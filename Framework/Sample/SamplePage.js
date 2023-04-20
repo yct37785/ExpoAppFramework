@@ -163,8 +163,11 @@ export default function SamplePage({ navigation, route }) {
       <View style={{ width: '100%', flex: 1, padding: padSize }}>
         <Text variant="bodyMedium">Hello world</Text>
         <View style={{ height: padSize4 }} />
-        <Button mode="contained" onPress={() => setShowDialog(true)}>
+        <Button mode="contained" onPress={() => setShowDialog(true)} style={{ marginBottom: padSize }}>
           Launch dialog
+        </Button>
+        <Button mode="contained" onPress={() => navigation.navigate("sample page 2", { paramText: 'hello from SamplePage' })}>
+          Sample Page 2
         </Button>
         <View style={{ height: padSize4 }} />
         <Picker value={pickerSelection} options={PICKER_ITEM_LIST} onChange={(v) => setPickerSelection(v)} />
