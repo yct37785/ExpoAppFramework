@@ -1,4 +1,4 @@
-import { NEW_USER_DATA } from '../Common/DefaultValues';
+import { NEW_USER_DATA } from '../../DefaultValues';
 import { deleteDataAS, getAllKeysAS, readDataAS, WriteDataAS, objToKeyValueArr } from './ASUtils';
 const _ = require('lodash');
 

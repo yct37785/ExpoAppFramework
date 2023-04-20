@@ -6,7 +6,7 @@ import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme
   Text } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
 // utils
-import { getLocalUserData } from './Utilities/DataUtils';
+import { getLocalUserData } from './Framework/Utilities/DataUtils';
 // nav
 import { NavigationContainer, DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationDefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -31,11 +31,11 @@ const CombinedDarkTheme = {
     ...DarkTheme.colors,
   },
 };
-// comps
-import SamplePage from './Sample/SamplePage';
+// TAKENOTE: import your pages here
+import SamplePage from './Framework/Sample/SamplePage';
 // data
-import { ThemePrefContext } from './Common/ThemePrefContext';
-import { DataContext } from './Common/DataContext';
+import { ThemePrefContext } from './Framework/Common/ThemePrefContext';
+import { DataContext } from './Framework/Common/DataContext';
 
 // temp warning disabling
 LogBox.ignoreLogs(['new NativeEventEmitter']);
@@ -43,7 +43,7 @@ LogBox.ignoreLogs(['new NativeEventEmitter']);
 // nav
 const Stack = createNativeStackNavigator();
 
-// screens
+// TAKENOTE: insert your screens here
 function SampleScreen({ navigation, route, extraData }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -119,6 +119,7 @@ const App = () => {
                 }}
               >
                 <Stack.Screen name="home">
+                  {/* TAKENOTE: insert your screens here */}
                   {(props) => <SampleScreen {...props} extraData={{}} />}
                 </Stack.Screen>
               </Stack.Navigator>
