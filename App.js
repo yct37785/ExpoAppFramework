@@ -120,23 +120,25 @@ const App = () => {
       <DataContext.Provider value={dataValues}>
         <PaperProvider theme={theme}>
           <MenuProvider>
-            <NavigationContainer theme={theme}>
-              <Stack.Navigator
-                initialRouteName="home"
-                screenOptions={{
-                  headerShown: false
-                }}
-              >
-                <Stack.Screen name="home">
-                  {/* TAKENOTE: insert your screens here */}
-                  {(props) => <SampleScreen {...props} extraData={{}} />}
-                </Stack.Screen>
-                <Stack.Screen name="sample page 2">
-                  {/* TAKENOTE: insert your screens here */}
-                  {(props) => <SampleScreen2 {...props} extraData={{}} />}
-                </Stack.Screen>
-              </Stack.Navigator>
-            </NavigationContainer>
+            <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+              <NavigationContainer theme={theme}>
+                <Stack.Navigator
+                  initialRouteName="home"
+                  screenOptions={{
+                    headerShown: false
+                  }}
+                >
+                  <Stack.Screen name="home">
+                    {/* TAKENOTE: insert your screens here */}
+                    {(props) => <SampleScreen {...props} extraData={{}} />}
+                  </Stack.Screen>
+                  <Stack.Screen name="sample page 2">
+                    {/* TAKENOTE: insert your screens here */}
+                    {(props) => <SampleScreen2 {...props} extraData={{}} />}
+                  </Stack.Screen>
+                </Stack.Navigator>
+              </NavigationContainer>
+            </View>
           </MenuProvider>
         </PaperProvider>
       </DataContext.Provider>
