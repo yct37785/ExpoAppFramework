@@ -1,12 +1,14 @@
 // core
 import React, { Node, useCallback, useMemo, useEffect, useState } from 'react';
-import { View, LogBox, NativeModules } from 'react-native';
+import { View, LogBox, Platform, StatusBar } from 'react-native';
 // UI
 import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme,
   Text } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
 // utils
 import { getLocalUserData } from './Framework/Utilities/DataUtils';
+// deps
+import 'react-native-get-random-values';
 // nav
 import { NavigationContainer, DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationDefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -120,7 +122,7 @@ const App = () => {
       <DataContext.Provider value={dataValues}>
         <PaperProvider theme={theme}>
           <MenuProvider>
-            <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+            <View style={{ flex: 1, backgroundColor: theme.colors.background, paddingTop: Platform.OS == "android" ? StatusBar.currentHeight : 0 }}>
               <NavigationContainer theme={theme}>
                 <Stack.Navigator
                   initialRouteName="home"
