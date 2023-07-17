@@ -64,7 +64,9 @@ export async function getLocalUserData() {
       if (allKeys.length === 0) {
         userData = await createNewUserData();
       } else {
-        userData = await readDataAS(Object.keys(NEW_USER_DATA));
+        // read all keys, even if not part of NEW_USER_DATA
+        userData = await readDataAS(allKeys);
+        // check if keys (root/nested) missing, fill in with default values from NEW_USER_DATA
         const hasMissing = checkNested(userData, NEW_USER_DATA);
         if (hasMissing) {
           await WriteDataAS(objToKeyValueArr(userData));
