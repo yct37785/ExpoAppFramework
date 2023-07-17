@@ -122,7 +122,8 @@ const App = () => {
       <DataContext.Provider value={dataValues}>
         <PaperProvider theme={theme}>
           <MenuProvider>
-            <View style={{ flex: 1, backgroundColor: theme.colors.background, paddingTop: Platform.OS == "android" ? StatusBar.currentHeight : 0 }}>
+            {/* <View style={{ flex: 1, backgroundColor: theme.colors.background, paddingTop: Platform.OS == "android" ? StatusBar.currentHeight : 0 }}> */}
+            <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
               <NavigationContainer theme={theme}>
                 <Stack.Navigator
                   initialRouteName="home"
