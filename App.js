@@ -33,9 +33,17 @@ const CombinedDarkTheme = {
     ...DarkTheme.colors,
   },
 };
-// TAKENOTE: import your pages here
+// TAKENOTE: include your pages here
+import SampleHomePage from './Framework/Sample/SampleHomePage';
+import SampleTabsPage from './Framework/Sample/SampleTabsPage';
 import SamplePage from './Framework/Sample/SamplePage';
 import SampleEmptyPage from './Framework/Sample/SampleEmptyPage';
+const screenMaps = {
+  home: SampleHomePage,
+  tabs: SampleTabsPage,
+  sample: SamplePage,
+  empty: SampleEmptyPage,
+};
 // data
 import { ThemePrefContext } from './Framework/Common/ThemePrefContext';
 import { DataContext } from './Framework/Common/DataContext';
@@ -46,19 +54,11 @@ LogBox.ignoreLogs(['new NativeEventEmitter']);
 // nav
 const Stack = createNativeStackNavigator();
 
-// TAKENOTE: insert your screens here
-function SampleScreen({ navigation, route, extraData }) {
+// screens
+function ScreenWrapper({ component: Component, ...props }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <SamplePage navigation={navigation} route={route} />
-    </View>
-  );
-}
-
-function SampleEmptyScreen({ navigation, route, extraData }) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <SampleEmptyPage navigation={navigation} route={route} />
+      <Component {...props} />
     </View>
   );
 }
@@ -131,13 +131,13 @@ const App = () => {
                     headerShown: false
                   }}
                 >
-                  {/* TAKENOTE: insert your screens and do routing here */}
-                  <Stack.Screen name="home">
-                    {(props) => <SampleScreen {...props} extraData={{}} />}
-                  </Stack.Screen>
-                  <Stack.Screen name="sample empty page">
-                    {(props) => <SampleEmptyScreen {...props} extraData={{}} />}
-                  </Stack.Screen>
+                  {Object.keys(screenMaps).map((key) => (
+                    <Stack.Screen name={key} key={key}>
+                      {(props) => (
+                        <ScreenWrapper {...props} component={screenMaps[key]} extraData={{}} />
+                      )}
+                    </Stack.Screen>
+                  ))}
                 </Stack.Navigator>
               </NavigationContainer>
             </View>
