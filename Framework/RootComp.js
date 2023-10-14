@@ -33,17 +33,8 @@ const CombinedDarkTheme = {
     ...DarkTheme.colors,
   },
 };
-// TAKENOTE: include your pages here
-import SampleHomePage from './Sample/SampleHomePage';
-import SampleTabsPage from './Sample/SampleTabsPage';
-import SamplePage from './Sample/SamplePage';
-import SampleEmptyPage from './Sample/SampleEmptyPage';
-const screenMaps = {
-  home: SampleHomePage,
-  tabs: SampleTabsPage,
-  sample: SamplePage,
-  empty: SampleEmptyPage,
-};
+// pages
+import { screenMaps, DEFAULT_SCREEN } from '../PageMapper';
 // data
 import { ThemePrefContext } from './Common/ThemePrefContext';
 import { DataContext } from './Common/DataContext';
@@ -126,7 +117,7 @@ const RootComp = () => {
             <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
               <NavigationContainer theme={theme}>
                 <Stack.Navigator
-                  initialRouteName="home"
+                  initialRouteName={DEFAULT_SCREEN}
                   screenOptions={{
                     headerShown: false
                   }}
