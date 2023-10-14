@@ -10,9 +10,9 @@ import {
 import { DataContext } from '../Common/DataContext';
 
 /**
- * Display sample page 2
+ * sample empty page
  */
-export default function SamplePage2({ navigation, route }) {
+export default function SampleEmptyPage({ navigation, route }) {
   /**------------------------------------------------------------------------------------*
    * State
    *------------------------------------------------------------------------------------*/

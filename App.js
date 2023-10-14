@@ -35,7 +35,7 @@ const CombinedDarkTheme = {
 };
 // TAKENOTE: import your pages here
 import SamplePage from './Framework/Sample/SamplePage';
-import SamplePage2 from './Framework/Sample/SamplePage2';
+import SampleEmptyPage from './Framework/Sample/SampleEmptyPage';
 // data
 import { ThemePrefContext } from './Framework/Common/ThemePrefContext';
 import { DataContext } from './Framework/Common/DataContext';
@@ -55,10 +55,10 @@ function SampleScreen({ navigation, route, extraData }) {
   );
 }
 
-function SampleScreen2({ navigation, route, extraData }) {
+function SampleEmptyScreen({ navigation, route, extraData }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <SamplePage2 navigation={navigation} route={route} />
+      <SampleEmptyPage navigation={navigation} route={route} />
     </View>
   );
 }
@@ -131,13 +131,12 @@ const App = () => {
                     headerShown: false
                   }}
                 >
+                  {/* TAKENOTE: insert your screens and do routing here */}
                   <Stack.Screen name="home">
-                    {/* TAKENOTE: insert your screens here */}
                     {(props) => <SampleScreen {...props} extraData={{}} />}
                   </Stack.Screen>
-                  <Stack.Screen name="sample page 2">
-                    {/* TAKENOTE: insert your screens here */}
-                    {(props) => <SampleScreen2 {...props} extraData={{}} />}
+                  <Stack.Screen name="sample empty page">
+                    {(props) => <SampleEmptyScreen {...props} extraData={{}} />}
                   </Stack.Screen>
                 </Stack.Navigator>
               </NavigationContainer>
