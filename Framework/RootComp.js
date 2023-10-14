@@ -34,7 +34,7 @@ const CombinedDarkTheme = {
   },
 };
 // pages
-import { screenMaps, DEFAULT_SCREEN } from '../PageMapper';
+import { screenMaps, DEFAULT_SCREEN } from '../User/PageMapper';
 // data
 import { ThemePrefContext } from './Common/ThemePrefContext';
 import { DataContext } from './Common/DataContext';
