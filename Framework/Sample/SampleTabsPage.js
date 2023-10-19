@@ -6,10 +6,6 @@ import {
   useTheme, Text, Button, Appbar
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Dialog from '../UI/Dialog';
-import Picker from '../UI/Picker';
-import DropdownMenu from '../UI/DropdownMenu';
-import DropdownCheckMenu from '../UI/DropdownCheckMenu';
 import TabBar from '../UI/TabBar';
 // data
 import { DataContext } from '../Common/DataContext';
