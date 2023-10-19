@@ -51,15 +51,27 @@ export default function SampleTabsPage({ navigation, route }) {
   const renderScene = ({ route }) => {
     switch (route.key) {
       case 'p1':
-        return <View style={{ flex: 1, backgroundColor: 'green' }}><Text>P1</Text></View>
+        return <Tab1Comp />
       case 'p2':
-        return <View style={{ flex: 1, backgroundColor: 'blue' }}><Text>P2</Text></View>
+        return <Tab2Comp />
       case 'p3':
-        return <View style={{ flex: 1, backgroundColor: 'yellow' }}><Text>P3</Text></View>
+        return <Tab3Comp />
       default:
         return null;
     }
   };
+
+  const Tab1Comp = ({}) => {
+    return <View style={{ flex: 1, backgroundColor: 'green' }}><Text>P1</Text></View>
+  }
+
+  const Tab2Comp = ({}) => {
+    return <View style={{ flex: 1, backgroundColor: 'blue' }}><Text>P2</Text></View>
+  }
+
+  const Tab3Comp = ({}) => {
+    return <View style={{ flex: 1, backgroundColor: 'yellow' }}><Text>P3</Text></View>
+  }
 
   /**------------------------------------------------------------------------------------*
    * Draw
