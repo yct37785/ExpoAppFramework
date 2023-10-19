@@ -51,11 +51,11 @@ export default function SampleTabsPage({ navigation, route }) {
   const renderScene = ({ route }) => {
     switch (route.key) {
       case 'p1':
-        return <View style={{ width: '100%', height: 200, backgroundColor: 'green' }}><Text>P1</Text></View>
+        return <View style={{ flex: 1, backgroundColor: 'green' }}><Text>P1</Text></View>
       case 'p2':
-        return <View style={{ width: '100%', height: 200, backgroundColor: 'blue' }}><Text>P2</Text></View>
+        return <View style={{ flex: 1, backgroundColor: 'blue' }}><Text>P2</Text></View>
       case 'p3':
-        return <View style={{ width: '100%', height: 200, backgroundColor: 'yellow' }}><Text>P3</Text></View>
+        return <View style={{ flex: 1, backgroundColor: 'yellow' }}><Text>P3</Text></View>
       default:
         return null;
     }
@@ -68,7 +68,11 @@ export default function SampleTabsPage({ navigation, route }) {
     <View style={{ width: '100%', flex: 1 }}>
       {/* main content here */}
       <View style={{ width: '100%', flex: 1, padding: padSize }}>
-        <Text variant="bodyMedium">Hello world</Text>
+        <Appbar.Header>
+          <Appbar.BackAction onPress={() => navigation.goBack()} />
+          <Appbar.Content title="Tabs" >
+          </Appbar.Content>
+        </Appbar.Header>
         <TabBar
           routes={TAB_ROUTES}
           renderIcon={renderIcon}

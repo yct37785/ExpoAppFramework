@@ -29,7 +29,7 @@ export default function SampleEmptyPage({ navigation, route }) {
       {/* appbar */}
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Title" >
+        <Appbar.Content title="Empty" >
         </Appbar.Content>
       </Appbar.Header>
       {/* main content here */}
