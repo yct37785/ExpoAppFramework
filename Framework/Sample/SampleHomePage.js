@@ -6,18 +6,17 @@ import {
   useTheme, Text, Card, Button, Appbar,
   TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
 } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Dialog from '../UI/Dialog';
-import Picker from '../UI/Picker';
-import DropdownMenu from '../UI/DropdownMenu';
-import DropdownCheckMenu from '../UI/DropdownCheckMenu';
-import TabBar from '../UI/TabBar';
 // data
 import { DataContext } from '../Common/DataContext';
 // const
+export const SAMPLE_PAGES = {
+  tabs: "tabs example",
+  sample: "sample example",
+  empty: "empty example",
+};
 
 /**
- * Navigate between all the sample screens
+ * sample home page
  */
 export default function SampleHomePage({ navigation, route }) {
   /**------------------------------------------------------------------------------------*
@@ -40,9 +39,22 @@ export default function SampleHomePage({ navigation, route }) {
    *------------------------------------------------------------------------------------*/
   return (
     <View style={{ width: '100%', flex: 1 }}>
+      {/* appbar */}
+      <Appbar.Header>
+        <Appbar.BackAction onPress={() => navigation.goBack()} />
+        <Appbar.Content title="Home" >
+        </Appbar.Content>
+      </Appbar.Header>
       {/* main content here */}
       <View style={{ width: '100%', flex: 1, padding: padSize }}>
-        <Text variant="bodyMedium">Hello world</Text>
+        <Text variant="bodyMedium">Select the pages you want to navigate to</Text>
+        <View style={{ flex: 1 }}>
+          {Object.keys(SAMPLE_PAGES).map((key) => (
+            <Button key={key} mode="contained" onPress={() => navigation.navigate(key, { paramText: `hello ${key} from home` })} style={{ margin: padSize }}>
+              {SAMPLE_PAGES[key]}
+            </Button>
+          ))}
+        </View>
       </View>
     </View>
   );
