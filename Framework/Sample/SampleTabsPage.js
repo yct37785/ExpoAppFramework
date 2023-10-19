@@ -3,8 +3,7 @@ import { View, Keyboard } from 'react-native';
 import { borderRad, padSize05, padSize, padSize2, padSize4 } from '../Common/Common';
 // UI
 import {
-  useTheme, Text, Card, Button, Appbar,
-  TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
+  useTheme, Text, Button, Appbar
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Dialog from '../UI/Dialog';
