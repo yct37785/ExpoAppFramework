@@ -13,6 +13,7 @@ export const SAMPLE_PAGES = {
   tabs: "tabs example",
   sample: "sample example",
   empty: "empty example",
+  search: "search example",
 };
 
 /**
