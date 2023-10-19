@@ -22,6 +22,7 @@ export default function SampleSearchPage({ navigation, route }) {
   const { userData, setUserData } = useContext(DataContext);
   const [searchQuery, setSearchQuery] = useState('');
   const [productList, setProductList] = useState([]);
+  const [filteredProductList, setFilteredProductList] = useState([]);
 
   /**------------------------------------------------------------------------------------*
    * Init
@@ -53,6 +54,20 @@ export default function SampleSearchPage({ navigation, route }) {
   /**------------------------------------------------------------------------------------*
    * Search
    *------------------------------------------------------------------------------------*/
+  useEffect(() => {
+    console.log("Begin filtering");
+    const filteredProducts = searchQuery
+      ? productList.filter(
+        (product) =>
+          product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          product.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          product.material.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+      : productList;
+      console.log("End filtering");
+    setFilteredProductList(filteredProducts);
+  }, [searchQuery, productList]);
+
   const onChangeSearch = (query) => {
     setSearchQuery(query);
   }
@@ -63,7 +78,8 @@ export default function SampleSearchPage({ navigation, route }) {
   const renderProductItem = ({ item, index }) => {
     return <View style={{ width: '100%' }}>
       <View style={{ width: '100%', height: '100%', padding: padSize05 }}>
-        <Text variant="titleSmall">{`${item.name}`}</Text>
+        {/* <Text variant="titleSmall">{`${item.name}`}</Text> */}
+        {highlightSearchText(item.name, searchQuery)}
         <Image
           style={{ width: 100, height: 100 }}
           source={{
@@ -71,12 +87,31 @@ export default function SampleSearchPage({ navigation, route }) {
           }}
           resizeMode={'contain'}
         />
-        <Text variant="labelMedium">{`material: ${item.material}`}</Text>
-        <Text variant="bodyMedium">{`${item.desc}`}</Text>
+        {/* <Text variant="labelMedium">{`material: ${item.material}`}</Text>
+        <Text variant="bodyMedium">{`${item.desc}`}</Text> */}
+        {highlightSearchText(`material: ${item.material}`, searchQuery)}
+        {highlightSearchText(item.desc, searchQuery)}
       </View>
       <Divider />
     </View>
   };
+
+  const highlightSearchText = (text, query) => {
+    const parts = text.split(new RegExp(`(${query})`, 'gi'));
+    return (
+      <Text>
+        {parts.map((part, index) =>
+          part.toLowerCase() === query.toLowerCase() ? (
+            <Text key={index} style={{ backgroundColor: 'yellow' }}>
+              {part}
+            </Text>
+          ) : (
+            part
+          )
+        )}
+      </Text>
+    );
+  };  
 
   /**------------------------------------------------------------------------------------*
    * Draw
@@ -92,7 +127,7 @@ export default function SampleSearchPage({ navigation, route }) {
             value={searchQuery}
           />
         </Appbar.Header>
-        {productList.length > 0 ? <BigList data={productList} renderItem={renderProductItem} itemHeight={250} /> : null}
+        {filteredProductList.length > 0 ? <BigList data={filteredProductList} renderItem={renderProductItem} itemHeight={250} /> : null}
       </View>
     </View>
   );
