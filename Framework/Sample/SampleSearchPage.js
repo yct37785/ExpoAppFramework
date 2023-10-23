@@ -94,6 +94,9 @@ export default function SampleSearchPage({ navigation, route }) {
   };
   
   const highlightSearchText = (text, query) => {
+    if (!query) {
+      return <Text>{text}</Text>;
+    }
     const parts = text.split(new RegExp(`(${query})`, 'gi'));
     return (
       <Text>
