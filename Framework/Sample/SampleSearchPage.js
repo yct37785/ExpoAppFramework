@@ -1,5 +1,5 @@
-import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
-import { View, Image } from 'react-native';
+import React, { useContext, useState, useEffect, useCallback, useRef, createContext } from 'react';
+import { View, Image, FlatList } from 'react-native';
 import { borderRad, padSize05, padSize, padSize2, padSize4 } from '../Common/Common';
 // UI
 import {
@@ -23,6 +23,7 @@ export default function SampleSearchPage({ navigation, route }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [productList, setProductList] = useState([]);
   const [filteredProductList, setFilteredProductList] = useState([]);
+  const ROW_HEIGHT = 250;
 
   /**------------------------------------------------------------------------------------*
    * Init
@@ -75,11 +76,11 @@ export default function SampleSearchPage({ navigation, route }) {
   /**------------------------------------------------------------------------------------*
    * List
    *------------------------------------------------------------------------------------*/
-  const renderProductItem = ({ item, index }) => {
+  const renderItemBiglist = ({ item, index }) => {
     return <View style={{ width: '100%' }}>
       <View style={{ width: '100%', height: '100%', padding: padSize05 }}>
-        {/* <Text variant="titleSmall">{`${item.name}`}</Text> */}
-        {highlightSearchText(item.name, searchQuery)}
+        <Text variant="titleSmall">{`${item.name}`}</Text>
+        {/* {highlightSearchText(item.name, searchQuery)} */}
         <Image
           style={{ width: 100, height: 100 }}
           source={{
@@ -87,15 +88,33 @@ export default function SampleSearchPage({ navigation, route }) {
           }}
           resizeMode={'contain'}
         />
-        {/* <Text variant="labelMedium">{`material: ${item.material}`}</Text>
-        <Text variant="bodyMedium">{`${item.desc}`}</Text> */}
-        {highlightSearchText(`material: ${item.material}`, searchQuery)}
-        {highlightSearchText(item.desc, searchQuery)}
+        <Text variant="labelMedium">{`material: ${item.material}`}</Text>
+        <Text variant="bodyMedium">{`${item.desc}`}</Text>
+        {/* {highlightSearchText(`material: ${item.material}`, searchQuery)}
+        {highlightSearchText(item.desc, searchQuery)} */}
       </View>
       <Divider />
     </View>
   };
-
+  
+  const renderItemFlatlist = ({ item }) => (
+    <View style={{ height: ROW_HEIGHT, padding: padSize05 }}>
+      <Text variant="titleSmall">{`${item.name}`}</Text>
+      {/* {highlightSearchText(item.name, searchQuery)} */}
+        <Image
+          style={{ width: 100, height: 100 }}
+          source={{
+            uri: item.img,
+          }}
+          resizeMode={'contain'}
+        />
+        <Text variant="labelMedium">{`material: ${item.material}`}</Text>
+        <Text variant="bodyMedium">{`${item.desc}`}</Text>
+        {/* {highlightSearchText(`material: ${item.material}`, searchQuery)}
+        {highlightSearchText(item.desc, searchQuery)} */}
+    </View>
+  );
+  
   const highlightSearchText = (text, query) => {
     const parts = text.split(new RegExp(`(${query})`, 'gi'));
     return (
@@ -111,7 +130,7 @@ export default function SampleSearchPage({ navigation, route }) {
         )}
       </Text>
     );
-  };  
+  };
 
   /**------------------------------------------------------------------------------------*
    * Draw
@@ -127,7 +146,16 @@ export default function SampleSearchPage({ navigation, route }) {
             value={searchQuery}
           />
         </Appbar.Header>
-        {filteredProductList.length > 0 ? <BigList data={filteredProductList} renderItem={renderProductItem} itemHeight={250} /> : null}
+        {filteredProductList.length > 0 ? <BigList data={filteredProductList} renderItem={renderItemBiglist} itemHeight={ROW_HEIGHT} /> : null}
+        {/* <FlatList
+            data={productList}
+            // keyExtractor={(item) => item.id}
+            renderItem={renderItemFlatlist}
+            // Using getItemLayout for better performance
+            getItemLayout={(data, index) => (
+                { length: ROW_HEIGHT, offset: ROW_HEIGHT * index, index }
+            )}
+        /> */}
       </View>
     </View>
   );
