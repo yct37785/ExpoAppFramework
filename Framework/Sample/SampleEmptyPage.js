@@ -3,8 +3,7 @@ import { View, Keyboard } from 'react-native';
 import { borderRad, padSize05, padSize, padSize2, padSize4 } from '../Common/Common';
 // UI
 import {
-  useTheme, Text, Card, Button, Appbar,
-  TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
+  useTheme, Text, Button, Appbar
 } from 'react-native-paper';
 // data
 import { DataContext } from '../Common/DataContext';
@@ -29,7 +28,7 @@ export default function SampleEmptyPage({ navigation, route }) {
       {/* appbar */}
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Title" >
+        <Appbar.Content title="Empty" >
         </Appbar.Content>
       </Appbar.Header>
       {/* main content here */}

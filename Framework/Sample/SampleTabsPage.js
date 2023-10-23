@@ -3,14 +3,9 @@ import { View, Keyboard } from 'react-native';
 import { borderRad, padSize05, padSize, padSize2, padSize4 } from '../Common/Common';
 // UI
 import {
-  useTheme, Text, Card, Button, Appbar,
-  TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
+  useTheme, Text, Button, Appbar
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Dialog from '../UI/Dialog';
-import Picker from '../UI/Picker';
-import DropdownMenu from '../UI/DropdownMenu';
-import DropdownCheckMenu from '../UI/DropdownCheckMenu';
 import TabBar from '../UI/TabBar';
 // data
 import { DataContext } from '../Common/DataContext';
@@ -51,15 +46,27 @@ export default function SampleTabsPage({ navigation, route }) {
   const renderScene = ({ route }) => {
     switch (route.key) {
       case 'p1':
-        return <View style={{ width: '100%', height: 200, backgroundColor: 'green' }}><Text>P1</Text></View>
+        return <Tab1Comp />
       case 'p2':
-        return <View style={{ width: '100%', height: 200, backgroundColor: 'blue' }}><Text>P2</Text></View>
+        return <Tab2Comp />
       case 'p3':
-        return <View style={{ width: '100%', height: 200, backgroundColor: 'yellow' }}><Text>P3</Text></View>
+        return <Tab3Comp />
       default:
         return null;
     }
   };
+
+  const Tab1Comp = ({}) => {
+    return <View style={{ flex: 1, backgroundColor: 'green' }}><Text>P1</Text></View>
+  }
+
+  const Tab2Comp = ({}) => {
+    return <View style={{ flex: 1, backgroundColor: 'blue' }}><Text>P2</Text></View>
+  }
+
+  const Tab3Comp = ({}) => {
+    return <View style={{ flex: 1, backgroundColor: 'yellow' }}><Text>P3</Text></View>
+  }
 
   /**------------------------------------------------------------------------------------*
    * Draw
@@ -68,7 +75,11 @@ export default function SampleTabsPage({ navigation, route }) {
     <View style={{ width: '100%', flex: 1 }}>
       {/* main content here */}
       <View style={{ width: '100%', flex: 1, padding: padSize }}>
-        <Text variant="bodyMedium">Hello world</Text>
+        <Appbar.Header>
+          <Appbar.BackAction onPress={() => navigation.goBack()} />
+          <Appbar.Content title="Tabs" >
+          </Appbar.Content>
+        </Appbar.Header>
         <TabBar
           routes={TAB_ROUTES}
           renderIcon={renderIcon}

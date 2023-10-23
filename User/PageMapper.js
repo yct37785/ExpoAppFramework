@@ -6,12 +6,14 @@ import SampleHomePage from '../Framework/Sample/SampleHomePage';
 import SampleTabsPage from '../Framework/Sample/SampleTabsPage';
 import SamplePage from '../Framework/Sample/SamplePage';
 import SampleEmptyPage from '../Framework/Sample/SampleEmptyPage';
+import SampleSearchPage from '../Framework/Sample/SampleSearchPage';
 
 export const screenMaps = {
   home: SampleHomePage,
   tabs: SampleTabsPage,
   sample: SamplePage,
   empty: SampleEmptyPage,
+  search: SampleSearchPage
 };
 
 export const DEFAULT_SCREEN = 'home';
