@@ -75,8 +75,7 @@ export default function SampleSearchPage({ navigation, route }) {
   const renderItemBiglist = ({ item, index }) => {
     return <View style={{ width: '100%' }}>
       <View style={{ width: '100%', height: '100%', padding: padSize05 }}>
-        {/* <Text variant="titleSmall">{`${item.name}`}</Text> */}
-        {highlightSearchText(item.name, searchQuery)}
+        {highlightSearchText(item.name, searchQuery, 'titleSmall')}
         <Image
           style={{ width: 100, height: 100 }}
           source={{
@@ -84,25 +83,24 @@ export default function SampleSearchPage({ navigation, route }) {
           }}
           resizeMode={'contain'}
         />
-        {/* <Text variant="labelMedium">{`material: ${item.material}`}</Text>
-        <Text variant="bodyMedium">{`${item.desc}`}</Text> */}
-        {highlightSearchText(`material: ${item.material}`, searchQuery)}
-        {highlightSearchText(item.desc, searchQuery)}
+        {highlightSearchText(`material: ${item.material}`, searchQuery, 'labelMedium')}
+        {highlightSearchText(item.desc, searchQuery, 'bodyMedium')}
       </View>
       <Divider />
     </View>
   };
   
-  const highlightSearchText = (text, query) => {
+  const highlightSearchText = (text, query, variant='bodyMedium') => {
     if (!query) {
-      return <Text>{text}</Text>;
+      return <Text variant={variant}>{text}</Text>;
     }
-    const parts = text.split(new RegExp(`(${query})`, 'gi'));
+    const regex = new RegExp(`(${query})`, 'gi');
+    const parts = text.split(regex);
     return (
-      <Text>
+      <Text variant={variant}>
         {parts.map((part, index) =>
           part.toLowerCase() === query.toLowerCase() ? (
-            <Text key={index} style={{ backgroundColor: 'yellow' }}>
+            <Text variant={variant} key={index} style={{ backgroundColor: 'yellow' }}>
               {part}
             </Text>
           ) : (
