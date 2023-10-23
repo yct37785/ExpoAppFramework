@@ -3,7 +3,7 @@ import { View, Image, Keyboard } from 'react-native';
 import { borderRad, padSize05, padSize, padSize2, padSize4 } from '../Common/Common';
 // UI
 import {
-  useTheme, Text, Button, Appbar, Searchbar, Divider,
+  useTheme, Text, Button, Appbar, Divider,
 } from 'react-native-paper';
 import { SearchBarComp } from '../UI/SearchBar';
 import BigList from 'react-native-big-list';
@@ -20,7 +20,6 @@ export default function SampleSearchPage({ navigation, route }) {
    * State
    *------------------------------------------------------------------------------------*/
   const theme = useTheme();
-  const searchBarRef = useRef();
   const { userData, setUserData } = useContext(DataContext);
   const [searchQuery, setSearchQuery] = useState('');
   const [productList, setProductList] = useState([]);
@@ -53,18 +52,6 @@ export default function SampleSearchPage({ navigation, route }) {
   }
 
   /**------------------------------------------------------------------------------------*
-   * Keyboard
-   *------------------------------------------------------------------------------------*/
-  useEffect(() => {
-    const keyboardListener = Keyboard.addListener('keyboardDidHide', (e) => {
-      if (searchBarRef.current) {
-        searchBarRef.current.blur();
-      }
-    });
-    return () => keyboardListener.remove();
-  }, [searchBarRef]);
-
-  /**------------------------------------------------------------------------------------*
    * Search
    *------------------------------------------------------------------------------------*/
   useEffect(() => {
@@ -78,10 +65,6 @@ export default function SampleSearchPage({ navigation, route }) {
       : productList;
     setFilteredProductList(filteredProducts);
   }, [searchQuery, productList]);
-
-  const onChangeSearch = (query) => {
-    setSearchQuery(query);
-  }
 
   /**------------------------------------------------------------------------------------*
    * List
@@ -134,12 +117,6 @@ export default function SampleSearchPage({ navigation, route }) {
       {/* main content here */}
       <View style={{ width: '100%', flex: 1, padding: padSize }}>
         <Appbar.Header>
-          {/* <Searchbar
-            ref={searchBarRef}
-            placeholder="Search"
-            onChangeText={onChangeSearch}
-            value={searchQuery}
-          /> */}
           <SearchBarComp
             value={searchQuery} 
             onChange={setSearchQuery}
