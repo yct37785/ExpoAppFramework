@@ -38,8 +38,6 @@ export default function SampleSearchPage({ navigation, route }) {
     // generate prod list sample
     const fakeData = faker.helpers.multiple(createRandomProduct, { count: 1000 });
     setProductList(fakeData);
-    console.log(JSON.stringify(fakeData[2]));
-    console.log("Sample data generated");
   }, []);
 
   const createRandomProduct = () => {
@@ -56,7 +54,6 @@ export default function SampleSearchPage({ navigation, route }) {
    * Search
    *------------------------------------------------------------------------------------*/
   useEffect(() => {
-    console.log("Begin filtering");
     const filteredProducts = searchQuery
       ? productList.filter(
         (product) =>
@@ -65,7 +62,6 @@ export default function SampleSearchPage({ navigation, route }) {
           product.material.toLowerCase().includes(searchQuery.toLowerCase())
       )
       : productList;
-      console.log("End filtering");
     setFilteredProductList(filteredProducts);
   }, [searchQuery, productList]);
 
@@ -79,8 +75,8 @@ export default function SampleSearchPage({ navigation, route }) {
   const renderItemBiglist = ({ item, index }) => {
     return <View style={{ width: '100%' }}>
       <View style={{ width: '100%', height: '100%', padding: padSize05 }}>
-        <Text variant="titleSmall">{`${item.name}`}</Text>
-        {/* {highlightSearchText(item.name, searchQuery)} */}
+        {/* <Text variant="titleSmall">{`${item.name}`}</Text> */}
+        {highlightSearchText(item.name, searchQuery)}
         <Image
           style={{ width: 100, height: 100 }}
           source={{
@@ -88,10 +84,10 @@ export default function SampleSearchPage({ navigation, route }) {
           }}
           resizeMode={'contain'}
         />
-        <Text variant="labelMedium">{`material: ${item.material}`}</Text>
-        <Text variant="bodyMedium">{`${item.desc}`}</Text>
-        {/* {highlightSearchText(`material: ${item.material}`, searchQuery)}
-        {highlightSearchText(item.desc, searchQuery)} */}
+        {/* <Text variant="labelMedium">{`material: ${item.material}`}</Text>
+        <Text variant="bodyMedium">{`${item.desc}`}</Text> */}
+        {highlightSearchText(`material: ${item.material}`, searchQuery)}
+        {highlightSearchText(item.desc, searchQuery)}
       </View>
       <Divider />
     </View>
