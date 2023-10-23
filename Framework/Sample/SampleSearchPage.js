@@ -5,7 +5,7 @@ import { borderRad, padSize05, padSize, padSize2, padSize4 } from '../Common/Com
 import {
   useTheme, Text, Button, Appbar, Divider,
 } from 'react-native-paper';
-import { SearchBarComp, SearchableListComp, highlightSearchText } from '../UI/SearchBar';
+import { SearchBarComp, SearchableBigListComp, SearchableFlatListComp, highlightSearchText } from '../UI/SearchBar';
 // data
 import { DataContext } from '../Common/DataContext';
 // dev
@@ -64,7 +64,7 @@ export default function SampleSearchPage({ navigation, route }) {
 
   const renderItem = ({ item, index }) => {
     return <View style={{ width: '100%' }}>
-      <View style={{ width: '100%', height: '100%', padding: padSize05 }}>
+      <View style={{ width: '100%', padding: padSize }}>
         {highlightSearchText(item.name, searchQuery, 'titleSmall')}
         <Image
           style={{ width: 100, height: 100 }}
@@ -93,10 +93,15 @@ export default function SampleSearchPage({ navigation, route }) {
             onChange={setSearchQuery}
           />
         </Appbar.Header>
-        <SearchableListComp
+        {/* <SearchableBigListComp
           data={productList}
           queryFunction={queryProducts}
           rowHeight={ROW_HEIGHT}
+          renderItem={renderItem}
+        /> */}
+        <SearchableFlatListComp
+          data={productList}
+          queryFunction={queryProducts}
           renderItem={renderItem}
         />
       </View>

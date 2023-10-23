@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, createContext } from 'react';
-import { View, Image, Keyboard } from 'react-native';
+import { View, Image, Keyboard, FlatList } from 'react-native';
 // UI
 import {
   useTheme, Text, Button, Appbar, Searchbar, Divider,
@@ -32,14 +32,14 @@ export const SearchBarComp = ({ value, onChange, placeholder='Search' }) => {
 };
 
 /**
- * BigList
+ * BigList version
  */
-export const SearchableListComp = ({ 
-  data, 
-  queryFunction, 
-  rowHeight, 
-  renderItem, 
-  ...props 
+export const SearchableBigListComp = ({ 
+  data,
+  queryFunction,
+  rowHeight,
+  renderItem,
+  ...props
 }) => {
   const [filteredData, setFilteredData] = useState(data);
 
@@ -50,10 +50,39 @@ export const SearchableListComp = ({
   return (
     <View style={{ width: '100%', flex: 1 }}>
       {filteredData.length > 0 ? 
-        <BigList 
-          data={filteredData} 
-          renderItem={renderItem} 
-          itemHeight={rowHeight} 
+        <BigList
+          data={filteredData}
+          renderItem={renderItem}
+          itemHeight={rowHeight}
+          {...props}
+        /> 
+      : null}
+    </View>
+  );
+};
+
+/**
+ * Flatlist version
+ * - no fixed height support, use this if you need dynamic height row items
+ */
+export const SearchableFlatListComp = ({ 
+  data,
+  queryFunction,
+  renderItem,
+  ...props
+}) => {
+  const [filteredData, setFilteredData] = useState(data);
+
+  useEffect(() => {
+    setFilteredData(queryFunction(data));
+  }, [data, queryFunction]);
+
+  return (
+    <View style={{ width: '100%', flex: 1 }}>
+      {filteredData.length > 0 ? 
+        <FlatList 
+          data={filteredData}
+          renderItem={renderItem}
           {...props}
         /> 
       : null}
