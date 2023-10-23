@@ -5,7 +5,7 @@ import { borderRad, padSize05, padSize, padSize2, padSize4 } from '../Common/Com
 import {
   useTheme, Text, Button, Appbar, Divider,
 } from 'react-native-paper';
-import { SearchBarComp } from '../UI/SearchBar';
+import { SearchBarComp, highlightSearchText } from '../UI/SearchBar';
 import BigList from 'react-native-big-list';
 // data
 import { DataContext } from '../Common/DataContext';
@@ -85,28 +85,6 @@ export default function SampleSearchPage({ navigation, route }) {
       </View>
       <Divider />
     </View>
-  };
-  
-  const highlightSearchText = (text, query, variant='bodyMedium', label='') => {
-    if (!query) {
-      return <Text variant={variant}>{`${label}${text}`}</Text>;
-    }
-    const regex = new RegExp(`(${query})`, 'gi');
-    const parts = text.split(regex);
-    return (
-      <Text variant={variant}>
-        {label}
-        {parts.map((part, index) =>
-          part.toLowerCase() === query.toLowerCase() ? (
-            <Text variant={variant} key={index} style={{ backgroundColor: 'yellow' }}>
-              {part}
-            </Text>
-          ) : (
-            part
-          )
-        )}
-      </Text>
-    );
   };
 
   /**------------------------------------------------------------------------------------*

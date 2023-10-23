@@ -30,3 +30,28 @@ export const SearchBarComp = ({ value, onChange, placeholder='Search' }) => {
     />
   );
 };
+
+/**
+ * highlights search text
+ */
+export const highlightSearchText = (text, query, variant='bodyMedium', label='') => {
+  if (!query) {
+    return <Text variant={variant}>{`${label}${text}`}</Text>;
+  }
+  const regex = new RegExp(`(${query})`, 'gi');
+  const parts = text.split(regex);
+  return (
+    <Text variant={variant}>
+      {label}
+      {parts.map((part, index) =>
+        part.toLowerCase() === query.toLowerCase() ? (
+          <Text variant={variant} key={index} style={{ backgroundColor: 'yellow' }}>
+            {part}
+          </Text>
+        ) : (
+          part
+        )
+      )}
+    </Text>
+  );
+};
