@@ -62,22 +62,35 @@ export default function SampleSearchPage({ navigation, route }) {
     );
   };
 
-  const renderItem = ({ item, index }) => {
-    return <View style={{ width: '100%' }}>
-      <View style={{ width: '100%', padding: padSize }}>
-        {highlightSearchText(item.name, searchQuery, 'titleSmall')}
-        <Image
-          style={{ width: 100, height: 100 }}
-          source={{
-            uri: item.img,
-          }}
-          resizeMode={'contain'}
-        />
-        {highlightSearchText(item.material, searchQuery, 'labelMedium', 'material: ')}
-        {highlightSearchText(item.desc, searchQuery, 'bodyMedium')}
+  const ListItem = React.memo(({ item, searchQuery, highlightSearchText }) => {
+    return (
+      <View style={{ width: '100%' }}>
+        <View style={{ width: '100%', padding: padSize }}>
+          {highlightSearchText(item.name, searchQuery, 'titleSmall')}
+          <Image
+            style={{ width: 100, height: 100 }}
+            source={{
+              uri: item.img,
+            }}
+            resizeMode={'contain'}
+          />
+          {highlightSearchText(item.material, searchQuery, 'labelMedium', 'material: ')}
+          {highlightSearchText(item.desc, searchQuery, 'bodyMedium')}
+        </View>
+        <Divider />
       </View>
-      <Divider />
-    </View>
+    );
+  });
+
+
+  const renderItem = ({ item, index }) => {
+    return (
+      <ListItem
+        item={item}
+        searchQuery={searchQuery}
+        highlightSearchText={highlightSearchText}
+      />
+    );
   };
 
   /**------------------------------------------------------------------------------------*
