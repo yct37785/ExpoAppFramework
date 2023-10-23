@@ -83,21 +83,22 @@ export default function SampleSearchPage({ navigation, route }) {
           }}
           resizeMode={'contain'}
         />
-        {highlightSearchText(`material: ${item.material}`, searchQuery, 'labelMedium')}
+        {highlightSearchText(item.material, searchQuery, 'labelMedium', 'material: ')}
         {highlightSearchText(item.desc, searchQuery, 'bodyMedium')}
       </View>
       <Divider />
     </View>
   };
   
-  const highlightSearchText = (text, query, variant='bodyMedium') => {
+  const highlightSearchText = (text, query, variant='bodyMedium', label='') => {
     if (!query) {
-      return <Text variant={variant}>{text}</Text>;
+      return <Text variant={variant}>{`${label}${text}`}</Text>;
     }
     const regex = new RegExp(`(${query})`, 'gi');
     const parts = text.split(regex);
     return (
       <Text variant={variant}>
+        {label}
         {parts.map((part, index) =>
           part.toLowerCase() === query.toLowerCase() ? (
             <Text variant={variant} key={index} style={{ backgroundColor: 'yellow' }}>
