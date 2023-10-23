@@ -5,6 +5,7 @@ import { borderRad, padSize05, padSize, padSize2, padSize4 } from '../Common/Com
 import {
   useTheme, Text, Button, Appbar, Searchbar, Divider,
 } from 'react-native-paper';
+import { SearchBarComp } from '../UI/SearchBar';
 import BigList from 'react-native-big-list';
 // data
 import { DataContext } from '../Common/DataContext';
@@ -133,11 +134,15 @@ export default function SampleSearchPage({ navigation, route }) {
       {/* main content here */}
       <View style={{ width: '100%', flex: 1, padding: padSize }}>
         <Appbar.Header>
-          <Searchbar
+          {/* <Searchbar
             ref={searchBarRef}
             placeholder="Search"
             onChangeText={onChangeSearch}
             value={searchQuery}
+          /> */}
+          <SearchBarComp
+            value={searchQuery} 
+            onChange={setSearchQuery}
           />
         </Appbar.Header>
         {filteredProductList.length > 0 ? <BigList data={filteredProductList} renderItem={renderItemBiglist} itemHeight={ROW_HEIGHT} /> : null}
