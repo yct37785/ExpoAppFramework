@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, createContext } from 'react';
-import { View, Image, FlatList } from 'react-native';
+import { View, Image } from 'react-native';
 import { borderRad, padSize05, padSize, padSize2, padSize4 } from '../Common/Common';
 // UI
 import {
@@ -97,24 +97,6 @@ export default function SampleSearchPage({ navigation, route }) {
     </View>
   };
   
-  const renderItemFlatlist = ({ item }) => (
-    <View style={{ height: ROW_HEIGHT, padding: padSize05 }}>
-      <Text variant="titleSmall">{`${item.name}`}</Text>
-      {/* {highlightSearchText(item.name, searchQuery)} */}
-        <Image
-          style={{ width: 100, height: 100 }}
-          source={{
-            uri: item.img,
-          }}
-          resizeMode={'contain'}
-        />
-        <Text variant="labelMedium">{`material: ${item.material}`}</Text>
-        <Text variant="bodyMedium">{`${item.desc}`}</Text>
-        {/* {highlightSearchText(`material: ${item.material}`, searchQuery)}
-        {highlightSearchText(item.desc, searchQuery)} */}
-    </View>
-  );
-  
   const highlightSearchText = (text, query) => {
     const parts = text.split(new RegExp(`(${query})`, 'gi'));
     return (
@@ -147,15 +129,6 @@ export default function SampleSearchPage({ navigation, route }) {
           />
         </Appbar.Header>
         {filteredProductList.length > 0 ? <BigList data={filteredProductList} renderItem={renderItemBiglist} itemHeight={ROW_HEIGHT} /> : null}
-        {/* <FlatList
-            data={productList}
-            // keyExtractor={(item) => item.id}
-            renderItem={renderItemFlatlist}
-            // Using getItemLayout for better performance
-            getItemLayout={(data, index) => (
-                { length: ROW_HEIGHT, offset: ROW_HEIGHT * index, index }
-            )}
-        /> */}
       </View>
     </View>
   );
