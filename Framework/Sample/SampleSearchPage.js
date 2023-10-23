@@ -5,8 +5,7 @@ import { borderRad, padSize05, padSize, padSize2, padSize4 } from '../Common/Com
 import {
   useTheme, Text, Button, Appbar, Divider,
 } from 'react-native-paper';
-import { SearchBarComp, highlightSearchText } from '../UI/SearchBar';
-import BigList from 'react-native-big-list';
+import { SearchBarComp, SearchableListComp, highlightSearchText } from '../UI/SearchBar';
 // data
 import { DataContext } from '../Common/DataContext';
 // dev
@@ -23,7 +22,6 @@ export default function SampleSearchPage({ navigation, route }) {
   const { userData, setUserData } = useContext(DataContext);
   const [searchQuery, setSearchQuery] = useState('');
   const [productList, setProductList] = useState([]);
-  const [filteredProductList, setFilteredProductList] = useState([]);
   const ROW_HEIGHT = 250;
 
   /**------------------------------------------------------------------------------------*
@@ -52,24 +50,19 @@ export default function SampleSearchPage({ navigation, route }) {
   }
 
   /**------------------------------------------------------------------------------------*
-   * Search
-   *------------------------------------------------------------------------------------*/
-  useEffect(() => {
-    const filteredProducts = searchQuery
-      ? productList.filter(
-        (product) =>
-          product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          product.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          product.material.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-      : productList;
-    setFilteredProductList(filteredProducts);
-  }, [searchQuery, productList]);
-
-  /**------------------------------------------------------------------------------------*
    * List
    *------------------------------------------------------------------------------------*/
-  const renderItemBiglist = ({ item, index }) => {
+  const queryProducts = (data) => {
+    if (!searchQuery) return data;
+    return data.filter(
+      (item) => 
+        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.material.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  };
+
+  const renderItem = ({ item, index }) => {
     return <View style={{ width: '100%' }}>
       <View style={{ width: '100%', height: '100%', padding: padSize05 }}>
         {highlightSearchText(item.name, searchQuery, 'titleSmall')}
@@ -100,7 +93,12 @@ export default function SampleSearchPage({ navigation, route }) {
             onChange={setSearchQuery}
           />
         </Appbar.Header>
-        {filteredProductList.length > 0 ? <BigList data={filteredProductList} renderItem={renderItemBiglist} itemHeight={ROW_HEIGHT} /> : null}
+        <SearchableListComp
+          data={productList}
+          queryFunction={queryProducts}
+          rowHeight={ROW_HEIGHT}
+          renderItem={renderItem}
+        />
       </View>
     </View>
   );

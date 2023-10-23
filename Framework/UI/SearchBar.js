@@ -32,6 +32,36 @@ export const SearchBarComp = ({ value, onChange, placeholder='Search' }) => {
 };
 
 /**
+ * BigList
+ */
+export const SearchableListComp = ({ 
+  data, 
+  queryFunction, 
+  rowHeight, 
+  renderItem, 
+  ...props 
+}) => {
+  const [filteredData, setFilteredData] = useState(data);
+
+  useEffect(() => {
+    setFilteredData(queryFunction(data));
+  }, [data, queryFunction]);
+
+  return (
+    <View style={{ width: '100%', flex: 1 }}>
+      {filteredData.length > 0 ? 
+        <BigList 
+          data={filteredData} 
+          renderItem={renderItem} 
+          itemHeight={rowHeight} 
+          {...props}
+        /> 
+      : null}
+    </View>
+  );
+};
+
+/**
  * highlights search text
  */
 export const highlightSearchText = (text, query, variant='bodyMedium', label='') => {
