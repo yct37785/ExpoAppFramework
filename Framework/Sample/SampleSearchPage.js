@@ -107,18 +107,20 @@ export default function SampleSearchPage({ navigation, route }) {
             onChange={setSearchQuery}
           />
         </Appbar.Header>
-        <RadioButton.Group onValueChange={newValue => setListType(newValue)} value={listType}>
-          <View style={{ flexDirection: 'row' }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text>BigList</Text>
-              <RadioButton value="biglist" />
+        <View style={{ padding: padSize }}>
+          <RadioButton.Group onValueChange={newValue => setListType(newValue)} value={listType}>
+            <View style={{ flexDirection: 'row' }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text>BigList</Text>
+                <RadioButton value="biglist" />
+              </View>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text>FlatList</Text>
+                <RadioButton value="flatlist" />
+              </View>
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text>FlatList</Text>
-              <RadioButton value="flatlist" />
-            </View>
-          </View>
-        </RadioButton.Group>
+          </RadioButton.Group>
+        </View>
         {listType == 'biglist' ? <SearchableBigListComp
           data={productList}
           queryFunction={queryProducts}
