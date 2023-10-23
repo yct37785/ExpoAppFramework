@@ -84,6 +84,7 @@ export const SearchableFlatListComp = ({
           data={filteredData}
           renderItem={renderItem}
           {...props}
+          windowSize={5}
         /> 
       : null}
     </View>
