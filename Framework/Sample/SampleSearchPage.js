@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, createContext } from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, Keyboard } from 'react-native';
 import { borderRad, padSize05, padSize, padSize2, padSize4 } from '../Common/Common';
 // UI
 import {
@@ -19,6 +19,7 @@ export default function SampleSearchPage({ navigation, route }) {
    * State
    *------------------------------------------------------------------------------------*/
   const theme = useTheme();
+  const searchBarRef = useRef();
   const { userData, setUserData } = useContext(DataContext);
   const [searchQuery, setSearchQuery] = useState('');
   const [productList, setProductList] = useState([]);
@@ -49,6 +50,18 @@ export default function SampleSearchPage({ navigation, route }) {
       material: faker.commerce.productMaterial()
     };
   }
+
+  /**------------------------------------------------------------------------------------*
+   * Keyboard
+   *------------------------------------------------------------------------------------*/
+  useEffect(() => {
+    const keyboardListener = Keyboard.addListener('keyboardDidHide', (e) => {
+      if (searchBarRef.current) {
+        searchBarRef.current.blur();
+      }
+    });
+    return () => keyboardListener.remove();
+  }, [searchBarRef]);
 
   /**------------------------------------------------------------------------------------*
    * Search
@@ -121,6 +134,7 @@ export default function SampleSearchPage({ navigation, route }) {
       <View style={{ width: '100%', flex: 1, padding: padSize }}>
         <Appbar.Header>
           <Searchbar
+            ref={searchBarRef}
             placeholder="Search"
             onChangeText={onChangeSearch}
             value={searchQuery}
