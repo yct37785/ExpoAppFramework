@@ -3,7 +3,7 @@ import { View, Image, Keyboard } from 'react-native';
 import { borderRad, padSize05, padSize, padSize2, padSize4 } from '../Common/Common';
 // UI
 import {
-  useTheme, Text, Button, Appbar, Divider,
+  useTheme, Text, Button, Appbar, Divider, RadioButton
 } from 'react-native-paper';
 import { SearchBarComp, SearchableBigListComp, SearchableFlatListComp, highlightSearchText } from '../UI/SearchBar';
 // data
@@ -20,6 +20,7 @@ export default function SampleSearchPage({ navigation, route }) {
    *------------------------------------------------------------------------------------*/
   const theme = useTheme();
   const { userData, setUserData } = useContext(DataContext);
+  const [listType, setListType] = useState('biglist');
   const [searchQuery, setSearchQuery] = useState('');
   const [productList, setProductList] = useState([]);
   const ROW_HEIGHT = 250;
@@ -102,21 +103,33 @@ export default function SampleSearchPage({ navigation, route }) {
       <View style={{ width: '100%', flex: 1, padding: padSize }}>
         <Appbar.Header>
           <SearchBarComp
-            value={searchQuery} 
+            value={searchQuery}
             onChange={setSearchQuery}
           />
         </Appbar.Header>
-        {/* <SearchableBigListComp
+        <RadioButton.Group onValueChange={newValue => setListType(newValue)} value={listType}>
+          <View style={{ flexDirection: 'row' }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Text>BigList</Text>
+              <RadioButton value="biglist" />
+            </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Text>FlatList</Text>
+              <RadioButton value="flatlist" />
+            </View>
+          </View>
+        </RadioButton.Group>
+        {listType == 'biglist' ? <SearchableBigListComp
           data={productList}
           queryFunction={queryProducts}
           rowHeight={ROW_HEIGHT}
           renderItem={renderItem}
-        /> */}
-        <SearchableFlatListComp
+        /> : null}
+        {listType == 'flatlist' ? <SearchableFlatListComp
           data={productList}
           queryFunction={queryProducts}
           renderItem={renderItem}
-        />
+        /> : null}
       </View>
     </View>
   );
