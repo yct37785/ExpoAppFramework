@@ -45,7 +45,7 @@ export const SearchBarComp = ({
  */
 export const SearchableBigListComp = ({ 
   data,
-  queryFunction,
+  filterFunction,
   rowHeight,
   renderItem,
   ...props
@@ -53,8 +53,8 @@ export const SearchableBigListComp = ({
   const [filteredData, setFilteredData] = useState(data);
 
   useEffect(() => {
-    setFilteredData(queryFunction(data));
-  }, [data, queryFunction]);
+    setFilteredData(filterFunction(data));
+  }, [data, filterFunction]);
 
   return (
     <View style={{ width: '100%', flex: 1 }}>
@@ -76,15 +76,15 @@ export const SearchableBigListComp = ({
  */
 export const SearchableFlatListComp = ({ 
   data,
-  queryFunction,
+  filterFunction,
   renderItem,
   ...props
 }) => {
   const [filteredData, setFilteredData] = useState(data);
 
   useEffect(() => {
-    setFilteredData(queryFunction(data));
-  }, [data, queryFunction]);
+    setFilteredData(filterFunction(data));
+  }, [data, filterFunction]);
 
   return (
     <View style={{ width: '100%', flex: 1 }}>
