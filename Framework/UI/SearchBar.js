@@ -23,6 +23,7 @@ export const SearchBarComp = ({ value, onChange, placeholder='Search' }) => {
 
   return (
     <Searchbar
+      style={{ flex: 1 }}
       ref={searchBarRef}
       placeholder={placeholder}
       onChangeText={onChange}
