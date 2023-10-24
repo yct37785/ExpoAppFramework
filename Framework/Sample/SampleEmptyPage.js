@@ -32,7 +32,7 @@ export default function SampleEmptyPage({ navigation, route }) {
         </Appbar.Content>
       </Appbar.Header>
       {/* main content here */}
-      <View style={{ width: '100%', flex: 1, padding: padSize }}>
+      <View style={{ flex: 1, padding: padSize }}>
         <Text variant="bodyMedium">{`paramText: ${paramText}`}</Text>
       </View>
     </View>
