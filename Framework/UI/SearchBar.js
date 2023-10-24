@@ -9,7 +9,13 @@ import BigList from 'react-native-big-list';
 /**
  * search bar component
  */
-export const SearchBarComp = ({ value, onChange, placeholder='Search' }) => {
+export const SearchBarComp = ({
+  value,
+  onChange,
+  placeholder='Search',
+  onFocus=()=>{},
+  onBlur=()=>{}
+}) => {
   const searchBarRef = useRef();
 
   useEffect(() => {
@@ -27,6 +33,8 @@ export const SearchBarComp = ({ value, onChange, placeholder='Search' }) => {
       ref={searchBarRef}
       placeholder={placeholder}
       onChangeText={onChange}
+      onFocus={onFocus}
+      onBlur={onBlur}
       value={value}
     />
   );
