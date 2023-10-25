@@ -76,9 +76,10 @@ export default function SampleSearchPage({ navigation, route }) {
     return (
       <View style={{ width: '100%', padding: padSize, paddingHorizontal: padSize2 }}>
         <Text variant='labelSmall'>Materials</Text>
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingTop: padSize05 }}>
           {Object.keys(materialsSelected).map((mat) => {
-            return <Chip key={mat} selected={materialsSelected[mat]} showSelectedCheck={true} style={{ margin: padSize05 }}
+            return <Chip key={mat} selected={materialsSelected[mat]} showSelectedCheck={false} mode='outlined'
+              style={{ margin: padSize05, backgroundColor: materialsSelected[mat] ? theme.colors.primaryContainer : theme.colors.backdrop }}
               onPress={() => onMaterialChipSelected(mat)}>{mat}</Chip>
           })}
         </View>
