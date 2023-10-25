@@ -7,6 +7,7 @@ import {
 } from 'react-native-paper';
 import { MaterialIcons, Ionicons } from '@expo/vector-icons'; 
 import { CollapsibleComp, AccordionComp } from '../UI/Collapsible';
+import { ChipsComp } from '../UI/Options';
 import { SearchBarComp, SearchableBigListComp, SearchableFlatListComp, highlightSearchText } from '../UI/SearchBar';
 // data
 import { DataContext } from '../Common/DataContext';
@@ -76,23 +77,17 @@ export default function SampleSearchPage({ navigation, route }) {
     return (
       <View style={{ width: '100%', padding: padSize, paddingHorizontal: padSize2 }}>
         <Text variant='labelSmall'>Materials</Text>
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingTop: padSize05 }}>
-          {Object.keys(materialsSelected).map((mat) => {
-            return <Chip key={mat} selected={materialsSelected[mat]} showSelectedCheck={false} mode='outlined'
-              style={{ margin: padSize05, backgroundColor: materialsSelected[mat] ? theme.colors.primaryContainer : theme.colors.backdrop }}
-              onPress={() => onMaterialChipSelected(mat)}>{mat}</Chip>
-          })}
-        </View>
+        <ChipsComp toggledMap={materialsSelected} onChipSelected={onMaterialChipSelected} />
       </View>
     );
   });
 
-  const onMaterialChipSelected = (mat) => {
+  const onMaterialChipSelected = useCallback((mat) => {
     if (mat in materialsSelected) {
       materialsSelected[mat] = !materialsSelected[mat];
       setMaterialsSelected({ ...materialsSelected });
     }
-  };
+  }, [materialsSelected]);
 
   /**------------------------------------------------------------------------------------*
    * List
