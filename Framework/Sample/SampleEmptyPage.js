@@ -16,7 +16,6 @@ export default function SampleEmptyPage({ navigation, route }) {
    * State
    *------------------------------------------------------------------------------------*/
   const theme = useTheme();
-  const searchBarRef = useRef();
   const { userData, setUserData } = React.useContext(DataContext);
   const { paramText } = route.params;
 

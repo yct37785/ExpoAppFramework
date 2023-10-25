@@ -11,7 +11,7 @@ import { DataContext } from '../Common/DataContext';
 // const
 export const SAMPLE_PAGES = {
   tabs: "tabs example",
-  sample: "sample example",
+  menus: "menus example",
   empty: "empty example",
   search: "search example",
 };

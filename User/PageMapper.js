@@ -4,14 +4,14 @@
  */
 import SampleHomePage from '../Framework/Sample/SampleHomePage';
 import SampleTabsPage from '../Framework/Sample/SampleTabsPage';
-import SamplePage from '../Framework/Sample/SamplePage';
+import SampleMenusPage from '../Framework/Sample/SampleMenusPage';
 import SampleEmptyPage from '../Framework/Sample/SampleEmptyPage';
 import SampleSearchPage from '../Framework/Sample/SampleSearchPage';
 
 export const screenMaps = {
   home: SampleHomePage,
   tabs: SampleTabsPage,
-  sample: SamplePage,
+  menus: SampleMenusPage,
   empty: SampleEmptyPage,
   search: SampleSearchPage
 };

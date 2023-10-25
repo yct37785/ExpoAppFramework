@@ -6,12 +6,10 @@ import {
   useTheme, Text, Card, Button, Appbar,
   TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
 } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Dialog from '../UI/Dialog';
 import Picker from '../UI/Picker';
 import DropdownMenu from '../UI/DropdownMenu';
 import DropdownCheckMenu from '../UI/DropdownCheckMenu';
-import TabBar from '../UI/TabBar';
 // data
 import { DataContext } from '../Common/DataContext';
 // const
@@ -25,16 +23,11 @@ const DROPDOWN_ITEM_LIST = [
   { label: 'Something', value: 'something' },
   { label: 'Delete', value: 'delete', color: 'red' },
 ];
-export const TAB_ROUTES = [
-  { title: 'Page 1', key: 'p1', icon: 'google-street-view' },
-  { title: 'Page 2', key: 'p2', icon: 'camera' },
-  { title: 'Page 3', key: 'p3', icon: 'palm-tree' },
-];
 
 /**
- * Display sample page
+ * Display sample menus page
  */
-export default function SamplePage({ navigation, route }) {
+export default function SampleMenusPage({ navigation, route }) {
   /**------------------------------------------------------------------------------------*
    * State
    *------------------------------------------------------------------------------------*/
@@ -43,8 +36,6 @@ export default function SamplePage({ navigation, route }) {
   const { userData, setUserData } = React.useContext(DataContext);
   const [showDialog, setShowDialog] = useState(false);
   const [pickerSelection, setPickerSelection] = useState('red');
-  const [query, setQuery] = useState('');
-  const [tabIndex, setTabIndex] = useState(0);
 
   /**------------------------------------------------------------------------------------*
    * Init
@@ -89,26 +80,6 @@ export default function SamplePage({ navigation, route }) {
   }
 
   /**------------------------------------------------------------------------------------*
-   * Tabbar
-   *------------------------------------------------------------------------------------*/
-  function renderIcon({ route, focused, color }) {
-    return <Icon name={route.icon} size={15} color={theme.colors.text} />
-  }
-
-  const renderScene = ({ route }) => {
-    switch (route.key) {
-      case 'p1':
-        return <View style={{ width: '100%', height: 200, backgroundColor: 'green' }}><Text>P1</Text></View>
-      case 'p2':
-        return <View style={{ width: '100%', height: 200, backgroundColor: 'blue' }}><Text>P2</Text></View>
-      case 'p3':
-        return <View style={{ width: '100%', height: 200, backgroundColor: 'yellow' }}><Text>P3</Text></View>
-      default:
-        return null;
-    }
-  };
-
-  /**------------------------------------------------------------------------------------*
    * Draw
    *------------------------------------------------------------------------------------*/
   return (
@@ -130,9 +101,8 @@ export default function SamplePage({ navigation, route }) {
       {/* appbar */}
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Title" >
+        <Appbar.Content title="Menus" >
         </Appbar.Content>
-        {/* <Appbar.Action icon="dots-vertical" onPress={() => { }} /> */}
         <DropdownMenu
           triggerComp={<IconButton
             icon="dots-vertical"
@@ -148,36 +118,17 @@ export default function SamplePage({ navigation, route }) {
           options={PICKER_ITEM_LIST}
           onPress={onDropdownCheckMenuSelected} />
       </Appbar.Header>
-      {/* searchbar */}
-      <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', padding: padSize }}>
-        <Searchbar
-          ref={searchBarRef}
-          placeholder={`Search...`}
-          onChangeText={onQuery}
-          autoFocus={false}
-          value={query}
-          style={{ flex: 1, marginRight: padSize05 }}
-        />
-      </View>
       {/* main content here */}
-      <View style={{ width: '100%', flex: 1, padding: padSize }}>
+      <View style={{ padding: padSize }}>
         <Text variant="bodyMedium">Hello world</Text>
-        <View style={{ height: padSize4 }} />
+      </View>
+      <View style={{ padding: padSize }}>
         <Button mode="contained" onPress={() => setShowDialog(true)} style={{ marginBottom: padSize }}>
           Launch dialog
         </Button>
-        <Button mode="contained" onPress={() => navigation.navigate("sample page 2", { paramText: 'hello from SamplePage' })}>
-          Sample Page 2
-        </Button>
-        <View style={{ height: padSize4 }} />
+      </View>
+      <View style={{ padding: padSize }}>
         <Picker value={pickerSelection} options={PICKER_ITEM_LIST} onChange={(v) => setPickerSelection(v)} />
-        <View style={{ height: padSize4 }} />
-        <TabBar
-          routes={TAB_ROUTES}
-          renderIcon={renderIcon}
-          tabIndex={tabIndex}
-          onTabIdxChange={setTabIndex}
-          sceneMap={renderScene} />
       </View>
     </View>
   );
