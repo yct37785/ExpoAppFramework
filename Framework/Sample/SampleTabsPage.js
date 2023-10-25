@@ -74,19 +74,17 @@ export default function SampleTabsPage({ navigation, route }) {
   return (
     <View style={{ width: '100%', flex: 1 }}>
       {/* main content here */}
-      <View style={{ width: '100%', flex: 1, padding: padSize }}>
-        <Appbar.Header>
-          <Appbar.BackAction onPress={() => navigation.goBack()} />
-          <Appbar.Content title="Tabs" >
-          </Appbar.Content>
-        </Appbar.Header>
-        <TabBar
-          routes={TAB_ROUTES}
-          renderIcon={renderIcon}
-          tabIndex={tabIndex}
-          onTabIdxChange={setTabIndex}
-          sceneMap={renderScene} />
-      </View>
+      <Appbar.Header>
+        <Appbar.BackAction onPress={() => navigation.goBack()} />
+        <Appbar.Content title="Tabs" >
+        </Appbar.Content>
+      </Appbar.Header>
+      <TabBar
+        routes={TAB_ROUTES}
+        renderIcon={renderIcon}
+        tabIndex={tabIndex}
+        onTabIdxChange={setTabIndex}
+        sceneMap={renderScene} />
     </View>
   );
 }
