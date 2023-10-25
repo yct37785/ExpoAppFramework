@@ -92,7 +92,7 @@ export default function SampleSearchPage({ navigation, route }) {
   /**------------------------------------------------------------------------------------*
    * List
    *------------------------------------------------------------------------------------*/
-  const filterProducts = (data) => {
+  const filterProducts = useCallback((data) => {
     if (!searchQuery) return data;
     return data.filter(
       (item) => 
@@ -100,7 +100,7 @@ export default function SampleSearchPage({ navigation, route }) {
         item.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.material.toLowerCase().includes(searchQuery.toLowerCase())
     );
-  };
+  }, [searchQuery]);
 
   const ListItem = React.memo(({ item, searchQuery, highlightSearchText }) => {
     return (
@@ -123,7 +123,7 @@ export default function SampleSearchPage({ navigation, route }) {
   });
 
 
-  const renderItem = ({ item, index }) => {
+  const renderItem = useCallback(({ item, index }) => {
     return (
       <ListItem
         item={item}
@@ -131,7 +131,7 @@ export default function SampleSearchPage({ navigation, route }) {
         highlightSearchText={highlightSearchText}
       />
     );
-  };
+  }, [searchQuery]);
 
   /**------------------------------------------------------------------------------------*
    * Draw
