@@ -56,7 +56,7 @@ export default function SampleSearchPage({ navigation, route }) {
       img: faker.image.urlPicsumPhotos(),
       name: faker.commerce.productName(),
       desc: faker.commerce.productDescription(),
-      material: faker.commerce.productMaterial()
+      material: faker.commerce.productMaterial().toLowerCase()
     };
   }
 
@@ -93,14 +93,23 @@ export default function SampleSearchPage({ navigation, route }) {
    * List
    *------------------------------------------------------------------------------------*/
   const filterProducts = useCallback((data) => {
-    if (!searchQuery) return data;
-    return data.filter(
+    let newData = data.slice();
+    // do not filter if no materials selected
+    const allFalse = Object.values(materialsSelected).every((value) => value === false);
+    if (!allFalse) {
+      newData = data.filter((item) =>
+      materialsSelected[item.material]
+    );
+    }
+    // if no query, return as we do not want to filter based on ''
+    if (!searchQuery) return newData;
+    newData = newData.filter(
       (item) => 
         item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.material.toLowerCase().includes(searchQuery.toLowerCase())
+        item.desc.toLowerCase().includes(searchQuery.toLowerCase())
     );
-  }, [searchQuery]);
+    return newData;
+  }, [searchQuery, materialsSelected]);
 
   const ListItem = React.memo(({ item, searchQuery, highlightSearchText }) => {
     return (
@@ -114,7 +123,7 @@ export default function SampleSearchPage({ navigation, route }) {
             }}
             resizeMode={'contain'}
           />
-          {highlightSearchText(item.material, searchQuery, 'labelMedium', 'material: ')}
+          <Text variant='labelMedium'>{`material: ${item.material}`}</Text>
           {highlightSearchText(item.desc, searchQuery, 'bodyMedium')}
         </View>
         <Divider />
