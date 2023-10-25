@@ -3,7 +3,7 @@ import { View, Image, Keyboard } from 'react-native';
 import { borderRad, padSize05, padSize, padSize2, padSize4, iconSizeSmall } from '../Common/Common';
 // UI
 import {
-  useTheme, Text, Button, Appbar, Divider, RadioButton, MD3Colors
+  useTheme, Text, Button, Appbar, Divider, RadioButton, Chip
 } from 'react-native-paper';
 import { MaterialIcons, Ionicons } from '@expo/vector-icons'; 
 import { CollapsibleComp, AccordionComp } from '../UI/Collapsible';
@@ -25,6 +25,7 @@ export default function SampleSearchPage({ navigation, route }) {
   const [listType, setListType] = useState('biglist');
   const [searchQuery, setSearchQuery] = useState('');
   const [productList, setProductList] = useState([]);
+  const [materialsSelected, setMaterialsSelected] = useState({});
   const ROW_HEIGHT = 250;
 
   /**------------------------------------------------------------------------------------*
@@ -40,14 +41,11 @@ export default function SampleSearchPage({ navigation, route }) {
     // generate prod list sample
     const fakeData = faker.helpers.multiple(createRandomProduct, { count: 1000 });
     // generate filters
-    const materials = {};
-    const materialFilter = [];
+    const materialsSelected = {};
     fakeData.map((item) => {
-      if (!(item.material in materials)) {
-        materials[item.material] = 0;
-        materialFilter.push({ label: item.material, value: item.material });
-      }
+      materialsSelected[item.material] = false;
     });
+    setMaterialsSelected(materialsSelected);
     setProductList(fakeData);
   }, []);
 
@@ -76,11 +74,24 @@ export default function SampleSearchPage({ navigation, route }) {
 
   const FilterContent = React.memo(({isCollapsed}) => {
     return (
-      <View style={{ width: '100%', height: 500, backgroundColor: 'yellow' }}>
-        <Text>stuff</Text>
+      <View style={{ width: '100%', padding: padSize, paddingHorizontal: padSize2 }}>
+        <Text variant='labelSmall'>Materials</Text>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+          {Object.keys(materialsSelected).map((mat) => {
+            return <Chip key={mat} selected={materialsSelected[mat]} showSelectedCheck={true} style={{ margin: padSize05 }}
+              onPress={() => onMaterialChipSelected(mat)}>{mat}</Chip>
+          })}
+        </View>
       </View>
     );
   });
+
+  const onMaterialChipSelected = (mat) => {
+    if (mat in materialsSelected) {
+      materialsSelected[mat] = !materialsSelected[mat];
+      setMaterialsSelected({ ...materialsSelected });
+    }
+  };
 
   /**------------------------------------------------------------------------------------*
    * List
