@@ -1,12 +1,13 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, createContext } from 'react';
 import { View, Image, Keyboard } from 'react-native';
-import { borderRad, padSize05, padSize, padSize2, padSize4 } from '../Common/Common';
+import { borderRad, padSize05, padSize, padSize2, padSize4, iconSizeSmall } from '../Common/Common';
 // UI
 import {
-  useTheme, Text, Button, Appbar, Divider, RadioButton, IconButton
+  useTheme, Text, Button, Appbar, Divider, RadioButton, MD3Colors
 } from 'react-native-paper';
+import { MaterialIcons, Ionicons } from '@expo/vector-icons'; 
+import { CollapsibleComp, AccordionComp } from '../UI/Collapsible';
 import { SearchBarComp, SearchableBigListComp, SearchableFlatListComp, highlightSearchText } from '../UI/SearchBar';
-import DropdownCheckMenu from '../UI/DropdownCheckMenu';
 // data
 import { DataContext } from '../Common/DataContext';
 // dev
@@ -24,7 +25,6 @@ export default function SampleSearchPage({ navigation, route }) {
   const [listType, setListType] = useState('biglist');
   const [searchQuery, setSearchQuery] = useState('');
   const [productList, setProductList] = useState([]);
-  const [productFilter, setProductFilter] = useState([]);
   const ROW_HEIGHT = 250;
 
   /**------------------------------------------------------------------------------------*
@@ -62,12 +62,29 @@ export default function SampleSearchPage({ navigation, route }) {
   }
 
   /**------------------------------------------------------------------------------------*
+   * Filter
+   *------------------------------------------------------------------------------------*/
+  const FilterHeader = React.memo(({isCollapsed}) => {
+    return (
+      <View style={{ padding: padSize, paddingLeft: padSize2, flexDirection: 'row', alignItems: 'center' }}>
+        <Text>Filters</Text>
+        {isCollapsed ? <MaterialIcons name='keyboard-arrow-down' color={theme.colors.text} size={iconSizeSmall} style={{ paddingLeft: padSize05 }} /> :
+          <MaterialIcons name='keyboard-arrow-up' color={theme.colors.text} size={iconSizeSmall} style={{ paddingLeft: padSize05 }} />}
+      </View>
+    );
+  });
+
+  const FilterContent = React.memo(({isCollapsed}) => {
+    return (
+      <View style={{ width: '100%', height: 500, backgroundColor: 'yellow' }}>
+        <Text>stuff</Text>
+      </View>
+    );
+  });
+
+  /**------------------------------------------------------------------------------------*
    * List
    *------------------------------------------------------------------------------------*/
-  function onDropdownCheckMenuSelected(value, idx, selected) {
-    console.log('Dropdown check menu selection: ' + JSON.stringify(Object.keys(selected)));
-  }
-
   const filterProducts = (data) => {
     if (!searchQuery) return data;
     return data.filter(
@@ -114,13 +131,24 @@ export default function SampleSearchPage({ navigation, route }) {
    *------------------------------------------------------------------------------------*/
   return (
     <View style={{ width: '100%', flex: 1 }}>
-      {/* main content here */}
+      {/* header and search bar */}
       <Appbar.Header>
         <SearchBarComp
           value={searchQuery}
           onChange={setSearchQuery}
         />
       </Appbar.Header>
+      {/* filter menu */}
+      <CollapsibleComp
+        renderHeader={(isCollapsed) => { return <FilterHeader isCollapsed={isCollapsed} /> }}
+        renderContent={(isCollapsed) => { return <FilterContent isCollapsed={isCollapsed} /> }}
+      />
+      {/* <AccordionComp
+        sections={[0]}
+        renderHeader={renderFilterHeader}
+        renderContent={renderFilterContent}
+      /> */}
+      {/* toggle biglist vs flatlist */}
       <View style={{ flex: 1, padding: padSize }}>
         <View style={{ padding: padSize }}>
           <RadioButton.Group onValueChange={newValue => setListType(newValue)} value={listType}>
@@ -136,6 +164,7 @@ export default function SampleSearchPage({ navigation, route }) {
             </View>
           </RadioButton.Group>
         </View>
+        {/* main content */}
         {listType == 'biglist' ? <SearchableBigListComp
           data={productList}
           filterFunction={filterProducts}
