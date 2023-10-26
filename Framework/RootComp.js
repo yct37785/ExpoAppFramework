@@ -33,8 +33,6 @@ const CombinedDarkTheme = {
     ...DarkTheme.colors,
   },
 };
-// pages
-import { screenMaps, DEFAULT_SCREEN } from '../User/PageMapper';
 // data
 import { ThemePrefContext } from './Common/ThemePrefContext';
 import { DataContext } from './Common/DataContext';
@@ -55,7 +53,7 @@ function ScreenWrapper({ component: Component, ...props }) {
 }
 
 // main
-const RootComp = () => {
+const RootComp = ({ screenMaps, defaultScreen }) => {
   /**------------------------------------------------------------------------------------*
    * State
    *------------------------------------------------------------------------------------*/
@@ -117,7 +115,7 @@ const RootComp = () => {
             <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
               <NavigationContainer theme={theme}>
                 <Stack.Navigator
-                  initialRouteName={DEFAULT_SCREEN}
+                  initialRouteName={defaultScreen}
                   screenOptions={{
                     headerShown: false
                   }}
