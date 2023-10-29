@@ -1,5 +1,5 @@
 import { NEW_USER_DATA } from '../../DefaultValues';
-import { deleteDataAS, getAllKeysAS, readDataAS, WriteDataAS, objToKeyValueArr } from './ASUtils';
+import { deleteDataAS, getAllKeysAS, readDataAS, WriteDataAS, objToKeyValueArr } from '../APIs/AsyncStorageAPI';
 const _ = require('lodash');
 
 /**------------------------------------------------------------------------------------*
