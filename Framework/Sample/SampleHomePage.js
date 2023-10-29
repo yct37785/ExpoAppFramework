@@ -14,6 +14,7 @@ export const SAMPLE_PAGES = {
   menus: "menus example",
   empty: "empty example",
   search: "search example",
+  storage: "storage example",
 };
 
 /**
