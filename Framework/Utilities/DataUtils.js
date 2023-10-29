@@ -1,11 +1,10 @@
-import { NEW_USER_DATA } from '../../DefaultValues';
 import { deleteDataAS, getAllKeysAS, readDataAS, WriteDataAS, objToKeyValueArr } from '../APIs/AsyncStorageAPI';
 const _ = require('lodash');
 
 /**------------------------------------------------------------------------------------*
  * Create new user data
  *------------------------------------------------------------------------------------*/
-async function createNewUserData() {
+async function createNewUserData(NEW_USER_DATA) {
   return new Promise(async (resolve, reject) => {
     try {
       // flatten to key value pairs to save individually as dictated by api
@@ -48,7 +47,7 @@ function checkNested(currObj, templateObj) {
 /**------------------------------------------------------------------------------------*
  * defined key values in DefaultValues.js
  *------------------------------------------------------------------------------------*/
-export async function getLocalUserData() {
+export async function getLocalUserData(NEW_USER_DATA) {
   return new Promise(async (resolve, reject) => {
     try {
       // get all rows
@@ -62,7 +61,7 @@ export async function getLocalUserData() {
       let userData = {};
       // new user, create new user data
       if (allKeys.length === 0) {
-        userData = await createNewUserData();
+        userData = await createNewUserData(NEW_USER_DATA);
       } else {
         // read all keys, even if not part of NEW_USER_DATA
         userData = await readDataAS(allKeys);
@@ -72,28 +71,6 @@ export async function getLocalUserData() {
           await WriteDataAS(objToKeyValueArr(userData));
           console.log('save userData for missing keys');
         }
-      }
-      resolve(userData);
-    } catch(e) {
-      console.log(e);
-      reject(e);
-    }
-  });
-}
-
-/**------------------------------------------------------------------------------------*
- * eg. <ID: value> pairs
- *------------------------------------------------------------------------------------*/
-export async function getLocalUserDynamicData() {
-  return new Promise(async (resolve, reject) => {
-    try {
-      // get all rows
-      let allKeys = await getAllKeysAS();
-      // read data
-      let dynamicData = {};
-      // new user, create new user data
-      if (allKeys.length > 0) {
-        dynamicData = await readDataAS(allKeys.filter(v => !(v in NEW_USER_DATA)));
       }
       resolve(userData);
     } catch(e) {

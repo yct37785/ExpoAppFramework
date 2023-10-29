@@ -53,7 +53,7 @@ function ScreenWrapper({ component: Component, ...props }) {
 }
 
 // main
-const RootComp = ({ screenMaps, defaultScreen }) => {
+const RootComp = ({ screenMaps, DEFAULT_SCREEN, NEW_USER_DATA, APP_NAME }) => {
   /**------------------------------------------------------------------------------------*
    * State
    *------------------------------------------------------------------------------------*/
@@ -99,7 +99,7 @@ const RootComp = ({ screenMaps, defaultScreen }) => {
   }, []);
 
   async function loadUserData() {
-    const newUserData = await getLocalUserData();
+    const newUserData = await getLocalUserData(NEW_USER_DATA);
     setUserData(newUserData);
   }
 
@@ -115,7 +115,7 @@ const RootComp = ({ screenMaps, defaultScreen }) => {
             <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
               <NavigationContainer theme={theme}>
                 <Stack.Navigator
-                  initialRouteName={defaultScreen}
+                  initialRouteName={DEFAULT_SCREEN}
                   screenOptions={{
                     headerShown: false
                   }}
