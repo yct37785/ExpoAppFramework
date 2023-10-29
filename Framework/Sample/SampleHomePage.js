@@ -7,7 +7,7 @@ import {
   TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
 } from 'react-native-paper';
 // data
-import { DataContext } from '../Common/DataContext';
+import { DataContext } from '../Contexts/DataContext';
 // const
 export const SAMPLE_PAGES = {
   tabs: "tabs example",

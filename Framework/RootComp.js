@@ -34,8 +34,8 @@ const CombinedDarkTheme = {
   },
 };
 // data
-import { ThemePrefContext } from './Common/ThemePrefContext';
-import { DataContext } from './Common/DataContext';
+import { ThemePrefContext } from './Contexts/ThemePrefContext';
+import { DataContext } from './Contexts/DataContext';
 
 // temp warning disabling
 LogBox.ignoreLogs(['new NativeEventEmitter']);

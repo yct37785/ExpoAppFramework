@@ -6,7 +6,7 @@ import {
   useTheme, Text, Button, Appbar
 } from 'react-native-paper';
 // data
-import { DataContext } from '../Common/DataContext';
+import { DataContext } from '../Contexts/DataContext';
 
 /**
  * sample empty page

@@ -10,7 +10,7 @@ import { CollapsibleComp, AccordionComp } from '../UI/Collapsible';
 import { ChipsComp } from '../UI/Options';
 import { SearchBarComp, SearchableBigListComp, SearchableFlatListComp, highlightSearchText } from '../UI/SearchBar';
 // data
-import { DataContext } from '../Common/DataContext';
+import { DataContext } from '../Contexts/DataContext';
 // dev
 import { faker } from '@faker-js/faker';
 

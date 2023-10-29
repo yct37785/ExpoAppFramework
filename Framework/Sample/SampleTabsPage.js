@@ -8,7 +8,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import TabBar from '../UI/TabBar';
 // data
-import { DataContext } from '../Common/DataContext';
+import { DataContext } from '../Contexts/DataContext';
 // const
 export const TAB_ROUTES = [
   { title: 'Page 1', key: 'p1', icon: 'google-street-view' },
