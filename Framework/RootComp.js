@@ -5,8 +5,10 @@ import { View, LogBox, Platform, StatusBar } from 'react-native';
 import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme,
   Text } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
-// utils
-import { getLocalUserData } from './Utilities/DataUtils';
+// data
+import { ThemePrefContext } from './Contexts/ThemePrefContext';
+import { LocalDataContext } from './Contexts/LocalDataContext';
+import useLocalDataManager from './Managers/LocalDataManager';
 // deps
 import 'react-native-get-random-values';
 // nav
@@ -33,9 +35,6 @@ const CombinedDarkTheme = {
     ...DarkTheme.colors,
   },
 };
-// data
-import { ThemePrefContext } from './Contexts/ThemePrefContext';
-import { DataContext } from './Contexts/DataContext';
 
 // temp warning disabling
 LogBox.ignoreLogs(['new NativeEventEmitter']);
@@ -58,7 +57,7 @@ const RootComp = ({ screenMaps, DEFAULT_SCREEN, NEW_USER_DATA, APP_NAME }) => {
    * State
    *------------------------------------------------------------------------------------*/
   const [isThemeDark, setIsThemeDark] = useState(true);
-  const [userData, setUserData] = useState(null);
+  const localDataManager = useLocalDataManager({ NEW_USER_DATA });
   let theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme;
 
   /**------------------------------------------------------------------------------------*
@@ -67,10 +66,6 @@ const RootComp = ({ screenMaps, DEFAULT_SCREEN, NEW_USER_DATA, APP_NAME }) => {
   const toggleTheme = useCallback(() => {
     return setIsThemeDark(!isThemeDark);
   }, [isThemeDark]);
-
-  const setUserDataCallback = useCallback((newUserData) => {
-    setUserData(newUserData);
-  }, []);
 
   /**------------------------------------------------------------------------------------*
    * Context objects
@@ -82,33 +77,13 @@ const RootComp = ({ screenMaps, DEFAULT_SCREEN, NEW_USER_DATA, APP_NAME }) => {
     }),
     [toggleTheme, isThemeDark]
   );
-
-  const dataValues = useMemo(
-    () => ({
-      userData,
-      setUserData: setUserDataCallback
-    }),
-    [userData]
-  );
   
-  /**------------------------------------------------------------------------------------*
-   * Init
-   *------------------------------------------------------------------------------------*/
-  useEffect(() => {
-    loadUserData();
-  }, []);
-
-  async function loadUserData() {
-    const newUserData = await getLocalUserData(NEW_USER_DATA);
-    setUserData(newUserData);
-  }
-
   /**------------------------------------------------------------------------------------*
    * Draw
    *------------------------------------------------------------------------------------*/
   return (
     <ThemePrefContext.Provider value={themePref}>
-      <DataContext.Provider value={dataValues}>
+      <LocalDataContext.Provider value={localDataManager}>
         <PaperProvider theme={theme}>
           <MenuProvider>
             {/* <View style={{ flex: 1, backgroundColor: theme.colors.background, paddingTop: Platform.OS == "android" ? StatusBar.currentHeight : 0 }}> */}
@@ -132,7 +107,7 @@ const RootComp = ({ screenMaps, DEFAULT_SCREEN, NEW_USER_DATA, APP_NAME }) => {
             </View>
           </MenuProvider>
         </PaperProvider>
-      </DataContext.Provider>
+      </LocalDataContext.Provider>
     </ThemePrefContext.Provider>
   );
 };
