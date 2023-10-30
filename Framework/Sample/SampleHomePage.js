@@ -7,7 +7,7 @@ import {
   TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
 } from 'react-native-paper';
 // data
-import { DataContext } from '../Contexts/DataContext';
+import { LocalDataContext } from '../Contexts/LocalDataContext';
 // const
 export const SAMPLE_PAGES = {
   tabs: "tabs example",
@@ -25,16 +25,16 @@ export default function SampleHomePage({ navigation, route }) {
    * State
    *------------------------------------------------------------------------------------*/
   const theme = useTheme();
-  const { userData, setUserData } = React.useContext(DataContext);
+  const { localData, setLocalDataValue } = useContext(LocalDataContext);
 
   /**------------------------------------------------------------------------------------*
    * Init
    *------------------------------------------------------------------------------------*/
   useEffect(() => {
-    if (userData) {
-      console.log(JSON.stringify(userData));
+    if (localData) {
+      console.log(JSON.stringify(localData));
     }
-  }, [userData]);
+  }, [localData]);
 
   /**------------------------------------------------------------------------------------*
    * Draw
