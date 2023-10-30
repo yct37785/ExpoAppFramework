@@ -21,10 +21,12 @@ async function createNewUserData(NEW_USER_DATA) {
 }
 
 /**------------------------------------------------------------------------------------*
- * Get all saved words
+ * fixes nested keyvalues
+ * - clones the value if key is previously missing
+ * - WILL NOT delete values if key is no longer defined in schema, this should be
+ * handled separately (i.e. migration patches)
  *------------------------------------------------------------------------------------*/
-// return true if missing found
-function checkNested(currObj, templateObj) {
+function fixNestedKeyValues(currObj, templateObj) {
   if (typeof currObj !== 'object') {
     return false;
   }
@@ -35,7 +37,7 @@ function checkNested(currObj, templateObj) {
       currObj[key] = _.cloneDeep(templateObj[key]);
       hasMissing = true;
     } else {
-      // if nested key is missing
+      // check nested
       if (checkNested(currObj[key], templateObj[key])) {
         hasMissing = true;
       }
@@ -53,10 +55,10 @@ export async function getLocalUserData(NEW_USER_DATA) {
       // get all rows
       let allKeys = await getAllKeysAS();
       // DEBUG ONLY, REMOVE
-      // if (allKeys.length > 0) {
-      //   await deleteDataAS(allKeys);
-      //   allKeys = [];
-      // }
+      if (allKeys.length > 0) {
+        await deleteDataAS(allKeys);
+        allKeys = [];
+      }
       // read data
       let userData = {};
       // new user, create new user data
@@ -66,10 +68,10 @@ export async function getLocalUserData(NEW_USER_DATA) {
         // read all keys, even if not part of NEW_USER_DATA
         userData = await readDataAS(allKeys);
         // check if keys (root/nested) missing, fill in with default values from NEW_USER_DATA
-        const hasMissing = checkNested(userData, NEW_USER_DATA);
+        const hasMissing = fixNestedKeyValues(userData, NEW_USER_DATA);
         if (hasMissing) {
           await WriteDataAS(objToKeyValueArr(userData));
-          console.log('save userData for missing keys');
+          console.log('saved userData for missing keys');
         }
       }
       resolve(userData);

@@ -45,7 +45,7 @@ export default function SampleDataStoragePage({ navigation, route }) {
         <View style={{ padding: padSize }}>
           <Text variant="titleMedium">Modify and save local data</Text>
           <View style={{ marginTop: padSize2, padding: padSize }}>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Button mode="contained" onPress={() => { }} style={{ marginBottom: padSize2, marginRight: padSize2, flex: 1 }}>++trackers_sample.num</Button>
               <View style={{ alignItems: 'flex-start', flex: 1 }}>
                 <Text variant="labelMedium" style={{ marginRight: padSize }}>Toogle dark mode</Text>
