@@ -2,7 +2,8 @@ import { deleteDataAS, getAllKeysAS, readDataAS, WriteDataAS, objToKeyValueArr }
 const _ = require('lodash');
 
 /**------------------------------------------------------------------------------------*
- * Create new user data
+ * Create new user data based on NEW_USER_DATA schema, saved to local storage 
+ * and a deep copy returned
  *------------------------------------------------------------------------------------*/
 async function createNewUserData(NEW_USER_DATA) {
   return new Promise(async (resolve, reject) => {
@@ -47,7 +48,8 @@ function fixNestedKeyValues(currObj, templateObj) {
 }
 
 /**------------------------------------------------------------------------------------*
- * defined key values in DefaultValues.js
+ * get all locally saved data, will create if no data (keys == 0) and fix if a nested
+ * key value pair is missing
  *------------------------------------------------------------------------------------*/
 export async function getLocalUserData(NEW_USER_DATA) {
   return new Promise(async (resolve, reject) => {

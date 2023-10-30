@@ -74,7 +74,7 @@ export default function SampleDataStoragePage({ navigation, route }) {
           <Text variant="titleMedium" style={{ marginBottom: padSize2 }}>Data preview</Text>
           <Card mode='elevated'>
             <Card.Content>
-              <Text variant="bodyMedium">num = 0</Text>
+              <Text variant="bodySmall">{JSON.stringify(userData, null, 2)}</Text>
             </Card.Content>
           </Card>
         </View>

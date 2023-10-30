@@ -6,8 +6,14 @@
  * Save data
  *------------------------------------------------------------------------------------*/
 export const NEW_USER_DATA = {
-  trackers_sample: {},
-  settings_sample: {}
+  trackers_sample: {
+    key1: {
+      num: 0
+    }
+  },
+  settings_sample: {
+    isDarkMode: true
+  }
 };
 
 /**------------------------------------------------------------------------------------*
