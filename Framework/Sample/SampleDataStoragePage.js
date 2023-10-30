@@ -37,7 +37,7 @@ export default function SampleDataStoragePage({ navigation, route }) {
       {/* appbar */}
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Empty" >
+        <Appbar.Content title="Data Storage" >
         </Appbar.Content>
       </Appbar.Header>
       {/* main content here */}
@@ -45,24 +45,27 @@ export default function SampleDataStoragePage({ navigation, route }) {
         <View style={{ padding: padSize }}>
           <Text variant="titleMedium">Modify and save local data</Text>
           <View style={{ marginTop: padSize2, padding: padSize }}>
-            <Button icon="cookie" mode="contained" onPress={() => { }} style={{ marginBottom: padSize2 }}>trackers_sample.num + 1</Button>
-            <View style={{ marginBottom: padSize2 }}>
-              <TextInput
-                label="trackers_sample.string"
-                value={sampleUserInput}
-                onChangeText={text => setSampleUserInput(text)}
-              />
-            </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text variant="labelMedium" style={{ marginRight: padSize }}>Toogle dark mode</Text>
-              <Switch value={false} onValueChange={() => { }} />
+            <View style={{ flexDirection: 'row' }}>
+              <Button mode="contained" onPress={() => { }} style={{ marginBottom: padSize2, marginRight: padSize2, flex: 1 }}>++trackers_sample.num</Button>
+              <View style={{ alignItems: 'flex-start', flex: 1 }}>
+                <Text variant="labelMedium" style={{ marginRight: padSize }}>Toogle dark mode</Text>
+                <Switch value={false} onValueChange={() => { }} />
+              </View>
             </View>
           </View>
         </View>
         <Divider />
         <View style={{ padding: padSize }}>
-          <Text variant="titleMedium">Danger zone</Text>
+          <Text variant="titleMedium">Change data schema</Text>
           <View style={{ marginTop: padSize2, padding: padSize }}>
+            <View style={{ flexDirection: 'row' }}>
+              <Button mode="contained" onPress={() => { }} style={{ marginBottom: padSize2, flex: 1, marginRight: padSize2 }}>+ nested data</Button>
+              <Button mode="contained" onPress={() => { }} style={{ marginBottom: padSize2, flex: 1 }}>- nested data</Button>
+            </View>
+            <View style={{ flexDirection: 'row' }}>
+              <Button mode="contained" onPress={() => { }} style={{ marginBottom: padSize2, flex: 1, marginRight: padSize2 }}>+ root data</Button>
+              <Button mode="contained" onPress={() => { }} style={{ marginBottom: padSize2, flex: 1 }}>- root data</Button>
+            </View>
             <Button icon="trash-can" mode="contained" onPress={() => { }} style={{ marginBottom: padSize2 }}>delete data completely</Button>
           </View>
         </View>
@@ -71,13 +74,7 @@ export default function SampleDataStoragePage({ navigation, route }) {
           <Text variant="titleMedium" style={{ marginBottom: padSize2 }}>Data preview</Text>
           <Card mode='elevated'>
             <Card.Content>
-              <Text variant="titleMedium">trackers_sample</Text>
               <Text variant="bodyMedium">num = 0</Text>
-              <Text variant="bodyMedium">string = ""</Text>
-            </Card.Content>
-            <Card.Content>
-              <Text variant="titleMedium">settings_sample</Text>
-              <Text variant="bodyMedium">isDarkMode = true</Text>
             </Card.Content>
           </Card>
         </View>
