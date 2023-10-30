@@ -6,7 +6,7 @@ import {
   useTheme, Text, Button, Appbar, Divider, Switch, TextInput, Card
 } from 'react-native-paper';
 // data
-import { DataContext } from '../Contexts/DataContext';
+import { LocalDataContext } from '../Contexts/LocalDataContext';
 
 /**
  * sample local data storage showcase page
@@ -16,7 +16,7 @@ export default function SampleDataStoragePage({ navigation, route }) {
    * State
    *------------------------------------------------------------------------------------*/
   const theme = useTheme();
-  const { userData, setUserData } = React.useContext(DataContext);
+  const { localData, setLocalDataValue } = useContext(LocalDataContext);
   const { paramText } = route.params;
   const [sampleUserInput, setSampleUserInput] = useState("");
 
@@ -24,10 +24,10 @@ export default function SampleDataStoragePage({ navigation, route }) {
    * Init
    *------------------------------------------------------------------------------------*/
   useEffect(() => {
-    if (userData) {
-      console.log(JSON.stringify(userData));
+    if (localData) {
+      console.log(JSON.stringify(localData));
     }
-  }, [userData]);
+  }, [localData]);
 
   /**------------------------------------------------------------------------------------*
    * Draw

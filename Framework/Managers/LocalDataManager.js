@@ -123,7 +123,7 @@ const useLocalDataManager = ({ NEW_USER_DATA }) => {
     }
   };
 
-  return { setLocalDataValue };
+  return { localData: { ...data }, setLocalDataValue };
 };
 
 export default useLocalDataManager;
