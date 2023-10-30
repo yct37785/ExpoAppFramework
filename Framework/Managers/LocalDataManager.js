@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { deleteDataAS, getAllKeysAS, readDataAS, WriteDataAS, objToKeyValueArr } from '../APIs/AsyncStorageAPI';
+import { deleteDataAS, getAllKeysAS, readDataAS, writeDataAS, objToKeyValueArr } from '../APIs/AsyncStorageAPI';
 const _ = require('lodash');
 
 

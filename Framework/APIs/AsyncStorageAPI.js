@@ -51,7 +51,7 @@ export async function getAllKeysAS() {
  * Write data
  * param keyValueList: [ [ key: str, value: str ] ]
  */
-export async function WriteDataAS(keyValueList) {
+export async function writeDataAS(keyValueList) {
   try {
     if (keyValueList.length > 0) {
       await AsyncStorage.multiSet(keyValueList);
