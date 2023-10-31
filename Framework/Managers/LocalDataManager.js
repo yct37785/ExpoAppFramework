@@ -48,10 +48,10 @@ async function getLocalUserData(NEW_USER_DATA) {
     let allKeys = await getAllKeysAS();
     
     // DEBUG ONLY, REMOVE
-    if (allKeys.length > 0) {
-      await deleteDataAS(allKeys);
-      allKeys = [];
-    }
+    // if (allKeys.length > 0) {
+    //   await deleteDataAS(allKeys);
+    //   allKeys = [];
+    // }
 
     if (allKeys.length === 0) {
       return await createNewUserData(NEW_USER_DATA);
@@ -127,7 +127,30 @@ const useLocalDataManager = ({ NEW_USER_DATA }) => {
     await writeDataAS(toUpdate);
   };
 
-  return { updateCount, setLocalDataValue };
+  /**----------------------------------------------------------------------------------*
+   * get value from key
+   * - key: "level1.level2.level3"
+   *----------------------------------------------------------------------------------*/
+  const getLocalDataValue = (keyString) => {
+    const keys = keyString.split('.');
+    let currentLevel = data;
+
+    for (const key of keys) {
+      if (currentLevel[key] === undefined) return undefined; 
+      currentLevel = currentLevel[key];
+    }
+
+    return currentLevel;
+  };
+
+  /**----------------------------------------------------------------------------------*
+   * get data in JSON string format
+   *----------------------------------------------------------------------------------*/
+  const getLocalDataStringify = () => {
+    return JSON.stringify(data, null, 2);
+  };
+
+  return { updateCount, setLocalDataValue, getLocalDataValue, getLocalDataStringify };
 };
 
 export default useLocalDataManager;

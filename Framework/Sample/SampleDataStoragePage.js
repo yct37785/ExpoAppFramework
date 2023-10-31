@@ -16,7 +16,7 @@ export default function SampleDataStoragePage({ navigation, route }) {
    * State
    *------------------------------------------------------------------------------------*/
   const theme = useTheme();
-  const { updateCount, setLocalDataValue } = useContext(LocalDataContext);
+  const { updateCount, setLocalDataValue, getLocalDataValue, getLocalDataStringify } = useContext(LocalDataContext);
   const { paramText } = route.params;
   const [sampleUserInput, setSampleUserInput] = useState("");
 
@@ -28,6 +28,14 @@ export default function SampleDataStoragePage({ navigation, route }) {
       console.log("SampleDataStoragePage: updated data");
     }
   }, [updateCount]);
+
+  /**------------------------------------------------------------------------------------*
+   * Values
+   *------------------------------------------------------------------------------------*/
+  const updateTrackersSample = () => {
+    const num = getLocalDataValue("trackers_sample.key1.num");
+    setLocalDataValue([["trackers_sample.key1.num", num + 1]]);
+  }
 
   /**------------------------------------------------------------------------------------*
    * Draw
@@ -45,7 +53,7 @@ export default function SampleDataStoragePage({ navigation, route }) {
         <View style={{ padding: padSize }}>
           <Text variant="titleMedium" style={{ marginBottom: padSize }}>Modify and save local data</Text>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: padSize }}>
-            <Button mode="contained" onPress={() => {setLocalDataValue([["trackers_sample.key1.num", 1]])}} style={{ marginRight: padSize2 }}>++trackers_sample.num</Button>
+            <Button mode="contained" onPress={() => updateTrackersSample()} style={{ marginRight: padSize2 }}>++trackers_sample.num</Button>
             <View style={{ alignItems: 'flex-start', flex: 1 }}>
               <Text variant="labelMedium" style={{ marginRight: padSize }}>Toogle dark mode</Text>
               <Switch value={false} onValueChange={() => { }} />
@@ -63,7 +71,7 @@ export default function SampleDataStoragePage({ navigation, route }) {
           <Text variant="titleMedium" style={{ marginBottom: padSize2 }}>Data preview</Text>
           <Card mode='elevated'>
             <Card.Content>
-              {/* <Text variant="bodySmall">{JSON.stringify(localData, null, 2)}</Text> */}
+              <Text variant="bodySmall">{getLocalDataStringify()}</Text>
             </Card.Content>
           </Card>
         </View>

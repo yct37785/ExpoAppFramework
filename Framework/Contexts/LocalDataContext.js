@@ -6,4 +6,6 @@ import React from 'react';
 export const LocalDataContext = React.createContext({
   updateCount: 0,
   setLocalDataValue: () => {},
+  getLocalDataValue: () => {},
+  getLocalDataStringify: () => {},
 });
