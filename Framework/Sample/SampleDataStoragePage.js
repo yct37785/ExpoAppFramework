@@ -41,29 +41,22 @@ export default function SampleDataStoragePage({ navigation, route }) {
         </Appbar.Content>
       </Appbar.Header>
       {/* main content here */}
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, padding: padSize }}>
         <View style={{ padding: padSize }}>
-          <Text variant="titleMedium">Modify and save local data</Text>
-          <View style={{ marginTop: padSize2, padding: padSize }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Button mode="contained" onPress={() => { }} style={{ marginBottom: padSize2, marginRight: padSize2 }}>++trackers_sample.num</Button>
-              <View style={{ alignItems: 'flex-start', flex: 1 }}>
-                <Text variant="labelMedium" style={{ marginRight: padSize }}>Toogle dark mode</Text>
-                <Switch value={false} onValueChange={() => { }} />
-              </View>
+          <Text variant="titleMedium" style={{ marginBottom: padSize }}>Modify and save local data</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: padSize }}>
+            <Button mode="contained" onPress={() => { }} style={{ marginRight: padSize2 }}>++trackers_sample.num</Button>
+            <View style={{ alignItems: 'flex-start', flex: 1 }}>
+              <Text variant="labelMedium" style={{ marginRight: padSize }}>Toogle dark mode</Text>
+              <Switch value={false} onValueChange={() => { }} />
             </View>
           </View>
+          <Button icon="trash-can" mode="contained" onPress={() => { }} style={{ marginBottom: padSize2 }}>delete data completely</Button>
         </View>
         <Divider />
-        <View style={{ padding: padSize }}>
+        <View style={{ padding: padSize, marginBottom: padSize2 }}>
           <Text variant="titleMedium">Change data schema</Text>
-          <View style={{ marginTop: padSize2, padding: padSize }}>
-            <View style={{ flexDirection: 'row', marginBottom: padSize2 }}>
-              <Button mode="contained" onPress={() => { }} style={{ flex: 1, marginRight: padSize2 }}>+ nested data</Button>
-              <Button mode="contained" onPress={() => { }} style={{ flex: 1 }}>+ root data</Button>
-            </View>
-            <Button icon="trash-can" mode="contained" onPress={() => { }} style={{ marginBottom: padSize2 }}>delete data completely</Button>
-          </View>
+          <Text variant="bodyMedium">To test: close app, add additional values to schema and restart app</Text>
         </View>
         <Divider />
         <View style={{ padding: padSize }}>
