@@ -58,13 +58,9 @@ export default function SampleDataStoragePage({ navigation, route }) {
         <View style={{ padding: padSize }}>
           <Text variant="titleMedium">Change data schema</Text>
           <View style={{ marginTop: padSize2, padding: padSize }}>
-            <View style={{ flexDirection: 'row' }}>
-              <Button mode="contained" onPress={() => { }} style={{ marginBottom: padSize2, flex: 1, marginRight: padSize2 }}>+ nested data</Button>
-              <Button mode="contained" onPress={() => { }} style={{ marginBottom: padSize2, flex: 1 }}>- nested data</Button>
-            </View>
-            <View style={{ flexDirection: 'row' }}>
-              <Button mode="contained" onPress={() => { }} style={{ marginBottom: padSize2, flex: 1, marginRight: padSize2 }}>+ root data</Button>
-              <Button mode="contained" onPress={() => { }} style={{ marginBottom: padSize2, flex: 1 }}>- root data</Button>
+            <View style={{ flexDirection: 'row', marginBottom: padSize2 }}>
+              <Button mode="contained" onPress={() => { }} style={{ flex: 1, marginRight: padSize2 }}>+ nested data</Button>
+              <Button mode="contained" onPress={() => { }} style={{ flex: 1 }}>+ root data</Button>
             </View>
             <Button icon="trash-can" mode="contained" onPress={() => { }} style={{ marginBottom: padSize2 }}>delete data completely</Button>
           </View>
