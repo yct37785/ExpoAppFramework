@@ -16,7 +16,7 @@ export default function SampleDataStoragePage({ navigation, route }) {
    * State
    *------------------------------------------------------------------------------------*/
   const theme = useTheme();
-  const { updateCount, setLocalDataValue, getLocalDataValue, getLocalDataStringify } = useContext(LocalDataContext);
+  const { updateCount, setLocalDataValue, getLocalDataValue, resetLocalData, getLocalDataStringify } = useContext(LocalDataContext);
   const { paramText } = route.params;
   const [sampleUserInput, setSampleUserInput] = useState("");
 
@@ -59,7 +59,7 @@ export default function SampleDataStoragePage({ navigation, route }) {
               <Switch value={false} onValueChange={() => { }} />
             </View>
           </View>
-          <Button icon="trash-can" mode="contained" onPress={() => { }} style={{ marginBottom: padSize2 }}>delete data completely</Button>
+          <Button icon="refresh" mode="contained" onPress={() => resetLocalData()} style={{ marginBottom: padSize2 }}>reset data completely</Button>
         </View>
         <Divider />
         <View style={{ padding: padSize, marginBottom: padSize2 }}>

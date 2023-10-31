@@ -144,13 +144,25 @@ const useLocalDataManager = ({ NEW_USER_DATA }) => {
   };
 
   /**----------------------------------------------------------------------------------*
+   * reset data based on schema
+   *----------------------------------------------------------------------------------*/
+  const resetLocalData = async () => {
+    let allKeys = await getAllKeysAS();
+    if (allKeys.length > 0) {
+      await deleteDataAS(allKeys);
+    }
+    setData(await createNewUserData(NEW_USER_DATA));
+    setUpdateCount(updateCount + 1);
+  };
+
+  /**----------------------------------------------------------------------------------*
    * get data in JSON string format
    *----------------------------------------------------------------------------------*/
   const getLocalDataStringify = () => {
     return JSON.stringify(data, null, 2);
   };
 
-  return { updateCount, setLocalDataValue, getLocalDataValue, getLocalDataStringify };
+  return { updateCount, setLocalDataValue, getLocalDataValue, resetLocalData, getLocalDataStringify };
 };
 
 export default useLocalDataManager;
