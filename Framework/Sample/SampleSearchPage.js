@@ -22,7 +22,7 @@ export default function SampleSearchPage({ navigation, route }) {
    * State
    *------------------------------------------------------------------------------------*/
   const theme = useTheme();
-  const { localData, setLocalDataValue } = useContext(LocalDataContext);
+  const { updateCount, setLocalDataValue } = useContext(LocalDataContext);
   const [listType, setListType] = useState('biglist');
   const [searchQuery, setSearchQuery] = useState('');
   const [productList, setProductList] = useState([]);
@@ -33,10 +33,11 @@ export default function SampleSearchPage({ navigation, route }) {
    * Init
    *------------------------------------------------------------------------------------*/
   useEffect(() => {
-    if (localData) {
-      console.log(JSON.stringify(localData));
+    if (updateCount) {
+      console.log("SampleSearchPage: updated data");
     }
-  }, [localData]);
+  }, [updateCount]);
+
 
   useEffect(() => {
     // generate prod list sample

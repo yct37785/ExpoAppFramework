@@ -25,16 +25,16 @@ export default function SampleHomePage({ navigation, route }) {
    * State
    *------------------------------------------------------------------------------------*/
   const theme = useTheme();
-  const { localData, setLocalDataValue } = useContext(LocalDataContext);
+  const { updateCount, setLocalDataValue } = useContext(LocalDataContext);
 
   /**------------------------------------------------------------------------------------*
    * Init
    *------------------------------------------------------------------------------------*/
   useEffect(() => {
-    if (localData) {
-      console.log(JSON.stringify(localData));
+    if (updateCount) {
+      console.log("SampleHomePage: updated data");
     }
-  }, [localData]);
+  }, [updateCount]);
 
   /**------------------------------------------------------------------------------------*
    * Draw

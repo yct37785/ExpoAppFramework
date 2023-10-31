@@ -33,7 +33,7 @@ export default function SampleMenusPage({ navigation, route }) {
    *------------------------------------------------------------------------------------*/
   const theme = useTheme();
   const searchBarRef = useRef();
-  const { localData, setLocalDataValue } = useContext(LocalDataContext);
+  const { updateCount, setLocalDataValue } = useContext(LocalDataContext);
   const [showDialog, setShowDialog] = useState(false);
   const [pickerSelection, setPickerSelection] = useState('red');
 
@@ -41,10 +41,10 @@ export default function SampleMenusPage({ navigation, route }) {
    * Init
    *------------------------------------------------------------------------------------*/
   useEffect(() => {
-    if (localData) {
-      console.log(JSON.stringify(localData));
+    if (updateCount) {
+      console.log("SampleMenusPage: updated data");
     }
-  }, [localData]);
+  }, [updateCount]);
 
   /**------------------------------------------------------------------------------------*
    * Keyboard

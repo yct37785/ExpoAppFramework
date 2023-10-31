@@ -74,11 +74,12 @@ async function getLocalUserData(NEW_USER_DATA) {
  * custom hook for managing mutable userData instance and loading/saving to local storage
  *------------------------------------------------------------------------------------*/
 const useLocalDataManager = ({ NEW_USER_DATA }) => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState({}); // will not be exposed to consumers
+  const [updateCount, setUpdateCount] = useState(0);
 
-  /**
+  /**----------------------------------------------------------------------------------*
    * on init will fetch from local storage
-   */
+   *----------------------------------------------------------------------------------*/
   useEffect(() => {
     const fetchData = async () => {
       const storedData = await getLocalUserData(NEW_USER_DATA);
@@ -117,13 +118,16 @@ const useLocalDataManager = ({ NEW_USER_DATA }) => {
     });
 
     setData(updatedData);
+    setUpdateCount(updateCount + 1);
 
+    const toUpdate = [];
     for (let rootKey of rootKeysToUpdate) {
-      await AsyncStorage.setItem(rootKey, JSON.stringify(updatedData[rootKey]));
+      toUpdate.push([rootKey, JSON.stringify(updatedData[rootKey])]);
     }
+    await writeDataAS(toUpdate);
   };
 
-  return { localData: { ...data }, setLocalDataValue };
+  return { updateCount, setLocalDataValue };
 };
 
 export default useLocalDataManager;

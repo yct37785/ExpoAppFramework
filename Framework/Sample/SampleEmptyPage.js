@@ -16,17 +16,17 @@ export default function SampleEmptyPage({ navigation, route }) {
    * State
    *------------------------------------------------------------------------------------*/
   const theme = useTheme();
-  const { localData, setLocalDataValue } = useContext(LocalDataContext);
+  const { updateCount, setLocalDataValue } = useContext(LocalDataContext);
   const { paramText } = route.params;
 
   /**------------------------------------------------------------------------------------*
    * Init
    *------------------------------------------------------------------------------------*/
   useEffect(() => {
-    if (localData) {
-      console.log(JSON.stringify(localData));
+    if (updateCount) {
+      console.log("SampleEmptyPage: updated data");
     }
-  }, [localData]);
+  }, [updateCount]);
 
   /**------------------------------------------------------------------------------------*
    * Draw

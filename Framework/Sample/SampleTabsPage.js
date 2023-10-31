@@ -24,17 +24,17 @@ export default function SampleTabsPage({ navigation, route }) {
    * State
    *------------------------------------------------------------------------------------*/
   const theme = useTheme();
-  const { localData, setLocalDataValue } = useContext(LocalDataContext);
+  const { updateCount, setLocalDataValue } = useContext(LocalDataContext);
   const [tabIndex, setTabIndex] = useState(0);
 
   /**------------------------------------------------------------------------------------*
    * Init
    *------------------------------------------------------------------------------------*/
   useEffect(() => {
-    if (localData) {
-      console.log(JSON.stringify(localData));
+    if (updateCount) {
+      console.log("SampleTabsPage: updated data");
     }
-  }, [localData]);
+  }, [updateCount]);
 
   /**------------------------------------------------------------------------------------*
    * Tabbar
