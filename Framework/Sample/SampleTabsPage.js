@@ -8,7 +8,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import TabBar from '../UI/TabBar';
 // data
-import { DataContext } from '../Common/DataContext';
+import { LocalDataContext } from '../Contexts/LocalDataContext';
 // const
 export const TAB_ROUTES = [
   { title: 'Page 1', key: 'p1', icon: 'google-street-view' },
@@ -24,17 +24,17 @@ export default function SampleTabsPage({ navigation, route }) {
    * State
    *------------------------------------------------------------------------------------*/
   const theme = useTheme();
-  const { userData, setUserData } = React.useContext(DataContext);
+  const { updateCount, setLocalDataValue } = useContext(LocalDataContext);
   const [tabIndex, setTabIndex] = useState(0);
 
   /**------------------------------------------------------------------------------------*
    * Init
    *------------------------------------------------------------------------------------*/
   useEffect(() => {
-    if (userData) {
-      console.log(JSON.stringify(userData));
+    if (updateCount) {
+      console.log("SampleTabsPage: updated data");
     }
-  }, [userData]);
+  }, [updateCount]);
 
   /**------------------------------------------------------------------------------------*
    * Tabbar

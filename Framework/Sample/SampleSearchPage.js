@@ -10,7 +10,7 @@ import { CollapsibleComp, AccordionComp } from '../UI/Collapsible';
 import { ChipsComp } from '../UI/Options';
 import { SearchBarComp, SearchableBigListComp, SearchableFlatListComp, highlightSearchText } from '../UI/SearchBar';
 // data
-import { DataContext } from '../Common/DataContext';
+import { LocalDataContext } from '../Contexts/LocalDataContext';
 // dev
 import { faker } from '@faker-js/faker';
 
@@ -22,7 +22,7 @@ export default function SampleSearchPage({ navigation, route }) {
    * State
    *------------------------------------------------------------------------------------*/
   const theme = useTheme();
-  const { userData, setUserData } = useContext(DataContext);
+  const { updateCount, setLocalDataValue } = useContext(LocalDataContext);
   const [listType, setListType] = useState('biglist');
   const [searchQuery, setSearchQuery] = useState('');
   const [productList, setProductList] = useState([]);
@@ -33,10 +33,11 @@ export default function SampleSearchPage({ navigation, route }) {
    * Init
    *------------------------------------------------------------------------------------*/
   useEffect(() => {
-    if (userData) {
-      console.log(JSON.stringify(userData));
+    if (updateCount) {
+      console.log("SampleSearchPage: updated data");
     }
-  }, [userData]);
+  }, [updateCount]);
+
 
   useEffect(() => {
     // generate prod list sample

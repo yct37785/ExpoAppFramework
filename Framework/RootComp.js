@@ -5,8 +5,9 @@ import { View, LogBox, Platform, StatusBar } from 'react-native';
 import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme,
   Text } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
-// utils
-import { getLocalUserData } from './Utilities/DataUtils';
+// data
+import { LocalDataContext } from './Contexts/LocalDataContext';
+import useLocalDataManager from './Managers/LocalDataManager';
 // deps
 import 'react-native-get-random-values';
 // nav
@@ -33,9 +34,6 @@ const CombinedDarkTheme = {
     ...DarkTheme.colors,
   },
 };
-// data
-import { ThemePrefContext } from './Common/ThemePrefContext';
-import { DataContext } from './Common/DataContext';
 
 // temp warning disabling
 LogBox.ignoreLogs(['new NativeEventEmitter']);
@@ -53,87 +51,54 @@ function ScreenWrapper({ component: Component, ...props }) {
 }
 
 // main
-const RootComp = ({ screenMaps, defaultScreen }) => {
+const RootComp = ({ screenMaps, DEFAULT_SCREEN, NEW_USER_DATA, APP_NAME }) => {
   /**------------------------------------------------------------------------------------*
    * State
    *------------------------------------------------------------------------------------*/
-  const [isThemeDark, setIsThemeDark] = useState(true);
-  const [userData, setUserData] = useState(null);
-  let theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme;
+  const localDataManager = useLocalDataManager({ NEW_USER_DATA });
+  const [theme, setTheme] = useState(CombinedDarkTheme);
 
   /**------------------------------------------------------------------------------------*
-   * Context callbacks
-   *------------------------------------------------------------------------------------*/
-  const toggleTheme = useCallback(() => {
-    return setIsThemeDark(!isThemeDark);
-  }, [isThemeDark]);
-
-  const setUserDataCallback = useCallback((newUserData) => {
-    setUserData(newUserData);
-  }, []);
-
-  /**------------------------------------------------------------------------------------*
-   * Context objects
-   *------------------------------------------------------------------------------------*/
-  const themePref = useMemo(
-    () => ({
-      toggleTheme,
-      isThemeDark,
-    }),
-    [toggleTheme, isThemeDark]
-  );
-
-  const dataValues = useMemo(
-    () => ({
-      userData,
-      setUserData: setUserDataCallback
-    }),
-    [userData]
-  );
-  
-  /**------------------------------------------------------------------------------------*
-   * Init
+   * Theme
    *------------------------------------------------------------------------------------*/
   useEffect(() => {
-    loadUserData();
-  }, []);
-
-  async function loadUserData() {
-    const newUserData = await getLocalUserData();
-    setUserData(newUserData);
-  }
-
+    const isDarkMode = localDataManager.getLocalDataValue("settings_sample.isDarkMode");
+    if (localDataManager.isLocalDataLoaded && (isDarkMode !== (theme === CombinedDarkTheme))) {
+      const newTheme = isDarkMode ? CombinedDarkTheme : CombinedDefaultTheme;
+      console.log("RootComp: toggle dark mode: " + localDataManager.getLocalDataValue("settings_sample.isDarkMode"));
+      setTheme(newTheme);
+    }
+  }, [localDataManager.updateCount, localDataManager.isLocalDataLoaded]);
+  
   /**------------------------------------------------------------------------------------*
    * Draw
    *------------------------------------------------------------------------------------*/
   return (
-    <ThemePrefContext.Provider value={themePref}>
-      <DataContext.Provider value={dataValues}>
-        <PaperProvider theme={theme}>
-          <MenuProvider>
-            {/* <View style={{ flex: 1, backgroundColor: theme.colors.background, paddingTop: Platform.OS == "android" ? StatusBar.currentHeight : 0 }}> */}
-            <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
-              <NavigationContainer theme={theme}>
-                <Stack.Navigator
-                  initialRouteName={defaultScreen}
-                  screenOptions={{
-                    headerShown: false
-                  }}
-                >
-                  {Object.keys(screenMaps).map((key) => (
-                    <Stack.Screen name={key} key={key}>
-                      {(props) => (
-                        <ScreenWrapper {...props} component={screenMaps[key]} extraData={{}} />
-                      )}
-                    </Stack.Screen>
-                  ))}
-                </Stack.Navigator>
-              </NavigationContainer>
-            </View>
-          </MenuProvider>
-        </PaperProvider>
-      </DataContext.Provider>
-    </ThemePrefContext.Provider>
+    <LocalDataContext.Provider value={localDataManager}>
+      <PaperProvider theme={theme}>
+        <MenuProvider>
+          {/* <View style={{ flex: 1, backgroundColor: theme.colors.background, paddingTop: Platform.OS == "android" ? StatusBar.currentHeight : 0 }}> */}
+          <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+            <NavigationContainer theme={theme}>
+              <Stack.Navigator
+                initialRouteName={DEFAULT_SCREEN}
+                screenOptions={{
+                  headerShown: false
+                }}
+              >
+                {Object.keys(screenMaps).map((key) => (
+                  <Stack.Screen name={key} key={key}>
+                    {(props) => (
+                      <ScreenWrapper {...props} component={screenMaps[key]} extraData={{}} />
+                    )}
+                  </Stack.Screen>
+                ))}
+              </Stack.Navigator>
+            </NavigationContainer>
+          </View>
+        </MenuProvider>
+      </PaperProvider>
+    </LocalDataContext.Provider>
   );
 };
 
