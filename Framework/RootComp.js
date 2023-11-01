@@ -6,7 +6,6 @@ import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme
   Text } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
 // data
-import { ThemePrefContext } from './Contexts/ThemePrefContext';
 import { LocalDataContext } from './Contexts/LocalDataContext';
 import useLocalDataManager from './Managers/LocalDataManager';
 // deps
@@ -56,59 +55,47 @@ const RootComp = ({ screenMaps, DEFAULT_SCREEN, NEW_USER_DATA, APP_NAME }) => {
   /**------------------------------------------------------------------------------------*
    * State
    *------------------------------------------------------------------------------------*/
-  const [isThemeDark, setIsThemeDark] = useState(true);
   const localDataManager = useLocalDataManager({ NEW_USER_DATA });
-  let theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme;
+  const [theme, setTheme] = useState(CombinedDarkTheme);
 
   /**------------------------------------------------------------------------------------*
-   * Context callbacks
+   * Theme
    *------------------------------------------------------------------------------------*/
-  const toggleTheme = useCallback(() => {
-    return setIsThemeDark(!isThemeDark);
-  }, [isThemeDark]);
-
-  /**------------------------------------------------------------------------------------*
-   * Context objects
-   *------------------------------------------------------------------------------------*/
-  const themePref = useMemo(
-    () => ({
-      toggleTheme,
-      isThemeDark,
-    }),
-    [toggleTheme, isThemeDark]
-  );
+  useEffect(() => {
+    const newTheme = localDataManager.getLocalDataValue("settings_sample.isDarkMode") ? CombinedDarkTheme : CombinedDefaultTheme;
+    console.log("RootComp: toggle dark mode: " + localDataManager.getLocalDataValue("settings_sample.isDarkMode"));
+    setTheme(newTheme);
+  }, [localDataManager.updateCount]);
   
   /**------------------------------------------------------------------------------------*
    * Draw
    *------------------------------------------------------------------------------------*/
   return (
-    <ThemePrefContext.Provider value={themePref}>
-      <LocalDataContext.Provider value={localDataManager}>
-        <PaperProvider theme={theme}>
-          <MenuProvider>
-            {/* <View style={{ flex: 1, backgroundColor: theme.colors.background, paddingTop: Platform.OS == "android" ? StatusBar.currentHeight : 0 }}> */}
-            <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
-              <NavigationContainer theme={theme}>
-                <Stack.Navigator
-                  initialRouteName={DEFAULT_SCREEN}
-                  screenOptions={{
-                    headerShown: false
-                  }}
-                >
-                  {Object.keys(screenMaps).map((key) => (
-                    <Stack.Screen name={key} key={key}>
-                      {(props) => (
-                        <ScreenWrapper {...props} component={screenMaps[key]} extraData={{}} />
-                      )}
-                    </Stack.Screen>
-                  ))}
-                </Stack.Navigator>
-              </NavigationContainer>
-            </View>
-          </MenuProvider>
-        </PaperProvider>
-      </LocalDataContext.Provider>
-    </ThemePrefContext.Provider>
+    <LocalDataContext.Provider value={localDataManager}>
+      <PaperProvider theme={theme}>
+        <MenuProvider>
+          {/* <View style={{ flex: 1, backgroundColor: theme.colors.background, paddingTop: Platform.OS == "android" ? StatusBar.currentHeight : 0 }}> */}
+          <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+            <NavigationContainer theme={theme}>
+              <Stack.Navigator
+                initialRouteName={DEFAULT_SCREEN}
+                screenOptions={{
+                  headerShown: false
+                }}
+              >
+                {Object.keys(screenMaps).map((key) => (
+                  <Stack.Screen name={key} key={key}>
+                    {(props) => (
+                      <ScreenWrapper {...props} component={screenMaps[key]} extraData={{}} />
+                    )}
+                  </Stack.Screen>
+                ))}
+              </Stack.Navigator>
+            </NavigationContainer>
+          </View>
+        </MenuProvider>
+      </PaperProvider>
+    </LocalDataContext.Provider>
   );
 };
 
