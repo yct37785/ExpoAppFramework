@@ -18,8 +18,6 @@ export default function SampleDataStoragePage({ navigation, route }) {
   const theme = useTheme();
   const { updateCount, setLocalDataValue, getLocalDataValue, resetLocalData, getLocalDataStringify } = useContext(LocalDataContext);
   const { paramText } = route.params;
-  const [sampleUserInput, setSampleUserInput] = useState("");
-  const [isDarkMode, setIsDarkMode] = useState(getLocalDataValue("settings_sample.isDarkMode"));
 
   /**------------------------------------------------------------------------------------*
    * Init
@@ -39,8 +37,7 @@ export default function SampleDataStoragePage({ navigation, route }) {
   }
 
   const toggleDarkMode = () => {
-    setLocalDataValue([["settings_sample.isDarkMode", !isDarkMode]]);
-    setIsDarkMode(!isDarkMode);
+    setLocalDataValue([["settings_sample.isDarkMode", !getLocalDataValue("settings_sample.isDarkMode")]]);
   }
 
   /**------------------------------------------------------------------------------------*
@@ -62,7 +59,7 @@ export default function SampleDataStoragePage({ navigation, route }) {
             <Button mode="contained" onPress={() => updateTrackersSample()} style={{ marginRight: padSize2 }}>++trackers_sample.num</Button>
             <View style={{ alignItems: 'flex-start', flex: 1 }}>
               <Text variant="labelMedium" style={{ marginRight: padSize }}>Toogle dark mode</Text>
-              <Switch value={isDarkMode} onValueChange={() => toggleDarkMode()} />
+              <Switch value={getLocalDataValue("settings_sample.isDarkMode")} onValueChange={() => toggleDarkMode()} />
             </View>
           </View>
           <Button icon="refresh" mode="contained" onPress={() => resetLocalData()} style={{ marginBottom: padSize2 }}>reset data completely</Button>
