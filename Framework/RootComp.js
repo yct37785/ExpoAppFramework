@@ -62,8 +62,9 @@ const RootComp = ({ screenMaps, DEFAULT_SCREEN, NEW_USER_DATA, APP_NAME }) => {
    * Theme
    *------------------------------------------------------------------------------------*/
   useEffect(() => {
-    if (localDataManager.isLocalDataLoaded) {
-      const newTheme = localDataManager.getLocalDataValue("settings_sample.isDarkMode") ? CombinedDarkTheme : CombinedDefaultTheme;
+    const isDarkMode = localDataManager.getLocalDataValue("settings_sample.isDarkMode");
+    if (localDataManager.isLocalDataLoaded && (isDarkMode !== (theme === CombinedDarkTheme))) {
+      const newTheme = isDarkMode ? CombinedDarkTheme : CombinedDefaultTheme;
       console.log("RootComp: toggle dark mode: " + localDataManager.getLocalDataValue("settings_sample.isDarkMode"));
       setTheme(newTheme);
     }
