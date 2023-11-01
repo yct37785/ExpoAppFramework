@@ -62,10 +62,12 @@ const RootComp = ({ screenMaps, DEFAULT_SCREEN, NEW_USER_DATA, APP_NAME }) => {
    * Theme
    *------------------------------------------------------------------------------------*/
   useEffect(() => {
-    const newTheme = localDataManager.getLocalDataValue("settings_sample.isDarkMode") ? CombinedDarkTheme : CombinedDefaultTheme;
-    console.log("RootComp: toggle dark mode: " + localDataManager.getLocalDataValue("settings_sample.isDarkMode"));
-    setTheme(newTheme);
-  }, [localDataManager.updateCount]);
+    if (localDataManager.isLocalDataLoaded) {
+      const newTheme = localDataManager.getLocalDataValue("settings_sample.isDarkMode") ? CombinedDarkTheme : CombinedDefaultTheme;
+      console.log("RootComp: toggle dark mode: " + localDataManager.getLocalDataValue("settings_sample.isDarkMode"));
+      setTheme(newTheme);
+    }
+  }, [localDataManager.updateCount, localDataManager.isLocalDataLoaded]);
   
   /**------------------------------------------------------------------------------------*
    * Draw

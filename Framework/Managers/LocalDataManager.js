@@ -75,6 +75,7 @@ async function getLocalUserData(NEW_USER_DATA) {
  *------------------------------------------------------------------------------------*/
 const useLocalDataManager = ({ NEW_USER_DATA }) => {
   const [data, setData] = useState({}); // will not be exposed to consumers
+  const [isLocalDataLoaded, setIsLocalDataLoaded] = useState(false);
   const [updateCount, setUpdateCount] = useState(0);
 
   /**----------------------------------------------------------------------------------*
@@ -85,6 +86,7 @@ const useLocalDataManager = ({ NEW_USER_DATA }) => {
       const storedData = await getLocalUserData(NEW_USER_DATA);
       if (storedData) {
         setData(storedData);
+        setIsLocalDataLoaded(true);
       }
     };
     fetchData();
@@ -162,7 +164,7 @@ const useLocalDataManager = ({ NEW_USER_DATA }) => {
     return JSON.stringify(data, null, 2);
   };
 
-  return { updateCount, setLocalDataValue, getLocalDataValue, resetLocalData, getLocalDataStringify };
+  return { updateCount, isLocalDataLoaded, setLocalDataValue, getLocalDataValue, resetLocalData, getLocalDataStringify };
 };
 
 export default useLocalDataManager;
