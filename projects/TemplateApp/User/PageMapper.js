@@ -2,7 +2,7 @@
  * include any pages here by importing and including in screenMaps (feel free to remove the sample pages)
  * define default page under DEFAULT_SCREEN, value must match respective key in screenMaps
  */
-import SampleHomePage from '@expo-app-framework/framework/Sample/SampleHomePage';
+import SampleHomePage from '../Pages/SampleHomePage';
 // import SampleTabsPage from '../Framework/Sample/SampleTabsPage';
 // import SampleMenusPage from '../Framework/Sample/SampleMenusPage';
 // import SampleEmptyPage from '../Framework/Sample/SampleEmptyPage';

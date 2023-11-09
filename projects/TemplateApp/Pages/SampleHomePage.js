@@ -1,13 +1,13 @@
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { View, Keyboard } from 'react-native';
-import { borderRad, padSize05, padSize, padSize2, padSize4 } from '../Common/Common';
+import { borderRad, padSize05, padSize, padSize2, padSize4 } from '@expo-app-framework/framework/Common/Common';
 // UI
 import {
   useTheme, Text, Card, Button, Appbar,
   TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
 } from 'react-native-paper';
 // data
-import { LocalDataContext } from '../Contexts/LocalDataContext';
+import { LocalDataContext } from '@expo-app-framework/framework/Contexts/LocalDataContext';
 // const
 export const SAMPLE_PAGES = {
   tabs: "tabs example",
