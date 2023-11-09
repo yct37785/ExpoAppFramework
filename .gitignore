@@ -154,3 +154,8 @@ lerna-debug.log*
 # Ignore OS generated files
 .DS_Store
 Thumbs.db
+
+# Custom rules for projects directory
+/projects/*
+!/projects/Framework/
+!/projects/TemplateApp/
