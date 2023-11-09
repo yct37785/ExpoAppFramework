@@ -3,19 +3,19 @@
  * define default page under DEFAULT_SCREEN, value must match respective key in screenMaps
  */
 import SampleHomePage from '../Pages/SampleHomePage';
-// import SampleTabsPage from '../Framework/Sample/SampleTabsPage';
-// import SampleMenusPage from '../Framework/Sample/SampleMenusPage';
-// import SampleEmptyPage from '../Framework/Sample/SampleEmptyPage';
-// import SampleSearchPage from '../Framework/Sample/SampleSearchPage';
-// import SampleDataStoragePage from '../Framework/Sample/SampleDataStoragePage';
+import SampleTabsPage from '../Pages/SampleTabsPage';
+import SampleMenusPage from '../Pages/SampleMenusPage';
+import SampleEmptyPage from '../Pages/SampleEmptyPage';
+//import SampleSearchPage from '../Pages/SampleSearchPage';
+import SampleDataStoragePage from '../Pages/SampleDataStoragePage';
 
 export const screenMaps = {
   home: SampleHomePage,
-  // tabs: SampleTabsPage,
-  // menus: SampleMenusPage,
-  // empty: SampleEmptyPage,
-  // search: SampleSearchPage,
-  // storage: SampleDataStoragePage
+  tabs: SampleTabsPage,
+  menus: SampleMenusPage,
+  empty: SampleEmptyPage,
+  //search: SampleSearchPage,
+  storage: SampleDataStoragePage
 };
 
 export const DEFAULT_SCREEN = 'home';

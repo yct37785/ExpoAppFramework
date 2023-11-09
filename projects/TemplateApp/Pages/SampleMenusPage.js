@@ -1,17 +1,17 @@
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { View, Keyboard } from 'react-native';
-import { borderRad, padSize05, padSize, padSize2, padSize4 } from '../Common/Common';
+import { borderRad, padSize05, padSize, padSize2, padSize4 } from '@expo-app-framework/framework/Common/Common';
 // UI
 import {
   useTheme, Text, Card, Button, Appbar,
   TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
 } from 'react-native-paper';
-import Dialog from '../UI/Dialog';
-import Picker from '../UI/Picker';
-import DropdownMenu from '../UI/DropdownMenu';
-import DropdownCheckMenu from '../UI/DropdownCheckMenu';
+import Dialog from '@expo-app-framework/framework/UI/Dialog';
+import Picker from '@expo-app-framework/framework/UI/Picker';
+import DropdownMenu from '@expo-app-framework/framework/UI/DropdownMenu';
+import DropdownCheckMenu from '@expo-app-framework/framework/UI/DropdownCheckMenu';
 // data
-import { LocalDataContext } from '../Contexts/LocalDataContext';
+import { LocalDataContext } from '@expo-app-framework/framework/Contexts/LocalDataContext';
 // const
 const PICKER_ITEM_LIST = [
   { label: 'Red', value: 'red' },

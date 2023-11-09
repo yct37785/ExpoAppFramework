@@ -1,16 +1,16 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, createContext } from 'react';
 import { View, Image, Keyboard } from 'react-native';
-import { borderRad, padSize05, padSize, padSize2, padSize4, iconSizeSmall } from '../Common/Common';
+import { borderRad, padSize05, padSize, padSize2, padSize4, iconSizeSmall } from '@expo-app-framework/framework/Common/Common';
 // UI
 import {
   useTheme, Text, Button, Appbar, Divider, RadioButton, Chip
 } from 'react-native-paper';
 import { MaterialIcons, Ionicons } from '@expo/vector-icons'; 
-import { CollapsibleComp, AccordionComp } from '../UI/Collapsible';
-import { ChipsComp } from '../UI/Options';
-import { SearchBarComp, SearchableBigListComp, SearchableFlatListComp, highlightSearchText } from '../UI/SearchBar';
+import { CollapsibleComp, AccordionComp } from '@expo-app-framework/framework/UI/Collapsible';
+import { ChipsComp } from '@expo-app-framework/framework/UI/Options';
+import { SearchBarComp, SearchableBigListComp, SearchableFlatListComp, highlightSearchText } from '@expo-app-framework/framework/UI/SearchBar';
 // data
-import { LocalDataContext } from '../Contexts/LocalDataContext';
+import { LocalDataContext } from '@expo-app-framework/framework/Contexts/LocalDataContext';
 // dev
 import { faker } from '@faker-js/faker';
 

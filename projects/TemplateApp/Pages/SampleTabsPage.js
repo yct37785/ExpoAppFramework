@@ -1,14 +1,14 @@
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { View, Keyboard } from 'react-native';
-import { borderRad, padSize05, padSize, padSize2, padSize4 } from '../Common/Common';
+import { borderRad, padSize05, padSize, padSize2, padSize4 } from '@expo-app-framework/framework/Common/Common';
 // UI
 import {
   useTheme, Text, Button, Appbar
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import TabBar from '../UI/TabBar';
+import TabBar from '@expo-app-framework/framework/UI/TabBar';
 // data
-import { LocalDataContext } from '../Contexts/LocalDataContext';
+import { LocalDataContext } from '@expo-app-framework/framework/Contexts/LocalDataContext';
 // const
 export const TAB_ROUTES = [
   { title: 'Page 1', key: 'p1', icon: 'google-street-view' },
