@@ -1,5 +1,5 @@
 {
-  "name": "template-app",
+  "name": "@expo-app-framework/template-app",
   "version": "1.0.0",
   "main": "./AppEntry.js",
   "scripts": {
