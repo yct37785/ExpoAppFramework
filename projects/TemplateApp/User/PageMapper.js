@@ -6,7 +6,7 @@ import SampleHomePage from '../Pages/SampleHomePage';
 import SampleTabsPage from '../Pages/SampleTabsPage';
 import SampleMenusPage from '../Pages/SampleMenusPage';
 import SampleEmptyPage from '../Pages/SampleEmptyPage';
-//import SampleSearchPage from '../Pages/SampleSearchPage';
+import SampleSearchPage from '../Pages/SampleSearchPage';
 import SampleDataStoragePage from '../Pages/SampleDataStoragePage';
 
 export const screenMaps = {
@@ -14,7 +14,7 @@ export const screenMaps = {
   tabs: SampleTabsPage,
   menus: SampleMenusPage,
   empty: SampleEmptyPage,
-  //search: SampleSearchPage,
+  search: SampleSearchPage,
   storage: SampleDataStoragePage
 };
 
