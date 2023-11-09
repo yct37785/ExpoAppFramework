@@ -1,0 +1,7 @@
+{
+  "name": "expo-app-framework",
+  "private": true,
+  "workspaces": [
+    "projects/*"
+  ]
+}
