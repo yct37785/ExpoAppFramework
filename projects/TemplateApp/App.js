@@ -1,20 +1,13 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+// change to import RootComp from '../<expo-sample-app-folder>/Framework/RootComp';
+import RootComp from './Framework/RootComp';
+import { screenMaps, DEFAULT_SCREEN } from './User/PageMapper';
+import { NEW_USER_DATA, APP_NAME } from './User/Schemas';
 
-export default function App() {
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <RootComp screenMaps={screenMaps} defaultScreen={DEFAULT_SCREEN} NEW_USER_DATA={NEW_USER_DATA} APP_NAME={APP_NAME} />
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
