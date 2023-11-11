@@ -92,142 +92,75 @@ The TemplateApp project is structured as follows:
 
 **app.json:** Change the values under `expo.name`, `expo.slug` and any other app project specific values as you see fit
 
+**package.json:** Install any app specific dependencies here
+
 ## Setup
-### Initialize the monorepo
+### Setup monorepo
+Clone the repo and enter the monorepo root
 
 ````bash
-mkdir my-monorepo && cd my-monorepo
-yarn init -y
+git clone git@github.com:yct37785/ExpoAppFramework.git
+cd ExpoAppFramework
 ````
 
-### Configure Yarn Workspaces in root
-In root, create the root `packages.json` :
-
-````json
-{
-	"name": "my-monorepo",
-	"private": true,
-	"workspaces":  [
-		"packages/*"
-	]
-}
-````
-
-The `"private": true` is important because it prevents the root of your monorepo from being accidentally published to npm.
-
-### Create ProjectA (your component)
-Within your monorepo, create a packages directory where each package will live:
+Run `yarn` to install dependencies:
 
 ````bash
-mkdir packages && cd packages
-````
-
-Now create ProjectA:
-
-````bash
-mkdir ProjectA && cd ProjectA
-yarn init -y
-````
-
-Within ProjectA, create its own package.json, we will have `lodash` as a dependency for ProjectA:
-
-````json
-{
-	"name": "@my-monorepo/project-a",
-	"version": "1.0.0",
-	"main": "index.js",
-	"license": "MIT",
-	"dependencies":  {
-		"lodash": "^4.17.21"
-	}
-}
-````
-
-And the corresponding `index.js` file with a simple export:
-
-````javascript
-const _ = require('lodash');
-
-const componentA = () => {
-	console.log('This is component A with Lodash version:', _.VERSION);
-};
-
-module.exports = componentA;
-````
-
-### Create ProjectB (your app)
-Create corresponding ProjectB back in the packages folder:
-
-````bash
-cd..
-mkdir ProjectB && cd ProjectB
-yarn init -y
-````
-
-Create the `package.json` for ProjectB:
-
-````json
-{
-	"name": "@my-monorepo/project-b",
-	"version": "1.0.0",
-	"main": "index.js",
-	"license": "MIT",
-	"dependencies":  {
-		"@my-monorepo/project-a": "1.0.0",
-		"axios": "^1.6.1"
-	}
-}
-````
-
-ProjectA is linked here as a dependency as seen above. `Axios` is a dependency used only by ProjectB.
-
-Create `index.js` for projectB that uses the component exported from ProjectA:
-
-````javascript
-const componentA = require('@my-monorepo/project-a');
-const axios = require('axios');
-
-componentA();
-
-axios.get('https://api.github.com/users/github')
- 	.then(response => {
-		console.log(response.data);
-	})
-	.catch(error => {
-		console.log(error);
-	});
-````
-
-### Install dependencies
-We will install dependencies in the root with the yarn managed root `package.json`.
-
-Yarn will now install all dependencies in the root node_modules, linking projectA within projectB's node_modules:
-
-````bash
-cd ../../
 yarn
 ````
 
-## Run
-All dependencies are now managed in the root of the Monorepo. You will hence run each of your projects individually from the packages folder.
-
-To run Project B:
+## Usage
+### Running the TemplateApp
+To run the template app, run the `npx expo start` command from **within the root folder of the template app**:
 
 ````bash
-cd packages/ProjectB
-node index.js
+# assuming from ExpoAppFramework root
+cd projects/TemplateApp
+npx expo start
 ````
 
-You should see the console.log from the component exported from ProjectA and the output from Axios in ProjectB:
+Scan the QR code from your Expo GO app and the app will run
+
+### Setup client app
+To set up a client app, in the monorepo root/projects, simply duplicate the TemplateApp and rename all instances of TemplateApp the that of your client app:
 
 ````bash
-This is component A with Lodash version: 4.17.21
+# assuming from ExpoAppFramework root
+mkdir projects/<NEW_APP_NAME>
+cp -r projects/TemplateApp/* projects/<NEW_APP_NAME>/
+````
+
+package.json:
+````json
 {
-	login: 'github',
-	id: 9919,
-	....
-	created_at: '2008-05-11T04:37:31Z',
-	updated_at: '2022-11-29T19:44:55Z'
+	 "name": "@expo-app-framework/<NEW_APP_NAME>"
+	 ...
 }
 ````
 
+app.json:
+````json
+{
+	 "expo": {
+		"name": "<NEW_APP_NAME>",
+		"slug": "<NEW_APP_NAME>",
+	 ...
+}
+````
+
+To run the client app, similiar to the template app, run the `npx expo start` command from **within the root folder of the client app**:
+
+````bash
+# assuming from ExpoAppFramework root
+cd projects/<NEW_APP_NAME>
+npx expo start
+````
+
+To install additional dependencies specific to the client app:
+
+````bash
+# assuming from <NEW_APP_NAME> root
+npx expo install <package1> <package2>
+````
+
+The dependencies will be installed to within the <NEW_APP_NAME> `node_modules`
