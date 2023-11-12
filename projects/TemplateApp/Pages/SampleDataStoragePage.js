@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { View, Keyboard } from 'react-native';
-import { borderRad, padSize05, padSize, padSize2, padSize4 } from '@expo-app-framework/framework/Common/Values';
+import { padSize, padSize2 } from '@expo-app-framework/framework/Common/Values';
+import Styles from '@expo-app-framework/framework/Common/Styles';
 // UI
 import {
   useTheme, Text, Button, Appbar, Divider, Switch, TextInput, Card
@@ -44,7 +45,7 @@ export default function SampleDataStoragePage({ navigation, route }) {
    * Draw
    *------------------------------------------------------------------------------------*/
   return (
-    <View style={{ width: '100%', flex: 1 }}>
+    <View style={Styles.contPage}>
       {/* appbar */}
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
@@ -52,8 +53,8 @@ export default function SampleDataStoragePage({ navigation, route }) {
         </Appbar.Content>
       </Appbar.Header>
       {/* main content here */}
-      <View style={{ flex: 1, padding: padSize }}>
-        <View style={{ padding: padSize }}>
+      <View style={Styles.contVert}>
+        <View style={Styles.contPad}>
           <Text variant="titleMedium" style={{ marginBottom: padSize }}>Modify and save local data</Text>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: padSize }}>
             <Button mode="contained" onPress={() => updateTrackersSample()} style={{ marginRight: padSize2 }}>++trackers_sample.num</Button>
@@ -65,12 +66,12 @@ export default function SampleDataStoragePage({ navigation, route }) {
           <Button icon="refresh" mode="contained" onPress={() => resetLocalData()} style={{ marginBottom: padSize2 }}>reset data completely</Button>
         </View>
         <Divider />
-        <View style={{ padding: padSize, marginBottom: padSize2 }}>
+        <View style={[Styles.contPad, { marginBottom: padSize2 }]}>
           <Text variant="titleMedium">Change data schema</Text>
           <Text variant="bodyMedium">To test: close app, add additional values to schema and restart app</Text>
         </View>
         <Divider />
-        <View style={{ padding: padSize }}>
+        <View style={Styles.contPad}>
           <Text variant="titleMedium" style={{ marginBottom: padSize2 }}>Data preview</Text>
           <Card mode='elevated'>
             <Card.Content>

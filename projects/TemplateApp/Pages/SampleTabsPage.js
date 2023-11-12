@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { View, Keyboard } from 'react-native';
-import { borderRad, padSize05, padSize, padSize2, padSize4 } from '@expo-app-framework/framework/Common/Values';
+import Styles from '@expo-app-framework/framework/Common/Styles';
 // UI
 import {
   useTheme, Text, Button, Appbar
@@ -57,22 +57,22 @@ export default function SampleTabsPage({ navigation, route }) {
   };
 
   const Tab1Comp = ({}) => {
-    return <View style={{ flex: 1, backgroundColor: 'green' }}><Text>P1</Text></View>
+    return <View style={Styles.contFlex}><Text>P1</Text></View>
   }
 
   const Tab2Comp = ({}) => {
-    return <View style={{ flex: 1, backgroundColor: 'blue' }}><Text>P2</Text></View>
+    return <View style={Styles.contFlex}><Text>P2</Text></View>
   }
 
   const Tab3Comp = ({}) => {
-    return <View style={{ flex: 1, backgroundColor: 'yellow' }}><Text>P3</Text></View>
+    return <View style={Styles.contFlex}><Text>P3</Text></View>
   }
 
   /**------------------------------------------------------------------------------------*
    * Draw
    *------------------------------------------------------------------------------------*/
   return (
-    <View style={{ width: '100%', flex: 1 }}>
+    <View style={Styles.contPage}>
       {/* main content here */}
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />

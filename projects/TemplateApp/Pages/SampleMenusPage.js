@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { View, Keyboard } from 'react-native';
-import { borderRad, padSize05, padSize, padSize2, padSize4 } from '@expo-app-framework/framework/Common/Values';
+import Styles from '@expo-app-framework/framework/Common/Styles';
 // UI
 import {
   useTheme, Text, Card, Button, Appbar,
@@ -83,7 +83,7 @@ export default function SampleMenusPage({ navigation, route }) {
    * Draw
    *------------------------------------------------------------------------------------*/
   return (
-    <View style={{ width: '100%', flex: 1 }}>
+    <View style={Styles.contPage}>
       {/* all dialogs here */}
       <Portal>
         <Dialog
@@ -93,9 +93,9 @@ export default function SampleMenusPage({ navigation, route }) {
           onSubmit={onSubmitDialog}
           onClose={() => setShowDialog(false)}
         >
-          <View style={{ width: '100%', paddingHorizontal: padSize2 }}>
+          <Card.Content>
             <Text variant="bodyMedium">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
-          </View>
+          </Card.Content>
         </Dialog>
       </Portal>
       {/* appbar */}
@@ -119,15 +119,15 @@ export default function SampleMenusPage({ navigation, route }) {
           onPress={onDropdownCheckMenuSelected} />
       </Appbar.Header>
       {/* main content here */}
-      <View style={{ padding: padSize }}>
+      <View style={Styles.contPad}>
         <Text variant="bodyMedium">Hello world</Text>
       </View>
-      <View style={{ padding: padSize }}>
-        <Button mode="contained" onPress={() => setShowDialog(true)} style={{ marginBottom: padSize }}>
+      <View style={Styles.contPad}>
+        <Button mode="contained" onPress={() => setShowDialog(true)}>
           Launch dialog
         </Button>
       </View>
-      <View style={{ padding: padSize }}>
+      <View style={Styles.contPad}>
         <Picker value={pickerSelection} options={PICKER_ITEM_LIST} onChange={(v) => setPickerSelection(v)} />
       </View>
     </View>
