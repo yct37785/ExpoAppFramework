@@ -8,5 +8,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web"
   },
-  "private": true
+  "private": true,
+  "dependencies": {
+    "@expo-app-framework/framework": "1.0.0"
+  }
 }
