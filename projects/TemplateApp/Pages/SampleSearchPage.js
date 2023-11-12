@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, createContext } from 'react';
 import { View, Image, Keyboard } from 'react-native';
-import { borderRad, padSize05, padSize, padSize2, padSize4, iconSizeSmall } from '@expo-app-framework/framework/Common/Common';
+import { padSize05, padSize, padSize2, iconSizeSmall } from '@expo-app-framework/framework/Common/Values';
+import Styles from '@expo-app-framework/framework/Common/Styles';
 // UI
 import {
   useTheme, Text, Button, Appbar, Divider, RadioButton, Chip
@@ -114,8 +115,8 @@ export default function SampleSearchPage({ navigation, route }) {
 
   const ListItem = React.memo(({ item, searchQuery, highlightSearchText }) => {
     return (
-      <View style={{ width: '100%' }}>
-        <View style={{ width: '100%', padding: padSize }}>
+      <View style={Styles.contFlex}>
+        <View style={Styles.contVert}>
           {highlightSearchText(item.name, searchQuery, 'titleSmall')}
           <Image
             style={{ width: 100, height: 100 }}
@@ -147,7 +148,7 @@ export default function SampleSearchPage({ navigation, route }) {
    * Draw
    *------------------------------------------------------------------------------------*/
   return (
-    <View style={{ width: '100%', flex: 1 }}>
+    <View style={Styles.contPage}>
       {/* header and search bar */}
       <Appbar.Header>
         <SearchBarComp
@@ -166,8 +167,8 @@ export default function SampleSearchPage({ navigation, route }) {
         renderContent={renderFilterContent}
       /> */}
       {/* toggle biglist vs flatlist */}
-      <View style={{ flex: 1, padding: padSize }}>
-        <View style={{ padding: padSize }}>
+      <View style={Styles.contVert}>
+      <View style={Styles.contPad}>
           <RadioButton.Group onValueChange={newValue => setListType(newValue)} value={listType}>
             <View style={{ flexDirection: 'row' }}>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>

@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
-import { View, Keyboard } from 'react-native';
-import { borderRad, padSize05, padSize, padSize2, padSize4 } from '@expo-app-framework/framework/Common/Common';
+import { View } from 'react-native';
+import Styles from '@expo-app-framework/framework/Common/Styles';
 // UI
 import {
   useTheme, Text, Card, Button, Appbar,
@@ -40,7 +40,7 @@ export default function SampleHomePage({ navigation, route }) {
    * Draw
    *------------------------------------------------------------------------------------*/
   return (
-    <View style={{ width: '100%', flex: 1 }}>
+    <View style={Styles.contPage}>
       {/* appbar */}
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
@@ -48,11 +48,11 @@ export default function SampleHomePage({ navigation, route }) {
         </Appbar.Content>
       </Appbar.Header>
       {/* main content here */}
-      <View style={{ width: '100%', flex: 1, padding: padSize }}>
+      <View style={Styles.contVert}>
         <Text variant="bodyMedium">Select the pages you want to navigate to</Text>
-        <View style={{ flex: 1 }}>
+        <View style={Styles.contFlex}>
           {Object.keys(SAMPLE_PAGES).map((key) => (
-            <Button key={key} mode="contained" onPress={() => navigation.navigate(key, { paramText: `hello ${key} from home` })} style={{ margin: padSize }}>
+            <Button key={key} mode="contained" onPress={() => navigation.navigate(key, { paramText: `hello ${key} from home` })} style={Styles.margin}>
               {SAMPLE_PAGES[key]}
             </Button>
           ))}

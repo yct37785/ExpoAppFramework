@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { View, Keyboard } from 'react-native';
-import { borderRad, padSize05, padSize, padSize2, padSize4 } from '@expo-app-framework/framework/Common/Common';
+import Styles from '@expo-app-framework/framework/Common/Styles';
 // UI
 import {
   useTheme, Text, Button, Appbar
@@ -32,7 +32,7 @@ export default function SampleEmptyPage({ navigation, route }) {
    * Draw
    *------------------------------------------------------------------------------------*/
   return (
-    <View style={{ width: '100%', flex: 1 }}>
+    <View style={Styles.contPage}>
       {/* appbar */}
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
@@ -40,7 +40,7 @@ export default function SampleEmptyPage({ navigation, route }) {
         </Appbar.Content>
       </Appbar.Header>
       {/* main content here */}
-      <View style={{ flex: 1, padding: padSize }}>
+      <View style={Styles.contVert}>
         <Text variant="bodyMedium">{`paramText: ${paramText}`}</Text>
       </View>
     </View>
