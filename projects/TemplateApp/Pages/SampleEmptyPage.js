@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { View, Keyboard } from 'react-native';
-import { borderRad, padSize05, padSize, padSize2, padSize4 } from '@expo-app-framework/framework/Common/Common';
+import { borderRad, padSize05, padSize, padSize2, padSize4 } from '@expo-app-framework/framework/Common/Values';
 // UI
 import {
   useTheme, Text, Button, Appbar
