@@ -1,12 +1,12 @@
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { View, Keyboard } from 'react-native';
-import Styles from '@expo-app-framework/framework/Common/Styles';
+import Styles from '../../../Framework/Common/Styles';
 // UI
 import {
   useTheme, Text, Button, Appbar
 } from 'react-native-paper';
 // data
-import { LocalDataContext } from '@expo-app-framework/framework/Contexts/LocalDataContext';
+import { LocalDataContext } from '../../../Framework/Contexts/LocalDataContext';
 
 /**
  * sample empty page

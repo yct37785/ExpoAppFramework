@@ -1,13 +1,13 @@
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { View, Keyboard } from 'react-native';
-import { padSize, padSize2 } from '@expo-app-framework/framework/Common/Values';
-import Styles from '@expo-app-framework/framework/Common/Styles';
+import { padSize, padSize2 } from '../../../Framework/Common/Values';
+import Styles from '../../../Framework/Common/Styles';
 // UI
 import {
   useTheme, Text, Button, Appbar, Divider, Switch, TextInput, Card
 } from 'react-native-paper';
 // data
-import { LocalDataContext } from '@expo-app-framework/framework/Contexts/LocalDataContext';
+import { LocalDataContext } from '../../../Framework/Contexts/LocalDataContext';
 
 /**
  * sample local data storage showcase page

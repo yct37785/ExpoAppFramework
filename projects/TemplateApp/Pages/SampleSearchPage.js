@@ -1,17 +1,17 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, createContext } from 'react';
 import { View, Image, Keyboard } from 'react-native';
-import { padSize05, padSize, padSize2, iconSizeSmall } from '@expo-app-framework/framework/Common/Values';
-import Styles from '@expo-app-framework/framework/Common/Styles';
+import { padSize05, padSize, padSize2, iconSizeSmall } from '../../../Framework/Common/Values';
+import Styles from '../../../Framework/Common/Styles';
 // UI
 import {
   useTheme, Text, Button, Appbar, Divider, RadioButton, Chip
 } from 'react-native-paper';
 import { MaterialIcons, Ionicons } from '@expo/vector-icons'; 
-import { CollapsibleComp, AccordionComp } from '@expo-app-framework/framework/UI/Collapsible';
-import { ChipsComp } from '@expo-app-framework/framework/UI/Options';
-import { SearchBarComp, SearchableBigListComp, SearchableFlatListComp, highlightSearchText } from '@expo-app-framework/framework/UI/SearchBar';
+import { CollapsibleComp, AccordionComp } from '../../../Framework/UI/Collapsible';
+import { ChipsComp } from '../../../Framework/UI/Options';
+import { SearchBarComp, SearchableBigListComp, SearchableFlatListComp, highlightSearchText } from '../../../Framework/UI/SearchBar';
 // data
-import { LocalDataContext } from '@expo-app-framework/framework/Contexts/LocalDataContext';
+import { LocalDataContext } from '../../../Framework/Contexts/LocalDataContext';
 // dev
 import { faker } from '@faker-js/faker';
 
