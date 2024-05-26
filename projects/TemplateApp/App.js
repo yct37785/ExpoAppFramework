@@ -1,5 +1,5 @@
 import React from 'react';
-import RootComp from '@expo-app-framework/framework/RootComp';
+import RootComp from '../../Framework/RootComp';
 import { screenMaps, DEFAULT_SCREEN } from './User/PageMapper';
 import { NEW_USER_DATA, APP_NAME } from './User/Schemas';
 

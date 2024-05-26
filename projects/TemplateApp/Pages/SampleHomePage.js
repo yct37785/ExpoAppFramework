@@ -1,13 +1,13 @@
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { View } from 'react-native';
-import Styles from '@expo-app-framework/framework/Common/Styles';
+import Styles from '../../../Framework/Common/Styles';
 // UI
 import {
   useTheme, Text, Card, Button, Appbar,
   TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
 } from 'react-native-paper';
 // data
-import { LocalDataContext } from '@expo-app-framework/framework/Contexts/LocalDataContext';
+import { LocalDataContext } from '../../../Framework/Contexts/LocalDataContext';
 // const
 export const SAMPLE_PAGES = {
   tabs: "tabs example",
