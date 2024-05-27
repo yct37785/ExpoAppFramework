@@ -31,14 +31,14 @@ The Framework project is structured as follows:
 /ExpoCommonFramework
 ...
 └── Framework
-		├── APIs
-		├── Common
-		├── Contexts
-		├── Managers
-		├── UI
-		├── Utilities
-		├── package.json
-		└── RootComp.js
+	├── APIs
+	├── Common
+	├── Contexts
+	├── Managers
+	├── UI
+	├── Utilities
+	├── package.json
+	└── RootComp.js
 ```
 
 **APIs:** interfaces with APIs like AsyncStorage
@@ -67,15 +67,15 @@ The TemplateApp project is structured as follows:
 /ExpoAppFramework
 ...
 └── projects
-		└── TemplateApp
-			├── Pages
-			│	└── ~ page files
-			├── User
-			│	├── PageMapper.js
-			│	└── Schemas.js
-			├── app.json
-			├── package.json
-			└── ~other stuff
+	└── TemplateApp
+		├── Pages
+		│	└── ~ page files
+		├── User
+		│	├── PageMapper.js
+		│	└── Schemas.js
+		├── app.json
+		├── package.json
+		└── ~other stuff
 ```
 
 **~other stuff:** Users can ignore, these are system files that are handled by the framework/Expo/NodeJS
