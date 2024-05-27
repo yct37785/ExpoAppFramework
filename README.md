@@ -127,11 +127,11 @@ cp -r projects/TemplateApp/* projects/<NEW_APP_NAME>/
 app.json:
 ````json
 {
-	 "expo": {
-		 "name": "<NEW_APP_NAME>",
-		 "slug": "<NEW_APP_NAME>",
-		 ...
-		 }
+	"expo": {
+		"name": "<NEW_APP_NAME>",
+		"slug": "<NEW_APP_NAME>",
+		...
+	}
 ...
 }
 ````
