@@ -92,14 +92,14 @@ The TemplateApp project is structured as follows:
 
 ## Setup
 ### Setup monorepo
-Clone the repo and enter the monorepo root
+Clone the repo and enter TemplatesApp from monorepo root
 
 ````bash
 git clone git@github.com:yct37785/ExpoAppFramework.git
-cd ExpoAppFramework
+cd ExpoAppFramework/projects/TemplateApp
 ````
 
-Run `yarn` to install dependencies:
+Run `yarn` to install dependencies (modules will be installed in root instead of TemplateApp):
 
 ````bash
 yarn
