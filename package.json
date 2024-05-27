@@ -2,7 +2,6 @@
   "private": true,
   "name": "expo-app-framework",
   "version": "1.0.0",
-  "main": "index.js",
   "license": "MIT",
   "workspaces": [
     "projects/*",
