@@ -7,7 +7,7 @@ import {
   useTheme, Text, Button, Appbar, Divider, Switch, TextInput, Card
 } from 'react-native-paper';
 // data
-import { LocalDataContext } from '../../../Framework/Contexts/LocalDataContext';
+import { LocalDataContext, onLocalDataUpdate } from '../../../Framework/Contexts/LocalDataContext';
 
 /**
  * sample local data storage showcase page
@@ -17,17 +17,15 @@ export default function SampleDataStoragePage({ navigation, route }) {
    * State
    *------------------------------------------------------------------------------------*/
   const theme = useTheme();
-  const { updateCount, setLocalDataValue, getLocalDataValue, resetLocalData, getLocalDataStringify } = useContext(LocalDataContext);
   const { paramText } = route.params;
+  const { setLocalDataValue, getLocalDataValue, resetLocalData, getLocalDataStringify } = useContext(LocalDataContext);
 
   /**------------------------------------------------------------------------------------*
    * Init
    *------------------------------------------------------------------------------------*/
-  useEffect(() => {
-    if (updateCount) {
-      console.log("SampleDataStoragePage: updated data");
-    }
-  }, [updateCount]);
+  onLocalDataUpdate(() => {
+    console.log("SampleDataStoragePage: updated data");
+  });
 
   /**------------------------------------------------------------------------------------*
    * Values

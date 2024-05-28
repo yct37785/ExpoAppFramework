@@ -7,7 +7,7 @@ import {
   TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
 } from 'react-native-paper';
 // data
-import { LocalDataContext } from '../../../Framework/Contexts/LocalDataContext';
+import { onLocalDataUpdate } from '../../../Framework/Contexts/LocalDataContext';
 // const
 export const SAMPLE_PAGES = {
   tabs: "tabs example",
@@ -25,16 +25,13 @@ export default function SampleHomePage({ navigation, route }) {
    * State
    *------------------------------------------------------------------------------------*/
   const theme = useTheme();
-  const { updateCount, setLocalDataValue } = useContext(LocalDataContext);
 
   /**------------------------------------------------------------------------------------*
    * Init
    *------------------------------------------------------------------------------------*/
-  useEffect(() => {
-    if (updateCount) {
-      console.log("SampleHomePage: updated data");
-    }
-  }, [updateCount]);
+  onLocalDataUpdate(() => {
+    console.log("SampleHomePage: updated data");
+  });
 
   /**------------------------------------------------------------------------------------*
    * Draw

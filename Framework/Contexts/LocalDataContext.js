@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect } from 'react';
 
 /**
- * will not be exposed to end users
+ * context
  */
 export const LocalDataContext = React.createContext({
   updateCount: 0,
@@ -12,7 +12,7 @@ export const LocalDataContext = React.createContext({
 });
 
 /**
- * callback when local data updates
+ * callbacks
  */
 export const onLocalDataUpdate = (callback) => {
   const { updateCount } = useContext(LocalDataContext);
@@ -22,23 +22,4 @@ export const onLocalDataUpdate = (callback) => {
       callback();
     }
   }, [updateCount, callback]);
-};
-
-/**
- * expose context functions/values
- */
-export const setLocalDataValue = () => {
-  return { setLocalDataValue } = useContext(LocalDataContext);
-};
-
-export const getLocalDataValue = () => {
-  return { getLocalDataValue } = useContext(LocalDataContext);
-};
-
-export const resetLocalData = () => {
-  return { resetLocalData } = useContext(LocalDataContext);
-};
-
-export const getLocalDataStringify = () => {
-  return { getLocalDataStringify } = useContext(LocalDataContext);
 };
