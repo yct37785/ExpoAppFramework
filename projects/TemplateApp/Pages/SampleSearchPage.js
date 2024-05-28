@@ -10,8 +10,6 @@ import { MaterialIcons, Ionicons } from '@expo/vector-icons';
 import { CollapsibleComp, AccordionComp } from '../../../Framework/UI/Collapsible';
 import { ChipsComp } from '../../../Framework/UI/Options';
 import { SearchBarComp, SearchableBigListComp, SearchableFlatListComp, highlightSearchText } from '../../../Framework/UI/SearchBar';
-// data
-import { LocalDataContext } from '../../../Framework/Contexts/LocalDataContext';
 // dev
 import { faker } from '@faker-js/faker';
 
@@ -23,7 +21,6 @@ export default function SampleSearchPage({ navigation, route }) {
    * State
    *------------------------------------------------------------------------------------*/
   const theme = useTheme();
-  const { updateCount, setLocalDataValue } = useContext(LocalDataContext);
   const [listType, setListType] = useState('biglist');
   const [searchQuery, setSearchQuery] = useState('');
   const [productList, setProductList] = useState([]);
@@ -33,13 +30,6 @@ export default function SampleSearchPage({ navigation, route }) {
   /**------------------------------------------------------------------------------------*
    * Init
    *------------------------------------------------------------------------------------*/
-  useEffect(() => {
-    if (updateCount) {
-      console.log("SampleSearchPage: updated data");
-    }
-  }, [updateCount]);
-
-
   useEffect(() => {
     // generate prod list sample
     const fakeData = faker.helpers.multiple(createRandomProduct, { count: 1000 });

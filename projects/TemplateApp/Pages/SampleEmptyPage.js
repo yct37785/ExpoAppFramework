@@ -5,8 +5,6 @@ import Styles from '../../../Framework/Common/Styles';
 import {
   useTheme, Text, Button, Appbar
 } from 'react-native-paper';
-// data
-import { LocalDataContext } from '../../../Framework/Contexts/LocalDataContext';
 
 /**
  * sample empty page
@@ -16,17 +14,11 @@ export default function SampleEmptyPage({ navigation, route }) {
    * State
    *------------------------------------------------------------------------------------*/
   const theme = useTheme();
-  const { updateCount, setLocalDataValue } = useContext(LocalDataContext);
   const { paramText } = route.params;
 
   /**------------------------------------------------------------------------------------*
    * Init
    *------------------------------------------------------------------------------------*/
-  useEffect(() => {
-    if (updateCount) {
-      console.log("SampleEmptyPage: updated data");
-    }
-  }, [updateCount]);
 
   /**------------------------------------------------------------------------------------*
    * Draw

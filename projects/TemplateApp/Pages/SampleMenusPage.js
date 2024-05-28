@@ -10,8 +10,6 @@ import Dialog from '../../../Framework/UI/Dialog';
 import Picker from '../../../Framework/UI/Picker';
 import DropdownMenu from '../../../Framework/UI/DropdownMenu';
 import DropdownCheckMenu from '../../../Framework/UI/DropdownCheckMenu';
-// data
-import { LocalDataContext } from '../../../Framework/Contexts/LocalDataContext';
 // const
 const PICKER_ITEM_LIST = [
   { label: 'Red', value: 'red' },
@@ -33,18 +31,12 @@ export default function SampleMenusPage({ navigation, route }) {
    *------------------------------------------------------------------------------------*/
   const theme = useTheme();
   const searchBarRef = useRef();
-  const { updateCount, setLocalDataValue } = useContext(LocalDataContext);
   const [showDialog, setShowDialog] = useState(false);
   const [pickerSelection, setPickerSelection] = useState('red');
 
   /**------------------------------------------------------------------------------------*
    * Init
    *------------------------------------------------------------------------------------*/
-  useEffect(() => {
-    if (updateCount) {
-      console.log("SampleMenusPage: updated data");
-    }
-  }, [updateCount]);
 
   /**------------------------------------------------------------------------------------*
    * Keyboard
