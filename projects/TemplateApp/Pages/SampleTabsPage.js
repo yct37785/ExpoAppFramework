@@ -6,7 +6,7 @@ import {
   useTheme, Text, Button, Appbar
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import TabBar from '../../../Framework/UI/TabBar';
+import { TabBar } from '../../../Framework/UI/index';
 // const
 export const TAB_ROUTES = [
   { title: 'Page 1', key: 'p1', icon: 'google-street-view' },

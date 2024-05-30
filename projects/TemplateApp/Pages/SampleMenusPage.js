@@ -6,10 +6,7 @@ import {
   useTheme, Text, Card, Button, Appbar,
   TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
 } from 'react-native-paper';
-import Dialog from '../../../Framework/UI/Dialog';
-import Picker from '../../../Framework/UI/Picker';
-import DropdownMenu from '../../../Framework/UI/DropdownMenu';
-import DropdownCheckMenu from '../../../Framework/UI/DropdownCheckMenu';
+import { Dialog, Picker, DropdownMenu, DropdownCheckMenu } from '../../../Framework/UI/index';
 // const
 const PICKER_ITEM_LIST = [
   { label: 'Red', value: 'red' },

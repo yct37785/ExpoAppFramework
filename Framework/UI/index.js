@@ -13,7 +13,7 @@ export { default as DropdownMenu } from './DropdownMenu';
 // Options.js
 export { default as ChipsComp } from './Options';
 // Picker.js
-export { default as PickerComp } from './Picker';
+export { default as Picker } from './Picker';
 // search bar todo
 // TabBar.js
 export { default as TabBarComp } from './TabBar';

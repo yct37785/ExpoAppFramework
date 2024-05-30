@@ -6,9 +6,8 @@ import Styles from '../../../Framework/Common/Styles';
 import {
   useTheme, Text, Button, Appbar, Divider, RadioButton, Chip
 } from 'react-native-paper';
-import { MaterialIcons, Ionicons } from '@expo/vector-icons'; 
-import { CollapsibleComp, AccordionComp } from '../../../Framework/UI/Collapsible';
-import { ChipsComp } from '../../../Framework/UI/Options';
+import { MaterialIcons } from '@expo/vector-icons'; 
+import { CollapsibleComp, ChipsComp } from '../../../Framework/UI/index';
 import { SearchBarComp, SearchableBigListComp, SearchableFlatListComp, highlightSearchText } from '../../../Framework/UI/SearchBar';
 // dev
 import { faker } from '@faker-js/faker';
