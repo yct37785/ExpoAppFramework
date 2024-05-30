@@ -7,7 +7,7 @@ import {
   useTheme, Text, Button, Appbar, Divider, RadioButton, Chip
 } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons'; 
-import { CollapsibleComp, ChipsComp } from '../../../Framework/UI/index';
+import { Collapsible, ChipsContainer } from '../../../Framework/UI/index';
 import { SearchBarComp, SearchableBigListComp, SearchableFlatListComp, highlightSearchText } from '../../../Framework/UI/SearchBar';
 // dev
 import { faker } from '@faker-js/faker';
@@ -68,7 +68,7 @@ export default function SampleSearchPage({ navigation, route }) {
     return (
       <View style={{ width: '100%', padding: padSize, paddingHorizontal: padSize2 }}>
         <Text variant='labelSmall'>Materials</Text>
-        <ChipsComp toggledMap={materialsSelected} onChipSelected={onMaterialChipSelected} />
+        <ChipsContainer toggledMap={materialsSelected} onChipSelected={onMaterialChipSelected} />
       </View>
     );
   });
@@ -146,7 +146,7 @@ export default function SampleSearchPage({ navigation, route }) {
         />
       </Appbar.Header>
       {/* filter menu */}
-      <CollapsibleComp
+      <Collapsible
         renderHeader={(isCollapsed) => { return <FilterHeader isCollapsed={isCollapsed} /> }}
         renderContent={(isCollapsed) => { return <FilterContent isCollapsed={isCollapsed} /> }}
       />

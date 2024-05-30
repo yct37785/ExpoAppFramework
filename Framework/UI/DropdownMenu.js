@@ -16,7 +16,7 @@ import {
  * 
  * note, triggerComp should not take in an onPress callback or else it will override the option callbacks
  */
-function DropdownMenu({ triggerComp, value = '', options, onPress, disabled = false, marginTop = 0,
+function DropdownMenuComp({ triggerComp, value = '', options, onPress, disabled = false, marginTop = 0,
   dir = 'column', selectionStyle = 1, drawCustomOptionComp = null }) {
   /**------------------------------------------------------------------------------------*
    * State
@@ -110,4 +110,4 @@ function DropdownMenu({ triggerComp, value = '', options, onPress, disabled = fa
   )
 }
 
-export default React.memo(DropdownMenu);
+export default React.memo(DropdownMenuComp);

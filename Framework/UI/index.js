@@ -1,9 +1,10 @@
 /**
- * exposed to end users, export new components here
+ * exposed to end users, export new UI components here
+ * append Comp to name of each UI component for consistency 
  */
 // Collapsible.js
-export { default as CollapsibleComp } from './Collapsible';
-export { default as AccordionComp } from './Collapsible';
+export { CollapsibleComp as Collapsible } from './Collapsible';
+export { AccordionComp as Accordion } from './Collapsible';
 // Dialog.js
 export { default as Dialog } from './Dialog';
 // DropdownCheckMenu.js
@@ -11,9 +12,9 @@ export { default as DropdownCheckMenu } from './DropdownCheckMenu';
 // DropdownMenu.js
 export { default as DropdownMenu } from './DropdownMenu';
 // Options.js
-export { default as ChipsComp } from './Options';
+export { ChipsContainerComp as ChipsContainer } from './Options';
 // Picker.js
 export { default as Picker } from './Picker';
 // search bar todo
 // TabBar.js
-export { default as TabBarComp } from './TabBar';
+export { default as TabBar } from './TabBar';

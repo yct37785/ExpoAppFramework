@@ -11,7 +11,7 @@ import DropdownMenuComp from './DropdownMenu';
  * 
  * note, triggerComp should not take in an onPress callback or else it will override the option callbacks
  */
-function DropdownCheckMenu({ triggerComp, initialSelected = {}, options, onPress, disabled = false, marginTop = 0,
+function DropdownCheckMenuComp({ triggerComp, initialSelected = {}, options, onPress, disabled = false, marginTop = 0,
   dir = 'column' }) {
   const [selected, setSelected] = useState(initialSelected);
   const width = dir === 'column' ? '100%' : 'auto';
@@ -58,4 +58,4 @@ function DropdownCheckMenu({ triggerComp, initialSelected = {}, options, onPress
   )
 }
 
-export default React.memo(DropdownCheckMenu);
+export default React.memo(DropdownCheckMenuComp);

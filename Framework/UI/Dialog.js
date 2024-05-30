@@ -13,7 +13,7 @@ import { Modal, Button, Card, Text, useTheme } from 'react-native-paper';
  * onClose:
  * dismissable: tapping outside can close dialog
  */
-const Dialog = ({ title, subtitle, children, isVisible, onSubmit, onClose, dismissable = false,
+const DialogComp = ({ title, subtitle, children, isVisible, onSubmit, onClose, dismissable = false,
    submitText = 'Confirm', closeText = 'Close' }) => {
   const theme = useTheme();
 
@@ -50,4 +50,4 @@ const Dialog = ({ title, subtitle, children, isVisible, onSubmit, onClose, dismi
   );
 };
 
-export default React.memo(Dialog);
+export default React.memo(DialogComp);
