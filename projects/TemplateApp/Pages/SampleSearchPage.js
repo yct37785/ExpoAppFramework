@@ -8,7 +8,7 @@ import {
 } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { Collapsible, ChipsContainer } from '../../../Framework/UI/index';
-import { SearchBarComp, SearchableBigListComp, SearchableFlatListComp, highlightSearchText } from '../../../Framework/UI/SearchBar';
+import { SearchBarComp, SearchableBigListComp, SearchableFlatListComp, highlightSearchText } from '../../../Framework/UI/Inputs/SearchBar';
 // dev
 import { faker } from '@faker-js/faker';
 

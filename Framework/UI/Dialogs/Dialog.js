@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Image } from 'react-native';
-import { padSize05, padSize, padSize2, padSize4 } from '../Common/Values';
+import { padSize05, padSize, padSize2, padSize4 } from '../../Common/Values';
 // UI
 import { Modal, Button, Card, Text, useTheme } from 'react-native-paper';
 
