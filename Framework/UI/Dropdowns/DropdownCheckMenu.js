@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { View } from 'react-native';
 import { Text, TouchableRipple, useTheme, Checkbox } from 'react-native-paper';
-import { padSize05, padSize } from '../Common/Values';
+import { padSize05, padSize } from '../../Common/Values';
 import DropdownMenuComp from './DropdownMenu';
 
 /**

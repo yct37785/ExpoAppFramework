@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { View } from 'react-native';
 import { Text, TouchableRipple, useTheme } from 'react-native-paper';
-import { padSize05, padSize, rippleColorForLight, rippleColorForDark } from '../Common/Values';
+import { padSize05, padSize, rippleColorForLight, rippleColorForDark } from '../../Common/Values';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
   Menu,

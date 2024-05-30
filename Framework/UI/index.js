@@ -8,9 +8,9 @@ export { AccordionComp as Accordion } from './Collapsible/Collapsible';
 // Dialog.js
 export { default as Dialog } from './Dialogs/Dialog';
 // DropdownCheckMenu.js
-export { default as DropdownCheckMenu } from './DropdownCheckMenu';
+export { default as DropdownCheckMenu } from './Dropdowns/DropdownCheckMenu';
 // DropdownMenu.js
-export { default as DropdownMenu } from './DropdownMenu';
+export { default as DropdownMenu } from './Dropdowns/DropdownMenu';
 // Options.js
 export { ChipsContainerComp as ChipsContainer } from './Selectors/Options';
 // Picker.js
