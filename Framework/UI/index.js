@@ -8,13 +8,13 @@ export { AccordionComp as Accordion } from './Collapsible/Collapsible';
 // Dialog.js
 export { default as Dialog } from './Dialogs/Dialog';
 // DropdownCheckMenu.js
-export { default as DropdownCheckMenu } from './Dropdowns/DropdownCheckMenu';
+export { default as DropdownCheckMenu } from './Menus/Dropdowns/DropdownCheckMenu';
 // DropdownMenu.js
-export { default as DropdownMenu } from './Dropdowns/DropdownMenu';
+export { default as DropdownMenu } from './Menus/Dropdowns/DropdownMenu';
 // Options.js
-export { ChipsContainerComp as ChipsContainer } from './Selectors/Options';
+export { ChipsContainerComp as ChipsContainer } from './Menus/Selectors/Options';
 // Picker.js
-export { default as Picker } from './Selectors/Picker';
+export { default as Picker } from './Menus/Dropdowns/Picker';
 // search bar todo
 // TabBar.js
 export { default as TabBar } from './Navigation/TabBar';
