@@ -24,7 +24,7 @@ export default function SampleDataStoragePage({ navigation, route }) {
    * Init
    *------------------------------------------------------------------------------------*/
   onLocalDataUpdate(() => {
-    console.log("SampleDataStoragePage: updated data");
+    console.log("SampleDataStoragePage: updated local data");
   });
 
   /**------------------------------------------------------------------------------------*

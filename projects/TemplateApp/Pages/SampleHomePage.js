@@ -30,7 +30,7 @@ export default function SampleHomePage({ navigation, route }) {
    * Init
    *------------------------------------------------------------------------------------*/
   onLocalDataUpdate(() => {
-    console.log("SampleHomePage: updated data");
+    console.log("SampleHomePage: updated local data");
   });
 
   /**------------------------------------------------------------------------------------*
