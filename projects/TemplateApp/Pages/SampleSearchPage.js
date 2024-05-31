@@ -6,9 +6,10 @@ import Styles from '../../../Framework/Common/Styles';
 import {
   useTheme, Text, Button, Appbar, Divider, RadioButton, Chip
 } from 'react-native-paper';
-import { MaterialIcons } from '@expo/vector-icons'; 
+import { MaterialIcons } from '@expo/vector-icons';
 import { Collapsible, ChipsContainer } from '../../../Framework/UI/index';
-import { SearchBarComp, SearchableBigListComp, SearchableFlatListComp, highlightSearchText } from '../../../Framework/UI/Inputs/SearchBar';
+import { SearchableListComp } from '../../../Framework/UI/Lists/List';
+import { SearchBarComp, highlightSearchText } from '../../../Framework/UI/Inputs/SearchBar';
 // dev
 import { faker } from '@faker-js/faker';
 
@@ -157,7 +158,7 @@ export default function SampleSearchPage({ navigation, route }) {
       /> */}
       {/* toggle biglist vs flatlist */}
       <View style={Styles.contVert}>
-      <View style={Styles.contPad}>
+        <View style={Styles.contPad}>
           <RadioButton.Group onValueChange={newValue => setListType(newValue)} value={listType}>
             <View style={{ flexDirection: 'row' }}>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -172,17 +173,13 @@ export default function SampleSearchPage({ navigation, route }) {
           </RadioButton.Group>
         </View>
         {/* main content */}
-        {listType == 'biglist' ? <SearchableBigListComp
+        <SearchableListComp
           data={productList}
           filterFunction={filterProducts}
+          renderItem={renderItem}
+          listType={listType}
           rowHeight={ROW_HEIGHT}
-          renderItem={renderItem}
-        /> : null}
-        {listType == 'flatlist' ? <SearchableFlatListComp
-          data={productList}
-          filterFunction={filterProducts}
-          renderItem={renderItem}
-        /> : null}
+        />
       </View>
     </View>
   );
