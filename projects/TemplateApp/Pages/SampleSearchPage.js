@@ -9,7 +9,8 @@ import {
 import { MaterialIcons } from '@expo/vector-icons';
 import { Collapsible, ChipsContainer } from '../../../Framework/UI/index';
 import { SearchableListComp } from '../../../Framework/UI/Lists/List';
-import { SearchBarComp, highlightSearchText } from '../../../Framework/UI/Inputs/SearchBar';
+import { SearchBarComp } from '../../../Framework/UI/Inputs/SearchBar';
+import { highlightText } from '../../../Framework/Utilities/UI_Utilities';
 // dev
 import { faker } from '@faker-js/faker';
 
@@ -107,7 +108,7 @@ export default function SampleSearchPage({ navigation, route }) {
     return (
       <View style={Styles.contFlex}>
         <View style={Styles.contVert}>
-          {highlightSearchText(item.name, searchQuery, 'titleSmall')}
+          {highlightText(item.name, searchQuery, 'titleSmall')}
           <Image
             style={{ width: 100, height: 100 }}
             source={{
@@ -116,7 +117,7 @@ export default function SampleSearchPage({ navigation, route }) {
             resizeMode={'contain'}
           />
           <Text variant='labelMedium'>{`material: ${item.material}`}</Text>
-          {highlightSearchText(item.desc, searchQuery, 'bodyMedium')}
+          {highlightText(item.desc, searchQuery, 'bodyMedium')}
         </View>
         <Divider />
       </View>
@@ -129,7 +130,7 @@ export default function SampleSearchPage({ navigation, route }) {
       <ListItem
         item={item}
         searchQuery={searchQuery}
-        highlightSearchText={highlightSearchText}
+        highlightText={highlightText}
       />
     );
   }, [searchQuery]);
