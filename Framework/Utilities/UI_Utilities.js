@@ -1,6 +1,9 @@
 /**------------------------------------------------------------------------------------*
  * Utilities for display purposes
  *------------------------------------------------------------------------------------*/
+import {
+  useTheme, Text, Button, Appbar, Searchbar, Divider,
+} from 'react-native-paper';
 
 /**
  * highlights search text
