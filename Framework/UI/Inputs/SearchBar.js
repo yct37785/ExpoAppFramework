@@ -1,3 +1,6 @@
+/*****************************************************************************************
+ * TODO: change this into a general input comp
+*****************************************************************************************/
 import React, { useEffect, useRef } from 'react';
 import { Keyboard } from 'react-native';
 import { Searchbar } from 'react-native-paper';

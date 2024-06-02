@@ -1,3 +1,6 @@
+/*****************************************************************************************
+ * common styles defined
+*****************************************************************************************/
 import { StyleSheet } from 'react-native';
 import { borderRad, padSize05, padSize, padSize2, padSize4 } from './Values';
 

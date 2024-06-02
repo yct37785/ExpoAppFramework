@@ -1,3 +1,6 @@
+/*****************************************************************************************
+ * multi-option selectors
+*****************************************************************************************/
 import React from 'react';
 import { View } from 'react-native';
 import { Chip, useTheme } from 'react-native-paper';

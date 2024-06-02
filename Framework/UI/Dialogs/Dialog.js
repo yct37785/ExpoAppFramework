@@ -1,49 +1,68 @@
-import React, { useEffect, useState } from 'react';
-import { View, Image } from 'react-native';
-import { padSize05, padSize, padSize2, padSize4 } from '../../Common/Values';
-// UI
+/*****************************************************************************************
+ * general dialog with customizable values
+*****************************************************************************************/
+import React from 'react';
+import { View } from 'react-native';
+import { padSize, padSize2, padSize4 } from '../../Common/Values';
 import { Modal, Button, Card, Text, useTheme } from 'react-native-paper';
 
 /**
- * title: title of dialog
- * subtitle: heading below the title
- * children: children comp if any
- * isVisible: controls visiblity of dialog
- * onSubmit:
- * onClose:
- * dismissable: tapping outside can close dialog
+ * DialogComp Component
+ * 
+ * A customizable dialog component.
+ * 
+ * @param {Object} props - Component props.
+ * @param {string} props.title - The title of the dialog.
+ * @param {string} props.subtitle - The subtitle or heading below the title.
+ * @param {React.ReactNode} props.children - Children components to be rendered inside the dialog.
+ * @param {boolean} props.isVisible - Controls the visibility of the dialog.
+ * @param {Function} props.onSubmit - Callback function to handle submit action.
+ * @param {Function} props.onClose - Callback function to handle close action.
+ * @param {boolean} [props.dismissable=false] - If true, tapping outside the dialog will close it.
+ * @param {string} [props.submitText='Confirm'] - Text for the submit button.
+ * @param {string} [props.closeText='Close'] - Text for the close button.
+ * @returns {JSX.Element} The DialogComp component.
  */
-const DialogComp = ({ title, subtitle, children, isVisible, onSubmit, onClose, dismissable = false,
-   submitText = 'Confirm', closeText = 'Close' }) => {
+const DialogComp = ({ 
+  title, 
+  subtitle, 
+  children, 
+  isVisible, 
+  onSubmit, 
+  onClose, 
+  dismissable = false, 
+  submitText = 'Confirm', 
+  closeText = 'Close' 
+}) => {
   const theme = useTheme();
 
   return (
     <Modal dismissable={dismissable} visible={isVisible} style={{ marginHorizontal: padSize4 }}>
       <View style={{
-        backgroundColor: theme.colors.surfaceVariant, borderRadius: theme.roundness,
+        backgroundColor: theme.colors.surfaceVariant, 
+        borderRadius: theme.roundness,
         minHeight: 160
       }}>
-        {/* title */}
-        {title ? <Text style={{ padding: padSize2 }} variant="titleLarge">{title}</Text> : null}
-        {/* subtitle */}
-        {subtitle ? <Text style={{ marginHorizontal: padSize2 }}>{subtitle}</Text> : null}
-        {/* comp */}
+        {title && <Text style={{ padding: padSize2 }} variant="titleLarge">{title}</Text>}
+        {subtitle && <Text style={{ marginHorizontal: padSize2 }}>{subtitle}</Text>}
         {children ? children : <View style={{ flex: 1 }} />}
-        {/* bottom */}
         <View style={{ width: '100%', padding: padSize }}>
-          {/* both submit and close */}
-          {onClose && onSubmit ? <Card.Actions style={{ justifyContent: 'flex-end' }}>
-            <Button onPress={onClose}>{closeText}</Button>
-            <Button onPress={onSubmit}>{submitText}</Button>
-          </Card.Actions> : null}
-          {/* submit only */}
-          {onSubmit && !onClose ? <Card.Actions style={{ justifyContent: 'flex-end' }}>
-            <Button onPress={onSubmit}>{submitText}</Button>
-          </Card.Actions> : null}
-          {/* close only */}
-          {onClose && !onSubmit ? <Card.Actions style={{ justifyContent: 'flex-end' }}>
-            <Button onPress={onClose}>{closeText}</Button>
-          </Card.Actions> : null}
+          {onClose && onSubmit && (
+            <Card.Actions style={{ justifyContent: 'flex-end' }}>
+              <Button onPress={onClose}>{closeText}</Button>
+              <Button onPress={onSubmit}>{submitText}</Button>
+            </Card.Actions>
+          )}
+          {onSubmit && !onClose && (
+            <Card.Actions style={{ justifyContent: 'flex-end' }}>
+              <Button onPress={onSubmit}>{submitText}</Button>
+            </Card.Actions>
+          )}
+          {onClose && !onSubmit && (
+            <Card.Actions style={{ justifyContent: 'flex-end' }}>
+              <Button onPress={onClose}>{closeText}</Button>
+            </Card.Actions>
+          )}
         </View>
       </View>
     </Modal>

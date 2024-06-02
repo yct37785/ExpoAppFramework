@@ -1,3 +1,7 @@
+/*****************************************************************************************
+ * TabBar
+*****************************************************************************************/
+
 import React from 'react';
 import { View } from 'react-native';
 import { padSize05, padSize, rippleColorForLight, rippleColorForDark, textColorForLight, textColorForDark } from '../../Common/Values';

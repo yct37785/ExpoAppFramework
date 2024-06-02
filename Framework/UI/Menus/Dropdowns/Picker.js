@@ -1,11 +1,20 @@
+/*****************************************************************************************
+ * one option pickers
+*****************************************************************************************/
 import React from 'react';
-import { popupBGColorForDark } from '../../../Common/Values';
 import { useTheme } from 'react-native-paper';
 import { Picker } from '@react-native-picker/picker';
 
 /**
- * value: str, value of a selection
- * options: [{ label: str, value: str }]
+ * PickerComp Component
+ * 
+ * A dropdown picker component.
+ * 
+ * @param {Object} props - Component props.
+ * @param {string} props.value - The selected value.
+ * @param {Array} props.options - Array of options for the picker, each with a label and value.
+ * @param {Function} props.onChange - Callback function to handle value change.
+ * @returns {JSX.Element} The PickerComp component.
  */
 function PickerComp({ value, options, onChange }) {
   const theme = useTheme();
@@ -18,17 +27,21 @@ function PickerComp({ value, options, onChange }) {
         width: '100%',
       }}
       selectedValue={value}
-      onValueChange={(v) => onChange(v)}>
-      {
-        options.map((item, idx) => {
-          return <Picker.Item key={idx} label={item.label} value={item.value}
-            style={{
-              color: theme.colors.text, backgroundColor: theme.colors.surfaceVariant
-            }} />
-        })
-      }
+      onValueChange={(v) => onChange(v)}
+    >
+      {options.map((item, idx) => (
+        <Picker.Item 
+          key={idx} 
+          label={item.label} 
+          value={item.value}
+          style={{
+            color: theme.colors.text, 
+            backgroundColor: theme.colors.surfaceVariant
+          }} 
+        />
+      ))}
     </Picker>
   );
-};
+}
 
 export default React.memo(PickerComp);

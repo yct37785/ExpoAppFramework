@@ -1,3 +1,6 @@
+/*****************************************************************************************
+ * general use case list that accepts user-defined filtering function
+*****************************************************************************************/
 import React, { useState, useEffect } from 'react';
 import { View, FlatList } from 'react-native';
 import BigList from 'react-native-big-list';
