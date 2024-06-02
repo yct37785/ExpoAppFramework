@@ -4,8 +4,8 @@
 *****************************************************************************************/
 
 // Collapsible.js
-export { CollapsibleComp as Collapsible } from './Collapsible/Collapsible';
-export { AccordionComp as Accordion } from './Collapsible/Collapsible';
+export { CollapsibleComp as Collapsible } from './Containers/Collapsible';
+export { AccordionComp as Accordion } from './Containers/Collapsible';
 // Dialog.js
 export { default as Dialog } from './Dialogs/Dialog';
 // DropdownCheckMenu.js
