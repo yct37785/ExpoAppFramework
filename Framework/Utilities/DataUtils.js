@@ -1,10 +1,16 @@
+/*****************************************************************************************
+* AsyncStorage utilities, only used internally by Framework
+*****************************************************************************************/
 import { deleteDataAS, getAllKeysAS, readDataAS, WriteDataAS, objToKeyValueArr } from '../APIs/AsyncStorageAPI';
 const _ = require('lodash');
 
-/**------------------------------------------------------------------------------------*
- * Create new user data based on NEW_USER_DATA schema, saved to local storage 
- * and a deep copy returned
- *------------------------------------------------------------------------------------*/
+/**
+ * Creates new user data based on NEW_USER_DATA schema, saves it to local storage,
+ * and returns a deep copy.
+ * 
+ * @param {Object} NEW_USER_DATA - The schema for new user data.
+ * @returns {Promise<Object>} A promise that resolves to a deep copy of the new user data.
+ */
 async function createNewUserData(NEW_USER_DATA) {
   return new Promise(async (resolve, reject) => {
     try {
@@ -21,12 +27,13 @@ async function createNewUserData(NEW_USER_DATA) {
   });
 }
 
-/**------------------------------------------------------------------------------------*
- * fixes nested keyvalues
- * - clones the value if key is previously missing
- * - WILL NOT delete values if key is no longer defined in schema, this should be
- * handled separately (i.e. migration patches)
- *------------------------------------------------------------------------------------*/
+/**
+ * Fixes nested key-value pairs by cloning the value if the key is previously missing.
+ * 
+ * @param {Object} currObj - The current object to check.
+ * @param {Object} templateObj - The template object with default values.
+ * @returns {boolean} True if there were missing keys that were added, false otherwise.
+ */
 function fixNestedKeyValues(currObj, templateObj) {
   if (typeof currObj !== 'object') {
     return false;
@@ -47,10 +54,13 @@ function fixNestedKeyValues(currObj, templateObj) {
   return hasMissing;
 }
 
-/**------------------------------------------------------------------------------------*
- * get all locally saved data, will create if no data (keys == 0) and fix if a nested
- * key value pair is missing
- *------------------------------------------------------------------------------------*/
+/**
+ * Gets all locally saved user data, creates new data if no data is found,
+ * and fixes missing nested key-value pairs.
+ * 
+ * @param {Object} NEW_USER_DATA - The schema for new user data.
+ * @returns {Promise<Object>} A promise that resolves to the user data.
+ */
 export async function getLocalUserData(NEW_USER_DATA) {
   return new Promise(async (resolve, reject) => {
     try {

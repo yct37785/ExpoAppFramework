@@ -9,8 +9,8 @@ import { MaterialIcons, Ionicons } from '@expo/vector-icons';
 
 /**
  * chip comp
- * @param toggledMap: map of toggled state for chip menu, { key<string>: value<bool> }
- * @param onChipSelected: takes in the key of the selectedMap when chip is pressed
+ * toggledMap: map of toggled state for chip menu, { key<string>: value<bool> }
+ * onChipSelected: takes in the key of the selectedMap when chip is pressed
  */
 export const ChipsContainerComp = ({
   toggledMap,

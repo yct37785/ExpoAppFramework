@@ -1,12 +1,11 @@
-/**------------------------------------------------------------------------------------*
- * Utilities for display purposes
- *------------------------------------------------------------------------------------*/
-import {
-  useTheme, Text, Button, Appbar, Searchbar, Divider,
-} from 'react-native-paper';
-
 /**
- * highlights search text
+ * Highlights search text within a given string.
+ * 
+ * @param {string} text - The text to search within.
+ * @param {string} query - The search query to highlight.
+ * @param {string} [variant='bodyMedium'] - The text variant style.
+ * @param {string} [label=''] - Optional label to prepend to the text.
+ * @returns {JSX.Element} A React element with the highlighted search text.
  */
 export const highlightText = (text, query, variant='bodyMedium', label='') => {
   if (!query) {

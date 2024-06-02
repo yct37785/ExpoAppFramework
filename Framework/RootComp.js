@@ -1,3 +1,6 @@
+/***************************************************************************************
+* Root of entire app, handles initialization, contexts and navigation of screens
+***************************************************************************************/
 // core
 import React, { Node, useCallback, useMemo, useEffect, useState } from 'react';
 import { View, LogBox, Platform, StatusBar } from 'react-native';
@@ -51,7 +54,7 @@ function ScreenWrapper({ component: Component, ...props }) {
 }
 
 // main
-const RootComp = ({ screenMaps, DEFAULT_SCREEN, NEW_USER_DATA, APP_NAME }) => {
+const RootComp = ({ screenMaps, DEFAULT_SCREEN, NEW_USER_DATA }) => {
   /**------------------------------------------------------------------------------------*
    * State
    *------------------------------------------------------------------------------------*/
