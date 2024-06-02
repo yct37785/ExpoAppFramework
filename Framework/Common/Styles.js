@@ -3,9 +3,7 @@ import { borderRad, padSize05, padSize, padSize2, padSize4 } from './Values';
 
 const Styles = StyleSheet.create({
 
-  /**------------------------------------------------------------------------------------*
-   * Containers
-   *------------------------------------------------------------------------------------*/
+  // Containers
   contPage: {
     flex: 1,
     width: '100%'
@@ -27,16 +25,12 @@ const Styles = StyleSheet.create({
     padding: padSize
   },
 
-  /**------------------------------------------------------------------------------------*
-   * Margins and paddings
-   *------------------------------------------------------------------------------------*/
+  // Margins and paddings
   margin: {
     margin: padSize
   },
 
-  /**------------------------------------------------------------------------------------*
-   * Orientations
-   *------------------------------------------------------------------------------------*/
+  // Orientations
   center: {
     justifyContent: 'center',
     alignItems: 'center'

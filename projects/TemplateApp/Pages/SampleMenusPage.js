@@ -23,21 +23,11 @@ const DROPDOWN_ITEM_LIST = [
  * Display sample menus page
  */
 export default function SampleMenusPage({ navigation, route }) {
-  /**------------------------------------------------------------------------------------*
-   * State
-   *------------------------------------------------------------------------------------*/
   const theme = useTheme();
   const searchBarRef = useRef();
   const [showDialog, setShowDialog] = useState(false);
   const [pickerSelection, setPickerSelection] = useState('red');
 
-  /**------------------------------------------------------------------------------------*
-   * Init
-   *------------------------------------------------------------------------------------*/
-
-  /**------------------------------------------------------------------------------------*
-   * Keyboard
-   *------------------------------------------------------------------------------------*/
   useEffect(() => {
     const keyboardListener = Keyboard.addListener('keyboardDidHide', (e) => {
       if (searchBarRef.current) {
@@ -47,9 +37,6 @@ export default function SampleMenusPage({ navigation, route }) {
     return () => keyboardListener.remove();
   }, [searchBarRef]);
 
-  /**------------------------------------------------------------------------------------*
-   * Utils
-   *------------------------------------------------------------------------------------*/
   function onSubmitDialog() {
     // some logic here
     setShowDialog(false);
@@ -68,9 +55,6 @@ export default function SampleMenusPage({ navigation, route }) {
     // process query logic here
   }
 
-  /**------------------------------------------------------------------------------------*
-   * Draw
-   *------------------------------------------------------------------------------------*/
   return (
     <View style={Styles.contPage}>
       {/* all dialogs here */}

@@ -18,9 +18,6 @@ import { faker } from '@faker-js/faker';
  * sample search bar page
  */
 export default function SampleSearchPage({ navigation, route }) {
-  /**------------------------------------------------------------------------------------*
-   * State
-   *------------------------------------------------------------------------------------*/
   const theme = useTheme();
   const [listType, setListType] = useState('biglist');
   const [searchQuery, setSearchQuery] = useState('');
@@ -28,9 +25,6 @@ export default function SampleSearchPage({ navigation, route }) {
   const [materialsSelected, setMaterialsSelected] = useState({});
   const ROW_HEIGHT = 250;
 
-  /**------------------------------------------------------------------------------------*
-   * Init
-   *------------------------------------------------------------------------------------*/
   useEffect(() => {
     // generate prod list sample
     const fakeData = faker.helpers.multiple(createRandomProduct, { count: 1000 });
@@ -53,9 +47,6 @@ export default function SampleSearchPage({ navigation, route }) {
     };
   }
 
-  /**------------------------------------------------------------------------------------*
-   * Filter
-   *------------------------------------------------------------------------------------*/
   const FilterHeader = React.memo(({isCollapsed}) => {
     return (
       <View style={{ padding: padSize, paddingLeft: padSize2, flexDirection: 'row', alignItems: 'center' }}>
@@ -82,9 +73,6 @@ export default function SampleSearchPage({ navigation, route }) {
     }
   }, [materialsSelected]);
 
-  /**------------------------------------------------------------------------------------*
-   * List
-   *------------------------------------------------------------------------------------*/
   const filterProducts = useCallback((data) => {
     let newData = data.slice();
     // do not filter if no materials selected
@@ -135,9 +123,6 @@ export default function SampleSearchPage({ navigation, route }) {
     );
   }, [searchQuery]);
 
-  /**------------------------------------------------------------------------------------*
-   * Draw
-   *------------------------------------------------------------------------------------*/
   return (
     <View style={Styles.contPage}>
       {/* header and search bar */}

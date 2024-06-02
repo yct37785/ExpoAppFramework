@@ -18,9 +18,6 @@ import {
  */
 function DropdownMenuComp({ triggerComp, value = '', options, onPress, disabled = false, marginTop = 0,
   dir = 'column', selectionStyle = 1, drawCustomOptionComp = null }) {
-  /**------------------------------------------------------------------------------------*
-   * State
-   *------------------------------------------------------------------------------------*/
   const theme = useTheme();
   const menuRef = useRef(null);
   const width = dir === 'column' ? '100%' : 'auto';
@@ -34,10 +31,7 @@ function DropdownMenuComp({ triggerComp, value = '', options, onPress, disabled 
       flexWrap: 'wrap'
     }
   };
-
-  /**------------------------------------------------------------------------------------*
-   * Logic
-   *------------------------------------------------------------------------------------*/
+  
   function onPressOption(val) {
     menuRef.current.close();
     onPress(val);
@@ -46,10 +40,7 @@ function DropdownMenuComp({ triggerComp, value = '', options, onPress, disabled 
   function closeMenu() {
     menuRef.current.close();
   }
-
-  /**------------------------------------------------------------------------------------*
-   * Draw items
-   *------------------------------------------------------------------------------------*/
+  
   function getTextColorStyle(o) {
     if (o.color) {
       return { color: o.color };
@@ -85,9 +76,6 @@ function DropdownMenuComp({ triggerComp, value = '', options, onPress, disabled 
     </TouchableRipple>
   }
 
-  /**------------------------------------------------------------------------------------*
-   * Draw
-   *------------------------------------------------------------------------------------*/
   return (
     <Menu ref={menuRef}>
       <MenuTrigger disabled={disabled} customStyles={{

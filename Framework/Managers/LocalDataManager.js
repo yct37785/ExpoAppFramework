@@ -4,10 +4,10 @@ import { objToKeyValueArr } from '../Utilities/GeneralUtils';
 const _ = require('lodash');
 
 
-/**------------------------------------------------------------------------------------*
+/**
  * Create new user data based on NEW_USER_DATA schema, saved to local storage 
  * and a deep copy returned
- *------------------------------------------------------------------------------------*/
+ */
 async function createNewUserData(NEW_USER_DATA) {
   try {
     const keyValList = Object.keys(NEW_USER_DATA).map((key) => {
@@ -21,12 +21,12 @@ async function createNewUserData(NEW_USER_DATA) {
   }
 }
 
-/**------------------------------------------------------------------------------------*
+/**
  * fixes nested keyvalues
  * - clones the value if key is previously missing
  * - WILL NOT delete values if key is no longer defined in schema, this should be
  * handled separately (i.e. migration patches)
- *------------------------------------------------------------------------------------*/
+ */
 function fixNestedKeyValues(currObj, templateObj) {
   let hasMissing = false;
   for (const key in templateObj) {
@@ -40,10 +40,10 @@ function fixNestedKeyValues(currObj, templateObj) {
   return hasMissing;
 }
 
-/**------------------------------------------------------------------------------------*
+/**
  * get all locally saved data, will create if no data (keys == 0) and fix if a nested
  * key value pair is missing
- *------------------------------------------------------------------------------------*/
+ */
 async function getLocalUserData(NEW_USER_DATA) {
   try {
     let allKeys = await getAllKeysAS();
@@ -71,17 +71,17 @@ async function getLocalUserData(NEW_USER_DATA) {
   }
 }
 
-/**------------------------------------------------------------------------------------*
+/**
  * custom hook for managing mutable userData instance and loading/saving to local storage
- *------------------------------------------------------------------------------------*/
+ */
 const useLocalDataManager = ({ NEW_USER_DATA }) => {
   const [data, setData] = useState({}); // will not be exposed to consumers
   const [isLocalDataLoaded, setIsLocalDataLoaded] = useState(false);
   const [updateCount, setUpdateCount] = useState(0);
 
-  /**----------------------------------------------------------------------------------*
+  /**
    * on init will fetch from local storage
-   *----------------------------------------------------------------------------------*/
+   */
   useEffect(() => {
     const fetchData = async () => {
       const storedData = await getLocalUserData(NEW_USER_DATA);
@@ -93,12 +93,12 @@ const useLocalDataManager = ({ NEW_USER_DATA }) => {
     fetchData();
   }, []);
 
-  /**----------------------------------------------------------------------------------*
+  /**
    * set key value pair
    * kvPairs: [[keypath, value],... ]
    * - key: "level1.level2.level3"
    * - value: any data type
-   *----------------------------------------------------------------------------------*/
+   */
   const setLocalDataValue = async (kvPairs) => {
     let updatedData = { ...data };
 
@@ -130,10 +130,10 @@ const useLocalDataManager = ({ NEW_USER_DATA }) => {
     await writeDataAS(toUpdate);
   };
 
-  /**----------------------------------------------------------------------------------*
+  /**
    * get value from key
    * - key: "level1.level2.level3"
-   *----------------------------------------------------------------------------------*/
+   */
   const getLocalDataValue = (keyString) => {
     const keys = keyString.split('.');
     let currentLevel = data;
@@ -146,9 +146,9 @@ const useLocalDataManager = ({ NEW_USER_DATA }) => {
     return currentLevel;
   };
 
-  /**----------------------------------------------------------------------------------*
+  /**
    * reset data based on schema
-   *----------------------------------------------------------------------------------*/
+   */
   const resetLocalData = async () => {
     let allKeys = await getAllKeysAS();
     if (allKeys.length > 0) {
@@ -158,9 +158,9 @@ const useLocalDataManager = ({ NEW_USER_DATA }) => {
     setUpdateCount(updateCount + 1);
   };
 
-  /**----------------------------------------------------------------------------------*
+  /**
    * get data in JSON string format
-   *----------------------------------------------------------------------------------*/
+   */
   const getLocalDataStringify = () => {
     return JSON.stringify(data, null, 2);
   };

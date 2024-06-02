@@ -18,19 +18,9 @@ export const TAB_ROUTES = [
  * Display sample page
  */
 export default function SampleTabsPage({ navigation, route }) {
-  /**------------------------------------------------------------------------------------*
-   * State
-   *------------------------------------------------------------------------------------*/
   const theme = useTheme();
   const [tabIndex, setTabIndex] = useState(0);
 
-  /**------------------------------------------------------------------------------------*
-   * Init
-   *------------------------------------------------------------------------------------*/
-
-  /**------------------------------------------------------------------------------------*
-   * Tabbar
-   *------------------------------------------------------------------------------------*/
   function renderIcon({ route, focused, color }) {
     return <Icon name={route.icon} size={15} color={theme.colors.text} />
   }
@@ -60,9 +50,6 @@ export default function SampleTabsPage({ navigation, route }) {
     return <View style={Styles.contFlex}><Text>P3</Text></View>
   }
 
-  /**------------------------------------------------------------------------------------*
-   * Draw
-   *------------------------------------------------------------------------------------*/
   return (
     <View style={Styles.contPage}>
       {/* main content here */}

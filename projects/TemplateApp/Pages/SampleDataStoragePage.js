@@ -13,23 +13,14 @@ import { LocalDataContext, onLocalDataUpdate } from '../../../Framework/Contexts
  * sample local data storage showcase page
  */
 export default function SampleDataStoragePage({ navigation, route }) {
-  /**------------------------------------------------------------------------------------*
-   * State
-   *------------------------------------------------------------------------------------*/
   const theme = useTheme();
   const { paramText } = route.params;
   const { setLocalDataValue, getLocalDataValue, resetLocalData, getLocalDataStringify } = useContext(LocalDataContext);
 
-  /**------------------------------------------------------------------------------------*
-   * Init
-   *------------------------------------------------------------------------------------*/
   onLocalDataUpdate(() => {
     console.log("SampleDataStoragePage: updated local data");
   });
 
-  /**------------------------------------------------------------------------------------*
-   * Values
-   *------------------------------------------------------------------------------------*/
   const updateTrackersSample = () => {
     const num = getLocalDataValue("trackers_sample.key1.num");
     setLocalDataValue([["trackers_sample.key1.num", num + 1]]);
@@ -38,10 +29,7 @@ export default function SampleDataStoragePage({ navigation, route }) {
   const toggleDarkMode = () => {
     setLocalDataValue([["settings_sample.isDarkMode", !getLocalDataValue("settings_sample.isDarkMode")]]);
   }
-
-  /**------------------------------------------------------------------------------------*
-   * Draw
-   *------------------------------------------------------------------------------------*/
+  
   return (
     <View style={Styles.contPage}>
       {/* appbar */}
