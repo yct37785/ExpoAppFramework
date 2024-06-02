@@ -38,13 +38,17 @@ const CombinedDarkTheme = {
   },
 };
 
-// temp warning disabling
 LogBox.ignoreLogs(['new NativeEventEmitter']);
 
-// nav
 const Stack = createNativeStackNavigator();
 
-// screens
+/**
+ * A wrapper for screens to standardize their layout.
+ * 
+ * @param {Object} props - The props passed to the screen.
+ * @param {React.ComponentType} props.component - The screen component to render.
+ * @returns {JSX.Element} The screen wrapped with a standardized layout.
+ */
 function ScreenWrapper({ component: Component, ...props }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -53,17 +57,19 @@ function ScreenWrapper({ component: Component, ...props }) {
   );
 }
 
-// main
+/**
+ * The root component of the entire app. Handles initialization, context providers, and navigation.
+ * 
+ * @param {Object} props - The props passed to the root component.
+ * @param {Object} props.screenMaps - A mapping of screen names to their respective components, refer to TemplateApp > App.js.
+ * @param {string} props.DEFAULT_SCREEN - The default screen to display on app launch, refer to TemplateApp > App.js.
+ * @param {Object} props.NEW_USER_DATA - The schema for new user data, refer to TemplateApp > App.js.
+ * @returns {JSX.Element} The root component of the app.
+ */
 const RootComp = ({ screenMaps, DEFAULT_SCREEN, NEW_USER_DATA }) => {
-  /**------------------------------------------------------------------------------------*
-   * State
-   *------------------------------------------------------------------------------------*/
   const localDataManager = useLocalDataManager({ NEW_USER_DATA });
   const [theme, setTheme] = useState(CombinedDarkTheme);
 
-  /**------------------------------------------------------------------------------------*
-   * Theme
-   *------------------------------------------------------------------------------------*/
   useEffect(() => {
     const isDarkMode = localDataManager.getLocalDataValue("settings_sample.isDarkMode");
     if (localDataManager.isLocalDataLoaded && (isDarkMode !== (theme === CombinedDarkTheme))) {
@@ -72,10 +78,7 @@ const RootComp = ({ screenMaps, DEFAULT_SCREEN, NEW_USER_DATA }) => {
       setTheme(newTheme);
     }
   }, [localDataManager.updateCount, localDataManager.isLocalDataLoaded]);
-  
-  /**------------------------------------------------------------------------------------*
-   * Draw
-   *------------------------------------------------------------------------------------*/
+
   return (
     <LocalDataContext.Provider value={localDataManager}>
       <PaperProvider theme={theme}>
