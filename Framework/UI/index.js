@@ -2,6 +2,7 @@
  * exposed to end users, export new UI components here
  * append Comp to name of each UI component for consistency 
 *****************************************************************************************/
+
 // Collapsible.js
 export { CollapsibleComp as Collapsible } from './Collapsible/Collapsible';
 export { AccordionComp as Accordion } from './Collapsible/Collapsible';

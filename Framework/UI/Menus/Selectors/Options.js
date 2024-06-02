@@ -1,16 +1,15 @@
-import React, { useContext, useState, useEffect, useCallback, useRef, createContext } from 'react';
-import { View, Image, Keyboard } from 'react-native';
-import { borderRad, padSize05, padSize, padSize2, padSize4, iconSizeSmall } from '../../../Common/Values';
-// UI
-import {
-  useTheme, Text, Button, Appbar, Divider, RadioButton, Chip
-} from 'react-native-paper';
-import { MaterialIcons, Ionicons } from '@expo/vector-icons';
+import React from 'react';
+import { View } from 'react-native';
+import { Chip, useTheme } from 'react-native-paper';
+import { padSize05 } from '../../Common/Values';
 
 /**
- * chip comp
- * toggledMap: map of toggled state for chip menu, { key<string>: value<bool> }
- * onChipSelected: takes in the key of the selectedMap when chip is pressed
+ * ChipsContainerComp Component
+ * 
+ * @param {Object} props - Component props.
+ * @param {Object} props.toggledMap - Map of toggled state for chip menu, where key is the chip label and value is a boolean indicating if the chip is selected.
+ * @param {Function} props.onChipSelected - Callback function to handle chip selection. Takes the key of the selected chip as a parameter.
+ * @returns {JSX.Element} The ChipsContainerComp component.
  */
 export const ChipsContainerComp = ({
   toggledMap,
@@ -20,11 +19,18 @@ export const ChipsContainerComp = ({
 
   return (
     <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingTop: padSize05 }}>
-      {Object.keys(toggledMap).map((k) => {
-        return <Chip key={k} selected={toggledMap[k]} showSelectedCheck={false} mode='outlined'
+      {Object.keys(toggledMap).map((k) => (
+        <Chip 
+          key={k} 
+          selected={toggledMap[k]} 
+          showSelectedCheck={false} 
+          mode='outlined'
           style={{ margin: padSize05, backgroundColor: toggledMap[k] ? theme.colors.primaryContainer : theme.colors.backdrop }}
-          onPress={() => onChipSelected(k)}>{k}</Chip>
-      })}
+          onPress={() => onChipSelected(k)}
+        >
+          {k}
+        </Chip>
+      ))}
     </View>
   );
 };

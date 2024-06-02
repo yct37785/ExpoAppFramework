@@ -1,21 +1,24 @@
-import React, { useContext, useState, useEffect, useCallback, useRef, createContext } from 'react';
-import { View, Image, Keyboard } from 'react-native';
-import { padSize05, padSize, padSize2, iconSizeSmall } from '../../../Framework/Common/Values';
-import Styles from '../../../Framework/Common/Styles';
-// UI
-import {
-  useTheme, Text, Button, Appbar, Divider, RadioButton, Chip
-} from 'react-native-paper';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { View, Image } from 'react-native';
+import { useTheme, Text, Appbar, Divider, RadioButton } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Collapsible, ChipsContainer } from '../../../Framework/UI/index';
+import { Collapsible, ChipsContainerComp } from '../../../Framework/UI/index';
 import { SearchableListComp } from '../../../Framework/UI/Lists/List';
 import { SearchBarComp } from '../../../Framework/UI/Inputs/SearchBar';
 import { highlightText } from '../../../Framework/Utilities/UI_Utilities';
-// dev
 import { faker } from '@faker-js/faker';
+import Styles from '../../../Framework/Common/Styles';
+import { padSize05, padSize, padSize2, iconSizeSmall } from '../../../Framework/Common/Values';
 
 /**
- * sample search bar page
+ * SampleSearchPage Component
+ * 
+ * Displays a sample page with a search bar, filter options, and a list of products.
+ * 
+ * @param {Object} props - Component props.
+ * @param {Object} props.navigation - Navigation object for navigating between screens.
+ * @param {Object} props.route - Route object containing route parameters.
+ * @returns {JSX.Element} The SampleSearchPage component.
  */
 export default function SampleSearchPage({ navigation, route }) {
   const theme = useTheme();
@@ -26,17 +29,22 @@ export default function SampleSearchPage({ navigation, route }) {
   const ROW_HEIGHT = 250;
 
   useEffect(() => {
-    // generate prod list sample
+    // Generate product list sample
     const fakeData = faker.helpers.multiple(createRandomProduct, { count: 1000 });
-    // generate filters
-    const materialsSelected = {};
-    fakeData.map((item) => {
-      materialsSelected[item.material] = false;
+    // Generate filters
+    const initialMaterialsSelected = {};
+    fakeData.forEach((item) => {
+      initialMaterialsSelected[item.material] = false;
     });
-    setMaterialsSelected(materialsSelected);
+    setMaterialsSelected(initialMaterialsSelected);
     setProductList(fakeData);
   }, []);
 
+  /**
+   * Creates a random product object.
+   * 
+   * @returns {Object} A random product object.
+   */
   const createRandomProduct = () => {
     return {
       id: faker.string.uuid(),
@@ -45,53 +53,87 @@ export default function SampleSearchPage({ navigation, route }) {
       desc: faker.commerce.productDescription(),
       material: faker.commerce.productMaterial().toLowerCase()
     };
-  }
+  };
 
-  const FilterHeader = React.memo(({isCollapsed}) => {
+  /**
+   * FilterHeader Component
+   * 
+   * @param {Object} param0 - Component props.
+   * @param {boolean} param0.isCollapsed - Indicates if the filter section is collapsed.
+   * @returns {JSX.Element} The FilterHeader component.
+   */
+  const FilterHeader = React.memo(({ isCollapsed }) => {
     return (
       <View style={{ padding: padSize, paddingLeft: padSize2, flexDirection: 'row', alignItems: 'center' }}>
         <Text>Filters</Text>
-        {isCollapsed ? <MaterialIcons name='keyboard-arrow-down' color={theme.colors.text} size={iconSizeSmall} style={{ paddingLeft: padSize05 }} /> :
-          <MaterialIcons name='keyboard-arrow-up' color={theme.colors.text} size={iconSizeSmall} style={{ paddingLeft: padSize05 }} />}
+        <MaterialIcons
+          name={isCollapsed ? 'keyboard-arrow-down' : 'keyboard-arrow-up'}
+          color={theme.colors.text}
+          size={iconSizeSmall}
+          style={{ paddingLeft: padSize05 }}
+        />
       </View>
     );
   });
 
-  const FilterContent = React.memo(({isCollapsed}) => {
+  /**
+   * FilterContent Component
+   * 
+   * @param {Object} param0 - Component props.
+   * @param {boolean} param0.isCollapsed - Indicates if the filter section is collapsed.
+   * @returns {JSX.Element} The FilterContent component.
+   */
+  const FilterContent = React.memo(({ isCollapsed }) => {
     return (
       <View style={{ width: '100%', padding: padSize, paddingHorizontal: padSize2 }}>
         <Text variant='labelSmall'>Materials</Text>
-        <ChipsContainer toggledMap={materialsSelected} onChipSelected={onMaterialChipSelected} />
+        <ChipsContainerComp toggledMap={materialsSelected} onChipSelected={onMaterialChipSelected} />
       </View>
     );
   });
 
+  /**
+   * Handles selection of material chips.
+   * 
+   * @param {string} mat - The key of the selected material chip.
+   */
   const onMaterialChipSelected = useCallback((mat) => {
     if (mat in materialsSelected) {
-      materialsSelected[mat] = !materialsSelected[mat];
-      setMaterialsSelected({ ...materialsSelected });
+      setMaterialsSelected((prevMaterialsSelected) => ({
+        ...prevMaterialsSelected,
+        [mat]: !prevMaterialsSelected[mat]
+      }));
     }
   }, [materialsSelected]);
 
+  /**
+   * Filters the products based on the selected materials and search query.
+   * 
+   * @param {Array} data - Array of product data.
+   * @returns {Array} Filtered array of product data.
+   */
   const filterProducts = useCallback((data) => {
-    let newData = data.slice();
-    // do not filter if no materials selected
+    let newData = [...data];
     const allFalse = Object.values(materialsSelected).every((value) => value === false);
     if (!allFalse) {
-      newData = data.filter((item) =>
-      materialsSelected[item.material]
-    );
+      newData = data.filter((item) => materialsSelected[item.material]);
     }
-    // if no query, return as we do not want to filter based on ''
     if (!searchQuery) return newData;
-    newData = newData.filter(
-      (item) => 
-        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.desc.toLowerCase().includes(searchQuery.toLowerCase())
+    return newData.filter((item) => 
+      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.desc.toLowerCase().includes(searchQuery.toLowerCase())
     );
-    return newData;
   }, [searchQuery, materialsSelected]);
 
+  /**
+   * ListItem Component
+   * 
+   * @param {Object} param0 - Component props.
+   * @param {Object} param0.item - The item data to render.
+   * @param {string} param0.searchQuery - The current search query.
+   * @param {Function} param0.highlightSearchText - Function to highlight search text.
+   * @returns {JSX.Element} The ListItem component.
+   */
   const ListItem = React.memo(({ item, searchQuery, highlightSearchText }) => {
     return (
       <View style={Styles.contFlex}>
@@ -99,9 +141,7 @@ export default function SampleSearchPage({ navigation, route }) {
           {highlightText(item.name, searchQuery, 'titleSmall')}
           <Image
             style={{ width: 100, height: 100 }}
-            source={{
-              uri: item.img,
-            }}
+            source={{ uri: item.img }}
             resizeMode={'contain'}
           />
           <Text variant='labelMedium'>{`material: ${item.material}`}</Text>
@@ -112,7 +152,14 @@ export default function SampleSearchPage({ navigation, route }) {
     );
   });
 
-
+  /**
+   * Renders each item in the list.
+   * 
+   * @param {Object} param0 - Render item parameters.
+   * @param {Object} param0.item - The item data to render.
+   * @param {number} param0.index - The index of the item.
+   * @returns {JSX.Element} The rendered item component.
+   */
   const renderItem = useCallback(({ item, index }) => {
     return (
       <ListItem
@@ -125,24 +172,19 @@ export default function SampleSearchPage({ navigation, route }) {
 
   return (
     <View style={Styles.contPage}>
-      {/* header and search bar */}
+      {/* Header and search bar */}
       <Appbar.Header>
         <SearchBarComp
           value={searchQuery}
           onChange={setSearchQuery}
         />
       </Appbar.Header>
-      {/* filter menu */}
+      {/* Filter menu */}
       <Collapsible
-        renderHeader={(isCollapsed) => { return <FilterHeader isCollapsed={isCollapsed} /> }}
-        renderContent={(isCollapsed) => { return <FilterContent isCollapsed={isCollapsed} /> }}
+        renderHeader={(isCollapsed) => <FilterHeader isCollapsed={isCollapsed} />}
+        renderContent={(isCollapsed) => <FilterContent isCollapsed={isCollapsed} />}
       />
-      {/* <AccordionComp
-        sections={[0]}
-        renderHeader={renderFilterHeader}
-        renderContent={renderFilterContent}
-      /> */}
-      {/* toggle biglist vs flatlist */}
+      {/* Toggle BigList vs FlatList */}
       <View style={Styles.contVert}>
         <View style={Styles.contPad}>
           <RadioButton.Group onValueChange={newValue => setListType(newValue)} value={listType}>
@@ -158,7 +200,7 @@ export default function SampleSearchPage({ navigation, route }) {
             </View>
           </RadioButton.Group>
         </View>
-        {/* main content */}
+        {/* Main content */}
         <SearchableListComp
           data={productList}
           filterFunction={filterProducts}

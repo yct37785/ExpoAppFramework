@@ -1,10 +1,20 @@
-import React, { useContext, useState, useEffect, useCallback, useRef, createContext } from 'react';
-import { View, Image, Keyboard, FlatList } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, FlatList } from 'react-native';
 import BigList from 'react-native-big-list';
 import PropTypes from 'prop-types';
 
 /**
- * Combined List component supporting both BigList and FlatList
+ * SearchableListComp Component
+ * 
+ * Combined List component supporting both BigList and FlatList.
+ * 
+ * @param {Object} props - Component props.
+ * @param {Array} props.data - Array of data items to be displayed in the list.
+ * @param {Function} props.filterFunction - Function to filter the data items.
+ * @param {Function} props.renderItem - Function to render each item in the list.
+ * @param {string} [props.listType='biglist'] - Type of list to display, either 'biglist' or 'flatlist'.
+ * @param {number} props.rowHeight - Height of each row in the list.
+ * @returns {JSX.Element} The SearchableListComp component.
  */
 export const SearchableListComp = ({
   data,

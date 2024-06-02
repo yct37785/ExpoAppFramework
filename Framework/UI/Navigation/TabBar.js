@@ -1,26 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 import { padSize05, padSize, rippleColorForLight, rippleColorForDark, textColorForLight, textColorForDark } from '../../Common/Values';
-// UI
-import {
-  useTheme, Text
-} from 'react-native-paper';
-// tabs
+import { useTheme, Text } from 'react-native-paper';
 import { TabView, TabBar } from 'react-native-tab-view';
 
 /**
- * routes: [{ key: str, title: str }]
- * renderFuncs: [func]
+ * TabBarComp Component
+ * 
+ * @param {Object[]} routes - Array of route objects for the tabs.
+ * @param {Function} renderIcon - Function to render the icon for each tab.
+ * @param {Object} sceneMap - Object mapping route keys to their respective scenes.
+ * @param {number} tabIndex - Index of the currently selected tab.
+ * @param {Function} onTabIdxChange - Function to handle tab index changes.
+ * @param {string} position - Position of the tab bar.
+ * @returns {JSX.Element} The TabBarComp component.
  */
 function TabBarComp({ routes, renderIcon, sceneMap, tabIndex, onTabIdxChange, position }) {
   const theme = useTheme();
   const textColor = theme.dark ? textColorForDark : textColorForLight;
 
+  /**
+   * Placeholder loading screen for lazy loading.
+   * 
+   * @returns {JSX.Element} An empty View.
+   */
   function loadingScreen() {
-    return <View style={{ flex: 1 }}>
-    </View>
+    return <View style={{ flex: 1 }} />;
   }
 
+  /**
+   * Renders the tab bar.
+   * 
+   * @param {Object} props - Props passed to the TabBar component.
+   * @returns {JSX.Element} The TabBar component with customized styling and functionality.
+   */
   const renderTabBar = props => (
     <TabBar
       {...props}
@@ -28,20 +41,8 @@ function TabBarComp({ routes, renderIcon, sceneMap, tabIndex, onTabIdxChange, po
       indicatorStyle={{ backgroundColor: textColor }}
       style={{ backgroundColor: theme.colors.surface }}
       labelStyle={{ color: textColor }}
-      renderIcon={({ route, focused, color }) => {
-        if (route.icon) {
-          return renderIcon({route, focused, color});
-        } else {
-          return null;
-        }
-      }}
-      renderLabel={({ route, focused, color }) => {
-        if (route.title) {
-          return <Text style={{ color: textColor }}>{route.title}</Text>;
-        } else {
-          return null;
-        }
-      }}
+      renderIcon={({ route, focused, color }) => route.icon ? renderIcon({ route, focused, color }) : null}
+      renderLabel={({ route, focused, color }) => route.title ? <Text style={{ color: textColor }}>{route.title}</Text> : null}
     />
   );
 
@@ -56,7 +57,7 @@ function TabBarComp({ routes, renderIcon, sceneMap, tabIndex, onTabIdxChange, po
       tabBarPosition={position}
       style={{ width: '100%' }}
     />
-  )
+  );
 }
 
 export default React.memo(TabBarComp);
