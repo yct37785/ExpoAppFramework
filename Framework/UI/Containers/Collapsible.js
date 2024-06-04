@@ -1,9 +1,8 @@
 /*****************************************************************************************
- * collapsible comps
+ * collapsible containers
 *****************************************************************************************/
 import React, { useState } from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { useTheme } from 'react-native-paper';
 import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
 
@@ -14,13 +13,10 @@ import Accordion from 'react-native-collapsible/Accordion';
  * 
  * @param {Object} props - Component props.
  * @param {Function} props.renderHeader - Function to render the header of the collapsible section.
- * @param {Function} props.renderContent - Function to render the content of the collapsible section.
+ * @param {React.ReactNode} props.children - Content to be rendered within the collapsible section.
  * @returns {JSX.Element} The CollapsibleComp component.
  */
-export const CollapsibleComp = ({
-  renderHeader = () => {},
-  renderContent = () => {}
-}) => {
+export const CollapsibleComp = ({ renderHeader = () => {}, children }) => {
   const [isCollapsed, setIsCollapsed] = useState(true);
 
   const toggleCollapse = () => {
@@ -33,7 +29,7 @@ export const CollapsibleComp = ({
         {renderHeader(isCollapsed)}
       </TouchableOpacity>
       <Collapsible collapsed={isCollapsed}>
-        {renderContent(isCollapsed)}
+        {children}
       </Collapsible>
     </View>
   );

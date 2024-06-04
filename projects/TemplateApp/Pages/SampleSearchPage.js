@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { View, Image } from 'react-native';
 import { useTheme, Text, Appbar, Divider, RadioButton } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Collapsible, ChipsContainerComp } from '../../../Framework/UI/index';
+import { CollapsibleComp, ChipsContainerComp } from '../../../Framework/UI/index';
 import { SearchableListComp } from '../../../Framework/UI/Data/List';
 import { TextInputFieldComp } from '../../../Framework/UI/Inputs/TextInput';
 import { highlightText } from '../../../Framework/Utilities/UI_Utilities';
@@ -72,22 +72,6 @@ export default function SampleSearchPage({ navigation, route }) {
           size={iconSizeSmall}
           style={{ paddingLeft: padSize05 }}
         />
-      </View>
-    );
-  });
-
-  /**
-   * FilterContent Component
-   * 
-   * @param {Object} param0 - Component props.
-   * @param {boolean} param0.isCollapsed - Indicates if the filter section is collapsed.
-   * @returns {JSX.Element} The FilterContent component.
-   */
-  const FilterContent = React.memo(({ isCollapsed }) => {
-    return (
-      <View style={{ width: '100%', padding: padSize, paddingHorizontal: padSize2 }}>
-        <Text variant='labelSmall'>Materials</Text>
-        <ChipsContainerComp toggledMap={materialsSelected} onChipSelected={onMaterialChipSelected} />
       </View>
     );
   });
@@ -182,10 +166,14 @@ export default function SampleSearchPage({ navigation, route }) {
         />
       </Appbar.Header>
       {/* Filter menu */}
-      <Collapsible
+      <CollapsibleComp
         renderHeader={(isCollapsed) => <FilterHeader isCollapsed={isCollapsed} />}
-        renderContent={(isCollapsed) => <FilterContent isCollapsed={isCollapsed} />}
-      />
+      >
+        <View style={{ width: '100%', padding: padSize, paddingHorizontal: padSize2 }}>
+          <Text variant='labelSmall'>Materials</Text>
+          <ChipsContainerComp toggledMap={materialsSelected} onChipSelected={onMaterialChipSelected} />
+        </View>
+      </CollapsibleComp>
       {/* Toggle BigList vs FlatList */}
       <View style={Styles.contVert}>
         <View style={Styles.contPad}>
