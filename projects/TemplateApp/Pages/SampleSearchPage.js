@@ -4,7 +4,7 @@ import { useTheme, Text, Appbar, Divider, RadioButton } from 'react-native-paper
 import { MaterialIcons } from '@expo/vector-icons';
 import { CollapsibleComp, ChipsContainerComp } from '../../../Framework/UI/index';
 import { SearchableListComp } from '../../../Framework/UI/Data/List';
-import { TextInputFieldComp } from '../../../Framework/UI/Inputs/TextInput';
+import { TextInputFieldComp } from '../../../Framework/UI/Input/TextInput';
 import { highlightText } from '../../../Framework/Utilities/UI_Utilities';
 import { faker } from '@faker-js/faker';
 import Styles from '../../../Framework/Common/Styles';
