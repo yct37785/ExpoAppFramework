@@ -164,7 +164,7 @@ export default function SampleSearchPage({ navigation, route }) {
         />
       </Appbar.Header>
       {/* Filter menu */}
-      <Collapsible>
+      <Collapsible toggleHeaderText="Filter">
         <View style={{ width: '100%', padding: padSize, paddingHorizontal: padSize2 }}>
           <Text variant='labelSmall'>Materials</Text>
           <ChipsContainer toggledMap={materialsSelected} onChipSelected={onMaterialChipSelected} />

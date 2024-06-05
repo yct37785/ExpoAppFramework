@@ -10,17 +10,17 @@ import Accordion from 'react-native-collapsible/Accordion';
 import { padSize05, padSize, padSize2, iconSizeSmall } from '../../Common/Values';
 
 /**
-   * FilterHeader Component
+   * ToggleHeader Component
    * 
    * @param {Object} param0 - Component props.
-   * @param {boolean} param0.isCollapsed - Indicates if the filter section is collapsed.
-   * @returns {JSX.Element} The FilterHeader component.
+   * @param {boolean} param0.isCollapsed - Indicates if the container is collapsed.
+   * @returns {JSX.Element} The ToggleHeader component.
    */
-const FilterHeader = React.memo(({ isCollapsed }) => {
+const ToggleHeader = React.memo(({ toggleHeaderText = '', isCollapsed }) => {
   const theme = useTheme();
   return (
     <View style={{ padding: padSize, paddingLeft: padSize2, flexDirection: 'row', alignItems: 'center' }}>
-      <Text>Filters</Text>
+      <Text>{toggleHeaderText}</Text>
       <MaterialIcons
         name={isCollapsed ? 'keyboard-arrow-down' : 'keyboard-arrow-up'}
         color={theme.colors.text}
@@ -40,7 +40,7 @@ const FilterHeader = React.memo(({ isCollapsed }) => {
  * @param {React.ReactNode} props.children - Content to be rendered within the collapsible section.
  * @returns {JSX.Element} The CollapsibleComp component.
  */
-export const CollapsibleComp = ({ children }) => {
+export const CollapsibleComp = ({ toggleHeaderText = '', children }) => {
   const [isCollapsed, setIsCollapsed] = useState(true);
 
   const toggleCollapse = () => {
@@ -50,7 +50,7 @@ export const CollapsibleComp = ({ children }) => {
   return (
     <View>
       <TouchableOpacity onPress={toggleCollapse}>
-        <FilterHeader isCollapsed={isCollapsed} />
+        <ToggleHeader toggleHeaderText={toggleHeaderText} isCollapsed={isCollapsed} />
       </TouchableOpacity>
       <Collapsible collapsed={isCollapsed}>
         {children}
