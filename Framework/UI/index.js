@@ -18,6 +18,6 @@ export { ChipsContainerComp as ChipsContainer } from './Menus/Selectors/Options'
 export { default as Picker } from './Menus/Dropdowns/Picker';
 // search bar todo
 // TabBar.js
-export { default as TabBar } from './Navigation/TabBar';
+export { default as TabBar } from './Containers/TabBar';
 // Text.js
 export { highlightTextComp as highlightText } from './Text';
