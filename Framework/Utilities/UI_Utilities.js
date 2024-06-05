@@ -1,6 +1,7 @@
 /*****************************************************************************************
  * Utilities to help with display purposes 
 *****************************************************************************************/
+import { Text } from 'react-native-paper';
 
 /**
  * Highlights search text within a given string.
