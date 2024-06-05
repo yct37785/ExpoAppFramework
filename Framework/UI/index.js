@@ -19,3 +19,5 @@ export { default as Picker } from './Menus/Dropdowns/Picker';
 // search bar todo
 // TabBar.js
 export { default as TabBar } from './Navigation/TabBar';
+// Text.js
+export { highlightTextComp as highlightText } from './Text';
