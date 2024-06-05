@@ -5,7 +5,7 @@ import { NEW_USER_DATA } from './User/Schemas';
 
 const App = () => {
   return (
-    <RootComp screenMaps={screenMaps} defaultScreen={DEFAULT_SCREEN} NEW_USER_DATA={NEW_USER_DATA} />
+    <RootComp screenMaps={screenMaps} DEFAULT_SCREEN={DEFAULT_SCREEN} NEW_USER_DATA={NEW_USER_DATA} />
   );
 };
 
