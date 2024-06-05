@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import Styles from '../../../Framework/Common/Styles';
 import { useTheme, Text, Appbar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { TabBar } from '../../../Framework/UI/index';
+import { Tabs } from '../../../Framework/UI/index';
 
 export const TAB_ROUTES = [
   { title: 'Page 1', key: 'p1', icon: 'google-street-view' },
@@ -92,7 +92,7 @@ export default function SampleTabsPage({ navigation, route }) {
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title="Tabs" />
       </Appbar.Header>
-      <TabBar
+      <Tabs
         routes={TAB_ROUTES}
         renderIcon={renderIcon}
         tabIndex={tabIndex}

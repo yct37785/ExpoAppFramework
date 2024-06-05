@@ -19,7 +19,7 @@ import { TabView, TabBar } from 'react-native-tab-view';
  * @param {string} position - Position of the tab bar.
  * @returns {JSX.Element} The TabBarComp component.
  */
-function TabBarComp({ routes, renderIcon, sceneMap, tabIndex, onTabIdxChange, position }) {
+function TabsComp({ routes, renderIcon, sceneMap, tabIndex, onTabIdxChange, position }) {
   const theme = useTheme();
   const textColor = theme.dark ? textColorForDark : textColorForLight;
 
@@ -64,4 +64,4 @@ function TabBarComp({ routes, renderIcon, sceneMap, tabIndex, onTabIdxChange, po
   );
 }
 
-export default React.memo(TabBarComp);
+export default React.memo(TabsComp);
