@@ -4,7 +4,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Chip, useTheme } from 'react-native-paper';
-import { padSize05 } from '../../Common/Values';
+import { padSize05 } from '../../../Common/Values';
 
 /**
  * ChipsContainerComp Component
