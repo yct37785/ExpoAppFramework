@@ -20,4 +20,4 @@ export { default as Picker } from './Menus/Dropdowns/Picker';
 // TabBar.js
 export { default as TabBar } from './Containers/TabBar';
 // Text.js
-export { highlightTextComp as highlightText } from './Text';
+export { highlightTextComp as highlightText } from './Display/Text';
