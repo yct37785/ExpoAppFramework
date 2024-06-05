@@ -3,7 +3,7 @@
 *****************************************************************************************/
 import React, { useEffect, useRef } from 'react';
 import { Keyboard } from 'react-native';
-import { Searchbar, TextInput, useTheme } from 'react-native-paper';
+import { Searchbar, TextInput } from 'react-native-paper';
 
 /**
  * KeyInputField Component
@@ -25,12 +25,12 @@ export const TextInputFieldComp = ({
   onFocus=()=>{},
   onBlur=()=>{}
 }) => {
-  const searchBarRef = useRef();
+  const inputRef = useRef();
 
   useEffect(() => {
     const keyboardListener = Keyboard.addListener('keyboardDidHide', () => {
-      if (searchBarRef.current) {
-        searchBarRef.current.blur();
+      if (inputRef.current) {
+        inputRef.current.blur();
       }
     });
     return () => keyboardListener.remove();
