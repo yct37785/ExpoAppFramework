@@ -3,8 +3,33 @@
 *****************************************************************************************/
 import React, { useState } from 'react';
 import { View, TouchableOpacity } from 'react-native';
+import { useTheme, Text } from 'react-native-paper';
+import { MaterialIcons } from '@expo/vector-icons';
 import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
+import { padSize05, padSize, padSize2, iconSizeSmall } from '../../Common/Values';
+
+/**
+   * FilterHeader Component
+   * 
+   * @param {Object} param0 - Component props.
+   * @param {boolean} param0.isCollapsed - Indicates if the filter section is collapsed.
+   * @returns {JSX.Element} The FilterHeader component.
+   */
+const FilterHeader = React.memo(({ isCollapsed }) => {
+  const theme = useTheme();
+  return (
+    <View style={{ padding: padSize, paddingLeft: padSize2, flexDirection: 'row', alignItems: 'center' }}>
+      <Text>Filters</Text>
+      <MaterialIcons
+        name={isCollapsed ? 'keyboard-arrow-down' : 'keyboard-arrow-up'}
+        color={theme.colors.text}
+        size={iconSizeSmall}
+        style={{ paddingLeft: padSize05 }}
+      />
+    </View>
+  );
+});
 
 /**
  * CollapsibleComp Component
@@ -12,11 +37,10 @@ import Accordion from 'react-native-collapsible/Accordion';
  * A component that provides a collapsible section.
  * 
  * @param {Object} props - Component props.
- * @param {Function} props.renderHeader - Function to render the header of the collapsible section.
  * @param {React.ReactNode} props.children - Content to be rendered within the collapsible section.
  * @returns {JSX.Element} The CollapsibleComp component.
  */
-export const CollapsibleComp = ({ renderHeader = () => {}, children }) => {
+export const CollapsibleComp = ({ children }) => {
   const [isCollapsed, setIsCollapsed] = useState(true);
 
   const toggleCollapse = () => {
@@ -26,7 +50,7 @@ export const CollapsibleComp = ({ renderHeader = () => {}, children }) => {
   return (
     <View>
       <TouchableOpacity onPress={toggleCollapse}>
-        {renderHeader(isCollapsed)}
+        <FilterHeader isCollapsed={isCollapsed} />
       </TouchableOpacity>
       <Collapsible collapsed={isCollapsed}>
         {children}

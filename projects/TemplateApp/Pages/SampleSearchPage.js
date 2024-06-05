@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { View, Image } from 'react-native';
 import { useTheme, Text, Appbar, Divider, RadioButton } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
-import { CollapsibleComp, ChipsContainerComp, highlightText } from '../../../Framework/UI/index';
+import { Collapsible, ChipsContainer, highlightText } from '../../../Framework/UI/index';
 import { SearchableListComp } from '../../../Framework/UI/Data/List';
 import { TextInputFieldComp } from '../../../Framework/UI/Input/TextInput';
 import { faker } from '@faker-js/faker';
@@ -114,10 +114,9 @@ export default function SampleSearchPage({ navigation, route }) {
    * @param {Object} param0 - Component props.
    * @param {Object} param0.item - The item data to render.
    * @param {string} param0.searchQuery - The current search query.
-   * @param {Function} param0.highlightSearchText - Function to highlight search text.
    * @returns {JSX.Element} The ListItem component.
    */
-  const ListItem = React.memo(({ item, searchQuery, highlightSearchText }) => {
+  const ListItem = React.memo(({ item, searchQuery }) => {
     return (
       <View style={Styles.contFlex}>
         <View style={Styles.contVert}>
@@ -165,14 +164,12 @@ export default function SampleSearchPage({ navigation, route }) {
         />
       </Appbar.Header>
       {/* Filter menu */}
-      <CollapsibleComp
-        renderHeader={(isCollapsed) => <FilterHeader isCollapsed={isCollapsed} />}
-      >
+      <Collapsible>
         <View style={{ width: '100%', padding: padSize, paddingHorizontal: padSize2 }}>
           <Text variant='labelSmall'>Materials</Text>
-          <ChipsContainerComp toggledMap={materialsSelected} onChipSelected={onMaterialChipSelected} />
+          <ChipsContainer toggledMap={materialsSelected} onChipSelected={onMaterialChipSelected} />
         </View>
-      </CollapsibleComp>
+      </Collapsible>
       {/* Toggle BigList vs FlatList */}
       <View style={Styles.contVert}>
         <View style={Styles.contPad}>
