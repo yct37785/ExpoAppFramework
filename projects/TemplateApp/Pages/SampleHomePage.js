@@ -10,6 +10,7 @@ import {
 import { onLocalDataUpdate } from '../../../Framework/Contexts/LocalDataContext';
 // const
 export const SAMPLE_PAGES = {
+  containers: "containers example",
   tabs: "tabs example",
   menus: "menus example",
   empty: "empty example",
