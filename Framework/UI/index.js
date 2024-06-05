@@ -13,7 +13,7 @@ export { default as DropdownCheckMenu } from './Menus/Dropdowns/DropdownCheckMen
 // DropdownMenu.js
 export { default as DropdownMenu } from './Menus/Dropdowns/DropdownMenu';
 // Options.js
-export { ChipsContainerComp as ChipsContainer } from './Menus/Selectors/Options';
+export { ChipsContainerComp as ChipsContainer } from './Menus/Options';
 // Picker.js
 export { default as Picker } from './Menus/Dropdowns/Picker';
 // search bar todo
