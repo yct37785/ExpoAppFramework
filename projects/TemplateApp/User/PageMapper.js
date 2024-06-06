@@ -3,6 +3,7 @@
  * define default page under DEFAULT_SCREEN, value must match respective key in screenMaps
  */
 import SampleHomePage from '../Pages/SampleHomePage';
+import SampleLayoutsPage from '../Pages/SampleLayoutsPage';
 import SampleContainersPage from '../Pages/SampleContainersPage';
 import SampleTabsPage from '../Pages/SampleTabsPage';
 import SampleMenusPage from '../Pages/SampleMenusPage';
@@ -12,6 +13,7 @@ import SampleDataStoragePage from '../Pages/SampleDataStoragePage';
 
 export const screenMaps = {
   home: SampleHomePage,
+  layouts: SampleLayoutsPage,
   containers: SampleContainersPage,
   tabs: SampleTabsPage,
   menus: SampleMenusPage,
