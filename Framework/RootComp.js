@@ -51,7 +51,7 @@ const Stack = createNativeStackNavigator();
  */
 function ScreenWrapper({ component: Component, ...props }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={{ flex: 1 }}>
       <Component {...props} />
     </View>
   );
