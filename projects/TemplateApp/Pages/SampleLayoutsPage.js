@@ -17,8 +17,8 @@ export default function SampleLayoutsPage({ navigation, route }) {
   const theme = useTheme();
 
   return (
-    <VerticalLayout backgroundColor="green" size="fitParent" flex={1}>
-
+    <VerticalLayout backgroundColor="yellow" size="fitParent" flex={1}>
+      <Text>asdasdasd</Text>
     </VerticalLayout>
   );
 }
