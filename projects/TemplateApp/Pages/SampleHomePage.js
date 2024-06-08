@@ -9,20 +9,12 @@ import {
 // data
 import { onLocalDataUpdate } from '../../../Framework/Contexts/LocalDataContext';
 // const
-export const SAMPLE_PAGES = {
-  layouts: "layouts example",
-  containers: "containers example",
-  tabs: "tabs example",
-  menus: "menus example",
-  empty: "empty example",
-  search: "search example",
-  storage: "storage example",
-};
+import { SAMPLE_PAGES } from '../User/Schemas';
 
 /**
  * sample home page
  */
-export default function SampleHomePage({ navigation, route }) {
+const SampleHomePage = ({ navigation, route }) => {
   const theme = useTheme();
 
   onLocalDataUpdate(() => {
@@ -31,12 +23,6 @@ export default function SampleHomePage({ navigation, route }) {
 
   return (
     <View style={Styles.contPage}>
-      {/* appbar */}
-      <Appbar.Header>
-        <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Home" >
-        </Appbar.Content>
-      </Appbar.Header>
       {/* main content here */}
       <View style={Styles.contVert}>
         <Text variant="bodyMedium">Select the pages you want to navigate to</Text>
@@ -51,3 +37,10 @@ export default function SampleHomePage({ navigation, route }) {
     </View>
   );
 }
+
+// Optional: Add extra elements to the header
+SampleHomePage.headerExtraElements = () => (
+  <Appbar.Action icon="magnify" onPress={() => console.log('Search pressed')} />
+);
+
+export default SampleHomePage;

@@ -5,8 +5,7 @@
 import React, { Node, useCallback, useMemo, useEffect, useState } from 'react';
 import { View, LogBox, Platform, StatusBar } from 'react-native';
 // UI
-import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme,
-  Text } from 'react-native-paper';
+import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, Appbar } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
 // data
 import { LocalDataContext } from './Contexts/LocalDataContext';
@@ -50,8 +49,19 @@ const Stack = createNativeStackNavigator();
  * @returns {JSX.Element} The screen wrapped with a standardized layout.
  */
 function ScreenWrapper({ component: Component, ...props }) {
+  const theme = useTheme();
+  
+  const renderHeader = (headerExtraElements) => (
+    <Appbar.Header>
+      <Appbar.BackAction onPress={() => props.navigation.goBack()} />
+      <Appbar.Content title={props.route.name} />
+      {headerExtraElements && headerExtraElements()}
+    </Appbar.Header>
+  );
+
   return (
     <View style={{ flex: 1 }}>
+      {renderHeader(Component.headerExtraElements)}
       <Component {...props} />
     </View>
   );
