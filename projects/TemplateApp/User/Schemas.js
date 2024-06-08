@@ -12,3 +12,14 @@ export const NEW_USER_DATA = {
     isDarkMode: true
   }
 };
+
+// others
+export const SAMPLE_PAGES = {
+  layouts: "layouts example",
+  containers: "containers example",
+  tabs: "tabs example",
+  menus: "menus example",
+  empty: "empty example",
+  search: "search example",
+  storage: "storage example",
+};
