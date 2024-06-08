@@ -88,10 +88,6 @@ export default function SampleTabsPage({ navigation, route }) {
   return (
     <View style={Styles.contPage}>
       {/* main content here */}
-      <Appbar.Header>
-        <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Tabs" />
-      </Appbar.Header>
       <Tabs
         routes={TAB_ROUTES}
         renderIcon={renderIcon}

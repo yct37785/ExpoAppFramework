@@ -155,14 +155,14 @@ export default function SampleSearchPage({ navigation, route }) {
   return (
     <View style={Styles.contPage}>
       {/* Header and search bar */}
-      <Appbar.Header>
+      {/* <Appbar.Header>
         <TextInputFieldComp
           type="search"
           value={searchQuery}
           onChange={setSearchQuery}
           placeholder="search"
         />
-      </Appbar.Header>
+      </Appbar.Header> */}
       {/* Filter menu */}
       <Collapsible toggleHeaderText="Filter">
         <View style={{ width: '100%', padding: padSize, paddingHorizontal: padSize2 }}>

@@ -15,12 +15,6 @@ export default function SampleEmptyPage({ navigation, route }) {
 
   return (
     <View style={Styles.contPage}>
-      {/* appbar */}
-      <Appbar.Header>
-        <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Empty" >
-        </Appbar.Content>
-      </Appbar.Header>
       {/* main content here */}
       <View style={Styles.contVert}>
         <Text variant="bodyMedium">{`paramText: ${paramText}`}</Text>

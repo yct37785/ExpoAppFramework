@@ -32,12 +32,6 @@ export default function SampleDataStoragePage({ navigation, route }) {
   
   return (
     <View style={Styles.contPage}>
-      {/* appbar */}
-      <Appbar.Header>
-        <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Data Storage" >
-        </Appbar.Content>
-      </Appbar.Header>
       {/* main content here */}
       <View style={Styles.contVert}>
         <View style={Styles.contPad}>

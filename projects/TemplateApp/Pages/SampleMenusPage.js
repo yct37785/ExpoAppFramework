@@ -72,7 +72,7 @@ export default function SampleMenusPage({ navigation, route }) {
         </Dialog>
       </Portal>
       {/* appbar */}
-      <Appbar.Header>
+      {/* <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title="Menus" >
         </Appbar.Content>
@@ -90,7 +90,7 @@ export default function SampleMenusPage({ navigation, route }) {
           />}
           options={PICKER_ITEM_LIST}
           onPress={onDropdownCheckMenuSelected} />
-      </Appbar.Header>
+      </Appbar.Header> */}
       {/* main content here */}
       <View style={Styles.contPad}>
         <Text variant="bodyMedium">Hello world</Text>
