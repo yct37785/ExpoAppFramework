@@ -39,8 +39,8 @@ const SampleHomePage = ({ navigation, route }) => {
 }
 
 // Optional: Add extra elements to the header
-SampleHomePage.headerExtraElements = () => (
-  <Appbar.Action icon="magnify" onPress={() => console.log('Search pressed')} />
-);
+// SampleHomePage.headerExtraElements = () => (
+//   <Appbar.Action icon="magnify" onPress={() => console.log('Search pressed')} />
+// );
 
 export default SampleHomePage;

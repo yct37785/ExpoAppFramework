@@ -51,17 +51,16 @@ const Stack = createNativeStackNavigator();
 function ScreenWrapper({ component: Component, ...props }) {
   const theme = useTheme();
   
-  const renderHeader = (headerExtraElements) => (
+  const renderHeader = () => (
     <Appbar.Header>
       <Appbar.BackAction onPress={() => props.navigation.goBack()} />
       <Appbar.Content title={props.route.name} />
-      {headerExtraElements && headerExtraElements()}
     </Appbar.Header>
   );
 
   return (
     <View style={{ flex: 1 }}>
-      {renderHeader(Component.headerExtraElements)}
+      {renderHeader()}
       <Component {...props} />
     </View>
   );
