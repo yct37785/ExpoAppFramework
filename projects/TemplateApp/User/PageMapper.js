@@ -22,8 +22,4 @@ export const screenMaps = {
   storage: SampleDataStoragePage
 };
 
-export const screenHeaderMaps = {
-  // custom header comps here, must correspond with screenMaps keys!
-};
-
 export const DEFAULT_SCREEN = 'home';

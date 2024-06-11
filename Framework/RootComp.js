@@ -42,27 +42,36 @@ LogBox.ignoreLogs(['new NativeEventEmitter']);
 const Stack = createNativeStackNavigator();
 
 /**
+ * A component for screens to render a standardized header with options for customization. This component must be rendered within the screen to be visible.
+ * 
+ * @param {Object} navigation - React Navigation navigation object.
+ * @param {Object} route - React Navigation route object.
+ * @param {React.ComponentType} props.component - The screen component to render.
+ * @returns {JSX.Element} The screen wrapped with a standardized layout.
+ */
+function ScreenHeaderComp({ navigation, route, customHeaderComp: CustomHeaderComp }) {
+
+  return (
+    <Appbar.Header>
+      <Appbar.BackAction onPress={() => navigation.goBack()} />
+      <Appbar.Content title={route.name} />
+      {CustomHeaderComp && CustomHeaderComp()}
+    </Appbar.Header>
+  );
+}
+
+/**
  * A wrapper for screens to standardize their layout.
  * 
  * @param {Object} props - The props passed to the screen.
  * @param {React.ComponentType} props.component - The screen component to render.
  * @returns {JSX.Element} The screen wrapped with a standardized layout.
  */
-function ScreenWrapper({ screenHeaderComp: ScreenHeaderComp, screenComp: ScreenComp, ...props }) {
-  const theme = useTheme();
-  
-  const renderHeader = () => (
-    <Appbar.Header>
-      <Appbar.BackAction onPress={() => props.navigation.goBack()} />
-      <Appbar.Content title={props.route.name} />
-      {ScreenHeaderComp && ScreenHeaderComp()}
-    </Appbar.Header>
-  );
+function ScreenWrapper({ component: Component, ...props }) {
 
   return (
     <View style={{ flex: 1 }}>
-      {renderHeader()}
-      <ScreenComp {...props} />
+      <Component screenHeaderComp={ScreenHeaderComp} {...props} />
     </View>
   );
 }

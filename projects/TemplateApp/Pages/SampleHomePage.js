@@ -14,7 +14,7 @@ import { SAMPLE_PAGES } from '../User/Schemas';
 /**
  * sample home page
  */
-const SampleHomePage = ({ navigation, route }) => {
+const SampleHomePage = ({ navigation, route, screenHeaderComp: ScreenHeaderComp }) => {
   const theme = useTheme();
 
   onLocalDataUpdate(() => {
@@ -23,6 +23,8 @@ const SampleHomePage = ({ navigation, route }) => {
 
   return (
     <View style={Styles.contPage}>
+      {/* always render header */}
+      <ScreenHeaderComp navigation={navigation} route={route} />
       {/* main content here */}
       <View style={Styles.contVert}>
         <Text variant="bodyMedium">Select the pages you want to navigate to</Text>
@@ -37,10 +39,5 @@ const SampleHomePage = ({ navigation, route }) => {
     </View>
   );
 }
-
-// Optional: Add extra elements to the header
-// SampleHomePage.headerExtraElements = () => (
-//   <Appbar.Action icon="magnify" onPress={() => console.log('Search pressed')} />
-// );
 
 export default SampleHomePage;
