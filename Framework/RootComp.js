@@ -48,20 +48,21 @@ const Stack = createNativeStackNavigator();
  * @param {React.ComponentType} props.component - The screen component to render.
  * @returns {JSX.Element} The screen wrapped with a standardized layout.
  */
-function ScreenWrapper({ component: Component, ...props }) {
+function ScreenWrapper({ screenHeaderComp: ScreenHeaderComp, screenComp: ScreenComp, ...props }) {
   const theme = useTheme();
   
   const renderHeader = () => (
     <Appbar.Header>
       <Appbar.BackAction onPress={() => props.navigation.goBack()} />
       <Appbar.Content title={props.route.name} />
+      {ScreenHeaderComp && ScreenHeaderComp()}
     </Appbar.Header>
   );
 
   return (
     <View style={{ flex: 1 }}>
       {renderHeader()}
-      <Component {...props} />
+      <ScreenComp {...props} />
     </View>
   );
 }
@@ -71,11 +72,12 @@ function ScreenWrapper({ component: Component, ...props }) {
  * 
  * @param {Object} props - The props passed to the root component.
  * @param {Object} props.screenMaps - A mapping of screen names to their respective components, refer to TemplateApp > App.js.
+ * @param {Object} props.screenHeaderMaps - A mapping of screen custom headers mapped to corresponding screen key, refer to TemplateApp > App.js.
  * @param {string} props.DEFAULT_SCREEN - The default screen to display on app launch, refer to TemplateApp > App.js.
  * @param {Object} props.NEW_USER_DATA - The schema for new user data, refer to TemplateApp > App.js.
  * @returns {JSX.Element} The root component of the app.
  */
-const RootComp = ({ screenMaps, DEFAULT_SCREEN, NEW_USER_DATA }) => {
+const RootComp = ({ screenMaps, screenHeaderMaps, DEFAULT_SCREEN, NEW_USER_DATA }) => {
   const localDataManager = useLocalDataManager({ NEW_USER_DATA });
   const [theme, setTheme] = useState(CombinedDarkTheme);
 
