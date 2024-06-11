@@ -23,7 +23,7 @@ const SampleHomePage = ({ navigation, route, screenHeaderComp: ScreenHeaderComp 
 
   return (
     <View style={Styles.contPage}>
-      {/* always render header */}
+      {/* app header */}
       <ScreenHeaderComp navigation={navigation} route={route} />
       {/* main content here */}
       <View style={Styles.contVert}>

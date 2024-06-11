@@ -45,7 +45,7 @@ export default function SampleTabsPage({ navigation, route }) {
    * @param {Object} param0.route - The route object for the tab.
    * @returns {JSX.Element|null} The component for the scene.
    */
-  const renderScene = ({ route }) => {
+  const renderScene = ({ navigation, route, screenHeaderComp: ScreenHeaderComp }) => {
     switch (route.key) {
       case 'p1':
         return <Tab1Comp />;
@@ -87,6 +87,8 @@ export default function SampleTabsPage({ navigation, route }) {
 
   return (
     <View style={Styles.contPage}>
+      {/* app header */}
+      <ScreenHeaderComp navigation={navigation} route={route} />
       {/* main content here */}
       <Tabs
         routes={TAB_ROUTES}

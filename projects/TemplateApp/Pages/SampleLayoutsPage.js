@@ -13,11 +13,13 @@ import { HorizontalLayout, VerticalLayout, GridLayout, ScrollLayout } from '../.
  * @param {Object} props.route - Route object containing route parameters.
  * @returns {JSX.Element} The SampleLayoutsPage component.
  */
-export default function SampleLayoutsPage({ navigation, route }) {
+export default function SampleLayoutsPage({ navigation, route, screenHeaderComp: ScreenHeaderComp }) {
   const theme = useTheme();
 
   return (
     <VerticalLayout backgroundColor="yellow" size="fitParent" flex={1}>
+      {/* app header */}
+      <ScreenHeaderComp navigation={navigation} route={route} />
       <Text>asdasdasd</Text>
     </VerticalLayout>
   );

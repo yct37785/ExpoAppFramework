@@ -22,7 +22,7 @@ const DROPDOWN_ITEM_LIST = [
 /**
  * Display sample menus page
  */
-export default function SampleMenusPage({ navigation, route }) {
+export default function SampleMenusPage({ navigation, route, screenHeaderComp: ScreenHeaderComp }) {
   const theme = useTheme();
   const searchBarRef = useRef();
   const [showDialog, setShowDialog] = useState(false);
@@ -57,6 +57,8 @@ export default function SampleMenusPage({ navigation, route }) {
 
   return (
     <View style={Styles.contPage}>
+      {/* app header */}
+      <ScreenHeaderComp navigation={navigation} route={route} />
       {/* all dialogs here */}
       <Portal>
         <Dialog

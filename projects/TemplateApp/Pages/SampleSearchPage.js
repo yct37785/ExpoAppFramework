@@ -19,7 +19,7 @@ import { padSize05, padSize, padSize2, iconSizeSmall } from '../../../Framework/
  * @param {Object} props.route - Route object containing route parameters.
  * @returns {JSX.Element} The SampleSearchPage component.
  */
-export default function SampleSearchPage({ navigation, route }) {
+export default function SampleSearchPage({ navigation, route, screenHeaderComp: ScreenHeaderComp }) {
   const theme = useTheme();
   const [listType, setListType] = useState('biglist');
   const [searchQuery, setSearchQuery] = useState('');
@@ -154,6 +154,8 @@ export default function SampleSearchPage({ navigation, route }) {
 
   return (
     <View style={Styles.contPage}>
+      {/* app header */}
+      <ScreenHeaderComp navigation={navigation} route={route} />
       {/* Header and search bar */}
       {/* <Appbar.Header>
         <TextInputFieldComp

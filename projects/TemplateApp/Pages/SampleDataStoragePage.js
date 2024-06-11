@@ -12,7 +12,7 @@ import { LocalDataContext, onLocalDataUpdate } from '../../../Framework/Contexts
 /**
  * sample local data storage showcase page
  */
-export default function SampleDataStoragePage({ navigation, route }) {
+export default function SampleDataStoragePage({ navigation, route, screenHeaderComp: ScreenHeaderComp }) {
   const theme = useTheme();
   const { paramText } = route.params;
   const { setLocalDataValue, getLocalDataValue, resetLocalData, getLocalDataStringify } = useContext(LocalDataContext);
@@ -32,6 +32,8 @@ export default function SampleDataStoragePage({ navigation, route }) {
   
   return (
     <View style={Styles.contPage}>
+      {/* app header */}
+      <ScreenHeaderComp navigation={navigation} route={route} />
       {/* main content here */}
       <View style={Styles.contVert}>
         <View style={Styles.contPad}>

@@ -9,12 +9,14 @@ import {
 /**
  * sample empty page
  */
-export default function SampleEmptyPage({ navigation, route }) {
+export default function SampleEmptyPage({ navigation, route, screenHeaderComp: ScreenHeaderComp }) {
   const theme = useTheme();
   const { paramText } = route.params;
 
   return (
     <View style={Styles.contPage}>
+      {/* app header */}
+      <ScreenHeaderComp navigation={navigation} route={route} />
       {/* main content here */}
       <View style={Styles.contVert}>
         <Text variant="bodyMedium">{`paramText: ${paramText}`}</Text>
