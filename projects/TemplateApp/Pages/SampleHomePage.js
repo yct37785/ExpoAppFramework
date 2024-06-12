@@ -21,10 +21,16 @@ const SampleHomePage = ({ navigation, route, screenHeaderComp: ScreenHeaderComp 
     console.log("SampleHomePage: updated local data");
   });
 
+  function customHeaderContent() {
+    return <View style={{ flex: 1 }}>
+      <Text>testing 1 2 3</Text>
+    </View>
+  }
+
   return (
     <View style={Styles.contPage}>
       {/* app header */}
-      <ScreenHeaderComp navigation={navigation} route={route} />
+      <ScreenHeaderComp navigation={navigation} route={route} customHeaderComp={customHeaderContent} />
       {/* main content here */}
       <View style={Styles.contVert}>
         <Text variant="bodyMedium">Select the pages you want to navigate to</Text>

@@ -7,6 +7,7 @@ import { View, LogBox, Platform, StatusBar } from 'react-native';
 // UI
 import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, Appbar } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
+import { padSize } from './Common/Values';
 // data
 import { LocalDataContext } from './Contexts/LocalDataContext';
 import useLocalDataManager from './Managers/LocalDataManager';
@@ -54,8 +55,10 @@ function ScreenHeaderComp({ navigation, route, customHeaderComp: CustomHeaderCom
   return (
     <Appbar.Header>
       <Appbar.BackAction onPress={() => navigation.goBack()} />
-      <Appbar.Content title={route.name} />
-      {CustomHeaderComp && CustomHeaderComp()}
+      <Appbar.Content style={{ flex: 0 }} title={route.name} />
+      <View style={{ flex: 1, margin: padSize }}>
+        {CustomHeaderComp && CustomHeaderComp()}
+      </View>
     </Appbar.Header>
   );
 }
