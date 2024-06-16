@@ -1,23 +1,26 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, ScrollView } from 'react-native';
 
-export const VerticalLayout = ({ children }) => (
-  <View style={{ flexDirection: 'column', flex: 1 }}>
+// Vertical Layout
+export const VerticalLayout = ({ children, style, ...props }) => (
+  <View style={[{ flexDirection: 'column', flex: 1 }, style]} {...props}>
     {children}
   </View>
 );
 
-export const HorizontalLayout = ({ children }) => (
-  <View style={{ flexDirection: 'row', flex: 1 }}>
+// Horizontal Layout
+export const HorizontalLayout = ({ children, style, ...props }) => (
+  <View style={[{ flexDirection: 'row', flex: 1 }, style]} {...props}>
     {children}
   </View>
 );
 
-export const GridLayout = ({ children, columns = 2 }) => {
+// Grid Layout
+export const GridLayout = ({ children, columns = 2, style, ...props }) => {
   const rows = [];
   let row = [];
 
-  children.forEach((child, index) => {
+  React.Children.forEach(children, (child, index) => {
     row.push(child);
     if ((index + 1) % columns === 0) {
       rows.push(<View key={index} style={{ flexDirection: 'row' }}>{row}</View>);
@@ -30,14 +33,36 @@ export const GridLayout = ({ children, columns = 2 }) => {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={[{ flex: 1 }, style]} {...props}>
       {rows}
     </View>
   );
 };
 
-export const ScrollLayout = ({ children }) => (
-  <ScrollView>
-      {children}
+// Scroll Layout
+export const ScrollLayout = ({ children, style, ...props }) => (
+  <ScrollView style={[{ flex: 1 }, style]} {...props}>
+    {children}
   </ScrollView>
+);
+
+// Frame Layout
+export const FrameLayout = ({ children, style, ...props }) => (
+  <View style={[{ position: 'relative', flex: 1 }, style]} {...props}>
+    {children}
+  </View>
+);
+
+// Relative Layout
+export const RelativeLayout = ({ children, style, ...props }) => (
+  <View style={[{ position: 'relative', flex: 1 }, style]} {...props}>
+    {children}
+  </View>
+);
+
+// Flex Layout
+export const FlexLayout = ({ children, flex = 1, style, ...props }) => (
+  <View style={[{ flex }, style]} {...props}>
+    {children}
+  </View>
 );
