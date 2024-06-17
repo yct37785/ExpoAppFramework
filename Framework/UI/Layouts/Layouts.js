@@ -43,15 +43,27 @@ export const GridLayout = ({ children, columns = 2, style, ...props }) => {
   let row = [];
 
   React.Children.forEach((child, index) => {
-    row.push(child);
+    row.push(
+      <View key={`col-${index}`} style={{ flex: 1 }}>
+        {child}
+      </View>
+    );
     if ((index + 1) % columns === 0) {
-      rows.push(<View key={index} style={{ flexDirection: 'row' }}>{row}</View>);
+      rows.push(
+        <View key={`row-${Math.floor(index / columns)}`} style={{ flexDirection: 'row', flex: 1 }}>
+          {row}
+        </View>
+      );
       row = [];
     }
   });
 
   if (row.length > 0) {
-    rows.push(<View key={children.length} style={{ flexDirection: 'row' }}>{row}</View>);
+    rows.push(
+      <View key={`row-${rows.length}`} style={{ flexDirection: 'row', flex: 1 }}>
+        {row}
+      </View>
+    );
   }
 
   return (
