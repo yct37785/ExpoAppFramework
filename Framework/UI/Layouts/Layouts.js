@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Text } from 'react-native';
 
 /**
  * Arranges children vertically.
@@ -42,7 +42,7 @@ export const GridLayout = ({ children, columns = 2, style, ...props }) => {
   const rows = [];
   let row = [];
 
-  React.Children.forEach((child, index) => {
+  children.forEach((child, index) => {
     row.push(
       <View key={`col-${index}`} style={{ flex: 1 }}>
         {child}
@@ -68,7 +68,9 @@ export const GridLayout = ({ children, columns = 2, style, ...props }) => {
 
   return (
     <View style={[{ flex: 1 }, style]} {...props}>
-      {rows}
+      {rows.map((row, index) => {
+        return row
+      })}
     </View>
   );
 };

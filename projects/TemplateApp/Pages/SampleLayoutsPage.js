@@ -41,6 +41,12 @@ export default function SampleLayoutsPage({ navigation, route, screenHeaderComp:
           <TextContainer color="blue" text="Grid Item 2" />
           <TextContainer color="blue" text="Grid Item 3" />
           <TextContainer color="blue" text="Grid Item 4" />
+          <TextContainer color="blue" text="Grid Item 5" />
+          <TextContainer color="blue" text="Grid Item 6" />
+          <TextContainer color="blue" text="Grid Item 7" />
+          <TextContainer color="blue" text="Grid Item 8" />
+          <TextContainer color="blue" text="Grid Item 9" />
+          <TextContainer color="blue" text="Grid Item 10" />
         </GridLayout>
         <FrameLayout style={{ backgroundColor: 'lightyellow', marginVertical: 10 }}>
           <Text style={{ position: 'absolute', top: 10, left: 10 }}>Frame Item 1</Text>
