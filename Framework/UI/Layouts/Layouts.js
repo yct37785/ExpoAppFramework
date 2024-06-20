@@ -36,23 +36,27 @@ export const HorizontalLayout = ({ children, style, ...props }) => (
  * @param {Object} props - Component props.
  * @param {React.ReactNode} props.children - The children components to render within the layout.
  * @param {number} props.columns - Number of columns in the grid.
- * @param {Object} props.lastRowAlign - if the last row != column num, align row children 'left'/'center'/'right'
+ * @param {string} props.childLayout - 'wrap-content'/'match-parent'
+ * @param {string} props.lastRowAlign - if the last row != column num, align row children 'left'/'center'/'right'
  * @param {Object} props.style - Custom styles to apply to the layout.
  * @returns {JSX.Element} The GridLayout component.
  */
-export const GridLayout = ({ children, columns = 2, lastRowAlign = 'left', style, ...props }) => {
+export const GridLayout = ({ children, columns = 2, childLayout = 'match-parent', lastRowAlign = 'left', style, ...props }) => {
   const rows = [];
   let row = [];
+  const compFlex = childLayout === 'match-parent' ? 1 : 0;
   children.forEach((child, index) => {
     const isnotLastRow = (children.length - index) > (children.length % columns);
+    let flexVal = isnotLastRow ? 1 : 1.0 / columns;
+    flexVal = compFlex === 0 ? 0 : flexVal;
     row.push(
-      <View key={`col-${index}`} style={{ flex: isnotLastRow ? 1 : 1.0 / columns }}>
+      <View key={`col-${index}`} style={{ backgroundColor: 'yellow', flex: flexVal }}>
         {child}
       </View>
     );
     if ((index + 1) % columns === 0) {
       rows.push(
-        <View key={`row-${Math.floor(index / columns)}`} style={{ flexDirection: 'row', flex: 1 }}>
+        <View key={`row-${Math.floor(index / columns)}`} style={{ flexDirection: 'row', flex: compFlex }}>
           {row}
         </View>
       );
@@ -63,7 +67,7 @@ export const GridLayout = ({ children, columns = 2, lastRowAlign = 'left', style
   if (row.length > 0) {
     const alignItems = getValueByCondition([lastRowAlign === 'left', 'flex-start'], [lastRowAlign === 'center', 'center'], [lastRowAlign === 'right', 'flex-end'])
     rows.push(
-      <View key={`row-${rows.length}`} style={{ flexDirection: 'row', flex: 1, justifyContent: alignItems }}>
+      <View key={`row-${rows.length}`} style={{ flexDirection: 'row', flex: compFlex, justifyContent: alignItems }}>
         {row}
       </View>
     );
