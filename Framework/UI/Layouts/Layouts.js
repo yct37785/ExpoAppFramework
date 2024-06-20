@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, ScrollView, Text } from 'react-native';
+import { getValueByCondition } from '../../Utilities/GeneralUtils'
 
 /**
  * Arranges children vertically.
@@ -35,16 +36,17 @@ export const HorizontalLayout = ({ children, style, ...props }) => (
  * @param {Object} props - Component props.
  * @param {React.ReactNode} props.children - The children components to render within the layout.
  * @param {number} props.columns - Number of columns in the grid.
+ * @param {Object} props.lastRowAlign - if the last row != column num, align row children 'left'/'center'/'right'
  * @param {Object} props.style - Custom styles to apply to the layout.
  * @returns {JSX.Element} The GridLayout component.
  */
-export const GridLayout = ({ children, columns = 2, style, ...props }) => {
+export const GridLayout = ({ children, columns = 2, lastRowAlign = 'left', style, ...props }) => {
   const rows = [];
   let row = [];
-
   children.forEach((child, index) => {
+    const isnotLastRow = (children.length - index) > (children.length % columns);
     row.push(
-      <View key={`col-${index}`} style={{ flex: 1 }}>
+      <View key={`col-${index}`} style={{ flex: isnotLastRow ? 1 : 1.0 / columns }}>
         {child}
       </View>
     );
@@ -59,8 +61,9 @@ export const GridLayout = ({ children, columns = 2, style, ...props }) => {
   });
 
   if (row.length > 0) {
+    const alignItems = getValueByCondition([lastRowAlign === 'left', 'flex-start'], [lastRowAlign === 'center', 'center'], [lastRowAlign === 'right', 'flex-end'])
     rows.push(
-      <View key={`row-${rows.length}`} style={{ flexDirection: 'row', flex: 1 }}>
+      <View key={`row-${rows.length}`} style={{ flexDirection: 'row', flex: 1, justifyContent: alignItems }}>
         {row}
       </View>
     );

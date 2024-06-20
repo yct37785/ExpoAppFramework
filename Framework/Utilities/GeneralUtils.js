@@ -122,3 +122,18 @@ export function objToKeyValueArr(obj) {
   }
   return newArr;
 }
+
+/**
+ * Returns the value corresponding to the first true condition.
+ * 
+ * @param {...Array} conditionsAndValues - A list of arrays, each containing a condition and a corresponding value.
+ * @returns {any} The value corresponding to the first true condition.
+ */
+export function getValueByCondition(...conditionsAndValues) {
+  for (let [condition, value] of conditionsAndValues) {
+    if (condition) {
+      return value;
+    }
+  }
+  return null;
+}
