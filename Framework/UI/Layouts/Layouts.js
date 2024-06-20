@@ -37,24 +37,27 @@ export const HorizontalLayout = ({ children, style, ...props }) => (
  * @param {React.ReactNode} props.children - The children components to render within the layout.
  * @param {number} props.columns - Number of columns in the grid.
  * @param {string} props.childLayout - 'wrap-content'/'match-parent'
+ * @param {number} props.childMargin - how much margin in between child wrappers
  * @param {string} props.lastRowAlign - if the last row != column num, align row children 'left'/'center'/'right'
  * @param {Object} props.style - Custom styles to apply to the layout.
  * @returns {JSX.Element} The GridLayout component.
  */
-export const GridLayout = ({ children, columns = 2, childLayout = 'match-parent', lastRowAlign = 'left', style, ...props }) => {
+export const GridLayout = ({ children, columns = 2, childLayout = 'match-parent', childMargin = 2, lastRowAlign = 'left', style, ...props }) => {
   const rows = [];
   let row = [];
   const compFlex = childLayout === 'match-parent' ? 1 : 0;
   children.forEach((child, index) => {
-    const isnotLastRow = (children.length - index) > (children.length % columns);
-    let flexVal = isnotLastRow ? 1 : 1.0 / columns;
+    const isLastRow = (children.length - index) <= (children.length % columns);
+    const isLastCol = (index + 1) % columns === 0;
+    let flexVal = isLastRow ? 1.0 / columns : 1;
     flexVal = compFlex === 0 ? 0 : flexVal;
     row.push(
-      <View key={`col-${index}`} style={{ backgroundColor: 'yellow', flex: flexVal }}>
+      <View key={`col-${index}`} style={{ marginRight: isLastCol ? 0 : childMargin, marginBottom: isLastRow ? 0 : childMargin, 
+        backgroundColor: isLastCol ? 'green' : 'yellow', flex: flexVal }}>
         {child}
       </View>
     );
-    if ((index + 1) % columns === 0) {
+    if (isLastCol) {
       rows.push(
         <View key={`row-${Math.floor(index / columns)}`} style={{ flexDirection: 'row', flex: compFlex }}>
           {row}
