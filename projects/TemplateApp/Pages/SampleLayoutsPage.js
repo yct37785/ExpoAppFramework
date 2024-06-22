@@ -30,13 +30,13 @@ export default function SampleLayoutsPage({ navigation, route, screenHeaderComp:
       {/* app header */}
       <ScreenHeaderComp navigation={navigation} route={route} />
       {/* main content here */}
-      <LinearLayout align='vertical' childLayout = 'match-parent' style={{ backgroundColor: '#009900', padding: padSize }}>
+      <LinearLayout align='vertical' childLayout='wrap-content' style={{ backgroundColor: '#009900', padding: padSize }}>
         <Text>Vertical Layout</Text>
-        <LinearLayout align='horizontal' style={{ backgroundColor: '#991f00', padding: padSize }}>
+        <LinearLayout flex={0} align='horizontal' childLayout = 'wrap-content' style={{ backgroundColor: '#991f00', padding: padSize }}>
           <TextContainer color="blue" text="Horizontal Item 1" />
           <TextContainer color="blue" text="Horizontal Item 2" />
         </LinearLayout>
-        <GridLayout columns={4} style={{ backgroundColor: 'lightblue', marginTop: padSize, padding: padSize }}>
+        <GridLayout flex={0} columns={4} childLayout = 'wrap-content' style={{ backgroundColor: 'lightblue', marginTop: padSize, padding: padSize }}>
           <TextContainer color="blue" text="Grid Item 1" />
           <TextContainer color="blue" text="Grid Item 2" />
           <TextContainer color="blue" text="Grid Item 3" />
@@ -48,11 +48,11 @@ export default function SampleLayoutsPage({ navigation, route, screenHeaderComp:
           <TextContainer color="blue" text="Grid Item 9" />
           <TextContainer color="blue" text="Grid Item 10" />
         </GridLayout>
-        <FrameLayout style={{ backgroundColor: 'lightyellow', marginVertical: 10 }}>
+        <FrameLayout style={{ backgroundColor: 'lightyellow', marginTop: padSize }}>
           <Text style={{ position: 'absolute', top: 10, left: 10 }}>Frame Item 1</Text>
           <Text style={{ position: 'absolute', bottom: 10, right: 10 }}>Frame Item 2</Text>
         </FrameLayout>
-        <RelativeLayout style={{ backgroundColor: 'lightgray', marginVertical: 10 }}>
+        <RelativeLayout style={{ backgroundColor: 'lightgray', marginTop: padSize }}>
           <Text style={{ position: 'relative', top: 10, left: 10 }}>Relative Item 1</Text>
           <Text style={{ position: 'relative', bottom: 10, right: 10 }}>Relative Item 2</Text>
         </RelativeLayout>
