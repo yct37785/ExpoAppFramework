@@ -13,7 +13,7 @@ import { getValueByCondition } from '../../Utilities/GeneralUtils'
  * @param {Object} props.style - Custom styles to apply to the layout.
  * @returns {JSX.Element} The VerticalLayout component.
  */
-export const LinearLayout = ({ children, align = 'vertical', childLayout = 'match-parent', childMargin = 2, style, ...props }) => {
+export const LinearLayout = ({ children, align = 'vertical', childLayout = 'wrap-content', childMargin = 2, style, ...props }) => {
   const childFlex = childLayout === 'match-parent' ? 1 : 0;
   return (<View style={[{ flexDirection: align === 'vertical' ? 'column' : 'row', flex: 1 }, style]} {...props}>
     {children.map((child, index) => {
@@ -36,7 +36,7 @@ export const LinearLayout = ({ children, align = 'vertical', childLayout = 'matc
  * @param {Object} props.style - Custom styles to apply to the layout.
  * @returns {JSX.Element} The GridLayout component.
  */
-export const GridLayout = ({ children, columns = 2, childLayout = 'match-parent', childMargin = 2, lastRowAlign = 'left', style, ...props }) => {
+export const GridLayout = ({ children, columns = 2, childLayout = 'wrap-content', childMargin = 2, lastRowAlign = 'left', style, ...props }) => {
   const rows = [];
   let row = [];
   const compFlex = childLayout === 'match-parent' ? 1 : 0;
