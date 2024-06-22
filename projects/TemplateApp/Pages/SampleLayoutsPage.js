@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { useTheme, Text, Appbar } from 'react-native-paper';
-import { VerticalLayout, HorizontalLayout, GridLayout, ScrollLayout, FrameLayout, RelativeLayout } from '../../../Framework/UI/index';
+import { LinearLayout, GridLayout, ScrollLayout, FrameLayout, RelativeLayout } from '../../../Framework/UI/index';
 import Styles from '../../../Framework/Common/Styles';
 import { padSize } from '../../../Framework/Common/Values';
 
@@ -30,13 +30,13 @@ export default function SampleLayoutsPage({ navigation, route, screenHeaderComp:
       {/* app header */}
       <ScreenHeaderComp navigation={navigation} route={route} />
       {/* main content here */}
-      <VerticalLayout style={{ backgroundColor: '#009900', padding: padSize }}>
+      <LinearLayout align='vertical' style={{ backgroundColor: '#009900', padding: padSize }}>
         <Text>Vertical Layout</Text>
-        <HorizontalLayout style={{ backgroundColor: '#991f00', padding: padSize }}>
+        <LinearLayout align='horizontal' style={{ backgroundColor: '#991f00', padding: padSize }}>
           <TextContainer color="blue" text="Horizontal Item 1" />
           <TextContainer color="blue" text="Horizontal Item 2" />
-        </HorizontalLayout>
-        <GridLayout columns={4} style={{ backgroundColor: 'lightblue', marginTop: padSize, padding: padSize }}>
+        </LinearLayout>
+        <GridLayout columns={4} style={{ backgroundColor: 'lightblue', marginTop: padSize }}>
           <TextContainer color="blue" text="Grid Item 1" />
           <TextContainer color="blue" text="Grid Item 2" />
           <TextContainer color="blue" text="Grid Item 3" />
@@ -56,7 +56,7 @@ export default function SampleLayoutsPage({ navigation, route, screenHeaderComp:
           <Text style={{ position: 'relative', top: 10, left: 10 }}>Relative Item 1</Text>
           <Text style={{ position: 'relative', bottom: 10, right: 10 }}>Relative Item 2</Text>
         </RelativeLayout>
-      </VerticalLayout>
+      </LinearLayout>
     </View>
   );
 }

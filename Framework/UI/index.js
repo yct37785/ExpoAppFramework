@@ -22,4 +22,4 @@ export { default as Tabs } from './Containers/Tabs';
 // Text.js
 export { highlightTextComp as highlightText } from './Display/Text';
 // Layouts.js
-export { VerticalLayout, HorizontalLayout, GridLayout, ScrollLayout, FrameLayout, RelativeLayout, FlexLayout } from './Layouts/Layouts';
+export { LinearLayout, GridLayout, ScrollLayout, FrameLayout, RelativeLayout, FlexLayout } from './Layouts/Layouts';

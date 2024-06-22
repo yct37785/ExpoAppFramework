@@ -3,29 +3,17 @@ import { View, ScrollView, Text } from 'react-native';
 import { getValueByCondition } from '../../Utilities/GeneralUtils'
 
 /**
- * Arranges children vertically.
+ * Linear layout, aligns children verticallyhorizontally
  * 
  * @param {Object} props - Component props.
  * @param {React.ReactNode} props.children - The children components to render within the layout.
+ * @param {string} props.align - 'vertical'/'horizontal'
+ * @param {number} props.childMargin - how much margin in between child wrappers.
  * @param {Object} props.style - Custom styles to apply to the layout.
  * @returns {JSX.Element} The VerticalLayout component.
  */
-export const VerticalLayout = ({ children, style, ...props }) => (
-  <View style={[{ flexDirection: 'column', flex: 1 }, style]} {...props}>
-    {children}
-  </View>
-);
-
-/**
- * Arranges children horizontally.
- * 
- * @param {Object} props - Component props.
- * @param {React.ReactNode} props.children - The children components to render within the layout.
- * @param {Object} props.style - Custom styles to apply to the layout.
- * @returns {JSX.Element} The HorizontalLayout component.
- */
-export const HorizontalLayout = ({ children, style, ...props }) => (
-  <View style={[{ flexDirection: 'row', flex: 1 }, style]} {...props}>
+export const LinearLayout = ({ children, align = 'vertical', childMargin = 0, style, ...props }) => (
+  <View style={[{ flexDirection: align === 'vertical' ? 'column' : 'row', flex: 1 }, style]} {...props}>
     {children}
   </View>
 );
