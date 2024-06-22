@@ -8,15 +8,21 @@ import { getValueByCondition } from '../../Utilities/GeneralUtils'
  * @param {Object} props - Component props.
  * @param {React.ReactNode} props.children - The children components to render within the layout.
  * @param {string} props.align - 'vertical'/'horizontal'
- * @param {number} props.childMargin - how much margin in between child wrappers.
+ * @param {string} props.childLayout - 'wrap-content'/'match-parent'
+ * @param {number} props.childMargin - how much margin in between child wrappers
  * @param {Object} props.style - Custom styles to apply to the layout.
  * @returns {JSX.Element} The VerticalLayout component.
  */
-export const LinearLayout = ({ children, align = 'vertical', childMargin = 0, style, ...props }) => (
-  <View style={[{ flexDirection: align === 'vertical' ? 'column' : 'row', flex: 1 }, style]} {...props}>
-    {children}
-  </View>
-);
+export const LinearLayout = ({ children, align = 'vertical', childLayout = 'match-parent', childMargin = 2, style, ...props }) => {
+  const childFlex = childLayout === 'match-parent' ? 1 : 0;
+  return (<View style={[{ flexDirection: align === 'vertical' ? 'column' : 'row', flex: 1 }, style]} {...props}>
+    {children.map((child, index) => {
+      return <View key={index} style={{ flex: childFlex }}>
+        {child}
+      </View>
+    })}
+  </View>)
+};
 
 /**
  * Arranges children in a grid layout.

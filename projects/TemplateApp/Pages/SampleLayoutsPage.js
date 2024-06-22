@@ -20,7 +20,7 @@ export default function SampleLayoutsPage({ navigation, route, screenHeaderComp:
   const theme = useTheme();
 
   const TextContainer = ({ color, text }) => (
-    <View style={{ backgroundColor: color, marginRight: padSize }}>
+    <View style={{ backgroundColor: color }}>
       <Text>{text}</Text>
     </View>
   );
@@ -36,7 +36,7 @@ export default function SampleLayoutsPage({ navigation, route, screenHeaderComp:
           <TextContainer color="blue" text="Horizontal Item 1" />
           <TextContainer color="blue" text="Horizontal Item 2" />
         </LinearLayout>
-        <GridLayout columns={4} style={{ backgroundColor: 'lightblue', marginTop: padSize }}>
+        <GridLayout columns={4} style={{ backgroundColor: 'lightblue', marginTop: padSize, padding: padSize }}>
           <TextContainer color="blue" text="Grid Item 1" />
           <TextContainer color="blue" text="Grid Item 2" />
           <TextContainer color="blue" text="Grid Item 3" />
