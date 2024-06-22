@@ -14,12 +14,15 @@ import { getValueByCondition } from '../../Utilities/GeneralUtils'
  * @returns {JSX.Element} The VerticalLayout component.
  */
 export const LinearLayout = ({ children, align = 'vertical', childLayout = 'wrap-content', childMargin = 2, style, ...props }) => {
-  const childFlex = childLayout === 'match-parent' ? 1 : 0;
   return (<View style={[{ flexDirection: align === 'vertical' ? 'column' : 'row', flex: 1 }, style]} {...props}>
     {children.map((child, index) => {
-      return <View key={index} style={{ flex: childFlex }}>
-        {child}
-      </View>
+      if (childLayout === 'match-parent') {
+        return <View key={index} style={{ flex: 1 }}>
+          {child}
+        </View>
+      } else {
+        return child
+      }
     })}
   </View>)
 };

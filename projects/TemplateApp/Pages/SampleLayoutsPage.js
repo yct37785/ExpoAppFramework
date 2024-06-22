@@ -30,7 +30,7 @@ export default function SampleLayoutsPage({ navigation, route, screenHeaderComp:
       {/* app header */}
       <ScreenHeaderComp navigation={navigation} route={route} />
       {/* main content here */}
-      <LinearLayout align='vertical' style={{ backgroundColor: '#009900', padding: padSize }}>
+      <LinearLayout align='vertical' childLayout = 'match-parent' style={{ backgroundColor: '#009900', padding: padSize }}>
         <Text>Vertical Layout</Text>
         <LinearLayout align='horizontal' style={{ backgroundColor: '#991f00', padding: padSize }}>
           <TextContainer color="blue" text="Horizontal Item 1" />
