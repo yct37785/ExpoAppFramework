@@ -19,8 +19,8 @@ import { padSize } from '../../../Framework/Common/Values';
 export default function SampleLayoutsPage({ navigation, route, screenHeaderComp: ScreenHeaderComp }) {
   const theme = useTheme();
 
-  const TextContainer = ({ color, text }) => (
-    <View style={{ backgroundColor: color }}>
+  const TextContainer = ({ color, text, style, ...props }) => (
+    <View style={[{ backgroundColor: color }, style]}>
       <Text>{text}</Text>
     </View>
   );
@@ -49,8 +49,8 @@ export default function SampleLayoutsPage({ navigation, route, screenHeaderComp:
           <TextContainer color="blue" text="Grid Item 10" />
         </GridLayout>
         <FrameLayout style={{ backgroundColor: 'lightyellow', marginTop: padSize }}>
-          <Text style={{ position: 'absolute', top: 10, left: 10 }}>Frame Item 1</Text>
-          <Text style={{ position: 'absolute', bottom: 10, right: 10 }}>Frame Item 2</Text>
+          <TextContainer style={{ position: 'absolute', top: 10, left: 10 }} color="blue" text="Frame Item 1" />
+          <TextContainer style={{ position: 'absolute', bottom: 10, right: 10 }} color="blue" text="Frame Item 2" />
         </FrameLayout>
         <RelativeLayout style={{ backgroundColor: 'lightgray', marginTop: padSize }}>
           <Text style={{ position: 'relative', top: 10, left: 10 }}>Relative Item 1</Text>
