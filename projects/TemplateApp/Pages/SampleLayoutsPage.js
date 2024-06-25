@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { useTheme, Text, Appbar } from 'react-native-paper';
-import { LinearLayout, GridLayout, ScrollLayout, RelativeLayout } from '../../../Framework/UI/index';
+import { LinearLayout, GridLayout, ScrollLayout } from '../../../Framework/UI/index';
 import Styles from '../../../Framework/Common/Styles';
 import { padSize } from '../../../Framework/Common/Values';
 
@@ -48,10 +48,10 @@ export default function SampleLayoutsPage({ navigation, route, screenHeaderComp:
           <TextContainer color="blue" text="Grid Item 9" />
           <TextContainer color="blue" text="Grid Item 10" />
         </GridLayout>
-        <RelativeLayout style={{ backgroundColor: 'lightgray', marginTop: padSize }}>
+        <LinearLayout align='vertical' style={{ backgroundColor: 'lightgray', marginTop: padSize }}>
           <TextContainer style={{ position: 'relative', top: 0, left: 0 }}  color="blue" text="Relative Item 1" />
           <TextContainer style={{ position: 'relative', bottom: 10, right: 10 }} color="yellow" text="Relative Item 2" />
-        </RelativeLayout>
+        </LinearLayout>
       </LinearLayout>
     </View>
   );

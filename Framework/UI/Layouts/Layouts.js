@@ -97,20 +97,6 @@ export const ScrollLayout = ({ flex = 1, children, style, ...props }) => (
 );
 
 /**
- * Positions children relative to each other or to the parent layout.
- * 
- * @param {Object} props - Component props.
- * @param {React.ReactNode} props.children - The children components to render within the layout.
- * @param {Object} props.style - Custom styles to apply to the layout.
- * @returns {JSX.Element} The RelativeLayout component.
- */
-export const RelativeLayout = ({ flex = 1, children, style, ...props }) => (
-  <View style={[{ position: 'relative', flex: flex }, style]} {...props}>
-    {children}
-  </View>
-);
-
-/**
  * Allows flexible sizing of children.
  * 
  * @param {Object} props - Component props.
