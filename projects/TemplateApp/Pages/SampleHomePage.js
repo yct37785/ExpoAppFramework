@@ -29,20 +29,20 @@ const SampleHomePage = ({ navigation, route, screenHeaderComp: ScreenHeaderComp 
   }
 
   return (
-    <LinearLayout flex={1} childLayout='wrap-content'>
+    <LinearLayout>
       {/* app header */}
       <ScreenHeaderComp navigation={navigation} route={route} customHeaderComp={customHeaderContent} />
       {/* main content here */}
-      <View style={{ flex: 1, padding: padSize }}>
+      <LinearLayout childMargin={padSize} style={{ padding: padSize }}>
         <Text variant="bodyMedium">Select the pages you want to navigate to</Text>
-        <View style={{ flex: 1 }}>
+        <LinearLayout childMargin={padSize}>
           {Object.keys(SAMPLE_PAGES).map((key) => (
-            <Button key={key} mode="contained" onPress={() => navigation.navigate(key, { paramText: `hello ${key} from home` })} style={{ margin: padSize }}>
+            <Button key={key} mode="contained" onPress={() => navigation.navigate(key, { paramText: `hello ${key} from home` })}>
               {SAMPLE_PAGES[key]}
             </Button>
           ))}
-        </View>
-      </View>
+        </LinearLayout>
+      </LinearLayout>
     </LinearLayout>
   );
 }

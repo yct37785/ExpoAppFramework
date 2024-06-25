@@ -13,18 +13,27 @@ import { getValueByCondition } from '../../Utilities/GeneralUtils'
  * @param {Object} props.style - Custom styles to apply to the layout.
  * @returns {JSX.Element} The VerticalLayout component.
  */
-export const LinearLayout = ({ children, flex = 1, align = 'vertical', childLayout = 'wrap-content', childMargin = 2, style, ...props }) => {
-  return (<View style={[{ flexDirection: align === 'vertical' ? 'column' : 'row', flex: flex }, style]} {...props}>
-    {children.map((child, index) => {
-      if (childLayout === 'match-parent') {
-        return <View key={index} style={{ flex: 1 }}>
-          {child}
-        </View>
-      } else {
-        return child
-      }
-    })}
-  </View>)
+export const LinearLayout = ({ children, flex = 1, align = 'vertical', childLayout = 'wrap-content', childMargin = 0, style, ...props }) => {
+  const isVertical = align === 'vertical';
+  const marginStyle = isVertical ? { marginBottom: childMargin } : { marginRight: childMargin };
+
+  return (
+    <View style={[{ flexDirection: isVertical ? 'column' : 'row', flex: flex }, style]} {...props}>
+      {React.Children.map(children, (child, index) => {
+        const childStyle = child.props.style || {};
+        const newStyle = {
+          ...childStyle,
+          ...marginStyle,
+          ...(index === children.length - 1 ? {} : marginStyle), // Avoid margin for the last child
+          ...(childLayout === 'match-parent' ? { flex: 1 } : {}),
+        };
+
+        return React.cloneElement(child, {
+          style: newStyle,
+        });
+      })}
+    </View>
+  );
 };
 
 /**
