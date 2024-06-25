@@ -41,7 +41,11 @@ export const LinearLayout = ({ children, flex = 1, align = 'vertical', childLayo
   );
 
   if (scrollable) {
-    return <ScrollView style={{ flex: 1 }}>{mainContent}</ScrollView>;
+    return (
+      <ScrollView style={{ flex: 1 }} horizontal={!isVertical} contentContainerStyle={{ flexDirection: isVertical ? 'column' : 'row' }}>
+        {mainContent}
+      </ScrollView>
+    );
   }
 
   return mainContent;
