@@ -29,7 +29,10 @@ export default function SampleLayoutsPage({ navigation, route, screenHeaderComp:
       {/* app header */}
       <ScreenHeaderComp navigation={navigation} route={route} />
       {/* vertical layout */}
-      <LinearLayout childMargin={padSize} align='vertical' style={{ padding: padSize }}>
+      <View style={{ padding: padSize }}>
+        <Text variant="headlineSmall">vertical layout: scrollable</Text>
+      </View>
+      <LinearLayout childMargin={padSize} align='vertical' scrollable={true} style={{ padding: padSize }}>
         {/* horizontal layout: child = wrap content */}
         <Text>horizontal layout: child = wrap content</Text>
         <LinearLayout childMargin={padSize} flex={0} align='horizontal' style={{ backgroundColor: '#991f00', padding: padSize }}>
@@ -62,6 +65,13 @@ export default function SampleLayoutsPage({ navigation, route, screenHeaderComp:
           <TextContainer color="blue" text="Grid Item 5" />
           <TextContainer color="blue" text="Grid Item 6" />
         </GridLayout>
+        {/* vertical layout: child = wrap content */}
+        <Text>vertical layout: child = wrap content</Text>
+        <LinearLayout childMargin={padSize} flex={0} align='vertical' style={{ backgroundColor: '#991f00', padding: padSize }}>
+          <TextContainer color="blue" text="Horizontal Item 1" />
+          <TextContainer color="blue" text="Horizontal Item 2" />
+        </LinearLayout>
+        <View style={{ height: 1500, backgroundColor: 'green', marginTop: padSize }}></View>
       </LinearLayout>
     </LinearLayout>
   );

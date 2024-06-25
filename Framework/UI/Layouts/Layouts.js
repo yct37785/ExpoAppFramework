@@ -11,30 +11,40 @@ import { getValueByCondition } from '../../Utilities/GeneralUtils'
  * @param {string} props.align - Alignment direction of children, either 'vertical' or 'horizontal'.
  * @param {string} props.childLayout - Child layout strategy, either 'wrap-content' or 'match-parent'.
  * @param {number} props.childMargin - Margin to apply to each child.
+ * @param {boolean} props.scrollable - Whether the layout should be scrollable if children exceed the container size.
  * @param {Object} props.style - Custom styles to apply to the layout.
  * @returns {JSX.Element} The LinearLayout component.
  */
-export const LinearLayout = ({ children, flex = 1, align = 'vertical', childLayout = 'wrap-content', childMargin = 0, style, ...props }) => {
+export const LinearLayout = ({ children, flex = 1, align = 'vertical', childLayout = 'wrap-content', childMargin = 0, scrollable = false, style, ...props }) => {
   const isVertical = align === 'vertical';
   const marginStyle = isVertical ? { marginBottom: childMargin } : { marginRight: childMargin };
 
-  return (
-    <View style={[{ flexDirection: isVertical ? 'column' : 'row', flex: flex }, style]} {...props}>
-      {React.Children.map(children, (child, index) => {
-        const childStyle = child.props.style || {};
-        const newStyle = {
-          ...childStyle,
-          ...marginStyle,
-          ...(index === children.length - 1 ? {} : marginStyle), // Avoid margin for the last child
-          ...(childLayout === 'match-parent' ? { flex: 1 } : {}),
-        };
+  const renderChildren = () => {
+    return React.Children.map(children, (child, index) => {
+      const childStyle = child.props.style || {};
+      const newStyle = {
+        ...childStyle,
+        ...(index !== React.Children.count(children) - 1 ? marginStyle : {}), // Avoid margin for the last child
+        ...(childLayout === 'match-parent' ? { flex: 1 } : {}),
+      };
 
-        return React.cloneElement(child, {
-          style: newStyle,
-        });
-      })}
+      return React.cloneElement(child, {
+        style: newStyle,
+      });
+    });
+  };
+
+  const mainContent = (
+    <View style={[{ flexDirection: isVertical ? 'column' : 'row', flex: flex }, style]} {...props}>
+      {renderChildren()}
     </View>
   );
+
+  if (scrollable) {
+    return <ScrollView style={{ flex: 1 }}>{mainContent}</ScrollView>;
+  }
+
+  return mainContent;
 };
 
 /**
