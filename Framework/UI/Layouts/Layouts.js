@@ -95,18 +95,3 @@ export const ScrollLayout = ({ flex = 1, children, style, ...props }) => (
     {children}
   </ScrollView>
 );
-
-/**
- * Allows flexible sizing of children.
- * 
- * @param {Object} props - Component props.
- * @param {React.ReactNode} props.children - The children components to render within the layout.
- * @param {number} props.flex - Flex value to determine space occupied relative to siblings.
- * @param {Object} props.style - Custom styles to apply to the layout.
- * @returns {JSX.Element} The FlexLayout component.
- */
-export const FlexLayout = ({ children, flex = 1, style, ...props }) => (
-  <View style={[{ flex }, style]} {...props}>
-    {children}
-  </View>
-);
