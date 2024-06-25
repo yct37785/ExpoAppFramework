@@ -3,15 +3,16 @@ import { View, ScrollView, Text } from 'react-native';
 import { getValueByCondition } from '../../Utilities/GeneralUtils'
 
 /**
- * Linear layout, aligns children verticallyhorizontally
+ * Arranges children in a linear layout, either vertically or horizontally.
  * 
  * @param {Object} props - Component props.
  * @param {React.ReactNode} props.children - The children components to render within the layout.
- * @param {string} props.align - 'vertical'/'horizontal'
- * @param {string} props.childLayout - 'wrap-content'/'match-parent'
- * @param {number} props.childMargin - how much margin in between child wrappers
+ * @param {number} props.flex - The flex value of the LinearLayout container.
+ * @param {string} props.align - Alignment direction of children, either 'vertical' or 'horizontal'.
+ * @param {string} props.childLayout - Child layout strategy, either 'wrap-content' or 'match-parent'.
+ * @param {number} props.childMargin - Margin to apply to each child.
  * @param {Object} props.style - Custom styles to apply to the layout.
- * @returns {JSX.Element} The VerticalLayout component.
+ * @returns {JSX.Element} The LinearLayout component.
  */
 export const LinearLayout = ({ children, flex = 1, align = 'vertical', childLayout = 'wrap-content', childMargin = 0, style, ...props }) => {
   const isVertical = align === 'vertical';
