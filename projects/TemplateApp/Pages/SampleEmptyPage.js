@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { View, Keyboard } from 'react-native';
-import Styles from '../../../Framework/Common/Styles';
 // UI
 import {
   useTheme, Text, Button, Appbar
 } from 'react-native-paper';
+import { LinearLayout } from '../../../Framework/UI/index';
 
 /**
  * sample empty page
@@ -14,13 +14,13 @@ export default function SampleEmptyPage({ navigation, route, screenHeaderComp: S
   const { paramText } = route.params;
 
   return (
-    <View style={Styles.contPage}>
+    <LinearLayout flex={1} childLayout='wrap-content'>
       {/* app header */}
       <ScreenHeaderComp navigation={navigation} route={route} />
       {/* main content here */}
       <View style={Styles.contVert}>
         <Text variant="bodyMedium">{`paramText: ${paramText}`}</Text>
       </View>
-    </View>
+    </LinearLayout>
   );
 }

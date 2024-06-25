@@ -1,12 +1,12 @@
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { View, Keyboard } from 'react-native';
-import Styles from '../../../Framework/Common/Styles';
 // UI
 import {
   useTheme, Text, Card, Button, Appbar,
   TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
 } from 'react-native-paper';
 import { Dialog, Picker, DropdownMenu, DropdownCheckMenu } from '../../../Framework/UI/index';
+import { LinearLayout } from '../../../Framework/UI/index';
 // const
 const PICKER_ITEM_LIST = [
   { label: 'Red', value: 'red' },
@@ -56,7 +56,7 @@ export default function SampleMenusPage({ navigation, route, screenHeaderComp: S
   }
 
   return (
-    <View style={Styles.contPage}>
+    <LinearLayout flex={1} childLayout='wrap-content'>
       {/* app header */}
       <ScreenHeaderComp navigation={navigation} route={route} />
       {/* all dialogs here */}
@@ -105,6 +105,6 @@ export default function SampleMenusPage({ navigation, route, screenHeaderComp: S
       <View style={Styles.contPad}>
         <Picker value={pickerSelection} options={PICKER_ITEM_LIST} onChange={(v) => setPickerSelection(v)} />
       </View>
-    </View>
+    </LinearLayout>
   );
 }

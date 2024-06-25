@@ -1,11 +1,11 @@
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { View, Keyboard } from 'react-native';
 import { padSize, padSize2 } from '../../../Framework/Common/Values';
-import Styles from '../../../Framework/Common/Styles';
 // UI
 import {
   useTheme, Text, Button, Appbar, Divider, Switch, TextInput, Card
 } from 'react-native-paper';
+import { LinearLayout } from '../../../Framework/UI/index';
 // data
 import { LocalDataContext, onLocalDataUpdate } from '../../../Framework/Contexts/LocalDataContext';
 
@@ -31,7 +31,7 @@ export default function SampleDataStoragePage({ navigation, route, screenHeaderC
   }
   
   return (
-    <View style={Styles.contPage}>
+    <LinearLayout flex={1} childLayout='wrap-content'>
       {/* app header */}
       <ScreenHeaderComp navigation={navigation} route={route} />
       {/* main content here */}
@@ -62,6 +62,6 @@ export default function SampleDataStoragePage({ navigation, route, screenHeaderC
           </Card>
         </View>
       </View>
-    </View>
+    </LinearLayout>
   );
 }

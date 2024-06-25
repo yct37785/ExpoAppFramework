@@ -2,7 +2,6 @@ import React from 'react';
 import { View } from 'react-native';
 import { useTheme, Text, Appbar } from 'react-native-paper';
 import { LinearLayout, GridLayout, ScrollLayout } from '../../../Framework/UI/index';
-import Styles from '../../../Framework/Common/Styles';
 import { padSize } from '../../../Framework/Common/Values';
 
 /**
@@ -26,7 +25,7 @@ export default function SampleLayoutsPage({ navigation, route, screenHeaderComp:
   );
 
   return (
-    <View style={Styles.contPage}>
+    <LinearLayout flex={1} childLayout='wrap-content'>
       {/* app header */}
       <ScreenHeaderComp navigation={navigation} route={route} />
       {/* main content here */}
@@ -53,6 +52,6 @@ export default function SampleLayoutsPage({ navigation, route, screenHeaderComp:
           <TextContainer style={{ position: 'relative', bottom: 10, right: 10 }} color="yellow" text="Relative Item 2" />
         </LinearLayout>
       </LinearLayout>
-    </View>
+    </LinearLayout>
   );
 }

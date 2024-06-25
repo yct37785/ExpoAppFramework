@@ -2,11 +2,11 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { View, Image } from 'react-native';
 import { useTheme, Text, Appbar, Divider, RadioButton } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
+import { LinearLayout } from '../../../Framework/UI/index';
 import { Collapsible, ChipsContainer, highlightText } from '../../../Framework/UI/index';
 import { SearchableListComp } from '../../../Framework/UI/Data/List';
 import { TextInputFieldComp } from '../../../Framework/UI/Input/TextInput';
 import { faker } from '@faker-js/faker';
-import Styles from '../../../Framework/Common/Styles';
 import { padSize05, padSize, padSize2, iconSizeSmall } from '../../../Framework/Common/Values';
 
 /**
@@ -153,7 +153,7 @@ export default function SampleSearchPage({ navigation, route, screenHeaderComp: 
   }, [searchQuery]);
 
   return (
-    <View style={Styles.contPage}>
+    <LinearLayout flex={1} childLayout='wrap-content'>
       {/* app header */}
       <ScreenHeaderComp navigation={navigation} route={route} />
       {/* Header and search bar */}
@@ -197,6 +197,6 @@ export default function SampleSearchPage({ navigation, route, screenHeaderComp: 
           rowHeight={ROW_HEIGHT}
         />
       </View>
-    </View>
+    </LinearLayout>
   );
 }

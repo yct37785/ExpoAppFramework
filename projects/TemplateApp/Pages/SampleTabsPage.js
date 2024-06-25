@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import Styles from '../../../Framework/Common/Styles';
 import { useTheme, Text, Appbar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { LinearLayout } from '../../../Framework/UI/index';
 import { Tabs } from '../../../Framework/UI/index';
 
 export const TAB_ROUTES = [
@@ -86,7 +86,7 @@ export default function SampleTabsPage({ navigation, route }) {
   };
 
   return (
-    <View style={Styles.contPage}>
+    <LinearLayout flex={1} childLayout='wrap-content'>
       {/* app header */}
       <ScreenHeaderComp navigation={navigation} route={route} />
       {/* main content here */}
@@ -97,6 +97,6 @@ export default function SampleTabsPage({ navigation, route }) {
         onTabIdxChange={setTabIndex}
         sceneMap={renderScene}
       />
-    </View>
+    </LinearLayout>
   );
 }
