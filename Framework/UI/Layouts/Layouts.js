@@ -52,6 +52,10 @@ export const LinearLayout = ({ children, flex = 1, align = 'vertical', childLayo
 export const GridLayout = ({ children, flex = 1, columns = 2, childLayout = 'wrap-content', childMargin = 2, lastRowAlign = 'left', style, ...props }) => {
   const rows = [];
   let row = [];
+  let rowFlex = flex;
+  if (childLayout === 'wrap-content') {
+    rowFlex = 0;
+  }
   const compFlex = childLayout === 'match-parent' ? 1 : 0;
   children.forEach((child, index) => {
     const isLastRow = (children.length - index) <= (children.length % columns);
@@ -66,7 +70,7 @@ export const GridLayout = ({ children, flex = 1, columns = 2, childLayout = 'wra
     );
     if (isLastCol) {
       rows.push(
-        <View key={`row-${Math.floor(index / columns)}`} style={{ flexDirection: 'row', flex: compFlex }}>
+        <View key={`row-${Math.floor(index / columns)}`} style={{ flexDirection: 'row', flex: rowFlex }}>
           {row}
         </View>
       );
@@ -77,7 +81,7 @@ export const GridLayout = ({ children, flex = 1, columns = 2, childLayout = 'wra
   if (row.length > 0) {
     const alignItems = getValueByCondition([lastRowAlign === 'left', 'flex-start'], [lastRowAlign === 'center', 'center'], [lastRowAlign === 'right', 'flex-end'])
     rows.push(
-      <View key={`row-${rows.length}`} style={{ flexDirection: 'row', flex: compFlex, justifyContent: alignItems }}>
+      <View key={`row-${rows.length}`} style={{ flexDirection: 'row', flex: rowFlex, justifyContent: alignItems }}>
         {row}
       </View>
     );
