@@ -15,7 +15,7 @@ import { getValueByCondition } from '../../Utilities/GeneralUtils'
  * @param {Object} props.style - Custom styles to apply to the layout.
  * @returns {JSX.Element} The LinearLayout component.
  */
-export const LinearLayout = ({ children, flex = 1, align = 'vertical', childLayout = 'wrap-content', childMargin = 0, scrollable = false, style, ...props }) => {
+export const LinearLayout = ({ children, flex = 0, align = 'vertical', childLayout = 'wrap-content', childMargin = 0, scrollable = false, style, ...props }) => {
   const isVertical = align === 'vertical';
   const marginStyle = isVertical ? { marginBottom: childMargin } : { marginRight: childMargin };
 
@@ -63,7 +63,7 @@ export const LinearLayout = ({ children, flex = 1, align = 'vertical', childLayo
  * @param {Object} props.style - Custom styles to apply to the layout.
  * @returns {JSX.Element} The GridLayout component.
  */
-export const GridLayout = ({ children, flex = 1, columns = 2, childLayout = 'wrap-content', childMargin = 2, lastRowAlign = 'left', style, ...props }) => {
+export const GridLayout = ({ children, flex = 0, columns = 2, childLayout = 'wrap-content', childMargin = 2, lastRowAlign = 'left', style, ...props }) => {
   const rows = [];
   let row = [];
   let rowFlex = flex;
@@ -118,7 +118,7 @@ export const GridLayout = ({ children, flex = 1, columns = 2, childLayout = 'wra
  * @param {Object} props.style - Custom styles to apply to the layout.
  * @returns {JSX.Element} The ScrollLayout component.
  */
-export const ScrollLayout = ({ flex = 1, children, style, ...props }) => (
+export const ScrollLayout = ({ flex = 0, children, style, ...props }) => (
   <ScrollView style={[{ flex: flex }, style]} {...props}>
     {children}
   </ScrollView>

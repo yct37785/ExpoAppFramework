@@ -34,7 +34,7 @@ const PageComp = ({ navigation, route, pageName, customHeaderContent: CustomHead
           {CustomHeaderComp && CustomHeaderComp()}
         </View>
       </Appbar.Header>
-      <LinearLayout childMargin={padSize} style={{ padding: padSize, backgroundColor: 'yellow' }}>
+      <LinearLayout flex={1} childMargin={padSize} style={{ padding: padSize, backgroundColor: 'yellow' }}>
         {children}
       </LinearLayout>
     </LinearLayout>
