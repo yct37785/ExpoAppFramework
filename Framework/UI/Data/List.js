@@ -56,7 +56,7 @@ export const SearchableListComp = ({
   };
 
   return (
-    <View style={{ width: '100%', flex: 1 }}>
+    <View style={{ width: '100%', flex: 1, backgroundColor: '#ff6666' }}>
       {filteredData.length > 0 ? renderList() : null}
     </View>
   );

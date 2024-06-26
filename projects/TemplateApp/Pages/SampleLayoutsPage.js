@@ -25,7 +25,7 @@ export default function SampleLayoutsPage({ navigation, route }) {
   );
 
   return (
-    <PageContainer navigation={navigation} route={route} pageName="SampleLayoutsPage">
+    <PageContainer navigation={navigation} route={route} scrollable={true} pageName="SampleLayoutsPage">
       {/* vertical layout */}
       <Text variant="titleMedium">PageContainer: vertical layout scrollable</Text>
       {/* horizontal layout: child = wrap content */}

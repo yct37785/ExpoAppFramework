@@ -4,7 +4,7 @@ import { View, Keyboard } from 'react-native';
 import {
   useTheme, Text, Button, Appbar
 } from 'react-native-paper';
-import { LinearLayout } from '../../../Framework/UI/index';
+import { PageContainer, LinearLayout } from '../../../Framework/UI/index';
 
 /**
  * sample empty page
@@ -14,13 +14,8 @@ export default function SampleEmptyPage({ navigation, route, screenHeaderComp: S
   const { paramText } = route.params;
 
   return (
-    <LinearLayout flex={1} childLayout='wrap-content'>
-      {/* app header */}
-      <ScreenHeaderComp navigation={navigation} route={route} />
-      {/* main content here */}
-      <View style={Styles.contVert}>
-        <Text variant="bodyMedium">{`paramText: ${paramText}`}</Text>
-      </View>
-    </LinearLayout>
+    <PageContainer navigation={navigation} route={route} pageName="SampleEmptyPage">
+      <Text variant="bodyMedium">{`paramText: ${paramText}`}</Text>
+    </PageContainer>
   );
 }

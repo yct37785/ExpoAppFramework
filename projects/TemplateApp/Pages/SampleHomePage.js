@@ -5,7 +5,7 @@ import {
   useTheme, Text, Card, Button, Appbar,
   TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
 } from 'react-native-paper';
-import { LinearLayout, PageContainer } from '../../../Framework/UI/index';
+import { PageContainer, LinearLayout } from '../../../Framework/UI/index';
 // data
 import { onLocalDataUpdate } from '../../../Framework/Contexts/LocalDataContext';
 // const
@@ -23,9 +23,9 @@ const SampleHomePage = ({ navigation, route }) => {
   });
 
   function customHeaderContent() {
-    return <View style={{ flex: 1 }}>
+    return <LinearLayout align='horizontal'>
       <Text>testing 1 2 3</Text>
-    </View>
+    </LinearLayout>
   }
 
   return (

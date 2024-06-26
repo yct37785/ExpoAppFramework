@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, useCallback, useRef } from 'rea
 import { View } from 'react-native';
 // UI
 import { useTheme, Text } from 'react-native-paper';
-import { LinearLayout, PageContainer } from '../../../Framework/UI/index';
+import { PageContainer, LinearLayout } from '../../../Framework/UI/index';
 import { padSize } from '../../../Framework/Common/Values';
 
 /**

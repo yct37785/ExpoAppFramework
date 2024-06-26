@@ -2,8 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { View, Image } from 'react-native';
 import { useTheme, Text, Appbar, Divider, RadioButton } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
-import { LinearLayout } from '../../../Framework/UI/index';
-import { Collapsible, ChipsContainer, highlightText } from '../../../Framework/UI/index';
+import { PageContainer, LinearLayout, Collapsible, ChipsContainer, highlightText } from '../../../Framework/UI/index';
 import { SearchableListComp } from '../../../Framework/UI/Data/List';
 import { TextInputFieldComp } from '../../../Framework/UI/Input/TextInput';
 import { faker } from '@faker-js/faker';
@@ -19,7 +18,7 @@ import { padSize05, padSize, padSize2, iconSizeSmall } from '../../../Framework/
  * @param {Object} props.route - Route object containing route parameters.
  * @returns {JSX.Element} The SampleSearchPage component.
  */
-export default function SampleSearchPage({ navigation, route, screenHeaderComp: ScreenHeaderComp }) {
+export default function SampleSearchPage({ navigation, route }) {
   const theme = useTheme();
   const [listType, setListType] = useState('biglist');
   const [searchQuery, setSearchQuery] = useState('');
@@ -53,27 +52,6 @@ export default function SampleSearchPage({ navigation, route, screenHeaderComp: 
       material: faker.commerce.productMaterial().toLowerCase()
     };
   };
-
-  /**
-   * FilterHeader Component
-   * 
-   * @param {Object} param0 - Component props.
-   * @param {boolean} param0.isCollapsed - Indicates if the filter section is collapsed.
-   * @returns {JSX.Element} The FilterHeader component.
-   */
-  const FilterHeader = React.memo(({ isCollapsed }) => {
-    return (
-      <View style={{ padding: padSize, paddingLeft: padSize2, flexDirection: 'row', alignItems: 'center' }}>
-        <Text>Filters</Text>
-        <MaterialIcons
-          name={isCollapsed ? 'keyboard-arrow-down' : 'keyboard-arrow-up'}
-          color={theme.colors.text}
-          size={iconSizeSmall}
-          style={{ paddingLeft: padSize05 }}
-        />
-      </View>
-    );
-  });
 
   /**
    * Handles selection of material chips.
@@ -118,8 +96,8 @@ export default function SampleSearchPage({ navigation, route, screenHeaderComp: 
    */
   const ListItem = React.memo(({ item, searchQuery }) => {
     return (
-      <View style={Styles.contFlex}>
-        <View style={Styles.contVert}>
+      <View style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
           {highlightText(item.name, searchQuery, 'titleSmall')}
           <Image
             style={{ width: 100, height: 100 }}
@@ -152,51 +130,46 @@ export default function SampleSearchPage({ navigation, route, screenHeaderComp: 
     );
   }, [searchQuery]);
 
+  function customHeaderContent() {
+    return <LinearLayout align='horizontal'>
+      <TextInputFieldComp
+        type="search"
+        value={searchQuery}
+        onChange={setSearchQuery}
+        placeholder="search"
+      />
+    </LinearLayout>
+  }
+
   return (
-    <LinearLayout flex={1} childLayout='wrap-content'>
-      {/* app header */}
-      <ScreenHeaderComp navigation={navigation} route={route} />
-      {/* Header and search bar */}
-      {/* <Appbar.Header>
-        <TextInputFieldComp
-          type="search"
-          value={searchQuery}
-          onChange={setSearchQuery}
-          placeholder="search"
-        />
-      </Appbar.Header> */}
+    <PageContainer navigation={navigation} route={route} pageName="SampleSearchPage" customHeaderContent={customHeaderContent}>
       {/* Filter menu */}
       <Collapsible toggleHeaderText="Filter">
-        <View style={{ width: '100%', padding: padSize, paddingHorizontal: padSize2 }}>
+        <View style={{ width: '100%' }}>
           <Text variant='labelSmall'>Materials</Text>
           <ChipsContainer toggledMap={materialsSelected} onChipSelected={onMaterialChipSelected} />
         </View>
       </Collapsible>
       {/* Toggle BigList vs FlatList */}
-      <View style={Styles.contVert}>
-        <View style={Styles.contPad}>
-          <RadioButton.Group onValueChange={newValue => setListType(newValue)} value={listType}>
-            <View style={{ flexDirection: 'row' }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Text>BigList</Text>
-                <RadioButton value="biglist" />
-              </View>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Text>FlatList</Text>
-                <RadioButton value="flatlist" />
-              </View>
-            </View>
-          </RadioButton.Group>
+      <RadioButton.Group onValueChange={newValue => setListType(newValue)} value={listType}>
+        <View style={{ flexDirection: 'row', backgroundColor: 'green' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text>BigList</Text>
+            <RadioButton value="biglist" />
+          </View>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text>FlatList</Text>
+            <RadioButton value="flatlist" />
+          </View>
         </View>
-        {/* Main content */}
-        <SearchableListComp
-          data={productList}
-          filterFunction={filterProducts}
-          renderItem={renderItem}
-          listType={listType}
-          rowHeight={ROW_HEIGHT}
-        />
-      </View>
-    </LinearLayout>
+      </RadioButton.Group>
+      <SearchableListComp
+        data={productList}
+        filterFunction={filterProducts}
+        renderItem={renderItem}
+        listType={listType}
+        rowHeight={ROW_HEIGHT}
+      />
+    </PageContainer>
   );
 }

@@ -48,7 +48,7 @@ export const CollapsibleComp = ({ toggleHeaderText = '', children }) => {
   };
 
   return (
-    <View>
+    <View style={{ backgroundColor: '#ff99ff' }}>
       <TouchableOpacity onPress={toggleCollapse}>
         <ToggleHeader toggleHeaderText={toggleHeaderText} isCollapsed={isCollapsed} />
       </TouchableOpacity>
