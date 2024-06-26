@@ -8,7 +8,7 @@ import { padSize } from '../../../Framework/Common/Values';
 /**
  * containers demos page
  */
-export default function SampleContainersPage({ navigation, route, screenHeaderComp }) {
+export default function SampleContainersPage({ navigation, route }) {
   const theme = useTheme();
   const { paramText } = route.params;
 
@@ -17,7 +17,7 @@ export default function SampleContainersPage({ navigation, route, screenHeaderCo
   };
 
   return (
-    <PageContainer navigation={navigation} route={route} screenHeaderComp={screenHeaderComp} pageName="SampleContainerPage" customHeaderContent={customHeaderContent}>
+    <PageContainer navigation={navigation} route={route} pageName="SampleContainerPage" customHeaderContent={customHeaderContent}>
       <LinearLayout childMargin={padSize} style={{ padding: padSize }}>
         <Text variant="bodyMedium">{`paramText: ${paramText}`}</Text>
       </LinearLayout>

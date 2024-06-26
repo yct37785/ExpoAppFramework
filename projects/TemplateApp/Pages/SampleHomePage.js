@@ -15,7 +15,7 @@ import { padSize } from '../../../Framework/Common/Values';
 /**
  * sample home page
  */
-const SampleHomePage = ({ navigation, route, screenHeaderComp: ScreenHeaderComp }) => {
+const SampleHomePage = ({ navigation, route }) => {
   const theme = useTheme();
 
   onLocalDataUpdate(() => {
@@ -30,9 +30,6 @@ const SampleHomePage = ({ navigation, route, screenHeaderComp: ScreenHeaderComp 
 
   return (
     <LinearLayout>
-      {/* app header */}
-      <ScreenHeaderComp navigation={navigation} route={route} customHeaderComp={customHeaderContent} />
-      {/* main content here */}
       <LinearLayout childMargin={padSize} style={{ padding: padSize }}>
         <Text variant="bodyMedium">Select the pages you want to navigate to</Text>
         <LinearLayout childMargin={padSize}>
