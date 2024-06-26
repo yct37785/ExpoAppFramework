@@ -102,7 +102,7 @@ export const GridLayout = ({ children, flex = 0, columns = 2, childLayout = 'wra
   }
 
   return (
-    <View style={[{ flex: flex }, style]} {...props}>
+    <View style={[{ flex: flex, backgroundColor: 'orange' }, style]} {...props}>
       {rows.map((row, index) => {
         return row
       })}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { useTheme, Text, Appbar } from 'react-native-paper';
-import { LinearLayout, GridLayout, ScrollLayout } from '../../../Framework/UI/index';
+import { PageContainer, LinearLayout, GridLayout } from '../../../Framework/UI/index';
 import { padSize } from '../../../Framework/Common/Values';
 
 /**
@@ -15,7 +15,7 @@ import { padSize } from '../../../Framework/Common/Values';
  * @param {Function} props.screenHeaderComp - Function component to render the screen header.
  * @returns {JSX.Element} The SampleLayoutsPage component.
  */
-export default function SampleLayoutsPage({ navigation, route, screenHeaderComp: ScreenHeaderComp }) {
+export default function SampleLayoutsPage({ navigation, route }) {
   const theme = useTheme();
 
   const TextContainer = ({ text, fontSize = 14, style, ...props }) => (
@@ -25,63 +25,58 @@ export default function SampleLayoutsPage({ navigation, route, screenHeaderComp:
   );
 
   return (
-    <LinearLayout flex={1}>
-      {/* app header */}
-      <ScreenHeaderComp navigation={navigation} route={route} />
+    <PageContainer navigation={navigation} route={route} pageName="SampleLayoutsPage">
       {/* vertical layout */}
-      <View style={{ padding: padSize }}>
-        <Text variant="headlineSmall">vertical layout: scrollable</Text>
-      </View>
-      <LinearLayout childMargin={padSize} align='vertical' scrollable={true} style={{ padding: padSize }}>
-        {/* horizontal layout: child = wrap content */}
-        <Text>horizontal layout: child = wrap content</Text>
-        <LinearLayout childMargin={padSize} flex={0} align='horizontal' style={{ backgroundColor: '#78dd8d', padding: padSize }}>
-          <TextContainer text="Horizontal Item 1" />
-          <TextContainer text="Horizontal Item 2" />
-        </LinearLayout>
-        {/* horizontal layout: child = match parent */}
-        <Text>horizontal layout: child = match parent</Text>
-        <LinearLayout childMargin={padSize} flex={0} align='horizontal' childLayout = 'match-parent' style={{ backgroundColor: '#78dd8d', padding: padSize }}>
-          <TextContainer text="Horizontal Item 1" />
-          <TextContainer text="Horizontal Item 2" />
-        </LinearLayout>
-        {/* horizontal layout: scrollable */}
-        <Text>horizontal layout: child = scrollable</Text>
-        <LinearLayout childMargin={padSize} flex={0} align='horizontal' childLayout = 'wrap-content' scrollable={true} style={{ backgroundColor: '#78dd8d', padding: padSize }}>
-          <TextContainer style={{ height: 80 }} text="Horizontal Item 1" />
-          <TextContainer style={{ height: 80 }} text="Horizontal Item 2" />
-          <TextContainer style={{ height: 80 }} text="Horizontal Item 3" />
-          <TextContainer style={{ height: 80 }} text="Horizontal Item 4" />
-        </LinearLayout>
-        {/* grid layout: child = wrap content */}
-        <Text>grid layout: child = wrap content</Text>
-        <GridLayout flex={0} childMargin={padSize} columns={4} childLayout = 'wrap-content' style={{ backgroundColor: '#78c9dd', padding: padSize }}>
-          <TextContainer text="Grid Item 1" />
-          <TextContainer text="Grid Item 2" />
-          <TextContainer text="Grid Item 3" />
-          <TextContainer text="Grid Item 4" />
-          <TextContainer text="Grid Item 5" />
-          <TextContainer text="Grid Item 6" />
-        </GridLayout>
-        {/* grid layout: child = match parent */}
-        <Text>grid layout: child = match parent</Text>
-        <GridLayout flex={0} childMargin={padSize} columns={4} childLayout = 'match-parent' style={{ backgroundColor: '#78c9dd', padding: padSize }}>
-          <TextContainer text="Grid Item 1" />
-          <TextContainer text="Grid Item 2" />
-          <TextContainer text="Grid Item 3" />
-          <TextContainer text="Grid Item 4" />
-          <TextContainer text="Grid Item 5" />
-          <TextContainer text="Grid Item 6" />
-        </GridLayout>
-        {/* vertical layout: child = wrap content */}
-        <Text>vertical layout: child = wrap content</Text>
-        <LinearLayout childMargin={padSize} flex={0} align='vertical' style={{ backgroundColor: '#f9f10b', padding: padSize }}>
-          <TextContainer text="Horizontal Item 1" />
-          <TextContainer text="Horizontal Item 2" />
-        </LinearLayout>
-        {/* vertical layout: fixed height */}
-        <Text>vertical layout: fixed height</Text>
-        <LinearLayout childMargin={padSize} style={{ height: 1500, backgroundColor: '#f9960b', marginTop: padSize, padding: padSize }}>
+      <Text variant="titleMedium">PageContainer: vertical layout scrollable</Text>
+      {/* horizontal layout: child = wrap content */}
+      <Text>horizontal layout: child = wrap content</Text>
+      <LinearLayout childMargin={padSize} flex={0} align='horizontal'>
+        <TextContainer text="Horizontal Item 1" />
+        <TextContainer text="Horizontal Item 2" />
+      </LinearLayout>
+      {/* horizontal layout: child = match parent */}
+      <Text>horizontal layout: child = match parent</Text>
+      <LinearLayout childMargin={padSize} flex={0} align='horizontal' childLayout='match-parent'>
+        <TextContainer text="Horizontal Item 1" />
+        <TextContainer text="Horizontal Item 2" />
+      </LinearLayout>
+      {/* horizontal layout: scrollable */}
+      <Text>horizontal layout: child = scrollable</Text>
+      <LinearLayout childMargin={padSize} flex={0} align='horizontal' childLayout='wrap-content' scrollable={true}>
+        <TextContainer style={{ height: 80 }} text="Horizontal Item 1" />
+        <TextContainer style={{ height: 80 }} text="Horizontal Item 2" />
+        <TextContainer style={{ height: 80 }} text="Horizontal Item 3" />
+        <TextContainer style={{ height: 80 }} text="Horizontal Item 4" />
+      </LinearLayout>
+      {/* grid layout: child = wrap content */}
+      <Text>grid layout: child = wrap content</Text>
+      <GridLayout flex={0} childMargin={padSize} columns={4} childLayout='wrap-content'>
+        <TextContainer text="Grid Item 1" />
+        <TextContainer text="Grid Item 2" />
+        <TextContainer text="Grid Item 3" />
+        <TextContainer text="Grid Item 4" />
+        <TextContainer text="Grid Item 5" />
+        <TextContainer text="Grid Item 6" />
+      </GridLayout>
+      {/* grid layout: child = match parent */}
+      <Text>grid layout: child = match parent</Text>
+      <GridLayout flex={0} childMargin={padSize} columns={4} childLayout='match-parent'>
+        <TextContainer text="Grid Item 1" />
+        <TextContainer text="Grid Item 2" />
+        <TextContainer text="Grid Item 3" />
+        <TextContainer text="Grid Item 4" />
+        <TextContainer text="Grid Item 5" />
+        <TextContainer text="Grid Item 6" />
+      </GridLayout>
+      {/* vertical layout: child = wrap content */}
+      <Text>vertical layout: child = wrap content</Text>
+      <LinearLayout childMargin={padSize} flex={0} align='vertical'>
+        <TextContainer text="Horizontal Item 1" />
+        <TextContainer text="Horizontal Item 2" />
+      </LinearLayout>
+      {/* vertical layout: fixed height */}
+      <Text>vertical layout: fixed height</Text>
+      <LinearLayout childMargin={padSize} style={{ height: 1500 }}>
         <TextContainer fontSize={16} text="scroll down..." />
         <TextContainer fontSize={14} text="down..." />
         <TextContainer fontSize={12} text="down..." />
@@ -89,11 +84,10 @@ export default function SampleLayoutsPage({ navigation, route, screenHeaderComp:
         <TextContainer fontSize={8} text="down..." />
         <TextContainer fontSize={6} text="down..." />
         <TextContainer fontSize={4} text="down..." />
-          <View style={{ position: 'absolute', top: 500, left: 100, width: 200, height: 200, justifyContent: 'center', alignItems: 'center', backgroundColor: '#ff66ff' }}>
-            <Text>a random absolute position element</Text>
-          </View>
-        </LinearLayout>
+        <View style={{ position: 'absolute', top: 500, left: 100, width: 200, height: 200, justifyContent: 'center', alignItems: 'center', backgroundColor: '#ff66ff' }}>
+          <Text>a random absolute position element</Text>
+        </View>
       </LinearLayout>
-    </LinearLayout>
+    </PageContainer>
   );
 }
