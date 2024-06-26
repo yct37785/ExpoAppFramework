@@ -4,6 +4,7 @@ import { useTheme, Appbar } from 'react-native-paper';
 import { LinearLayout } from './Layouts';
 import { onLocalDataUpdate } from '../../Contexts/LocalDataContext';
 import { padSize } from '../../Common/Values';
+import { toggleDebugMode } from '../../Contexts/GlobalConfig';
 
 /**
  * PageComp Component
@@ -30,7 +31,7 @@ const PageComp = ({ navigation, route, scrollable = false, applyPadding = true, 
   return (
     <View style={{ flex: 1 }}>
       <Appbar.Header style={{ backgroundColor: 'blue' }}>
-        <Appbar.BackAction onPress={() => navigation.goBack()} />
+        <Appbar.BackAction onPress={() => navigation.goBack()} onLongPress={toggleDebugMode} />
         <Appbar.Content style={{ flex: 0 }} title={route.name} />
         <View style={{ flex: 1 }}>
           {CustomHeaderComp && CustomHeaderComp()}
