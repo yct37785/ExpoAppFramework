@@ -16,23 +16,32 @@ import { getValueByCondition } from '../../Utilities/GeneralUtils'
  * @param {Object} props.style - Custom styles to apply to the layout.
  * @returns {JSX.Element} The LinearLayout component.
  */
-export const LinearLayout = ({ children, flex = 0, align = 'vertical', childLayout = 'wrap-content', childMargin = 0, 
-  scrollable = false, debugBackgroundColor = 'orange', style, ...props }) => {
+
+export const LinearLayout = ({ 
+  children, 
+  flex = 0, 
+  align = 'vertical', 
+  childLayout = 'wrap-content', 
+  childMargin = 0, 
+  scrollable = false, 
+  debugBackgroundColor = 'orange', 
+  style, 
+  ...props 
+}) => {
   const isVertical = align === 'vertical';
   const marginStyle = isVertical ? { marginBottom: childMargin } : { marginRight: childMargin };
 
   const renderChildren = () => {
     return React.Children.map(children, (child, index) => {
-      const childStyle = child.props.style || {};
       const newStyle = {
-        ...childStyle,
-        ...(index !== React.Children.count(children) - 1 ? marginStyle : {}), // Avoid margin for the last child
         ...(childLayout === 'match-parent' ? { flex: 1 } : {}),
       };
 
-      return React.cloneElement(child, {
-        style: newStyle,
-      });
+      return (
+        <View key={index} style={[newStyle, index !== React.Children.count(children) - 1 ? marginStyle : {}]}>
+          {child}
+        </View>
+      );
     });
   };
 
