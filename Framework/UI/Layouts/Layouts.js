@@ -12,10 +12,12 @@ import { getValueByCondition } from '../../Utilities/GeneralUtils'
  * @param {string} props.childLayout - Child layout strategy, either 'wrap-content' or 'match-parent'.
  * @param {number} props.childMargin - Margin to apply to each child.
  * @param {boolean} props.scrollable - Whether the layout should be scrollable if children exceed the container size.
+ * @param {string} props.debugBackgroundColor - dictate background color of layout for debugging purposes.
  * @param {Object} props.style - Custom styles to apply to the layout.
  * @returns {JSX.Element} The LinearLayout component.
  */
-export const LinearLayout = ({ children, flex = 0, align = 'vertical', childLayout = 'wrap-content', childMargin = 0, scrollable = false, style, ...props }) => {
+export const LinearLayout = ({ children, flex = 0, align = 'vertical', childLayout = 'wrap-content', childMargin = 0, 
+  scrollable = false, debugBackgroundColor = 'orange', style, ...props }) => {
   const isVertical = align === 'vertical';
   const marginStyle = isVertical ? { marginBottom: childMargin } : { marginRight: childMargin };
 
@@ -35,14 +37,14 @@ export const LinearLayout = ({ children, flex = 0, align = 'vertical', childLayo
   };
 
   const mainContent = (
-    <View style={[{ flexDirection: isVertical ? 'column' : 'row', flex: flex, backgroundColor: 'orange' }, style]} {...props}>
+    <View style={[{ flexDirection: isVertical ? 'column' : 'row', flex: flex, backgroundColor: debugBackgroundColor }, style]} {...props}>
       {renderChildren()}
     </View>
   );
 
   if (scrollable) {
     return (
-      <ScrollView style={{ flex: 1, backgroundColor: 'orange' }} horizontal={!isVertical} contentContainerStyle={{ flexDirection: isVertical ? 'column' : 'row' }}>
+      <ScrollView style={{ flex: 1, backgroundColor: debugBackgroundColor }} horizontal={!isVertical} contentContainerStyle={{ flexDirection: isVertical ? 'column' : 'row' }}>
         {mainContent}
       </ScrollView>
     );
@@ -60,10 +62,12 @@ export const LinearLayout = ({ children, flex = 0, align = 'vertical', childLayo
  * @param {string} props.childLayout - 'wrap-content'/'match-parent'
  * @param {number} props.childMargin - how much margin in between child wrappers
  * @param {string} props.lastRowAlign - if the last row != column num, align row children 'left'/'center'/'right'
+ * @param {string} props.debugBackgroundColor - dictate background color of layout for debugging purposes.
  * @param {Object} props.style - Custom styles to apply to the layout.
  * @returns {JSX.Element} The GridLayout component.
  */
-export const GridLayout = ({ children, flex = 0, columns = 2, childLayout = 'wrap-content', childMargin = 2, lastRowAlign = 'left', style, ...props }) => {
+export const GridLayout = ({ children, flex = 0, columns = 2, childLayout = 'wrap-content', childMargin = 2, lastRowAlign = 'left',
+  debugBackgroundColor = 'orange', style, ...props }) => {
   const rows = [];
   let row = [];
   let rowFlex = flex;
@@ -102,7 +106,7 @@ export const GridLayout = ({ children, flex = 0, columns = 2, childLayout = 'wra
   }
 
   return (
-    <View style={[{ flex: flex, backgroundColor: 'orange' }, style]} {...props}>
+    <View style={[{ flex: flex, backgroundColor: debugBackgroundColor }, style]} {...props}>
       {rows.map((row, index) => {
         return row
       })}

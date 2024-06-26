@@ -12,15 +12,9 @@ export default function SampleContainersPage({ navigation, route }) {
   const theme = useTheme();
   const { paramText } = route.params;
 
-  function customHeaderContent() {
-    return (<Text>Custom Header</Text>)
-  };
-
   return (
-    <PageContainer navigation={navigation} route={route} pageName="SampleContainerPage" customHeaderContent={customHeaderContent}>
-      <LinearLayout childMargin={padSize} style={{ padding: padSize }}>
-        <Text variant="bodyMedium">{`paramText: ${paramText}`}</Text>
-      </LinearLayout>
+    <PageContainer navigation={navigation} route={route} pageName="SampleContainerPage">
+      <Text variant="bodyMedium">{`paramText: ${paramText}`}</Text>
     </PageContainer>
   );
 }
