@@ -14,12 +14,13 @@ import { padSize } from '../../Common/Values';
  * @param {Object} props.navigation - Navigation object for navigating between screens.
  * @param {Object} props.route - Route object containing route parameters.
  * @param {boolean} props.scrollable - page scrollable if exceed screen height.
+ * @param {boolean} props.applyPadding - to apply padding to sides.
  * @param {string} props.pageName - Name of the page.
  * @param {React.ReactNode} props.customHeaderContent - Custom content to display in the header.
  * @param {React.ReactNode} props.children - The body content of the page.
  * @returns {JSX.Element} The PageComp component.
  */
-const PageComp = ({ navigation, route, scrollable = false, pageName, customHeaderContent: CustomHeaderComp, children }) => {
+const PageComp = ({ navigation, route, scrollable = false, applyPadding = true, pageName, customHeaderContent: CustomHeaderComp, children }) => {
   const theme = useTheme();
 
   onLocalDataUpdate(() => {
@@ -35,7 +36,7 @@ const PageComp = ({ navigation, route, scrollable = false, pageName, customHeade
           {CustomHeaderComp && CustomHeaderComp()}
         </View>
       </Appbar.Header>
-      <LinearLayout flex={1} childMargin={padSize} scrollable={scrollable} style={{ padding: padSize }} debugBackgroundColor='yellow'>
+      <LinearLayout flex={1} childMargin={padSize} scrollable={scrollable} style={{ padding: applyPadding ? padSize : 0 }} debugBackgroundColor='yellow'>
         {children}
       </LinearLayout>
     </View>

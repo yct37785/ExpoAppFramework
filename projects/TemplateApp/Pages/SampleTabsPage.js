@@ -86,7 +86,7 @@ export default function SampleTabsPage({ navigation, route }) {
   };
 
   return (
-    <PageContainer navigation={navigation} route={route} pageName="SampleTabsPage">
+    <PageContainer navigation={navigation} route={route} applyPadding={false} pageName="SampleTabsPage">
       <Tabs
         routes={TAB_ROUTES}
         renderIcon={renderIcon}
