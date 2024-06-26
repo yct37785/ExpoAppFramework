@@ -23,3 +23,5 @@ export { default as Tabs } from './Containers/Tabs';
 export { highlightTextComp as highlightText } from './Display/Text';
 // Layouts.js
 export { LinearLayout, GridLayout, ScrollLayout } from './Layouts/Layouts';
+// Containers.js
+export { default as PageContainer } from './Containers/Page';

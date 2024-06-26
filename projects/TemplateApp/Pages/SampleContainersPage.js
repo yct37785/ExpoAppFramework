@@ -1,26 +1,26 @@
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
-import { View, Keyboard } from 'react-native';
+import { View } from 'react-native';
 // UI
-import {
-  useTheme, Text, Button, Appbar
-} from 'react-native-paper';
-import { LinearLayout } from '../../../Framework/UI/index';
+import { useTheme, Text } from 'react-native-paper';
+import { LinearLayout, PageContainer } from '../../../Framework/UI/index';
+import { padSize } from '../../../Framework/Common/Values';
 
 /**
  * containers demos page
  */
-export default function SampleContainersPage({ navigation, route, screenHeaderComp: ScreenHeaderComp }) {
+export default function SampleContainersPage({ navigation, route, screenHeaderComp }) {
   const theme = useTheme();
   const { paramText } = route.params;
 
+  function customHeaderContent() {
+    return (<Text>Custom Header</Text>)
+  };
+
   return (
-    <LinearLayout flex={1} childLayout='wrap-content'>
-      {/* app header */}
-      <ScreenHeaderComp navigation={navigation} route={route} />
-      {/* main content here */}
-      <View style={Styles.contVert}>
+    <PageContainer navigation={navigation} route={route} screenHeaderComp={screenHeaderComp} pageName="SampleContainerPage" customHeaderContent={customHeaderContent}>
+      <LinearLayout childMargin={padSize} style={{ padding: padSize }}>
         <Text variant="bodyMedium">{`paramText: ${paramText}`}</Text>
-      </View>
-    </LinearLayout>
+      </LinearLayout>
+    </PageContainer>
   );
 }
