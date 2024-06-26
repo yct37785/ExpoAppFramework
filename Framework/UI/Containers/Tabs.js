@@ -59,7 +59,7 @@ function TabsComp({ routes, renderIcon, sceneMap, tabIndex, onTabIdxChange, posi
       renderLazyPlaceholder={loadingScreen}
       onIndexChange={onTabIdxChange}
       tabBarPosition={position}
-      style={{ width: '100%' }}
+      style={{ width: '100%', backgroundColor: 'magenta' }}
     />
   );
 }

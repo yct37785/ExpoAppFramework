@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import { useTheme, Text, Appbar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { LinearLayout } from '../../../Framework/UI/index';
+import { PageContainer, LinearLayout } from '../../../Framework/UI/index';
 import { Tabs } from '../../../Framework/UI/index';
 
 export const TAB_ROUTES = [
@@ -45,7 +45,7 @@ export default function SampleTabsPage({ navigation, route }) {
    * @param {Object} param0.route - The route object for the tab.
    * @returns {JSX.Element|null} The component for the scene.
    */
-  const renderScene = ({ navigation, route, screenHeaderComp: ScreenHeaderComp }) => {
+  const renderScene = ({ navigation, route }) => {
     switch (route.key) {
       case 'p1':
         return <Tab1Comp />;
@@ -64,7 +64,7 @@ export default function SampleTabsPage({ navigation, route }) {
    * @returns {JSX.Element} The component for Tab 1.
    */
   const Tab1Comp = () => {
-    return <View style={Styles.contFlex}><Text>P1</Text></View>;
+    return <View style={{ flex: 1 }}><Text>P1</Text></View>;
   };
 
   /**
@@ -73,7 +73,7 @@ export default function SampleTabsPage({ navigation, route }) {
    * @returns {JSX.Element} The component for Tab 2.
    */
   const Tab2Comp = () => {
-    return <View style={Styles.contFlex}><Text>P2</Text></View>;
+    return <View style={{ flex: 1 }}><Text>P2</Text></View>;
   };
 
   /**
@@ -82,21 +82,19 @@ export default function SampleTabsPage({ navigation, route }) {
    * @returns {JSX.Element} The component for Tab 3.
    */
   const Tab3Comp = () => {
-    return <View style={Styles.contFlex}><Text>P3</Text></View>;
+    return <View style={{ flex: 1 }}><Text>P3</Text></View>;
   };
 
   return (
-    <LinearLayout flex={1} childLayout='wrap-content'>
-      {/* app header */}
-      <ScreenHeaderComp navigation={navigation} route={route} />
-      {/* main content here */}
+    <PageContainer navigation={navigation} route={route} pageName="SampleTabsPage">
       <Tabs
         routes={TAB_ROUTES}
         renderIcon={renderIcon}
         tabIndex={tabIndex}
         onTabIdxChange={setTabIndex}
         sceneMap={renderScene}
+        customLayout="match-parent" // special prop to set flex to 1 for elems with undefined height
       />
-    </LinearLayout>
+    </PageContainer>
   );
 }
