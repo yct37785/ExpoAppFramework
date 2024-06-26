@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
 
 /**
- * For any user data
+ * context
  */
 export const LocalDataContext = React.createContext({
   updateCount: 0,
@@ -10,3 +10,16 @@ export const LocalDataContext = React.createContext({
   resetLocalData: () => {},
   getLocalDataStringify: () => {},
 });
+
+/**
+ * callbacks
+ */
+export const onLocalDataUpdate = (callback) => {
+  const { updateCount } = useContext(LocalDataContext);
+
+  useEffect(() => {
+    if (updateCount) {
+      callback();
+    }
+  }, [updateCount, callback]);
+};

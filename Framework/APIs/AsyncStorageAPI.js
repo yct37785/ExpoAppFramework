@@ -1,10 +1,14 @@
+/*****************************************************************************************
+ * AsyncStorage API functions
+*****************************************************************************************/
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-/**------------------------------------------------------------------------------------*
- * Delete
- *------------------------------------------------------------------------------------*/
 /**
- * Delete an object
+ * Deletes an object from AsyncStorage.
+ * 
+ * @param {Array<string>} keys - The keys of the objects to delete.
+ * @returns {Promise<void>} A promise that resolves when the objects are deleted.
+ * @throws {Error} If an error occurs during deletion.
  */
 export async function deleteDataAS(keys) {
   try {
@@ -14,11 +18,12 @@ export async function deleteDataAS(keys) {
   }
 }
 
-/**------------------------------------------------------------------------------------*
- * Read
- *------------------------------------------------------------------------------------*/
 /**
- * Read all data from async storage
+ * Reads data from AsyncStorage.
+ * 
+ * @param {Array<string>} keyList - The keys of the data to read.
+ * @returns {Promise<Object>} A promise that resolves to an object containing the key-value pairs.
+ * @throws {Error} If an error occurs during reading.
  */
 export async function readDataAS(keyList) {
   try {
@@ -34,7 +39,10 @@ export async function readDataAS(keyList) {
 }
 
 /**
- * Read all keys from async storage
+ * Reads all keys from AsyncStorage.
+ * 
+ * @returns {Promise<Array<string>>} A promise that resolves to an array of all keys.
+ * @throws {Error} If an error occurs during reading.
  */
 export async function getAllKeysAS() {
   try {
@@ -44,12 +52,12 @@ export async function getAllKeysAS() {
   }
 }
 
-/**------------------------------------------------------------------------------------*
- * Write
- *------------------------------------------------------------------------------------*/
 /**
- * Write data
- * param keyValueList: [ [ key: str, value: str ] ]
+ * Writes data to AsyncStorage.
+ * 
+ * @param {Array<Array<string>>} keyValueList - An array of key-value pairs to write.
+ * @returns {Promise<void>} A promise that resolves when the data is written.
+ * @throws {Error} If an error occurs during writing.
  */
 export async function writeDataAS(keyValueList) {
   try {
@@ -59,19 +67,4 @@ export async function writeDataAS(keyValueList) {
   } catch (e) {
     throw new Error(e);
   }
-}
-
-/**------------------------------------------------------------------------------------*
- * Utils
- *------------------------------------------------------------------------------------*/
-/**
- * Helper for converting object to key value list, only 1 layer deep
- * param object: {}
- */
-export function objToKeyValueArr(obj) {
-  const newArr = [];
-  for (key in obj) {
-    newArr.push([key, JSON.stringify(obj[key])]);
-  }
-  return newArr;
 }

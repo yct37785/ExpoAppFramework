@@ -1,17 +1,11 @@
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { View, Keyboard } from 'react-native';
-import Styles from '../../../Framework/Common/Styles';
 // UI
 import {
   useTheme, Text, Card, Button, Appbar,
   TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
 } from 'react-native-paper';
-import Dialog from '../../../Framework/UI/Dialog';
-import Picker from '../../../Framework/UI/Picker';
-import DropdownMenu from '../../../Framework/UI/DropdownMenu';
-import DropdownCheckMenu from '../../../Framework/UI/DropdownCheckMenu';
-// data
-import { LocalDataContext } from '../../../Framework/Contexts/LocalDataContext';
+import { PageContainer, LinearLayout, Dialog, Picker, DropdownMenu, DropdownCheckMenu } from '../../../Framework/UI/index';
 // const
 const PICKER_ITEM_LIST = [
   { label: 'Red', value: 'red' },
@@ -27,28 +21,12 @@ const DROPDOWN_ITEM_LIST = [
 /**
  * Display sample menus page
  */
-export default function SampleMenusPage({ navigation, route }) {
-  /**------------------------------------------------------------------------------------*
-   * State
-   *------------------------------------------------------------------------------------*/
+export default function SampleMenusPage({ navigation, route, screenHeaderComp: ScreenHeaderComp }) {
   const theme = useTheme();
   const searchBarRef = useRef();
-  const { updateCount, setLocalDataValue } = useContext(LocalDataContext);
   const [showDialog, setShowDialog] = useState(false);
   const [pickerSelection, setPickerSelection] = useState('red');
 
-  /**------------------------------------------------------------------------------------*
-   * Init
-   *------------------------------------------------------------------------------------*/
-  useEffect(() => {
-    if (updateCount) {
-      console.log("SampleMenusPage: updated data");
-    }
-  }, [updateCount]);
-
-  /**------------------------------------------------------------------------------------*
-   * Keyboard
-   *------------------------------------------------------------------------------------*/
   useEffect(() => {
     const keyboardListener = Keyboard.addListener('keyboardDidHide', (e) => {
       if (searchBarRef.current) {
@@ -58,9 +36,6 @@ export default function SampleMenusPage({ navigation, route }) {
     return () => keyboardListener.remove();
   }, [searchBarRef]);
 
-  /**------------------------------------------------------------------------------------*
-   * Utils
-   *------------------------------------------------------------------------------------*/
   function onSubmitDialog() {
     // some logic here
     setShowDialog(false);
@@ -79,11 +54,27 @@ export default function SampleMenusPage({ navigation, route }) {
     // process query logic here
   }
 
-  /**------------------------------------------------------------------------------------*
-   * Draw
-   *------------------------------------------------------------------------------------*/
+  function customHeaderContent() {
+    return <LinearLayout align='horizontal'>
+      <DropdownMenu
+        triggerComp={<IconButton
+          icon="dots-vertical"
+          size={20}
+        />}
+        options={DROPDOWN_ITEM_LIST}
+        onPress={onDropdownMenuSelected} />
+      <DropdownCheckMenu
+        triggerComp={<IconButton
+          icon="dots-vertical"
+          size={20}
+        />}
+        options={PICKER_ITEM_LIST}
+        onPress={onDropdownCheckMenuSelected} />
+    </LinearLayout>
+  }
+
   return (
-    <View style={Styles.contPage}>
+    <PageContainer navigation={navigation} route={route} pageName="SampleMenusPage" customHeaderContent={customHeaderContent}>
       {/* all dialogs here */}
       <Portal>
         <Dialog
@@ -98,38 +89,12 @@ export default function SampleMenusPage({ navigation, route }) {
           </Card.Content>
         </Dialog>
       </Portal>
-      {/* appbar */}
-      <Appbar.Header>
-        <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Menus" >
-        </Appbar.Content>
-        <DropdownMenu
-          triggerComp={<IconButton
-            icon="dots-vertical"
-            size={20}
-          />}
-          options={DROPDOWN_ITEM_LIST}
-          onPress={onDropdownMenuSelected} />
-        <DropdownCheckMenu
-          triggerComp={<IconButton
-            icon="dots-vertical"
-            size={20}
-          />}
-          options={PICKER_ITEM_LIST}
-          onPress={onDropdownCheckMenuSelected} />
-      </Appbar.Header>
       {/* main content here */}
-      <View style={Styles.contPad}>
-        <Text variant="bodyMedium">Hello world</Text>
-      </View>
-      <View style={Styles.contPad}>
-        <Button mode="contained" onPress={() => setShowDialog(true)}>
-          Launch dialog
-        </Button>
-      </View>
-      <View style={Styles.contPad}>
-        <Picker value={pickerSelection} options={PICKER_ITEM_LIST} onChange={(v) => setPickerSelection(v)} />
-      </View>
-    </View>
+      <Text variant="bodyMedium">Hello world</Text>
+      <Button mode="contained" onPress={() => setShowDialog(true)}>
+        Launch dialog
+      </Button>
+      <Picker value={pickerSelection} options={PICKER_ITEM_LIST} onChange={(v) => setPickerSelection(v)} />
+    </PageContainer>
   );
 }

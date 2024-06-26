@@ -1,63 +1,42 @@
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { View } from 'react-native';
-import Styles from '../../../Framework/Common/Styles';
 // UI
 import {
   useTheme, Text, Card, Button, Appbar,
   TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
 } from 'react-native-paper';
+import { PageContainer, LinearLayout } from '../../../Framework/UI/index';
 // data
-import { LocalDataContext } from '../../../Framework/Contexts/LocalDataContext';
+import { onLocalDataUpdate } from '../../../Framework/Contexts/LocalDataContext';
 // const
-export const SAMPLE_PAGES = {
-  tabs: "tabs example",
-  menus: "menus example",
-  empty: "empty example",
-  search: "search example",
-  storage: "storage example",
-};
+import { SAMPLE_PAGES } from '../User/Schemas';
+import { padSize } from '../../../Framework/Common/Values';
 
 /**
  * sample home page
  */
-export default function SampleHomePage({ navigation, route }) {
-  /**------------------------------------------------------------------------------------*
-   * State
-   *------------------------------------------------------------------------------------*/
+const SampleHomePage = ({ navigation, route }) => {
   const theme = useTheme();
-  const { updateCount, setLocalDataValue } = useContext(LocalDataContext);
 
-  /**------------------------------------------------------------------------------------*
-   * Init
-   *------------------------------------------------------------------------------------*/
-  useEffect(() => {
-    if (updateCount) {
-      console.log("SampleHomePage: updated data");
-    }
-  }, [updateCount]);
+  onLocalDataUpdate(() => {
+    console.log("SampleHomePage: updated local data");
+  });
 
-  /**------------------------------------------------------------------------------------*
-   * Draw
-   *------------------------------------------------------------------------------------*/
+  function customHeaderContent() {
+    return <LinearLayout align='horizontal'>
+      <Text>testing 1 2 3</Text>
+    </LinearLayout>
+  }
+
   return (
-    <View style={Styles.contPage}>
-      {/* appbar */}
-      <Appbar.Header>
-        <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Home" >
-        </Appbar.Content>
-      </Appbar.Header>
-      {/* main content here */}
-      <View style={Styles.contVert}>
-        <Text variant="bodyMedium">Select the pages you want to navigate to</Text>
-        <View style={Styles.contFlex}>
-          {Object.keys(SAMPLE_PAGES).map((key) => (
-            <Button key={key} mode="contained" onPress={() => navigation.navigate(key, { paramText: `hello ${key} from home` })} style={Styles.margin}>
-              {SAMPLE_PAGES[key]}
-            </Button>
-          ))}
-        </View>
-      </View>
-    </View>
-  );
+    <PageContainer navigation={navigation} route={route} pageName="SampleHomePage" customHeaderContent={customHeaderContent}>
+      <Text variant="bodyMedium">Select the pages you want to navigate to</Text>
+      {Object.keys(SAMPLE_PAGES).map((key) => (
+        <Button key={key} mode="contained" onPress={() => navigation.navigate(key, { paramText: `hello ${key} from home` })}>
+          {SAMPLE_PAGES[key]}
+        </Button>
+      ))}
+    </PageContainer>)
 }
+
+export default SampleHomePage;
