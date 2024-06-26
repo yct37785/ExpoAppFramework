@@ -40,7 +40,6 @@ export const TextInputFieldComp = ({
     <>
       {type === "search" && (
         <Searchbar
-          style={{ flex: 1 }}
           ref={inputRef}
           placeholder={placeholder}
           onChangeText={onChange}
@@ -51,7 +50,6 @@ export const TextInputFieldComp = ({
       )}
       {type === "text" && (
         <TextInput
-          style={{ flex: 1 }}
           ref={inputRef}
           placeholder={placeholder}
           onChangeText={onChange}

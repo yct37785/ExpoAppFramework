@@ -131,7 +131,7 @@ export default function SampleSearchPage({ navigation, route }) {
   }, [searchQuery]);
 
   function customHeaderContent() {
-    return <LinearLayout align='horizontal'>
+    return <LinearLayout style={{ backgroundColor: 'yellow' }}>
       <TextInputFieldComp
         type="search"
         value={searchQuery}
@@ -140,12 +140,6 @@ export default function SampleSearchPage({ navigation, route }) {
       />
     </LinearLayout>
   }
-
-  const TextContainer = ({ text, fontSize = 14, style, ...props }) => (
-    <View style={[{ backgroundColor: '#be74c8', justifyContent: 'center' }, style]}>
-      <Text style={{ fontSize: fontSize }}>{text}</Text>
-    </View>
-  );
 
   return (
     <PageContainer navigation={navigation} route={route} pageName="SampleSearchPage" customHeaderContent={customHeaderContent}>
