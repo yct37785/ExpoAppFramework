@@ -31,13 +31,11 @@ const SampleHomePage = ({ navigation, route }) => {
   return (
     <PageContainer navigation={navigation} route={route} pageName="SampleHomePage" customHeaderContent={customHeaderContent}>
       <Text variant="bodyMedium">Select the pages you want to navigate to</Text>
-      <LinearLayout childMargin={padSize}>
-        {Object.keys(SAMPLE_PAGES).map((key) => (
-          <Button key={key} mode="contained" onPress={() => navigation.navigate(key, { paramText: `hello ${key} from home` })}>
-            {SAMPLE_PAGES[key]}
-          </Button>
-        ))}
-      </LinearLayout>
+      {Object.keys(SAMPLE_PAGES).map((key) => (
+        <Button key={key} mode="contained" onPress={() => navigation.navigate(key, { paramText: `hello ${key} from home` })}>
+          {SAMPLE_PAGES[key]}
+        </Button>
+      ))}
     </PageContainer>)
 }
 
