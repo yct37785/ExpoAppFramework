@@ -26,7 +26,7 @@ const PageComp = ({ navigation, route, pageName, customHeaderContent: CustomHead
   });
 
   return (
-    <LinearLayout style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <Appbar.Header style={{ backgroundColor: 'blue' }}>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content style={{ flex: 0 }} title={route.name} />
@@ -37,7 +37,7 @@ const PageComp = ({ navigation, route, pageName, customHeaderContent: CustomHead
       <LinearLayout flex={1} childMargin={padSize} scrollable={true} style={{ padding: padSize, backgroundColor: 'yellow' }}>
         {children}
       </LinearLayout>
-    </LinearLayout>
+    </View>
   );
 };
 
