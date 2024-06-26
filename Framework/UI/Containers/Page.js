@@ -30,11 +30,11 @@ const PageComp = ({ navigation, route, pageName, customHeaderContent: CustomHead
       <Appbar.Header style={{ backgroundColor: 'blue' }}>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content style={{ flex: 0 }} title={route.name} />
-        <View style={{ flex: 1, margin: padSize }}>
+        <View style={{ flex: 1, margin: padSize, backgroundColor: 'green' }}>
           {CustomHeaderComp && CustomHeaderComp()}
         </View>
       </Appbar.Header>
-      <LinearLayout childMargin={padSize} style={{ padding: padSize }}>
+      <LinearLayout childMargin={padSize} style={{ padding: padSize, backgroundColor: 'yellow' }}>
         {children}
       </LinearLayout>
     </LinearLayout>

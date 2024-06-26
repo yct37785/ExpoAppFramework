@@ -5,7 +5,7 @@ import { padSize, padSize2 } from '../../../Framework/Common/Values';
 import {
   useTheme, Text, Button, Appbar, Divider, Switch, TextInput, Card
 } from 'react-native-paper';
-import { LinearLayout } from '../../../Framework/UI/index';
+import { LinearLayout, PageContainer } from '../../../Framework/UI/index';
 // data
 import { LocalDataContext, onLocalDataUpdate } from '../../../Framework/Contexts/LocalDataContext';
 
@@ -29,13 +29,10 @@ export default function SampleDataStoragePage({ navigation, route, screenHeaderC
   const toggleDarkMode = () => {
     setLocalDataValue([["settings_sample.isDarkMode", !getLocalDataValue("settings_sample.isDarkMode")]]);
   }
-  
+
   return (
-    <LinearLayout flex={1} childLayout='wrap-content'>
-      {/* app header */}
-      <ScreenHeaderComp navigation={navigation} route={route} />
-      {/* main content here */}
-      <View style={Styles.contVert}>
+    <PageContainer navigation={navigation} route={route} pageName="SampleDataStoragePage">
+      <LinearLayout childMargin={padSize} style={{ padding: padSize }}>
         <View style={Styles.contPad}>
           <Text variant="titleMedium" style={{ marginBottom: padSize }}>Modify and save local data</Text>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: padSize }}>
@@ -61,7 +58,7 @@ export default function SampleDataStoragePage({ navigation, route, screenHeaderC
             </Card.Content>
           </Card>
         </View>
-      </View>
-    </LinearLayout>
+      </LinearLayout>
+    </PageContainer>
   );
 }

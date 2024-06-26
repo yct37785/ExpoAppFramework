@@ -35,14 +35,14 @@ export const LinearLayout = ({ children, flex = 1, align = 'vertical', childLayo
   };
 
   const mainContent = (
-    <View style={[{ flexDirection: isVertical ? 'column' : 'row', flex: flex }, style]} {...props}>
+    <View style={[{ flexDirection: isVertical ? 'column' : 'row', flex: flex, backgroundColor: 'orange' }, style]} {...props}>
       {renderChildren()}
     </View>
   );
 
   if (scrollable) {
     return (
-      <ScrollView style={{ flex: 1 }} horizontal={!isVertical} contentContainerStyle={{ flexDirection: isVertical ? 'column' : 'row' }}>
+      <ScrollView style={{ flex: 1, backgroundColor: 'orange' }} horizontal={!isVertical} contentContainerStyle={{ flexDirection: isVertical ? 'column' : 'row' }}>
         {mainContent}
       </ScrollView>
     );

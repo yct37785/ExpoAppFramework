@@ -23,7 +23,7 @@ const SampleHomePage = ({ navigation, route }) => {
   });
 
   function customHeaderContent() {
-    return <View style={{ flex: 1, backgroundColor: 'green' }}>
+    return <View style={{ flex: 1 }}>
       <Text>testing 1 2 3</Text>
     </View>
   }
@@ -31,7 +31,7 @@ const SampleHomePage = ({ navigation, route }) => {
   return (
     <PageContainer navigation={navigation} route={route} pageName="SampleHomePage" customHeaderContent={customHeaderContent}>
       <Text variant="bodyMedium">Select the pages you want to navigate to</Text>
-      <LinearLayout childMargin={padSize} style={{ backgroundColor: 'orange' }}>
+      <LinearLayout childMargin={padSize}>
         {Object.keys(SAMPLE_PAGES).map((key) => (
           <Button key={key} mode="contained" onPress={() => navigation.navigate(key, { paramText: `hello ${key} from home` })}>
             {SAMPLE_PAGES[key]}
