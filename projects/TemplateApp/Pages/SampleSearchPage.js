@@ -141,6 +141,12 @@ export default function SampleSearchPage({ navigation, route }) {
     </LinearLayout>
   }
 
+  const TextContainer = ({ text, fontSize = 14, style, ...props }) => (
+    <View style={[{ backgroundColor: '#be74c8', justifyContent: 'center' }, style]}>
+      <Text style={{ fontSize: fontSize }}>{text}</Text>
+    </View>
+  );
+
   return (
     <PageContainer navigation={navigation} route={route} pageName="SampleSearchPage" customHeaderContent={customHeaderContent}>
       {/* Filter menu */}
@@ -169,6 +175,7 @@ export default function SampleSearchPage({ navigation, route }) {
         renderItem={renderItem}
         listType={listType}
         rowHeight={ROW_HEIGHT}
+        customLayout="match-parent" // special prop to set flex to 1 for elems with undefined height
       />
     </PageContainer>
   );

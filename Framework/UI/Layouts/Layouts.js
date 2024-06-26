@@ -33,8 +33,9 @@ export const LinearLayout = ({
 
   const renderChildren = () => {
     return React.Children.map(children, (child, index) => {
+      const childCustomLayout = child.props.customLayout || childLayout;
       const newStyle = {
-        ...(childLayout === 'match-parent' ? { flex: 1 } : {}),
+        ...(childCustomLayout === 'match-parent' ? { flex: 1 } : {}),
       };
 
       return (
