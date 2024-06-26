@@ -109,17 +109,3 @@ export const GridLayout = ({ children, flex = 0, columns = 2, childLayout = 'wra
     </View>
   );
 };
-
-/**
- * Makes children scrollable.
- * 
- * @param {Object} props - Component props.
- * @param {React.ReactNode} props.children - The children components to render within the layout.
- * @param {Object} props.style - Custom styles to apply to the layout.
- * @returns {JSX.Element} The ScrollLayout component.
- */
-export const ScrollLayout = ({ flex = 0, children, style, ...props }) => (
-  <ScrollView style={[{ flex: flex }, style]} {...props}>
-    {children}
-  </ScrollView>
-);
