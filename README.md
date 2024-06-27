@@ -21,12 +21,12 @@ The monorepo is structured as follows:
 └── yarn.lock
 ```
 
-All node modules, including expo, are managed in the root folder. All app projects are handled in the projects folder.
+All node modules, including expo, are managed in the root folder. All app projects are handled in the projects folder. App projects will import core functionalities, UI components, constants and utilities from Framework:
 
 ![overview visual](./misc/Expo%20App%20Framework_%20overview.jpg?raw=true "Title")
 
 ### Framework
-Contains common app components/functionalities. Namely core functionalities, UI components, constants and utilities are defined here to be shared among all app projects.
+Contains common app components/functionalities. Namely the aforementioned core functionalities, UI components, constants and utilities are defined here to be shared among all app projects.
 
 The Framework project is structured as follows:
 ```
