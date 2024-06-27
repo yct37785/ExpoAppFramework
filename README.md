@@ -144,6 +144,11 @@ To run the client app, similiar to the template app, run the `npx expo start` co
 cd projects/<NEW_APP_NAME>
 npx expo start
 ````
+
+## Defining pages
+
+![Expo App Framework_ pages](https://github.com/yct37785/ExpoAppFramework/assets/8434189/682c633c-a44c-47e5-bde4-11398a3459ce)
+
 ## Building
 ### new common components/functionalities
 To build a new component/functionality, simply define it within the proper folder under Framework (see setup -> Framework), test and run it from TemplateApp and install required packages from TemplateApp.
