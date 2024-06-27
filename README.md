@@ -23,6 +23,8 @@ The monorepo is structured as follows:
 
 All node modules, including expo, are managed in the root folder. All app projects are handled in the projects folder.
 
+![overview visual](./misc/Expo%20App%20Framework_%20overview.jpg?raw=true "Title")
+
 ### Framework
 Contains common app components/functionalities. Namely core functionalities, UI components, constants and utilities are defined here to be shared among all app projects.
 
