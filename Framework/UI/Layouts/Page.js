@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { useTheme, Appbar } from 'react-native-paper';
 import { LinearLayout } from './Layouts';
-import { LocalDataContext, onLocalDataUpdate } from '../../Contexts/LocalDataContext';
+import { LocalDataContext } from '../../Contexts/LocalDataContext';
 import { padSize } from '../../Common/Values';
 
 /**
@@ -23,10 +23,6 @@ import { padSize } from '../../Common/Values';
 const PageComp = ({ navigation, route, scrollable = false, applyPadding = true, pageName, customHeaderContent: CustomHeaderComp, children }) => {
   const theme = useTheme();
   const { debugMode, toggleDebugMode } = useContext(LocalDataContext);
-
-  onLocalDataUpdate(() => {
-    console.log(pageName + ": updated local data");
-  });
 
   return (
     <View style={{ flex: 1 }}>
