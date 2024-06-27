@@ -78,6 +78,7 @@ const useLocalDataManager = ({ NEW_USER_DATA }) => {
   const [data, setData] = useState({}); // will not be exposed to consumers
   const [isLocalDataLoaded, setIsLocalDataLoaded] = useState(false);
   const [updateCount, setUpdateCount] = useState(0);
+  const [debugMode, setDebugMode] = useState(false);
 
   /**
    * on init will fetch from local storage
@@ -165,7 +166,17 @@ const useLocalDataManager = ({ NEW_USER_DATA }) => {
     return JSON.stringify(data, null, 2);
   };
 
-  return { updateCount, isLocalDataLoaded, setLocalDataValue, getLocalDataValue, resetLocalData, getLocalDataStringify };
+  /**
+   * whether to toggle debug flag on/off
+   */
+  const toggleDebugMode = () => {
+    setDebugMode(!debugMode);
+  }
+
+  return {
+    updateCount, isLocalDataLoaded, setLocalDataValue, getLocalDataValue, resetLocalData, getLocalDataStringify,
+    debugMode, toggleDebugMode
+  };
 };
 
 export default useLocalDataManager;

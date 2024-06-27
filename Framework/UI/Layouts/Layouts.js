@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, ScrollView, Text } from 'react-native';
-import { getValueByCondition } from '../../Utilities/GeneralUtils'
-
+import { getValueByCondition } from '../../Utilities/GeneralUtils';
+import { LocalDataContext } from '../../Contexts/LocalDataContext';
 /**
  * Arranges children in a linear layout, either vertically or horizontally.
  * 
@@ -17,17 +17,18 @@ import { getValueByCondition } from '../../Utilities/GeneralUtils'
  * @returns {JSX.Element} The LinearLayout component.
  */
 
-export const LinearLayout = ({ 
-  children, 
-  flex = 0, 
-  align = 'vertical', 
-  childLayout = 'wrap-content', 
-  childMargin = 0, 
-  scrollable = false, 
-  debugBackgroundColor = 'orange', 
-  style, 
-  ...props 
+export const LinearLayout = ({
+  children,
+  flex = 0,
+  align = 'vertical',
+  childLayout = 'wrap-content',
+  childMargin = 0,
+  scrollable = false,
+  debugBackgroundColor = 'orange',
+  style,
+  ...props
 }) => {
+  const { debugMode } = useContext(LocalDataContext);
   const isVertical = align === 'vertical';
   const marginStyle = isVertical ? { marginBottom: childMargin } : { marginRight: childMargin };
 
@@ -47,14 +48,18 @@ export const LinearLayout = ({
   };
 
   const mainContent = (
-    <View style={[{ flexDirection: isVertical ? 'column' : 'row', flex: flex, backgroundColor: debugBackgroundColor }, style]} {...props}>
+    <View style={[{
+      flexDirection: isVertical ? 'column' : 'row', flex: flex,
+      backgroundColor: debugMode ? debugBackgroundColor : 'transparent'
+    }, style]} {...props}>
       {renderChildren()}
     </View>
   );
 
   if (scrollable) {
     return (
-      <ScrollView style={{ flex: 1, backgroundColor: debugBackgroundColor }} horizontal={!isVertical} contentContainerStyle={{ flexDirection: isVertical ? 'column' : 'row' }}>
+      <ScrollView style={{ flex: 1, backgroundColor: debugMode ? debugBackgroundColor : 'transparent' }}
+        horizontal={!isVertical} contentContainerStyle={{ flexDirection: isVertical ? 'column' : 'row' }}>
         {mainContent}
       </ScrollView>
     );
@@ -78,6 +83,7 @@ export const LinearLayout = ({
  */
 export const GridLayout = ({ children, flex = 0, columns = 2, childLayout = 'wrap-content', childMargin = 2, lastRowAlign = 'left',
   debugBackgroundColor = 'orange', style, ...props }) => {
+  const { debugMode } = useContext(LocalDataContext);
   const rows = [];
   let row = [];
   let rowFlex = flex;
@@ -90,9 +96,12 @@ export const GridLayout = ({ children, flex = 0, columns = 2, childLayout = 'wra
     const isLastCol = (index + 1) % columns === 0;
     let flexVal = isLastRow ? 1.0 / columns : 1;
     flexVal = compFlex === 0 ? 0 : flexVal;
+    const debugRowBackgroundColor = isLastCol ? 'green' : 'yellow';
     row.push(
-      <View key={`col-${index}`} style={{ marginRight: isLastCol ? 0 : childMargin, marginBottom: isLastRow ? 0 : childMargin, 
-        backgroundColor: isLastCol ? 'green' : 'yellow', flex: flexVal }}>
+      <View key={`col-${index}`} style={{
+        marginRight: isLastCol ? 0 : childMargin, marginBottom: isLastRow ? 0 : childMargin,
+        backgroundColor: debugMode ? debugRowBackgroundColor : 'transparent', flex: flexVal
+      }}>
         {child}
       </View>
     );
@@ -116,7 +125,7 @@ export const GridLayout = ({ children, flex = 0, columns = 2, childLayout = 'wra
   }
 
   return (
-    <View style={[{ flex: flex, backgroundColor: debugBackgroundColor }, style]} {...props}>
+    <View style={[{ flex: flex, backgroundColor: debugMode ? debugBackgroundColor : 'transparent' }, style]} {...props}>
       {rows.map((row, index) => {
         return row
       })}

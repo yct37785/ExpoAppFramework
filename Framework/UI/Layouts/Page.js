@@ -2,9 +2,8 @@ import React from 'react';
 import { View } from 'react-native';
 import { useTheme, Appbar } from 'react-native-paper';
 import { LinearLayout } from './Layouts';
-import { onLocalDataUpdate } from '../../Contexts/LocalDataContext';
+import { LocalDataContext, onLocalDataUpdate } from '../../Contexts/LocalDataContext';
 import { padSize } from '../../Common/Values';
-import { toggleDebugMode } from '../../Contexts/GlobalConfig';
 
 /**
  * PageComp Component
@@ -23,6 +22,7 @@ import { toggleDebugMode } from '../../Contexts/GlobalConfig';
  */
 const PageComp = ({ navigation, route, scrollable = false, applyPadding = true, pageName, customHeaderContent: CustomHeaderComp, children }) => {
   const theme = useTheme();
+  const { debugMode, toggleDebugMode } = useContext(LocalDataContext);
 
   onLocalDataUpdate(() => {
     console.log(pageName + ": updated local data");
@@ -30,7 +30,7 @@ const PageComp = ({ navigation, route, scrollable = false, applyPadding = true, 
 
   return (
     <View style={{ flex: 1 }}>
-      <Appbar.Header style={{ backgroundColor: 'blue' }}>
+      <Appbar.Header style={{ backgroundColor: debugMode ? 'blue' : 'none' }}>
         <Appbar.BackAction onPress={() => navigation.goBack()} onLongPress={toggleDebugMode} />
         <Appbar.Content style={{ flex: 0 }} title={route.name} />
         <View style={{ flex: 1 }}>
