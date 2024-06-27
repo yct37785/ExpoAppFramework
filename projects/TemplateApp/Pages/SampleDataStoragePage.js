@@ -32,23 +32,23 @@ export default function SampleDataStoragePage({ navigation, route, screenHeaderC
 
   return (
     <PageContainer navigation={navigation} route={route} pageName="SampleDataStoragePage">
-      <LinearLayout>
-        <Text variant="titleMedium" style={{ marginBottom: padSize }}>Modify and save local data</Text>
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: padSize }}>
-          <Button mode="contained" onPress={() => updateTrackersSample()} style={{ marginRight: padSize2 }}>++trackers_sample.num</Button>
+      <LinearLayout childMargin={padSize}>
+        <Text variant="titleMedium">Modify and save local data</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Button mode="contained" onPress={() => updateTrackersSample()}>++trackers_sample.num</Button>
           <View style={{ alignItems: 'flex-start', flex: 1 }}>
-            <Text variant="labelMedium" style={{ marginRight: padSize }}>Toogle dark mode</Text>
+            <Text variant="labelMedium">Toogle dark mode</Text>
             <Switch value={getLocalDataValue("settings_sample.isDarkMode")} onValueChange={() => toggleDarkMode()} />
           </View>
         </View>
-        <Button icon="refresh" mode="contained" onPress={() => resetLocalData()} style={{ marginBottom: padSize2 }}>reset data completely</Button>
+        <Button icon="refresh" mode="contained" onPress={() => resetLocalData()}>reset data completely</Button>
       </LinearLayout>
       <LinearLayout>
         <Text variant="titleMedium">Change data schema</Text>
         <Text variant="bodyMedium">To test: close app, add additional values to schema and restart app</Text>
       </LinearLayout>
       <LinearLayout>
-        <Text variant="titleMedium" style={{ marginBottom: padSize2 }}>Data preview</Text>
+        <Text variant="titleMedium">Data preview</Text>
         <Card mode='elevated'>
           <Card.Content>
             <Text variant="bodySmall">{getLocalDataStringify()}</Text>
