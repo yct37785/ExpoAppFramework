@@ -9,6 +9,8 @@ export const LocalDataContext = React.createContext({
   getLocalDataValue: () => {},
   resetLocalData: () => {},
   getLocalDataStringify: () => {},
+  debugMode: false,
+  toggleDebugMode: () => {},
 });
 
 /**

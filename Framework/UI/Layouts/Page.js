@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View } from 'react-native';
 import { useTheme, Appbar } from 'react-native-paper';
 import { LinearLayout } from './Layouts';
-import { onLocalDataUpdate } from '../../Contexts/LocalDataContext';
+import { LocalDataContext } from '../../Contexts/LocalDataContext';
 import { padSize } from '../../Common/Values';
 
 /**
@@ -22,15 +22,12 @@ import { padSize } from '../../Common/Values';
  */
 const PageComp = ({ navigation, route, scrollable = false, applyPadding = true, pageName, customHeaderContent: CustomHeaderComp, children }) => {
   const theme = useTheme();
-
-  onLocalDataUpdate(() => {
-    console.log(pageName + ": updated local data");
-  });
+  const { debugMode, toggleDebugMode } = useContext(LocalDataContext);
 
   return (
     <View style={{ flex: 1 }}>
-      <Appbar.Header style={{ backgroundColor: 'blue' }}>
-        <Appbar.BackAction onPress={() => navigation.goBack()} />
+      <Appbar.Header style={{ backgroundColor: debugMode ? 'blue' : 'none' }}>
+        <Appbar.BackAction onPress={() => navigation.goBack()} onLongPress={toggleDebugMode} />
         <Appbar.Content style={{ flex: 0 }} title={route.name} />
         <View style={{ flex: 1 }}>
           {CustomHeaderComp && CustomHeaderComp()}
