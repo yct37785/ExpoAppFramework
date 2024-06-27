@@ -26,7 +26,7 @@ const PageComp = ({ navigation, route, scrollable = false, applyPadding = true, 
 
   return (
     <View style={{ flex: 1 }}>
-      <Appbar.Header style={{ backgroundColor: debugMode ? 'blue' : 'none' }}>
+      <Appbar.Header style={{ backgroundColor: debugMode ? '#b3ecff' : 'transparent' }}>
         <Appbar.BackAction onPress={() => navigation.goBack()} onLongPress={toggleDebugMode} />
         <Appbar.Content style={{ flex: 0 }} title={route.name} />
         <View style={{ flex: 1 }}>
