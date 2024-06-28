@@ -147,7 +147,7 @@ npx expo start
 
 ## Defining screens
 
-![Expo App Framework_ pages](https://github.com/yct37785/ExpoAppFramework/assets/8434189/682c633c-a44c-47e5-bde4-11398a3459ce)
+![Expo App Framework_ screens](https://github.com/yct37785/ExpoAppFramework/assets/8434189/66c677d4-955b-47cb-9c5e-366f3c097630)
 
 ## Building
 ### new common components/functionalities
