@@ -8,7 +8,7 @@ import {
   useTheme, Text, Card, Button, Appbar,
   TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
 } from 'react-native-paper';
-import { PageContainer, LinearLayout, Dialog, Picker, DropdownMenu, DropdownCheckMenu } from '../../../Framework/UI/index';
+import { ScreenContainer, LinearLayout, Dialog, Picker, DropdownMenu, DropdownCheckMenu } from '../../../Framework/UI/index';
 // const
 const PICKER_ITEM_LIST = [
   { label: 'Red', value: 'red' },
@@ -22,9 +22,9 @@ const DROPDOWN_ITEM_LIST = [
 ];
 
 /**
- * Display sample menus page
+ * Display sample menus screen
  */
-export default function SampleMenusPage({ navigation, route, screenHeaderComp: ScreenHeaderComp }) {
+export default function SampleMenusScreen({ navigation, route, screenHeaderComp: ScreenHeaderComp }) {
   const theme = useTheme();
   const searchBarRef = useRef();
   const [showDialog, setShowDialog] = useState(false);
@@ -77,7 +77,7 @@ export default function SampleMenusPage({ navigation, route, screenHeaderComp: S
   }
 
   return (
-    <PageContainer navigation={navigation} route={route} pageName="SampleMenusPage" customHeaderContent={customHeaderContent}>
+    <ScreenContainer navigation={navigation} route={route} screenName="Menus Sample" customHeaderContent={customHeaderContent}>
       {/* all dialogs here */}
       <Portal>
         <Dialog
@@ -98,6 +98,6 @@ export default function SampleMenusPage({ navigation, route, screenHeaderComp: S
         Launch dialog
       </Button>
       <Picker value={pickerSelection} options={PICKER_ITEM_LIST} onChange={(v) => setPickerSelection(v)} />
-    </PageContainer>
+    </ScreenContainer>
   );
 }

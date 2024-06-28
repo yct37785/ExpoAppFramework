@@ -5,7 +5,7 @@ import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { View, Image } from 'react-native';
 import { useTheme, Text, Appbar, Divider, RadioButton } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
-import { PageContainer, LinearLayout, Collapsible, ChipsContainer, highlightText } from '../../../Framework/UI/index';
+import { ScreenContainer, LinearLayout, Collapsible, ChipsContainer, highlightText } from '../../../Framework/UI/index';
 import { SearchableListComp } from '../../../Framework/UI/Data/List';
 import { TextInputFieldComp } from '../../../Framework/UI/Input/TextInput';
 import { faker } from '@faker-js/faker';
@@ -13,16 +13,14 @@ import { LocalDataContext } from '../../../Framework/Contexts/LocalDataContext';
 import { padSize05, padSize, padSize2, iconSizeSmall } from '../../../Framework/CommonVals';
 
 /**
- * SampleSearchPage Component
- * 
- * Displays a sample page with a search bar, filter options, and a list of products.
+ * Displays a sample screen with a search bar, filter options, and a list of products.
  * 
  * @param {Object} props - Component props.
  * @param {Object} props.navigation - Navigation object for navigating between screens.
  * @param {Object} props.route - Route object containing route parameters.
- * @returns {JSX.Element} The SampleSearchPage component.
+ * @returns {JSX.Element} The SampleSearchScreen component.
  */
-export default function SampleSearchPage({ navigation, route }) {
+export default function SampleSearchScreen({ navigation, route }) {
   const theme = useTheme();
   const { debugMode } = useContext(LocalDataContext);
   const [listType, setListType] = useState('biglist');
@@ -147,7 +145,7 @@ export default function SampleSearchPage({ navigation, route }) {
   }
 
   return (
-    <PageContainer navigation={navigation} route={route} pageName="SampleSearchPage" customHeaderContent={customHeaderContent}>
+    <ScreenContainer navigation={navigation} route={route} screenName="Search Sample" customHeaderContent={customHeaderContent}>
       {/* Filter menu */}
       <Collapsible toggleHeaderText="Filter">
         <View style={{ width: '100%' }}>
@@ -176,6 +174,6 @@ export default function SampleSearchPage({ navigation, route }) {
         rowHeight={ROW_HEIGHT}
         customLayout="match-parent" // special prop to set flex to 1 for elems with undefined height
       />
-    </PageContainer>
+    </ScreenContainer>
   );
 }

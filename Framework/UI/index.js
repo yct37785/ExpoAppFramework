@@ -24,4 +24,4 @@ export { highlightTextComp as highlightText } from './Display/Text';
 // Layouts.js
 export { LinearLayout, GridLayout, ScrollLayout } from './Layouts/Layouts';
 // Containers.js
-export { default as PageContainer } from './Layouts/Page';
+export { default as ScreenContainer } from './Layouts/Screen';

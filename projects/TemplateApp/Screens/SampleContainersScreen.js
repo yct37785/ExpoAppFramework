@@ -5,19 +5,19 @@ import React, { useContext, useState, useEffect, useCallback, useRef } from 'rea
 import { View } from 'react-native';
 // UI
 import { useTheme, Text } from 'react-native-paper';
-import { PageContainer, LinearLayout } from '../../../Framework/UI/index';
+import { ScreenContainer, LinearLayout } from '../../../Framework/UI/index';
 import { padSize } from '../../../Framework/CommonVals';
 
 /**
- * containers demos page
+ * containers demos screen
  */
-export default function SampleContainersPage({ navigation, route }) {
+export default function SampleContainersScreen({ navigation, route }) {
   const theme = useTheme();
   const { paramText } = route.params;
 
   return (
-    <PageContainer navigation={navigation} route={route} pageName="SampleContainerPage">
+    <ScreenContainer navigation={navigation} route={route} screenName="Containers Sample">
       <Text variant="bodyMedium">{`paramText: ${paramText}`}</Text>
-    </PageContainer>
+    </ScreenContainer>
   );
 }

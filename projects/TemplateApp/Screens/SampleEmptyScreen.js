@@ -1,5 +1,5 @@
 /***************************************************************************************
-* copy paste empty page
+* copy paste empty screen
 ***************************************************************************************/
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { View, Keyboard } from 'react-native';
@@ -7,18 +7,18 @@ import { View, Keyboard } from 'react-native';
 import {
   useTheme, Text, Button, Appbar
 } from 'react-native-paper';
-import { PageContainer, LinearLayout } from '../../../Framework/UI/index';
+import { ScreenContainer, LinearLayout } from '../../../Framework/UI/index';
 
 /**
- * sample empty page
+ * sample empty screen
  */
-export default function SampleEmptyPage({ navigation, route, screenHeaderComp: ScreenHeaderComp }) {
+export default function SampleEmptyScreen({ navigation, route, screenHeaderComp: ScreenHeaderComp }) {
   const theme = useTheme();
   const { paramText } = route.params;
 
   return (
-    <PageContainer navigation={navigation} route={route} pageName="SampleEmptyPage">
+    <ScreenContainer navigation={navigation} route={route} screenName="Empty Sample">
       <Text variant="bodyMedium">{`paramText: ${paramText}`}</Text>
-    </PageContainer>
+    </ScreenContainer>
   );
 }
