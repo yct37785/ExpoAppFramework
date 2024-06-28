@@ -3,7 +3,7 @@ import { View } from 'react-native';
 // UI
 import { useTheme, Text } from 'react-native-paper';
 import { PageContainer, LinearLayout } from '../../../Framework/UI/index';
-import { padSize } from '../../../Framework/Common/Values';
+import { padSize } from '../../../Framework/CommonVals';
 
 /**
  * containers demos page

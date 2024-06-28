@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { useTheme, Text, Appbar } from 'react-native-paper';
 import { PageContainer, LinearLayout, GridLayout } from '../../../Framework/UI/index';
-import { padSize } from '../../../Framework/Common/Values';
+import { padSize } from '../../../Framework/CommonVals';
 
 /**
  * SampleLayoutsPage Component

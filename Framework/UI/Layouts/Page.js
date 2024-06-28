@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { useTheme, Appbar } from 'react-native-paper';
 import { LinearLayout } from './Layouts';
 import { LocalDataContext } from '../../Contexts/LocalDataContext';
-import { padSize } from '../../Common/Values';
+import { padSize } from '../../CommonVals';
 
 /**
  * PageComp Component

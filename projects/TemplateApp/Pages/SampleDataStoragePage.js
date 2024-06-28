@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { View, Keyboard } from 'react-native';
-import { padSize, padSize2 } from '../../../Framework/Common/Values';
+import { padSize, padSize2 } from '../../../Framework/CommonVals';
 // UI
 import {
   useTheme, Text, Button, Appbar, Divider, Switch, TextInput, Card

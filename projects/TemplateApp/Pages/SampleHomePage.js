@@ -10,7 +10,7 @@ import { PageContainer, LinearLayout } from '../../../Framework/UI/index';
 import { onLocalDataUpdate } from '../../../Framework/Contexts/LocalDataContext';
 // const
 import { SAMPLE_PAGES } from '../User/Schemas';
-import { padSize } from '../../../Framework/Common/Values';
+import { padSize } from '../../../Framework/CommonVals';
 
 /**
  * sample home page

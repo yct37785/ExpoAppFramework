@@ -3,7 +3,7 @@
 *****************************************************************************************/
 import React from 'react';
 import { View } from 'react-native';
-import { padSize, padSize2, padSize4 } from '../../Common/Values';
+import { padSize, padSize2, padSize4 } from '../../CommonVals';
 import { Modal, Button, Card, Text, useTheme } from 'react-native-paper';
 
 /**

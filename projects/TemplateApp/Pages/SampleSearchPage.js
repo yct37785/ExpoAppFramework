@@ -6,7 +6,7 @@ import { PageContainer, LinearLayout, Collapsible, ChipsContainer, highlightText
 import { SearchableListComp } from '../../../Framework/UI/Data/List';
 import { TextInputFieldComp } from '../../../Framework/UI/Input/TextInput';
 import { faker } from '@faker-js/faker';
-import { padSize05, padSize, padSize2, iconSizeSmall } from '../../../Framework/Common/Values';
+import { padSize05, padSize, padSize2, iconSizeSmall } from '../../../Framework/CommonVals';
 
 /**
  * SampleSearchPage Component

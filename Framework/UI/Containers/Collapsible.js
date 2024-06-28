@@ -7,7 +7,7 @@ import { useTheme, Text } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
-import { padSize05, padSize, padSize2, iconSizeSmall } from '../../Common/Values';
+import { padSize05, padSize, padSize2, iconSizeSmall } from '../../CommonVals';
 
 /**
    * ToggleHeader Component
