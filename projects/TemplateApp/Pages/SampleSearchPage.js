@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { View, Image } from 'react-native';
 import { useTheme, Text, Appbar, Divider, RadioButton } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -6,6 +6,7 @@ import { PageContainer, LinearLayout, Collapsible, ChipsContainer, highlightText
 import { SearchableListComp } from '../../../Framework/UI/Data/List';
 import { TextInputFieldComp } from '../../../Framework/UI/Input/TextInput';
 import { faker } from '@faker-js/faker';
+import { LocalDataContext } from '../../../Framework/Contexts/LocalDataContext';
 import { padSize05, padSize, padSize2, iconSizeSmall } from '../../../Framework/CommonVals';
 
 /**
@@ -20,6 +21,7 @@ import { padSize05, padSize, padSize2, iconSizeSmall } from '../../../Framework/
  */
 export default function SampleSearchPage({ navigation, route }) {
   const theme = useTheme();
+  const { debugMode } = useContext(LocalDataContext);
   const [listType, setListType] = useState('biglist');
   const [searchQuery, setSearchQuery] = useState('');
   const [productList, setProductList] = useState([]);
@@ -131,7 +133,7 @@ export default function SampleSearchPage({ navigation, route }) {
   }, [searchQuery]);
 
   function customHeaderContent() {
-    return <LinearLayout style={{ backgroundColor: 'yellow' }}>
+    return <LinearLayout style={{ backgroundColor: debugMode ? '#0000ff' : 'transparent' }}>
       <TextInputFieldComp
         type="search"
         value={searchQuery}
@@ -152,7 +154,7 @@ export default function SampleSearchPage({ navigation, route }) {
       </Collapsible>
       {/* Toggle BigList vs FlatList */}
       <RadioButton.Group onValueChange={newValue => setListType(newValue)} value={listType}>
-        <View style={{ flexDirection: 'row', backgroundColor: 'green' }}>
+        <View style={{ flexDirection: 'row', backgroundColor: debugMode ? '#66ff99' : 'transparent' }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text>BigList</Text>
             <RadioButton value="biglist" />

@@ -1,9 +1,10 @@
 /*****************************************************************************************
  * general use case list that accepts user-defined filtering function
 *****************************************************************************************/
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, FlatList } from 'react-native';
 import BigList from 'react-native-big-list';
+import { LocalDataContext } from '../../Contexts/LocalDataContext';
 import PropTypes from 'prop-types';
 
 /**
@@ -27,6 +28,7 @@ export const SearchableListComp = ({
   rowHeight,
   ...props
 }) => {
+  const { debugMode } = useContext(LocalDataContext);
   const [filteredData, setFilteredData] = useState(data);
 
   useEffect(() => {
@@ -56,7 +58,7 @@ export const SearchableListComp = ({
   };
 
   return (
-    <View style={{ width: '100%', flex: 1, backgroundColor: '#ff6666' }}>
+    <View style={{ width: '100%', flex: 1, backgroundColor: debugMode ? '#ff6666' : 'transparent' }}>
       {filteredData.length > 0 ? renderList() : null}
     </View>
   );
