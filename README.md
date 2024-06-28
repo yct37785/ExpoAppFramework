@@ -70,10 +70,10 @@ The TemplateApp project is structured as follows:
 ...
 └── projects
 	└── TemplateApp
-		├── Pages
-		│	└── ~ page files
+		├── Screens
+		│	└── ~ screen files
 		├── User
-		│	├── PageMapper.js
+		│	├── ScreenMapper.js
 		│	└── Schemas.js
 		├── app.json
 		├── package.json
@@ -82,9 +82,9 @@ The TemplateApp project is structured as follows:
 
 **~other stuff:** Users can ignore, these are system files that are handled by the framework/Expo/NodeJS
 
-**Pages:** This is where you define your app specific pages (see sample pages)
+**Screens:** This is where you define your app specific screens (see sample screens)
 
-**User/PageMapper.js:** This is where you define your page mapping for registration with the navigator (see sample pages)
+**User/ScreenMapper.js:** This is where you define your screen mapping for registration with the navigator (see sample screens)
 
 **User/Schemas.js:** This is where you define schemas of your local user data etc
 
@@ -145,7 +145,7 @@ cd projects/<NEW_APP_NAME>
 npx expo start
 ````
 
-## Defining pages
+## Defining screens
 
 ![Expo App Framework_ pages](https://github.com/yct37785/ExpoAppFramework/assets/8434189/682c633c-a44c-47e5-bde4-11398a3459ce)
 
