@@ -1,5 +1,5 @@
 /***************************************************************************************
-* showcase data UI elements
+* showcase data display UI elements
 ***************************************************************************************/
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { View, Image } from 'react-native';
@@ -20,7 +20,7 @@ import { padSize05, padSize, padSize2, iconSizeSmall } from '../../../Framework/
  * @param {Object} props.route - Route object containing route parameters.
  * @returns {JSX.Element} The SampleSearchScreen component.
  */
-export default function SampleSearchScreen({ navigation, route }) {
+export default function SampleDataDisplayScreen({ navigation, route }) {
   const theme = useTheme();
   const { debugMode } = useContext(LocalDataContext);
   const [listType, setListType] = useState('biglist');

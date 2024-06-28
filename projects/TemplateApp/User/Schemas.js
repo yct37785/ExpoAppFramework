@@ -24,6 +24,6 @@ export const SAMPLE_SCREENS = {
   tabs: "tabs example",
   menus: "menus example",
   empty: "empty example",
-  search: "search example",
+  dataDisplay: "data display example",
   storage: "storage example",
 };

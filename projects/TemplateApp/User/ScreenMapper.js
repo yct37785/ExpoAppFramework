@@ -11,7 +11,7 @@ import SampleContainersScreen from '../Screens/SampleContainersScreen';
 import SampleTabsScreen from '../Screens/SampleTabsScreen';
 import SampleMenusScreen from '../Screens/SampleMenusScreen';
 import SampleEmptyScreen from '../Screens/SampleEmptyScreen';
-import SampleSearchScreen from '../Screens/SampleSearchScreen';
+import SampleDataDisplayScreen from '../Screens/SampleDataDisplayScreen';
 import SampleDataStorageScreen from '../Screens/SampleDataStorageScreen';
 
 export const screenMaps = {
@@ -21,7 +21,7 @@ export const screenMaps = {
   tabs: SampleTabsScreen,
   menus: SampleMenusScreen,
   empty: SampleEmptyScreen,
-  search: SampleSearchScreen,
+  dataDisplay: SampleDataDisplayScreen,
   storage: SampleDataStorageScreen
 };
 
