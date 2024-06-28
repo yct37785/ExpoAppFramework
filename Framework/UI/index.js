@@ -12,6 +12,8 @@ export { default as Dialog } from './Dialogs/Dialog';
 export { default as DropdownCheckMenu } from './Menus/Dropdowns/DropdownCheckMenu';
 // DropdownMenu.js
 export { default as DropdownMenu } from './Menus/Dropdowns/DropdownMenu';
+// OptionsMenu.js
+export { default as OptionsMenu } from './Menus/OptionsMenu';
 // Options.js
 export { ChipsContainerComp as ChipsContainer } from './Menus/Options';
 // Picker.js

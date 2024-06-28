@@ -8,7 +8,7 @@ import {
   useTheme, Text, Card, Button, Appbar,
   TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
 } from 'react-native-paper';
-import { ScreenContainer, LinearLayout, Dialog, Picker, DropdownMenu, DropdownCheckMenu } from '../../../Framework/UI/index';
+import { ScreenContainer, LinearLayout, Dialog, Picker, DropdownMenu, DropdownCheckMenu, OptionsMenu } from '../../../Framework/UI/index';
 // const
 const PICKER_ITEM_LIST = [
   { label: 'Red', value: 'red' },
@@ -20,6 +20,25 @@ const DROPDOWN_ITEM_LIST = [
   { label: 'Something', value: 'something' },
   { label: 'Delete', value: 'delete', color: 'red' },
 ];
+const schema = [
+  {
+    label: 'Colors',
+    value: 'colors',
+    children: [
+      { label: 'Red', value: 'red' },
+      { label: 'Blue', value: 'blue' },
+      { label: 'Green', value: 'green' },
+    ],
+  },
+  {
+    label: 'Shapes',
+    value: 'shapes',
+    children: [
+      { label: 'Circle', value: 'circle' },
+      { label: 'Square', value: 'square' },
+    ],
+  },
+];
 
 /**
  * Display sample menus screen
@@ -29,6 +48,7 @@ export default function SampleMenusScreen({ navigation, route, screenHeaderComp:
   const searchBarRef = useRef();
   const [showDialog, setShowDialog] = useState(false);
   const [pickerSelection, setPickerSelection] = useState('red');
+  const [selectedOptions, setSelectedOptions] = useState({});
 
   useEffect(() => {
     const keyboardListener = Keyboard.addListener('keyboardDidHide', (e) => {
@@ -51,6 +71,10 @@ export default function SampleMenusScreen({ navigation, route, screenHeaderComp:
   function onDropdownCheckMenuSelected(value, idx, selected) {
     console.log('Dropdown check menu selection: ' + JSON.stringify(Object.keys(selected)));
   }
+
+  const handleSelectionChange = (selectedValues) => {
+    setSelectedOptions(selectedValues);
+  };
 
   function onQuery(rawQuery) {
     setQuery(rawQuery);
@@ -98,6 +122,7 @@ export default function SampleMenusScreen({ navigation, route, screenHeaderComp:
         Launch dialog
       </Button>
       <Picker value={pickerSelection} options={PICKER_ITEM_LIST} onChange={(v) => setPickerSelection(v)} />
+      <OptionsMenu schema={schema} onSelectionChange={handleSelectionChange} />
     </ScreenContainer>
   );
 }
