@@ -1,8 +1,11 @@
+/***************************************************************************************
+* showcase tab type container UI element
+***************************************************************************************/
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { useTheme, Text, Appbar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { PageContainer, LinearLayout } from '../../../Framework/UI/index';
+import { ScreenContainer, LinearLayout } from '../../../Framework/UI/index';
 import { Tabs } from '../../../Framework/UI/index';
 
 export const TAB_ROUTES = [
@@ -12,16 +15,14 @@ export const TAB_ROUTES = [
 ];
 
 /**
- * SampleTabsPage Component
- * 
- * Displays a sample page with tab navigation.
+ * Displays a sample screen with tab navigation.
  * 
  * @param {Object} props - Props passed to the component.
  * @param {Object} props.navigation - Navigation object for navigating between screens.
  * @param {Object} props.route - Route object containing route parameters.
- * @returns {JSX.Element} The SampleTabsPage component.
+ * @returns {JSX.Element} The SampleTabsScreen component.
  */
-export default function SampleTabsPage({ navigation, route }) {
+export default function SampleTabsScreen({ navigation, route }) {
   const theme = useTheme();
   const [tabIndex, setTabIndex] = useState(0);
 
@@ -86,7 +87,7 @@ export default function SampleTabsPage({ navigation, route }) {
   };
 
   return (
-    <PageContainer navigation={navigation} route={route} applyPadding={false} pageName="SampleTabsPage">
+    <ScreenContainer navigation={navigation} route={route} applyPadding={false} screenName="Tabs Sample">
       <Tabs
         routes={TAB_ROUTES}
         renderIcon={renderIcon}
@@ -95,6 +96,6 @@ export default function SampleTabsPage({ navigation, route }) {
         sceneMap={renderScene}
         customLayout="match-parent" // special prop to set flex to 1 for elems with undefined height
       />
-    </PageContainer>
+    </ScreenContainer>
   );
 }

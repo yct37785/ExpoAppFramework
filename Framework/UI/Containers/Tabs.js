@@ -1,10 +1,9 @@
 /*****************************************************************************************
- * TabBar
+ * tab type containers
 *****************************************************************************************/
-
 import React from 'react';
 import { View } from 'react-native';
-import { padSize05, padSize, rippleColorForLight, rippleColorForDark, textColorForLight, textColorForDark } from '../../Common/Values';
+import { padSize05, padSize, rippleColorForLight, rippleColorForDark, textColorForLight, textColorForDark } from '../../CommonVals';
 import { useTheme, Text } from 'react-native-paper';
 import { TabView, TabBar } from 'react-native-tab-view';
 

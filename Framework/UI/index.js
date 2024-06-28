@@ -1,6 +1,6 @@
 /*****************************************************************************************
  * exposed to end users, export new UI components here
- * append Comp to name of each UI component for consistency 
+ * append Comp to name of each UI component for consistency, export without Comp appended
 *****************************************************************************************/
 
 // Collapsible.js
@@ -24,4 +24,4 @@ export { highlightTextComp as highlightText } from './Display/Text';
 // Layouts.js
 export { LinearLayout, GridLayout, ScrollLayout } from './Layouts/Layouts';
 // Containers.js
-export { default as PageContainer } from './Layouts/Page';
+export { default as ScreenContainer } from './Layouts/Screen';

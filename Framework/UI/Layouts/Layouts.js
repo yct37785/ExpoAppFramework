@@ -1,3 +1,6 @@
+/*****************************************************************************************
+ * layouts, used to hold together UI elements, use one of the Layouts instead of Views
+*****************************************************************************************/
 import React, { useContext } from 'react';
 import { View, ScrollView, Text } from 'react-native';
 import { getValueByCondition } from '../../Utilities/GeneralUtils';

@@ -1,5 +1,5 @@
 /*****************************************************************************************
- * text input field (use for text field, password field, searchbar etc)
+ * universal text input field (use for text field, password field, searchbar etc)
 *****************************************************************************************/
 import React, { useEffect, useRef } from 'react';
 import { Keyboard } from 'react-native';

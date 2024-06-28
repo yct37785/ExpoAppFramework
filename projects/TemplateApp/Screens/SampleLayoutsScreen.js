@@ -1,11 +1,14 @@
+/***************************************************************************************
+* showcase layout UI elements
+***************************************************************************************/
 import React from 'react';
 import { View } from 'react-native';
 import { useTheme, Text, Appbar } from 'react-native-paper';
-import { PageContainer, LinearLayout, GridLayout } from '../../../Framework/UI/index';
-import { padSize } from '../../../Framework/Common/Values';
+import { ScreenContainer, LinearLayout, GridLayout } from '../../../Framework/UI/index';
+import { padSize } from '../../../Framework/CommonVals';
 
 /**
- * SampleLayoutsPage Component
+ * SampleLayoutsScreen Component
  * 
  * Demonstrates various layout components.
  * 
@@ -13,9 +16,9 @@ import { padSize } from '../../../Framework/Common/Values';
  * @param {Object} props.navigation - Navigation object for navigating between screens.
  * @param {Object} props.route - Route object containing route parameters.
  * @param {Function} props.screenHeaderComp - Function component to render the screen header.
- * @returns {JSX.Element} The SampleLayoutsPage component.
+ * @returns {JSX.Element} The SampleLayoutsScreen component.
  */
-export default function SampleLayoutsPage({ navigation, route }) {
+export default function SampleLayoutsScreen({ navigation, route }) {
   const theme = useTheme();
 
   const TextContainer = ({ text, fontSize = 14, style, ...props }) => (
@@ -25,9 +28,9 @@ export default function SampleLayoutsPage({ navigation, route }) {
   );
 
   return (
-    <PageContainer navigation={navigation} route={route} scrollable={true} pageName="SampleLayoutsPage">
+    <ScreenContainer navigation={navigation} route={route} scrollable={true} screenName="Layouts Sample">
       {/* vertical layout */}
-      <Text variant="titleMedium">PageContainer: vertical layout scrollable</Text>
+      <Text variant="titleMedium">ScreenContainer: vertical layout scrollable</Text>
       {/* horizontal layout: child = wrap content */}
       <Text>horizontal layout: child = wrap content</Text>
       <LinearLayout childMargin={padSize} flex={0} align='horizontal'>
@@ -88,6 +91,6 @@ export default function SampleLayoutsPage({ navigation, route }) {
           <Text>a random absolute position element</Text>
         </View>
       </LinearLayout>
-    </PageContainer>
+    </ScreenContainer>
   );
 }

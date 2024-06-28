@@ -1,5 +1,5 @@
 /***************************************************************************************
-* Root of entire app, handles initialization, contexts and navigation of screens
+* engine of entire app, handles initialization, contexts and navigation of screens
 ***************************************************************************************/
 // core
 import React, { Node, useCallback, useMemo, useEffect, useState } from 'react';
@@ -7,7 +7,7 @@ import { View, LogBox, Platform, StatusBar } from 'react-native';
 // UI
 import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, Appbar } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
-import { padSize } from './Common/Values';
+import { padSize } from './CommonVals';
 // data
 import { LocalDataContext } from './Contexts/LocalDataContext';
 import useLocalDataManager from './Managers/LocalDataManager';

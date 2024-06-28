@@ -1,26 +1,29 @@
+/*****************************************************************************************
+ * the main layout for a screen, manages app bar
+*****************************************************************************************/
 import React, { useContext } from 'react';
 import { View } from 'react-native';
 import { useTheme, Appbar } from 'react-native-paper';
 import { LinearLayout } from './Layouts';
 import { LocalDataContext } from '../../Contexts/LocalDataContext';
-import { padSize } from '../../Common/Values';
+import { padSize } from '../../CommonVals';
 
 /**
- * PageComp Component
+ * ScreenComp Component
  * 
- * A wrapper component to setup a page quickly by providing the body and custom header content if any.
+ * A wrapper component to setup a screen quickly by providing the body and custom header content if any.
  * 
  * @param {Object} props - Component props.
  * @param {Object} props.navigation - Navigation object for navigating between screens.
  * @param {Object} props.route - Route object containing route parameters.
- * @param {boolean} props.scrollable - page scrollable if exceed screen height.
+ * @param {boolean} props.scrollable - content scrollable if exceed screen height.
  * @param {boolean} props.applyPadding - to apply padding to sides.
- * @param {string} props.pageName - Name of the page.
+ * @param {string} props.screenName - Name of the screen.
  * @param {React.ReactNode} props.customHeaderContent - Custom content to display in the header.
- * @param {React.ReactNode} props.children - The body content of the page.
- * @returns {JSX.Element} The PageComp component.
+ * @param {React.ReactNode} props.children - The body content of the screen.
+ * @returns {JSX.Element} The ScreenComp component.
  */
-const PageComp = ({ navigation, route, scrollable = false, applyPadding = true, pageName, customHeaderContent: CustomHeaderComp, children }) => {
+const ScreenComp = ({ navigation, route, scrollable = false, applyPadding = true, screenName, customHeaderContent: CustomHeaderComp, children }) => {
   const theme = useTheme();
   const { debugMode, toggleDebugMode } = useContext(LocalDataContext);
 
@@ -40,4 +43,4 @@ const PageComp = ({ navigation, route, scrollable = false, applyPadding = true, 
   );
 };
 
-export default PageComp;
+export default ScreenComp;

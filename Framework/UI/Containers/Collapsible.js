@@ -1,13 +1,14 @@
 /*****************************************************************************************
- * collapsible containers
+ * collapsible type containers
 *****************************************************************************************/
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { useTheme, Text } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
-import { padSize05, padSize, padSize2, iconSizeSmall } from '../../Common/Values';
+import { LocalDataContext } from '../../Contexts/LocalDataContext';
+import { padSize05, padSize, padSize2, iconSizeSmall } from '../../CommonVals';
 
 /**
    * ToggleHeader Component
@@ -41,6 +42,7 @@ const ToggleHeader = React.memo(({ toggleHeaderText = '', isCollapsed }) => {
  * @returns {JSX.Element} The CollapsibleComp component.
  */
 export const CollapsibleComp = ({ toggleHeaderText = '', children }) => {
+  const { debugMode } = useContext(LocalDataContext);
   const [isCollapsed, setIsCollapsed] = useState(true);
 
   const toggleCollapse = () => {
@@ -48,7 +50,7 @@ export const CollapsibleComp = ({ toggleHeaderText = '', children }) => {
   };
 
   return (
-    <View style={{ backgroundColor: '#ff99ff' }}>
+    <View style={{ backgroundColor: debugMode ? '#ff99ff' : 'transparent' }}>
       <TouchableOpacity onPress={toggleCollapse}>
         <ToggleHeader toggleHeaderText={toggleHeaderText} isCollapsed={isCollapsed} />
       </TouchableOpacity>
