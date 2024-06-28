@@ -34,18 +34,16 @@ The Framework project is structured as follows:
 ...
 └── Framework
 	├── APIs
-	├── Common
 	├── Contexts
 	├── Managers
 	├── UI
 	├── Utilities
+	├── CommonVals.js
 	├── package.json
 	└── RootComp.js
 ```
 
 **APIs:** interfaces with APIs like AsyncStorage
-
-**Common:** common values, like padSize
 
 **Contexts:** React context objects
 
@@ -54,6 +52,8 @@ The Framework project is structured as follows:
 **UI:** UI components like dropdown, tabs
 
 **Utilities:** Utility functions like epochToDDMMYY
+
+**CommonVals.js:** common values, like padSize
 
 **package.json:** managed by Yarn, we do not list dependencies here but rather in the app projects itself
 
