@@ -12,7 +12,7 @@ import SampleTabsScreen from '../Screens/SampleTabsScreen';
 import SampleMenusScreen from '../Screens/SampleMenusScreen';
 import SampleEmptyScreen from '../Screens/SampleEmptyScreen';
 import SampleDataDisplayScreen from '../Screens/SampleDataDisplayScreen';
-import SampleDataStorageScreen from '../Screens/SampleDataStorageScreen';
+import SampleLocalDataScreen from '../Screens/SampleLocalDataScreen';
 
 export const screenMaps = {
   home: SampleHomeScreen,
@@ -22,7 +22,7 @@ export const screenMaps = {
   menus: SampleMenusScreen,
   empty: SampleEmptyScreen,
   dataDisplay: SampleDataDisplayScreen,
-  storage: SampleDataStorageScreen
+  localData: SampleLocalDataScreen
 };
 
 export const DEFAULT_SCREEN = 'home';

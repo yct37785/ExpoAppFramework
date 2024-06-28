@@ -13,15 +13,15 @@ import { LinearLayout, ScreenContainer } from '../../../Framework/UI/index';
 import { LocalDataContext, onLocalDataUpdate } from '../../../Framework/Contexts/LocalDataContext';
 
 /**
- * sample local data storage showcase screen
+ * sample local data management showcase screen
  */
-export default function SampleDataStorageScreen({ navigation, route, screenHeaderComp: ScreenHeaderComp }) {
+export default function SampleLocalDataScreen({ navigation, route, screenHeaderComp: ScreenHeaderComp }) {
   const theme = useTheme();
   const { paramText } = route.params;
   const { setLocalDataValue, getLocalDataValue, resetLocalData, getLocalDataStringify } = useContext(LocalDataContext);
 
   onLocalDataUpdate(() => {
-    console.log("SampleDataStorageScreen: updated local data");
+    console.log("SampleLocalDataScreen: updated local data");
   });
 
   const updateTrackersSample = () => {

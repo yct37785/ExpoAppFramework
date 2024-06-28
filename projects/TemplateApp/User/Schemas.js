@@ -25,5 +25,5 @@ export const SAMPLE_SCREENS = {
   menus: "menus example",
   empty: "empty example",
   dataDisplay: "data display example",
-  storage: "storage example",
+  localData: "local data management example",
 };
