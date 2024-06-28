@@ -1,5 +1,5 @@
 /*****************************************************************************************
- * general dialog with customizable values
+ * dialog with standard dialog elements (submit, close options etc)
 *****************************************************************************************/
 import React from 'react';
 import { View } from 'react-native';

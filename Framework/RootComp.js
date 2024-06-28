@@ -1,5 +1,5 @@
 /***************************************************************************************
-* Root of entire app, handles initialization, contexts and navigation of screens
+* engine of entire app, handles initialization, contexts and navigation of screens
 ***************************************************************************************/
 // core
 import React, { Node, useCallback, useMemo, useEffect, useState } from 'react';

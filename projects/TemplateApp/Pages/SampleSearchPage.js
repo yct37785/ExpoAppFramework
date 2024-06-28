@@ -1,3 +1,6 @@
+/***************************************************************************************
+* showcase data UI elements
+***************************************************************************************/
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { View, Image } from 'react-native';
 import { useTheme, Text, Appbar, Divider, RadioButton } from 'react-native-paper';

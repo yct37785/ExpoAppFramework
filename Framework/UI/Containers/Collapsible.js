@@ -1,5 +1,5 @@
 /*****************************************************************************************
- * collapsible containers
+ * collapsible type containers
 *****************************************************************************************/
 import React, { useState, useContext } from 'react';
 import { View, TouchableOpacity } from 'react-native';

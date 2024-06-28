@@ -1,3 +1,6 @@
+/***************************************************************************************
+* showcase menu UI elements
+***************************************************************************************/
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { View, Keyboard } from 'react-native';
 // UI

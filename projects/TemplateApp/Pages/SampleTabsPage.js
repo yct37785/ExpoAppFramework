@@ -1,3 +1,6 @@
+/***************************************************************************************
+* showcase tab type container UI element
+***************************************************************************************/
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { useTheme, Text, Appbar } from 'react-native-paper';

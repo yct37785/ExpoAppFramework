@@ -1,3 +1,6 @@
+/*****************************************************************************************
+ * the main layout for every page, manages app bar
+*****************************************************************************************/
 import React, { useContext } from 'react';
 import { View } from 'react-native';
 import { useTheme, Appbar } from 'react-native-paper';

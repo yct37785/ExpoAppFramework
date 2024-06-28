@@ -1,3 +1,6 @@
+/***************************************************************************************
+* showcase layout UI elements
+***************************************************************************************/
 import React from 'react';
 import { View } from 'react-native';
 import { useTheme, Text, Appbar } from 'react-native-paper';

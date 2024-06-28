@@ -1,6 +1,6 @@
 /*****************************************************************************************
  * exposed to end users, export new UI components here
- * append Comp to name of each UI component for consistency 
+ * append Comp to name of each UI component for consistency, export without Comp appended
 *****************************************************************************************/
 
 // Collapsible.js

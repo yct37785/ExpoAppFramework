@@ -1,3 +1,6 @@
+/***************************************************************************************
+* copy paste empty page
+***************************************************************************************/
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { View, Keyboard } from 'react-native';
 // UI

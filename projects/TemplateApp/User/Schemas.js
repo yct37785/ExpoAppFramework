@@ -1,7 +1,9 @@
 /*****************************************************************************************
-* define global const definitions here
+* define schemas here, like default values of new user data etc
 *****************************************************************************************/
-// Save data schema
+/**
+ * new user data schema
+ */
 export const NEW_USER_DATA = {
   trackers_sample: {
     key1: {
@@ -13,7 +15,9 @@ export const NEW_USER_DATA = {
   }
 };
 
-// others
+/**
+ * screen display names
+ */
 export const SAMPLE_PAGES = {
   layouts: "layouts example",
   containers: "containers example",

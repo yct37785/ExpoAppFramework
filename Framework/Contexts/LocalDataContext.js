@@ -1,3 +1,7 @@
+/*****************************************************************************************
+ * Context object for LocalDataManager
+ * Callbacks for update events
+*****************************************************************************************/
 import React, { createContext, useContext, useEffect } from 'react';
 
 /**

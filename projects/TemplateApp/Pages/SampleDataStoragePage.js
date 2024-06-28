@@ -1,3 +1,6 @@
+/***************************************************************************************
+* showcase local data management
+***************************************************************************************/
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { View, Keyboard } from 'react-native';
 import { padSize, padSize2 } from '../../../Framework/CommonVals';

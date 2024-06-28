@@ -1,3 +1,6 @@
+/***************************************************************************************
+* home page, the root page
+***************************************************************************************/
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { View } from 'react-native';
 // UI

@@ -1,7 +1,10 @@
-/**
+/***************************************************************************************
  * include any pages here by importing and including in screenMaps (feel free to remove the sample pages)
  * define default page under DEFAULT_SCREEN, value must match respective key in screenMaps
- */
+ * 
+ * as the name suggests, screenMaps serve as a directory of all screens in your app, 
+ * with DEFAULT_SCREEN as the root screen
+***************************************************************************************/
 import SampleHomePage from '../Pages/SampleHomePage';
 import SampleLayoutsPage from '../Pages/SampleLayoutsPage';
 import SampleContainersPage from '../Pages/SampleContainersPage';
