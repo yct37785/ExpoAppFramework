@@ -13,6 +13,7 @@ import { padSize } from '../../CommonVals';
  * @param {React.ReactNode} props.children - The children components to render within the layout.
  * @param {number} props.flex - The flex value of the LinearLayout container.
  * @param {string} props.align - Alignment direction of children, either 'vertical' or 'horizontal'.
+ * @param {boolean} props.reverse - Order children in reverse direction.
  * @param {string} props.childLayout - Child layout strategy, either 'wrap-content' or 'match-parent'.
  * @param {number} props.childMargin - Margin to apply to each child.
  * @param {boolean} props.scrollable - Whether the layout should be scrollable if children exceed the container size.
@@ -26,6 +27,7 @@ export const LinearLayout = ({
   children,
   flex = 0,
   align = 'vertical',
+  reverse = false,
   childLayout = 'wrap-content',
   childMargin = 0,
   scrollable = false,
@@ -36,7 +38,11 @@ export const LinearLayout = ({
 }) => {
   const { debugMode } = useContext(LocalDataContext);
   const isVertical = align === 'vertical';
-  const marginStyle = isVertical ? { marginBottom: childMargin } : { marginRight: childMargin };
+  const marginNonReverse = reverse ? 0 : childMargin;
+  const marginReverse = reverse ? childMargin : 0;
+  const marginStyle = isVertical ? 
+  { marginBottom: marginNonReverse, marginTop: marginReverse } : 
+  { marginRight: marginNonReverse, marginLeft: marginReverse };
 
   const renderChildren = () => {
     return React.Children.map(children, (child, index) => {
@@ -55,7 +61,8 @@ export const LinearLayout = ({
 
   const mainContent = (
     <View style={[{
-      flexDirection: isVertical ? 'column' : 'row', flex: flex, padding: applyPadding ? padSize : 0,
+      flexDirection: isVertical ? (reverse ? 'column-reverse' : 'column') : (reverse ? 'row-reverse' : 'row'),
+      flex: flex, padding: applyPadding ? padSize : 0,
       backgroundColor: debugMode ? debugBackgroundColor : 'transparent'
     }, style]} {...props}>
       {renderChildren()}
@@ -79,6 +86,7 @@ export const LinearLayout = ({
  * 
  * @param {Object} props - Component props.
  * @param {React.ReactNode} props.children - The children components to render within the layout.
+ * @param {number} props.flex - The flex value of the GridLayout container.
  * @param {number} props.columns - Number of columns in the grid.
  * @param {string} props.childLayout - 'wrap-content'/'match-parent'
  * @param {number} props.childMargin - how much margin in between child wrappers
