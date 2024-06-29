@@ -27,11 +27,26 @@ const POPUP_MENU_OPTIONS = [
     ],
   },
   {
-    label: 'Shapes',
-    value: 'shapes',
+    label: 'Class',
+    value: 'class',
     children: [
-      { label: 'Circle', value: 'circle' },
-      { label: 'Square', value: 'square' },
+      { 
+        label: 'Mammals',
+        value: 'mammals',
+        children: [
+          { label: 'Cat', value: 'cat' },
+          { label: 'Dog', value: 'dog' }
+        ]
+      },
+      {
+        label: 'Reptiles',
+        value: 'reptiles',
+        children: [
+          { label: 'Turtle', value: 'turtle' },
+          { label: 'Frog', value: 'frog' },
+          { label: 'Lizard', value: 'lizard' }
+        ]
+      },
     ],
   },
 ];

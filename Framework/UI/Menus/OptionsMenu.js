@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { Checkbox } from 'react-native-paper';
+import { View, TouchableOpacity } from 'react-native';
+import { Checkbox, Text } from 'react-native-paper';
+import { LinearLayout } from '../Layouts/Layouts';
 import { padSize025, padSize05, padSize } from '../../CommonVals';
 import { LocalDataContext } from '../../Contexts/LocalDataContext';
 import PropTypes from 'prop-types';
@@ -68,15 +69,17 @@ const OptionsMenuComp = ({ schema, onSelectionChange }) => {
     onSelectionChange(newSelectedValues);
   };
 
-  const renderOptions = (options, path = []) => {
+  const renderOptions = (options, depth = 0, path = []) => {
     return options.map((option, index) => {
       const optionPath = [...path, option.value];
+      const padding = padSize * depth;
 
       if (option.children) {
+        const isGrandparent = !!option.children[0]?.children;
         return (
-          <View key={index} style={{ paddingBottom: padSize025 }}>
-            <Text>{option.label}</Text>
-            {renderOptions(option.children, optionPath)}
+          <View key={index} style={{ paddingLeft: padding, backgroundColor: debugMode ? '#e699ff' : 'transparent' }}>
+            <Text style={{ paddingBottom: isGrandparent ? padSize05 : 0 }}>{option.label}</Text>
+            {renderOptions(option.children, depth + 1, optionPath)}
           </View>
         );
       }
@@ -85,7 +88,7 @@ const OptionsMenuComp = ({ schema, onSelectionChange }) => {
 
       return (
         <TouchableOpacity key={index} onPress={() => handleSelect(optionPath, option.value, !isSelected)}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{ paddingLeft: padding, flexDirection: 'row', alignItems: 'center', backgroundColor: debugMode ? '#ccff99' : 'transparent' }}>
             <Checkbox status={isSelected ? 'checked' : 'unchecked'} />
             <Text>{option.label}</Text>
           </View>
@@ -95,35 +98,20 @@ const OptionsMenuComp = ({ schema, onSelectionChange }) => {
   };
 
   return (
-    <View style={{ backgroundColor: debugMode ? '#ffcc99' : 'transparent' }}>
+    <LinearLayout>
       {renderOptions(schema)}
-    </View>
+    </LinearLayout>
   );
 };
 
 OptionsMenuComp.propTypes = {
-  /**
-   * JSON schema representing the menu options.
-   */
   schema: PropTypes.arrayOf(
     PropTypes.shape({
-      /**
-       * The label for the menu option.
-       */
       label: PropTypes.string.isRequired,
-      /**
-       * The value for the menu option.
-       */
       value: PropTypes.string.isRequired,
-      /**
-       * Nested options for the menu.
-       */
       children: PropTypes.array,
     })
   ).isRequired,
-  /**
-   * Callback function to handle selection changes.
-   */
   onSelectionChange: PropTypes.func.isRequired,
 };
 
