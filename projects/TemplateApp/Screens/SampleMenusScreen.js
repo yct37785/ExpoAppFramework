@@ -8,7 +8,7 @@ import {
   useTheme, Text, Card, Button, Appbar,
   TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
 } from 'react-native-paper';
-import { ScreenContainer, LinearLayout, Dialog, Popup, Picker, DropdownMenu, OptionsMenu } from '../../../Framework/UI/index';
+import { ScreenContainer, LinearLayout, Dialog, Popup, Picker, OptionsMenu } from '../../../Framework/UI/index';
 // const
 const PICKER_ITEM_LIST = [
   { label: 'Red', value: 'red' },
