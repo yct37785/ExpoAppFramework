@@ -16,8 +16,8 @@ import { padSize } from '../../CommonVals';
  * @param {Object} props - Component props.
  * @param {Object} props.navigation - Navigation object for navigating between screens.
  * @param {Object} props.route - Route object containing route parameters.
- * @param {boolean} props.scrollable - content scrollable if exceed screen height.
- * @param {boolean} props.applyPadding - to apply padding to sides.
+ * @param {boolean} props.scrollable - Content scrollable if exceed screen height.
+ * @param {boolean} props.applyPadding - Apply padding around children comps.
  * @param {string} props.screenName - Name of the screen.
  * @param {React.ReactNode} props.customHeaderContent - Custom content to display in the header.
  * @param {React.ReactNode} props.children - The body content of the screen.
@@ -36,7 +36,7 @@ const ScreenComp = ({ navigation, route, scrollable = false, applyPadding = true
           {CustomHeaderComp && CustomHeaderComp()}
         </View>
       </Appbar.Header>
-      <LinearLayout flex={1} childMargin={padSize} scrollable={scrollable} style={{ padding: applyPadding ? padSize : 0 }} debugBackgroundColor='yellow'>
+      <LinearLayout flex={1} childMargin={padSize} scrollable={scrollable} applyPadding={applyPadding} debugBackgroundColor='yellow'>
         {children}
       </LinearLayout>
     </View>

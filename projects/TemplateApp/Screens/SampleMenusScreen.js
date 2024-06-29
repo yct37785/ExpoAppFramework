@@ -66,7 +66,7 @@ export default function SampleMenusScreen({ navigation, route, screenHeaderComp:
   function customHeaderContent() {
     return <LinearLayout align='horizontal'>
       <Popup triggerComp={<Button mode="contained">Open Menu</Button>}>
-        <LinearLayout>
+        <LinearLayout applyPadding={true}>
           <OptionsMenu schema={POPUP_MENU_OPTIONS} onSelectionChange={handlePopupMenuSelectionChange} />
         </LinearLayout>
       </Popup>

@@ -134,7 +134,7 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
   }, [searchQuery]);
 
   function customHeaderContent() {
-    return <LinearLayout style={{ backgroundColor: debugMode ? '#0000ff' : 'transparent' }}>
+    return <LinearLayout>
       <TextInputFieldComp
         type="search"
         value={searchQuery}
