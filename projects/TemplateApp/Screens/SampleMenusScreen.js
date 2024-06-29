@@ -9,6 +9,7 @@ import {
   TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
 } from 'react-native-paper';
 import { ScreenContainer, LinearLayout, Dialog, Popup, Picker, OptionsMenu } from '../../../Framework/UI/index';
+import { iconSizeSmall } from '../../../Framework/CommonVals';
 // const
 const PICKER_ITEM_LIST = [
   { label: 'Red', value: 'red' },
@@ -64,8 +65,8 @@ export default function SampleMenusScreen({ navigation, route, screenHeaderComp:
   };
 
   function customHeaderContent() {
-    return <LinearLayout align='horizontal'>
-      <Popup triggerComp={<Button mode="contained">Open Menu</Button>}>
+    return <LinearLayout align='horizontal' reverse={true}>
+      <Popup triggerComp={<IconButton icon="dots-vertical" size={iconSizeSmall} />}>
         <LinearLayout applyPadding={true}>
           <OptionsMenu schema={POPUP_MENU_OPTIONS} onSelectionChange={handlePopupMenuSelectionChange} />
         </LinearLayout>
