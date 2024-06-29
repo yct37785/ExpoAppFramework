@@ -8,6 +8,7 @@ export { CollapsibleComp as Collapsible } from './Containers/Collapsible';
 export { AccordionComp as Accordion } from './Containers/Collapsible';
 // Dialog.js
 export { default as Dialog } from './Dialogs/Dialog';
+export { default as Popup } from './Dialogs/Popup';
 // DropdownCheckMenu.js
 export { default as DropdownCheckMenu } from './Menus/Dropdowns/DropdownCheckMenu';
 // DropdownMenu.js

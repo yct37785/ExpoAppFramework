@@ -8,19 +8,14 @@ import {
   useTheme, Text, Card, Button, Appbar,
   TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
 } from 'react-native-paper';
-import { ScreenContainer, LinearLayout, Dialog, Picker, DropdownMenu, DropdownCheckMenu, OptionsMenu } from '../../../Framework/UI/index';
+import { ScreenContainer, LinearLayout, Dialog, Popup, Picker, DropdownMenu, OptionsMenu } from '../../../Framework/UI/index';
 // const
 const PICKER_ITEM_LIST = [
   { label: 'Red', value: 'red' },
   { label: 'Blue', value: 'blue' },
   { label: 'Green', value: 'green' },
 ];
-const DROPDOWN_ITEM_LIST = [
-  { label: 'Bookmark', value: 'bookmark' },
-  { label: 'Something', value: 'something' },
-  { label: 'Delete', value: 'delete', color: 'red' },
-];
-const schema = [
+const POPUP_MENU_OPTIONS = [
   {
     label: 'Colors',
     value: 'colors',
@@ -64,39 +59,17 @@ export default function SampleMenusScreen({ navigation, route, screenHeaderComp:
     setShowDialog(false);
   }
 
-  function onDropdownMenuSelected(value) {
-    console.log('Drowndown menu selection: ' + value);
-  }
-
-  function onDropdownCheckMenuSelected(value, idx, selected) {
-    console.log('Dropdown check menu selection: ' + JSON.stringify(Object.keys(selected)));
-  }
-
   const handleSelectionChange = (selectedValues) => {
     setSelectedOptions(selectedValues);
   };
 
-  function onQuery(rawQuery) {
-    setQuery(rawQuery);
-    // process query logic here
-  }
-
   function customHeaderContent() {
     return <LinearLayout align='horizontal'>
-      <DropdownMenu
-        triggerComp={<IconButton
-          icon="dots-vertical"
-          size={20}
-        />}
-        options={DROPDOWN_ITEM_LIST}
-        onPress={onDropdownMenuSelected} />
-      <DropdownCheckMenu
-        triggerComp={<IconButton
-          icon="dots-vertical"
-          size={20}
-        />}
-        options={PICKER_ITEM_LIST}
-        onPress={onDropdownCheckMenuSelected} />
+      <Popup triggerComp={<Button mode="contained">Open Menu</Button>}>
+        <LinearLayout>
+          <OptionsMenu schema={POPUP_MENU_OPTIONS} onSelectionChange={handleSelectionChange} />
+        </LinearLayout>
+      </Popup>
     </LinearLayout>
   }
 
@@ -122,7 +95,6 @@ export default function SampleMenusScreen({ navigation, route, screenHeaderComp:
         Launch dialog
       </Button>
       <Picker value={pickerSelection} options={PICKER_ITEM_LIST} onChange={(v) => setPickerSelection(v)} />
-      <OptionsMenu schema={schema} onSelectionChange={handleSelectionChange} />
     </ScreenContainer>
   );
 }
