@@ -43,7 +43,7 @@ export default function SampleMenusScreen({ navigation, route, screenHeaderComp:
   const searchBarRef = useRef();
   const [showDialog, setShowDialog] = useState(false);
   const [pickerSelection, setPickerSelection] = useState('red');
-  const [selectedOptions, setSelectedOptions] = useState({});
+  const [popupMenuSelection, setPopupMenuSelection] = useState({});
 
   useEffect(() => {
     const keyboardListener = Keyboard.addListener('keyboardDidHide', (e) => {
@@ -59,15 +59,15 @@ export default function SampleMenusScreen({ navigation, route, screenHeaderComp:
     setShowDialog(false);
   }
 
-  const handleSelectionChange = (selectedValues) => {
-    setSelectedOptions(selectedValues);
+  const handlePopupMenuSelectionChange = (selectedValues) => {
+    setPopupMenuSelection(selectedValues);
   };
 
   function customHeaderContent() {
     return <LinearLayout align='horizontal'>
       <Popup triggerComp={<Button mode="contained">Open Menu</Button>}>
         <LinearLayout>
-          <OptionsMenu schema={POPUP_MENU_OPTIONS} onSelectionChange={handleSelectionChange} />
+          <OptionsMenu schema={POPUP_MENU_OPTIONS} onSelectionChange={handlePopupMenuSelectionChange} />
         </LinearLayout>
       </Popup>
     </LinearLayout>
