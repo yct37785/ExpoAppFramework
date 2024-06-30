@@ -14,7 +14,7 @@ export { default as OptionsMenu } from './Menus/OptionsMenu';
 // Options.js
 export { ChipsContainerComp as ChipsContainer } from './Menus/Options';
 // Picker.js
-export { default as Picker } from './Menus/Dropdowns/Picker';
+export { default as Picker } from './Input/Picker';
 // search bar todo
 // TabBar.js
 export { default as Tabs } from './Containers/Tabs';
