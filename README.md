@@ -179,3 +179,8 @@ commits are separated into the following categories, append the associated emoji
 - **documentation** 📝: comments, comment block, readme etc
 - **stylizing** 💄: changing placement of UI, CSS etc
 - **housekeeping** 🧹: remove obselete code or files
+
+for example:
+````
+✨ add onPress callback to button
+````
