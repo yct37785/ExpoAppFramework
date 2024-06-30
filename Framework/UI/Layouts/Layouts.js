@@ -5,6 +5,7 @@ import React, { useContext } from 'react';
 import { View, ScrollView, Text } from 'react-native';
 import { getValueByCondition } from '../../Utilities/GeneralUtils';
 import { LocalDataContext } from '../../Contexts/LocalDataContext';
+import { padSize } from '../../CommonVals';
 /**
  * Arranges children in a linear layout, either vertically or horizontally.
  * 
@@ -12,9 +13,11 @@ import { LocalDataContext } from '../../Contexts/LocalDataContext';
  * @param {React.ReactNode} props.children - The children components to render within the layout.
  * @param {number} props.flex - The flex value of the LinearLayout container.
  * @param {string} props.align - Alignment direction of children, either 'vertical' or 'horizontal'.
+ * @param {boolean} props.reverse - Order children in reverse direction.
  * @param {string} props.childLayout - Child layout strategy, either 'wrap-content' or 'match-parent'.
  * @param {number} props.childMargin - Margin to apply to each child.
  * @param {boolean} props.scrollable - Whether the layout should be scrollable if children exceed the container size.
+ * @param {boolean} props.applyPadding - Apply padding around children comps.
  * @param {string} props.debugBackgroundColor - dictate background color of layout for debugging purposes.
  * @param {Object} props.style - Custom styles to apply to the layout.
  * @returns {JSX.Element} The LinearLayout component.
@@ -24,16 +27,22 @@ export const LinearLayout = ({
   children,
   flex = 0,
   align = 'vertical',
+  reverse = false,
   childLayout = 'wrap-content',
   childMargin = 0,
   scrollable = false,
+  applyPadding = false,
   debugBackgroundColor = 'orange',
   style,
   ...props
 }) => {
   const { debugMode } = useContext(LocalDataContext);
   const isVertical = align === 'vertical';
-  const marginStyle = isVertical ? { marginBottom: childMargin } : { marginRight: childMargin };
+  const marginNonReverse = reverse ? 0 : childMargin;
+  const marginReverse = reverse ? childMargin : 0;
+  const marginStyle = isVertical ? 
+  { marginBottom: marginNonReverse, marginTop: marginReverse } : 
+  { marginRight: marginNonReverse, marginLeft: marginReverse };
 
   const renderChildren = () => {
     return React.Children.map(children, (child, index) => {
@@ -52,7 +61,8 @@ export const LinearLayout = ({
 
   const mainContent = (
     <View style={[{
-      flexDirection: isVertical ? 'column' : 'row', flex: flex,
+      flexDirection: isVertical ? (reverse ? 'column-reverse' : 'column') : (reverse ? 'row-reverse' : 'row'),
+      flex: flex, padding: applyPadding ? padSize : 0,
       backgroundColor: debugMode ? debugBackgroundColor : 'transparent'
     }, style]} {...props}>
       {renderChildren()}
@@ -76,16 +86,18 @@ export const LinearLayout = ({
  * 
  * @param {Object} props - Component props.
  * @param {React.ReactNode} props.children - The children components to render within the layout.
+ * @param {number} props.flex - The flex value of the GridLayout container.
  * @param {number} props.columns - Number of columns in the grid.
  * @param {string} props.childLayout - 'wrap-content'/'match-parent'
  * @param {number} props.childMargin - how much margin in between child wrappers
  * @param {string} props.lastRowAlign - if the last row != column num, align row children 'left'/'center'/'right'
+ * @param {boolean} props.applyPadding - Apply padding around children comps.
  * @param {string} props.debugBackgroundColor - dictate background color of layout for debugging purposes.
  * @param {Object} props.style - Custom styles to apply to the layout.
  * @returns {JSX.Element} The GridLayout component.
  */
 export const GridLayout = ({ children, flex = 0, columns = 2, childLayout = 'wrap-content', childMargin = 2, lastRowAlign = 'left',
-  debugBackgroundColor = 'orange', style, ...props }) => {
+  applyPadding = false, debugBackgroundColor = 'orange', style, ...props }) => {
   const { debugMode } = useContext(LocalDataContext);
   const rows = [];
   let row = [];
@@ -128,7 +140,7 @@ export const GridLayout = ({ children, flex = 0, columns = 2, childLayout = 'wra
   }
 
   return (
-    <View style={[{ flex: flex, backgroundColor: debugMode ? debugBackgroundColor : 'transparent' }, style]} {...props}>
+    <View style={[{ flex: flex, backgroundColor: debugMode ? debugBackgroundColor : 'transparent', padding: applyPadding ? padSize : 0 }, style]} {...props}>
       {rows.map((row, index) => {
         return row
       })}

@@ -8,17 +8,47 @@ import {
   useTheme, Text, Card, Button, Appbar,
   TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
 } from 'react-native-paper';
-import { ScreenContainer, LinearLayout, Dialog, Picker, DropdownMenu, DropdownCheckMenu } from '../../../Framework/UI/index';
+import { ScreenContainer, LinearLayout, Dialog, Popup, Picker, OptionsMenu } from '../../../Framework/UI/index';
+import { iconSizeSmall } from '../../../Framework/CommonVals';
 // const
 const PICKER_ITEM_LIST = [
   { label: 'Red', value: 'red' },
   { label: 'Blue', value: 'blue' },
   { label: 'Green', value: 'green' },
 ];
-const DROPDOWN_ITEM_LIST = [
-  { label: 'Bookmark', value: 'bookmark' },
-  { label: 'Something', value: 'something' },
-  { label: 'Delete', value: 'delete', color: 'red' },
+const POPUP_MENU_OPTIONS = [
+  {
+    label: 'Colors',
+    value: 'colors',
+    children: [
+      { label: 'Red', value: 'red' },
+      { label: 'Blue', value: 'blue' },
+      { label: 'Green', value: 'green' },
+    ],
+  },
+  {
+    label: 'Class',
+    value: 'class',
+    children: [
+      { 
+        label: 'Mammals',
+        value: 'mammals',
+        children: [
+          { label: 'Cat', value: 'cat' },
+          { label: 'Dog', value: 'dog' }
+        ]
+      },
+      {
+        label: 'Reptiles',
+        value: 'reptiles',
+        children: [
+          { label: 'Turtle', value: 'turtle' },
+          { label: 'Frog', value: 'frog' },
+          { label: 'Lizard', value: 'lizard' }
+        ]
+      },
+    ],
+  },
 ];
 
 /**
@@ -29,6 +59,7 @@ export default function SampleMenusScreen({ navigation, route, screenHeaderComp:
   const searchBarRef = useRef();
   const [showDialog, setShowDialog] = useState(false);
   const [pickerSelection, setPickerSelection] = useState('red');
+  const [popupMenuSelection, setPopupMenuSelection] = useState({});
 
   useEffect(() => {
     const keyboardListener = Keyboard.addListener('keyboardDidHide', (e) => {
@@ -44,35 +75,17 @@ export default function SampleMenusScreen({ navigation, route, screenHeaderComp:
     setShowDialog(false);
   }
 
-  function onDropdownMenuSelected(value) {
-    console.log('Drowndown menu selection: ' + value);
-  }
-
-  function onDropdownCheckMenuSelected(value, idx, selected) {
-    console.log('Dropdown check menu selection: ' + JSON.stringify(Object.keys(selected)));
-  }
-
-  function onQuery(rawQuery) {
-    setQuery(rawQuery);
-    // process query logic here
-  }
+  const handlePopupMenuSelectionChange = (selectedValues) => {
+    setPopupMenuSelection(selectedValues);
+  };
 
   function customHeaderContent() {
-    return <LinearLayout align='horizontal'>
-      <DropdownMenu
-        triggerComp={<IconButton
-          icon="dots-vertical"
-          size={20}
-        />}
-        options={DROPDOWN_ITEM_LIST}
-        onPress={onDropdownMenuSelected} />
-      <DropdownCheckMenu
-        triggerComp={<IconButton
-          icon="dots-vertical"
-          size={20}
-        />}
-        options={PICKER_ITEM_LIST}
-        onPress={onDropdownCheckMenuSelected} />
+    return <LinearLayout align='horizontal' reverse={true}>
+      <Popup triggerComp={<IconButton icon="dots-vertical" size={iconSizeSmall} />}>
+        <LinearLayout applyPadding={true}>
+          <OptionsMenu schema={POPUP_MENU_OPTIONS} onSelectionChange={handlePopupMenuSelectionChange} />
+        </LinearLayout>
+      </Popup>
     </LinearLayout>
   }
 

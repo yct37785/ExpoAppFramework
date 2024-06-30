@@ -8,14 +8,13 @@ export { CollapsibleComp as Collapsible } from './Containers/Collapsible';
 export { AccordionComp as Accordion } from './Containers/Collapsible';
 // Dialog.js
 export { default as Dialog } from './Dialogs/Dialog';
-// DropdownCheckMenu.js
-export { default as DropdownCheckMenu } from './Menus/Dropdowns/DropdownCheckMenu';
-// DropdownMenu.js
-export { default as DropdownMenu } from './Menus/Dropdowns/DropdownMenu';
+export { default as Popup } from './Dialogs/Popup';
+// OptionsMenu.js
+export { default as OptionsMenu } from './Menus/OptionsMenu';
 // Options.js
 export { ChipsContainerComp as ChipsContainer } from './Menus/Options';
 // Picker.js
-export { default as Picker } from './Menus/Dropdowns/Picker';
+export { default as Picker } from './Input/Picker';
 // search bar todo
 // TabBar.js
 export { default as Tabs } from './Containers/Tabs';
