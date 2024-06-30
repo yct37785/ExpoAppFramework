@@ -168,3 +168,13 @@ To build a new component/functionality for a specific app project, simply define
 cd projects/<NEW_APP_NAME>
 npx expo install <package1> <package2>
 ````
+
+## Contributing
+### commit message formalities
+commits are separated into the following categories, append the associated emojis to commit messages for organisation and standardisation purposes:
+- refactor 🔄: code refactoring
+- feature ✨: newly added components, UI elements, functionalities etc
+- bug fix 🐛: code to fix errors
+- documentation 📝: comments, comment block, readme etc
+- stylizing 💄: changing placement of UI, CSS etc
+- housekeeping 🧹: remove obselete code or files
