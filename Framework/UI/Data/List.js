@@ -7,8 +7,6 @@ import BigList from 'react-native-big-list';
 import { LocalDataContext } from '../../Contexts/LocalDataContext';
 
 /**
- * ListComp Component
- * 
  * Combined List component supporting both BigList and FlatList.
  * 
  * @param {Object} props - Component props.
@@ -17,9 +15,9 @@ import { LocalDataContext } from '../../Contexts/LocalDataContext';
  * @param {Function} props.renderItem - Function to render each item in the list.
  * @param {string} [props.listType='biglist'] - Type of list to display, either 'biglist' or 'flatlist'.
  * @param {number} props.rowHeight - Height of each row in the list.
- * @returns {JSX.Element} The ListComp component.
+ * @returns {JSX.Element} The List component.
  */
-const ListComp = ({
+const List = ({
   data,
   filterFunction,
   renderItem,
@@ -63,4 +61,4 @@ const ListComp = ({
   );
 };
 
-export default memo(ListComp);
+export default memo(List);
