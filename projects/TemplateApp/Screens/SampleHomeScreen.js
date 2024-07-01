@@ -13,7 +13,7 @@ import { LinearLayout, ScreenLayout } from '../../../Framework/Index/UI';
 import { onLocalDataUpdate } from '../../../Framework/Contexts/LocalDataContext';
 // const
 import { SAMPLE_SCREENS } from '../User/Schemas';
-import { padSize } from '../../../Framework/CommonVals';
+import { padSize } from '../../../Framework/Index/CommonVals';
 
 /**
  * sample home screen

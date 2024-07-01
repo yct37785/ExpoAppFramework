@@ -3,7 +3,7 @@
 ***************************************************************************************/
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { View, Keyboard } from 'react-native';
-import { padSize, padSize2 } from '../../../Framework/CommonVals';
+import { padSize, padSize2 } from '../../../Framework/Index/CommonVals';
 // UI
 import {
   useTheme, Text, Button, Appbar, Divider, Switch, TextInput, Card

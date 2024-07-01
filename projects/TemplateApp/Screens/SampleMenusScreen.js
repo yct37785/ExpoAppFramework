@@ -9,7 +9,7 @@ import {
   TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
 } from 'react-native-paper';
 import { LinearLayout, ScreenLayout, Dialog, Popup, PickerInput, CheckOptions, ChipOptions } from '../../../Framework/Index/UI';
-import { iconSizeSmall } from '../../../Framework/CommonVals';
+import { iconSizeSmall } from '../../../Framework/Index/CommonVals';
 // const
 const PICKER_ITEM_LIST = [
   { label: 'Red', value: 'red' },
