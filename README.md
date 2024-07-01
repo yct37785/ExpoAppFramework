@@ -177,7 +177,7 @@ commits are separated into the following categories, prepend the associated emoj
 - **bug fix** 🐛: code to fix errors
 - **config** 🔧: updating dependencies, config files etc
 - **documentation** 📝: comments, comment block, readme etc
-- **stylizing** 💄: changing placement of UI, CSS etc
+- **stylizing** 💄: changing visuals, placement of UI, CSS etc
 - **housekeeping** 🧹: remove obselete code or files
 
 for example:
