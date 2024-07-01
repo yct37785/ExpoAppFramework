@@ -1,7 +1,7 @@
 import React, { useState, useContext, memo } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Checkbox, Text } from 'react-native-paper';
-import { LinearLayout } from '../Layouts/Layouts';
+import { LinearLayoutCompMemo as LinearLayout } from '../Layouts/Layouts';
 import { padSize025, padSize05, padSize } from '../../CommonVals';
 import { LocalDataContext } from '../../Contexts/LocalDataContext';
 

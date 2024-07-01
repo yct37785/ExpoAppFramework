@@ -18,8 +18,8 @@ export { highlightTextCompMemo as HighlightText } from './Display/Text';
 export { default as Picker } from './Input/Picker';
 export { default as TextInput } from './Input/TextInput';
 // layouts
-export { LinearLayoutMemo as LinearLayout } from './Layouts/Layouts';
-export { GridLayoutMemo as GridLayout } from './Layouts/Layouts';
+export { LinearLayoutCompMemo as LinearLayout } from './Layouts/Layouts';
+export { GridLayoutCompMemo as GridLayout } from './Layouts/Layouts';
 export { default as ScreenLayout } from './Layouts/ScreenLayout';
 // options
 export { default as CheckOptions } from './Options/CheckOptions';
