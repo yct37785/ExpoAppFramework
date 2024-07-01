@@ -7,10 +7,10 @@ import { View, LogBox, Platform, StatusBar } from 'react-native';
 // UI
 import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, Appbar } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
-import { padSize } from './Index/CommonVals';
+import { padSize } from '../Index/CommonVals';
 // data
-import { LocalDataContext } from './Contexts/LocalDataContext';
-import useLocalDataManager from './Managers/LocalDataManager';
+import { LocalDataContext } from '../Contexts/LocalDataContext';
+import useLocalDataManager from '../Managers/LocalDataManager';
 // deps
 import 'react-native-get-random-values';
 // nav
