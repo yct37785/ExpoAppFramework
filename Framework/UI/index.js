@@ -15,11 +15,11 @@ export { default as Popup } from './Dialogs/Popup';
 // text display
 export { HighlightTextDisplayMemo as HighlightTextDisplay } from './TextDisplay/Text';
 // input
-export { default as Picker } from './Input/Picker';
+export { default as PickerInput } from './Input/Picker';
 export { default as TextInput } from './Input/TextInput';
 // layouts
-export { LinearLayoutCompMemo as LinearLayout } from './Layouts/Layouts';
-export { GridLayoutCompMemo as GridLayout } from './Layouts/Layouts';
+export { LinearLayoutMemo as LinearLayout } from './Layouts/Layouts';
+export { GridLayoutMemo as GridLayout } from './Layouts/Layouts';
 export { default as ScreenLayout } from './Layouts/ScreenLayout';
 // options
 export { default as CheckOptions } from './Options/CheckOptions';

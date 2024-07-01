@@ -23,7 +23,7 @@ import { padSize } from '../../CommonVals';
  * @returns {JSX.Element} The LinearLayout component.
  */
 
-const LinearLayoutComp = ({
+const LinearLayout = ({
   children,
   flex = 0,
   align = 'vertical',
@@ -96,7 +96,7 @@ const LinearLayoutComp = ({
  * @param {Object} props.style - Custom styles to apply to the layout.
  * @returns {JSX.Element} The GridLayout component.
  */
-const GridLayoutComp = ({ children, flex = 0, columns = 2, childLayout = 'wrap-content', childMargin = 2, lastRowAlign = 'left',
+const GridLayout = ({ children, flex = 0, columns = 2, childLayout = 'wrap-content', childMargin = 2, lastRowAlign = 'left',
   applyPadding = false, debugBackgroundColor = 'orange', style, ...props }) => {
   const { debugMode } = useContext(LocalDataContext);
   const rows = [];
@@ -148,5 +148,5 @@ const GridLayoutComp = ({ children, flex = 0, columns = 2, childLayout = 'wrap-c
   );
 };
 
-export const LinearLayoutCompMemo = memo(LinearLayoutComp);
-export const GridLayoutCompMemo = memo(GridLayoutComp);
+export const LinearLayoutMemo = memo(LinearLayout);
+export const GridLayoutMemo = memo(GridLayout);

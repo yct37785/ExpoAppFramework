@@ -4,14 +4,14 @@ import { Chip, useTheme } from 'react-native-paper';
 import { padSize05 } from '../../CommonVals';
 
 /**
- * ChipsContainerComp Component
+ * display options in chips form
  * 
  * @param {Object} props - Component props.
  * @param {Object} props.toggledMap - Map of toggled state for chip menu, where key is the chip label and value is a boolean indicating if the chip is selected.
  * @param {Function} props.onChipSelected - Callback function to handle chip selection. Takes the key of the selected chip as a parameter.
- * @returns {JSX.Element} The ChipsContainerComp component.
+ * @returns {JSX.Element} The ChipOptions component.
  */
-const ChipOptionsComp = ({
+const ChipOptions = ({
   toggledMap,
   onChipSelected,
 }) => {
@@ -35,4 +35,4 @@ const ChipOptionsComp = ({
   );
 };
 
-export default memo(ChipOptionsComp);
+export default memo(ChipOptions);

@@ -4,7 +4,7 @@
 import React, { useContext, memo } from 'react';
 import { View } from 'react-native';
 import { useTheme, Appbar } from 'react-native-paper';
-import { LinearLayoutCompMemo as LinearLayout } from './Layouts';
+import { LinearLayoutMemo as LinearLayout } from './Layouts';
 import { LocalDataContext } from '../../Contexts/LocalDataContext';
 import { padSize } from '../../CommonVals';
 
@@ -21,7 +21,7 @@ import { padSize } from '../../CommonVals';
  * @param {React.ReactNode} props.children - The body content of the screen.
  * @returns {JSX.Element} The ScreenLayoutComp component.
  */
-const ScreenLayoutComp = ({ navigation, route, scrollable = false, applyPadding = true, screenName = '', customHeaderContent: CustomHeaderComp, children }) => {
+const ScreenLayout = ({ navigation, route, scrollable = false, applyPadding = true, screenName = '', customHeaderContent: CustomHeaderComp, children }) => {
   const theme = useTheme();
   const { debugMode, toggleDebugMode } = useContext(LocalDataContext);
 
@@ -41,4 +41,4 @@ const ScreenLayoutComp = ({ navigation, route, scrollable = false, applyPadding 
   );
 };
 
-export default memo(ScreenLayoutComp);
+export default memo(ScreenLayout);

@@ -8,7 +8,7 @@ import {
   useTheme, Text, Card, Button, Appbar,
   TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
 } from 'react-native-paper';
-import { LinearLayout, ScreenLayout, Dialog, Popup, Picker, CheckOptions, ChipOptions } from '../../../Framework/UI/index';
+import { LinearLayout, ScreenLayout, Dialog, Popup, PickerInput, CheckOptions, ChipOptions } from '../../../Framework/UI/index';
 import { iconSizeSmall } from '../../../Framework/CommonVals';
 // const
 const PICKER_ITEM_LIST = [
@@ -110,7 +110,7 @@ export default function SampleMenusScreen({ navigation, route, screenHeaderComp:
       <Button mode="contained" onPress={() => setShowDialog(true)}>
         Launch dialog
       </Button>
-      <Picker value={pickerSelection} options={PICKER_ITEM_LIST} onChange={(v) => setPickerSelection(v)} />
+      <PickerInput value={pickerSelection} options={PICKER_ITEM_LIST} onChange={(v) => setPickerSelection(v)} />
     </ScreenLayout>
   );
 }

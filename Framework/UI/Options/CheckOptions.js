@@ -1,7 +1,7 @@
 import React, { useState, useContext, memo } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Checkbox, Text } from 'react-native-paper';
-import { LinearLayoutCompMemo as LinearLayout } from '../Layouts/Layouts';
+import { LinearLayoutMemo as LinearLayout } from '../Layouts/Layouts';
 import { padSize025, padSize05, padSize } from '../../CommonVals';
 import { LocalDataContext } from '../../Contexts/LocalDataContext';
 
@@ -15,6 +15,7 @@ import { LocalDataContext } from '../../Contexts/LocalDataContext';
  * @param {string} props.schema[].value - The value for the menu option.
  * @param {Array<Object>} [props.schema[].children] - Nested options for the menu.
  * @param {Function} props.onSelectionChange - Callback function to handle selection changes.
+ * @returns {JSX.Element} The CheckOptions component.
  *
  * @example
  * const schema = [
@@ -43,7 +44,7 @@ import { LocalDataContext } from '../../Contexts/LocalDataContext';
  *
  * <OptionsMenuComp schema={schema} onSelectionChange={handleSelectionChange} />
  */
-const CheckOptionsComp = ({ schema, onSelectionChange }) => {
+const CheckOptions = ({ schema, onSelectionChange }) => {
   const { debugMode } = useContext(LocalDataContext);
   const [selectedValues, setSelectedValues] = useState({});
 
@@ -103,4 +104,4 @@ const CheckOptionsComp = ({ schema, onSelectionChange }) => {
   );
 };
 
-export default memo(CheckOptionsComp);
+export default memo(CheckOptions);
