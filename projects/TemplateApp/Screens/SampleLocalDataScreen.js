@@ -8,7 +8,7 @@ import { padSize, padSize2 } from '../../../Framework/CommonVals';
 import {
   useTheme, Text, Button, Appbar, Divider, Switch, TextInput, Card
 } from 'react-native-paper';
-import { LinearLayout, ScreenLayout } from '../../../Framework/UI/index';
+import { LinearLayout, ScreenLayout } from '../../../Framework/Index/UI';
 // data
 import { LocalDataContext, onLocalDataUpdate } from '../../../Framework/Contexts/LocalDataContext';
 

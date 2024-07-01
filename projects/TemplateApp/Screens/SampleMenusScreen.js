@@ -8,7 +8,7 @@ import {
   useTheme, Text, Card, Button, Appbar,
   TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
 } from 'react-native-paper';
-import { LinearLayout, ScreenLayout, Dialog, Popup, PickerInput, CheckOptions, ChipOptions } from '../../../Framework/UI/index';
+import { LinearLayout, ScreenLayout, Dialog, Popup, PickerInput, CheckOptions, ChipOptions } from '../../../Framework/Index/UI';
 import { iconSizeSmall } from '../../../Framework/CommonVals';
 // const
 const PICKER_ITEM_LIST = [

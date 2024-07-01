@@ -7,7 +7,7 @@ import { View, Keyboard } from 'react-native';
 import {
   useTheme, Text, Button, Appbar
 } from 'react-native-paper';
-import { LinearLayout, ScreenLayout } from '../../../Framework/UI/index';
+import { LinearLayout, ScreenLayout } from '../../../Framework/Index/UI';
 
 /**
  * sample empty screen
