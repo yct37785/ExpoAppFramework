@@ -4,7 +4,7 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { View, Image } from 'react-native';
 import { useTheme, Text, Divider, RadioButton } from 'react-native-paper';
-import { LinearLayout, ScreenLayout, Collapsible, ChipOptions, List, TextInput, HighlightText } from '../../../Framework/UI/index';
+import { LinearLayout, ScreenLayout, CollapsibleContainer, ChipOptions, List, TextInput, HighlightText } from '../../../Framework/UI/index';
 import { faker } from '@faker-js/faker';
 import { LocalDataContext } from '../../../Framework/Contexts/LocalDataContext';
 
@@ -142,12 +142,12 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
   return (
     <ScreenLayout navigation={navigation} route={route} customHeaderContent={customHeaderContent}>
       {/* Filter menu */}
-      <Collapsible toggleHeaderText="Filter">
+      <CollapsibleContainer toggleHeaderText="Filter">
         <View style={{ width: '100%' }}>
           <Text variant='labelSmall'>Materials</Text>
           <ChipOptions toggledMap={materialsSelected} onChipSelected={onMaterialChipSelected} />
         </View>
-      </Collapsible>
+      </CollapsibleContainer>
       {/* Toggle BigList vs FlatList */}
       <RadioButton.Group onValueChange={newValue => setListType(newValue)} value={listType}>
         <View style={{ flexDirection: 'row', backgroundColor: debugMode ? '#66ff99' : 'transparent' }}>

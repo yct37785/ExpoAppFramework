@@ -4,9 +4,9 @@
 *****************************************************************************************/
 
 // containers
-export { CollapsibleCompMemo as Collapsible } from './Containers/Collapsible';
-export { AccordionCompMemo as Accordion } from './Containers/Collapsible';
-export { default as Tabs } from './Containers/Tabs';
+export { CollapsibleContainerMemo as CollapsibleContainer } from './Containers/Collapsible';
+export { AccordionContainerMemo as AccordionContainer } from './Containers/Collapsible';
+export { default as TabsContainer } from './Containers/Tabs';
 // data
 export { default as List } from './Data/List';
 // dialogs
