@@ -5,7 +5,7 @@ import React, { useContext, useState, useEffect, useCallback, useRef } from 'rea
 import { View } from 'react-native';
 // UI
 import {
-  useTheme, Text, Card, Button, Appbar,
+  Text, Card, Button, Appbar,
   TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
 } from 'react-native-paper';
 import { LinearLayout, ScreenLayout } from '../../../Framework/Index/UI';
@@ -19,8 +19,7 @@ import { padSize } from '../../../Framework/Index/CommonVals';
  * sample home screen
  */
 const SampleHomeScreen = ({ navigation, route }) => {
-  const theme = useTheme();
-
+  
   onLocalDataUpdate(() => {
     console.log("SampleHomeScreen: updated local data");
   });

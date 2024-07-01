@@ -3,7 +3,7 @@
 ***************************************************************************************/
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { useTheme, Text, Appbar } from 'react-native-paper';
+import { Text, Appbar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { LinearLayout, ScreenLayout, TabsContainer } from '../../../Framework/Index/UI';
 
@@ -22,7 +22,6 @@ export const TAB_ROUTES = [
  * @returns {JSX.Element} The SampleTabsScreen component.
  */
 export default function SampleTabsScreen({ navigation, route }) {
-  const theme = useTheme();
   const [tabIndex, setTabIndex] = useState(0);
 
   /**
@@ -35,7 +34,7 @@ export default function SampleTabsScreen({ navigation, route }) {
    * @returns {JSX.Element} The icon component for the tab.
    */
   function renderIcon({ route, focused, color }) {
-    return <Icon name={route.icon} size={15} color={theme.colors.text} />;
+    return <Icon name={route.icon} size={15} />;
   }
 
   /**

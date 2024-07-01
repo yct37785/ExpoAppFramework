@@ -6,7 +6,7 @@ import { View, Keyboard } from 'react-native';
 import { padSize, padSize2 } from '../../../Framework/Index/CommonVals';
 // UI
 import {
-  useTheme, Text, Button, Appbar, Divider, Switch, TextInput, Card
+  Text, Button, Appbar, Divider, Switch, TextInput, Card
 } from 'react-native-paper';
 import { LinearLayout, ScreenLayout } from '../../../Framework/Index/UI';
 // data
@@ -16,7 +16,6 @@ import { LocalDataContext, onLocalDataUpdate } from '../../../Framework/Index/Co
  * sample local data management showcase screen
  */
 export default function SampleLocalDataScreen({ navigation, route, screenHeaderComp: ScreenHeaderComp }) {
-  const theme = useTheme();
   const { paramText } = route.params;
   const { setLocalDataValue, getLocalDataValue, resetLocalData, getLocalDataStringify } = useContext(LocalDataContext);
 

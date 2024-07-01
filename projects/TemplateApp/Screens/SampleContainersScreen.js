@@ -4,7 +4,7 @@
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { View } from 'react-native';
 // UI
-import { useTheme, Text } from 'react-native-paper';
+import { Text } from 'react-native-paper';
 import { LinearLayout, ScreenLayout } from '../../../Framework/Index/UI';
 import { padSize } from '../../../Framework/Index/CommonVals';
 
@@ -12,7 +12,6 @@ import { padSize } from '../../../Framework/Index/CommonVals';
  * containers demos screen
  */
 export default function SampleContainersScreen({ navigation, route }) {
-  const theme = useTheme();
   const { paramText } = route.params;
 
   return (

@@ -5,7 +5,7 @@ import React, { useContext, useState, useEffect, useCallback, useRef } from 'rea
 import { View, Keyboard } from 'react-native';
 // UI
 import {
-  useTheme, Text, Card, Button, Appbar,
+  Text, Card, Button, Appbar,
   TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
 } from 'react-native-paper';
 import { LinearLayout, ScreenLayout, Dialog, Popup, PickerInput, CheckOptions, ChipOptions } from '../../../Framework/Index/UI';
@@ -55,7 +55,6 @@ const POPUP_MENU_OPTIONS = [
  * Display sample menus screen
  */
 export default function SampleMenusScreen({ navigation, route, screenHeaderComp: ScreenHeaderComp }) {
-  const theme = useTheme();
   const searchBarRef = useRef();
   const [showDialog, setShowDialog] = useState(false);
   const [pickerSelection, setPickerSelection] = useState('red');

@@ -3,7 +3,7 @@
 ***************************************************************************************/
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { View, Image } from 'react-native';
-import { useTheme, Text, Divider, RadioButton } from 'react-native-paper';
+import { Text, Divider, RadioButton } from 'react-native-paper';
 import { LinearLayout, ScreenLayout, CollapsibleContainer, ChipOptions, ListDataDisplay, TextInput, HighlightTextDisplay } from '../../../Framework/Index/UI';
 import { faker } from '@faker-js/faker';
 import { LocalDataContext } from '../../../Framework/Index/Contexts';
@@ -17,7 +17,6 @@ import { LocalDataContext } from '../../../Framework/Index/Contexts';
  * @returns {JSX.Element} The SampleSearchScreen component.
  */
 export default function SampleDataDisplayScreen({ navigation, route }) {
-  const theme = useTheme();
   const { debugMode } = useContext(LocalDataContext);
   const [listType, setListType] = useState('biglist');
   const [searchQuery, setSearchQuery] = useState('');
