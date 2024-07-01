@@ -1,7 +1,7 @@
 /*****************************************************************************************
  * one option pickers
 *****************************************************************************************/
-import React from 'react';
+import React, { memo } from 'react';
 import { useTheme } from 'react-native-paper';
 import { Picker } from '@react-native-picker/picker';
 
@@ -44,4 +44,4 @@ function PickerComp({ value, options, onChange }) {
   );
 }
 
-export default React.memo(PickerComp);
+export default memo(PickerComp);

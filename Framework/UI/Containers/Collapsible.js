@@ -1,7 +1,7 @@
 /*****************************************************************************************
  * collapsible type containers
 *****************************************************************************************/
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, memo } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { useTheme, Text } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -41,7 +41,7 @@ const ToggleHeader = React.memo(({ toggleHeaderText = '', isCollapsed }) => {
  * @param {React.ReactNode} props.children - Content to be rendered within the collapsible section.
  * @returns {JSX.Element} The CollapsibleComp component.
  */
-export const CollapsibleComp = ({ toggleHeaderText = '', children }) => {
+const CollapsibleComp = ({ toggleHeaderText = '', children }) => {
   const { debugMode } = useContext(LocalDataContext);
   const [isCollapsed, setIsCollapsed] = useState(true);
 
@@ -73,7 +73,7 @@ export const CollapsibleComp = ({ toggleHeaderText = '', children }) => {
  * @param {Function} props.renderContent - Function to render the content of each section.
  * @returns {JSX.Element} The AccordionComp component.
  */
-export const AccordionComp = ({
+const AccordionComp = ({
   sections,
   renderSectionTitle = () => {},
   renderHeader = () => {},
@@ -92,3 +92,6 @@ export const AccordionComp = ({
     />
   );
 };
+
+export const CollapsibleCompMemo = memo(CollapsibleComp);
+export const AccordionCompMemo = memo(AccordionComp);

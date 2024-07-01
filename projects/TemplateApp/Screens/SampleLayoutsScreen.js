@@ -4,7 +4,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { useTheme, Text, Appbar } from 'react-native-paper';
-import { ScreenContainer, LinearLayout, GridLayout } from '../../../Framework/UI/index';
+import { LinearLayout, GridLayout, ScreenLayout } from '../../../Framework/UI/index';
 import { padSize } from '../../../Framework/CommonVals';
 
 /**
@@ -28,7 +28,7 @@ export default function SampleLayoutsScreen({ navigation, route }) {
   );
 
   return (
-    <ScreenContainer navigation={navigation} route={route} scrollable={true} screenName="Layouts Sample">
+    <ScreenLayout navigation={navigation} route={route} scrollable={true} screenName="Layouts Sample">
       {/* vertical layout */}
       <Text variant="titleMedium">ScreenContainer: vertical layout scrollable</Text>
       {/* horizontal layout: child = wrap content */}
@@ -91,6 +91,6 @@ export default function SampleLayoutsScreen({ navigation, route }) {
           <Text>a random absolute position element</Text>
         </View>
       </LinearLayout>
-    </ScreenContainer>
+    </ScreenLayout>
   );
 }

@@ -1,14 +1,13 @@
 /*****************************************************************************************
  * general use case list that accepts user-defined filtering function
 *****************************************************************************************/
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, memo } from 'react';
 import { View, FlatList } from 'react-native';
 import BigList from 'react-native-big-list';
 import { LocalDataContext } from '../../Contexts/LocalDataContext';
-import PropTypes from 'prop-types';
 
 /**
- * SearchableListComp Component
+ * ListComp Component
  * 
  * Combined List component supporting both BigList and FlatList.
  * 
@@ -18,9 +17,9 @@ import PropTypes from 'prop-types';
  * @param {Function} props.renderItem - Function to render each item in the list.
  * @param {string} [props.listType='biglist'] - Type of list to display, either 'biglist' or 'flatlist'.
  * @param {number} props.rowHeight - Height of each row in the list.
- * @returns {JSX.Element} The SearchableListComp component.
+ * @returns {JSX.Element} The ListComp component.
  */
-export const SearchableListComp = ({
+const ListComp = ({
   data,
   filterFunction,
   renderItem,
@@ -64,10 +63,4 @@ export const SearchableListComp = ({
   );
 };
 
-SearchableListComp.propTypes = {
-  data: PropTypes.array.isRequired,
-  filterFunction: PropTypes.func.isRequired,
-  renderItem: PropTypes.func.isRequired,
-  listType: PropTypes.oneOf(['biglist', 'flatlist']),
-  rowHeight: PropTypes.number,
-};
+export default memo(ListComp);

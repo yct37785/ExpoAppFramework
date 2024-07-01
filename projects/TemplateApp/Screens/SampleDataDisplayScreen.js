@@ -3,14 +3,10 @@
 ***************************************************************************************/
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { View, Image } from 'react-native';
-import { useTheme, Text, Appbar, Divider, RadioButton } from 'react-native-paper';
-import { MaterialIcons } from '@expo/vector-icons';
-import { ScreenContainer, LinearLayout, Collapsible, ChipsContainer, highlightText } from '../../../Framework/UI/index';
-import { SearchableListComp } from '../../../Framework/UI/Data/List';
-import { TextInputFieldComp } from '../../../Framework/UI/Input/TextInput';
+import { useTheme, Text, Divider, RadioButton } from 'react-native-paper';
+import { LinearLayout, ScreenLayout, Collapsible, ChipsContainer, List, TextInput, highlightText } from '../../../Framework/UI/index';
 import { faker } from '@faker-js/faker';
 import { LocalDataContext } from '../../../Framework/Contexts/LocalDataContext';
-import { padSize05, padSize, padSize2, iconSizeSmall } from '../../../Framework/CommonVals';
 
 /**
  * Displays a sample screen with a search bar, filter options, and a list of products.
@@ -135,7 +131,7 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
 
   function customHeaderContent() {
     return <LinearLayout>
-      <TextInputFieldComp
+      <TextInput
         type="search"
         value={searchQuery}
         onChange={setSearchQuery}
@@ -145,7 +141,7 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
   }
 
   return (
-    <ScreenContainer navigation={navigation} route={route} screenName="Search Sample" customHeaderContent={customHeaderContent}>
+    <ScreenLayout navigation={navigation} route={route} screenName="Search Sample" customHeaderContent={customHeaderContent}>
       {/* Filter menu */}
       <Collapsible toggleHeaderText="Filter">
         <View style={{ width: '100%' }}>
@@ -166,7 +162,7 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
           </View>
         </View>
       </RadioButton.Group>
-      <SearchableListComp
+      <List
         data={productList}
         filterFunction={filterProducts}
         renderItem={renderItem}
@@ -174,6 +170,6 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
         rowHeight={ROW_HEIGHT}
         customLayout="match-parent" // special prop to set flex to 1 for elems with undefined height
       />
-    </ScreenContainer>
+    </ScreenLayout>
   );
 }

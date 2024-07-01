@@ -3,22 +3,24 @@
  * append Comp to name of each UI component for consistency, export without Comp appended
 *****************************************************************************************/
 
-// Collapsible.js
-export { CollapsibleComp as Collapsible } from './Containers/Collapsible';
-export { AccordionComp as Accordion } from './Containers/Collapsible';
-// Dialog.js
+// containers
+export { CollapsibleCompMemo as Collapsible } from './Containers/Collapsible';
+export { AccordionCompMemo as Accordion } from './Containers/Collapsible';
+export { default as Tabs } from './Containers/Tabs';
+// data
+export { default as List } from './Data/List';
+// dialogs
 export { default as Dialog } from './Dialogs/Dialog';
 export { default as Popup } from './Dialogs/Popup';
-export { default as Checkptions } from './Options/CheckOptions';
-export { default as ChipOptions } from './Options/ChipOptions';
-// Picker.js
+// display
+export { highlightTextCompMemo as HighlightText } from './Display/Text';
+// input
 export { default as Picker } from './Input/Picker';
-// search bar todo
-// TabBar.js
-export { default as Tabs } from './Containers/Tabs';
-// Text.js
-export { highlightTextComp as highlightText } from './Display/Text';
-// Layouts.js
-export { LinearLayout, GridLayout, ScrollLayout } from './Layouts/Layouts';
-// Containers.js
-export { default as ScreenContainer } from './Layouts/Screen';
+export { default as TextInput } from './Input/TextInput';
+// layouts
+export { LinearLayoutMemo as LinearLayout } from './Layouts/Layouts';
+export { GridLayoutMemo as GridLayout } from './Layouts/Layouts';
+export { default as ScreenLayout } from './Layouts/ScreenLayout';
+// options
+export { default as CheckOptions } from './Options/CheckOptions';
+export { default as ChipOptions } from './Options/ChipOptions';

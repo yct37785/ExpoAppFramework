@@ -1,7 +1,7 @@
 /*****************************************************************************************
  * tab type containers
 *****************************************************************************************/
-import React from 'react';
+import React, { memo } from 'react';
 import { View } from 'react-native';
 import { padSize05, padSize, rippleColorForLight, rippleColorForDark, textColorForLight, textColorForDark } from '../../CommonVals';
 import { useTheme, Text } from 'react-native-paper';
@@ -63,4 +63,4 @@ function TabsComp({ routes, renderIcon, sceneMap, tabIndex, onTabIdxChange, posi
   );
 }
 
-export default React.memo(TabsComp);
+export default memo(TabsComp);

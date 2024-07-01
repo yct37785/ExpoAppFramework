@@ -1,6 +1,7 @@
 /*****************************************************************************************
  * text display
 *****************************************************************************************/
+import React, { useRef, memo } from 'react';
 import { Text } from 'react-native-paper';
 
 /**
@@ -12,7 +13,7 @@ import { Text } from 'react-native-paper';
  * @param {string} [label=''] - Optional label to prepend to the text.
  * @returns {JSX.Element} A React element with the highlighted search text.
  */
-export const highlightTextComp = (text, query, variant='bodyMedium', label='') => {
+const highlightTextComp = (text, query, variant='bodyMedium', label='') => {
   if (!query) {
     return <Text variant={variant}>{`${label}${text}`}</Text>;
   }
@@ -33,3 +34,5 @@ export const highlightTextComp = (text, query, variant='bodyMedium', label='') =
     </Text>
   );
 };
+
+export const highlightTextCompMemo = memo(highlightTextComp);
