@@ -10,7 +10,7 @@ import {
 } from 'react-native-paper';
 import { LinearLayout, ScreenLayout } from '../../../Framework/Index/UI';
 // data
-import { LocalDataContext, onLocalDataUpdate } from '../../../Framework/Contexts/LocalDataContext';
+import { LocalDataContext, onLocalDataUpdate } from '../../../Framework/Index/Contexts';
 
 /**
  * sample local data management showcase screen
