@@ -129,7 +129,7 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
   }, [searchQuery]);
 
   function customHeaderContent() {
-    return <LinearLayout>
+    return <LinearLayout applyPadding={true}>
       <TextInput
         type="search"
         value={searchQuery}

@@ -27,8 +27,14 @@ export default function SampleLayoutsScreen({ navigation, route }) {
     </View>
   );
 
+  function customHeaderContent() {
+    return <LinearLayout applyPadding={true}>
+      <Text>ScreenLayouts: test header</Text>
+    </LinearLayout>
+  }
+
   return (
-    <ScreenLayout navigation={navigation} route={route} scrollable={true} screenName="Layouts Sample">
+    <ScreenLayout navigation={navigation} route={route} scrollable={true} customHeaderContent={customHeaderContent}>
       {/* vertical layout */}
       <Text variant="titleMedium">ScreenContainer: vertical layout scrollable</Text>
       {/* horizontal layout: child = wrap content */}
