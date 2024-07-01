@@ -140,7 +140,7 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
   }
 
   return (
-    <ScreenLayout navigation={navigation} route={route} screenName="Search Sample" customHeaderContent={customHeaderContent}>
+    <ScreenLayout navigation={navigation} route={route} customHeaderContent={customHeaderContent}>
       {/* Filter menu */}
       <Collapsible toggleHeaderText="Filter">
         <View style={{ width: '100%' }}>
