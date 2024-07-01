@@ -6,7 +6,7 @@ import { View, Image } from 'react-native';
 import { useTheme, Text, Divider, RadioButton } from 'react-native-paper';
 import { LinearLayout, ScreenLayout, CollapsibleContainer, ChipOptions, ListDataDisplay, TextInput, HighlightTextDisplay } from '../../../Framework/Index/UI';
 import { faker } from '@faker-js/faker';
-import { LocalDataContext } from '../../../Framework/Contexts/LocalDataContext';
+import { LocalDataContext } from '../../../Framework/Index/Contexts';
 
 /**
  * Displays a sample screen with a search bar, filter options, and a list of products.
