@@ -5,8 +5,7 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import { useTheme, Text, Appbar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { ScreenContainer, LinearLayout } from '../../../Framework/UI/index';
-import { Tabs } from '../../../Framework/UI/index';
+import { LinearLayout, ScreenLayout, TabsContainer } from '../../../Framework/UI/index';
 
 export const TAB_ROUTES = [
   { title: 'Page 1', key: 'p1', icon: 'google-street-view' },
@@ -87,8 +86,8 @@ export default function SampleTabsScreen({ navigation, route }) {
   };
 
   return (
-    <ScreenContainer navigation={navigation} route={route} applyPadding={false} screenName="Tabs Sample">
-      <Tabs
+    <ScreenLayout navigation={navigation} route={route} applyPadding={false} screenName="Tabs Sample">
+      <TabsContainer
         routes={TAB_ROUTES}
         renderIcon={renderIcon}
         tabIndex={tabIndex}
@@ -96,6 +95,6 @@ export default function SampleTabsScreen({ navigation, route }) {
         sceneMap={renderScene}
         customLayout="match-parent" // special prop to set flex to 1 for elems with undefined height
       />
-    </ScreenContainer>
+    </ScreenLayout>
   );
 }

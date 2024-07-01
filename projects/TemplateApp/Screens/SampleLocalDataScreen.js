@@ -8,7 +8,7 @@ import { padSize, padSize2 } from '../../../Framework/CommonVals';
 import {
   useTheme, Text, Button, Appbar, Divider, Switch, TextInput, Card
 } from 'react-native-paper';
-import { LinearLayout, ScreenContainer } from '../../../Framework/UI/index';
+import { LinearLayout, ScreenLayout } from '../../../Framework/UI/index';
 // data
 import { LocalDataContext, onLocalDataUpdate } from '../../../Framework/Contexts/LocalDataContext';
 
@@ -34,7 +34,7 @@ export default function SampleLocalDataScreen({ navigation, route, screenHeaderC
   }
 
   return (
-    <ScreenContainer navigation={navigation} route={route} screemName="Local Data Sample">
+    <ScreenLayout navigation={navigation} route={route} screemName="Local Data Sample">
       <LinearLayout childMargin={padSize}>
         <Text variant="titleMedium">Modify and save local data</Text>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -58,6 +58,6 @@ export default function SampleLocalDataScreen({ navigation, route, screenHeaderC
           </Card.Content>
         </Card>
       </LinearLayout>
-    </ScreenContainer>
+    </ScreenLayout>
   );
 }

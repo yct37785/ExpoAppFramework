@@ -1,7 +1,7 @@
 /*****************************************************************************************
  * collapsible type containers
 *****************************************************************************************/
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, memo } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { useTheme, Text } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -33,15 +33,13 @@ const ToggleHeader = React.memo(({ toggleHeaderText = '', isCollapsed }) => {
 });
 
 /**
- * CollapsibleComp Component
- * 
  * A component that provides a collapsible section.
  * 
  * @param {Object} props - Component props.
  * @param {React.ReactNode} props.children - Content to be rendered within the collapsible section.
- * @returns {JSX.Element} The CollapsibleComp component.
+ * @returns {JSX.Element} The CollapsibleContainer component.
  */
-export const CollapsibleComp = ({ toggleHeaderText = '', children }) => {
+const CollapsibleContainer = ({ toggleHeaderText = '', children }) => {
   const { debugMode } = useContext(LocalDataContext);
   const [isCollapsed, setIsCollapsed] = useState(true);
 
@@ -62,8 +60,6 @@ export const CollapsibleComp = ({ toggleHeaderText = '', children }) => {
 };
 
 /**
- * AccordionComp Component
- * 
  * A component that provides an accordion with multiple collapsible sections.
  * 
  * @param {Object} props - Component props.
@@ -71,9 +67,9 @@ export const CollapsibleComp = ({ toggleHeaderText = '', children }) => {
  * @param {Function} props.renderSectionTitle - Function to render the section title.
  * @param {Function} props.renderHeader - Function to render the header of each section.
  * @param {Function} props.renderContent - Function to render the content of each section.
- * @returns {JSX.Element} The AccordionComp component.
+ * @returns {JSX.Element} The AccordionContainer component.
  */
-export const AccordionComp = ({
+const AccordionContainer = ({
   sections,
   renderSectionTitle = () => {},
   renderHeader = () => {},
@@ -92,3 +88,6 @@ export const AccordionComp = ({
     />
   );
 };
+
+export const CollapsibleContainerMemo = memo(CollapsibleContainer);
+export const AccordionContainerMemo = memo(AccordionContainer);

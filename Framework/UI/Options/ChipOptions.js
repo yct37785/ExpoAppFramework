@@ -1,20 +1,17 @@
-/*****************************************************************************************
- * multi-option selectors
-*****************************************************************************************/
-import React from 'react';
+import React, { memo } from 'react';
 import { View } from 'react-native';
 import { Chip, useTheme } from 'react-native-paper';
 import { padSize05 } from '../../CommonVals';
 
 /**
- * ChipsContainerComp Component
+ * display options in chips form
  * 
  * @param {Object} props - Component props.
  * @param {Object} props.toggledMap - Map of toggled state for chip menu, where key is the chip label and value is a boolean indicating if the chip is selected.
  * @param {Function} props.onChipSelected - Callback function to handle chip selection. Takes the key of the selected chip as a parameter.
- * @returns {JSX.Element} The ChipsContainerComp component.
+ * @returns {JSX.Element} The ChipOptions component.
  */
-export const ChipsContainerComp = ({
+const ChipOptions = ({
   toggledMap,
   onChipSelected,
 }) => {
@@ -37,3 +34,5 @@ export const ChipsContainerComp = ({
     </View>
   );
 };
+
+export default memo(ChipOptions);

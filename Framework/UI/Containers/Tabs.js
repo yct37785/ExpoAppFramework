@@ -1,14 +1,14 @@
 /*****************************************************************************************
  * tab type containers
 *****************************************************************************************/
-import React from 'react';
+import React, { memo } from 'react';
 import { View } from 'react-native';
 import { padSize05, padSize, rippleColorForLight, rippleColorForDark, textColorForLight, textColorForDark } from '../../CommonVals';
 import { useTheme, Text } from 'react-native-paper';
 import { TabView, TabBar } from 'react-native-tab-view';
 
 /**
- * TabBarComp Component
+ * display children in tabs
  * 
  * @param {Object[]} routes - Array of route objects for the tabs.
  * @param {Function} renderIcon - Function to render the icon for each tab.
@@ -16,9 +16,9 @@ import { TabView, TabBar } from 'react-native-tab-view';
  * @param {number} tabIndex - Index of the currently selected tab.
  * @param {Function} onTabIdxChange - Function to handle tab index changes.
  * @param {string} position - Position of the tab bar.
- * @returns {JSX.Element} The TabBarComp component.
+ * @returns {JSX.Element} The TabsContainer component.
  */
-function TabsComp({ routes, renderIcon, sceneMap, tabIndex, onTabIdxChange, position }) {
+function TabsContainer({ routes, renderIcon, sceneMap, tabIndex, onTabIdxChange, position }) {
   const theme = useTheme();
   const textColor = theme.dark ? textColorForDark : textColorForLight;
 
@@ -63,4 +63,4 @@ function TabsComp({ routes, renderIcon, sceneMap, tabIndex, onTabIdxChange, posi
   );
 }
 
-export default React.memo(TabsComp);
+export default memo(TabsContainer);

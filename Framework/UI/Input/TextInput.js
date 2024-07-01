@@ -1,7 +1,7 @@
 /*****************************************************************************************
  * universal text input field (use for text field, password field, searchbar etc)
 *****************************************************************************************/
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, memo } from 'react';
 import { Keyboard } from 'react-native';
 import { Searchbar, TextInput } from 'react-native-paper';
 
@@ -15,9 +15,9 @@ import { Searchbar, TextInput } from 'react-native-paper';
  * @param {Function} [props.onChange=({string})=>{}] - Callback function to receive changed input value.
  * @param {Function} [props.onFocus=()=>{}] - Callback function to handle focus event on the input.
  * @param {Function} [props.onBlur=()=>{}] - Callback function to handle blur event on the input.
- * @returns {JSX.Element} The TextInputFieldComp component.
+ * @returns {JSX.Element} The TextInputComp component.
  */
-export const TextInputFieldComp = ({
+const TextInputComp = ({
   type,
   value,
   placeholder,
@@ -62,3 +62,5 @@ export const TextInputFieldComp = ({
     </>
   );
 };
+
+export default memo(TextInputComp);

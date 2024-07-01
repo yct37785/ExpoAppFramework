@@ -8,7 +8,7 @@ import {
   useTheme, Text, Card, Button, Appbar,
   TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
 } from 'react-native-paper';
-import { ScreenContainer, LinearLayout, Dialog, Popup, Picker, OptionsMenu } from '../../../Framework/UI/index';
+import { LinearLayout, ScreenLayout, Dialog, Popup, PickerInput, CheckOptions, ChipOptions } from '../../../Framework/UI/index';
 import { iconSizeSmall } from '../../../Framework/CommonVals';
 // const
 const PICKER_ITEM_LIST = [
@@ -83,14 +83,14 @@ export default function SampleMenusScreen({ navigation, route, screenHeaderComp:
     return <LinearLayout align='horizontal' reverse={true}>
       <Popup triggerComp={<IconButton icon="dots-vertical" size={iconSizeSmall} />}>
         <LinearLayout applyPadding={true}>
-          <OptionsMenu schema={POPUP_MENU_OPTIONS} onSelectionChange={handlePopupMenuSelectionChange} />
+          <CheckOptions schema={POPUP_MENU_OPTIONS} onSelectionChange={handlePopupMenuSelectionChange} />
         </LinearLayout>
       </Popup>
     </LinearLayout>
   }
 
   return (
-    <ScreenContainer navigation={navigation} route={route} screenName="Menus Sample" customHeaderContent={customHeaderContent}>
+    <ScreenLayout navigation={navigation} route={route} screenName="Menus Sample" customHeaderContent={customHeaderContent}>
       {/* all dialogs here */}
       <Portal>
         <Dialog
@@ -110,7 +110,7 @@ export default function SampleMenusScreen({ navigation, route, screenHeaderComp:
       <Button mode="contained" onPress={() => setShowDialog(true)}>
         Launch dialog
       </Button>
-      <Picker value={pickerSelection} options={PICKER_ITEM_LIST} onChange={(v) => setPickerSelection(v)} />
-    </ScreenContainer>
+      <PickerInput value={pickerSelection} options={PICKER_ITEM_LIST} onChange={(v) => setPickerSelection(v)} />
+    </ScreenLayout>
   );
 }

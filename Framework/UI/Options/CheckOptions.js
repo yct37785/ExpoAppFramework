@@ -1,13 +1,12 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, memo } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Checkbox, Text } from 'react-native-paper';
-import { LinearLayout } from '../Layouts/Layouts';
+import { LinearLayoutMemo as LinearLayout } from '../Layouts/Layouts';
 import { padSize025, padSize05, padSize } from '../../CommonVals';
 import { LocalDataContext } from '../../Contexts/LocalDataContext';
-import PropTypes from 'prop-types';
 
 /**
- * Component for rendering a customizable options menu based on a JSON schema.
+ * Component for rendering checkbox options based on a JSON schema.
  *
  * @component
  * @param {Object} props - Component props
@@ -16,6 +15,7 @@ import PropTypes from 'prop-types';
  * @param {string} props.schema[].value - The value for the menu option.
  * @param {Array<Object>} [props.schema[].children] - Nested options for the menu.
  * @param {Function} props.onSelectionChange - Callback function to handle selection changes.
+ * @returns {JSX.Element} The CheckOptions component.
  *
  * @example
  * const schema = [
@@ -44,7 +44,7 @@ import PropTypes from 'prop-types';
  *
  * <OptionsMenuComp schema={schema} onSelectionChange={handleSelectionChange} />
  */
-const OptionsMenuComp = ({ schema, onSelectionChange }) => {
+const CheckOptions = ({ schema, onSelectionChange }) => {
   const { debugMode } = useContext(LocalDataContext);
   const [selectedValues, setSelectedValues] = useState({});
 
@@ -104,15 +104,4 @@ const OptionsMenuComp = ({ schema, onSelectionChange }) => {
   );
 };
 
-OptionsMenuComp.propTypes = {
-  schema: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      value: PropTypes.string.isRequired,
-      children: PropTypes.array,
-    })
-  ).isRequired,
-  onSelectionChange: PropTypes.func.isRequired,
-};
-
-export default OptionsMenuComp;
+export default memo(CheckOptions);

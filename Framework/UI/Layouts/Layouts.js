@@ -1,7 +1,7 @@
 /*****************************************************************************************
  * layouts, used to hold together UI elements, use one of the Layouts instead of Views
 *****************************************************************************************/
-import React, { useContext } from 'react';
+import React, { useContext, memo } from 'react';
 import { View, ScrollView, Text } from 'react-native';
 import { getValueByCondition } from '../../Utilities/GeneralUtils';
 import { LocalDataContext } from '../../Contexts/LocalDataContext';
@@ -23,7 +23,7 @@ import { padSize } from '../../CommonVals';
  * @returns {JSX.Element} The LinearLayout component.
  */
 
-export const LinearLayout = ({
+const LinearLayout = ({
   children,
   flex = 0,
   align = 'vertical',
@@ -96,7 +96,7 @@ export const LinearLayout = ({
  * @param {Object} props.style - Custom styles to apply to the layout.
  * @returns {JSX.Element} The GridLayout component.
  */
-export const GridLayout = ({ children, flex = 0, columns = 2, childLayout = 'wrap-content', childMargin = 2, lastRowAlign = 'left',
+const GridLayout = ({ children, flex = 0, columns = 2, childLayout = 'wrap-content', childMargin = 2, lastRowAlign = 'left',
   applyPadding = false, debugBackgroundColor = 'orange', style, ...props }) => {
   const { debugMode } = useContext(LocalDataContext);
   const rows = [];
@@ -147,3 +147,6 @@ export const GridLayout = ({ children, flex = 0, columns = 2, childLayout = 'wra
     </View>
   );
 };
+
+export const LinearLayoutMemo = memo(LinearLayout);
+export const GridLayoutMemo = memo(GridLayout);

@@ -1,22 +1,20 @@
 /*****************************************************************************************
  * one option pickers
 *****************************************************************************************/
-import React from 'react';
+import React, { memo } from 'react';
 import { useTheme } from 'react-native-paper';
 import { Picker } from '@react-native-picker/picker';
 
 /**
- * PickerComp Component
- * 
  * A dropdown picker component.
  * 
  * @param {Object} props - Component props.
  * @param {string} props.value - The selected value.
  * @param {Array} props.options - Array of options for the picker, each with a label and value.
  * @param {Function} props.onChange - Callback function to handle value change.
- * @returns {JSX.Element} The PickerComp component.
+ * @returns {JSX.Element} The PickerInput component.
  */
-function PickerComp({ value, options, onChange }) {
+function PickerInput({ value, options, onChange }) {
   const theme = useTheme();
   return (
     <Picker
@@ -44,4 +42,4 @@ function PickerComp({ value, options, onChange }) {
   );
 }
 
-export default React.memo(PickerComp);
+export default memo(PickerInput);

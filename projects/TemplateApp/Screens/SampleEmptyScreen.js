@@ -7,7 +7,7 @@ import { View, Keyboard } from 'react-native';
 import {
   useTheme, Text, Button, Appbar
 } from 'react-native-paper';
-import { ScreenContainer, LinearLayout } from '../../../Framework/UI/index';
+import { LinearLayout, ScreenLayout } from '../../../Framework/UI/index';
 
 /**
  * sample empty screen
@@ -17,8 +17,8 @@ export default function SampleEmptyScreen({ navigation, route, screenHeaderComp:
   const { paramText } = route.params;
 
   return (
-    <ScreenContainer navigation={navigation} route={route} screenName="Empty Sample">
+    <ScreenLayout navigation={navigation} route={route} screenName="Empty Sample">
       <Text variant="bodyMedium">{`paramText: ${paramText}`}</Text>
-    </ScreenContainer>
+    </ScreenLayout>
   );
 }

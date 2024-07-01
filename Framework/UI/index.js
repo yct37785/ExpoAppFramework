@@ -3,24 +3,44 @@
  * append Comp to name of each UI component for consistency, export without Comp appended
 *****************************************************************************************/
 
-// Collapsible.js
-export { CollapsibleComp as Collapsible } from './Containers/Collapsible';
-export { AccordionComp as Accordion } from './Containers/Collapsible';
-// Dialog.js
+/**
+ * containers: holds children; eg. children collapsible when triggered
+ */
+export { CollapsibleContainerMemo as CollapsibleContainer } from './Containers/Collapsible';
+export { AccordionContainerMemo as AccordionContainer } from './Containers/Collapsible';
+export { default as TabsContainer } from './Containers/Tabs';
+
+/**
+ * data display: display data in a consistent manner; eg. list of items
+ */
+export { default as ListDataDisplay } from './DataDisplay/List';
+
+/**
+ * dialogs: popup a menu on trigger; eg. dialog menu
+ */
 export { default as Dialog } from './Dialogs/Dialog';
 export { default as Popup } from './Dialogs/Popup';
-// OptionsMenu.js
-export { default as OptionsMenu } from './Menus/OptionsMenu';
-// Options.js
-export { ChipsContainerComp as ChipsContainer } from './Menus/Options';
-// Picker.js
-export { default as Picker } from './Input/Picker';
-// search bar todo
-// TabBar.js
-export { default as Tabs } from './Containers/Tabs';
-// Text.js
-export { highlightTextComp as highlightText } from './Display/Text';
-// Layouts.js
-export { LinearLayout, GridLayout, ScrollLayout } from './Layouts/Layouts';
-// Containers.js
-export { default as ScreenContainer } from './Layouts/Screen';
+
+/**
+ * text display: special utility comps to display text; eg. highlight search text
+ */
+export { HighlightTextDisplayMemo as HighlightTextDisplay } from './TextDisplay/Text';
+
+/**
+ * input: for entering and capturing info; eg. form input
+ */
+export { default as PickerInput } from './Input/Picker';
+export { default as TextInput } from './Input/TextInput';
+
+/**
+ * layouts: parent view to contain other UI comps; eg. align children horizontally
+ */
+export { LinearLayoutMemo as LinearLayout } from './Layouts/Layouts';
+export { GridLayoutMemo as GridLayout } from './Layouts/Layouts';
+export { default as ScreenLayout } from './Layouts/ScreenLayout';
+
+/**
+ * options: option selection for data; eg. filtering
+ */
+export { default as CheckOptions } from './Options/CheckOptions';
+export { default as ChipOptions } from './Options/ChipOptions';

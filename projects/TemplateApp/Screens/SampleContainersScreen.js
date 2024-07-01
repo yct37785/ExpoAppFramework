@@ -5,7 +5,7 @@ import React, { useContext, useState, useEffect, useCallback, useRef } from 'rea
 import { View } from 'react-native';
 // UI
 import { useTheme, Text } from 'react-native-paper';
-import { ScreenContainer, LinearLayout } from '../../../Framework/UI/index';
+import { LinearLayout, ScreenLayout } from '../../../Framework/UI/index';
 import { padSize } from '../../../Framework/CommonVals';
 
 /**
@@ -16,8 +16,8 @@ export default function SampleContainersScreen({ navigation, route }) {
   const { paramText } = route.params;
 
   return (
-    <ScreenContainer navigation={navigation} route={route} screenName="Containers Sample">
+    <ScreenLayout navigation={navigation} route={route} screenName="Containers Sample">
       <Text variant="bodyMedium">{`paramText: ${paramText}`}</Text>
-    </ScreenContainer>
+    </ScreenLayout>
   );
 }

@@ -1,7 +1,7 @@
 /*****************************************************************************************
  * popup comp
 *****************************************************************************************/
-import React, { useRef } from 'react';
+import React, { useRef, memo } from 'react';
 import { TouchableRipple, useTheme, Text } from 'react-native-paper';
 import { Menu, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import PropTypes from 'prop-types';
@@ -34,10 +34,4 @@ function PopupComp({ triggerComp, children, disabled = false }) {
   );
 }
 
-PopupComp.propTypes = {
-  triggerComp: PropTypes.element.isRequired,
-  children: PropTypes.node.isRequired,
-  disabled: PropTypes.bool,
-};
-
-export default React.memo(PopupComp);
+export default memo(PopupComp);
