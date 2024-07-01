@@ -15,9 +15,9 @@ import { LocalDataContext } from '../../Contexts/LocalDataContext';
  * @param {Function} props.renderItem - Function to render each item in the list.
  * @param {string} [props.listType='biglist'] - Type of list to display, either 'biglist' or 'flatlist'.
  * @param {number} props.rowHeight - Height of each row in the list.
- * @returns {JSX.Element} The List component.
+ * @returns {JSX.Element} The ListDataDisplay component.
  */
-const List = ({
+const ListDataDisplay = ({
   data,
   filterFunction,
   renderItem,
@@ -61,4 +61,4 @@ const List = ({
   );
 };
 
-export default memo(List);
+export default memo(ListDataDisplay);

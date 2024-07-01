@@ -7,13 +7,13 @@
 export { CollapsibleContainerMemo as CollapsibleContainer } from './Containers/Collapsible';
 export { AccordionContainerMemo as AccordionContainer } from './Containers/Collapsible';
 export { default as TabsContainer } from './Containers/Tabs';
-// data
-export { default as List } from './Data/List';
+// data display
+export { default as ListDataDisplay } from './DataDisplay/List';
 // dialogs
 export { default as Dialog } from './Dialogs/Dialog';
 export { default as Popup } from './Dialogs/Popup';
-// display
-export { HighlightTextCompMemo as HighlightText } from './Display/Text';
+// text display
+export { HighlightTextDisplayMemo as HighlightTextDisplay } from './TextDisplay/Text';
 // input
 export { default as Picker } from './Input/Picker';
 export { default as TextInput } from './Input/TextInput';

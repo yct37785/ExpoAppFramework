@@ -4,7 +4,7 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { View, Image } from 'react-native';
 import { useTheme, Text, Divider, RadioButton } from 'react-native-paper';
-import { LinearLayout, ScreenLayout, CollapsibleContainer, ChipOptions, List, TextInput, HighlightText } from '../../../Framework/UI/index';
+import { LinearLayout, ScreenLayout, CollapsibleContainer, ChipOptions, ListDataDisplay, TextInput, HighlightTextDisplay } from '../../../Framework/UI/index';
 import { faker } from '@faker-js/faker';
 import { LocalDataContext } from '../../../Framework/Contexts/LocalDataContext';
 
@@ -97,14 +97,14 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
     return (
       <View style={{ flex: 1 }}>
         <View style={{ flex: 1 }}>
-          <HighlightText text={item.name} query={searchQuery} variant={'titleSmall'} />
+          <HighlightTextDisplay text={item.name} query={searchQuery} variant={'titleSmall'} />
           <Image
             style={{ width: 100, height: 100 }}
             source={{ uri: item.img }}
             resizeMode={'contain'}
           />
           <Text variant='labelMedium'>{`material: ${item.material}`}</Text>
-          <HighlightText text={item.desc} query={searchQuery} variant={'bodyMedium'} />
+          <HighlightTextDisplay text={item.desc} query={searchQuery} variant={'bodyMedium'} />
         </View>
         <Divider />
       </View>
@@ -161,7 +161,7 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
           </View>
         </View>
       </RadioButton.Group>
-      <List
+      <ListDataDisplay
         data={productList}
         filterFunction={filterProducts}
         renderItem={renderItem}
