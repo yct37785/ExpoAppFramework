@@ -4,8 +4,8 @@
 import React from 'react';
 import { View } from 'react-native';
 import { useTheme, Text, Appbar } from 'react-native-paper';
-import { LinearLayout, GridLayout, ScreenLayout } from '../../../Framework/UI/index';
-import { padSize } from '../../../Framework/CommonVals';
+import { LinearLayout, GridLayout, ScreenLayout } from '../../../Framework/Index/UI';
+import { padSize } from '../../../Framework/Index/CommonVals';
 
 /**
  * SampleLayoutsScreen Component

@@ -6,7 +6,7 @@ import { View } from 'react-native';
 import { useTheme, Appbar } from 'react-native-paper';
 import { LinearLayoutMemo as LinearLayout } from './Layouts';
 import { LocalDataContext } from '../../Contexts/LocalDataContext';
-import { padSize } from '../../CommonVals';
+import { padSize } from '../../Index/CommonVals';
 
 /**
  * A wrapper component to setup a screen quickly by providing the body and custom header content if any.

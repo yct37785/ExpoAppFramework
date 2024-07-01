@@ -8,7 +8,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
 import { LocalDataContext } from '../../Contexts/LocalDataContext';
-import { padSize05, padSize, padSize2, iconSizeSmall } from '../../CommonVals';
+import { padSize05, padSize, padSize2, iconSizeSmall } from '../../Index/CommonVals';
 
 /**
    * ToggleHeader Component

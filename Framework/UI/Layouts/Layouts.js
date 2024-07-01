@@ -5,7 +5,7 @@ import React, { useContext, memo } from 'react';
 import { View, ScrollView, Text } from 'react-native';
 import { getValueByCondition } from '../../Utilities/GeneralUtils';
 import { LocalDataContext } from '../../Contexts/LocalDataContext';
-import { padSize } from '../../CommonVals';
+import { padSize } from '../../Index/CommonVals';
 /**
  * Arranges children in a linear layout, either vertically or horizontally.
  * 

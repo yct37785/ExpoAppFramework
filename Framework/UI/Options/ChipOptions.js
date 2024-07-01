@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { View } from 'react-native';
 import { Chip, useTheme } from 'react-native-paper';
-import { padSize05 } from '../../CommonVals';
+import { padSize05 } from '../../Index/CommonVals';
 
 /**
  * display options in chips form

@@ -3,14 +3,14 @@
 ***************************************************************************************/
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { View, Keyboard } from 'react-native';
-import { padSize, padSize2 } from '../../../Framework/CommonVals';
+import { padSize, padSize2 } from '../../../Framework/Index/CommonVals';
 // UI
 import {
   useTheme, Text, Button, Appbar, Divider, Switch, TextInput, Card
 } from 'react-native-paper';
-import { LinearLayout, ScreenLayout } from '../../../Framework/UI/index';
+import { LinearLayout, ScreenLayout } from '../../../Framework/Index/UI';
 // data
-import { LocalDataContext, onLocalDataUpdate } from '../../../Framework/Contexts/LocalDataContext';
+import { LocalDataContext, onLocalDataUpdate } from '../../../Framework/Index/Contexts';
 
 /**
  * sample local data management showcase screen
