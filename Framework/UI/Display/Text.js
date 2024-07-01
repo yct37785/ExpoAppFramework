@@ -9,22 +9,28 @@ import { Text } from 'react-native-paper';
  * 
  * @param {string} text - The text to search within.
  * @param {string} query - The search query to highlight.
- * @param {string} [variant='bodyMedium'] - The text variant style.
+ * @param {string} highlightColor - The highlight color for query text.
  * @param {string} [label=''] - Optional label to prepend to the text.
  * @returns {JSX.Element} A React element with the highlighted search text.
  */
-const highlightTextComp = (text, query, variant='bodyMedium', label='') => {
+const HighlightTextComp = ({
+  text,
+  query,
+  highlightColor = 'yellow',
+  label = '',
+  ...props
+}) => {
   if (!query) {
-    return <Text variant={variant}>{`${label}${text}`}</Text>;
+    return <Text {...props}>{`${label}${text}`}</Text>;
   }
   const regex = new RegExp(`(${query})`, 'gi');
   const parts = text.split(regex);
   return (
-    <Text variant={variant}>
+    <Text {...props}>
       {label}
       {parts.map((part, index) =>
         part.toLowerCase() === query.toLowerCase() ? (
-          <Text variant={variant} key={index} style={{ backgroundColor: 'yellow' }}>
+          <Text {...props} key={index} style={{ backgroundColor: highlightColor }}>
             {part}
           </Text>
         ) : (
@@ -35,4 +41,4 @@ const highlightTextComp = (text, query, variant='bodyMedium', label='') => {
   );
 };
 
-export const highlightTextCompMemo = memo(highlightTextComp);
+export const HighlightTextCompMemo = memo(HighlightTextComp);

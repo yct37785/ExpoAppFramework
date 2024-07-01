@@ -13,7 +13,7 @@ export { default as List } from './Data/List';
 export { default as Dialog } from './Dialogs/Dialog';
 export { default as Popup } from './Dialogs/Popup';
 // display
-export { highlightTextCompMemo as HighlightText } from './Display/Text';
+export { HighlightTextCompMemo as HighlightText } from './Display/Text';
 // input
 export { default as Picker } from './Input/Picker';
 export { default as TextInput } from './Input/TextInput';

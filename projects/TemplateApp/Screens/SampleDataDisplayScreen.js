@@ -4,7 +4,7 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { View, Image } from 'react-native';
 import { useTheme, Text, Divider, RadioButton } from 'react-native-paper';
-import { LinearLayout, ScreenLayout, Collapsible, ChipsContainer, List, TextInput, highlightText } from '../../../Framework/UI/index';
+import { LinearLayout, ScreenLayout, Collapsible, ChipOptions, List, TextInput, HighlightText } from '../../../Framework/UI/index';
 import { faker } from '@faker-js/faker';
 import { LocalDataContext } from '../../../Framework/Contexts/LocalDataContext';
 
@@ -97,14 +97,14 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
     return (
       <View style={{ flex: 1 }}>
         <View style={{ flex: 1 }}>
-          {highlightText(item.name, searchQuery, 'titleSmall')}
+          <HighlightText text={item.name} query={searchQuery} variant={'titleSmall'} />
           <Image
             style={{ width: 100, height: 100 }}
             source={{ uri: item.img }}
             resizeMode={'contain'}
           />
           <Text variant='labelMedium'>{`material: ${item.material}`}</Text>
-          {highlightText(item.desc, searchQuery, 'bodyMedium')}
+          <HighlightText text={item.desc} query={searchQuery} variant={'bodyMedium'} />
         </View>
         <Divider />
       </View>
@@ -124,7 +124,6 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
       <ListItem
         item={item}
         searchQuery={searchQuery}
-        highlightText={highlightText}
       />
     );
   }, [searchQuery]);
@@ -146,7 +145,7 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
       <Collapsible toggleHeaderText="Filter">
         <View style={{ width: '100%' }}>
           <Text variant='labelSmall'>Materials</Text>
-          <ChipsContainer toggledMap={materialsSelected} onChipSelected={onMaterialChipSelected} />
+          <ChipOptions toggledMap={materialsSelected} onChipSelected={onMaterialChipSelected} />
         </View>
       </Collapsible>
       {/* Toggle BigList vs FlatList */}
