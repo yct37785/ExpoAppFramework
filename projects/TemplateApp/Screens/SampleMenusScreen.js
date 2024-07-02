@@ -15,40 +15,36 @@ const PICKER_ITEM_LIST = [
   { label: 'Blue', value: 'blue' },
   { label: 'Green', value: 'green' },
 ];
-const POPUP_MENU_OPTIONS = [
-  {
+const POPUP_MENU_OPTIONS = {
+  'colors': {
     label: 'Colors',
-    value: 'colors',
-    children: [
-      { label: 'Red', value: 'red' },
-      { label: 'Blue', value: 'blue' },
-      { label: 'Green', value: 'green' },
-    ],
+    children: {
+      'red': { label: 'Red' },
+      'blue': { label: 'Blue' },
+      'green': { label: 'Green' },
+    }
   },
-  {
+  'class': {
     label: 'Class',
-    value: 'class',
-    children: [
-      { 
+    children: {
+      'mammals': { 
         label: 'Mammals',
-        value: 'mammals',
-        children: [
-          { label: 'Cat', value: 'cat' },
-          { label: 'Dog', value: 'dog' }
-        ]
+        children: {
+          'cat': { label: 'Cat' },
+          'dog': { label: 'Dog' }
+        }
       },
-      {
+      'reptiles': { 
         label: 'Reptiles',
-        value: 'reptiles',
-        children: [
-          { label: 'Turtle', value: 'turtle' },
-          { label: 'Frog', value: 'frog' },
-          { label: 'Lizard', value: 'lizard' }
-        ]
-      },
-    ],
-  },
-];
+        children: {
+          'turtle': { label: 'Turtle' },
+          'frog': { label: 'Frog' },
+          'lizard': { label: 'Lizard' }
+        }
+      }
+    }
+  }
+};
 
 /**
  * Display sample menus screen

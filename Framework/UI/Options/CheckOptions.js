@@ -11,39 +11,27 @@ import { LocalDataContext } from '../../Contexts/LocalDataContext';
  *
  * @component
  * @param {Object} props - Component props
- * @param {Array<Object>} props.schema - JSON schema representing the menu options.
- * @param {string} props.schema[].label - The label for the menu option.
- * @param {string} props.schema[].value - The value for the menu option.
- * @param {Array<Object>} [props.schema[].children] - Nested options for the menu.
+ * @param {Object} props.schema - JSON schema representing the menu options.
+ * @param {string} props.schema.label - The label for the menu option.
+ * @param {Object} [props.schema.children] - Nested options for the menu.
  * @param {Function} props.onSelectionChange - Callback function to handle selection changes.
  * @returns {JSX.Element} The CheckOptions component.
  *
  * @example
- * const schema = [
- *   {
- *     label: 'Colors',
- *     value: 'colors',
- *     children: [
- *       { label: 'Red', value: 'red' },
- *       { label: 'Blue', value: 'blue' },
- *       { label: 'Green', value: 'green' },
- *     ],
+ * const schema = {
+ *   label: 'Colors',
+ *   children: {
+ *     red: { label: 'Red' },
+ *     blue: { label: 'Blue' },
+ *     green: { label: 'Green' },
  *   },
- *   {
- *     label: 'Shapes',
- *     value: 'shapes',
- *     children: [
- *       { label: 'Circle', value: 'circle' },
- *       { label: 'Square', value: 'square' },
- *     ],
- *   },
- * ];
+ * };
  *
  * const handleSelectionChange = (selectedValues) => {
  *   console.log(selectedValues);
  * };
  *
- * <OptionsMenuComp schema={schema} onSelectionChange={handleSelectionChange} />
+ * <CheckOptions schema={schema} onSelectionChange={handleSelectionChange} />
  */
 const CheckOptions = ({ schema, onSelectionChange }) => {
   const { debugMode } = useContext(LocalDataContext);
@@ -71,12 +59,12 @@ const CheckOptions = ({ schema, onSelectionChange }) => {
   };
 
   const renderOptions = (options, depth = 0, path = []) => {
-    return options.map((option, index) => {
-      const optionPath = [...path, option.value];
+    return Object.entries(options).map(([key, option], index) => {
+      const optionPath = [...path, key];
       const padding = padSize * depth;
 
       if (option.children) {
-        const isGrandparent = !!option.children[0]?.children;
+        const isGrandparent = !!option.children[Object.keys(option.children)[0]]?.children;
         return (
           <View key={index} style={{ paddingLeft: padding, backgroundColor: debugMode ? '#e699ff' : 'transparent' }}>
             <Text style={{ paddingBottom: isGrandparent ? padSize05 : 0 }}>{option.label}</Text>
@@ -85,10 +73,10 @@ const CheckOptions = ({ schema, onSelectionChange }) => {
         );
       }
 
-      const isSelected = optionPath.reduce((acc, key) => acc && acc[key], selectedValues) === option.value;
+      const isSelected = optionPath.reduce((acc, key) => acc && acc[key], selectedValues) === key;
 
       return (
-        <TouchableOpacity key={index} onPress={() => handleSelect(optionPath, option.value, !isSelected)}>
+        <TouchableOpacity key={index} onPress={() => handleSelect(optionPath, key, !isSelected)}>
           <View style={{ paddingLeft: padding, flexDirection: 'row', alignItems: 'center', backgroundColor: debugMode ? '#ccff99' : 'transparent' }}>
             <Checkbox status={isSelected ? 'checked' : 'unchecked'} />
             <Text>{option.label}</Text>
