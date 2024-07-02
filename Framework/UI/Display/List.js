@@ -23,8 +23,7 @@ const ListDataDisplay = ({
   filterFunction,
   renderItem: RenderItem,
   listType = 'biglist',
-  rowHeight,
-  ...props
+  rowHeight
 }) => {
   const { debugMode } = useContext(LocalDataContext);
   const [filteredData, setFilteredData] = useState(data);
@@ -47,7 +46,6 @@ const ListDataDisplay = ({
           data={filteredData}
           renderItem={renderListItem}
           itemHeight={rowHeight}
-          {...props}
         />
       );
     } else {
@@ -56,7 +54,6 @@ const ListDataDisplay = ({
           data={filteredData}
           renderItem={renderListItem}
           windowSize={5}
-          {...props}
         />
       );
     }
