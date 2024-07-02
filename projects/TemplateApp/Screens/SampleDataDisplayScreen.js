@@ -18,7 +18,7 @@ import { LocalDataContext } from '../../../Framework/Index/Contexts';
  */
 export default function SampleDataDisplayScreen({ navigation, route }) {
   const { debugMode } = useContext(LocalDataContext);
-  const [listType, setListType] = useState('biglist');
+  const [listType, setListType] = useState('flashlist');
   const [searchQuery, setSearchQuery] = useState('');
   const [productList, setProductList] = useState([]);
   const [materialsSelected, setMaterialsSelected] = useState({});
@@ -131,12 +131,12 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
           <ChipOptions toggledMap={materialsSelected} onChipSelected={onMaterialChipSelected} />
         </View>
       </CollapsibleContainer>
-      {/* Toggle BigList vs FlatList */}
+      {/* Toggle Flashlist vs FlatList */}
       <RadioButton.Group onValueChange={newValue => setListType(newValue)} value={listType}>
         <View style={{ flexDirection: 'row', backgroundColor: debugMode ? '#66ff99' : 'transparent' }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text>BigList</Text>
-            <RadioButton value="biglist" />
+            <Text>Flashlist</Text>
+            <RadioButton value="flashlist" />
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text>FlatList</Text>
