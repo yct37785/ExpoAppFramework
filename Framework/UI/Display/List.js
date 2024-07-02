@@ -3,6 +3,7 @@
 *****************************************************************************************/
 import React, { useState, useEffect, useContext, memo } from 'react';
 import { View, FlatList } from 'react-native';
+import { Divider } from 'react-native-paper';
 import BigList from 'react-native-big-list';
 import { LocalDataContext } from '../../Contexts/LocalDataContext';
 
@@ -32,12 +33,19 @@ const ListDataDisplay = ({
     setFilteredData(filterFunction(data));
   }, [data, filterFunction]);
 
+  const renderListItem = ({ item, index }) => (
+    <View style={{ flex: 1 }}>
+      {renderItem({ item, index })}
+      <Divider />
+    </View>
+  );
+
   const renderList = () => {
     if (listType === 'biglist') {
       return (
         <BigList
           data={filteredData}
-          renderItem={renderItem}
+          renderItem={renderListItem}
           itemHeight={rowHeight}
           {...props}
         />
@@ -46,7 +54,7 @@ const ListDataDisplay = ({
       return (
         <FlatList
           data={filteredData}
-          renderItem={renderItem}
+          renderItem={renderListItem}
           windowSize={5}
           {...props}
         />

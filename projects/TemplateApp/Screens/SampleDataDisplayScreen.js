@@ -105,7 +105,6 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
           <Text variant='labelMedium'>{`material: ${item.material}`}</Text>
           <HighlightText text={item.desc} query={searchQuery} variant={'bodyMedium'} />
         </View>
-        <Divider />
       </View>
     );
   });
