@@ -1,9 +1,8 @@
 /*****************************************************************************************
  * text display
 *****************************************************************************************/
-import React, { useContext, memo } from 'react';
-import { useTheme, Text as RNPText } from 'react-native-paper';
-import { LocalDataContext } from '../../Contexts/LocalDataContext';
+import React, { memo } from 'react';
+import { Text as RNPText } from 'react-native-paper';
 
 /**
  * text component, wraps react-native-paper text, props identical to react-native-paper
@@ -12,10 +11,8 @@ import { LocalDataContext } from '../../Contexts/LocalDataContext';
  * @returns {JSX.Element} A React element with the text.
  */
 export const Text = ({children, ...props}) => {
-  const theme = useTheme();
-  const { debugMode } = useContext(LocalDataContext);
   return (
-    <RNPText style={{ color: debugMode ? '#000' : theme.colors.text }} {...props}>
+    <RNPText {...props}>
       {children}
     </RNPText>
   );

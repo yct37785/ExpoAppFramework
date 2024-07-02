@@ -179,7 +179,11 @@ const useLocalDataManager = ({ NEW_USER_DATA }) => {
   /**
    * whether to toggle debug flag on/off
    */
-  const toggleDebugMode = () => {
+  const toggleDebugMode = async () => {
+    // if debugMode will be true, always set light mode (text color = black)
+    if (!debugMode) {
+      await setLocalDataValue([["settings_sample.isDarkMode", false]]);
+    }
     setDebugMode(!debugMode);
   }
 
