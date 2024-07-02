@@ -4,7 +4,7 @@
 import React, { useContext, memo } from 'react';
 import { View } from 'react-native';
 import { useTheme, Appbar } from 'react-native-paper';
-import { LinearLayoutMemo as LinearLayout } from './Layouts';
+import { LinearLayout } from './Layouts';
 import { LocalDataContext } from '../../Contexts/LocalDataContext';
 import { padSize } from '../../Index/CommonVals';
 

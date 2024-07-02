@@ -5,8 +5,7 @@
 /**
  * containers: holds children; eg. children collapsible when triggered
  */
-export { CollapsibleContainerMemo as CollapsibleContainer } from '../UI/Containers/Collapsible';
-export { AccordionContainerMemo as AccordionContainer } from '../UI/Containers/Collapsible';
+export { CollapsibleContainer, AccordionContainer } from '../UI/Containers/Collapsible';
 export { default as TabsContainer } from '../UI/Containers/Tabs';
 
 /**
@@ -23,7 +22,7 @@ export { default as ListDataDisplay } from '../UI/Display/List';
 /**
  * text:
  */
-export { HighlightTextMemo as HighlightText } from '../UI/Text/Text';
+export { HighlightText } from '../UI/Text/Text';
 
 /**
  * input: for entering and capturing info; eg. form input
@@ -34,8 +33,7 @@ export { default as TextInput } from '../UI/Input/TextInput';
 /**
  * layouts: parent view to contain other UI comps; eg. align children horizontally
  */
-export { LinearLayoutMemo as LinearLayout } from '../UI/Layouts/Layouts';
-export { GridLayoutMemo as GridLayout } from '../UI/Layouts/Layouts';
+export { LinearLayout, GridLayout } from '../UI/Layouts/Layouts';
 export { default as ScreenLayout } from '../UI/Layouts/ScreenLayout';
 
 /**

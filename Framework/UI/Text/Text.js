@@ -13,7 +13,7 @@ import { Text } from 'react-native-paper';
  * @param {string} [label=''] - Optional label to prepend to the text.
  * @returns {JSX.Element} A React element with the highlighted search text.
  */
-const HighlightText = ({
+export const HighlightText = memo(({
   text,
   query,
   highlightColor = 'yellow',
@@ -39,6 +39,4 @@ const HighlightText = ({
       )}
     </Text>
   );
-};
-
-export const HighlightTextDisplayMemo = memo(HighlightText);
+});
