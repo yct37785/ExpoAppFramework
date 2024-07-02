@@ -4,7 +4,7 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { View, Image } from 'react-native';
 import { Text, Divider, RadioButton } from 'react-native-paper';
-import { LinearLayout, ScreenLayout, CollapsibleContainer, ChipOptions, ListDataDisplay, TextInput, HighlightTextDisplay } from '../../../Framework/Index/UI';
+import { LinearLayout, ScreenLayout, CollapsibleContainer, ChipOptions, ListDataDisplay, TextInput, HighlightText } from '../../../Framework/Index/UI';
 import { faker } from '@faker-js/faker';
 import { LocalDataContext } from '../../../Framework/Index/Contexts';
 
@@ -96,14 +96,14 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
     return (
       <View style={{ flex: 1 }}>
         <View style={{ flex: 1 }}>
-          <HighlightTextDisplay text={item.name} query={searchQuery} variant={'titleSmall'} />
+          <HighlightText text={item.name} query={searchQuery} variant={'titleSmall'} />
           <Image
             style={{ width: 100, height: 100 }}
             source={{ uri: item.img }}
             resizeMode={'contain'}
           />
           <Text variant='labelMedium'>{`material: ${item.material}`}</Text>
-          <HighlightTextDisplay text={item.desc} query={searchQuery} variant={'bodyMedium'} />
+          <HighlightText text={item.desc} query={searchQuery} variant={'bodyMedium'} />
         </View>
         <Divider />
       </View>

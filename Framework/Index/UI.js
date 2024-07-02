@@ -16,10 +16,14 @@ export { default as Dialog } from '../UI/Dialogs/Dialog';
 export { default as Popup } from '../UI/Dialogs/Popup';
 
 /**
- * display: special utility comps to display data; eg. text
+ * display: display data/media
  */
 export { default as ListDataDisplay } from '../UI/Display/List';
-export { HighlightTextDisplayMemo as HighlightTextDisplay } from '../UI/Display/Text';
+
+/**
+ * text:
+ */
+export { HighlightTextMemo as HighlightText } from '../UI/Text/Text';
 
 /**
  * input: for entering and capturing info; eg. form input
