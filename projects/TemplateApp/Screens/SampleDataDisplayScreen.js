@@ -85,16 +85,17 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
   }, [searchQuery, materialsSelected]);
 
   /**
-   * ListItem Component
+   * Renders each item in the list.
    * 
-   * @param {Object} param0 - Component props.
+   * @param {Object} param0 - Render item parameters.
    * @param {Object} param0.item - The item data to render.
-   * @param {string} param0.searchQuery - The current search query.
-   * @returns {JSX.Element} The ListItem component.
+   * @param {number} param0.index - The index of the item.
+   * @returns {JSX.Element} The rendered item component.
    */
-  const ListItem = React.memo(({ item, searchQuery }) => {
-    return (
-      <View style={{ flex: 1 }}>
+  const renderItem = useCallback(
+    React.memo(({ item, index }) => {
+      return (
+        <View style={{ flex: 1 }}>
         <View style={{ flex: 1 }}>
           <HighlightText text={item.name} query={searchQuery} variant={'titleSmall'} />
           <Image
@@ -106,25 +107,9 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
           <HighlightText text={item.desc} query={searchQuery} variant={'bodyMedium'} />
         </View>
       </View>
-    );
-  });
-
-  /**
-   * Renders each item in the list.
-   * 
-   * @param {Object} param0 - Render item parameters.
-   * @param {Object} param0.item - The item data to render.
-   * @param {number} param0.index - The index of the item.
-   * @returns {JSX.Element} The rendered item component.
-   */
-  const renderItem = useCallback(({ item, index }) => {
-    return (
-      <ListItem
-        item={item}
-        searchQuery={searchQuery}
-      />
-    );
-  }, [searchQuery]);
+      );
+    }), [searchQuery]
+  );
 
   function customHeaderContent() {
     return <LinearLayout applyPadding={true}>

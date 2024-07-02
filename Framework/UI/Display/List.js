@@ -21,7 +21,7 @@ import { LocalDataContext } from '../../Contexts/LocalDataContext';
 const ListDataDisplay = ({
   data,
   filterFunction,
-  renderItem,
+  renderItem: RenderItem,
   listType = 'biglist',
   rowHeight,
   ...props
@@ -35,7 +35,7 @@ const ListDataDisplay = ({
 
   const renderListItem = ({ item, index }) => (
     <View style={{ flex: 1 }}>
-      {renderItem({ item, index })}
+      <RenderItem item={item} index={index} />
       <Divider />
     </View>
   );
