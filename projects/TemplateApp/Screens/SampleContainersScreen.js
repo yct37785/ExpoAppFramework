@@ -1,11 +1,9 @@
 /***************************************************************************************
 * showcase container UI elements
 ***************************************************************************************/
-import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
+import React from 'react';
 import { View } from 'react-native';
-// UI
-import { Text } from 'react-native-paper';
-import { LinearLayout, ScreenLayout } from '../../../Framework/Index/UI';
+import { LinearLayout, ScreenLayout, Text } from '../../../Framework/Index/UI';
 import { padSize } from '../../../Framework/Index/CommonVals';
 
 /**

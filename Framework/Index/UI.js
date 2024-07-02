@@ -22,7 +22,7 @@ export { default as ListDataDisplay } from '../UI/Display/List';
 /**
  * text:
  */
-export { HighlightText } from '../UI/Text/Text';
+export { Text, HighlightText } from '../UI/Text/Text';
 
 /**
  * input: for entering and capturing info; eg. form input

@@ -1,8 +1,25 @@
 /*****************************************************************************************
  * text display
 *****************************************************************************************/
-import React, { useRef, memo } from 'react';
-import { Text } from 'react-native-paper';
+import React, { useContext, memo } from 'react';
+import { useTheme, Text as RNPText } from 'react-native-paper';
+import { LocalDataContext } from '../../Contexts/LocalDataContext';
+
+/**
+ * text component, wraps react-native-paper text, props identical to react-native-paper
+ * 
+ * @param {React.ReactNode} props.children - Textual content.
+ * @returns {JSX.Element} A React element with the text.
+ */
+export const Text = ({children, ...props}) => {
+  const theme = useTheme();
+  const { debugMode } = useContext(LocalDataContext);
+  return (
+    <RNPText style={{ color: debugMode ? '#000' : theme.colors.text }} {...props}>
+      {children}
+    </RNPText>
+  );
+}
 
 /**
  * Highlights search text within a given string.
