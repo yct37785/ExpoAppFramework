@@ -3,12 +3,13 @@
 *****************************************************************************************/
 import React, { useState, useContext, memo } from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { useTheme, Text } from 'react-native-paper';
+import { useTheme } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
 import { LocalDataContext } from '../../Contexts/LocalDataContext';
 import { padSize05, padSize, padSize2, iconSizeSmall } from '../../Index/CommonVals';
+import { Text } from '../Text/Text';
 
 /**
    * ToggleHeader Component

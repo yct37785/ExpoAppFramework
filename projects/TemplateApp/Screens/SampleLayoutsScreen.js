@@ -3,8 +3,7 @@
 ***************************************************************************************/
 import React from 'react';
 import { View } from 'react-native';
-import { Text, Appbar } from 'react-native-paper';
-import { LinearLayout, GridLayout, ScreenLayout } from '../../../Framework/Index/UI';
+import { LinearLayout, GridLayout, ScreenLayout, Text } from '../../../Framework/Index/UI';
 import { padSize } from '../../../Framework/Index/CommonVals';
 
 /**

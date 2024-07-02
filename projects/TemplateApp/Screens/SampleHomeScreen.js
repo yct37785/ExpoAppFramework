@@ -5,10 +5,9 @@ import React, { useContext, useState, useEffect, useCallback, useRef } from 'rea
 import { View } from 'react-native';
 // UI
 import {
-  Text, Card, Button, Appbar,
-  TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
+ Button
 } from 'react-native-paper';
-import { LinearLayout, ScreenLayout } from '../../../Framework/Index/UI';
+import { LinearLayout, ScreenLayout, Text } from '../../../Framework/Index/UI';
 // data
 import { onLocalDataUpdate } from '../../../Framework/Index/Contexts';
 // const

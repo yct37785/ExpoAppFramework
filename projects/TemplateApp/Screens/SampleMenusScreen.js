@@ -5,10 +5,9 @@ import React, { useContext, useState, useEffect, useCallback, useRef } from 'rea
 import { View, Keyboard } from 'react-native';
 // UI
 import {
-  Text, Card, Button, Appbar,
-  TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
+  Card, Button, IconButton, Portal
 } from 'react-native-paper';
-import { LinearLayout, ScreenLayout, Dialog, Popup, PickerInput, CheckOptions, ChipOptions } from '../../../Framework/Index/UI';
+import { LinearLayout, ScreenLayout, Dialog, Popup, PickerInput, CheckOptions, Text } from '../../../Framework/Index/UI';
 import { iconSizeSmall } from '../../../Framework/Index/CommonVals';
 // const
 const PICKER_ITEM_LIST = [

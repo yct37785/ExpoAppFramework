@@ -3,9 +3,8 @@
 ***************************************************************************************/
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { Text, Appbar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { LinearLayout, ScreenLayout, TabsContainer } from '../../../Framework/Index/UI';
+import { LinearLayout, ScreenLayout, TabsContainer, Text } from '../../../Framework/Index/UI';
 
 export const TAB_ROUTES = [
   { title: 'Page 1', key: 'p1', icon: 'google-street-view' },

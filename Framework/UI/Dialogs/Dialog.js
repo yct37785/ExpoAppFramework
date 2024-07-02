@@ -4,7 +4,8 @@
 import React, { memo } from 'react';
 import { View } from 'react-native';
 import { padSize, padSize2, padSize4 } from '../../Index/CommonVals';
-import { Modal, Button, Card, Text, useTheme } from 'react-native-paper';
+import { Modal, Button, Card, useTheme } from 'react-native-paper';
+import { Text } from '../Text/Text';
 
 /**
  * DialogComp Component

@@ -2,7 +2,7 @@
  * layouts, used to hold together UI elements, use one of the Layouts instead of Views
 *****************************************************************************************/
 import React, { useContext, memo } from 'react';
-import { View, ScrollView, Text } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { getValueByCondition } from '../../Utilities/GeneralUtils';
 import { LocalDataContext } from '../../Contexts/LocalDataContext';
 import { padSize } from '../../Index/CommonVals';

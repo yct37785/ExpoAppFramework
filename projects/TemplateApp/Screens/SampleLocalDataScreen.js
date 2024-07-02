@@ -6,9 +6,9 @@ import { View, Keyboard } from 'react-native';
 import { padSize, padSize2 } from '../../../Framework/Index/CommonVals';
 // UI
 import {
-  Text, Button, Appbar, Divider, Switch, TextInput, Card
+  Button, Switch, Card
 } from 'react-native-paper';
-import { LinearLayout, ScreenLayout } from '../../../Framework/Index/UI';
+import { LinearLayout, ScreenLayout, Text } from '../../../Framework/Index/UI';
 // data
 import { LocalDataContext, onLocalDataUpdate } from '../../../Framework/Index/Contexts';
 
