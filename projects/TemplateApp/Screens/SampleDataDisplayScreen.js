@@ -21,6 +21,7 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
   const [listType, setListType] = useState('flashlist');
   const [searchQuery, setSearchQuery] = useState('');
   const [productList, setProductList] = useState([]);
+  const [chipsSchema, setChipsSchema] = useState({});
   const [materialsSelected, setMaterialsSelected] = useState({});
   const ROW_HEIGHT = 250;
 
@@ -28,10 +29,15 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
     // Generate product list sample
     const fakeData = faker.helpers.multiple(createRandomProduct, { count: 1000 });
     // Generate filters
+    const chipsSchema = { 'material': { label: 'Material', children: {} } };
     const initialMaterialsSelected = {};
     fakeData.forEach((item) => {
-      initialMaterialsSelected[item.material] = false;
+      if (!(item.material in chipsSchema['material'].children)) {
+        chipsSchema['material'].children[item.material] = { label: item.material };
+        initialMaterialsSelected[item.material] = false;
+      }
     });
+    setChipsSchema(chipsSchema);
     setMaterialsSelected(initialMaterialsSelected);
     setProductList(fakeData);
   }, []);
@@ -56,13 +62,13 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
    * 
    * @param {string} mat - The key of the selected material chip.
    */
-  const onMaterialChipSelected = useCallback((mat) => {
-    if (mat in materialsSelected) {
-      setMaterialsSelected((prevMaterialsSelected) => ({
-        ...prevMaterialsSelected,
-        [mat]: !prevMaterialsSelected[mat]
-      }));
-    }
+  const onMaterialChipSelected = useCallback(() => {
+    // if (mat in materialsSelected) {
+    //   setMaterialsSelected((prevMaterialsSelected) => ({
+    //     ...prevMaterialsSelected,
+    //     [mat]: !prevMaterialsSelected[mat]
+    //   }));
+    // }
   }, [materialsSelected]);
 
   /**
@@ -127,8 +133,7 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
       {/* Filter menu */}
       <CollapsibleContainer toggleHeaderText="Filter">
         <View style={{ width: '100%' }}>
-          <Text variant='labelSmall'>Materials</Text>
-          <ChipOptions toggledMap={materialsSelected} onChipSelected={onMaterialChipSelected} />
+          <ChipOptions schema={chipsSchema} onSelectionChange={onMaterialChipSelected} />
         </View>
       </CollapsibleContainer>
       {/* Toggle Flashlist vs FlatList */}

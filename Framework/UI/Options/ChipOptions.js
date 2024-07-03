@@ -1,6 +1,6 @@
 import React, { useState, useContext, memo } from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { useTheme, Checkbox } from 'react-native-paper';
+import { useTheme, Chip } from 'react-native-paper';
 import { LinearLayout } from '../Layouts/Layouts';
 import { Text } from '../Text/Text';
 import { padSize025, padSize05, padSize } from '../../Index/CommonVals';
@@ -37,7 +37,7 @@ const ChipOptions = ({ schema, onSelectionChange }) => {
       style={{ backgroundColor: isSelected ? theme.colors.primaryContainer : theme.colors.backdrop }}
       onPress={onPress}
     >
-      {option}
+      {option.label}
     </Chip>
   );
   return (
