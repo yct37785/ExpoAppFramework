@@ -28,10 +28,6 @@ import OptionsComp from './OptionsComp';
  */
 const CheckOptions = ({ schema, onSelectionChange }) => {
 
-  const renderLabel = ({option, depth}) => (
-    <Text style={{ paddingLeft: depth * padSize }}>{option.label}</Text>
-  );
-
   const renderCheckbox = ({ option, isSelected, depth, onPress }) => (
     <TouchableOpacity onPress={onPress}>
       <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: depth * padSize }}>
@@ -42,7 +38,7 @@ const CheckOptions = ({ schema, onSelectionChange }) => {
   );
 
   return (
-    <OptionsComp schema={schema} onSelectionChange={onSelectionChange} renderLabel={renderLabel} renderOption={renderCheckbox} />
+    <OptionsComp schema={schema} onSelectionChange={onSelectionChange} renderOption={renderCheckbox} />
   );
 };
 
