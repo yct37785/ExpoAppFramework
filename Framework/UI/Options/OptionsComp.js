@@ -10,7 +10,7 @@ import { LocalDataContext } from '../../Contexts/LocalDataContext';
  * @param {Object} props - Component props
  * @param {Object} props.schema - JSON schema representing the menu options.
  * @param {string} props.schema.label - The label for the menu option.
- * @param {number} props.schema.state - 0: unselected, 1: selected, 2: partially selected (for parent options).
+ * @param {number} props.schema.state - 0: unselected, 1: selected.
  * @param {Object} [props.schema.children] - Nested options for the menu.
  * @param {Function} props.onSelectionChange - Callback function to handle selection changes.
  * @param {Function} props.renderOption - Function to render the option with the selection control.
@@ -53,13 +53,21 @@ const OptionsComp = ({ schema, onSelectionChange, renderOption, renderParentOpti
 
   const handleSelect = (path, isSelected) => {
     const updateSchema = (obj, path, isSelected) => {
+      // toggles a state for an option/node, recursively sets children state to match parent (1 or 0)
+      const toggleState = (node, state) => {
+        node.state = state;
+        if (node.children) {
+          Object.values(node.children).forEach(child => toggleState(child, state));
+        }
+      };
       if (path.length === 1) {
-        obj[path[0]].state = isSelected ? 1 : 0;
+        // propagate state downwards to all descendants
+        toggleState(obj[path[0]], isSelected ? 1 : 0);
       } else {
         updateSchema(obj[path[0]].children, path.slice(1), isSelected);
       }
       
-      // Update the parent state
+      // check descendant states
       const parentState = calculateParentState(obj[path[0]]);
       obj[path[0]].state = parentState;
     };

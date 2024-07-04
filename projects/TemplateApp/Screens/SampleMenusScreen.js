@@ -91,7 +91,7 @@ export default function SampleMenusScreen({ navigation, route, screenHeaderComp:
 
   const handleCheckOptionsChange = (updatedCheckOptionsSchema) => {
     setCheckOptionsSchema(updatedCheckOptionsSchema);
-    printSelectedOptions(updatedCheckOptionsSchema);
+    // printSelectedOptions(updatedCheckOptionsSchema);
   };
 
   function customHeaderContent() {
