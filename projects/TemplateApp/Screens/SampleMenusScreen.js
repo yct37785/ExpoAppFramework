@@ -3,6 +3,7 @@
 ***************************************************************************************/
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { View, Keyboard } from 'react-native';
+const _ = require('lodash');
 // UI
 import {
   Card, Button, IconButton, Portal
@@ -18,28 +19,32 @@ const PICKER_ITEM_LIST = [
 const POPUP_MENU_OPTIONS = {
   'colors': {
     label: 'Colors',
+    state: 0,
     children: {
-      'red': { label: 'Red' },
-      'blue': { label: 'Blue' },
-      'green': { label: 'Green' },
+      'red': { label: 'Red', state: 0 },
+      'blue': { label: 'Blue', state: 0 },
+      'green': { label: 'Green', state: 0 },
     }
   },
   'class': {
     label: 'Class',
+    state: 0,
     children: {
       'mammals': { 
         label: 'Mammals',
+        state: 0,
         children: {
-          'cat': { label: 'Cat' },
-          'dog': { label: 'Dog' }
+          'cat': { label: 'Cat', state: 0 },
+          'dog': { label: 'Dog', state: 0 }
         }
       },
       'reptiles': { 
         label: 'Reptiles',
+        state: 0,
         children: {
-          'turtle': { label: 'Turtle' },
-          'frog': { label: 'Frog' },
-          'lizard': { label: 'Lizard' }
+          'turtle': { label: 'Turtle', state: 0 },
+          'frog': { label: 'Frog', state: 0 },
+          'lizard': { label: 'Lizard', state: 0 }
         }
       }
     }
@@ -53,7 +58,7 @@ export default function SampleMenusScreen({ navigation, route, screenHeaderComp:
   const searchBarRef = useRef();
   const [showDialog, setShowDialog] = useState(false);
   const [pickerSelection, setPickerSelection] = useState('red');
-  const [popupMenuSelection, setPopupMenuSelection] = useState({});
+  const [checkOptionsSchema, setCheckOptionsSchema] = useState( _.cloneDeep(POPUP_MENU_OPTIONS));
 
   useEffect(() => {
     const keyboardListener = Keyboard.addListener('keyboardDidHide', (e) => {
@@ -69,15 +74,31 @@ export default function SampleMenusScreen({ navigation, route, screenHeaderComp:
     setShowDialog(false);
   }
 
-  const handlePopupMenuSelectionChange = (selectedValues) => {
-    setPopupMenuSelection(selectedValues);
+  function printSelectedOptions(optionsSchema, path = []) {
+    Object.entries(optionsSchema).forEach(([key, value]) => {
+      if (typeof value === 'object' && value !== null) {
+        const newPath = [...path, key];
+        if (value.children) {
+          console.log(newPath.join(' > ') + ' > ' + value.state);
+          printSelectedOptions(value.children, newPath);
+        } else {
+          console.log(newPath.join(' > ') + ' = ' + value.state);
+        }
+      }
+    });
+    console.log('');
+  }
+
+  const handleCheckOptionsChange = (updatedCheckOptionsSchema) => {
+    setCheckOptionsSchema(updatedCheckOptionsSchema);
+    printSelectedOptions(updatedCheckOptionsSchema);
   };
 
   function customHeaderContent() {
     return <LinearLayout align='horizontal' reverse={true}>
       <Popup triggerComp={<IconButton icon="dots-vertical" size={iconSizeSmall} />}>
         <LinearLayout applyPadding={true}>
-          <CheckOptions schema={POPUP_MENU_OPTIONS} onSelectionChange={handlePopupMenuSelectionChange} />
+          <CheckOptions schema={checkOptionsSchema} onSelectionChange={handleCheckOptionsChange} />
         </LinearLayout>
       </Popup>
     </LinearLayout>
