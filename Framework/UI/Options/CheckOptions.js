@@ -38,7 +38,7 @@ const CheckOptions = ({ schema, onSelectionChange }) => {
   );
 
   return (
-    <OptionsComp schema={schema} onSelectionChange={onSelectionChange} renderOption={renderCheckbox} />
+    <OptionsComp schema={schema} onSelectionChange={onSelectionChange} renderOption={renderCheckbox} renderParentOption={renderCheckbox} />
   );
 };
 

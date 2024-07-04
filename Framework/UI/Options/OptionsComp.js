@@ -14,6 +14,8 @@ import { LocalDataContext } from '../../Contexts/LocalDataContext';
  * @param {Object} [props.schema.children] - Nested options for the menu.
  * @param {Function} props.onSelectionChange - Callback function to handle selection changes.
  * @param {Function} props.renderOption - Function to render the option with the selection control.
+ * @param {Function} props.renderParentOption - Function to render parent options, if same as renderOption just set
+ * prop to same function value.
  * @returns {JSX.Element} The OptionsComp component.
  *
  * @example
@@ -34,13 +36,19 @@ import { LocalDataContext } from '../../Contexts/LocalDataContext';
  * const renderOption = ({ option, isSelected, depth, onPress }) => (
  *   // render option logic here
  * );
+ * 
+ * 
+ * const renderParentOption = ({ option, isSelected, depth, onPress }) => (
+ *   // render parent option logic here
+ * );
  *
  * <OptionsComp 
  *   schema={schema}
  *   onSelectionChange={onSelectionChange}
- *   renderOption={renderOption} />
+ *   renderOption={renderOption}
+ *   renderParentOption={renderParentOption} />
  */
-const OptionsComp = ({ schema, onSelectionChange, renderOption }) => {
+const OptionsComp = ({ schema, onSelectionChange, renderOption, renderParentOption }) => {
   const { debugMode } = useContext(LocalDataContext);
 
   const handleSelect = (path, isSelected) => {
@@ -76,27 +84,29 @@ const OptionsComp = ({ schema, onSelectionChange, renderOption }) => {
     onSelectionChange(newSchema);
   };
 
-  const renderOptions = (options, depth = 0, path = []) => {
+  const renderChildrenOptions = (options, depth = 0, path = []) => {
     return Object.entries(options).map(([key, option], index) => {
       // track current path/hierarchy
       const optionPath = [...path, key];
       const isSelected = option.state === 1;
-      return (
-        <View key={index} style={{ backgroundColor: debugMode ? '#e699ff' : 'transparent' }}>
-          {/* render the option */}
-          {renderOption({option, isSelected, depth, onPress: () => handleSelect(optionPath, isSelected)
-          })}
-          {/* if have children/non-leaf node */}
-          {option.children ? renderOptions(option.children, depth + 1, optionPath) : null}
+      // render the parent option/non-leaf node
+      if (option.children) {
+        return <View key={index} style={{ backgroundColor: debugMode ? '#e699ff' : 'transparent' }}>
+          {renderParentOption({option, isSelected, depth, onPress: () => handleSelect(optionPath, isSelected)})}
+          {renderChildrenOptions(option.children, depth + 1, optionPath)}
         </View>
-      );
-      // #ccff99
+      } else {
+        // render child option/leaf node
+        return <View key={index} style={{ backgroundColor: debugMode ? '#ccff99' : 'transparent' }}>
+          {renderOption({option, isSelected, depth, onPress: () => handleSelect(optionPath, isSelected)})}
+        </View>
+      }
     });
   };
 
   return (
     <LinearLayout>
-      {renderOptions(schema)}
+      {renderChildrenOptions(schema)}
     </LinearLayout>
   );
 };
