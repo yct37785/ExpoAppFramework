@@ -1,9 +1,8 @@
-import React, { useState, useContext, memo } from 'react';
+import React, { memo } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Checkbox } from 'react-native-paper';
-import { LinearLayout } from '../Layouts/Layouts';
 import { Text } from '../Text/Text';
-import { padSize025, padSize05, padSize } from '../../Index/CommonVals';
+import { padSize } from '../../Index/CommonVals';
 import OptionsComp from './OptionsComp';
 
 /**
@@ -28,9 +27,14 @@ import OptionsComp from './OptionsComp';
  * };
  */
 const CheckOptions = ({ schema, onSelectionChange }) => {
-  const renderCheckbox = ({ option, isSelected, onPress }) => (
+
+  const renderLabel = ({option, depth}) => (
+    <Text style={{ paddingLeft: depth * padSize }}>{option.label}</Text>
+  );
+
+  const renderCheckbox = ({ option, isSelected, depth, onPress }) => (
     <TouchableOpacity onPress={onPress}>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: depth * padSize }}>
         <Checkbox status={isSelected ? 'checked' : 'unchecked'} />
         <Text>{option.label}</Text>
       </View>
@@ -38,7 +42,7 @@ const CheckOptions = ({ schema, onSelectionChange }) => {
   );
 
   return (
-    <OptionsComp schema={schema} onSelectionChange={onSelectionChange} renderOption={renderCheckbox} />
+    <OptionsComp schema={schema} onSelectionChange={onSelectionChange} renderLabel={renderLabel} renderOption={renderCheckbox} />
   );
 };
 
