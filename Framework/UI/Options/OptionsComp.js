@@ -10,7 +10,7 @@ import { LocalDataContext } from '../../Contexts/LocalDataContext';
  * @param {Object} props - Component props
  * @param {Object} props.schema - JSON schema representing the menu options.
  * @param {string} props.schema.label - The label for the menu option.
- * @param {number} props.schema.state - 0: unselected, 1: selected, .
+ * @param {number} props.schema.state - 0: unchecked, 1: checked, 2: indeterminate.
  * @param {Object} [props.schema.children] - Nested options for the menu.
  * @param {Function} props.onSelectionChange - Callback function to handle selection changes.
  * @param {Function} props.renderOption - Function to render the option with the selection control.

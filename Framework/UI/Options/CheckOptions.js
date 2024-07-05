@@ -28,14 +28,15 @@ import OptionsComp from './OptionsComp';
  */
 const CheckOptions = ({ schema, onSelectionChange }) => {
 
-  const renderCheckbox = ({ option, depth, onPress }) => (
-    <TouchableOpacity onPress={onPress}>
+  const renderCheckbox = ({ option, depth, onPress }) => {
+    const status = option.state === 1 ? 'checked' : option.state === 2 ? 'indeterminate' : 'unchecked';
+    return (<TouchableOpacity onPress={onPress}>
       <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: depth * padSize }}>
-        <Checkbox status={option.state === 1 ? 'checked' : 'unchecked'} />
+        <Checkbox status={status} />
         <Text>{option.label}</Text>
       </View>
-    </TouchableOpacity>
-  );
+    </TouchableOpacity>)
+  };
 
   return (
     <OptionsComp schema={schema} onSelectionChange={onSelectionChange} renderOption={renderCheckbox} renderParentOption={renderCheckbox} />
