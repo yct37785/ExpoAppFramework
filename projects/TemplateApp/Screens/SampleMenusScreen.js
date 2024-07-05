@@ -74,24 +74,8 @@ export default function SampleMenusScreen({ navigation, route, screenHeaderComp:
     setShowDialog(false);
   }
 
-  function printSelectedOptions(optionsSchema, path = []) {
-    Object.entries(optionsSchema).forEach(([key, value]) => {
-      if (typeof value === 'object' && value !== null) {
-        const newPath = [...path, key];
-        if (value.children) {
-          console.log(newPath.join(' > ') + ' > ' + value.state);
-          printSelectedOptions(value.children, newPath);
-        } else {
-          console.log(newPath.join(' > ') + ' = ' + value.state);
-        }
-      }
-    });
-    console.log('');
-  }
-
   const handleCheckOptionsChange = (updatedCheckOptionsSchema) => {
     setCheckOptionsSchema(updatedCheckOptionsSchema);
-    // printSelectedOptions(updatedCheckOptionsSchema);
   };
 
   function customHeaderContent() {
