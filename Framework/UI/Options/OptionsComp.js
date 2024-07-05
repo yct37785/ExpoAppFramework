@@ -1,5 +1,4 @@
 import React, { useContext, memo } from 'react';
-import { View } from 'react-native';
 import { LinearLayout } from '../Layouts/Layouts';
 import { LocalDataContext } from '../../Contexts/LocalDataContext';
 
@@ -13,6 +12,7 @@ import { LocalDataContext } from '../../Contexts/LocalDataContext';
  * @param {number} props.schema.state - 0: unchecked, 1: checked, 2: indeterminate.
  * @param {Object} [props.schema.children] - Nested options for the menu.
  * @param {Function} props.onSelectionChange - Callback function to handle selection changes.
+ * @param {Object} props.optionsContainer - Container to contain children options.
  * @param {Function} props.renderOption - Function to render the option with the selection control.
  * @param {Function} props.renderParentOption - Function to render parent options, if same as renderOption just set
  * prop to same function value.
@@ -36,14 +36,20 @@ import { LocalDataContext } from '../../Contexts/LocalDataContext';
  * const renderParentOption = ({ option, isSelected, depth, onPress }) => (
  *   // render parent option logic here
  * );
+ * const optionsContainer = ({children}) => {
+ *   <View>
+ *     {children}
+ *   </View>
+ * }
  *
  * <OptionsComp 
  *   schema={schema}
  *   onSelectionChange={onSelectionChange}
+ *   optionsContainer={optionsContainer}
  *   renderOption={renderOption}
  *   renderParentOption={renderParentOption} />
  */
-const OptionsComp = ({ schema, onSelectionChange, renderOption, renderParentOption }) => {
+const OptionsComp = ({ schema, onSelectionChange, optionsContainer: OptionsContainer, renderOption, renderParentOption }) => {
   const { debugMode } = useContext(LocalDataContext);
 
   const handleSelect = (path) => {
@@ -98,15 +104,15 @@ const OptionsComp = ({ schema, onSelectionChange, renderOption, renderParentOpti
       const optionPath = [...path, key];
       // render the parent option/non-leaf node
       if (option.children) {
-        return <View key={index} style={{ backgroundColor: debugMode ? '#e699ff' : 'transparent' }}>
-          {renderParentOption({option, depth, onPress: () => handleSelect(optionPath)})}
+        return <OptionsContainer key={index} depth={depth} style={{ backgroundColor: debugMode ? '#e699ff' : 'transparent' }}>
+          {renderParentOption({option, onPress: () => handleSelect(optionPath)})}
           {renderChildrenOptions(option.children, depth + 1, optionPath)}
-        </View>
+        </OptionsContainer>
       } else {
         // render child option/leaf node
-        return <View key={index} style={{ backgroundColor: debugMode ? '#ccff99' : 'transparent' }}>
-          {renderOption({option, depth, onPress: () => handleSelect(optionPath)})}
-        </View>
+        return <OptionsContainer key={index} depth={depth} style={{ backgroundColor: debugMode ? '#ccff99' : 'transparent' }}>
+          {renderOption({option, onPress: () => handleSelect(optionPath)})}
+        </OptionsContainer>
       }
     });
   };
