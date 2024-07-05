@@ -28,10 +28,10 @@ import OptionsComp from './OptionsComp';
  */
 const CheckOptions = ({ schema, onSelectionChange }) => {
 
-  const renderCheckbox = ({ option, isSelected, depth, onPress }) => (
+  const renderCheckbox = ({ option, depth, onPress }) => (
     <TouchableOpacity onPress={onPress}>
       <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: depth * padSize }}>
-        <Checkbox status={isSelected ? 'checked' : 'unchecked'} />
+        <Checkbox status={option.state === 1 ? 'checked' : 'unchecked'} />
         <Text>{option.label}</Text>
       </View>
     </TouchableOpacity>
