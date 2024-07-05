@@ -48,17 +48,12 @@ const OptionsComp = ({ schema, onSelectionChange, renderOption, renderParentOpti
 
   const handleSelect = (path) => {
     // always iterate from root as schema refs might change but re-render doesn't activate
-    const parentsRef = [];
     let obj = schema[path[0]];
-    parentsRef.push(obj);
-    path.slice(1, -1).map((key => {
-      obj = obj.children[key];
-      parentsRef.push(obj);
-    }));
-    obj = obj.children[path.at(-1)];
+    path.slice(1).map(key => obj = obj.children[key]);
     // set state for node
     obj.state = obj.state !== 1 ? 1 : 0;
-    // ensure root always set to state 2 or 1
+    // ensure parents always set to state 2 or 1
+    // set parent state
     onSelectionChange({...schema});
   };
 
