@@ -10,7 +10,7 @@ import { LocalDataContext } from '../../Contexts/LocalDataContext';
  * @param {Object} props - Component props
  * @param {Object} props.schema - JSON schema representing the menu options.
  * @param {string} props.schema.label - The label for the menu option.
- * @param {number} props.schema.state - 0: unselected, 1: selected.
+ * @param {number} props.schema.state - 0: unselected, 1: selected, .
  * @param {Object} [props.schema.children] - Nested options for the menu.
  * @param {Function} props.onSelectionChange - Callback function to handle selection changes.
  * @param {Function} props.renderOption - Function to render the option with the selection control.
@@ -49,11 +49,34 @@ const OptionsComp = ({ schema, onSelectionChange, renderOption, renderParentOpti
   const handleSelect = (path) => {
     // always iterate from root as schema refs might change but re-render doesn't activate
     let obj = schema[path[0]];
-    path.slice(1).map(key => obj = obj.children[key]);
+    let parentsRef = [obj];
+    path.slice(1).map(key => {
+      obj = obj.children[key];
+      parentsRef.push(obj);
+    });
+    parentsRef = parentsRef.slice(0, -1).reverse();
     // set state for node
     obj.state = obj.state !== 1 ? 1 : 0;
-    // ensure parents always set to state 2 or 1
-    // set parent state
+    // check all children state for parent
+    parentsRef.map(parent => {
+      const childrenState = Object.values(parent.children).map(child => child.state);
+      const currChildState = childrenState[0];
+      // all children = unselected
+      if (currChildState === 0) {
+        parent.state = 0; 
+      }
+      // all children = selected
+      else if (currChildState === 1) {
+        parent.state = 1;
+      }
+      for (let i = 1; i < childrenState.length; ++i) {
+        // some selected and unselected
+        if (currChildState !== childrenState[i]) {
+          parent.state = 2;
+          break;
+        }
+      }
+    });
     onSelectionChange({...schema});
   };
 
