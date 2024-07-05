@@ -77,6 +77,18 @@ const OptionsComp = ({ schema, onSelectionChange, renderOption, renderParentOpti
         }
       }
     });
+    // all children options to match state of current
+    if (obj.children) {
+      const setAllToState = (currObj, newState) => {
+        for (const [key, currChild] of Object.entries(currObj)) {
+          currChild.state = newState;
+          if (currChild.children) {
+            setAllToState(currChild.children, newState);
+          }
+        }
+      }
+      setAllToState(obj.children, obj.state);
+    }
     onSelectionChange({...schema});
   };
 
