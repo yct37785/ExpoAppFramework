@@ -3,7 +3,7 @@ import { View, TouchableOpacity } from 'react-native';
 import { useTheme, Chip } from 'react-native-paper';
 import { LinearLayout } from '../Layouts/Layouts';
 import { Text } from '../Text/Text';
-import { padSize025, padSize05, padSize } from '../../Index/CommonVals';
+import { padSize025, padSize05, padSize, padSize2 } from '../../Index/CommonVals';
 import OptionsComp from './OptionsComp';
 
 /**
@@ -29,19 +29,36 @@ import OptionsComp from './OptionsComp';
  */
 const ChipOptions = ({ schema, onSelectionChange }) => {
   const theme = useTheme();
-  const renderChip = ({ option, isSelected, onPress }) => (
+
+  const renderLabel = ({ option, onPress }) => (
+    <Text>{option.label}</Text>
+  );
+
+  const renderChip = ({ option, onPress }) => (
     <Chip
-      selected={isSelected}
+      selected={option.state === 1}
       showSelectedCheck={false}
       mode='outlined'
-      style={{ backgroundColor: isSelected ? theme.colors.primaryContainer : theme.colors.backdrop }}
+      style={{ backgroundColor: option.state === 1 ? theme.colors.primaryContainer : theme.colors.backdrop }}
       onPress={onPress}
     >
       {option.label}
     </Chip>
   );
+  
+  const optionsContainer = ({depth, children}) => (
+    <View style={{ paddingLeft: depth * padSize2 }}>
+      {children}
+    </View>
+  );
+
   return (
-    <OptionsComp schema={schema} onSelectionChange={onSelectionChange} renderOption={renderChip} />
+    <OptionsComp
+      schema={schema}
+      onSelectionChange={onSelectionChange}
+      optionsContainer={optionsContainer}
+      renderOption={renderChip}
+      renderParentOption={renderLabel} />
   );
 };
 
