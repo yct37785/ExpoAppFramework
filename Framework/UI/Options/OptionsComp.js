@@ -1,6 +1,8 @@
 import React, { useContext, memo } from 'react';
+import { View } from 'react-native';
 import { LinearLayout } from '../Layouts/Layouts';
 import { LocalDataContext } from '../../Contexts/LocalDataContext';
+import { padSize } from '../../Index/CommonVals';
 
 /**
  * General options component for rendering various types of selection controls.
@@ -15,6 +17,7 @@ import { LocalDataContext } from '../../Contexts/LocalDataContext';
  * @param {Object} props.optionsContainer - Container to contain children options.
  * @param {Function} props.renderOption - Function to render the option with the selection control.
  * @param {Function} props.renderParentOption - Function to render parent options, if same as renderOption just set
+ * @param {number} props.depthPadding - to apply padding per depth hierarchy.
  * prop to same function value.
  * @returns {JSX.Element} The OptionsComp component.
  *
@@ -49,7 +52,7 @@ import { LocalDataContext } from '../../Contexts/LocalDataContext';
  *   renderOption={renderOption}
  *   renderParentOption={renderParentOption} />
  */
-const OptionsComp = ({ schema, onSelectionChange, optionsContainer: OptionsContainer, renderOption, renderParentOption }) => {
+const OptionsComp = ({ schema, onSelectionChange, optionsContainer: OptionsContainer, renderOption, renderParentOption, depthPadding }) => {
   const { debugMode } = useContext(LocalDataContext);
 
   const handleSelect = (path) => {
@@ -98,21 +101,23 @@ const OptionsComp = ({ schema, onSelectionChange, optionsContainer: OptionsConta
     onSelectionChange({...schema});
   };
 
-  const renderChildrenOptions = (options, depth = 0, path = []) => {
+  const renderChildrenOptions = (options, depth = 0, depthPaddingVal = 0, path = []) => {
     return Object.entries(options).map(([key, option], index) => {
       // track current path/hierarchy
       const optionPath = [...path, key];
       // render the parent option/non-leaf node
       if (option.children) {
-        return <OptionsContainer key={index} depth={depth} style={{ backgroundColor: debugMode ? '#e699ff' : 'transparent' }}>
-          {renderParentOption({option, onPress: () => handleSelect(optionPath)})}
-          {renderChildrenOptions(option.children, depth + 1, optionPath)}
-        </OptionsContainer>
+        return <View key={index} style={{ paddingLeft: 0 }}>
+          {renderParentOption({ option, onPress: () => handleSelect(optionPath) })}
+          <View style={{ paddingLeft: depthPaddingVal + depthPadding, backgroundColor: debugMode ? '#e699ff' : 'transparent' }}>
+            <OptionsContainer>
+              {renderChildrenOptions(option.children, depth + 1, depthPaddingVal + depthPadding, optionPath)}
+            </OptionsContainer>
+          </View>
+        </View>
       } else {
         // render child option/leaf node
-        return <OptionsContainer key={index} depth={depth} style={{ backgroundColor: debugMode ? '#ccff99' : 'transparent' }}>
-          {renderOption({option, onPress: () => handleSelect(optionPath)})}
-        </OptionsContainer>
+        return renderOption({ option, onPress: () => handleSelect(optionPath) })
       }
     });
   };

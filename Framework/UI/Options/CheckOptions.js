@@ -38,8 +38,8 @@ const CheckOptions = ({ schema, onSelectionChange }) => {
     </TouchableOpacity>)
   };
   
-  const optionsContainer = ({depth, children}) => (
-    <View style={{ paddingLeft: depth * padSize2 }}>
+  const optionsContainer = ({children}) => (
+    <View>
       {children}
     </View>
   );
@@ -50,7 +50,9 @@ const CheckOptions = ({ schema, onSelectionChange }) => {
       onSelectionChange={onSelectionChange}
       optionsContainer={optionsContainer}
       renderOption={renderCheckbox}
-      renderParentOption={renderCheckbox} />
+      renderParentOption={renderCheckbox}
+      depthPadding={padSize2}
+      />
   );
 };
 
