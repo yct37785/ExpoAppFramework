@@ -74,8 +74,8 @@ export default function SampleMenusScreen({ navigation, route, screenHeaderComp:
     setShowDialog(false);
   }
 
-  const handleCheckOptionsChange = (updatedCheckOptionsSchema) => {
-    setCheckOptionsSchema(updatedCheckOptionsSchema);
+  const handleCheckOptionsChange = (updatedSchema, optionPath, optionRef) => {
+    setCheckOptionsSchema(updatedSchema);
   };
 
   function customHeaderContent() {

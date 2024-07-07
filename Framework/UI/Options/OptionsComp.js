@@ -12,7 +12,7 @@ import { LocalDataContext } from '../../Contexts/LocalDataContext';
  * @param {string} props.schema.label - The label for the menu option.
  * @param {number} props.schema.state - 0: unchecked, 1: checked, 2: indeterminate.
  * @param {Object} [props.schema.children] - Nested options for the menu.
- * @param {Function} props.onSelectionChange - Callback function to handle selection changes.
+ * @param {Function} props.onSelectionChange - Callback function to handle selection changes: updatedSchema, optionPath, optionRef.
  * @param {Object} props.optionsContainer - Container to contain children options.
  * @param {Function} props.renderOption - Function to render the option with the selection control.
  * @param {Function} props.renderParentOption - Function to render parent options, if same as renderOption just set
@@ -38,6 +38,7 @@ import { LocalDataContext } from '../../Contexts/LocalDataContext';
  * const renderParentOption = ({ option, isSelected, depth, onPress }) => (
  *   // render parent option logic here
  * );
+ * 
  * const optionsContainer = ({children}) => {
  *   <View>
  *     {children}
@@ -97,7 +98,7 @@ const OptionsComp = ({ schema, onSelectionChange, optionsContainer: OptionsConta
       }
       setAllToState(obj.children, obj.state);
     }
-    onSelectionChange({...schema});
+    onSelectionChange({...schema}, path, obj);
   };
 
   const renderChildrenOptions = (options, depth = 0, depthPaddingVal = 0, path = []) => {

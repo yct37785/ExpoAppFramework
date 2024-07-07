@@ -22,7 +22,7 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
   const [listType, setListType] = useState('flashlist');
   const [searchQuery, setSearchQuery] = useState('');
   const [productList, setProductList] = useState([]);
-  const [chipsSchema, setChipsSchema] = useState({});
+  const [chipsSchema, setChipsSchema] = useState(null);
   const [materialsSelected, setMaterialsSelected] = useState({});
   const ROW_HEIGHT = 250;
 
@@ -30,11 +30,11 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
     // Generate product list sample
     const fakeData = faker.helpers.multiple(createRandomProduct, { count: 1000 });
     // Generate filters
-    const chipsSchema = { 'material': { label: 'Material', children: {} } };
+    const chipsSchema = { 'material': { label: 'Material', state: 0, children: {} } };
     const initialMaterialsSelected = {};
     fakeData.forEach((item) => {
       if (!(item.material in chipsSchema['material'].children)) {
-        chipsSchema['material'].children[item.material] = { label: item.material };
+        chipsSchema['material'].children[item.material] = { label: item.material, state: 0 };
         initialMaterialsSelected[item.material] = false;
       }
     });
@@ -63,13 +63,15 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
    * 
    * @param {string} mat - The key of the selected material chip.
    */
-  const onMaterialChipSelected = useCallback(() => {
-    // if (mat in materialsSelected) {
-    //   setMaterialsSelected((prevMaterialsSelected) => ({
-    //     ...prevMaterialsSelected,
-    //     [mat]: !prevMaterialsSelected[mat]
-    //   }));
-    // }
+  const onMaterialChipSelected = useCallback((updatedSchema, optionPath, optionRef) => {
+    const mat = optionPath.at(-1);
+    if (mat in materialsSelected) {
+      setMaterialsSelected((prevMaterialsSelected) => ({
+        ...prevMaterialsSelected,
+        [mat]: !prevMaterialsSelected[mat]
+      }));
+    }
+    setChipsSchema(updatedSchema);
   }, [materialsSelected]);
 
   /**
@@ -132,11 +134,11 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
   return (
     <ScreenLayout navigation={navigation} route={route} customHeaderContent={customHeaderContent}>
       {/* Filter menu */}
-      <View style={{ paddingLeft: padSize }}>
+      {chipsSchema ? <View style={{ paddingLeft: padSize }}>
         <CollapsibleContainer toggleHeaderText="Filter">
           <ChipOptions schema={chipsSchema} onSelectionChange={onMaterialChipSelected} />
         </CollapsibleContainer>
-      </View>
+      </View> : null}
       {/* Toggle Flashlist vs FlatList */}
       <RadioButton.Group onValueChange={newValue => setListType(newValue)} value={listType}>
         <View style={{ flexDirection: 'row', backgroundColor: debugMode ? '#66ff99' : 'transparent' }}>
