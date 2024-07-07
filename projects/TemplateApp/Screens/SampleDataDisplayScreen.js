@@ -3,8 +3,10 @@
 ***************************************************************************************/
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { View, Image } from 'react-native';
-import { RadioButton } from 'react-native-paper';
-import { LinearLayout, ScreenLayout, CollapsibleContainer, ChipOptions, ListDataDisplay, TextInput, Text, HighlightText } from '../../../Framework/Index/UI';
+import {
+  LinearLayout, ScreenLayout, CollapsibleContainer, ChipOptions, RadioGroupOption, ListDataDisplay,
+  TextInput, Text, HighlightText
+} from '../../../Framework/Index/UI';
 import { faker } from '@faker-js/faker';
 import { LocalDataContext } from '../../../Framework/Index/Contexts';
 import { padSize } from '../../../Framework/Index/CommonVals';
@@ -140,18 +142,12 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
         </CollapsibleContainer>
       </View> : null}
       {/* Toggle Flashlist vs FlatList */}
-      <RadioButton.Group onValueChange={newValue => setListType(newValue)} value={listType}>
-        <View style={{ flexDirection: 'row', backgroundColor: debugMode ? '#66ff99' : 'transparent' }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text>Flashlist</Text>
-            <RadioButton value="flashlist" />
-          </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text>FlatList</Text>
-            <RadioButton value="flatlist" />
-          </View>
-        </View>
-      </RadioButton.Group>
+      <RadioGroupOption
+        options={{
+          flashlist: { label: "Flashlist" },
+          flatlist: { label: "Flatlist" }
+        }}
+        value={listType} onValueChange={setListType} />
       <ListDataDisplay
         data={productList}
         filterFunction={filterProducts}
