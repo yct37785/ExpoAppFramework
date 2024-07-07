@@ -46,6 +46,7 @@ export { default as ChipOptions } from '../UI/Options/ChipOptions';
  * toggle: one option selectable; eg. check, radio, switch
  */
 export { default as RadioGroupToggle } from '../UI/Toggle/RadioGroupToggle';
+export { default as SwitchToggle } from '../UI/Toggle/SwitchToggle';
 
 /**
  * button: variations of buttons

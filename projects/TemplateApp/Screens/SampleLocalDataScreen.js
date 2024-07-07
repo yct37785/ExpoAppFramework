@@ -5,10 +5,8 @@ import React, { useContext, useState, useEffect, useCallback, useRef } from 'rea
 import { View, Keyboard } from 'react-native';
 import { padSize, padSize2 } from '../../../Framework/Index/CommonVals';
 // UI
-import {
-  Button, Switch, Card
-} from 'react-native-paper';
-import { LinearLayout, ScreenLayout, Text } from '../../../Framework/Index/UI';
+import { Card } from 'react-native-paper';
+import { LinearLayout, ScreenLayout, SwitchToggle, Button, Text } from '../../../Framework/Index/UI';
 // data
 import { LocalDataContext, onLocalDataUpdate } from '../../../Framework/Index/Contexts';
 
@@ -36,13 +34,13 @@ export default function SampleLocalDataScreen({ navigation, route, screenHeaderC
     <ScreenLayout navigation={navigation} route={route} screemName="Local Data Sample">
       <LinearLayout childMargin={padSize}>
         <Text variant="titleMedium">Modify and save local data</Text>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <LinearLayout align='horizontal' childMargin={padSize}>
           <Button mode="contained" onPress={() => updateTrackersSample()}>++trackers_sample.num</Button>
-          <View style={{ alignItems: 'flex-start', flex: 1 }}>
+          <View>
             <Text variant="labelMedium">Toogle dark mode</Text>
-            <Switch value={getLocalDataValue("settings_sample.isDarkMode")} onValueChange={() => toggleDarkMode()} />
+            <SwitchToggle value={getLocalDataValue("settings_sample.isDarkMode")} onValueChange={() => toggleDarkMode()} />
           </View>
-        </View>
+        </LinearLayout>
         <Button icon="refresh" mode="contained" onPress={() => resetLocalData()}>reset data completely</Button>
       </LinearLayout>
       <LinearLayout>
