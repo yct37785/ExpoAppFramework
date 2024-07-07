@@ -6,6 +6,7 @@ import { View, ScrollView } from 'react-native';
 import { getValueByCondition } from '../../Utilities/GeneralUtils';
 import { LocalDataContext } from '../../Contexts/LocalDataContext';
 import { padSize } from '../../Index/CommonVals';
+
 /**
  * Arranges children in a linear layout, either vertically or horizontally.
  * 
@@ -22,7 +23,6 @@ import { padSize } from '../../Index/CommonVals';
  * @param {Object} props.style - Custom styles to apply to the layout.
  * @returns {JSX.Element} The LinearLayout component.
  */
-
 export const LinearLayout = memo(({
   children,
   flex = 0,
@@ -45,18 +45,20 @@ export const LinearLayout = memo(({
   { marginRight: marginNonReverse, marginLeft: marginReverse };
 
   const renderChildren = () => {
-    return React.Children.map(children, (child, index) => {
-      const childCustomLayout = child.props.customLayout || childLayout;
-      const newStyle = {
-        ...(childCustomLayout === 'match-parent' ? { flex: 1 } : {}),
-      };
+    return React.Children.toArray(children)
+      .filter(child => React.isValidElement(child))
+      .map((child, index) => {
+        const childCustomLayout = child.props.customLayout || childLayout;
+        const newStyle = {
+          ...(childCustomLayout === 'match-parent' ? { flex: 1 } : {}),
+        };
 
-      return (
-        <View key={index} style={[newStyle, index !== React.Children.count(children) - 1 ? marginStyle : {}]}>
-          {child}
-        </View>
-      );
-    });
+        return (
+          <View key={index} style={[newStyle, index !== React.Children.count(children) - 1 ? marginStyle : {}]}>
+            {child}
+          </View>
+        );
+      });
   };
 
   const mainContent = (
@@ -96,9 +98,13 @@ export const LinearLayout = memo(({
  * @param {Object} props.style - Custom styles to apply to the layout.
  * @returns {JSX.Element} The GridLayout component.
  */
-export const GridLayout = memo(({ children, flex = 0, columns = 2, childLayout = 'wrap-content', childMargin = 2, lastRowAlign = 'left',
-  applyPadding = false, debugBackgroundColor = 'orange', style, ...props }) => {
+export const GridLayout = memo(({
+  children, flex = 0, columns = 2, childLayout = 'wrap-content', childMargin = 2, lastRowAlign = 'left',
+  applyPadding = false, debugBackgroundColor = 'orange', style, ...props
+}) => {
   const { debugMode } = useContext(LocalDataContext);
+
+  const validChildren = React.Children.toArray(children).filter(child => React.isValidElement(child));
   const rows = [];
   let row = [];
   let rowFlex = flex;
@@ -106,8 +112,9 @@ export const GridLayout = memo(({ children, flex = 0, columns = 2, childLayout =
     rowFlex = 0;
   }
   const compFlex = childLayout === 'match-parent' ? 1 : 0;
-  children.forEach((child, index) => {
-    const isLastRow = (children.length - index) <= (children.length % columns);
+
+  validChildren.forEach((child, index) => {
+    const isLastRow = (validChildren.length - index) <= (validChildren.length % columns);
     const isLastCol = (index + 1) % columns === 0;
     let flexVal = isLastRow ? 1.0 / columns : 1;
     flexVal = compFlex === 0 ? 0 : flexVal;
@@ -131,7 +138,11 @@ export const GridLayout = memo(({ children, flex = 0, columns = 2, childLayout =
   });
 
   if (row.length > 0) {
-    const alignItems = getValueByCondition([lastRowAlign === 'left', 'flex-start'], [lastRowAlign === 'center', 'center'], [lastRowAlign === 'right', 'flex-end'])
+    const alignItems = getValueByCondition(
+      [lastRowAlign === 'left', 'flex-start'],
+      [lastRowAlign === 'center', 'center'],
+      [lastRowAlign === 'right', 'flex-end']
+    );
     rows.push(
       <View key={`row-${rows.length}`} style={{ flexDirection: 'row', flex: rowFlex, justifyContent: alignItems }}>
         {row}
@@ -142,7 +153,7 @@ export const GridLayout = memo(({ children, flex = 0, columns = 2, childLayout =
   return (
     <View style={[{ flex: flex, backgroundColor: debugMode ? debugBackgroundColor : 'transparent', padding: applyPadding ? padSize : 0 }, style]} {...props}>
       {rows.map((row, index) => {
-        return row
+        return row;
       })}
     </View>
   );
