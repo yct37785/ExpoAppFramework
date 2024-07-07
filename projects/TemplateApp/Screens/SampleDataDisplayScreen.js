@@ -7,6 +7,7 @@ import { RadioButton } from 'react-native-paper';
 import { LinearLayout, ScreenLayout, CollapsibleContainer, ChipOptions, ListDataDisplay, TextInput, Text, HighlightText } from '../../../Framework/Index/UI';
 import { faker } from '@faker-js/faker';
 import { LocalDataContext } from '../../../Framework/Index/Contexts';
+import { padSize } from '../../../Framework/Index/CommonVals';
 
 /**
  * Displays a sample screen with a search bar, filter options, and a list of products.
@@ -131,11 +132,11 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
   return (
     <ScreenLayout navigation={navigation} route={route} customHeaderContent={customHeaderContent}>
       {/* Filter menu */}
-      <CollapsibleContainer toggleHeaderText="Filter">
-        <View style={{ width: '100%' }}>
+      <View style={{ paddingLeft: padSize }}>
+        <CollapsibleContainer toggleHeaderText="Filter">
           <ChipOptions schema={chipsSchema} onSelectionChange={onMaterialChipSelected} />
-        </View>
-      </CollapsibleContainer>
+        </CollapsibleContainer>
+      </View>
       {/* Toggle Flashlist vs FlatList */}
       <RadioButton.Group onValueChange={newValue => setListType(newValue)} value={listType}>
         <View style={{ flexDirection: 'row', backgroundColor: debugMode ? '#66ff99' : 'transparent' }}>

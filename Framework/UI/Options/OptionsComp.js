@@ -2,7 +2,6 @@ import React, { useContext, memo } from 'react';
 import { View } from 'react-native';
 import { LinearLayout } from '../Layouts/Layouts';
 import { LocalDataContext } from '../../Contexts/LocalDataContext';
-import { padSize } from '../../Index/CommonVals';
 
 /**
  * General options component for rendering various types of selection controls.
@@ -52,7 +51,7 @@ import { padSize } from '../../Index/CommonVals';
  *   renderOption={renderOption}
  *   renderParentOption={renderParentOption} />
  */
-const OptionsComp = ({ schema, onSelectionChange, optionsContainer: OptionsContainer, renderOption, renderParentOption, depthPadding }) => {
+const OptionsComp = ({ schema, onSelectionChange, optionsContainer: OptionsContainer, renderOption, renderParentOption, depthPadding = 0 }) => {
   const { debugMode } = useContext(LocalDataContext);
 
   const handleSelect = (path) => {
@@ -117,7 +116,9 @@ const OptionsComp = ({ schema, onSelectionChange, optionsContainer: OptionsConta
         </View>
       } else {
         // render child option/leaf node
-        return renderOption({ option, onPress: () => handleSelect(optionPath) })
+        return <View key={index} style={{ backgroundColor: debugMode ? '#99eeff' : 'transparent' }}>
+          {renderOption({ option, onPress: () => handleSelect(optionPath) })}
+        </View>
       }
     });
   };

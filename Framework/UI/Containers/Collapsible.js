@@ -21,7 +21,7 @@ import { Text } from '../Text/Text';
 const ToggleHeader = memo(({ toggleHeaderText = '', isCollapsed }) => {
   const theme = useTheme();
   return (
-    <View style={{ padding: padSize, paddingLeft: padSize2, flexDirection: 'row', alignItems: 'center' }}>
+    <View style={{ paddingVertical: padSize05, flexDirection: 'row', alignItems: 'center' }}>
       <Text>{toggleHeaderText}</Text>
       <MaterialIcons
         name={isCollapsed ? 'keyboard-arrow-down' : 'keyboard-arrow-up'}

@@ -39,15 +39,15 @@ const ChipOptions = ({ schema, onSelectionChange }) => {
       selected={option.state === 1}
       showSelectedCheck={false}
       mode='outlined'
-      style={{ backgroundColor: option.state === 1 ? theme.colors.primaryContainer : theme.colors.backdrop }}
+      style={{ backgroundColor: option.state === 1 ? theme.colors.primaryContainer : theme.colors.backdrop, margin: padSize05 }}
       onPress={onPress}
     >
       {option.label}
     </Chip>
   );
   
-  const optionsContainer = ({depth, children}) => (
-    <View style={{ paddingLeft: depth * padSize2 }}>
+  const optionsContainer = ({children}) => (
+    <View style={{ flexDirection: 'row', flexWrap: 'wrap'}}>
       {children}
     </View>
   );
