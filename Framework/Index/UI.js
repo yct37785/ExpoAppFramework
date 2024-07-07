@@ -37,11 +37,15 @@ export { LinearLayout, GridLayout } from '../UI/Layouts/Layouts';
 export { default as ScreenLayout } from '../UI/Layouts/ScreenLayout';
 
 /**
- * options: option selection for data; eg. filtering
+ * options: multiple options selection for data; eg. filtering
  */
 export { default as CheckOptions } from '../UI/Options/CheckOptions';
 export { default as ChipOptions } from '../UI/Options/ChipOptions';
-export { default as RadioGroupOption } from '../UI/Options/RadioGroupOption';
+
+/**
+ * toggle: one option selectable; eg. check, radio, switch
+ */
+export { default as RadioGroupToggle } from '../UI/Toggle/RadioGroupToggle';
 
 /**
  * button: variations of buttons

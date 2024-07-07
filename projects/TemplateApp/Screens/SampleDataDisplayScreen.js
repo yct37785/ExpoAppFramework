@@ -4,7 +4,7 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { View, Image } from 'react-native';
 import {
-  LinearLayout, ScreenLayout, CollapsibleContainer, ChipOptions, RadioGroupOption, ListDataDisplay,
+  LinearLayout, ScreenLayout, CollapsibleContainer, ChipOptions, RadioGroupToggle, ListDataDisplay,
   TextInput, Text, HighlightText
 } from '../../../Framework/Index/UI';
 import { faker } from '@faker-js/faker';
@@ -140,7 +140,7 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
         </CollapsibleContainer>
       </View> : null}
       {/* Toggle Flashlist vs FlatList */}
-      <RadioGroupOption
+      <RadioGroupToggle
         options={{
           flashlist: { label: "Flashlist" },
           flatlist: { label: "Flatlist" }

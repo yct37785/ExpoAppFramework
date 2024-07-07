@@ -12,7 +12,7 @@ import { LocalDataContext } from '../../Contexts/LocalDataContext';
  * @param {Object} props.options - options in JSON obj: { value: { label: <string> } }
  * @param {string} props.value - value of currently selected option.
  * @param {Function} props.onValueChange - Callback function to handle selection changes.
- * @returns {JSX.Element} The RadioGroupOption component.
+ * @returns {JSX.Element} The RadioGroupToggle component.
  *
  * @example
  * const options = {
@@ -21,7 +21,7 @@ import { LocalDataContext } from '../../Contexts/LocalDataContext';
  *   green: { label: 'Green' },
  * };
  */
-const RadioGroupOption = ({ options, value, onValueChange }) => {
+const RadioGroupToggle = ({ options, value, onValueChange }) => {
   const { debugMode } = useContext(LocalDataContext);
   return (
     <RadioButton.Group onValueChange={newValue => onValueChange(newValue)} value={value}>
@@ -37,4 +37,4 @@ const RadioGroupOption = ({ options, value, onValueChange }) => {
   );
 };
 
-export default memo(RadioGroupOption);
+export default memo(RadioGroupToggle);
