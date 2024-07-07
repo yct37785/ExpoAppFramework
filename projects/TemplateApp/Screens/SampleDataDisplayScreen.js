@@ -8,7 +8,6 @@ import {
   TextInput, Text, HighlightText
 } from '../../../Framework/Index/UI';
 import { faker } from '@faker-js/faker';
-import { LocalDataContext } from '../../../Framework/Index/Contexts';
 import { padSize } from '../../../Framework/Index/CommonVals';
 
 /**
@@ -20,7 +19,6 @@ import { padSize } from '../../../Framework/Index/CommonVals';
  * @returns {JSX.Element} The SampleSearchScreen component.
  */
 export default function SampleDataDisplayScreen({ navigation, route }) {
-  const { debugMode } = useContext(LocalDataContext);
   const [listType, setListType] = useState('flashlist');
   const [searchQuery, setSearchQuery] = useState('');
   const [productList, setProductList] = useState([]);

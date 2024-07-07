@@ -42,3 +42,8 @@ export { default as ScreenLayout } from '../UI/Layouts/ScreenLayout';
 export { default as CheckOptions } from '../UI/Options/CheckOptions';
 export { default as ChipOptions } from '../UI/Options/ChipOptions';
 export { default as RadioGroupOption } from '../UI/Options/RadioGroupOption';
+
+/**
+ * button: variations of buttons
+ */
+export { default as Button } from '../UI/Button/Button';
