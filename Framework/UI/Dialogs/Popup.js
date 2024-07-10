@@ -2,7 +2,7 @@
  * popup comp
 *****************************************************************************************/
 import React, { useRef, memo } from 'react';
-import { TouchableRipple, useTheme, Text } from 'react-native-paper';
+import { TouchableRipple, useTheme } from 'react-native-paper';
 import { Menu, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import PropTypes from 'prop-types';
 

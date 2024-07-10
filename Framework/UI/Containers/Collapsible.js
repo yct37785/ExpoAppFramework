@@ -3,12 +3,13 @@
 *****************************************************************************************/
 import React, { useState, useContext, memo } from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { useTheme, Text } from 'react-native-paper';
+import { useTheme } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
 import { LocalDataContext } from '../../Contexts/LocalDataContext';
 import { padSize05, padSize, padSize2, iconSizeSmall } from '../../Index/CommonVals';
+import { Text } from '../Text/Text';
 
 /**
    * ToggleHeader Component
@@ -17,10 +18,10 @@ import { padSize05, padSize, padSize2, iconSizeSmall } from '../../Index/CommonV
    * @param {boolean} param0.isCollapsed - Indicates if the container is collapsed.
    * @returns {JSX.Element} The ToggleHeader component.
    */
-const ToggleHeader = React.memo(({ toggleHeaderText = '', isCollapsed }) => {
+const ToggleHeader = memo(({ toggleHeaderText = '', isCollapsed }) => {
   const theme = useTheme();
   return (
-    <View style={{ padding: padSize, paddingLeft: padSize2, flexDirection: 'row', alignItems: 'center' }}>
+    <View style={{ paddingVertical: padSize05, flexDirection: 'row', alignItems: 'center' }}>
       <Text>{toggleHeaderText}</Text>
       <MaterialIcons
         name={isCollapsed ? 'keyboard-arrow-down' : 'keyboard-arrow-up'}
@@ -39,7 +40,7 @@ const ToggleHeader = React.memo(({ toggleHeaderText = '', isCollapsed }) => {
  * @param {React.ReactNode} props.children - Content to be rendered within the collapsible section.
  * @returns {JSX.Element} The CollapsibleContainer component.
  */
-const CollapsibleContainer = ({ toggleHeaderText = '', children }) => {
+export const CollapsibleContainer = memo(({ toggleHeaderText = '', children }) => {
   const { debugMode } = useContext(LocalDataContext);
   const [isCollapsed, setIsCollapsed] = useState(true);
 
@@ -57,7 +58,7 @@ const CollapsibleContainer = ({ toggleHeaderText = '', children }) => {
       </Collapsible>
     </View>
   );
-};
+});
 
 /**
  * A component that provides an accordion with multiple collapsible sections.
@@ -69,7 +70,7 @@ const CollapsibleContainer = ({ toggleHeaderText = '', children }) => {
  * @param {Function} props.renderContent - Function to render the content of each section.
  * @returns {JSX.Element} The AccordionContainer component.
  */
-const AccordionContainer = ({
+export const AccordionContainer = memo(({
   sections,
   renderSectionTitle = () => {},
   renderHeader = () => {},
@@ -87,7 +88,4 @@ const AccordionContainer = ({
       onChange={(activeSections) => setActiveSections(activeSections)}
     />
   );
-};
-
-export const CollapsibleContainerMemo = memo(CollapsibleContainer);
-export const AccordionContainerMemo = memo(AccordionContainer);
+});

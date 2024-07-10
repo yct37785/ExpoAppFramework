@@ -2,18 +2,13 @@
 * copy paste empty screen
 ***************************************************************************************/
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
-import { View, Keyboard } from 'react-native';
 // UI
-import {
-  useTheme, Text, Button, Appbar
-} from 'react-native-paper';
-import { LinearLayout, ScreenLayout } from '../../../Framework/Index/UI';
+import { LinearLayout, ScreenLayout, Text } from '../../../Framework/Index/UI';
 
 /**
  * sample empty screen
  */
 export default function SampleEmptyScreen({ navigation, route, screenHeaderComp: ScreenHeaderComp }) {
-  const theme = useTheme();
   const { paramText } = route.params;
 
   return (

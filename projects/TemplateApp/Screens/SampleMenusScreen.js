@@ -3,12 +3,12 @@
 ***************************************************************************************/
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { View, Keyboard } from 'react-native';
+const _ = require('lodash');
 // UI
 import {
-  useTheme, Text, Card, Button, Appbar,
-  TouchableRipple, Searchbar, IconButton, FAB, Portal, Divider, Snackbar
+  Card, Button, IconButton, Portal
 } from 'react-native-paper';
-import { LinearLayout, ScreenLayout, Dialog, Popup, PickerInput, CheckOptions, ChipOptions } from '../../../Framework/Index/UI';
+import { LinearLayout, ScreenLayout, Dialog, Popup, PickerInput, CheckOptions, Text } from '../../../Framework/Index/UI';
 import { iconSizeSmall } from '../../../Framework/Index/CommonVals';
 // const
 const PICKER_ITEM_LIST = [
@@ -16,50 +16,49 @@ const PICKER_ITEM_LIST = [
   { label: 'Blue', value: 'blue' },
   { label: 'Green', value: 'green' },
 ];
-const POPUP_MENU_OPTIONS = [
-  {
+const POPUP_MENU_OPTIONS = {
+  'colors': {
     label: 'Colors',
-    value: 'colors',
-    children: [
-      { label: 'Red', value: 'red' },
-      { label: 'Blue', value: 'blue' },
-      { label: 'Green', value: 'green' },
-    ],
+    state: 0,
+    children: {
+      'red': { label: 'Red', state: 0 },
+      'blue': { label: 'Blue', state: 0 },
+      'green': { label: 'Green', state: 0 },
+    }
   },
-  {
+  'class': {
     label: 'Class',
-    value: 'class',
-    children: [
-      { 
+    state: 0,
+    children: {
+      'mammals': { 
         label: 'Mammals',
-        value: 'mammals',
-        children: [
-          { label: 'Cat', value: 'cat' },
-          { label: 'Dog', value: 'dog' }
-        ]
+        state: 0,
+        children: {
+          'cat': { label: 'Cat', state: 0 },
+          'dog': { label: 'Dog', state: 0 }
+        }
       },
-      {
+      'reptiles': { 
         label: 'Reptiles',
-        value: 'reptiles',
-        children: [
-          { label: 'Turtle', value: 'turtle' },
-          { label: 'Frog', value: 'frog' },
-          { label: 'Lizard', value: 'lizard' }
-        ]
-      },
-    ],
-  },
-];
+        state: 0,
+        children: {
+          'turtle': { label: 'Turtle', state: 0 },
+          'frog': { label: 'Frog', state: 0 },
+          'lizard': { label: 'Lizard', state: 0 }
+        }
+      }
+    }
+  }
+};
 
 /**
  * Display sample menus screen
  */
 export default function SampleMenusScreen({ navigation, route, screenHeaderComp: ScreenHeaderComp }) {
-  const theme = useTheme();
   const searchBarRef = useRef();
   const [showDialog, setShowDialog] = useState(false);
   const [pickerSelection, setPickerSelection] = useState('red');
-  const [popupMenuSelection, setPopupMenuSelection] = useState({});
+  const [checkOptionsSchema, setCheckOptionsSchema] = useState( _.cloneDeep(POPUP_MENU_OPTIONS));
 
   useEffect(() => {
     const keyboardListener = Keyboard.addListener('keyboardDidHide', (e) => {
@@ -75,15 +74,15 @@ export default function SampleMenusScreen({ navigation, route, screenHeaderComp:
     setShowDialog(false);
   }
 
-  const handlePopupMenuSelectionChange = (selectedValues) => {
-    setPopupMenuSelection(selectedValues);
+  const handleCheckOptionsChange = (updatedSchema, optionPath, optionRef) => {
+    setCheckOptionsSchema(updatedSchema);
   };
 
   function customHeaderContent() {
     return <LinearLayout align='horizontal' reverse={true}>
       <Popup triggerComp={<IconButton icon="dots-vertical" size={iconSizeSmall} />}>
         <LinearLayout applyPadding={true}>
-          <CheckOptions schema={POPUP_MENU_OPTIONS} onSelectionChange={handlePopupMenuSelectionChange} />
+          <CheckOptions schema={checkOptionsSchema} onSelectionChange={handleCheckOptionsChange} />
         </LinearLayout>
       </Popup>
     </LinearLayout>

@@ -3,10 +3,12 @@
 ***************************************************************************************/
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { View, Image } from 'react-native';
-import { useTheme, Text, Divider, RadioButton } from 'react-native-paper';
-import { LinearLayout, ScreenLayout, CollapsibleContainer, ChipOptions, ListDataDisplay, TextInput, HighlightTextDisplay } from '../../../Framework/Index/UI';
+import {
+  LinearLayout, ScreenLayout, CollapsibleContainer, ChipOptions, RadioGroupToggle, ListDataDisplay,
+  TextInput, Text, HighlightText
+} from '../../../Framework/Index/UI';
 import { faker } from '@faker-js/faker';
-import { LocalDataContext } from '../../../Framework/Index/Contexts';
+import { padSize } from '../../../Framework/Index/CommonVals';
 
 /**
  * Displays a sample screen with a search bar, filter options, and a list of products.
@@ -17,11 +19,10 @@ import { LocalDataContext } from '../../../Framework/Index/Contexts';
  * @returns {JSX.Element} The SampleSearchScreen component.
  */
 export default function SampleDataDisplayScreen({ navigation, route }) {
-  const theme = useTheme();
-  const { debugMode } = useContext(LocalDataContext);
-  const [listType, setListType] = useState('biglist');
+  const [listType, setListType] = useState('flashlist');
   const [searchQuery, setSearchQuery] = useState('');
   const [productList, setProductList] = useState([]);
+  const [chipsSchema, setChipsSchema] = useState(null);
   const [materialsSelected, setMaterialsSelected] = useState({});
   const ROW_HEIGHT = 250;
 
@@ -29,10 +30,15 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
     // Generate product list sample
     const fakeData = faker.helpers.multiple(createRandomProduct, { count: 1000 });
     // Generate filters
+    const chipsSchema = { 'material': { label: 'Material', state: 0, children: {} } };
     const initialMaterialsSelected = {};
     fakeData.forEach((item) => {
-      initialMaterialsSelected[item.material] = false;
+      if (!(item.material in chipsSchema['material'].children)) {
+        chipsSchema['material'].children[item.material] = { label: item.material, state: 0 };
+        initialMaterialsSelected[item.material] = false;
+      }
     });
+    setChipsSchema(chipsSchema);
     setMaterialsSelected(initialMaterialsSelected);
     setProductList(fakeData);
   }, []);
@@ -57,13 +63,15 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
    * 
    * @param {string} mat - The key of the selected material chip.
    */
-  const onMaterialChipSelected = useCallback((mat) => {
+  const onMaterialChipSelected = useCallback((updatedSchema, optionPath, optionRef) => {
+    const mat = optionPath.at(-1);
     if (mat in materialsSelected) {
       setMaterialsSelected((prevMaterialsSelected) => ({
         ...prevMaterialsSelected,
         [mat]: !prevMaterialsSelected[mat]
       }));
     }
+    setChipsSchema(updatedSchema);
   }, [materialsSelected]);
 
   /**
@@ -86,32 +94,6 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
   }, [searchQuery, materialsSelected]);
 
   /**
-   * ListItem Component
-   * 
-   * @param {Object} param0 - Component props.
-   * @param {Object} param0.item - The item data to render.
-   * @param {string} param0.searchQuery - The current search query.
-   * @returns {JSX.Element} The ListItem component.
-   */
-  const ListItem = React.memo(({ item, searchQuery }) => {
-    return (
-      <View style={{ flex: 1 }}>
-        <View style={{ flex: 1 }}>
-          <HighlightTextDisplay text={item.name} query={searchQuery} variant={'titleSmall'} />
-          <Image
-            style={{ width: 100, height: 100 }}
-            source={{ uri: item.img }}
-            resizeMode={'contain'}
-          />
-          <Text variant='labelMedium'>{`material: ${item.material}`}</Text>
-          <HighlightTextDisplay text={item.desc} query={searchQuery} variant={'bodyMedium'} />
-        </View>
-        <Divider />
-      </View>
-    );
-  });
-
-  /**
    * Renders each item in the list.
    * 
    * @param {Object} param0 - Render item parameters.
@@ -119,14 +101,24 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
    * @param {number} param0.index - The index of the item.
    * @returns {JSX.Element} The rendered item component.
    */
-  const renderItem = useCallback(({ item, index }) => {
-    return (
-      <ListItem
-        item={item}
-        searchQuery={searchQuery}
-      />
-    );
-  }, [searchQuery]);
+  const renderItem = useCallback(
+    React.memo(({ item, index }) => {
+      return (
+        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
+          <HighlightText text={item.name} query={searchQuery} variant={'titleSmall'} />
+          <Image
+            style={{ width: 100, height: 100 }}
+            source={{ uri: item.img }}
+            resizeMode={'contain'}
+          />
+          <Text variant='labelMedium'>{`material: ${item.material}`}</Text>
+          <HighlightText text={item.desc} query={searchQuery} variant={'bodyMedium'} />
+        </View>
+      </View>
+      );
+    }), [searchQuery]
+  );
 
   function customHeaderContent() {
     return <LinearLayout applyPadding={true}>
@@ -142,25 +134,18 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
   return (
     <ScreenLayout navigation={navigation} route={route} customHeaderContent={customHeaderContent}>
       {/* Filter menu */}
-      <CollapsibleContainer toggleHeaderText="Filter">
-        <View style={{ width: '100%' }}>
-          <Text variant='labelSmall'>Materials</Text>
-          <ChipOptions toggledMap={materialsSelected} onChipSelected={onMaterialChipSelected} />
-        </View>
-      </CollapsibleContainer>
-      {/* Toggle BigList vs FlatList */}
-      <RadioButton.Group onValueChange={newValue => setListType(newValue)} value={listType}>
-        <View style={{ flexDirection: 'row', backgroundColor: debugMode ? '#66ff99' : 'transparent' }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text>BigList</Text>
-            <RadioButton value="biglist" />
-          </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text>FlatList</Text>
-            <RadioButton value="flatlist" />
-          </View>
-        </View>
-      </RadioButton.Group>
+      {chipsSchema ? <View style={{ paddingLeft: padSize }}>
+        <CollapsibleContainer toggleHeaderText="Filter">
+          <ChipOptions schema={chipsSchema} onSelectionChange={onMaterialChipSelected} />
+        </CollapsibleContainer>
+      </View> : null}
+      {/* Toggle Flashlist vs FlatList */}
+      <RadioGroupToggle
+        options={{
+          flashlist: { label: "Flashlist" },
+          flatlist: { label: "Flatlist" }
+        }}
+        value={listType} onValueChange={setListType} />
       <ListDataDisplay
         data={productList}
         filterFunction={filterProducts}

@@ -3,8 +3,7 @@
 ***************************************************************************************/
 import React from 'react';
 import { View } from 'react-native';
-import { useTheme, Text, Appbar } from 'react-native-paper';
-import { LinearLayout, GridLayout, ScreenLayout } from '../../../Framework/Index/UI';
+import { LinearLayout, GridLayout, ScreenLayout, Text } from '../../../Framework/Index/UI';
 import { padSize } from '../../../Framework/Index/CommonVals';
 
 /**
@@ -19,7 +18,6 @@ import { padSize } from '../../../Framework/Index/CommonVals';
  * @returns {JSX.Element} The SampleLayoutsScreen component.
  */
 export default function SampleLayoutsScreen({ navigation, route }) {
-  const theme = useTheme();
 
   const TextContainer = ({ text, fontSize = 14, style, ...props }) => (
     <View style={[{ backgroundColor: '#be74c8', justifyContent: 'center' }, style]}>

@@ -1,37 +1,64 @@
-import React, { memo } from 'react';
-import { View } from 'react-native';
-import { Chip, useTheme } from 'react-native-paper';
-import { padSize05 } from '../../Index/CommonVals';
+import React, { useState, useContext, memo } from 'react';
+import { View, TouchableOpacity } from 'react-native';
+import { useTheme, Chip } from 'react-native-paper';
+import { LinearLayout } from '../Layouts/Layouts';
+import { Text } from '../Text/Text';
+import { padSize025, padSize05, padSize, padSize2 } from '../../Index/CommonVals';
+import OptionsComp from './OptionsComp';
 
 /**
- * display options in chips form
- * 
- * @param {Object} props - Component props.
- * @param {Object} props.toggledMap - Map of toggled state for chip menu, where key is the chip label and value is a boolean indicating if the chip is selected.
- * @param {Function} props.onChipSelected - Callback function to handle chip selection. Takes the key of the selected chip as a parameter.
+ * Component for rendering chip options based on a JSON schema.
+ *
+ * @component
+ * @param {Object} props - Component props
+ * @param {Object} props.schema - JSON schema representing the menu options.
+ * @param {string} props.schema.label - The label for the menu option.
+ * @param {Object} [props.schema.children] - Nested options for the menu.
+ * @param {Function} props.onSelectionChange - Callback function to handle selection changes.
  * @returns {JSX.Element} The ChipOptions component.
+ *
+ * @example
+ * const schema = {
+ *   label: 'Colors',
+ *   children: {
+ *     red: { label: 'Red' },
+ *     blue: { label: 'Blue' },
+ *     green: { label: 'Green' },
+ *   },
+ * };
  */
-const ChipOptions = ({
-  toggledMap,
-  onChipSelected,
-}) => {
+const ChipOptions = ({ schema, onSelectionChange }) => {
   const theme = useTheme();
 
-  return (
-    <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingTop: padSize05 }}>
-      {Object.keys(toggledMap).map((k) => (
-        <Chip 
-          key={k} 
-          selected={toggledMap[k]} 
-          showSelectedCheck={false} 
-          mode='outlined'
-          style={{ margin: padSize05, backgroundColor: toggledMap[k] ? theme.colors.primaryContainer : theme.colors.backdrop }}
-          onPress={() => onChipSelected(k)}
-        >
-          {k}
-        </Chip>
-      ))}
+  const renderLabel = ({ option, onPress }) => (
+    <Text>{option.label}</Text>
+  );
+
+  const renderChip = ({ option, onPress }) => (
+    <Chip
+      selected={option.state === 1}
+      showSelectedCheck={false}
+      mode='outlined'
+      style={{ backgroundColor: option.state === 1 ? theme.colors.primaryContainer : theme.colors.backdrop, margin: padSize05 }}
+      onPress={onPress}
+    >
+      {option.label}
+    </Chip>
+  );
+  
+  const optionsContainer = ({children}) => (
+    <View style={{ flexDirection: 'row', flexWrap: 'wrap'}}>
+      {children}
     </View>
+  );
+
+  return (
+    <OptionsComp
+      schema={schema}
+      onSelectionChange={onSelectionChange}
+      optionsContainer={optionsContainer}
+      renderOption={renderChip}
+      renderParentOption={renderLabel} />
   );
 };
 

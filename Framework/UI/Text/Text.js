@@ -1,8 +1,22 @@
 /*****************************************************************************************
  * text display
 *****************************************************************************************/
-import React, { useRef, memo } from 'react';
-import { Text } from 'react-native-paper';
+import React, { memo } from 'react';
+import { Text as RNPText } from 'react-native-paper';
+
+/**
+ * text component, wraps react-native-paper text, props identical to react-native-paper
+ * 
+ * @param {React.ReactNode} props.children - Textual content.
+ * @returns {JSX.Element} A React element with the text.
+ */
+export const Text = ({children, ...props}) => {
+  return (
+    <RNPText {...props}>
+      {children}
+    </RNPText>
+  );
+}
 
 /**
  * Highlights search text within a given string.
@@ -13,7 +27,7 @@ import { Text } from 'react-native-paper';
  * @param {string} [label=''] - Optional label to prepend to the text.
  * @returns {JSX.Element} A React element with the highlighted search text.
  */
-const HighlightTextDisplay = ({
+export const HighlightText = memo(({
   text,
   query,
   highlightColor = 'yellow',
@@ -39,6 +53,4 @@ const HighlightTextDisplay = ({
       )}
     </Text>
   );
-};
-
-export const HighlightTextDisplayMemo = memo(HighlightTextDisplay);
+});
