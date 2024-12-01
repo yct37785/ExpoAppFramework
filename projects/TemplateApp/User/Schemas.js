@@ -19,6 +19,7 @@ export const NEW_USER_DATA = {
  * screen display names
  */
 export const SAMPLE_SCREENS = {
+  new: "new screen",
   layouts: "layouts example",
   containers: "containers example",
   tabs: "tabs example",
