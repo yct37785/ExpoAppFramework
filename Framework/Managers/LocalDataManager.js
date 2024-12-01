@@ -7,19 +7,19 @@ import { objToKeyValueArr } from '../Utilities/GeneralUtils';
 const _ = require('lodash');
 
 /**
- * Creates new user data based on NEW_USER_DATA schema, saves it to local storage,
+ * Creates new user data based on LOCAL_DATA_SCHEMA schema, saves it to local storage,
  * and returns a deep copy.
  * 
- * @param {Object} NEW_USER_DATA - The schema for new user data.
+ * @param {Object} LOCAL_DATA_SCHEMA - The schema for new user data.
  * @returns {Promise<Object>} A promise that resolves to a deep copy of the new user data.
  */
-async function createNewUserData(NEW_USER_DATA) {
+async function createNewUserData(LOCAL_DATA_SCHEMA) {
   try {
-    const keyValList = Object.keys(NEW_USER_DATA).map((key) => {
-      return [key, JSON.stringify(NEW_USER_DATA[key])];
+    const keyValList = Object.keys(LOCAL_DATA_SCHEMA).map((key) => {
+      return [key, JSON.stringify(LOCAL_DATA_SCHEMA[key])];
     });
     await writeDataAS(keyValList);
-    return _.cloneDeep(NEW_USER_DATA);
+    return _.cloneDeep(LOCAL_DATA_SCHEMA);
   } catch (e) {
     console.log(e);
     throw e;
@@ -50,10 +50,10 @@ function fixNestedKeyValues(currObj, templateObj) {
  * Gets all locally saved user data, creates new data if no data is found,
  * and fixes missing nested key-value pairs.
  * 
- * @param {Object} NEW_USER_DATA - The schema for new user data.
+ * @param {Object} LOCAL_DATA_SCHEMA - The schema for new user data.
  * @returns {Promise<Object>} A promise that resolves to the user data.
  */
-async function getLocalUserData(NEW_USER_DATA) {
+async function getLocalUserData(LOCAL_DATA_SCHEMA) {
   try {
     let allKeys = await getAllKeysAS();
     
@@ -64,10 +64,10 @@ async function getLocalUserData(NEW_USER_DATA) {
     // }
 
     if (allKeys.length === 0) {
-      return await createNewUserData(NEW_USER_DATA);
+      return await createNewUserData(LOCAL_DATA_SCHEMA);
     } else {
       const userData = await readDataAS(allKeys);
-      const hasMissing = fixNestedKeyValues(userData, NEW_USER_DATA);
+      const hasMissing = fixNestedKeyValues(userData, LOCAL_DATA_SCHEMA);
       if (hasMissing) {
         await writeDataAS(objToKeyValueArr(userData));
         console.log('saved userData for missing keys');
@@ -84,7 +84,7 @@ async function getLocalUserData(NEW_USER_DATA) {
  * custom hook for managing immutable local data instance and loading/saving to local storage
  * data instance can only be modified via functions
  */
-const useLocalDataManager = ({ NEW_USER_DATA }) => {
+const useLocalDataManager = ({ LOCAL_DATA_SCHEMA }) => {
   const [data, setData] = useState({}); // will not be exposed to consumers
   const [isLocalDataLoaded, setIsLocalDataLoaded] = useState(false);
   const [updateCount, setUpdateCount] = useState(0);
@@ -95,7 +95,7 @@ const useLocalDataManager = ({ NEW_USER_DATA }) => {
    */
   useEffect(() => {
     const fetchData = async () => {
-      const storedData = await getLocalUserData(NEW_USER_DATA);
+      const storedData = await getLocalUserData(LOCAL_DATA_SCHEMA);
       if (storedData) {
         setData(storedData);
         setIsLocalDataLoaded(true);
@@ -165,7 +165,7 @@ const useLocalDataManager = ({ NEW_USER_DATA }) => {
     if (allKeys.length > 0) {
       await deleteDataAS(allKeys);
     }
-    setData(await createNewUserData(NEW_USER_DATA));
+    setData(await createNewUserData(LOCAL_DATA_SCHEMA));
     setUpdateCount(updateCount + 1);
   };
 

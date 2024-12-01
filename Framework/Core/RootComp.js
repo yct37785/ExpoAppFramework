@@ -71,11 +71,11 @@ function ScreenWrapper({ component: Component, ...props }) {
  * @param {Object} props.screenMaps - A mapping of screen names to their respective components, refer to TemplateApp > App.js.
  * @param {Object} props.screenHeaderMaps - A mapping of screen custom headers mapped to corresponding screen key, refer to TemplateApp > App.js.
  * @param {string} props.DEFAULT_SCREEN - The default screen to display on app launch, refer to TemplateApp > App.js.
- * @param {Object} props.NEW_USER_DATA - The schema for new user data, refer to TemplateApp > App.js.
+ * @param {Object} props.LOCAL_DATA_SCHEMA - The schema for new user data, refer to TemplateApp > App.js.
  * @returns {JSX.Element} The root component of the app.
  */
-const RootComp = ({ screenMaps, screenHeaderMaps, DEFAULT_SCREEN, NEW_USER_DATA }) => {
-  const localDataManager = useLocalDataManager({ NEW_USER_DATA });
+const RootComp = ({ screenMaps, screenHeaderMaps, DEFAULT_SCREEN, LOCAL_DATA_SCHEMA }) => {
+  const localDataManager = useLocalDataManager({ LOCAL_DATA_SCHEMA });
   const [theme, setTheme] = useState(CombinedDarkTheme);
 
   useEffect(() => {

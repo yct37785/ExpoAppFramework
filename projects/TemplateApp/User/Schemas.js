@@ -4,7 +4,7 @@
 /**
  * new user data schema
  */
-export const NEW_USER_DATA = {
+export const LOCAL_DATA_SCHEMA = {
   trackers_sample: {
     key1: {
       num: 0
