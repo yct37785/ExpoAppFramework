@@ -5,7 +5,7 @@
 import React, { Node, useCallback, useMemo, useEffect, useState } from 'react';
 import { View, LogBox, Platform, StatusBar } from 'react-native';
 // UI
-import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, Appbar } from 'react-native-paper';
+import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, configureFonts } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
 import { padSize } from '../Index/CommonVals';
 // data
@@ -28,6 +28,7 @@ const CombinedDefaultTheme = {
     ...MD3LightTheme.colors,
     ...LightTheme.colors,
   },
+  fonts: configureFonts({ isV3: true })
 };
 const CombinedDarkTheme = {
   ...MD3DarkTheme,
@@ -36,6 +37,7 @@ const CombinedDarkTheme = {
     ...MD3DarkTheme.colors,
     ...DarkTheme.colors,
   },
+  fonts: configureFonts({ isV3: true })
 };
 
 LogBox.ignoreLogs(['new NativeEventEmitter']);
