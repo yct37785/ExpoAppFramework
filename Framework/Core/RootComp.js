@@ -28,7 +28,10 @@ const CombinedDefaultTheme = {
     ...MD3LightTheme.colors,
     ...LightTheme.colors,
   },
-  fonts: configureFonts({ isV3: true })
+  fonts: {
+    ...MD3LightTheme.fonts,
+    ...LightTheme.fonts,
+  }
 };
 const CombinedDarkTheme = {
   ...MD3DarkTheme,
@@ -37,7 +40,10 @@ const CombinedDarkTheme = {
     ...MD3DarkTheme.colors,
     ...DarkTheme.colors,
   },
-  fonts: configureFonts({ isV3: true })
+  fonts: {
+    ...MD3DarkTheme.fonts,
+    ...DarkTheme.fonts,
+  }
 };
 
 LogBox.ignoreLogs(['new NativeEventEmitter']);
