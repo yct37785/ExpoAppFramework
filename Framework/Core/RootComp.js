@@ -30,7 +30,6 @@ const CombinedDefaultTheme = {
   },
   fonts: {
     ...MD3LightTheme.fonts,
-    ...LightTheme.fonts,
   }
 };
 const CombinedDarkTheme = {
@@ -42,7 +41,6 @@ const CombinedDarkTheme = {
   },
   fonts: {
     ...MD3DarkTheme.fonts,
-    ...DarkTheme.fonts,
   }
 };
 
