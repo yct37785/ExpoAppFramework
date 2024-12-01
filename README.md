@@ -101,10 +101,10 @@ git clone git@github.com:yct37785/ExpoAppFramework.git
 cd ExpoAppFramework/projects/TemplateApp
 ````
 
-Run `yarn` to install dependencies (modules will be installed in root instead of TemplateApp):
+Run `yarn add expo` to install expo module first, this step also automatically installs the rest of the dependencies in package.json:
 
 ````bash
-yarn
+yarn add expo
 ````
 
 ## Usage
