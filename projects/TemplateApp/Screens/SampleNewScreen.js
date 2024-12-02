@@ -4,7 +4,7 @@
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { View } from 'react-native';
 import { ScreenLayout, Text } from '../../../Framework/Index/UI';
-import { VerticalLayout, HorizontalLayout } from './TestLayouts';
+import { VerticalLayout, HorizontalLayout, GridLayout } from './TestLayouts';
 // data
 import { onLocalDataUpdate } from '../../../Framework/Index/Contexts';
 // const
@@ -42,6 +42,27 @@ const SampleNewScreen = ({ navigation, route }) => {
         <Container />
         <Container />
       </HorizontalLayout>
+      <GridLayout
+        direction="row"
+        reverse={false}
+        alignment="centered"
+        spacing={10}
+        itemsPerLine={3}
+        style={{ margin: 10, backgroundColor: 'red' }}
+      >
+        {Array.from({ length: 10 }, (_, i) => (
+          <Text
+            key={i}
+            style={{
+              backgroundColor: 'lightblue',
+              textAlign: 'center',
+              padding: 10,
+            }}
+          >
+            Item {i + 1}
+          </Text>
+        ))}
+      </GridLayout>
     </ScreenLayout>)
 }
 

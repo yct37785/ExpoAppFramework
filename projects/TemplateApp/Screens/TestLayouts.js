@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useContext } from 'react';
 import { View, StyleSheet } from 'react-native';
 
 /**
@@ -51,11 +51,67 @@ const Layout = ({
 };
 
 /**
+ * Grid Layout Component
+ * @param {object} props
+ * @param {'row' | 'column'} [props.direction='row'] - layout direction
+ * @param {boolean} [props.reverse=false] - reverse the order of children
+ * @param {'fixed' | 'centered'} [props.alignment='fixed'] - alignment of elements in grid
+ * @param {number} [props.spacing=0] - space between grid items
+ * @param {number} [props.itemsPerLine=2] - number of items per row/column
+ * @param {object} [props.style={}] - additional custom styles for the grid
+ * @param {React.ReactNode} props.children - child elements
+ */
+export const GridLayout = memo(({
+  direction = 'row',
+  reverse = false,
+  alignment = 'fixed',
+  spacing = 0,
+  itemsPerLine = 2,
+  style = {},
+  children,
+}) => {
+  const arrangedChildren = React.Children.toArray(children).filter(child =>
+    React.isValidElement(child)
+  );
+  if (reverse) {
+    arrangedChildren.reverse();
+  }
+
+  const containerStyle = StyleSheet.create({
+    container: {
+      flexDirection: direction === 'row' ? 'column' : 'row',
+      flexWrap: 'wrap',
+      alignItems: alignment === 'centered' ? 'flex-start' : 'stretch',
+      ...style,
+    },
+  });
+
+  const itemStyle = StyleSheet.create({
+    item: {
+      margin: spacing / 2,
+      flexBasis: `${100 / itemsPerLine}%`,
+      maxWidth: `${100 / itemsPerLine}%`,
+    },
+  });
+
+  return (
+    <View style={containerStyle.container}>
+      {arrangedChildren.map((child, index) => (
+        <View style={itemStyle.item} key={index}>
+          {child}
+        </View>
+      ))}
+    </View>
+  );
+});
+
+
+/**
  * Vertical Layout Component
  */
-export const VerticalLayout = (props) => <Layout {...props} direction="column" />;
+export const VerticalLayout = memo((props) => <Layout {...props} direction="column" />);
 
 /**
  * Horizontal Layout Component
  */
-export const HorizontalLayout = (props) => <Layout {...props} direction="row" />;
+export const HorizontalLayout = memo((props) => <Layout {...props} direction="row" />);
