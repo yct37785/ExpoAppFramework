@@ -33,7 +33,7 @@ const Layout = ({
   const containerStyle = StyleSheet.create({
     container: {
       flexDirection: direction,
-      alignItems: align,
+      justifyContent: align,
       flexWrap: constraint === 'wrap' ? 'wrap' : 'nowrap',
       margin,
       padding,
