@@ -24,7 +24,7 @@ const Layout = ({
   children,
 }) => {
   // Reverse children if needed
-  const arrangedChildren = React.Children.toArray(children);
+  const arrangedChildren = React.Children.toArray(children).filter(child => React.isValidElement(child));
   if (reverse) {
     arrangedChildren.reverse();
   }
