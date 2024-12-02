@@ -33,7 +33,7 @@ export { default as TextInput } from '../UI/Input/TextInput';
 /**
  * layouts: parent view to contain other UI comps; eg. align children horizontally
  */
-export { LinearLayout, GridLayout } from '../UI/Layouts/Layouts';
+export { VerticalLayout, HorizontalLayout, GridLayout } from '../UI/Layouts/Layouts';
 export { default as ScreenLayout } from '../UI/Layouts/ScreenLayout';
 
 /**

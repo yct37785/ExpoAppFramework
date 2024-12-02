@@ -1,160 +1,130 @@
-/*****************************************************************************************
- * layouts, used to hold together UI elements, use one of the Layouts instead of Views
-*****************************************************************************************/
-import React, { useContext, memo } from 'react';
-import { View, ScrollView } from 'react-native';
-import { getValueByCondition } from '../../Utilities/GeneralUtils';
-import { LocalDataContext } from '../../Hooks/LocalDataHook';
-import { padSize } from '../../Index/CommonVals';
+import React, { memo, useContext, useState, useCallback, useEffect } from 'react';
+import { useOnLayout } from '../../Hooks/OnLayoutHook';
+import { View, StyleSheet, ScrollView } from 'react-native';
 
 /**
- * Arranges children in a linear layout, either vertically or horizontally.
- * 
- * @param {Object} props - Component props.
- * @param {React.ReactNode} props.children - The children components to render within the layout.
- * @param {number} props.flex - The flex value of the LinearLayout container.
- * @param {string} props.align - Alignment direction of children, either 'vertical' or 'horizontal'.
- * @param {boolean} props.reverse - Order children in reverse direction.
- * @param {string} props.childLayout - Child layout strategy, either 'wrap-content' or 'match-parent'.
- * @param {number} props.childMargin - Margin to apply to each child.
- * @param {boolean} props.scrollable - Whether the layout should be scrollable if children exceed the container size.
- * @param {boolean} props.applyPadding - Apply padding around children comps.
- * @param {string} props.debugBackgroundColor - dictate background color of layout for debugging purposes.
- * @param {Object} props.style - Custom styles to apply to the layout.
- * @returns {JSX.Element} The LinearLayout component.
+ * base layout component
+ * @param {object} props
+ * @param {'row' | 'column'} props.direction - flex direction
+ * @param {'flex-start' | 'center' | 'flex-end'} [props.align='flex-start'] - alignment of children
+ * @param {boolean} [props.reverse=false] - reverse the order of children
+ * @param {'wrap' | 'scroll'} [props.constraint='wrap'] - determines if children wrap or view becomes scrollable once container exceeds parent view
+ * @param {number} [props.childMargin=0] - margin between child elements
+ * @param {number} [props.margin=0] - outer margin for the layout
+ * @param {number} [props.padding=0] - inner padding for the layout
+ * @param {object} [props.style={}] - additional custom styles for the layout
+ * @param {React.ReactNode} props.children - child elements
  */
-export const LinearLayout = memo(({
-  children,
-  flex = 0,
-  align = 'vertical',
+const Layout = ({
+  direction,
+  align = 'flex-start',
   reverse = false,
-  childLayout = 'wrap-content',
+  constraint = 'wrap',
   childMargin = 0,
-  scrollable = false,
-  applyPadding = false,
-  debugBackgroundColor = 'orange',
-  style,
-  ...props
+  margin = 0,
+  padding = 0,
+  style = {},
+  children,
 }) => {
-  const { debugMode } = useContext(LocalDataContext);
-  const isVertical = align === 'vertical';
-  const marginNonReverse = reverse ? 0 : childMargin;
-  const marginReverse = reverse ? childMargin : 0;
-  const marginStyle = isVertical ? 
-  { marginBottom: marginNonReverse, marginTop: marginReverse } : 
-  { marginRight: marginNonReverse, marginLeft: marginReverse };
-
-  const renderChildren = () => {
-    return React.Children.toArray(children)
-      .filter(child => React.isValidElement(child))
-      .map((child, index) => {
-        const childCustomLayout = child.props.customLayout || childLayout;
-        const newStyle = {
-          ...(childCustomLayout === 'match-parent' ? { flex: 1 } : {}),
-        };
-
-        return (
-          <View key={index} style={[newStyle, index !== React.Children.count(children) - 1 ? marginStyle : {}]}>
-            {child}
-          </View>
-        );
-      });
-  };
-
-  const mainContent = (
-    <View style={[{
-      flexDirection: isVertical ? (reverse ? 'column-reverse' : 'column') : (reverse ? 'row-reverse' : 'row'),
-      flex: flex, padding: applyPadding ? padSize : 0,
-      backgroundColor: debugMode ? debugBackgroundColor : 'transparent'
-    }, style]} {...props}>
-      {renderChildren()}
-    </View>
-  );
-
-  if (scrollable) {
+  const arrangedChildren = React.Children.toArray(children).filter(child => React.isValidElement(child));
+  if (reverse) {
+    arrangedChildren.reverse();
+  }
+  
+  const containerStyle = StyleSheet.create({
+    container: {
+      flexDirection: direction,
+      justifyContent: align,
+      flexWrap: constraint === 'wrap' ? 'wrap' : 'nowrap',
+      margin,
+      padding,
+    },
+  });
+  
+  if (constraint === 'scroll') {
     return (
-      <ScrollView style={{ flex: 1, backgroundColor: debugMode ? debugBackgroundColor : 'transparent' }}
-        horizontal={!isVertical} contentContainerStyle={{ flexDirection: isVertical ? 'column' : 'row' }}>
-        {mainContent}
-      </ScrollView>
+      <View style={style}>
+        <ScrollView horizontal={direction === 'row'}>
+          <View style={containerStyle.container} horizontal={direction === 'row'}>
+            {arrangedChildren.map((child, index) =>
+              <View style={{ padding: childMargin / 2 }} key={index}>{child}</View>
+            )}
+          </View>
+        </ScrollView>
+      </View>
+    );
+  } else {
+    return (
+      <View style={style}>
+        <View style={containerStyle.container}>
+          {arrangedChildren.map((child, index) =>
+            <View style={{ padding: childMargin / 2 }} key={index}>{child}</View>
+          )}
+        </View>
+      </View>
     );
   }
-
-  return mainContent;
-});
+};
 
 /**
- * Arranges children in a grid layout.
- * 
- * @param {Object} props - Component props.
- * @param {React.ReactNode} props.children - The children components to render within the layout.
- * @param {number} props.flex - The flex value of the GridLayout container.
- * @param {number} props.columns - Number of columns in the grid.
- * @param {string} props.childLayout - 'wrap-content'/'match-parent'
- * @param {number} props.childMargin - how much margin in between child wrappers
- * @param {string} props.lastRowAlign - if the last row != column num, align row children 'left'/'center'/'right'
- * @param {boolean} props.applyPadding - Apply padding around children comps.
- * @param {string} props.debugBackgroundColor - dictate background color of layout for debugging purposes.
- * @param {Object} props.style - Custom styles to apply to the layout.
- * @returns {JSX.Element} The GridLayout component.
+ * Vertical Layout Component
+ */
+export const VerticalLayout = memo((props) => <Layout {...props} direction="column" />);
+
+/**
+ * Horizontal Layout Component
+ */
+export const HorizontalLayout = memo((props) => <Layout {...props} direction="row" />);
+
+/**
+ * Grid Layout Component
+ * @param {object} props
+ * @param {'row' | 'column'} [props.direction='row'] - layout direction
+ * @param {boolean} [props.reverse=false] - reverse the order of children
+ * @param {number} [props.spacing=0] - space between grid items
+ * @param {number} [props.itemsPerLine=2] - number of items per row/column
+ * @param {object} [props.style={}] - additional custom styles for the grid
+ * @param {React.ReactNode} props.children - child elements
  */
 export const GridLayout = memo(({
-  children, flex = 0, columns = 2, childLayout = 'wrap-content', childMargin = 2, lastRowAlign = 'left',
-  applyPadding = false, debugBackgroundColor = 'orange', style, ...props
+  direction = 'row',
+  reverse = false,
+  spacing = 0,
+  itemsPerLine = 2,
+  style = {},
+  children,
 }) => {
-  const { debugMode } = useContext(LocalDataContext);
-
-  const validChildren = React.Children.toArray(children).filter(child => React.isValidElement(child));
-  const rows = [];
-  let row = [];
-  let rowFlex = flex;
-  if (childLayout === 'wrap-content') {
-    rowFlex = 0;
+  const [size, onLayout] = useOnLayout();
+  const arrangedChildren = React.Children.toArray(children).filter(child =>
+    React.isValidElement(child)
+  );
+  if (reverse) {
+    arrangedChildren.reverse();
   }
-  const compFlex = childLayout === 'match-parent' ? 1 : 0;
 
-  validChildren.forEach((child, index) => {
-    const isLastRow = (validChildren.length - index) <= (validChildren.length % columns);
-    const isLastCol = (index + 1) % columns === 0;
-    let flexVal = isLastRow ? 1.0 / columns : 1;
-    flexVal = compFlex === 0 ? 0 : flexVal;
-    const debugRowBackgroundColor = isLastCol ? 'green' : 'yellow';
-    row.push(
-      <View key={`col-${index}`} style={{
-        marginRight: isLastCol ? 0 : childMargin, marginBottom: isLastRow ? 0 : childMargin,
-        backgroundColor: debugMode ? debugRowBackgroundColor : 'transparent', flex: flexVal
-      }}>
-        {child}
-      </View>
-    );
-    if (isLastCol) {
-      rows.push(
-        <View key={`row-${Math.floor(index / columns)}`} style={{ flexDirection: 'row', flex: rowFlex }}>
-          {row}
-        </View>
-      );
-      row = [];
-    }
+  const containerStyle = StyleSheet.create({
+    container: {
+      flexDirection: direction === 'row' ? 'row' : 'column',
+      flexWrap: 'wrap',
+      ...style,
+    },
   });
 
-  if (row.length > 0) {
-    const alignItems = getValueByCondition(
-      [lastRowAlign === 'left', 'flex-start'],
-      [lastRowAlign === 'center', 'center'],
-      [lastRowAlign === 'right', 'flex-end']
-    );
-    rows.push(
-      <View key={`row-${rows.length}`} style={{ flexDirection: 'row', flex: rowFlex, justifyContent: alignItems }}>
-        {row}
-      </View>
-    );
-  }
+  const itemStyle = StyleSheet.create({
+    item: {
+      backgroundColor: 'yellow',
+      margin: spacing / 2,
+      width: size ? (size.width / itemsPerLine) - spacing : 0
+    },
+  });
 
   return (
-    <View style={[{ flex: flex, backgroundColor: debugMode ? debugBackgroundColor : 'transparent', padding: applyPadding ? padSize : 0 }, style]} {...props}>
-      {rows.map((row, index) => {
-        return row;
-      })}
+    <View style={containerStyle.container} onLayout={onLayout}>
+      {arrangedChildren.map((child, index) => (
+        <View style={itemStyle.item} key={index}>
+          {child}
+        </View>
+      ))}
     </View>
   );
 });

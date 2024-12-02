@@ -4,7 +4,7 @@
 import React, { useContext, memo } from 'react';
 import { View } from 'react-native';
 import { useTheme, Appbar } from 'react-native-paper';
-import { LinearLayout } from './Layouts';
+import { VerticalLayout } from './Layouts';
 import { LocalDataContext } from '../../Hooks/LocalDataHook';
 import { padSize } from '../../Index/CommonVals';
 
@@ -34,9 +34,9 @@ const ScreenLayout = ({ navigation, route, scrollable = false, applyPadding = tr
           {CustomHeaderComp && CustomHeaderComp()}
         </View>
       </Appbar.Header>
-      <LinearLayout flex={1} childMargin={padSize} scrollable={scrollable} applyPadding={applyPadding} debugBackgroundColor='yellow'>
+      <VerticalLayout constraint='scroll' style={{ backgroundColor: 'yellow' }}>
         {children}
-      </LinearLayout>
+      </VerticalLayout>
     </View>
   );
 };
