@@ -19,13 +19,20 @@ const SampleNewScreen = ({ navigation, route }) => {
     console.log("SampleNewScreen: updated local data");
   });
 
+  const Container = ({ style }) => (
+    <View style={[{ width: 50, height: 50, backgroundColor: 'green' }, style]} />
+  );
+
   return (
     <ScreenLayout navigation={navigation} route={route} screenName="Home Sample">
-      <VerticalLayout>
-        <Text variant="bodyMedium">Select the screen you want to navigate to</Text>
-        <Text variant="bodyMedium">Select the screen you want to navigate to</Text>
+      <VerticalLayout childMargin={10} padding={10}>
+        <Container />
+        <Container />
       </VerticalLayout>
-      {/* LinearLayout */}
+      <HorizontalLayout childMargin={10} padding={10}>
+        <Container />
+        <Container />
+      </HorizontalLayout>
     </ScreenLayout>)
 }
 

@@ -23,19 +23,16 @@ const Layout = ({
   padding = 0,
   children,
 }) => {
-  // Generate dynamic styles for children
-  const childStyle = {
-    marginHorizontal: childMargin / 2,
-    marginVertical: childMargin / 2,
-  };
-
   // Reverse children if needed
-  const arrangedChildren = React.Children.toArray(children).map((child, index) =>
-    React.cloneElement(child, { style: [child.props.style, childStyle] })
-  );
+  const arrangedChildren = React.Children.toArray(children);
   if (reverse) {
     arrangedChildren.reverse();
   }
+
+  // Generate dynamic styles for children
+  const childStyles = (index) => ({
+    [direction === 'row' ? 'marginRight' : 'marginBottom']: index < arrangedChildren.length - 1 ? childMargin : 0,
+  });
 
   // Main container styles
   const containerStyle = StyleSheet.create({
@@ -45,10 +42,24 @@ const Layout = ({
       flexWrap: constraint === 'wrap' ? 'wrap' : 'nowrap',
       margin,
       padding,
+      backgroundColor: 'red'
     },
   });
 
-  return <View style={containerStyle.container}>{arrangedChildren}</View>;
+  // Render children with styles
+  return (
+    <View style={containerStyle.container}>
+      {arrangedChildren.map((child, index) =>
+        React.isValidElement(child)
+          ? React.cloneElement(child, {
+              style: [child.props.style, childStyles(index)],
+            })
+          : typeof child === 'function' // Check if child is a functional component
+          ? child({ style: childStyles(index) }) // Pass styles explicitly to functional components
+          : child
+      )}
+    </View>
+  );
 };
 
 /**
