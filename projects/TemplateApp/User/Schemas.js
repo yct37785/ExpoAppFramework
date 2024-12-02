@@ -19,7 +19,6 @@ export const LOCAL_DATA_SCHEMA = {
  * screen display names
  */
 export const SAMPLE_SCREENS = {
-  new: "new screen",
   layouts: "layouts example",
   containers: "containers example",
   tabs: "tabs example",

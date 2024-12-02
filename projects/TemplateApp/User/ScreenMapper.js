@@ -5,7 +5,6 @@
  * as the name suggests, screenMaps serve as a directory of all screens in your app, 
  * with DEFAULT_SCREEN as the root screen
 ***************************************************************************************/
-import SampleNewScreen from '../Screens/SampleNewScreen';
 import SampleHomeScreen from '../Screens/SampleHomeScreen';
 import SampleLayoutsScreen from '../Screens/SampleLayoutsScreen';
 import SampleContainersScreen from '../Screens/SampleContainersScreen';
@@ -17,7 +16,6 @@ import SampleLocalDataScreen from '../Screens/SampleLocalDataScreen';
 
 export const screenMaps = {
   home: SampleHomeScreen,
-  new: SampleNewScreen,
   layouts: SampleLayoutsScreen,
   containers: SampleContainersScreen,
   tabs: SampleTabsScreen,
