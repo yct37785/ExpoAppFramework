@@ -30,6 +30,9 @@ const Layout = ({
   if (reverse) {
     arrangedChildren.reverse();
   }
+  const hasScrollChild = arrangedChildren.some(
+    child => child.props.hasScrollChild
+  );
   
   const containerStyle = StyleSheet.create({
     container: {
@@ -40,14 +43,18 @@ const Layout = ({
       padding,
     },
   });
+
+  const renderChild = (index, child) => {
+    return <View style={{ padding: childMargin / 2 }} key={index}>{child}</View>
+  };
   
-  if (constraint === 'scroll') {
+  if (constraint === 'scroll' && !hasScrollChild) {
     return (
       <View style={style}>
         <ScrollView horizontal={direction === 'row'}>
           <View style={containerStyle.container} horizontal={direction === 'row'}>
             {arrangedChildren.map((child, index) =>
-              <View style={{ padding: childMargin / 2 }} key={index}>{child}</View>
+              renderChild(index, child)
             )}
           </View>
         </ScrollView>
@@ -58,7 +65,7 @@ const Layout = ({
       <View style={style}>
         <View style={containerStyle.container}>
           {arrangedChildren.map((child, index) =>
-            <View style={{ padding: childMargin / 2 }} key={index}>{child}</View>
+              renderChild(index, child)
           )}
         </View>
       </View>

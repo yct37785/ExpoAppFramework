@@ -152,7 +152,7 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
         renderItem={renderItem}
         listType={listType}
         rowHeight={ROW_HEIGHT}
-        customLayout="match-parent" // special prop to set flex to 1 for elems with undefined height
+        hasScrollChild  // special prop to bypass parent scroll to avoid nested scrolls
       />
     </BasicActivity>
   );

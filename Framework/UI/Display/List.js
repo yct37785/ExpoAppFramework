@@ -60,7 +60,7 @@ const ListDataDisplay = ({
   };
 
   return (
-    <View style={{ width: '100%', flex: 1, backgroundColor: debugMode ? '#ff6666' : 'transparent' }}>
+    <View style={{ width: '100%', height: '100%', backgroundColor: debugMode ? '#ff6666' : 'transparent' }}>
       {filteredData.length > 0 ? renderList() : null}
     </View>
   );
