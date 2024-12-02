@@ -23,6 +23,10 @@ const SampleNewScreen = ({ navigation, route }) => {
     <View style={[{ width: 50, height: 50, backgroundColor: 'green' }, style]} />
   );
 
+  const TextContainer = ({ style, i }) => (
+    <Text key={i}>Item {i + 1}</Text>
+  );
+
   return (
     <ScreenLayout navigation={navigation} route={route} screenName="Home Sample">
       <VerticalLayout childMargin={10} padding={0} style={{ backgroundColor: 'red' }}>
@@ -48,20 +52,18 @@ const SampleNewScreen = ({ navigation, route }) => {
         alignment="centered"
         spacing={10}
         itemsPerLine={3}
-        style={{ margin: 10, backgroundColor: 'red' }}
+        style={{ backgroundColor: 'red', width: 300 }}
       >
-        {Array.from({ length: 10 }, (_, i) => (
-          <Text
-            key={i}
-            style={{
-              backgroundColor: 'lightblue',
-              textAlign: 'center',
-              padding: 10,
-            }}
-          >
-            Item {i + 1}
-          </Text>
-        ))}
+        <TextContainer i={0} />
+        <TextContainer i={1} />
+        <TextContainer i={2} />
+        <TextContainer i={3} />
+        <TextContainer i={4} />
+        <TextContainer i={5} />
+        <TextContainer i={6} />
+        <TextContainer i={7} />
+        <TextContainer i={8} />
+        <TextContainer i={9} />
       </GridLayout>
     </ScreenLayout>)
 }

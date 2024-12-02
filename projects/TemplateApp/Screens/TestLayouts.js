@@ -1,4 +1,4 @@
-import React, { memo, useContext } from 'react';
+import React, { memo, useContext, useState, useCallback, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 
 /**
@@ -55,21 +55,31 @@ const Layout = ({
  * @param {object} props
  * @param {'row' | 'column'} [props.direction='row'] - layout direction
  * @param {boolean} [props.reverse=false] - reverse the order of children
- * @param {'fixed' | 'centered'} [props.alignment='fixed'] - alignment of elements in grid
  * @param {number} [props.spacing=0] - space between grid items
  * @param {number} [props.itemsPerLine=2] - number of items per row/column
  * @param {object} [props.style={}] - additional custom styles for the grid
  * @param {React.ReactNode} props.children - child elements
  */
+const useComponentSize = () => {
+  const [size, setSize] = useState(null);
+
+  const onLayout = useCallback(event => {
+    const { width, height } = event.nativeEvent.layout;
+    setSize({ width, height });
+  }, []);
+
+  return [size, onLayout];
+};
+
 export const GridLayout = memo(({
   direction = 'row',
   reverse = false,
-  alignment = 'fixed',
   spacing = 0,
   itemsPerLine = 2,
   style = {},
   children,
 }) => {
+  const [size, onLayout] = useComponentSize();
   const arrangedChildren = React.Children.toArray(children).filter(child =>
     React.isValidElement(child)
   );
@@ -79,23 +89,22 @@ export const GridLayout = memo(({
 
   const containerStyle = StyleSheet.create({
     container: {
-      flexDirection: direction === 'row' ? 'column' : 'row',
+      flexDirection: direction === 'row' ? 'row' : 'column',
       flexWrap: 'wrap',
-      alignItems: alignment === 'centered' ? 'flex-start' : 'stretch',
       ...style,
     },
   });
 
   const itemStyle = StyleSheet.create({
     item: {
+      backgroundColor: 'yellow',
       margin: spacing / 2,
-      flexBasis: `${100 / itemsPerLine}%`,
-      maxWidth: `${100 / itemsPerLine}%`,
+      width: size ? (size.width / itemsPerLine) - spacing : 0
     },
   });
 
   return (
-    <View style={containerStyle.container}>
+    <View style={containerStyle.container} onLayout={onLayout}>
       {arrangedChildren.map((child, index) => (
         <View style={itemStyle.item} key={index}>
           {child}
@@ -104,7 +113,6 @@ export const GridLayout = memo(({
     </View>
   );
 });
-
 
 /**
  * Vertical Layout Component
