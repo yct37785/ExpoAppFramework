@@ -20,7 +20,7 @@ export const LocalDataContext = React.createContext({
 /**
  * callbacks
  */
-export const onLocalDataUpdate = (callback) => {
+export const useLocalDataUpdate = (callback) => {
   const { updateCount } = useContext(LocalDataContext);
 
   useEffect(() => {

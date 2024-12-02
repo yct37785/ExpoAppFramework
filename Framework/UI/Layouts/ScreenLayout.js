@@ -5,7 +5,7 @@ import React, { useContext, memo } from 'react';
 import { View } from 'react-native';
 import { useTheme, Appbar } from 'react-native-paper';
 import { LinearLayout } from './Layouts';
-import { LocalDataContext } from '../../Contexts/LocalDataContext';
+import { LocalDataContext } from '../../Hooks/LocalDataHook';
 import { padSize } from '../../Index/CommonVals';
 
 /**

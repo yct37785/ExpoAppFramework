@@ -5,7 +5,7 @@ import React, { useContext, useState, useEffect, useCallback, useRef } from 'rea
 import { View } from 'react-native';
 import { LinearLayout, ScreenLayout, Text, Button } from '../../../Framework/Index/UI';
 // data
-import { onLocalDataUpdate } from '../../../Framework/Index/Contexts';
+import { useLocalDataUpdate } from '../../../Framework/Index/Hooks';
 // const
 import { SAMPLE_SCREENS } from '../User/Schemas';
 import { padSize } from '../../../Framework/Index/CommonVals';
@@ -15,7 +15,7 @@ import { padSize } from '../../../Framework/Index/CommonVals';
  */
 const SampleHomeScreen = ({ navigation, route }) => {
   
-  onLocalDataUpdate(() => {
+  useLocalDataUpdate(() => {
     console.log("SampleHomeScreen: updated local data");
   });
 

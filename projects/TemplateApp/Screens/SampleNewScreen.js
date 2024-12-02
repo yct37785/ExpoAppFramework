@@ -6,7 +6,7 @@ import { View } from 'react-native';
 import { ScreenLayout, Text } from '../../../Framework/Index/UI';
 import { VerticalLayout, HorizontalLayout, GridLayout } from './TestLayouts';
 // data
-import { onLocalDataUpdate } from '../../../Framework/Index/Contexts';
+import { useLocalDataUpdate } from '../../../Framework/Index/Hooks';
 // const
 import { padSize } from '../../../Framework/Index/CommonVals';
 
@@ -15,7 +15,7 @@ import { padSize } from '../../../Framework/Index/CommonVals';
  */
 const SampleNewScreen = ({ navigation, route }) => {
   
-  onLocalDataUpdate(() => {
+  useLocalDataUpdate(() => {
     console.log("SampleNewScreen: updated local data");
   });
 

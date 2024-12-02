@@ -7,7 +7,7 @@ import { useTheme } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
-import { LocalDataContext } from '../../Contexts/LocalDataContext';
+import { LocalDataContext } from '../../Hooks/LocalDataHook';
 import { padSize05, padSize, padSize2, iconSizeSmall } from '../../Index/CommonVals';
 import { Text } from '../Text/Text';
 

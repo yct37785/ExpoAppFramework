@@ -8,7 +8,7 @@ import { padSize, padSize2 } from '../../../Framework/Index/CommonVals';
 import { Card } from 'react-native-paper';
 import { LinearLayout, ScreenLayout, SwitchToggle, Button, Text } from '../../../Framework/Index/UI';
 // data
-import { LocalDataContext, onLocalDataUpdate } from '../../../Framework/Index/Contexts';
+import { LocalDataContext, useLocalDataUpdate } from '../../../Framework/Index/Hooks';
 
 /**
  * sample local data management showcase screen
@@ -17,7 +17,7 @@ export default function SampleLocalDataScreen({ navigation, route, screenHeaderC
   const { paramText } = route.params;
   const { setLocalDataValue, getLocalDataValue, resetLocalData, getLocalDataStringify } = useContext(LocalDataContext);
 
-  onLocalDataUpdate(() => {
+  useLocalDataUpdate(() => {
     console.log("SampleLocalDataScreen: updated local data");
   });
 

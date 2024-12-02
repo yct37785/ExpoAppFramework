@@ -1,4 +1,5 @@
 import React, { memo, useContext, useState, useCallback, useEffect } from 'react';
+import { useOnLayout } from '../../../Framework/Index/Hooks';
 import { View, StyleSheet } from 'react-native';
 
 /**
@@ -60,17 +61,6 @@ const Layout = ({
  * @param {object} [props.style={}] - additional custom styles for the grid
  * @param {React.ReactNode} props.children - child elements
  */
-const useComponentSize = () => {
-  const [size, setSize] = useState(null);
-
-  const onLayout = useCallback(event => {
-    const { width, height } = event.nativeEvent.layout;
-    setSize({ width, height });
-  }, []);
-
-  return [size, onLayout];
-};
-
 export const GridLayout = memo(({
   direction = 'row',
   reverse = false,
@@ -79,7 +69,7 @@ export const GridLayout = memo(({
   style = {},
   children,
 }) => {
-  const [size, onLayout] = useComponentSize();
+  const [size, onLayout] = useOnLayout();
   const arrangedChildren = React.Children.toArray(children).filter(child =>
     React.isValidElement(child)
   );

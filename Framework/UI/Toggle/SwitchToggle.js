@@ -1,7 +1,7 @@
 import React, { useState, useContext, memo } from 'react';
 import { View } from 'react-native';
 import { Switch } from 'react-native-paper';
-import { LocalDataContext } from '../../Contexts/LocalDataContext';
+import { LocalDataContext } from '../../Hooks/LocalDataHook';
 
 /**
  * Component for rendering one set of radio group

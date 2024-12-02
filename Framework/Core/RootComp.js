@@ -9,7 +9,7 @@ import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme
 import { MenuProvider } from 'react-native-popup-menu';
 import { padSize } from '../Index/CommonVals';
 // data
-import { LocalDataContext } from '../Contexts/LocalDataContext';
+import { LocalDataContext } from '../Hooks/LocalDataHook';
 import useLocalDataManager from '../Managers/LocalDataManager';
 // deps
 import 'react-native-get-random-values';

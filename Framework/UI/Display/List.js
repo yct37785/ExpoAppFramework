@@ -5,7 +5,7 @@ import React, { useState, useEffect, useContext, memo } from 'react';
 import { View, FlatList } from 'react-native';
 import { Divider } from 'react-native-paper';
 import { FlashList } from '@shopify/flash-list';
-import { LocalDataContext } from '../../Contexts/LocalDataContext';
+import { LocalDataContext } from '../../Hooks/LocalDataHook';
 
 /**
  * Combined List component supporting both Flashlist and FlatList.

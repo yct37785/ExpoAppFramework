@@ -4,7 +4,7 @@
 import React, { useContext, memo } from 'react';
 import { View, ScrollView } from 'react-native';
 import { getValueByCondition } from '../../Utilities/GeneralUtils';
-import { LocalDataContext } from '../../Contexts/LocalDataContext';
+import { LocalDataContext } from '../../Hooks/LocalDataHook';
 import { padSize } from '../../Index/CommonVals';
 
 /**

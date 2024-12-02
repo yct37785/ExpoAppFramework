@@ -1,7 +1,7 @@
 import React, { useContext, memo } from 'react';
 import { View } from 'react-native';
 import { LinearLayout } from '../Layouts/Layouts';
-import { LocalDataContext } from '../../Contexts/LocalDataContext';
+import { LocalDataContext } from '../../Hooks/LocalDataHook';
 
 /**
  * General options component for rendering various types of selection controls.
