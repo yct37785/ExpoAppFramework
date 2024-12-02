@@ -4,12 +4,12 @@
 import React, { useContext, memo } from 'react';
 import { View } from 'react-native';
 import { useTheme, Appbar } from 'react-native-paper';
-import { VerticalLayout } from './Layouts';
+import { VerticalLayout } from '../Layouts/Layouts';
 import { LocalDataContext } from '../../Hooks/LocalDataHook';
 import { padSize } from '../../Index/CommonVals';
 
 /**
- * A wrapper component to setup a screen quickly by providing the body and custom header content if any.
+ * A wrapper component to setup an activity quickly by providing the body and custom header content if any.
  * 
  * @param {Object} props - Component props.
  * @param {Object} props.navigation - Navigation object for navigating between screens.
@@ -19,9 +19,9 @@ import { padSize } from '../../Index/CommonVals';
  * @param {string} props.screenName - Name of the screen to be displayed on app header.
  * @param {React.ReactNode} props.customHeaderContent - Custom content to display in the header.
  * @param {React.ReactNode} props.children - The body content of the screen.
- * @returns {JSX.Element} The ScreenLayoutComp component.
+ * @returns {JSX.Element} The BasicActivity component.
  */
-const ScreenLayout = ({ navigation, route, scrollable = false, applyPadding = true, screenName = '', customHeaderContent: CustomHeaderComp, children }) => {
+const BasicActivity = ({ navigation, route, scrollable = false, applyPadding = true, screenName = '', customHeaderContent: CustomHeaderComp, children }) => {
   const theme = useTheme();
   const { debugMode, toggleDebugMode } = useContext(LocalDataContext);
 
@@ -34,11 +34,11 @@ const ScreenLayout = ({ navigation, route, scrollable = false, applyPadding = tr
           {CustomHeaderComp && CustomHeaderComp()}
         </View>
       </Appbar.Header>
-      <VerticalLayout constraint='scroll' style={{ backgroundColor: 'yellow' }}>
+      <VerticalLayout constraint='scroll'>
         {children}
       </VerticalLayout>
     </View>
   );
 };
 
-export default memo(ScreenLayout);
+export default memo(BasicActivity);

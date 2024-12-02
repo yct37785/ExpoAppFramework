@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { View } from 'react-native';
-import { ScreenLayout, Text } from '../../../Framework/Index/UI';
+import { BasicActivity, Text } from '../../../Framework/Index/UI';
 import { VerticalLayout, HorizontalLayout, GridLayout } from '../../../Framework/Index/UI';
 // data
 import { useLocalDataUpdate } from '../../../Framework/Index/Hooks';
@@ -32,7 +32,7 @@ export default function SampleLayoutsScreen({ navigation, route }) {
   );
 
   return (
-    <ScreenLayout navigation={navigation} route={route} screenName="Home Sample">
+    <BasicActivity navigation={navigation} route={route} screenName="Home Sample">
       <VerticalLayout childMargin={padSize} padding={0} constraint='wrap' style={{ backgroundColor: 'red', height: 290 }}>
         <Container />
         <Container />
@@ -73,5 +73,5 @@ export default function SampleLayoutsScreen({ navigation, route }) {
         <TextContainer i={8} />
         <TextContainer i={9} />
       </GridLayout>
-    </ScreenLayout>)
+    </BasicActivity>)
 }

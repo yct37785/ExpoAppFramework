@@ -6,7 +6,7 @@ import { View, Keyboard } from 'react-native';
 import { padSize, padSize2 } from '../../../Framework/Index/CommonVals';
 // UI
 import { Card } from 'react-native-paper';
-import { LinearLayout, ScreenLayout, SwitchToggle, Button, Text } from '../../../Framework/Index/UI';
+import { LinearLayout, BasicActivity, SwitchToggle, Button, Text } from '../../../Framework/Index/UI';
 // data
 import { LocalDataContext, useLocalDataUpdate } from '../../../Framework/Index/Hooks';
 
@@ -31,7 +31,7 @@ export default function SampleLocalDataScreen({ navigation, route, screenHeaderC
   }
 
   return (
-    <ScreenLayout navigation={navigation} route={route} screemName="Local Data Sample">
+    <BasicActivity navigation={navigation} route={route} screemName="Local Data Sample">
       <LinearLayout childMargin={padSize}>
         <Text variant="titleMedium">Modify and save local data</Text>
         <LinearLayout align='horizontal' childMargin={padSize}>
@@ -55,6 +55,6 @@ export default function SampleLocalDataScreen({ navigation, route, screenHeaderC
           </Card.Content>
         </Card>
       </LinearLayout>
-    </ScreenLayout>
+    </BasicActivity>
   );
 }

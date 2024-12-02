@@ -3,6 +3,11 @@
 *****************************************************************************************/
 
 /**
+ * activities: screens with presets for various activities
+ */
+export { default as BasicActivity } from '../UI/Activities/BasicActivity';
+
+/**
  * containers: holds children; eg. children collapsible when triggered
  */
 export { CollapsibleContainer, AccordionContainer } from '../UI/Containers/Collapsible';
@@ -34,7 +39,6 @@ export { default as TextInput } from '../UI/Input/TextInput';
  * layouts: parent view to contain other UI comps; eg. align children horizontally
  */
 export { VerticalLayout, HorizontalLayout, GridLayout } from '../UI/Layouts/Layouts';
-export { default as ScreenLayout } from '../UI/Layouts/ScreenLayout';
 
 /**
  * options: multiple options selection for data; eg. filtering

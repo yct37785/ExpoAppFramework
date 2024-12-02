@@ -4,7 +4,7 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { View, Image } from 'react-native';
 import {
-  LinearLayout, ScreenLayout, CollapsibleContainer, ChipOptions, RadioGroupToggle, ListDataDisplay,
+  LinearLayout, BasicActivity, CollapsibleContainer, ChipOptions, RadioGroupToggle, ListDataDisplay,
   TextInput, Text, HighlightText
 } from '../../../Framework/Index/UI';
 import { faker } from '@faker-js/faker';
@@ -132,7 +132,7 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
   }
 
   return (
-    <ScreenLayout navigation={navigation} route={route} customHeaderContent={customHeaderContent}>
+    <BasicActivity navigation={navigation} route={route} customHeaderContent={customHeaderContent}>
       {/* Filter menu */}
       {chipsSchema ? <View style={{ paddingLeft: padSize }}>
         <CollapsibleContainer toggleHeaderText="Filter">
@@ -154,6 +154,6 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
         rowHeight={ROW_HEIGHT}
         customLayout="match-parent" // special prop to set flex to 1 for elems with undefined height
       />
-    </ScreenLayout>
+    </BasicActivity>
   );
 }

@@ -8,7 +8,7 @@ const _ = require('lodash');
 import {
   Card, Button, IconButton, Portal
 } from 'react-native-paper';
-import { LinearLayout, ScreenLayout, Dialog, Popup, PickerInput, CheckOptions, Text } from '../../../Framework/Index/UI';
+import { LinearLayout, BasicActivity, Dialog, Popup, PickerInput, CheckOptions, Text } from '../../../Framework/Index/UI';
 import { iconSizeSmall } from '../../../Framework/Index/CommonVals';
 // const
 const PICKER_ITEM_LIST = [
@@ -89,7 +89,7 @@ export default function SampleMenusScreen({ navigation, route, screenHeaderComp:
   }
 
   return (
-    <ScreenLayout navigation={navigation} route={route} screenName="Menus Sample" customHeaderContent={customHeaderContent}>
+    <BasicActivity navigation={navigation} route={route} screenName="Menus Sample" customHeaderContent={customHeaderContent}>
       {/* all dialogs here */}
       <Portal>
         <Dialog
@@ -110,6 +110,6 @@ export default function SampleMenusScreen({ navigation, route, screenHeaderComp:
         Launch dialog
       </Button>
       <PickerInput value={pickerSelection} options={PICKER_ITEM_LIST} onChange={(v) => setPickerSelection(v)} />
-    </ScreenLayout>
+    </BasicActivity>
   );
 }
