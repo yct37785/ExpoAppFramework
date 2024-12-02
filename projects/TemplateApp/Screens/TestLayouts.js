@@ -1,6 +1,6 @@
 import React, { memo, useContext, useState, useCallback, useEffect } from 'react';
 import { useOnLayout } from '../../../Framework/Index/Hooks';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 
 /**
  * base layout component
@@ -8,7 +8,7 @@ import { View, StyleSheet } from 'react-native';
  * @param {'row' | 'column'} props.direction - flex direction
  * @param {'flex-start' | 'center' | 'flex-end'} [props.align='flex-start'] - alignment of children
  * @param {boolean} [props.reverse=false] - reverse the order of children
- * @param {'wrap' | 'fill'} [props.constraint='wrap'] - determines if children wrap or fill parent
+ * @param {'wrap' | 'scroll'} [props.constraint='wrap'] - determines if children wrap or view becomes scrollable once container exceeds parent view
  * @param {number} [props.childMargin=0] - margin between child elements
  * @param {number} [props.margin=0] - outer margin for the layout
  * @param {number} [props.padding=0] - inner padding for the layout
@@ -38,17 +38,32 @@ const Layout = ({
       flexWrap: constraint === 'wrap' ? 'wrap' : 'nowrap',
       margin,
       padding,
-      ...style,
     },
   });
-
-  return (
-    <View style={containerStyle.container}>
-      {arrangedChildren.map((child, index) =>
-        <View style={{ padding: childMargin / 2 }} key={index}>{child}</View>
-      )}
-    </View>
-  );
+  
+  if (constraint === 'scroll') {
+    return (
+      <View style={style}>
+        <ScrollView horizontal={direction === 'row'}>
+          <View style={containerStyle.container} horizontal={direction === 'row'}>
+            {arrangedChildren.map((child, index) =>
+              <View style={{ padding: childMargin / 2 }} key={index}>{child}</View>
+            )}
+          </View>
+        </ScrollView>
+      </View>
+    );
+  } else {
+    return (
+      <View style={style}>
+        <View style={containerStyle.container}>
+          {arrangedChildren.map((child, index) =>
+            <View style={{ padding: childMargin / 2 }} key={index}>{child}</View>
+          )}
+        </View>
+      </View>
+    );
+  }
 };
 
 /**

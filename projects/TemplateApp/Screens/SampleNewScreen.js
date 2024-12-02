@@ -29,13 +29,17 @@ const SampleNewScreen = ({ navigation, route }) => {
 
   return (
     <ScreenLayout navigation={navigation} route={route} screenName="Home Sample">
-      <VerticalLayout childMargin={10} padding={0} style={{ backgroundColor: 'red' }}>
+      <VerticalLayout childMargin={10} padding={0} constraint='wrap' style={{ backgroundColor: 'red', height: 290 }}>
+        <Container />
+        <Container />
+        <Container />
+        <Container />
         <Container />
         <Container />
         <Container />
         <Container />
       </VerticalLayout>
-      <HorizontalLayout childMargin={10} padding={0} style={{ backgroundColor: 'red' }}>
+      <HorizontalLayout childMargin={10} padding={0} constraint='wrap' style={{ backgroundColor: 'red' }}>
         <Container />
         <Container />
         <Container />
