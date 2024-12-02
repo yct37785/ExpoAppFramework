@@ -4,7 +4,7 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { View, Image } from 'react-native';
 import {
-  LinearLayout, BasicActivity, CollapsibleContainer, ChipOptions, RadioGroupToggle, ListDataDisplay,
+  VerticalLayout, BasicActivity, CollapsibleContainer, ChipOptions, RadioGroupToggle, ListDataDisplay,
   TextInput, Text, HighlightText
 } from '../../../Framework/Index/UI';
 import { faker } from '@faker-js/faker';
@@ -121,14 +121,14 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
   );
 
   function customHeaderContent() {
-    return <LinearLayout applyPadding={true}>
+    return <VerticalLayout>
       <TextInput
         type="search"
         value={searchQuery}
         onChange={setSearchQuery}
         placeholder="search"
       />
-    </LinearLayout>
+    </VerticalLayout>
   }
 
   return (

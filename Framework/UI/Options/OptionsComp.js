@@ -1,6 +1,6 @@
 import React, { useContext, memo } from 'react';
 import { View } from 'react-native';
-import { LinearLayout } from '../Layouts/Layouts';
+import { VerticalLayout } from '../Layouts/Layouts';
 import { LocalDataContext } from '../../Hooks/LocalDataHook';
 
 /**
@@ -125,9 +125,9 @@ const OptionsComp = ({ schema, onSelectionChange, optionsContainer: OptionsConta
   };
 
   return (
-    <LinearLayout>
+    <VerticalLayout>
       {renderChildrenOptions(schema)}
-    </LinearLayout>
+    </VerticalLayout>
   );
 };
 

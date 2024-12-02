@@ -8,7 +8,7 @@ const _ = require('lodash');
 import {
   Card, Button, IconButton, Portal
 } from 'react-native-paper';
-import { LinearLayout, BasicActivity, Dialog, Popup, PickerInput, CheckOptions, Text } from '../../../Framework/Index/UI';
+import { VerticalLayout, BasicActivity, Dialog, Popup, PickerInput, CheckOptions, Text } from '../../../Framework/Index/UI';
 import { iconSizeSmall } from '../../../Framework/Index/CommonVals';
 // const
 const PICKER_ITEM_LIST = [
@@ -79,13 +79,13 @@ export default function SampleMenusScreen({ navigation, route, screenHeaderComp:
   };
 
   function customHeaderContent() {
-    return <LinearLayout align='horizontal' reverse={true}>
+    return <VerticalLayout align='horizontal' reverse={true}>
       <Popup triggerComp={<IconButton icon="dots-vertical" size={iconSizeSmall} />}>
-        <LinearLayout applyPadding={true}>
+        <VerticalLayout>
           <CheckOptions schema={checkOptionsSchema} onSelectionChange={handleCheckOptionsChange} />
-        </LinearLayout>
+        </VerticalLayout>
       </Popup>
-    </LinearLayout>
+    </VerticalLayout>
   }
 
   return (

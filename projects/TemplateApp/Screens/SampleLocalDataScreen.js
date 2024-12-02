@@ -6,7 +6,7 @@ import { View, Keyboard } from 'react-native';
 import { padSize, padSize2 } from '../../../Framework/Index/CommonVals';
 // UI
 import { Card } from 'react-native-paper';
-import { LinearLayout, BasicActivity, SwitchToggle, Button, Text } from '../../../Framework/Index/UI';
+import { VerticalLayout, BasicActivity, SwitchToggle, Button, Text } from '../../../Framework/Index/UI';
 // data
 import { LocalDataContext, useLocalDataUpdate } from '../../../Framework/Index/Hooks';
 
@@ -32,29 +32,29 @@ export default function SampleLocalDataScreen({ navigation, route, screenHeaderC
 
   return (
     <BasicActivity navigation={navigation} route={route} screemName="Local Data Sample">
-      <LinearLayout childMargin={padSize}>
+      <VerticalLayout>
         <Text variant="titleMedium">Modify and save local data</Text>
-        <LinearLayout align='horizontal' childMargin={padSize}>
+        <VerticalLayout>
           <Button mode="contained" onPress={() => updateTrackersSample()}>++trackers_sample.num</Button>
           <View>
             <Text variant="labelMedium">Toogle dark mode</Text>
             <SwitchToggle value={getLocalDataValue("settings_sample.isDarkMode")} onValueChange={() => toggleDarkMode()} />
           </View>
-        </LinearLayout>
+        </VerticalLayout>
         <Button icon="refresh" mode="contained" onPress={() => resetLocalData()}>reset data completely</Button>
-      </LinearLayout>
-      <LinearLayout>
+      </VerticalLayout>
+      <VerticalLayout>
         <Text variant="titleMedium">Change data schema</Text>
         <Text variant="bodyMedium">To test: close app, add additional values to schema and restart app</Text>
-      </LinearLayout>
-      <LinearLayout>
+      </VerticalLayout>
+      <VerticalLayout>
         <Text variant="titleMedium">Data preview</Text>
         <Card mode='elevated'>
           <Card.Content>
             <Text variant="bodySmall">{getLocalDataStringify()}</Text>
           </Card.Content>
         </Card>
-      </LinearLayout>
+      </VerticalLayout>
     </BasicActivity>
   );
 }
