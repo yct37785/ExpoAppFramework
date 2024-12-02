@@ -1,29 +1,18 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
-const useComponentSize = () => {
-  const [size, setSize] = useState(null);
-
-  const onLayout = useCallback(event => {
-    const { width, height } = event.nativeEvent.layout;
-    console.log(event.nativeEvent);
-    setSize({ width, height });
-  }, []);
-
-  return [size, onLayout];
-};
-
 /**
- * Base Layout Component
+ * base layout component
  * @param {object} props
- * @param {'row' | 'column'} props.direction - Flex direction.
- * @param {'flex-start' | 'center' | 'flex-end'} [props.align='flex-start'] - Alignment of children.
- * @param {boolean} [props.reverse=false] - Reverse the order of children.
- * @param {'wrap' | 'fill'} [props.constraint='wrap'] - Determines if children wrap or fill parent.
- * @param {number} [props.childMargin=0] - Margin between child elements.
- * @param {number} [props.margin=0] - Outer margin for the layout.
- * @param {number} [props.padding=0] - Inner padding for the layout.
- * @param {React.ReactNode} props.children - The child elements.
+ * @param {'row' | 'column'} props.direction - flex direction
+ * @param {'flex-start' | 'center' | 'flex-end'} [props.align='flex-start'] - alignment of children
+ * @param {boolean} [props.reverse=false] - reverse the order of children
+ * @param {'wrap' | 'fill'} [props.constraint='wrap'] - determines if children wrap or fill parent
+ * @param {number} [props.childMargin=0] - margin between child elements
+ * @param {number} [props.margin=0] - outer margin for the layout
+ * @param {number} [props.padding=0] - inner padding for the layout
+ * @param {object} [props.style={}] - additional custom styles for the layout
+ * @param {React.ReactNode} props.children - child elements
  */
 const Layout = ({
   direction,
@@ -33,28 +22,14 @@ const Layout = ({
   childMargin = 0,
   margin = 0,
   padding = 0,
+  style = {},
   children,
 }) => {
-
-  const [size, onLayout] = useComponentSize();
-
-  useEffect(() => {
-    if (size) {
-      console.log("Container size: " + JSON.stringify(size));
-      validChildren.forEach((child, index) => {
-      });
-    }
-  }, [size]);
-
-  // children
-  const validChildren = React.Children.toArray(children).filter(child => React.isValidElement(child));
-
-  // Generate dynamic styles for children
-  const childStyles = (index) => ({
-    [direction === 'row' ? 'marginRight' : 'marginBottom']: index < validChildren.length - 1 ? childMargin : 0,
-  });
-
-  // Main container styles
+  const arrangedChildren = React.Children.toArray(children).filter(child => React.isValidElement(child));
+  if (reverse) {
+    arrangedChildren.reverse();
+  }
+  
   const containerStyle = StyleSheet.create({
     container: {
       flexDirection: direction,
@@ -62,21 +37,14 @@ const Layout = ({
       flexWrap: constraint === 'wrap' ? 'wrap' : 'nowrap',
       margin,
       padding,
-      backgroundColor: 'red'
+      ...style,
     },
   });
 
-  // Render children with styles
   return (
-    <View style={containerStyle.container} onLayout={onLayout}>
-      {validChildren.map((child, index) =>
-        React.isValidElement(child)
-          ? React.cloneElement(child, {
-              style: [child.props.style, childStyles(index)],
-            })
-          : typeof child === 'function' // Check if child is a functional component
-          ? child({ style: childStyles(index) }) // Pass styles explicitly to functional components
-          : child
+    <View style={containerStyle.container}>
+      {arrangedChildren.map((child, index) =>
+        <View style={{ padding: childMargin / 2 }} key={index}>{child}</View>
       )}
     </View>
   );
