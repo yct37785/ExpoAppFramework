@@ -1,5 +1,17 @@
-import React from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
+
+const useComponentSize = () => {
+  const [size, setSize] = useState(null);
+
+  const onLayout = useCallback(event => {
+    const { width, height } = event.nativeEvent.layout;
+    console.log(event.nativeEvent);
+    setSize({ width, height });
+  }, []);
+
+  return [size, onLayout];
+};
 
 /**
  * Base Layout Component
@@ -23,15 +35,23 @@ const Layout = ({
   padding = 0,
   children,
 }) => {
-  // Reverse children if needed
-  const arrangedChildren = React.Children.toArray(children).filter(child => React.isValidElement(child));
-  if (reverse) {
-    arrangedChildren.reverse();
-  }
+
+  const [size, onLayout] = useComponentSize();
+
+  useEffect(() => {
+    if (size) {
+      console.log("Container size: " + JSON.stringify(size));
+      validChildren.forEach((child, index) => {
+      });
+    }
+  }, [size]);
+
+  // children
+  const validChildren = React.Children.toArray(children).filter(child => React.isValidElement(child));
 
   // Generate dynamic styles for children
   const childStyles = (index) => ({
-    [direction === 'row' ? 'marginRight' : 'marginBottom']: index < arrangedChildren.length - 1 ? childMargin : 0,
+    [direction === 'row' ? 'marginRight' : 'marginBottom']: index < validChildren.length - 1 ? childMargin : 0,
   });
 
   // Main container styles
@@ -48,8 +68,8 @@ const Layout = ({
 
   // Render children with styles
   return (
-    <View style={containerStyle.container}>
-      {arrangedChildren.map((child, index) =>
+    <View style={containerStyle.container} onLayout={onLayout}>
+      {validChildren.map((child, index) =>
         React.isValidElement(child)
           ? React.cloneElement(child, {
               style: [child.props.style, childStyles(index)],
