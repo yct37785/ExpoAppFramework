@@ -78,7 +78,6 @@ function TabsContainer({ routes, sceneMap, tabIndex, onTabIdxChange, position })
       renderLazyPlaceholder={loadingScreen}
       onIndexChange={onTabIdxChange}
       tabBarPosition={position}
-      style={{ width: '100%', backgroundColor: 'magenta' }}
     />
   );
 }

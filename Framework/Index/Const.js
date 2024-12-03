@@ -25,3 +25,4 @@ export const snackbarDuration = 2000;
 export const textOpacityHEmphasis = 0.87;
 export const textOpacityMEmphasis = 0.6;
 export const iconSizeSmall = 20;
+export const iconSizeMedium = 30;

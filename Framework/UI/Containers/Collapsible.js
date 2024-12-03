@@ -7,7 +7,7 @@ import { useTheme } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
-import { padSize05, padSize, padSize2, iconSizeSmall } from '../../Index/Const';
+import { padSize05, padSize, padSize2, iconSizeSmall, iconSizeMedium } from '../../Index/Const';
 import { Text } from '../Text/Text';
 
 /**
@@ -21,13 +21,13 @@ import { Text } from '../Text/Text';
 const ToggleHeader = memo(({ toggleHeaderText = '', isCollapsed }) => {
   const theme = useTheme();
   return (
-    <View style={{ paddingVertical: padSize05, flexDirection: 'row', alignItems: 'center' }}>
-      <Text>{toggleHeaderText}</Text>
+    <View style={{ padding: padSize, flexDirection: 'row', alignItems: 'center' }}>
+      <Text variant='titleSmall'>{toggleHeaderText}</Text>
+      <View style={{ flex: 1 }} />
       <MaterialIcons
         name={isCollapsed ? 'keyboard-arrow-down' : 'keyboard-arrow-up'}
         color={theme.colors.text}
-        size={iconSizeSmall}
-        style={{ paddingLeft: padSize05 }}
+        size={iconSizeMedium}
       />
     </View>
   );
