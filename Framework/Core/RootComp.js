@@ -2,7 +2,7 @@
 * engine of entire app, handles initialization, contexts and navigation of screens
 ***************************************************************************************/
 // core
-import React, { Node, useCallback, useMemo, useEffect, useState } from 'react';
+import React, { Node, useCallback, memo, useEffect, useState } from 'react';
 import { View, LogBox, Platform, StatusBar } from 'react-native';
 // UI
 import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, configureFonts } from 'react-native-paper';
@@ -53,6 +53,7 @@ const Stack = createNativeStackNavigator();
  * 
  * @param {Object} props - The props passed to the screen.
  * @param {React.ComponentType} props.component - The screen component to render.
+ * 
  * @returns {JSX.Element} The screen wrapped with a standardized layout.
  */
 function ScreenWrapper({ component: Component, ...props }) {
@@ -72,7 +73,6 @@ function ScreenWrapper({ component: Component, ...props }) {
  * @param {Object} props.screenHeaderMaps - A mapping of screen custom headers mapped to corresponding screen key, refer to TemplateApp > App.js.
  * @param {string} props.DEFAULT_SCREEN - The default screen to display on app launch, refer to TemplateApp > App.js.
  * @param {Object} props.LOCAL_DATA_SCHEMA - The schema for local storage data, refer to TemplateApp > App.js.
- * @returns {JSX.Element} The root component of the app.
  */
 const RootComp = ({ screenMaps, screenHeaderMaps, DEFAULT_SCREEN, LOCAL_DATA_SCHEMA }) => {
   const localDataManager = useLocalDataManager({ LOCAL_DATA_SCHEMA });
@@ -116,4 +116,4 @@ const RootComp = ({ screenMaps, screenHeaderMaps, DEFAULT_SCREEN, LOCAL_DATA_SCH
   );
 };
 
-export default RootComp;
+export default memo(RootComp);

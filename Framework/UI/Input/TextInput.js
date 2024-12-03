@@ -15,6 +15,7 @@ import { Searchbar, TextInput } from 'react-native-paper';
  * @param {Function} [props.onChange=({string})=>{}] - Callback function to receive changed input value.
  * @param {Function} [props.onFocus=()=>{}] - Callback function to handle focus event on the input.
  * @param {Function} [props.onBlur=()=>{}] - Callback function to handle blur event on the input.
+ * 
  * @returns {JSX.Element} The TextInputComp component.
  */
 const TextInputComp = ({

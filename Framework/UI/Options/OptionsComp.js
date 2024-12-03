@@ -18,6 +18,7 @@ import { LocalDataContext } from '../../Hooks/LocalDataHook';
  * @param {Function} props.renderParentOption - Function to render parent options, if same as renderOption just set
  * @param {number} props.depthPadding - to apply padding per depth hierarchy.
  * prop to same function value.
+ * 
  * @returns {JSX.Element} The OptionsComp component.
  *
  * @example

@@ -8,8 +8,6 @@ import { Modal, Button, Card, useTheme } from 'react-native-paper';
 import { Text } from '../Text/Text';
 
 /**
- * DialogComp Component
- * 
  * A customizable dialog component.
  * 
  * @param {Object} props - Component props.
@@ -22,7 +20,8 @@ import { Text } from '../Text/Text';
  * @param {boolean} [props.dismissable=false] - If true, tapping outside the dialog will close it.
  * @param {string} [props.submitText='Confirm'] - Text for the submit button.
  * @param {string} [props.closeText='Close'] - Text for the close button.
- * @returns {JSX.Element} The DialogComp component.
+ * 
+ * @returns {JSX.Element} The Dialog component.
  */
 const DialogComp = ({ 
   title, 

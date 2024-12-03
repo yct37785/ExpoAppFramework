@@ -12,6 +12,8 @@ import { LocalDataContext } from '../../Hooks/LocalDataHook';
  * @param {string} [props.screenName=''] - Name of the screen to be displayed on app header.
  * @param {React.ReactNode} props.customHeaderContent - Custom content to display in the header.
  * @param {React.ReactNode} props.children - The body content of the screen.
+ * 
+ * @returns {JSX.Element} The BasicActivity component.
  */
 const BasicActivity = ({ navigation, route, screenName = '', customHeaderContent: CustomHeaderComp, children }) => {
   const { debugMode, toggleDebugMode } = useContext(LocalDataContext);

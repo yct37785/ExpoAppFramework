@@ -1,8 +1,11 @@
-import React, { memo, useContext, useState, useCallback, useEffect } from 'react';
-
 /*****************************************************************************************
  * callback for layout events
 *****************************************************************************************/
+import React, { memo, useContext, useState, useCallback, useEffect } from 'react';
+
+/**
+ * On layout change hook.
+ */
 export const useOnLayout = () => {
   const [size, setSize] = useState(null);
 

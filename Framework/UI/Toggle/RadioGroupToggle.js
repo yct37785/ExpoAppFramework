@@ -12,6 +12,7 @@ import { LocalDataContext } from '../../Hooks/LocalDataHook';
  * @param {Object} props.options - options in JSON obj: { value: { label: <string> } }
  * @param {string} props.value - value of currently selected option.
  * @param {Function} props.onValueChange - Callback function to handle selection changes.
+ * 
  * @returns {JSX.Element} The RadioGroupToggle component.
  *
  * @example

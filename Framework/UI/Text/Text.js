@@ -8,6 +8,7 @@ import { Text as RNPText } from 'react-native-paper';
  * text component, wraps react-native-paper text, props identical to react-native-paper
  * 
  * @param {React.ReactNode} props.children - Textual content.
+ * 
  * @returns {JSX.Element} A React element with the text.
  */
 export const Text = ({children, ...props}) => {
@@ -25,6 +26,7 @@ export const Text = ({children, ...props}) => {
  * @param {string} query - The search query to highlight.
  * @param {string} highlightColor - The highlight color for query text.
  * @param {string} [label=''] - Optional label to prepend to the text.
+ * 
  * @returns {JSX.Element} A React element with the highlighted search text.
  */
 export const HighlightText = memo(({

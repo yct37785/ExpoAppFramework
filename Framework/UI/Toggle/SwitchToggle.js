@@ -10,6 +10,7 @@ import { LocalDataContext } from '../../Hooks/LocalDataHook';
  * @param {Object} props - Component props
  * @param {boolean} props.value - current value of the switch.
  * @param {Function} props.onValueChange - Callback function to handle selection changes.
+ * 
  * @returns {JSX.Element} The SwitchToggle component.
  */
 const SwitchToggle = ({ label, value, onValueChange, layout = 'vertical' }) => {

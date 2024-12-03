@@ -5,9 +5,9 @@
 import React, { createContext, useContext, useEffect } from 'react';
 
 /**
- * context
+ * Local data context.
  */
-export const LocalDataContext = React.createContext({
+export const LocalDataContext = createContext({
   updateCount: 0,
   setLocalDataValue: () => {},
   getLocalDataValue: () => {},
@@ -18,7 +18,9 @@ export const LocalDataContext = React.createContext({
 });
 
 /**
- * callbacks
+ * Hook for on local data updatge event.
+ * 
+ * @param {Function} callback - Triggered when local data update occurs.
  */
 export const useLocalDataUpdate = (callback) => {
   const { updateCount } = useContext(LocalDataContext);

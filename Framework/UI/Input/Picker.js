@@ -12,6 +12,7 @@ import { Picker } from '@react-native-picker/picker';
  * @param {string} props.value - The selected value.
  * @param {Array} props.options - Array of options for the picker, each with a label and value.
  * @param {Function} props.onChange - Callback function to handle value change.
+ * 
  * @returns {JSX.Element} The PickerInput component.
  */
 function PickerInput({ value, options, onChange }) {

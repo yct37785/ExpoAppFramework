@@ -11,6 +11,7 @@ import { Button as RNPButton } from 'react-native-paper';
  * @param {string} mode - RNP prop: text/outlined/contained/elevated/contained-tonal.
  * @param {Function} [props.onPress=()=>{}] - Callback function to handle on press event.
  * @param {React.ReactNode} props.children - Content within button.
+ * 
  * @returns {JSX.Element} The Button component.
  */
 const Button = ({

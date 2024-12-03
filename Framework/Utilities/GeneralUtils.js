@@ -5,6 +5,7 @@
  * Delays execution by a specified amount of time.
  * 
  * @param {number} t - The time to delay in milliseconds.
+ * 
  * @returns {Promise<void>} A promise that resolves after the specified delay.
  */
 export const delayPromise = t => new Promise(resolve => setTimeout(resolve, t));
@@ -15,6 +16,7 @@ export const delayPromise = t => new Promise(resolve => setTimeout(resolve, t));
  * @param {number} num - The number to clamp.
  * @param {number} min - The minimum value.
  * @param {number} max - The maximum value.
+ * 
  * @returns {number} The clamped value.
  */
 export function minMax(num, min, max) {
@@ -26,6 +28,7 @@ export function minMax(num, min, max) {
  * 
  * @param {Array<Object>} inputArr - The array of objects to sort.
  * @param {Function} getValueFromObj - Function to extract the value from an object for comparison.
+ * 
  * @returns {Array<Object>} The sorted array.
  */
 export function bubbleSortObjects(inputArr, getValueFromObj) {
@@ -49,6 +52,7 @@ export function bubbleSortObjects(inputArr, getValueFromObj) {
  * Converts an epoch time to a string in DD/MM/YY format.
  * 
  * @param {number} epoch - The epoch time to convert.
+ * 
  * @returns {string} The formatted date string.
  */
 export function epochToDDMMYY(epoch) {
@@ -74,6 +78,7 @@ export function get_ddmmyyyy_hhmmss() {
  * Converts milliseconds to a string in HH:MM:SS format.
  * 
  * @param {number} ms - The time in milliseconds.
+ * 
  * @returns {string} The formatted time string.
  */
 export function ms_to_hhmmss(ms) {
@@ -88,6 +93,7 @@ export function ms_to_hhmmss(ms) {
  * Removes all characters from a string that are greater than 2 bytes.
  * 
  * @param {string} str - The string to process.
+ * 
  * @returns {string} The processed string with characters greater than 2 bytes removed.
  */
 export function strToUtf8(str) {
@@ -99,6 +105,7 @@ export function strToUtf8(str) {
  * Capitalizes the first letter of a string.
  * 
  * @param {string} str - The string to capitalize.
+ * 
  * @returns {string} The capitalized string.
  */
 export function capitalizeStr(str) {
@@ -112,6 +119,7 @@ export function capitalizeStr(str) {
  * Converts an object to a key-value array, only 1 layer deep.
  * 
  * @param {Object} obj - The object to convert.
+ * 
  * @returns {Array<Array<string>>} An array of key-value pairs.
  */
 export function objToKeyValueArr(obj) {
@@ -126,6 +134,7 @@ export function objToKeyValueArr(obj) {
  * Returns the value corresponding to the first true condition.
  * 
  * @param {...Array} conditionsAndValues - A list of arrays, each containing a condition and a corresponding value.
+ * 
  * @returns {any} The value corresponding to the first true condition.
  */
 export function getValueByCondition(...conditionsAndValues) {

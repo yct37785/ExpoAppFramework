@@ -10,11 +10,12 @@ import PropTypes from 'prop-types';
  * A general-purpose popup component that can accept any children to open as a dropdown.
  * PLEASE NOTE: triggerComp must not contain onPress callback which overwrites option callbacks
  *
- * @component
  * @param {Object} props - Component props
  * @param {React.Element} props.triggerComp - The component to trigger the popup.
  * @param {React.Element} props.children - The content to display inside the popup.
  * @param {boolean} [props.disabled=false] - Whether the popup trigger is disabled.
+ * 
+ * @returns {JSX.Element} The Popup component.
  */
 function PopupComp({ triggerComp, children, disabled = false }) {
   const theme = useTheme();

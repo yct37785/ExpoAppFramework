@@ -16,6 +16,8 @@ import { View, StyleSheet, ScrollView } from 'react-native';
  * @param {number} [props.padding=0] - Inner padding for the layout.
  * @param {object} [props.style={}] - Additional custom styles for the layout.
  * @param {React.ReactNode} props.children - Child elements.
+ * 
+ * @returns {JSX.Element} The base Layout component.
  */
 const Layout = ({
   direction = 'column',
@@ -92,6 +94,8 @@ export const HorizontalLayout = memo((props) => <Layout {...props} direction="ro
  * @param {number} [props.itemsPerLine=2] - Number of items per row/column.
  * @param {object} [props.style={}] - Additional custom styles for the grid.
  * @param {React.ReactNode} props.children - Child elements.
+ * 
+ * @returns {JSX.Element} The Grid Layout component.
  */
 export const GridLayout = memo(({
   direction = 'row',

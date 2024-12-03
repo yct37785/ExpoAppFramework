@@ -12,12 +12,13 @@ import { padSize05, padSize, padSize2, iconSizeSmall } from '../../Index/Const';
 import { Text } from '../Text/Text';
 
 /**
-   * ToggleHeader Component
-   * 
-   * @param {Object} param0 - Component props.
-   * @param {boolean} param0.isCollapsed - Indicates if the container is collapsed.
-   * @returns {JSX.Element} The ToggleHeader component.
-   */
+ * ToggleHeader Component
+ * 
+ * @param {Object} param0 - Component props.
+ * @param {boolean} param0.isCollapsed - Indicates if the container is collapsed.
+ * 
+ * @returns {JSX.Element} The ToggleHeader component.
+ */
 const ToggleHeader = memo(({ toggleHeaderText = '', isCollapsed }) => {
   const theme = useTheme();
   return (
@@ -38,6 +39,7 @@ const ToggleHeader = memo(({ toggleHeaderText = '', isCollapsed }) => {
  * 
  * @param {Object} props - Component props.
  * @param {React.ReactNode} props.children - Content to be rendered within the collapsible section.
+ * 
  * @returns {JSX.Element} The CollapsibleContainer component.
  */
 export const CollapsibleContainer = memo(({ toggleHeaderText = '', children }) => {
@@ -68,6 +70,7 @@ export const CollapsibleContainer = memo(({ toggleHeaderText = '', children }) =
  * @param {Function} props.renderSectionTitle - Function to render the section title.
  * @param {Function} props.renderHeader - Function to render the header of each section.
  * @param {Function} props.renderContent - Function to render the content of each section.
+ * 
  * @returns {JSX.Element} The AccordionContainer component.
  */
 export const AccordionContainer = memo(({

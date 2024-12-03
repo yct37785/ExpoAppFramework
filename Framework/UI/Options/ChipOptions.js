@@ -14,6 +14,7 @@ import OptionsComp from './OptionsComp';
  * @param {string} props.schema.label - The label for the menu option.
  * @param {Object} [props.schema.children] - Nested options for the menu.
  * @param {Function} props.onSelectionChange - Callback function to handle selection changes.
+ * 
  * @returns {JSX.Element} The ChipOptions component.
  *
  * @example

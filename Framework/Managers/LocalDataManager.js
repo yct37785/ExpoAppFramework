@@ -11,6 +11,7 @@ const _ = require('lodash');
  * and returns a deep copy.
  * 
  * @param {Object} LOCAL_DATA_SCHEMA - The schema for new user data.
+ * 
  * @returns {Promise<Object>} A promise that resolves to a deep copy of the new user data.
  */
 async function createNewUserData(LOCAL_DATA_SCHEMA) {
@@ -31,6 +32,7 @@ async function createNewUserData(LOCAL_DATA_SCHEMA) {
  * 
  * @param {Object} currObj - The current object to check.
  * @param {Object} templateObj - The template object with default values.
+ * 
  * @returns {boolean} True if there were missing keys that were added, false otherwise.
  */
 function fixNestedKeyValues(currObj, templateObj) {
@@ -51,6 +53,7 @@ function fixNestedKeyValues(currObj, templateObj) {
  * and fixes missing nested key-value pairs.
  * 
  * @param {Object} LOCAL_DATA_SCHEMA - The schema for new user data.
+ * 
  * @returns {Promise<Object>} A promise that resolves to the user data.
  */
 async function getLocalUserData(LOCAL_DATA_SCHEMA) {
@@ -83,6 +86,8 @@ async function getLocalUserData(LOCAL_DATA_SCHEMA) {
 /**
  * custom hook for managing immutable local data instance and loading/saving to local storage
  * data instance can only be modified via functions
+ * 
+ * @param {Object} LOCAL_DATA_SCHEMA - The schema for new user data.
  */
 const useLocalDataManager = ({ LOCAL_DATA_SCHEMA }) => {
   const [data, setData] = useState({}); // will not be exposed to consumers

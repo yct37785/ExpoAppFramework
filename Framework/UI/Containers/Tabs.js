@@ -9,7 +9,7 @@ import { Text } from '../Text/Text';
 import { TabView, TabBar } from 'react-native-tab-view';
 
 /**
- * display children in tabs
+ * Display children in tabs.
  * 
  * @param {Object[]} routes - Array of route objects for the tabs.
  * @param {Function} renderIcon - Function to render the icon for each tab.
@@ -17,6 +17,7 @@ import { TabView, TabBar } from 'react-native-tab-view';
  * @param {number} tabIndex - Index of the currently selected tab.
  * @param {Function} onTabIdxChange - Function to handle tab index changes.
  * @param {string} position - Position of the tab bar.
+ * 
  * @returns {JSX.Element} The TabsContainer component.
  */
 function TabsContainer({ routes, renderIcon, sceneMap, tabIndex, onTabIdxChange, position }) {
@@ -36,6 +37,7 @@ function TabsContainer({ routes, renderIcon, sceneMap, tabIndex, onTabIdxChange,
    * Renders the tab bar.
    * 
    * @param {Object} props - Props passed to the TabBar component.
+   * 
    * @returns {JSX.Element} The TabBar component with customized styling and functionality.
    */
   const renderTabBar = props => (
