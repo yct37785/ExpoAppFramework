@@ -6,7 +6,7 @@ import { View, StyleSheet, ScrollView } from 'react-native';
  * base layout component
  * 
  * @param {object} props
- * @param {'row' | 'column'} props.direction - flex direction
+ * @param {'row' | 'column'} [props.direction] - flex direction
  * @param {'flex-start' | 'center' | 'flex-end'} [props.align='flex-start'] - alignment of children
  * @param {boolean} [props.reverse=false] - reverse the order of children
  * @param {'wrap' | 'scroll' | 'none'} [props.constraint='wrap'] - determine if child elements behaviour if exceeds parent dimensions,

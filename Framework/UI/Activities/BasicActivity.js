@@ -4,9 +4,7 @@
 import React, { useContext, memo } from 'react';
 import { View } from 'react-native';
 import { useTheme, Appbar } from 'react-native-paper';
-import { VerticalLayout } from '../Layouts/Layouts';
 import { LocalDataContext } from '../../Hooks/LocalDataHook';
-import { padSize } from '../../Index/CommonVals';
 
 /**
  * A wrapper component to setup an activity quickly by providing the body and custom header content if any.
@@ -22,7 +20,6 @@ import { padSize } from '../../Index/CommonVals';
  * @returns {JSX.Element} The BasicActivity component.
  */
 const BasicActivity = ({ navigation, route, scrollable = false, applyPadding = true, screenName = '', customHeaderContent: CustomHeaderComp, children }) => {
-  const theme = useTheme();
   const { debugMode, toggleDebugMode } = useContext(LocalDataContext);
 
   return (
