@@ -1,7 +1,6 @@
 import React, { useContext, memo } from 'react';
 import { View } from 'react-native';
 import { VerticalLayout } from '../Layouts/Layouts';
-import { LocalDataContext } from '../../Hooks/LocalDataHook';
 
 /**
  * General options component for rendering various types of selection controls.
@@ -54,7 +53,6 @@ import { LocalDataContext } from '../../Hooks/LocalDataHook';
  *   renderParentOption={renderParentOption} />
  */
 const OptionsComp = ({ schema, onSelectionChange, optionsContainer: OptionsContainer, renderOption, renderParentOption, depthPadding = 0 }) => {
-  const { debugMode } = useContext(LocalDataContext);
 
   const handleSelect = (path) => {
     // always iterate from root as schema refs might change but re-render doesn't activate
@@ -110,7 +108,7 @@ const OptionsComp = ({ schema, onSelectionChange, optionsContainer: OptionsConta
       if (option.children) {
         return <View key={index} style={{ paddingLeft: 0 }}>
           {renderParentOption({ option, onPress: () => handleSelect(optionPath) })}
-          <View style={{ paddingLeft: depthPaddingVal + depthPadding, backgroundColor: debugMode ? '#e699ff' : 'transparent' }}>
+          <View style={{ paddingLeft: depthPaddingVal + depthPadding }}>
             <OptionsContainer>
               {renderChildrenOptions(option.children, depth + 1, depthPaddingVal + depthPadding, optionPath)}
             </OptionsContainer>
@@ -118,7 +116,7 @@ const OptionsComp = ({ schema, onSelectionChange, optionsContainer: OptionsConta
         </View>
       } else {
         // render child option/leaf node
-        return <View key={index} style={{ backgroundColor: debugMode ? '#99eeff' : 'transparent' }}>
+        return <View key={index}>
           {renderOption({ option, onPress: () => handleSelect(optionPath) })}
         </View>
       }

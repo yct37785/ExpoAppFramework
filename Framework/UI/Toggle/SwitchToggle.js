@@ -1,7 +1,6 @@
 import React, { useState, useContext, memo } from 'react';
 import { View } from 'react-native';
 import { Switch } from 'react-native-paper';
-import { LocalDataContext } from '../../Hooks/LocalDataHook';
 
 /**
  * Component for rendering one set of radio group
@@ -14,10 +13,9 @@ import { LocalDataContext } from '../../Hooks/LocalDataHook';
  * @returns {JSX.Element} The SwitchToggle component.
  */
 const SwitchToggle = ({ label, value, onValueChange, layout = 'vertical' }) => {
-  const { debugMode } = useContext(LocalDataContext);
   return (
     <View style={{ alignItems: 'flex-start' }}>
-      <Switch value={value} onValueChange={(newValue) => onValueChange(newValue)} style={{ backgroundColor: debugMode ? 'blue' : 'transparent' }} />
+      <Switch value={value} onValueChange={(newValue) => onValueChange(newValue)} />
     </View>
   );
 };

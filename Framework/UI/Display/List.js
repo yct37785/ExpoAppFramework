@@ -5,7 +5,6 @@ import React, { useState, useEffect, useContext, memo } from 'react';
 import { View, FlatList } from 'react-native';
 import { Divider } from 'react-native-paper';
 import { FlashList } from '@shopify/flash-list';
-import { LocalDataContext } from '../../Hooks/LocalDataHook';
 
 /**
  * Combined List component supporting both Flashlist and FlatList.
@@ -26,7 +25,6 @@ const ListDataDisplay = ({
   listType = 'flashlist',
   rowHeight
 }) => {
-  const { debugMode } = useContext(LocalDataContext);
   const [filteredData, setFilteredData] = useState(data);
 
   useEffect(() => {
@@ -61,7 +59,7 @@ const ListDataDisplay = ({
   };
 
   return (
-    <View style={{ width: '100%', height: '100%', backgroundColor: debugMode ? '#ff6666' : 'transparent' }}>
+    <View style={{ width: '100%', height: '100%' }}>
       {filteredData.length > 0 ? renderList() : null}
     </View>
   );

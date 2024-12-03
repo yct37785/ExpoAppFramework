@@ -12,9 +12,7 @@ export const LocalDataContext = createContext({
   setLocalDataValue: () => {},
   getLocalDataValue: () => {},
   resetLocalData: () => {},
-  getLocalDataStringify: () => {},
-  debugMode: false,
-  toggleDebugMode: () => {},
+  getLocalDataStringify: () => {}
 });
 
 /**

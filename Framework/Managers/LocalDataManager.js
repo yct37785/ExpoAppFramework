@@ -93,7 +93,6 @@ const useLocalDataManager = ({ LOCAL_DATA_SCHEMA }) => {
   const [data, setData] = useState({}); // will not be exposed to consumers
   const [isLocalDataLoaded, setIsLocalDataLoaded] = useState(false);
   const [updateCount, setUpdateCount] = useState(0);
-  const [debugMode, setDebugMode] = useState(false);
 
   /**
    * on init will fetch from local storage
@@ -181,20 +180,8 @@ const useLocalDataManager = ({ LOCAL_DATA_SCHEMA }) => {
     return JSON.stringify(data, null, 2);
   };
 
-  /**
-   * whether to toggle debug flag on/off
-   */
-  const toggleDebugMode = async () => {
-    // if debugMode will be true, always set light mode (text color = black)
-    if (!debugMode) {
-      await setLocalDataValue([["settings_sample.isDarkMode", false]]);
-    }
-    setDebugMode(!debugMode);
-  }
-
   return {
-    updateCount, isLocalDataLoaded, setLocalDataValue, getLocalDataValue, resetLocalData, getLocalDataStringify,
-    debugMode, toggleDebugMode
+    updateCount, isLocalDataLoaded, setLocalDataValue, getLocalDataValue, resetLocalData, getLocalDataStringify
   };
 };
 

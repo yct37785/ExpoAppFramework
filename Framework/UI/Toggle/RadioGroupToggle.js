@@ -2,7 +2,6 @@ import React, { useState, useContext, memo } from 'react';
 import { View } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 import { Text } from '../Text/Text';
-import { LocalDataContext } from '../../Hooks/LocalDataHook';
 
 /**
  * Component for rendering one set of radio group
@@ -23,10 +22,9 @@ import { LocalDataContext } from '../../Hooks/LocalDataHook';
  * };
  */
 const RadioGroupToggle = ({ options, value, onValueChange }) => {
-  const { debugMode } = useContext(LocalDataContext);
   return (
     <RadioButton.Group onValueChange={newValue => onValueChange(newValue)} value={value}>
-      <View style={{ flexDirection: 'row', backgroundColor: debugMode ? '#66ff99' : 'transparent' }}>
+      <View style={{ flexDirection: 'row' }}>
         {Object.entries(options).map(([key, obj], index) => {
           return <View key={index} style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text>{obj.label}</Text>

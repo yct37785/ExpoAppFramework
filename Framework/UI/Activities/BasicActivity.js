@@ -1,7 +1,6 @@
 import React, { useContext, memo } from 'react';
 import { View } from 'react-native';
 import { useTheme, Appbar } from 'react-native-paper';
-import { LocalDataContext } from '../../Hooks/LocalDataHook';
 
 /**
  * A wrapper component to setup an activity quickly by providing the body and custom header content if any.
@@ -16,12 +15,11 @@ import { LocalDataContext } from '../../Hooks/LocalDataHook';
  * @returns {JSX.Element} The BasicActivity component.
  */
 const BasicActivity = ({ navigation, route, screenName = '', customHeaderContent: CustomHeaderComp, children }) => {
-  const { debugMode, toggleDebugMode } = useContext(LocalDataContext);
 
   return (
     <View style={{ flex: 1 }}>
-      <Appbar.Header style={{ backgroundColor: debugMode ? '#b3ecff' : 'transparent' }}>
-        <Appbar.BackAction onPress={() => navigation.goBack()} onLongPress={toggleDebugMode} />
+      <Appbar.Header>
+        <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content style={{ flex: 0 }} title={screenName} />
         <View style={{ flex: 1 }}>
           {CustomHeaderComp && CustomHeaderComp()}
