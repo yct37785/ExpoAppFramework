@@ -98,6 +98,7 @@ export const HorizontalLayout = memo((props) => <Layout {...props} direction="ro
  * @param {boolean} [props.reverse=false] - Reverse the order of children.
  * @param {number} [props.spacing=0] - Space between grid items.
  * @param {number} [props.itemsPerLine=2] - Number of items per row/column.
+ * @param {object} [props.itemStyle={}] - Additional custom styles for the child container.
  * @param {object} [props.style={}] - Additional custom styles for the grid.
  * @param {React.ReactNode} props.children - Child elements.
  * 
@@ -108,6 +109,7 @@ export const GridLayout = memo(({
   reverse = false,
   spacing = 0,
   itemsPerLine = 2,
+  itemStyle={},
   style = {},
   children,
 }) => {
@@ -127,18 +129,16 @@ export const GridLayout = memo(({
     },
   });
 
-  const itemStyle = StyleSheet.create({
-    item: {
-      backgroundColor: 'yellow',
-      margin: spacing / 2,
-      width: size ? Math.floor(size.width / itemsPerLine) - spacing : 0
-    },
-  });
-
   return (
     <View style={containerStyle.container} onLayout={onLayout}>
       {arrangedChildren.map((child, index) => (
-        <View style={itemStyle.item} key={index}>
+        <View
+          style={{
+            margin: spacing / 2,
+            width: size ? Math.floor(size.width / itemsPerLine) - spacing : 0,
+            ...itemStyle
+          }} 
+        key={index}>
           {child}
         </View>
       ))}

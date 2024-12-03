@@ -45,12 +45,12 @@ function SampleLayoutsScreen({ navigation, route }) {
         <UI.GridLayout
           direction="row"
           reverse={false}
-          alignment="centered"
           spacing={Const.padSize}
           itemsPerLine={3}
+          itemStyle = {{ backgroundColor: 'yellow' }}
           style={{ backgroundColor: 'red', width: 350 }}
         >
-          {[...Array(10)].map((e, i) => <BasicContainer key={i} i />)}
+          {[...Array(10)].map((e, i) => <BasicContainer key={i} i={i} />)}
         </UI.GridLayout>
       </UI.VerticalLayout>
     </UI.BasicActivity>)
