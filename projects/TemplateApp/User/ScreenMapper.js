@@ -8,7 +8,6 @@
 import SampleHomeScreen from '../Screens/SampleHomeScreen';
 import SampleLayoutsScreen from '../Screens/SampleLayoutsScreen';
 import SampleContainersScreen from '../Screens/SampleContainersScreen';
-import SampleTabsScreen from '../Screens/SampleTabsScreen';
 import SampleMenusScreen from '../Screens/SampleMenusScreen';
 import SampleEmptyScreen from '../Screens/SampleEmptyScreen';
 import SampleDataDisplayScreen from '../Screens/SampleDataDisplayScreen';
@@ -18,7 +17,6 @@ export const screenMaps = {
   home: SampleHomeScreen,
   layouts: SampleLayoutsScreen,
   containers: SampleContainersScreen,
-  tabs: SampleTabsScreen,
   menus: SampleMenusScreen,
   empty: SampleEmptyScreen,
   dataDisplay: SampleDataDisplayScreen,

@@ -21,7 +21,6 @@ export const LOCAL_DATA_SCHEMA = {
 export const SAMPLE_SCREENS = {
   layouts: "layouts example",
   containers: "containers example",
-  tabs: "tabs example",
   menus: "menus example",
   empty: "empty example",
   dataDisplay: "data display example",
