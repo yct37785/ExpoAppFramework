@@ -1,16 +1,15 @@
-/***************************************************************************************
-* showcase menu UI elements
-***************************************************************************************/
-import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
+import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
 import { View, Keyboard } from 'react-native';
 const _ = require('lodash');
-// UI
 import {
   Card, Button, IconButton, Portal
 } from 'react-native-paper';
 import { VerticalLayout, BasicActivity, Dialog, Popup, PickerInput, CheckOptions, Text } from '../../../Framework/Index/UI';
 import { iconSizeSmall } from '../../../Framework/Index/CommonVals';
-// const
+
+/**
+ * Const defines.
+ */
 const PICKER_ITEM_LIST = [
   { label: 'Red', value: 'red' },
   { label: 'Blue', value: 'blue' },
@@ -52,9 +51,13 @@ const POPUP_MENU_OPTIONS = {
 };
 
 /**
- * Display sample menus screen
+ * Sample menus screen, demo various menu UI.
+ * 
+ * @param {Object} props - Component props.
+ * @param {Object} props.navigation - React Navigation provided object for navigating between screens.
+ * @param {Object} props.route - React Navigation provided oobject containing route parameters.
  */
-export default function SampleMenusScreen({ navigation, route, screenHeaderComp: ScreenHeaderComp }) {
+function SampleMenusScreen({ navigation, route, screenHeaderComp: ScreenHeaderComp }) {
   const searchBarRef = useRef();
   const [showDialog, setShowDialog] = useState(false);
   const [pickerSelection, setPickerSelection] = useState('red');
@@ -113,3 +116,5 @@ export default function SampleMenusScreen({ navigation, route, screenHeaderComp:
     </BasicActivity>
   );
 }
+
+export default memo(SampleMenusScreen);

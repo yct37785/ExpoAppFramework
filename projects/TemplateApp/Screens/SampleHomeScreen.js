@@ -1,7 +1,4 @@
-/***************************************************************************************
-* home screen, the root screen
-***************************************************************************************/
-import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
+import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
 import { View } from 'react-native';
 import { BasicActivity, VerticalLayout, Text, Button } from '../../../Framework/Index/UI';
 import { useLocalDataUpdate } from '../../../Framework/Index/Hooks';
@@ -9,9 +6,13 @@ import { padSize } from '../../../Framework/Index/CommonVals';
 import { SAMPLE_SCREENS } from '../User/Schemas';
 
 /**
- * sample home screen
+ * Sample home screen.
+ * 
+ * @param {Object} props - Component props.
+ * @param {Object} props.navigation - React Navigation provided object for navigating between screens.
+ * @param {Object} props.route - React Navigation provided oobject containing route parameters.
  */
-const SampleHomeScreen = ({ navigation, route }) => {
+function SampleHomeScreen({ navigation, route }) {
   
   useLocalDataUpdate(() => {
     console.log("SampleHomeScreen: updated local data");
@@ -30,4 +31,4 @@ const SampleHomeScreen = ({ navigation, route }) => {
     </BasicActivity>)
 }
 
-export default SampleHomeScreen;
+export default memo(SampleHomeScreen);

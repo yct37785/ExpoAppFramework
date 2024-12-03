@@ -1,24 +1,18 @@
-import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
+import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
 import { View } from 'react-native';
 import { BasicActivity, Text } from '../../../Framework/Index/UI';
 import { VerticalLayout, HorizontalLayout, GridLayout } from '../../../Framework/Index/UI';
-// data
 import { useLocalDataUpdate } from '../../../Framework/Index/Hooks';
-// const
 import { padSize } from '../../../Framework/Index/CommonVals';
 
 /**
- * SampleLayoutsScreen Component
- * 
- * Demonstrates various layout components.
+ * Sample layouts screen, demo various layout configurations.
  * 
  * @param {Object} props - Component props.
- * @param {Object} props.navigation - Navigation object for navigating between screens.
- * @param {Object} props.route - Route object containing route parameters.
- * @param {Function} props.screenHeaderComp - Function component to render the screen header.
- * @returns {JSX.Element} The SampleLayoutsScreen component.
+ * @param {Object} props.navigation - React Navigation provided object for navigating between screens.
+ * @param {Object} props.route - React Navigation provided oobject containing route parameters.
  */
-export default function SampleLayoutsScreen({ navigation, route }) {
+function SampleLayoutsScreen({ navigation, route }) {
   useLocalDataUpdate(() => {
     console.log("SampleNewScreen: updated local data");
   });
@@ -75,3 +69,5 @@ export default function SampleLayoutsScreen({ navigation, route }) {
       </GridLayout>
     </BasicActivity>)
 }
+
+export default memo(SampleLayoutsScreen);

@@ -3,22 +3,22 @@ import { useOnLayout } from '../../Hooks/OnLayoutHook';
 import { View, StyleSheet, ScrollView } from 'react-native';
 
 /**
- * base layout component
+ * Base layout component.
  * 
- * @param {object} props
- * @param {'row' | 'column'} [props.direction] - flex direction
- * @param {'flex-start' | 'center' | 'flex-end'} [props.align='flex-start'] - alignment of children
- * @param {boolean} [props.reverse=false] - reverse the order of children
- * @param {'wrap' | 'scroll' | 'none'} [props.constraint='wrap'] - determine if child elements behaviour if exceeds parent dimensions,
- * none by default, up to user to determine if wrap or scroll
- * @param {number} [props.childMargin=0] - margin between child elements
- * @param {number} [props.margin=0] - outer margin for the layout
- * @param {number} [props.padding=0] - inner padding for the layout
- * @param {object} [props.style={}] - additional custom styles for the layout
- * @param {React.ReactNode} props.children - child elements
+ * @param {Object} props - Component props.
+ * @param {'row' | 'column'} [props.direction='column'] - Flex direction.
+ * @param {'flex-start' | 'center' | 'flex-end'} [props.align='flex-start'] - Alignment of children.
+ * @param {boolean} [props.reverse=false] - Reverse the order of children.
+ * @param {'wrap' | 'scroll' | 'none'} [props.constraint='wrap'] - Determine if child elements behaviour if exceeds parent dimensions,
+ * none by default, up to user to determine if wrap or scroll.
+ * @param {number} [props.childMargin=0] - Margin between child elements.
+ * @param {number} [props.margin=0] - Outer margin for the layout.
+ * @param {number} [props.padding=0] - Inner padding for the layout.
+ * @param {object} [props.style={}] - Additional custom styles for the layout.
+ * @param {React.ReactNode} props.children - Child elements.
  */
 const Layout = ({
-  direction,
+  direction = 'column',
   align = 'flex-start',
   reverse = false,
   constraint = 'none',
@@ -73,24 +73,25 @@ const Layout = ({
 };
 
 /**
- * Vertical Layout Component
+ * Vertical Layout Component.
  */
 export const VerticalLayout = memo((props) => <Layout {...props} direction="column" />);
 
 /**
- * Horizontal Layout Component
+ * Horizontal Layout Component.
  */
 export const HorizontalLayout = memo((props) => <Layout {...props} direction="row" />);
 
 /**
- * Grid Layout Component
- * @param {object} props
- * @param {'row' | 'column'} [props.direction='row'] - layout direction
- * @param {boolean} [props.reverse=false] - reverse the order of children
- * @param {number} [props.spacing=0] - space between grid items
- * @param {number} [props.itemsPerLine=2] - number of items per row/column
- * @param {object} [props.style={}] - additional custom styles for the grid
- * @param {React.ReactNode} props.children - child elements
+ * Grid Layout Component.
+ * 
+ * @param {Object} props - Component props.
+ * @param {'row' | 'column'} [props.direction='row'] - Layout direction.
+ * @param {boolean} [props.reverse=false] - Reverse the order of children.
+ * @param {number} [props.spacing=0] - Space between grid items.
+ * @param {number} [props.itemsPerLine=2] - Number of items per row/column.
+ * @param {object} [props.style={}] - Additional custom styles for the grid.
+ * @param {React.ReactNode} props.children - Child elements.
  */
 export const GridLayout = memo(({
   direction = 'row',

@@ -1,7 +1,4 @@
-/***************************************************************************************
-* showcase data display UI elements
-***************************************************************************************/
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import React, { useState, useEffect, useCallback, useContext, memo } from 'react';
 import { View, Image } from 'react-native';
 import {
   VerticalLayout, BasicActivity, CollapsibleContainer, ChipOptions, RadioGroupToggle, ListDataDisplay,
@@ -14,11 +11,10 @@ import { padSize } from '../../../Framework/Index/CommonVals';
  * Displays a sample screen with a search bar, filter options, and a list of products.
  * 
  * @param {Object} props - Component props.
- * @param {Object} props.navigation - Navigation object for navigating between screens.
- * @param {Object} props.route - Route object containing route parameters.
- * @returns {JSX.Element} The SampleSearchScreen component.
+ * @param {Object} props.navigation - React Navigation provided object for navigating between screens.
+ * @param {Object} props.route - React Navigation provided oobject containing route parameters.
  */
-export default function SampleDataDisplayScreen({ navigation, route }) {
+function SampleDataDisplayScreen({ navigation, route }) {
   const [listType, setListType] = useState('flashlist');
   const [searchQuery, setSearchQuery] = useState('');
   const [productList, setProductList] = useState([]);
@@ -44,7 +40,7 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
   }, []);
 
   /**
-   * Creates a random product object.
+   * Creates a random product object generated with FakerJS.
    * 
    * @returns {Object} A random product object.
    */
@@ -61,7 +57,7 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
   /**
    * Handles selection of material chips.
    * 
-   * @param {string} mat - The key of the selected material chip.
+   * TODO: params
    */
   const onMaterialChipSelected = useCallback((updatedSchema, optionPath, optionRef) => {
     const mat = optionPath.at(-1);
@@ -78,6 +74,7 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
    * Filters the products based on the selected materials and search query.
    * 
    * @param {Array} data - Array of product data.
+   * 
    * @returns {Array} Filtered array of product data.
    */
   const filterProducts = useCallback((data) => {
@@ -99,6 +96,7 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
    * @param {Object} param0 - Render item parameters.
    * @param {Object} param0.item - The item data to render.
    * @param {number} param0.index - The index of the item.
+   * 
    * @returns {JSX.Element} The rendered item component.
    */
   const renderItem = useCallback(
@@ -152,8 +150,9 @@ export default function SampleDataDisplayScreen({ navigation, route }) {
         renderItem={renderItem}
         listType={listType}
         rowHeight={ROW_HEIGHT}
-        hasScrollChild  // special prop to bypass parent scroll to avoid nested scrolls
       />
     </BasicActivity>
   );
 }
+
+export default memo(SampleDataDisplayScreen);

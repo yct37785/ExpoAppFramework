@@ -1,15 +1,16 @@
-/***************************************************************************************
-* showcase container UI elements
-***************************************************************************************/
-import React from 'react';
+import React, { memo } from 'react';
 import { View } from 'react-native';
 import { BasicActivity, Text } from '../../../Framework/Index/UI';
 import { padSize } from '../../../Framework/Index/CommonVals';
 
 /**
- * containers demos screen
+ * Containers demos screen.
+ * 
+ * @param {Object} props - Component props.
+ * @param {Object} props.navigation - React Navigation provided object for navigating between screens.
+ * @param {Object} props.route - React Navigation provided oobject containing route parameters.
  */
-export default function SampleContainersScreen({ navigation, route }) {
+function SampleContainersScreen({ navigation, route }) {
   const { paramText } = route.params;
 
   return (
@@ -18,3 +19,5 @@ export default function SampleContainersScreen({ navigation, route }) {
     </BasicActivity>
   );
 }
+
+export default memo(SampleContainersScreen);

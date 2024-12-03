@@ -1,11 +1,11 @@
-/***************************************************************************************
-* showcase tab type container UI element
-***************************************************************************************/
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { BasicActivity, TabsContainer, Text } from '../../../Framework/Index/UI';
 
+/**
+ * Const defines.
+ */
 export const TAB_ROUTES = [
   { title: 'Page 1', key: 'p1', icon: 'google-street-view' },
   { title: 'Page 2', key: 'p2', icon: 'camera' },
@@ -13,14 +13,13 @@ export const TAB_ROUTES = [
 ];
 
 /**
- * Displays a sample screen with tab navigation.
+ * Sample tabs screen, demo simple tab UI.
  * 
- * @param {Object} props - Props passed to the component.
- * @param {Object} props.navigation - Navigation object for navigating between screens.
- * @param {Object} props.route - Route object containing route parameters.
- * @returns {JSX.Element} The SampleTabsScreen component.
+ * @param {Object} props - Component props.
+ * @param {Object} props.navigation - React Navigation provided object for navigating between screens.
+ * @param {Object} props.route - React Navigation provided oobject containing route parameters.
  */
-export default function SampleTabsScreen({ navigation, route }) {
+function SampleTabsScreen({ navigation, route }) {
   const [tabIndex, setTabIndex] = useState(0);
 
   /**
@@ -43,7 +42,7 @@ export default function SampleTabsScreen({ navigation, route }) {
    * @param {Object} param0.route - The route object for the tab.
    * @returns {JSX.Element|null} The component for the scene.
    */
-  const renderScene = ({ navigation, route }) => {
+  const renderScene = memo(({ navigation, route }) => {
     switch (route.key) {
       case 'p1':
         return <Tab1Comp />;
@@ -54,7 +53,7 @@ export default function SampleTabsScreen({ navigation, route }) {
       default:
         return null;
     }
-  };
+  });
 
   /**
    * Component for Tab 1.
@@ -91,8 +90,9 @@ export default function SampleTabsScreen({ navigation, route }) {
         tabIndex={tabIndex}
         onTabIdxChange={setTabIndex}
         sceneMap={renderScene}
-        customLayout="match-parent" // special prop to set flex to 1 for elems with undefined height
       />
     </BasicActivity>
   );
 }
+
+export default memo(SampleTabsScreen);

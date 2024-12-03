@@ -1,19 +1,18 @@
-/***************************************************************************************
-* showcase local data management
-***************************************************************************************/
-import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
+import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
 import { View, Keyboard } from 'react-native';
 import { padSize, padSize2 } from '../../../Framework/Index/CommonVals';
-// UI
 import { Card } from 'react-native-paper';
 import { VerticalLayout, BasicActivity, SwitchToggle, Button, Text } from '../../../Framework/Index/UI';
-// data
 import { LocalDataContext, useLocalDataUpdate } from '../../../Framework/Index/Hooks';
 
 /**
- * sample local data management showcase screen
+ * Sample local data screen, demo local data management.
+ * 
+ * @param {Object} props - Component props.
+ * @param {Object} props.navigation - React Navigation provided object for navigating between screens.
+ * @param {Object} props.route - React Navigation provided oobject containing route parameters.
  */
-export default function SampleLocalDataScreen({ navigation, route, screenHeaderComp: ScreenHeaderComp }) {
+function SampleLocalDataScreen({ navigation, route }) {
   const { paramText } = route.params;
   const { setLocalDataValue, getLocalDataValue, resetLocalData, getLocalDataStringify } = useContext(LocalDataContext);
 
@@ -58,3 +57,5 @@ export default function SampleLocalDataScreen({ navigation, route, screenHeaderC
     </BasicActivity>
   );
 }
+
+export default memo(SampleLocalDataScreen);

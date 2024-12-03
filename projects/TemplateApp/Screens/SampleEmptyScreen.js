@@ -1,14 +1,14 @@
-/***************************************************************************************
-* copy paste empty screen
-***************************************************************************************/
-import React, { useContext, useState, useEffect, useCallback, useRef } from 'react';
-// UI
+import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
 import { BasicActivity, Text } from '../../../Framework/Index/UI';
 
 /**
- * sample empty screen
+ * Sample empty screen, duplicate for quick start for new screens.
+ * 
+ * @param {Object} props - Component props.
+ * @param {Object} props.navigation - React Navigation provided object for navigating between screens.
+ * @param {Object} props.route - React Navigation provided oobject containing route parameters.
  */
-export default function SampleEmptyScreen({ navigation, route, screenHeaderComp: ScreenHeaderComp }) {
+function SampleEmptyScreen({ navigation, route }) {
   const { paramText } = route.params;
 
   return (
@@ -17,3 +17,5 @@ export default function SampleEmptyScreen({ navigation, route, screenHeaderComp:
     </BasicActivity>
   );
 }
+
+export default memo(SampleEmptyScreen);
