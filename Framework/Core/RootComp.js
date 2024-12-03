@@ -7,7 +7,7 @@ import { View, LogBox, Platform, StatusBar } from 'react-native';
 // UI
 import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, configureFonts } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
-import { padSize } from '../Index/CommonVals';
+import { padSize } from '../Index/Const';
 // data
 import { LocalDataContext } from '../Hooks/LocalDataHook';
 import useLocalDataManager from '../Managers/LocalDataManager';

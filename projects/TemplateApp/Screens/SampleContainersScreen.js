@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { View } from 'react-native';
 import * as UI from '../../../Framework/Index/UI';
 import * as Hooks from '../../../Framework/Index/Hooks';
-import * as Common from '../../../Framework/Index/CommonVals';
+import * as Const from '../../../Framework/Index/Const';
 
 /**
  * Containers demos screen.

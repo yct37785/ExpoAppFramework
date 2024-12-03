@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, memo } from 'react';
 import { View, Image } from 'react-native';
 import * as UI from '../../../Framework/Index/UI';
 import * as Hooks from '../../../Framework/Index/Hooks';
-import * as Common from '../../../Framework/Index/CommonVals';
+import * as Const from '../../../Framework/Index/Const';
 import { faker } from '@faker-js/faker';
 
 /**
@@ -130,7 +130,7 @@ function SampleDataDisplayScreen({ navigation, route }) {
   return (
     <UI.BasicActivity navigation={navigation} route={route} customHeaderContent={customHeaderContent}>
       {/* Filter menu */}
-      {chipsSchema ? <View style={{ paddingLeft: Common.padSize }}>
+      {chipsSchema ? <View style={{ paddingLeft: Const.padSize }}>
         <UI.CollapsibleContainer toggleHeaderText="Filter">
           <UI.ChipOptions schema={chipsSchema} onSelectionChange={onMaterialChipSelected} />
         </UI.CollapsibleContainer>

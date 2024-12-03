@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, useCallback, useRef, memo } fro
 import { View } from 'react-native';
 import * as UI from '../../../Framework/Index/UI';
 import * as Hooks from '../../../Framework/Index/Hooks';
-import * as Common from '../../../Framework/Index/CommonVals';
+import * as Const from '../../../Framework/Index/Const';
 
 /**
  * Sample layouts screen, demo various layout configurations.
@@ -26,7 +26,7 @@ function SampleLayoutsScreen({ navigation, route }) {
 
   return (
     <UI.BasicActivity navigation={navigation} route={route} screenName="Home Sample">
-      <UI.VerticalLayout childMargin={Common.padSize} padding={0} constraint='wrap' style={{ backgroundColor: 'red', height: 290 }}>
+      <UI.VerticalLayout childMargin={Const.padSize} padding={0} constraint='wrap' style={{ backgroundColor: 'red', height: 290 }}>
         <Container />
         <Container />
         <Container />
@@ -36,7 +36,7 @@ function SampleLayoutsScreen({ navigation, route }) {
         <Container />
         <Container />
       </UI.VerticalLayout>
-      <UI.HorizontalLayout childMargin={Common.padSize} padding={0} constraint='wrap' style={{ backgroundColor: 'red' }}>
+      <UI.HorizontalLayout childMargin={Const.padSize} padding={0} constraint='wrap' style={{ backgroundColor: 'red' }}>
         <Container />
         <Container />
         <Container />

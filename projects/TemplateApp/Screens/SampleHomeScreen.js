@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, useCallback, useRef, memo } fro
 import { SAMPLE_SCREENS } from '../User/Schemas';
 import * as UI from '../../../Framework/Index/UI';
 import * as Hooks from '../../../Framework/Index/Hooks';
-import * as Common from '../../../Framework/Index/CommonVals';
+import * as Const from '../../../Framework/Index/Const';
 
 /**
  * Sample home screen.
@@ -19,7 +19,7 @@ function SampleHomeScreen({ navigation, route }) {
 
   return (
     <UI.BasicActivity navigation={navigation} route={route} screenName="Home Sample">
-      <UI.VerticalLayout childMargin={Common.padSize} padding={Common.padSize}>
+      <UI.VerticalLayout childMargin={Const.padSize} padding={Const.padSize}>
       <UI.Text variant="bodyMedium">Select the screen you want to navigate to</UI.Text>
       {Object.keys(SAMPLE_SCREENS).map((key) => (
         <UI.Button key={key} onPress={() => navigation.navigate(key, { paramText: `hello ${key} from home` })}>

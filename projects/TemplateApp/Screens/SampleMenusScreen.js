@@ -7,7 +7,7 @@ import {
 } from 'react-native-paper';
 import * as UI from '../../../Framework/Index/UI';
 import * as Hooks from '../../../Framework/Index/Hooks';
-import * as Common from '../../../Framework/Index/CommonVals';
+import * as Const from '../../../Framework/Index/Const';
 
 /**
  * Const defines.
@@ -85,7 +85,7 @@ function SampleMenusScreen({ navigation, route, screenHeaderComp: ScreenHeaderCo
 
   function customHeaderContent() {
     return <UI.VerticalLayout align='horizontal' reverse={true}>
-      <UI.Popup triggerComp={<IconButton icon="dots-vertical" size={Common.iconSizeSmall} />}>
+      <UI.Popup triggerComp={<IconButton icon="dots-vertical" size={Const.iconSizeSmall} />}>
         <UI.VerticalLayout>
           <UI.CheckOptions schema={checkOptionsSchema} onSelectionChange={handleCheckOptionsChange} />
         </UI.VerticalLayout>

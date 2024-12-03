@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
 import * as UI from '../../../Framework/Index/UI';
 import * as Hooks from '../../../Framework/Index/Hooks';
-import * as Common from '../../../Framework/Index/CommonVals';
+import * as Const from '../../../Framework/Index/Const';
 
 /**
  * Sample empty screen, duplicate for quick start for new screens.

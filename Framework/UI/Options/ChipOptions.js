@@ -2,7 +2,7 @@ import React, { useState, useContext, memo } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { useTheme, Chip } from 'react-native-paper';
 import { Text } from '../Text/Text';
-import { padSize025, padSize05, padSize, padSize2 } from '../../Index/CommonVals';
+import { padSize025, padSize05, padSize, padSize2 } from '../../Index/Const';
 import OptionsComp from './OptionsComp';
 
 /**

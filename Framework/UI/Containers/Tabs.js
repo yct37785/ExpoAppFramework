@@ -3,7 +3,7 @@
 *****************************************************************************************/
 import React, { memo } from 'react';
 import { View } from 'react-native';
-import { padSize05, padSize, rippleColorForLight, rippleColorForDark, textColorForLight, textColorForDark } from '../../Index/CommonVals';
+import { padSize05, padSize, rippleColorForLight, rippleColorForDark, textColorForLight, textColorForDark } from '../../Index/Const';
 import { useTheme } from 'react-native-paper';
 import { Text } from '../Text/Text';
 import { TabView, TabBar } from 'react-native-tab-view';
