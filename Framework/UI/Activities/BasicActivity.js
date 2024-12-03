@@ -34,9 +34,9 @@ const BasicActivity = ({ navigation, route, scrollable = false, applyPadding = t
           {CustomHeaderComp && CustomHeaderComp()}
         </View>
       </Appbar.Header>
-      <VerticalLayout constraint='scroll'>
+      <View style={{ flex: 1}}>
         {children}
-      </VerticalLayout>
+      </View>
     </View>
   );
 };

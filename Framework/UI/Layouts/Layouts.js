@@ -4,11 +4,13 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 
 /**
  * base layout component
+ * 
  * @param {object} props
  * @param {'row' | 'column'} props.direction - flex direction
  * @param {'flex-start' | 'center' | 'flex-end'} [props.align='flex-start'] - alignment of children
  * @param {boolean} [props.reverse=false] - reverse the order of children
- * @param {'wrap' | 'scroll'} [props.constraint='wrap'] - determines if children wrap or view becomes scrollable once container exceeds parent view
+ * @param {'wrap' | 'scroll' | 'none'} [props.constraint='wrap'] - determine if child elements behaviour if exceeds parent dimensions,
+ * none by default, up to user to determine if wrap or scroll
  * @param {number} [props.childMargin=0] - margin between child elements
  * @param {number} [props.margin=0] - outer margin for the layout
  * @param {number} [props.padding=0] - inner padding for the layout
@@ -19,7 +21,7 @@ const Layout = ({
   direction,
   align = 'flex-start',
   reverse = false,
-  constraint = 'wrap',
+  constraint = 'none',
   childMargin = 0,
   margin = 0,
   padding = 0,
@@ -30,9 +32,6 @@ const Layout = ({
   if (reverse) {
     arrangedChildren.reverse();
   }
-  const hasScrollChild = arrangedChildren.some(
-    child => child.props.hasScrollChild
-  );
   
   const containerStyle = StyleSheet.create({
     container: {
@@ -48,7 +47,7 @@ const Layout = ({
     return <View style={{ padding: childMargin / 2 }} key={index}>{child}</View>
   };
   
-  if (constraint === 'scroll' && !hasScrollChild) {
+  if (constraint === 'scroll') {
     return (
       <View style={style}>
         <ScrollView horizontal={direction === 'row'}>
