@@ -1,9 +1,9 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
-import { View, Keyboard } from 'react-native';
-import { padSize, padSize2 } from '../../../Framework/Index/CommonVals';
+import { View } from 'react-native';
 import { Card } from 'react-native-paper';
-import { VerticalLayout, BasicActivity, SwitchToggle, Button, Text } from '../../../Framework/Index/UI';
-import { LocalDataContext, useLocalDataUpdate } from '../../../Framework/Index/Hooks';
+import * as UI from '../../../Framework/Index/UI';
+import * as Hooks from '../../../Framework/Index/Hooks';
+import * as Common from '../../../Framework/Index/CommonVals';
 
 /**
  * Sample local data screen, demo local data management.
@@ -13,10 +13,9 @@ import { LocalDataContext, useLocalDataUpdate } from '../../../Framework/Index/H
  * @param {Object} props.route - React Navigation provided oobject containing route parameters.
  */
 function SampleLocalDataScreen({ navigation, route }) {
-  const { paramText } = route.params;
-  const { setLocalDataValue, getLocalDataValue, resetLocalData, getLocalDataStringify } = useContext(LocalDataContext);
+  const { setLocalDataValue, getLocalDataValue, resetLocalData, getLocalDataStringify } = useContext(Hooks.LocalDataContext);
 
-  useLocalDataUpdate(() => {
+  Hooks.useLocalDataUpdate(() => {
     console.log("SampleLocalDataScreen: updated local data");
   });
 
@@ -30,31 +29,31 @@ function SampleLocalDataScreen({ navigation, route }) {
   }
 
   return (
-    <BasicActivity navigation={navigation} route={route} screemName="Local Data Sample">
-      <VerticalLayout>
-        <Text variant="titleMedium">Modify and save local data</Text>
-        <VerticalLayout>
-          <Button mode="contained" onPress={() => updateTrackersSample()}>++trackers_sample.num</Button>
+    <UI.BasicActivity navigation={navigation} route={route} screemName="Local Data Sample">
+      <UI.VerticalLayout>
+        <UI.Text variant="titleMedium">Modify and save local data</UI.Text>
+        <UI.VerticalLayout>
+          <UI.Button mode="contained" onPress={() => updateTrackersSample()}>++trackers_sample.num</UI.Button>
           <View>
-            <Text variant="labelMedium">Toogle dark mode</Text>
-            <SwitchToggle value={getLocalDataValue("settings_sample.isDarkMode")} onValueChange={() => toggleDarkMode()} />
+            <UI.Text variant="labelMedium">Toogle dark mode</UI.Text>
+            <UI.SwitchToggle value={getLocalDataValue("settings_sample.isDarkMode")} onValueChange={() => toggleDarkMode()} />
           </View>
-        </VerticalLayout>
-        <Button icon="refresh" mode="contained" onPress={() => resetLocalData()}>reset data completely</Button>
-      </VerticalLayout>
-      <VerticalLayout>
-        <Text variant="titleMedium">Change data schema</Text>
-        <Text variant="bodyMedium">To test: close app, add additional values to schema and restart app</Text>
-      </VerticalLayout>
-      <VerticalLayout>
-        <Text variant="titleMedium">Data preview</Text>
+        </UI.VerticalLayout>
+        <UI.Button icon="refresh" mode="contained" onPress={() => resetLocalData()}>reset data completely</UI.Button>
+      </UI.VerticalLayout>
+      <UI.VerticalLayout>
+        <UI.Text variant="titleMedium">Change data schema</UI.Text>
+        <UI.Text variant="bodyMedium">To test: close app, add additional values to schema and restart app</UI.Text>
+      </UI.VerticalLayout>
+      <UI.VerticalLayout>
+        <UI.Text variant="titleMedium">Data preview</UI.Text>
         <Card mode='elevated'>
           <Card.Content>
-            <Text variant="bodySmall">{getLocalDataStringify()}</Text>
+            <UI.Text variant="bodySmall">{getLocalDataStringify()}</UI.Text>
           </Card.Content>
         </Card>
-      </VerticalLayout>
-    </BasicActivity>
+      </UI.VerticalLayout>
+    </UI.BasicActivity>
   );
 }
 

@@ -1,5 +1,7 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
-import { BasicActivity, Text } from '../../../Framework/Index/UI';
+import * as UI from '../../../Framework/Index/UI';
+import * as Hooks from '../../../Framework/Index/Hooks';
+import * as Common from '../../../Framework/Index/CommonVals';
 
 /**
  * Sample empty screen, duplicate for quick start for new screens.
@@ -12,9 +14,9 @@ function SampleEmptyScreen({ navigation, route }) {
   const { paramText } = route.params;
 
   return (
-    <BasicActivity navigation={navigation} route={route} screenName="Empty Sample">
-      <Text variant="bodyMedium">{`paramText: ${paramText}`}</Text>
-    </BasicActivity>
+    <UI.BasicActivity navigation={navigation} route={route} screenName="Empty Sample">
+      <UI.Text variant="bodyMedium">{`paramText: ${paramText}`}</UI.Text>
+    </UI.BasicActivity>
   );
 }
 

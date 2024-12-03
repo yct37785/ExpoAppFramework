@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useCallback, useContext, memo } from 'react';
+import React, { useState, useEffect, useCallback, memo } from 'react';
 import { View, Image } from 'react-native';
-import {
-  VerticalLayout, BasicActivity, CollapsibleContainer, ChipOptions, RadioGroupToggle, ListDataDisplay,
-  TextInput, Text, HighlightText
-} from '../../../Framework/Index/UI';
+import * as UI from '../../../Framework/Index/UI';
+import * as Hooks from '../../../Framework/Index/Hooks';
+import * as Common from '../../../Framework/Index/CommonVals';
 import { faker } from '@faker-js/faker';
-import { padSize } from '../../../Framework/Index/CommonVals';
 
 /**
  * Displays a sample screen with a search bar, filter options, and a list of products.
@@ -104,14 +102,14 @@ function SampleDataDisplayScreen({ navigation, route }) {
       return (
         <View style={{ flex: 1 }}>
         <View style={{ flex: 1 }}>
-          <HighlightText text={item.name} query={searchQuery} variant={'titleSmall'} />
+          <UI.HighlightText text={item.name} query={searchQuery} variant={'titleSmall'} />
           <Image
             style={{ width: 100, height: 100 }}
             source={{ uri: item.img }}
             resizeMode={'contain'}
           />
-          <Text variant='labelMedium'>{`material: ${item.material}`}</Text>
-          <HighlightText text={item.desc} query={searchQuery} variant={'bodyMedium'} />
+          <UI.Text variant='labelMedium'>{`material: ${item.material}`}</UI.Text>
+          <UI.HighlightText text={item.desc} query={searchQuery} variant={'bodyMedium'} />
         </View>
       </View>
       );
@@ -119,39 +117,39 @@ function SampleDataDisplayScreen({ navigation, route }) {
   );
 
   function customHeaderContent() {
-    return <VerticalLayout>
-      <TextInput
+    return <UI.VerticalLayout>
+      <UI.TextInput
         type="search"
         value={searchQuery}
         onChange={setSearchQuery}
         placeholder="search"
       />
-    </VerticalLayout>
+    </UI.VerticalLayout>
   }
 
   return (
-    <BasicActivity navigation={navigation} route={route} customHeaderContent={customHeaderContent}>
+    <UI.BasicActivity navigation={navigation} route={route} customHeaderContent={customHeaderContent}>
       {/* Filter menu */}
-      {chipsSchema ? <View style={{ paddingLeft: padSize }}>
-        <CollapsibleContainer toggleHeaderText="Filter">
-          <ChipOptions schema={chipsSchema} onSelectionChange={onMaterialChipSelected} />
-        </CollapsibleContainer>
+      {chipsSchema ? <View style={{ paddingLeft: Common.padSize }}>
+        <UI.CollapsibleContainer toggleHeaderText="Filter">
+          <UI.ChipOptions schema={chipsSchema} onSelectionChange={onMaterialChipSelected} />
+        </UI.CollapsibleContainer>
       </View> : null}
       {/* Toggle Flashlist vs FlatList */}
-      <RadioGroupToggle
+      <UI.RadioGroupToggle
         options={{
           flashlist: { label: "Flashlist" },
           flatlist: { label: "Flatlist" }
         }}
         value={listType} onValueChange={setListType} />
-      <ListDataDisplay
+      <UI.ListDataDisplay
         data={productList}
         filterFunction={filterProducts}
         renderItem={renderItem}
         listType={listType}
         rowHeight={ROW_HEIGHT}
       />
-    </BasicActivity>
+    </UI.BasicActivity>
   );
 }
 

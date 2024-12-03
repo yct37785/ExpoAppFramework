@@ -1,9 +1,8 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
-import { View } from 'react-native';
-import { BasicActivity, VerticalLayout, Text, Button } from '../../../Framework/Index/UI';
-import { useLocalDataUpdate } from '../../../Framework/Index/Hooks';
-import { padSize } from '../../../Framework/Index/CommonVals';
 import { SAMPLE_SCREENS } from '../User/Schemas';
+import * as UI from '../../../Framework/Index/UI';
+import * as Hooks from '../../../Framework/Index/Hooks';
+import * as Common from '../../../Framework/Index/CommonVals';
 
 /**
  * Sample home screen.
@@ -14,21 +13,21 @@ import { SAMPLE_SCREENS } from '../User/Schemas';
  */
 function SampleHomeScreen({ navigation, route }) {
   
-  useLocalDataUpdate(() => {
+  Hooks.useLocalDataUpdate(() => {
     console.log("SampleHomeScreen: updated local data");
   });
 
   return (
-    <BasicActivity navigation={navigation} route={route} screenName="Home Sample">
-      <VerticalLayout childMargin={padSize} padding={padSize}>
-      <Text variant="bodyMedium">Select the screen you want to navigate to</Text>
+    <UI.BasicActivity navigation={navigation} route={route} screenName="Home Sample">
+      <UI.VerticalLayout childMargin={Common.padSize} padding={Common.padSize}>
+      <UI.Text variant="bodyMedium">Select the screen you want to navigate to</UI.Text>
       {Object.keys(SAMPLE_SCREENS).map((key) => (
-        <Button key={key} onPress={() => navigation.navigate(key, { paramText: `hello ${key} from home` })}>
+        <UI.Button key={key} onPress={() => navigation.navigate(key, { paramText: `hello ${key} from home` })}>
           {SAMPLE_SCREENS[key]}
-        </Button>
+        </UI.Button>
       ))}
-      </VerticalLayout>
-    </BasicActivity>)
+      </UI.VerticalLayout>
+    </UI.BasicActivity>)
 }
 
 export default memo(SampleHomeScreen);

@@ -1,9 +1,8 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
 import { View } from 'react-native';
-import { BasicActivity, Text } from '../../../Framework/Index/UI';
-import { VerticalLayout, HorizontalLayout, GridLayout } from '../../../Framework/Index/UI';
-import { useLocalDataUpdate } from '../../../Framework/Index/Hooks';
-import { padSize } from '../../../Framework/Index/CommonVals';
+import * as UI from '../../../Framework/Index/UI';
+import * as Hooks from '../../../Framework/Index/Hooks';
+import * as Common from '../../../Framework/Index/CommonVals';
 
 /**
  * Sample layouts screen, demo various layout configurations.
@@ -13,7 +12,7 @@ import { padSize } from '../../../Framework/Index/CommonVals';
  * @param {Object} props.route - React Navigation provided oobject containing route parameters.
  */
 function SampleLayoutsScreen({ navigation, route }) {
-  useLocalDataUpdate(() => {
+  Hooks.useLocalDataUpdate(() => {
     console.log("SampleNewScreen: updated local data");
   });
 
@@ -22,12 +21,12 @@ function SampleLayoutsScreen({ navigation, route }) {
   );
 
   const TextContainer = ({ style, i }) => (
-    <Text key={i}>Item {i + 1}</Text>
+    <UI.Text key={i}>Item {i + 1}</UI.Text>
   );
 
   return (
-    <BasicActivity navigation={navigation} route={route} screenName="Home Sample">
-      <VerticalLayout childMargin={padSize} padding={0} constraint='wrap' style={{ backgroundColor: 'red', height: 290 }}>
+    <UI.BasicActivity navigation={navigation} route={route} screenName="Home Sample">
+      <UI.VerticalLayout childMargin={Common.padSize} padding={0} constraint='wrap' style={{ backgroundColor: 'red', height: 290 }}>
         <Container />
         <Container />
         <Container />
@@ -36,8 +35,8 @@ function SampleLayoutsScreen({ navigation, route }) {
         <Container />
         <Container />
         <Container />
-      </VerticalLayout>
-      <HorizontalLayout childMargin={padSize} padding={0} constraint='wrap' style={{ backgroundColor: 'red' }}>
+      </UI.VerticalLayout>
+      <UI.HorizontalLayout childMargin={Common.padSize} padding={0} constraint='wrap' style={{ backgroundColor: 'red' }}>
         <Container />
         <Container />
         <Container />
@@ -47,8 +46,8 @@ function SampleLayoutsScreen({ navigation, route }) {
         <Container />
         <Container />
         <Container />
-      </HorizontalLayout>
-      <GridLayout
+      </UI.HorizontalLayout>
+      <UI.GridLayout
         direction="row"
         reverse={false}
         alignment="centered"
@@ -66,8 +65,8 @@ function SampleLayoutsScreen({ navigation, route }) {
         <TextContainer i={7} />
         <TextContainer i={8} />
         <TextContainer i={9} />
-      </GridLayout>
-    </BasicActivity>)
+      </UI.GridLayout>
+    </UI.BasicActivity>)
 }
 
 export default memo(SampleLayoutsScreen);

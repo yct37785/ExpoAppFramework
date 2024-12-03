@@ -1,11 +1,13 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
 import { View, Keyboard } from 'react-native';
 const _ = require('lodash');
+// TODO: remove RNP imports
 import {
-  Card, Button, IconButton, Portal
+  Card, IconButton, Portal
 } from 'react-native-paper';
-import { VerticalLayout, BasicActivity, Dialog, Popup, PickerInput, CheckOptions, Text } from '../../../Framework/Index/UI';
-import { iconSizeSmall } from '../../../Framework/Index/CommonVals';
+import * as UI from '../../../Framework/Index/UI';
+import * as Hooks from '../../../Framework/Index/Hooks';
+import * as Common from '../../../Framework/Index/CommonVals';
 
 /**
  * Const defines.
@@ -82,20 +84,20 @@ function SampleMenusScreen({ navigation, route, screenHeaderComp: ScreenHeaderCo
   };
 
   function customHeaderContent() {
-    return <VerticalLayout align='horizontal' reverse={true}>
-      <Popup triggerComp={<IconButton icon="dots-vertical" size={iconSizeSmall} />}>
-        <VerticalLayout>
-          <CheckOptions schema={checkOptionsSchema} onSelectionChange={handleCheckOptionsChange} />
-        </VerticalLayout>
-      </Popup>
-    </VerticalLayout>
+    return <UI.VerticalLayout align='horizontal' reverse={true}>
+      <UI.Popup triggerComp={<IconButton icon="dots-vertical" size={Common.iconSizeSmall} />}>
+        <UI.VerticalLayout>
+          <UI.CheckOptions schema={checkOptionsSchema} onSelectionChange={handleCheckOptionsChange} />
+        </UI.VerticalLayout>
+      </UI.Popup>
+    </UI.VerticalLayout>
   }
 
   return (
-    <BasicActivity navigation={navigation} route={route} screenName="Menus Sample" customHeaderContent={customHeaderContent}>
+    <UI.BasicActivity navigation={navigation} route={route} screenName="Menus Sample" customHeaderContent={customHeaderContent}>
       {/* all dialogs here */}
       <Portal>
-        <Dialog
+        <UI.Dialog
           title='Lorem Ipsum Stuff'
           subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
           isVisible={showDialog}
@@ -103,17 +105,17 @@ function SampleMenusScreen({ navigation, route, screenHeaderComp: ScreenHeaderCo
           onClose={() => setShowDialog(false)}
         >
           <Card.Content>
-            <Text variant="bodyMedium">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
+            <UI.Text variant="bodyMedium">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</UI.Text>
           </Card.Content>
-        </Dialog>
+        </UI.Dialog>
       </Portal>
       {/* main content here */}
-      <Text variant="bodyMedium">Hello world</Text>
-      <Button mode="contained" onPress={() => setShowDialog(true)}>
+      <UI.Text variant="bodyMedium">Hello world</UI.Text>
+      <UI.Button mode="contained" onPress={() => setShowDialog(true)}>
         Launch dialog
-      </Button>
-      <PickerInput value={pickerSelection} options={PICKER_ITEM_LIST} onChange={(v) => setPickerSelection(v)} />
-    </BasicActivity>
+      </UI.Button>
+      <UI.PickerInput value={pickerSelection} options={PICKER_ITEM_LIST} onChange={(v) => setPickerSelection(v)} />
+    </UI.BasicActivity>
   );
 }
 

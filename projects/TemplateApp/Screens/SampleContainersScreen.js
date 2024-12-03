@@ -1,7 +1,8 @@
 import React, { memo } from 'react';
 import { View } from 'react-native';
-import { BasicActivity, Text } from '../../../Framework/Index/UI';
-import { padSize } from '../../../Framework/Index/CommonVals';
+import * as UI from '../../../Framework/Index/UI';
+import * as Hooks from '../../../Framework/Index/Hooks';
+import * as Common from '../../../Framework/Index/CommonVals';
 
 /**
  * Containers demos screen.
@@ -14,9 +15,9 @@ function SampleContainersScreen({ navigation, route }) {
   const { paramText } = route.params;
 
   return (
-    <BasicActivity navigation={navigation} route={route} screenName="Containers Sample">
-      <Text variant="bodyMedium">{`paramText: ${paramText}`}</Text>
-    </BasicActivity>
+    <UI.BasicActivity navigation={navigation} route={route} screenName="Containers Sample">
+      <UI.Text variant="bodyMedium">{`paramText: ${paramText}`}</UI.Text>
+    </UI.BasicActivity>
   );
 }
 

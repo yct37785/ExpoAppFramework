@@ -1,7 +1,9 @@
 import React, { useState, memo } from 'react';
 import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { BasicActivity, TabsContainer, Text } from '../../../Framework/Index/UI';
+import * as UI from '../../../Framework/Index/UI';
+import * as Hooks from '../../../Framework/Index/Hooks';
+import * as Common from '../../../Framework/Index/CommonVals';
 
 /**
  * Const defines.
@@ -42,7 +44,7 @@ function SampleTabsScreen({ navigation, route }) {
    * @param {Object} param0.route - The route object for the tab.
    * @returns {JSX.Element|null} The component for the scene.
    */
-  const renderScene = memo(({ navigation, route }) => {
+  const renderScene = ({ navigation, route }) => {
     switch (route.key) {
       case 'p1':
         return <Tab1Comp />;
@@ -53,7 +55,7 @@ function SampleTabsScreen({ navigation, route }) {
       default:
         return null;
     }
-  });
+  };
 
   /**
    * Component for Tab 1.
@@ -61,7 +63,7 @@ function SampleTabsScreen({ navigation, route }) {
    * @returns {JSX.Element} The component for Tab 1.
    */
   const Tab1Comp = () => {
-    return <View style={{ flex: 1 }}><Text>P1</Text></View>;
+    return <View style={{ flex: 1 }}><UI.Text>P1</UI.Text></View>;
   };
 
   /**
@@ -70,7 +72,7 @@ function SampleTabsScreen({ navigation, route }) {
    * @returns {JSX.Element} The component for Tab 2.
    */
   const Tab2Comp = () => {
-    return <View style={{ flex: 1 }}><Text>P2</Text></View>;
+    return <View style={{ flex: 1 }}><UI.Text>P2</UI.Text></View>;
   };
 
   /**
@@ -79,19 +81,19 @@ function SampleTabsScreen({ navigation, route }) {
    * @returns {JSX.Element} The component for Tab 3.
    */
   const Tab3Comp = () => {
-    return <View style={{ flex: 1 }}><Text>P3</Text></View>;
+    return <View style={{ flex: 1 }}><UI.Text>P3</UI.Text></View>;
   };
 
   return (
-    <BasicActivity navigation={navigation} route={route} applyPadding={false} screenName="Tabs Sample">
-      <TabsContainer
+    <UI.BasicActivity navigation={navigation} route={route} applyPadding={false} screenName="Tabs Sample">
+      <UI.TabsContainer
         routes={TAB_ROUTES}
         renderIcon={renderIcon}
         tabIndex={tabIndex}
         onTabIdxChange={setTabIndex}
         sceneMap={renderScene}
       />
-    </BasicActivity>
+    </UI.BasicActivity>
   );
 }
 
