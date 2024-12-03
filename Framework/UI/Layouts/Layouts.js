@@ -76,11 +76,17 @@ const Layout = ({
 
 /**
  * Vertical Layout Component.
+ *
+ * @param {Omit<LayoutProps, 'direction'>} props - Component props.
+ * @returns {JSX.Element} Vertical Layout.
  */
 export const VerticalLayout = memo((props) => <Layout {...props} direction="column" />);
 
 /**
  * Horizontal Layout Component.
+ *
+ * @param {Omit<LayoutProps, 'direction'>} props - Component props.
+ * @returns {JSX.Element} Horizontal Layout.
  */
 export const HorizontalLayout = memo((props) => <Layout {...props} direction="row" />);
 
@@ -125,7 +131,7 @@ export const GridLayout = memo(({
     item: {
       backgroundColor: 'yellow',
       margin: spacing / 2,
-      width: size ? (size.width / itemsPerLine) - spacing : 0
+      width: size ? Math.floor(size.width / itemsPerLine) - spacing : 0
     },
   });
 

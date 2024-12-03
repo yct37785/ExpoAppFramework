@@ -16,56 +16,43 @@ function SampleLayoutsScreen({ navigation, route }) {
     console.log("SampleNewScreen: updated local data");
   });
 
-  const Container = ({ style }) => (
-    <View style={[{ width: 50, height: 50, backgroundColor: 'green' }, style]} />
-  );
-
-  const TextContainer = ({ style, i }) => (
-    <UI.Text key={i}>Item {i + 1}</UI.Text>
+  const BasicContainer = ({ i }) => (
+    <View style={{ width: 75, height: 75, alignItems: 'center', justifyContent: 'center', backgroundColor: 'green' }}>
+      <UI.Text key={i}>item {1 + i}</UI.Text>
+    </View>
   );
 
   return (
     <UI.BasicActivity navigation={navigation} route={route} screenName="Home Sample">
-      <UI.VerticalLayout childMargin={Const.padSize} padding={0} constraint='wrap' style={{ backgroundColor: 'red', height: 290 }}>
-        <Container />
-        <Container />
-        <Container />
-        <Container />
-        <Container />
-        <Container />
-        <Container />
-        <Container />
+      {/* VerticalLayout: scroll */}
+      <UI.Text variant="titleMedium">VerticalLayout: scroll</UI.Text>
+      <UI.VerticalLayout childMargin={Const.padSize} constraint='scroll'>
+
+        {/* VerticalLayout: wrap */}
+        <UI.Text variant="labelMedium">VerticalLayout: wrap</UI.Text>
+        <UI.VerticalLayout childMargin={Const.padSize} constraint='wrap' style={{ backgroundColor: 'red', height: 290 }}>
+          {[...Array(10)].map((e, i) => <BasicContainer key={i} i={i} />)}
+        </UI.VerticalLayout>
+
+        {/* HorizontalLayout: wrap */}
+        <UI.Text variant="labelMedium" style={{ marginTop: Const.padSize05 }}>HorizontalLayout: wrap</UI.Text>
+        <UI.HorizontalLayout childMargin={Const.padSize} constraint='wrap' style={{ backgroundColor: 'red' }}>
+          {[...Array(10)].map((e, i) => <BasicContainer key={i} i={i} />)}
+        </UI.HorizontalLayout>
+
+        {/* GridLayout */}
+        <UI.Text variant="labelMedium" style={{ marginTop: Const.padSize05 }}>GridLayout</UI.Text>
+        <UI.GridLayout
+          direction="row"
+          reverse={false}
+          alignment="centered"
+          spacing={Const.padSize}
+          itemsPerLine={3}
+          style={{ backgroundColor: 'red', width: 350 }}
+        >
+          {[...Array(10)].map((e, i) => <BasicContainer key={i} i />)}
+        </UI.GridLayout>
       </UI.VerticalLayout>
-      <UI.HorizontalLayout childMargin={Const.padSize} padding={0} constraint='wrap' style={{ backgroundColor: 'red' }}>
-        <Container />
-        <Container />
-        <Container />
-        <Container />
-        <Container />
-        <Container />
-        <Container />
-        <Container />
-        <Container />
-      </UI.HorizontalLayout>
-      <UI.GridLayout
-        direction="row"
-        reverse={false}
-        alignment="centered"
-        spacing={10}
-        itemsPerLine={3}
-        style={{ backgroundColor: 'red', width: 300 }}
-      >
-        <TextContainer i={0} />
-        <TextContainer i={1} />
-        <TextContainer i={2} />
-        <TextContainer i={3} />
-        <TextContainer i={4} />
-        <TextContainer i={5} />
-        <TextContainer i={6} />
-        <TextContainer i={7} />
-        <TextContainer i={8} />
-        <TextContainer i={9} />
-      </UI.GridLayout>
     </UI.BasicActivity>)
 }
 
