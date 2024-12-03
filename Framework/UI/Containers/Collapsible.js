@@ -62,29 +62,70 @@ export const CollapsibleContainer = memo(({ toggleHeaderText = '', children }) =
 
 /**
  * A component that provides an accordion with multiple collapsible sections.
+ * Automatically maps children to sections.
  * 
  * @param {Object} props - Component props.
- * @param {Array} props.sections - Array of sections for the accordion.
- * @param {Function} props.renderSectionTitle - Function to render the section title.
- * @param {Function} props.renderHeader - Function to render the header of each section.
- * @param {Function} props.renderContent - Function to render the content of each section.
+ * @param {Array<string>} props.sectionTitles - Array of section titles.
+ * @param {React.ReactNode[]} props.children - Children components for each section content.
  * 
  * @returns {JSX.Element} The AccordionContainer component.
  */
 export const AccordionContainer = memo(({
-  sections,
-  renderSectionTitle = () => {},
-  renderHeader = () => {},
-  renderContent = () => {}
+  sectionTitles,
+  children
 }) => {
+  if (sectionTitles.length !== React.Children.count(children)) {
+    throw new Error("The number of section titles must match the number of children.");
+  }
+
+  const theme = useTheme();
   const [activeSections, setActiveSections] = useState([]);
+
+  // Combine section titles and children into sections array
+  const sections = sectionTitles.map((title, index) => ({
+    title,
+    content: React.Children.toArray(children)[index],
+  }));
+
+  /**
+   * Renders header.
+   * 
+   * @param {Object} section - Section object.
+   * @param {number} i - Index of current section.
+   * 
+   * @returns {JSX.Element} The header component.
+   */
+  function renderHeader(section, i) {
+    console.log(activeSections, i);
+    return <View style={{ padding: padSize, alignItems: 'center', flexDirection: 'row' }}>
+      <Text variant='titleSmall'>{section.title}</Text>
+      <View style={{ flex: 1 }} />
+      <MaterialIcons
+        name={activeSections.length === 1 && activeSections[0] === i ? 'keyboard-arrow-up' : 'keyboard-arrow-down'}
+        color={theme.colors.text}
+        size={iconSizeMedium}
+      />
+    </View>;
+  }
+
+  /**
+   * Renders content.
+   * 
+   * @param {Object} section - Section object.
+   * 
+   * @returns {JSX.Element} The content component.
+   */
+  function renderContent(section) {
+    return <View>
+      {section.content}
+    </View>;
+  }
 
   return (
     <Accordion
       sections={sections}
       activeSections={activeSections}
-      renderSectionTitle={(section) => renderSectionTitle(section)}
-      renderHeader={(section) => renderHeader(section)}
+      renderHeader={(section, i) => renderHeader(section, i)}
       renderContent={(section) => renderContent(section)}
       onChange={(activeSections) => setActiveSections(activeSections)}
     />
