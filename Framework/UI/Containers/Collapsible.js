@@ -96,7 +96,6 @@ export const AccordionContainer = memo(({
    * @returns {JSX.Element} The header component.
    */
   function renderHeader(section, i) {
-    console.log(activeSections, i);
     return <View style={{ padding: padSize, alignItems: 'center', flexDirection: 'row' }}>
       <Text variant='titleSmall'>{section.title}</Text>
       <View style={{ flex: 1 }} />
