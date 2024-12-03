@@ -3,6 +3,7 @@
 *****************************************************************************************/
 import React, { memo } from 'react';
 import { View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { padSize05, padSize, rippleColorForLight, rippleColorForDark, textColorForLight, textColorForDark } from '../../Index/Const';
 import { useTheme } from 'react-native-paper';
 import { Text } from '../Text/Text';
@@ -12,7 +13,6 @@ import { TabView, TabBar } from 'react-native-tab-view';
  * Display children in tabs.
  * 
  * @param {Object[]} routes - Array of route objects for the tabs.
- * @param {Function} renderIcon - Function to render the icon for each tab.
  * @param {Object} sceneMap - Object mapping route keys to their respective scenes.
  * @param {number} tabIndex - Index of the currently selected tab.
  * @param {Function} onTabIdxChange - Function to handle tab index changes.
@@ -20,7 +20,7 @@ import { TabView, TabBar } from 'react-native-tab-view';
  * 
  * @returns {JSX.Element} The TabsContainer component.
  */
-function TabsContainer({ routes, renderIcon, sceneMap, tabIndex, onTabIdxChange, position }) {
+function TabsContainer({ routes, sceneMap, tabIndex, onTabIdxChange, position }) {
   const theme = useTheme();
   const textColor = theme.dark ? textColorForDark : textColorForLight;
 
@@ -31,6 +31,19 @@ function TabsContainer({ routes, renderIcon, sceneMap, tabIndex, onTabIdxChange,
    */
   function loadingScreen() {
     return <View style={{ flex: 1 }} />;
+  }
+  
+  /**
+   * Renders the icon for each tab.
+   * 
+   * @param {Object} param0 - Parameters including route, focused state, and color.
+   * @param {Object} param0.route - The route object for the tab.
+   * @param {boolean} param0.focused - Whether the tab is focused.
+   * @param {string} param0.color - The color for the icon.
+   * @returns {JSX.Element} The icon component for the tab.
+   */
+  function renderIcon(route, focused, color) {
+    return route.icon ? <Icon name={route.icon} size={15} color={textColor} /> : null;
   }
 
   /**
@@ -47,7 +60,6 @@ function TabsContainer({ routes, renderIcon, sceneMap, tabIndex, onTabIdxChange,
       indicatorStyle={{ backgroundColor: textColor }}
       style={{ backgroundColor: theme.colors.surface }}
       labelStyle={{ color: textColor }}
-      renderIcon={({ route, focused, color }) => route.icon ? renderIcon({ route, focused, color }) : null}
       renderLabel={({ route, focused, color }) => route.title ? <Text style={{ color: textColor }}>{route.title}</Text> : null}
     />
   );
@@ -55,6 +67,11 @@ function TabsContainer({ routes, renderIcon, sceneMap, tabIndex, onTabIdxChange,
   return (
     <TabView
       lazy
+      commonOptions={{
+        icon: ({ route, focused, color }) => {
+          return renderIcon(route, focused, color)
+        },
+      }}
       navigationState={{ index: tabIndex, routes }}
       renderTabBar={renderTabBar}
       renderScene={sceneMap}
