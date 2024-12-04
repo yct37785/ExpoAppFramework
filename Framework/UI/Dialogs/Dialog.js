@@ -1,6 +1,3 @@
-/*****************************************************************************************
- * dialog with standard dialog elements (submit, close options etc)
-*****************************************************************************************/
 import React, { memo } from 'react';
 import { View } from 'react-native';
 import { padSize, padSize2, padSize4 } from '../../Index/Const';

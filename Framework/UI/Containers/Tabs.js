@@ -1,6 +1,3 @@
-/*****************************************************************************************
- * tab type containers
-*****************************************************************************************/
 import React, { memo } from 'react';
 import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';

@@ -1,6 +1,7 @@
-/*****************************************************************************************
-* define schemas here, like default values of new user data etc
-*****************************************************************************************/
+/**
+ * Define schemas here, like default values of new user data etc.
+ */
+
 /**
  * new user data schema
  */

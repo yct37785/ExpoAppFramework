@@ -1,14 +1,10 @@
-/***************************************************************************************
-* engine of entire app, handles initialization, contexts and navigation of screens
-***************************************************************************************/
 // core
 import React, { Node, useCallback, memo, useEffect, useState } from 'react';
 import { View, LogBox, Platform, StatusBar } from 'react-native';
 // UI
 import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, configureFonts } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
-import { padSize } from '../Index/Const';
-// data
+// hooks
 import { LocalDataContext } from '../Hooks/LocalDataHook';
 import useLocalDataManager from '../Managers/LocalDataManager';
 // deps

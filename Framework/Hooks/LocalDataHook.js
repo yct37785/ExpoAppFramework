@@ -1,11 +1,7 @@
-/*****************************************************************************************
- * Context object for LocalDataManager
- * Callbacks for update events
-*****************************************************************************************/
 import React, { createContext, useContext, useEffect } from 'react';
 
 /**
- * Local data context.
+ * Local data context for LocalDataManager.
  */
 export const LocalDataContext = createContext({
   updateCount: 0,
@@ -16,7 +12,7 @@ export const LocalDataContext = createContext({
 });
 
 /**
- * Hook for on local data updatge event.
+ * Hook for on local data update event.
  * 
  * @param {Function} callback - Triggered when local data update occurs.
  */

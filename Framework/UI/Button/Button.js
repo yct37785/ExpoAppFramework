@@ -1,11 +1,8 @@
-/*****************************************************************************************
- * universal button
-*****************************************************************************************/
 import React, { useEffect, useRef, memo } from 'react';
 import { Button as RNPButton } from 'react-native-paper';
 
 /**
- * Button
+ * Basic button.
  * 
  * @param {Object} props - Component props.
  * @param {string} mode - RNP prop: text/outlined/contained/elevated/contained-tonal.

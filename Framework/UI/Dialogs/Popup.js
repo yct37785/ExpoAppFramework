@@ -1,10 +1,6 @@
-/*****************************************************************************************
- * popup comp
-*****************************************************************************************/
 import React, { useRef, memo } from 'react';
 import { TouchableRipple, useTheme } from 'react-native-paper';
 import { Menu, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
-import PropTypes from 'prop-types';
 
 /**
  * A general-purpose popup component that can accept any children to open as a dropdown.

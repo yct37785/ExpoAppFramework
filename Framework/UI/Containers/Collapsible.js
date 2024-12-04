@@ -1,6 +1,3 @@
-/*****************************************************************************************
- * collapsible type containers
-*****************************************************************************************/
 import React, { useState, useContext, memo } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { useTheme } from 'react-native-paper';

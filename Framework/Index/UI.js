@@ -1,6 +1,6 @@
-/*****************************************************************************************
- * exposed to end users, export new UI components here
-*****************************************************************************************/
+/**
+ * Exposed to end users, export core functions or comps here.
+ */
 
 /**
  * activities: screens with presets for various activities
@@ -26,8 +26,8 @@ export { default as TabsContainer } from '../UI/Containers/Tabs';
 /**
  * dialogs: popup a menu on trigger; eg. dialog menu
  */
-export { default as Dialog } from '../UI/Dialogs/Dialog';   // basic dialog
-export { default as Popup } from '../UI/Dialogs/Popup'; // popup dialog
+export { default as Dialog } from '../UI/Dialogs/Dialog';   // TODO: basic dialog
+export { default as Popup } from '../UI/Dialogs/Popup'; // TODO: popup dialog
 
 /**
  * display: display data/media

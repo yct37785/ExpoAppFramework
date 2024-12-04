@@ -1,6 +1,3 @@
-/*****************************************************************************************
- * one option pickers
-*****************************************************************************************/
 import React, { memo } from 'react';
 import { useTheme } from 'react-native-paper';
 import { Picker } from '@react-native-picker/picker';

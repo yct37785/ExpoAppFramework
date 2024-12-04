@@ -1,6 +1,3 @@
-/*****************************************************************************************
- * universal text input field (use for text field, password field, searchbar etc)
-*****************************************************************************************/
 import React, { useEffect, useRef, memo } from 'react';
 import { Keyboard } from 'react-native';
 import { Searchbar, TextInput } from 'react-native-paper';
