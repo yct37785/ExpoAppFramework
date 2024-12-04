@@ -8,6 +8,16 @@
 export { default as BasicActivity } from '../UI/Activities/BasicActivity';
 
 /**
+ * button: variations of buttons
+ */
+export { default as Button } from '../UI/Button/Button';
+
+/**
+ * component: various components
+ */
+export { DividerComp } from '../UI/Component/Decorators';
+
+/**
  * containers: holds children; eg. children collapsible when triggered
  */
 export { CollapsibleContainer, AccordionContainer } from '../UI/Containers/Collapsible';
@@ -16,8 +26,8 @@ export { default as TabsContainer } from '../UI/Containers/Tabs';
 /**
  * dialogs: popup a menu on trigger; eg. dialog menu
  */
-export { default as Dialog } from '../UI/Dialogs/Dialog';
-export { default as Popup } from '../UI/Dialogs/Popup';
+export { default as Dialog } from '../UI/Dialogs/Dialog';   // basic dialog
+export { default as Popup } from '../UI/Dialogs/Popup'; // popup dialog
 
 /**
  * display: display data/media
@@ -51,8 +61,3 @@ export { default as ChipOptions } from '../UI/Options/ChipOptions';
  */
 export { default as RadioGroupToggle } from '../UI/Toggle/RadioGroupToggle';
 export { default as SwitchToggle } from '../UI/Toggle/SwitchToggle';
-
-/**
- * button: variations of buttons
- */
-export { default as Button } from '../UI/Button/Button';
