@@ -99,7 +99,7 @@ function SampleDataDisplayScreen({ navigation, route }) {
   const renderItem = useCallback(
     React.memo(({ item, index }) => {
       return (
-        <View style={{ flex: 1, padding: Const.padSize }}>
+        <View style={{ flex: 1, paddingVertical: Const.padSize }}>
           <UI.HighlightText text={item.name} query={searchQuery} variant={'titleSmall'} />
           <Image
             style={{ width: 100, height: 100 }}
@@ -127,25 +127,25 @@ function SampleDataDisplayScreen({ navigation, route }) {
 
   return (
     <UI.BasicActivity navigation={navigation} route={route} customHeaderContent={customHeaderContent}>
-      {/* Filter menu */}
-      {chipsSchema ? <View style={{ paddingLeft: Const.padSize }}>
-        <UI.CollapsibleContainer toggleHeaderText="Filter">
-          <UI.ChipOptions schema={chipsSchema} onSelectionChange={onMaterialChipSelected} />
-        </UI.CollapsibleContainer>
-      </View> : null}
-      {/* Toggle Flashlist vs FlatList */}
-      <UI.RadioGroupToggle
-        options={{
-          flashlist: { label: "Flashlist" },
-          flatlist: { label: "Flatlist" }
-        }}
-        value={listType} onValueChange={setListType} />
-      <UI.ListDataDisplay
-        data={productList}
-        filterFunction={filterProducts}
-        renderItem={renderItem}
-        listType={listType}
-      />
+      <UI.VerticalLayout padding={Const.padSize} childMargin={Const.padSize}>
+        {/* Filter menu */}
+        {chipsSchema ? <UI.CollapsibleContainer toggleHeaderText="Filter">
+            <UI.ChipOptions schema={chipsSchema} onSelectionChange={onMaterialChipSelected} />
+          </UI.CollapsibleContainer> : null}
+        {/* Toggle Flashlist vs FlatList */}
+        <UI.RadioGroupToggle
+          options={{
+            flashlist: { label: "Flashlist" },
+            flatlist: { label: "Flatlist" }
+          }}
+          value={listType} onValueChange={setListType} />
+        <UI.ListDataDisplay
+          data={productList}
+          filterFunction={filterProducts}
+          renderItem={renderItem}
+          listType={listType}
+        />
+      </UI.VerticalLayout>
     </UI.BasicActivity>
   );
 }
