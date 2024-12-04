@@ -76,8 +76,6 @@ function SampleMenusScreen({ navigation, route, screenHeaderComp: ScreenHeaderCo
   }
 
   const handleCheckOptionsChange = (updatedSchema, optionPath) => {
-    console.log(updatedSchema);
-    console.log(optionPath);
   };
 
   function customHeaderContent() {
