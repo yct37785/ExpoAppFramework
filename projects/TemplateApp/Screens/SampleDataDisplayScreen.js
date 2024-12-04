@@ -18,7 +18,6 @@ function SampleDataDisplayScreen({ navigation, route }) {
   const [productList, setProductList] = useState([]);
   const [chipsSchema, setChipsSchema] = useState(null);
   const [materialsSelected, setMaterialsSelected] = useState({});
-  const ROW_HEIGHT = 250;
 
   useEffect(() => {
     // Generate product list sample
@@ -100,8 +99,7 @@ function SampleDataDisplayScreen({ navigation, route }) {
   const renderItem = useCallback(
     React.memo(({ item, index }) => {
       return (
-        <View style={{ flex: 1 }}>
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, padding: Const.padSize }}>
           <UI.HighlightText text={item.name} query={searchQuery} variant={'titleSmall'} />
           <Image
             style={{ width: 100, height: 100 }}
@@ -110,8 +108,8 @@ function SampleDataDisplayScreen({ navigation, route }) {
           />
           <UI.Text variant='labelMedium'>{`material: ${item.material}`}</UI.Text>
           <UI.HighlightText text={item.desc} query={searchQuery} variant={'bodyMedium'} />
+          <UI.DividerComp style={{ marginTop: Const.padSize }} />
         </View>
-      </View>
       );
     }), [searchQuery]
   );
@@ -147,7 +145,6 @@ function SampleDataDisplayScreen({ navigation, route }) {
         filterFunction={filterProducts}
         renderItem={renderItem}
         listType={listType}
-        rowHeight={ROW_HEIGHT}
       />
     </UI.BasicActivity>
   );

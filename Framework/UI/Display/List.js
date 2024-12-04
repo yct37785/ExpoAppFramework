@@ -3,7 +3,6 @@
 *****************************************************************************************/
 import React, { useState, useEffect, useContext, memo } from 'react';
 import { View, FlatList } from 'react-native';
-import { Divider } from 'react-native-paper';
 import { FlashList } from '@shopify/flash-list';
 
 /**
@@ -14,7 +13,6 @@ import { FlashList } from '@shopify/flash-list';
  * @param {Function} props.filterFunction - Function to filter the data items.
  * @param {Function} props.renderItem - Function to render each item in the list.
  * @param {string} [props.listType='flashlist'] - Type of list to display, either 'flashlist' or 'flatlist'.
- * @param {number} props.rowHeight - Height of each row in the list.
  * 
  * @returns {JSX.Element} The ListDataDisplay component.
  */
@@ -23,7 +21,6 @@ const ListDataDisplay = ({
   filterFunction,
   renderItem: RenderItem,
   listType = 'flashlist',
-  rowHeight
 }) => {
   const [filteredData, setFilteredData] = useState(data);
 
@@ -34,7 +31,6 @@ const ListDataDisplay = ({
   const renderListItem = ({ item, index }) => (
     <View style={{ flex: 1 }}>
       <RenderItem item={item} index={index} />
-      <Divider />
     </View>
   );
 
@@ -44,7 +40,6 @@ const ListDataDisplay = ({
         <FlashList
           data={filteredData}
           renderItem={renderListItem}
-          estimatedItemSize={rowHeight}
         />
       );
     } else {
