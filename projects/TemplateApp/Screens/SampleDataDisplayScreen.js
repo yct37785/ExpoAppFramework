@@ -111,10 +111,12 @@ function SampleDataDisplayScreen({ navigation, route }) {
   return (
     <UI.BasicActivity navigation={navigation} route={route} customHeaderContent={customHeaderContent}>
       <UI.VerticalLayout padding={Const.padSize} childMargin={Const.padSize}>
+
         {/* Filter menu */}
         {chipsSchema ? <UI.CollapsibleContainer toggleHeaderText="Filter">
-            <UI.ChipOptions schema={chipsSchema} onSelectionChange={onMaterialChipSelected} />
-          </UI.CollapsibleContainer> : null}
+          <UI.ChipOptions schema={chipsSchema} onSelectionChange={onMaterialChipSelected} />
+        </UI.CollapsibleContainer> : null}
+
         {/* Toggle Flashlist vs FlatList */}
         <UI.RadioGroupToggle
           options={{
@@ -122,6 +124,8 @@ function SampleDataDisplayScreen({ navigation, route }) {
             flatlist: { label: "Flatlist" }
           }}
           value={listType} onValueChange={setListType} />
+
+        {/* List comp */}
         <UI.ListDataDisplay
           dataArr={productList}
           query={searchQuery}
@@ -129,6 +133,7 @@ function SampleDataDisplayScreen({ navigation, route }) {
           renderItem={renderItem}
           listType={listType}
         />
+
       </UI.VerticalLayout>
     </UI.BasicActivity>
   );

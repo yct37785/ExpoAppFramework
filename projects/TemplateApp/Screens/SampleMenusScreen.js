@@ -17,35 +17,32 @@ const PICKER_ITEM_LIST = [
   { label: 'Blue', value: 'blue' },
   { label: 'Green', value: 'green' },
 ];
+
 const POPUP_MENU_OPTIONS = {
   'colors': {
     label: 'Colors',
-    state: 0,
     children: {
-      'red': { label: 'Red', state: 0 },
-      'blue': { label: 'Blue', state: 0 },
-      'green': { label: 'Green', state: 0 },
+      'red': { label: 'Red' },
+      'blue': { label: 'Blue' },
+      'green': { label: 'Green' },
     }
   },
   'class': {
     label: 'Class',
-    state: 0,
     children: {
       'mammals': { 
         label: 'Mammals',
-        state: 0,
         children: {
-          'cat': { label: 'Cat', state: 0 },
-          'dog': { label: 'Dog', state: 0 }
+          'cat': { label: 'Cat' },
+          'dog': { label: 'Dog' }
         }
       },
       'reptiles': { 
         label: 'Reptiles',
-        state: 0,
         children: {
-          'turtle': { label: 'Turtle', state: 0 },
-          'frog': { label: 'Frog', state: 0 },
-          'lizard': { label: 'Lizard', state: 0 }
+          'turtle': { label: 'Turtle' },
+          'frog': { label: 'Frog' },
+          'lizard': { label: 'Lizard' }
         }
       }
     }
@@ -63,7 +60,6 @@ function SampleMenusScreen({ navigation, route, screenHeaderComp: ScreenHeaderCo
   const searchBarRef = useRef();
   const [showDialog, setShowDialog] = useState(false);
   const [pickerSelection, setPickerSelection] = useState('red');
-  const [checkOptionsSchema, setCheckOptionsSchema] = useState( _.cloneDeep(POPUP_MENU_OPTIONS));
 
   useEffect(() => {
     const keyboardListener = Keyboard.addListener('keyboardDidHide', (e) => {
@@ -79,15 +75,16 @@ function SampleMenusScreen({ navigation, route, screenHeaderComp: ScreenHeaderCo
     setShowDialog(false);
   }
 
-  const handleCheckOptionsChange = (updatedSchema, optionPath, optionRef) => {
-    setCheckOptionsSchema(updatedSchema);
+  const handleCheckOptionsChange = (updatedSchema, optionPath) => {
+    console.log(updatedSchema);
+    console.log(optionPath);
   };
 
   function customHeaderContent() {
     return <UI.VerticalLayout align='horizontal' reverse={true}>
       <UI.Popup triggerComp={<IconButton icon="dots-vertical" size={Const.iconSizeSmall} />}>
         <UI.VerticalLayout>
-          <UI.CheckOptions schema={checkOptionsSchema} onSelectionChange={handleCheckOptionsChange} />
+          <UI.CheckOptions schema={POPUP_MENU_OPTIONS} onSelectionChange={handleCheckOptionsChange} />
         </UI.VerticalLayout>
       </UI.Popup>
     </UI.VerticalLayout>
