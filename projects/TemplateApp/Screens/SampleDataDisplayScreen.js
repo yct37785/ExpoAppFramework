@@ -43,11 +43,17 @@ function SampleDataDisplayScreen({ navigation, route }) {
    */
   const createRandomProduct = () => {
     return {
-      id: faker.string.uuid(),
-      img: faker.image.urlPicsumPhotos(),
-      name: faker.commerce.productName(),
-      desc: faker.commerce.productDescription(),
-      material: faker.commerce.productMaterial().toLowerCase()
+      searchable: {
+        id: faker.string.uuid(),
+        name: faker.commerce.productName(),
+        desc: faker.commerce.productDescription(),
+      },
+      filterable: {
+        material: faker.commerce.productMaterial().toLowerCase()
+      },
+      none: {
+        img: faker.image.urlPicsumPhotos(),
+      }
     };
   };
 
@@ -68,51 +74,28 @@ function SampleDataDisplayScreen({ navigation, route }) {
   }, [materialsSelected]);
 
   /**
-   * Filters the products based on the selected materials and search query.
-   * 
-   * @param {Array} data - Array of product data.
-   * 
-   * @returns {Array} Filtered array of product data.
-   */
-  const filterProducts = useCallback((data) => {
-    let newData = [...data];
-    const allFalse = Object.values(materialsSelected).every((value) => value === false);
-    if (!allFalse) {
-      newData = data.filter((item) => materialsSelected[item.material]);
-    }
-    if (!searchQuery) return newData;
-    return newData.filter((item) => 
-      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.desc.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  }, [searchQuery, materialsSelected]);
-
-  /**
    * Renders each item in the list.
    * 
-   * @param {Object} param0 - Render item parameters.
    * @param {Object} param0.item - The item data to render.
    * @param {number} param0.index - The index of the item.
    * 
    * @returns {JSX.Element} The rendered item component.
    */
-  const renderItem = useCallback(
-    React.memo(({ item, index }) => {
-      return (
-        <View style={{ flex: 1, paddingVertical: Const.padSize }}>
-          <UI.HighlightText text={item.name} query={searchQuery} variant={'titleSmall'} />
-          <Image
-            style={{ width: 100, height: 100 }}
-            source={{ uri: item.img }}
-            resizeMode={'contain'}
-          />
-          <UI.Text variant='labelMedium'>{`material: ${item.material}`}</UI.Text>
-          <UI.HighlightText text={item.desc} query={searchQuery} variant={'bodyMedium'} />
-          <UI.DividerComp style={{ marginTop: Const.padSize }} />
-        </View>
-      );
-    }), [searchQuery]
-  );
+  const renderItem = (item, index) => {
+    return (
+      <View style={{ flex: 1, paddingVertical: Const.padSize }}>
+        <UI.HighlightText text={item.searchable.name} query={searchQuery} variant={'titleSmall'} />
+        <Image
+          style={{ width: 100, height: 100 }}
+          source={{ uri: item.none.img }}
+          resizeMode={'contain'}
+        />
+        <UI.Text variant='labelMedium'>{`material: ${item.filterable.material}`}</UI.Text>
+        <UI.HighlightText text={item.searchable.desc} query={searchQuery} variant={'bodyMedium'} />
+        <UI.DividerComp style={{ marginTop: Const.padSize }} />
+      </View>
+    );
+  };
 
   function customHeaderContent() {
     return <UI.VerticalLayout>
@@ -140,8 +123,9 @@ function SampleDataDisplayScreen({ navigation, route }) {
           }}
           value={listType} onValueChange={setListType} />
         <UI.ListDataDisplay
-          data={productList}
-          filterFunction={filterProducts}
+          dataArr={productList}
+          query={searchQuery}
+          filter={materialsSelected}
           renderItem={renderItem}
           listType={listType}
         />
