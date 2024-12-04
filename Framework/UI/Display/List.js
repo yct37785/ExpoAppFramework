@@ -6,13 +6,14 @@ import { View, FlatList } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 
 /**
- * Combined List component supporting both Flashlist and FlatList.
+ * Combined List component supporting both Flashlist and FlatList. Supports dynamical height rows
  * 
  * @param {Object} props - Component props.
  * @param {Array} props.data - Array of data items to be displayed in the list.
  * @param {Function} props.filterFunction - Function to filter the data items.
  * @param {Function} props.renderItem - Function to render each item in the list.
  * @param {string} [props.listType='flashlist'] - Type of list to display, either 'flashlist' or 'flatlist'.
+ * @param {number} [props.estimatedRowHeight=250] - Estimated height of each row in the list for FlashList to estimate lazy loadm fixed at 250.
  * 
  * @returns {JSX.Element} The ListDataDisplay component.
  */
@@ -21,6 +22,7 @@ const ListDataDisplay = ({
   filterFunction,
   renderItem: RenderItem,
   listType = 'flashlist',
+  estimatedRowHeight = 250
 }) => {
   const [filteredData, setFilteredData] = useState(data);
 
@@ -40,6 +42,7 @@ const ListDataDisplay = ({
         <FlashList
           data={filteredData}
           renderItem={renderListItem}
+          estimatedItemSize={estimatedRowHeight}
         />
       );
     } else {
