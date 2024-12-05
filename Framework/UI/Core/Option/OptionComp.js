@@ -1,6 +1,5 @@
 import React, { useContext, memo, useState } from 'react';
 import { View } from 'react-native';
-import { VerticalLayout } from '../Layout/Layout';
 
 /**
  * General options component for rendering various types of selection controls.
@@ -13,7 +12,6 @@ import { VerticalLayout } from '../Layout/Layout';
  * @param {Function} props.onSelectionChange - Callback function to handle selection changes: updatedSchema, optionPath, optionRef.
  * @param {Object} props.optionsContainer - Container to contain children options.
  * @param {Function} props.renderOption - Function to render the option with the selection control.
- * @param {Function} props.renderParentOption - Function to render parent options, if same as renderOption just set
  * @param {number} props.depthPadding - to apply padding per depth hierarchy.
  * prop to same function value.
  * @param {Object} [props.style={}] - Additional style on base container.
@@ -25,7 +23,6 @@ const OptionComp = ({
   onSelectionChange,
   optionsContainer: OptionsContainer,
   renderOption,
-  renderParentOption,
   depthPadding = 0,
   style={}
 }) => {
@@ -117,9 +114,9 @@ const OptionComp = ({
   };
 
   return (
-    <VerticalLayout style={style}>
+    <View style={style}>
       {renderChildrenOptions(schema)}
-    </VerticalLayout>
+    </View>
   );
 };
 
