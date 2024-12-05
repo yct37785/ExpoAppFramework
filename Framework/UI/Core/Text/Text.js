@@ -4,13 +4,14 @@ import { Text as RNPText } from 'react-native-paper';
 /**
  * text component, wraps react-native-paper text, props identical to react-native-paper
  * 
+ * @param {string} Variant - https://callstack.github.io/react-native-paper/docs/components/Text/#variant--available-in-v5x-with-theme-version-3
  * @param {React.ReactNode} props.children - Textual content.
  * 
  * @returns {JSX.Element} A React element with the text.
  */
-export const Text = ({children, ...props}) => {
+export const Text = ({ variant = 'bodyMedium', children }) => {
   return (
-    <RNPText {...props}>
+    <RNPText variant={variant}>
       {children}
     </RNPText>
   );
