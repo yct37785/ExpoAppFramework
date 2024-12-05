@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
 import { View } from 'react-native';
 import * as UI from '../../../Framework/Index/UI';
-import * as Hooks from '../../../Framework/Index/Hooks';
+import * as Hook from '../../../Framework/Index/Hook';
 import * as Const from '../../../Framework/Index/Const';
 
 /**
@@ -12,7 +12,7 @@ import * as Const from '../../../Framework/Index/Const';
  * @param {Object} props.route - React Navigation provided oobject containing route parameters.
  */
 function SampleLayoutsScreen({ navigation, route }) {
-  Hooks.useLocalDataUpdate(() => {
+  Hook.useLocalDataUpdate(() => {
     console.log("SampleNewScreen: updated local data");
   });
 

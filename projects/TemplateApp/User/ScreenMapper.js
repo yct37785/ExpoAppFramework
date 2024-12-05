@@ -5,14 +5,14 @@
  * as the name suggests, screenMap serve as a directory of all screens in your app, 
  * with DEFAULT_SCREEN as the root screen
  */
-import SampleHomeScreen from '../Screens/SampleHomeScreen';
-import SampleTextInputBtnScreen from '../Screens/SampleTextInputBtnScreen';
-import SampleLayoutsScreen from '../Screens/SampleLayoutsScreen';
-import SampleContainersScreen from '../Screens/SampleContainersScreen';
-import SampleMenusScreen from '../Screens/SampleMenusScreen';
-import SampleEmptyScreen from '../Screens/SampleEmptyScreen';
-import SampleDataDisplayScreen from '../Screens/SampleDataDisplayScreen';
-import SampleLocalDataScreen from '../Screens/SampleLocalDataScreen';
+import SampleHomeScreen from '../Screen/SampleHomeScreen';
+import SampleTextInputBtnScreen from '../Screen/SampleTextInputBtnScreen';
+import SampleLayoutsScreen from '../Screen/SampleLayoutsScreen';
+import SampleContainersScreen from '../Screen/SampleContainersScreen';
+import SampleMenusScreen from '../Screen/SampleMenusScreen';
+import SampleEmptyScreen from '../Screen/SampleEmptyScreen';
+import SampleDataDisplayScreen from '../Screen/SampleDataDisplayScreen';
+import SampleLocalDataScreen from '../Screen/SampleLocalDataScreen';
 
 export const screenMap = {
   home: SampleHomeScreen,

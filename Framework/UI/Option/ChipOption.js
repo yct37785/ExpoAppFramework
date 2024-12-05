@@ -3,7 +3,7 @@ import { View, TouchableOpacity } from 'react-native';
 import { useTheme, Chip } from 'react-native-paper';
 import { Text } from '../Text/Text';
 import { padSize025, padSize05, padSize, padSize2 } from '../../Index/Const';
-import OptionsComp from './OptionsComp';
+import OptionComp from './OptionComp';
 
 /**
  * Component for rendering chip options based on a JSON schema.
@@ -27,7 +27,7 @@ import OptionsComp from './OptionsComp';
  *   },
  * };
  */
-const ChipOptions = ({ schema, onSelectionChange }) => {
+const ChipOption = ({ schema, onSelectionChange }) => {
   const theme = useTheme();
 
   const renderLabel = ({ option, onPress }) => (
@@ -53,7 +53,7 @@ const ChipOptions = ({ schema, onSelectionChange }) => {
   );
 
   return (
-    <OptionsComp
+    <OptionComp
       schema={schema}
       onSelectionChange={onSelectionChange}
       optionsContainer={optionsContainer}
@@ -62,4 +62,4 @@ const ChipOptions = ({ schema, onSelectionChange }) => {
   );
 };
 
-export default memo(ChipOptions);
+export default memo(ChipOption);

@@ -1,4 +1,4 @@
 /**
  * Utility functions exposed to end users.
  */
-export * from '../Utilities/GeneralUtils';
+export * from '../Utility/GeneralUtility';

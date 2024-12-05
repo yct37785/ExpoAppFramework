@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
-import { SAMPLE_SCREENS } from '../User/Schemas';
+import { SAMPLE_SCREENS } from '../User/Schema';
 import * as UI from '../../../Framework/Index/UI';
-import * as Hooks from '../../../Framework/Index/Hooks';
+import * as Hook from '../../../Framework/Index/Hook';
 import * as Const from '../../../Framework/Index/Const';
 
 /**
@@ -13,7 +13,7 @@ import * as Const from '../../../Framework/Index/Const';
  */
 function SampleHomeScreen({ navigation, route }) {
   
-  Hooks.useLocalDataUpdate(() => {
+  Hook.useLocalDataUpdate(() => {
     console.log("SampleHomeScreen: updated local data");
   });
 

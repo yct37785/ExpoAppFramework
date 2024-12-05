@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Core from '../../Framework/Index/Core';
 import { screenMap, DEFAULT_SCREEN } from './User/ScreenMapper';
-import { LOCAL_DATA_SCHEMA } from './User/Schemas';
+import { LOCAL_DATA_SCHEMA } from './User/Schema';
 
 const App = () => {
   return (

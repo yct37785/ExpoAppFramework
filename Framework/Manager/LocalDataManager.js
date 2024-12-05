@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { deleteDataAS, getAllKeysAS, readDataAS, writeDataAS } from '../APIs/AsyncStorageAPI';
-import { objToKeyValueArr } from '../Utilities/GeneralUtils';
+import { deleteDataAS, getAllKeysAS, readDataAS, writeDataAS } from '../API/AsyncStorageAPI';
+import { objToKeyValueArr } from '../Utility/GeneralUtility';
 const _ = require('lodash');
 
 /**

@@ -5,7 +5,7 @@
 /**
  * activities: screens with presets for various activities
  */
-export { default as BasicActivity } from '../UI/Activities/BasicActivity';
+export { default as BasicActivity } from '../UI/Activity/BasicActivity';
 
 /**
  * button: variations of buttons
@@ -15,19 +15,19 @@ export { default as Button } from '../UI/Button/Button';
 /**
  * component: various components
  */
-export { DividerComp } from '../UI/Component/Decorators';
+export { DividerComp } from '../UI/Component/Decorator';
 
 /**
  * containers: holds children; eg. children collapsible when triggered
  */
-export { CollapsibleContainer, AccordionContainer } from '../UI/Containers/Collapsible';
-export { default as TabsContainer } from '../UI/Containers/Tabs';
+export { CollapsibleContainer, AccordionContainer } from '../UI/Container/Collapsible';
+export { default as TabsContainer } from '../UI/Container/Tabs';
 
 /**
  * dialogs: popup a menu on trigger; eg. dialog menu
  */
-export { default as Dialog } from '../UI/Dialogs/Dialog';   // TODO: basic dialog
-export { default as Popup } from '../UI/Dialogs/Popup'; // TODO: popup dialog
+export { default as Dialog } from '../UI/Dialog/Dialog';   // TODO: basic dialog
+export { default as Popup } from '../UI/Dialog/Popup'; // TODO: popup dialog
 
 /**
  * display: display data/media
@@ -48,13 +48,13 @@ export { default as TextInput } from '../UI/Input/TextInput';
 /**
  * layouts: parent view to contain other UI comps; eg. align children horizontally
  */
-export { VerticalLayout, HorizontalLayout, GridLayout } from '../UI/Layouts/Layouts';
+export { VerticalLayout, HorizontalLayout, GridLayout } from '../UI/Layout/Layout';
 
 /**
  * options: multiple options selection for data; eg. filtering
  */
-export { default as CheckOptions } from '../UI/Options/CheckOptions';
-export { default as ChipOptions } from '../UI/Options/ChipOptions';
+export { default as CheckOption } from '../UI/Option/CheckOption';
+export { default as ChipOption } from '../UI/Option/ChipOption';
 
 /**
  * toggle: one option selectable; eg. check, radio, switch

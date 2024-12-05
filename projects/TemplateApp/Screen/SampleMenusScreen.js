@@ -6,7 +6,7 @@ import {
   Card, IconButton, Portal
 } from 'react-native-paper';
 import * as UI from '../../../Framework/Index/UI';
-import * as Hooks from '../../../Framework/Index/Hooks';
+import * as Hook from '../../../Framework/Index/Hook';
 import * as Const from '../../../Framework/Index/Const';
 
 /**
@@ -82,7 +82,7 @@ function SampleMenusScreen({ navigation, route, screenHeaderComp: ScreenHeaderCo
     return <UI.VerticalLayout align='horizontal' reverse={true}>
       <UI.Popup triggerComp={<IconButton icon="dots-vertical" size={Const.iconSizeSmall} />}>
         <UI.VerticalLayout>
-          <UI.CheckOptions schema={POPUP_MENU_OPTIONS} onSelectionChange={handleCheckOptionsChange} />
+          <UI.CheckOption schema={POPUP_MENU_OPTIONS} onSelectionChange={handleCheckOptionsChange} />
         </UI.VerticalLayout>
       </UI.Popup>
     </UI.VerticalLayout>

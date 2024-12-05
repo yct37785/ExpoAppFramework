@@ -5,8 +5,8 @@ import { View, LogBox, Platform, StatusBar } from 'react-native';
 import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, configureFonts } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
 // hooks
-import { LocalDataContext } from '../Hooks/LocalDataHook';
-import useLocalDataManager from '../Managers/LocalDataManager';
+import { LocalDataContext } from '../Hook/LocalDataHook';
+import useLocalDataManager from '../Manager/LocalDataManager';
 // deps
 import 'react-native-get-random-values';
 // nav

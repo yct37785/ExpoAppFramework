@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, memo } from 'react';
 import { View, Image } from 'react-native';
 import * as UI from '../../../Framework/Index/UI';
-import * as Hooks from '../../../Framework/Index/Hooks';
+import * as Hook from '../../../Framework/Index/Hook';
 import * as Const from '../../../Framework/Index/Const';
 import { faker } from '@faker-js/faker';
 
@@ -109,13 +109,13 @@ function SampleDataDisplayScreen({ navigation, route }) {
   }
 
   return (
-    <UI.BasicActivity navigation={navigation} route={route} customHeaderContent={customHeaderContent} title="Data Display Sample">
+    <UI.BasicActivity navigation={navigation} route={route} customHeaderContent={customHeaderContent} title="">
       <UI.VerticalLayout padding={Const.padSize} childMargin={Const.padSize}>
 
         {/* Filter menu */}
-        {chipsSchema ? <UI.CollapsibleContainer toggleHeaderText="Filter">
-          <UI.ChipOptions schema={chipsSchema} onSelectionChange={onMaterialChipSelected} />
-        </UI.CollapsibleContainer> : null}
+        {/* {chipsSchema ? <UI.CollapsibleContainer toggleHeaderText="Filter">
+          <UI.ChipOption schema={chipsSchema} onSelectionChange={onMaterialChipSelected} />
+        </UI.CollapsibleContainer> : null} */}
 
         {/* Toggle Flashlist vs FlatList */}
         <UI.RadioGroupToggle

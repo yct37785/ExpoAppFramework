@@ -20,7 +20,7 @@ const BasicActivity = ({ navigation, route, title = '', customHeaderContent: Cus
     <View style={{ flex: 1 }}>
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content style={{ flex: 0 }} title={title} />
+        {title ? <Appbar.Content style={{ flex: 0 }} title={title} /> : null}
         <View style={{ flex: 1 }}>
           {CustomHeaderComp && CustomHeaderComp()}
         </View>

@@ -1,7 +1,7 @@
 import React, { useState, memo } from 'react';
 import { View } from 'react-native';
 import * as UI from '../../../Framework/Index/UI';
-import * as Hooks from '../../../Framework/Index/Hooks';
+import * as Hook from '../../../Framework/Index/Hook';
 import * as Const from '../../../Framework/Index/Const';
 
 /**

@@ -3,7 +3,7 @@ import { View, TouchableOpacity } from 'react-native';
 import { Checkbox } from 'react-native-paper';
 import { Text } from '../Text/Text';
 import { padSize, padSize2 } from '../../Index/Const';
-import OptionsComp from './OptionsComp';
+import OptionComp from './OptionComp';
 
 /**
  * Component for rendering checkbox options based on a JSON schema.
@@ -17,7 +17,7 @@ import OptionsComp from './OptionsComp';
  * 
  * @returns {JSX.Element} The CheckOptions component.
  */
-const CheckOptions = ({ schema, onSelectionChange }) => {
+const CheckOption = ({ schema, onSelectionChange }) => {
 
   const renderCheckbox = ({ option, onPress }) => {
     const status = option.state === 1 ? 'checked' : option.state === 2 ? 'unchecked' : 'indeterminate';
@@ -36,7 +36,7 @@ const CheckOptions = ({ schema, onSelectionChange }) => {
   );
 
   return (
-    <OptionsComp
+    <OptionComp
     originalSchema={schema}
       onSelectionChange={onSelectionChange}
       optionsContainer={optionsContainer}
@@ -46,4 +46,4 @@ const CheckOptions = ({ schema, onSelectionChange }) => {
   );
 };
 
-export default memo(CheckOptions);
+export default memo(CheckOption);

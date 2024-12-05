@@ -1,6 +1,6 @@
 import React, { useContext, memo, useState } from 'react';
 import { View } from 'react-native';
-import { VerticalLayout } from '../Layouts/Layouts';
+import { VerticalLayout } from '../Layout/Layout';
 
 /**
  * General options component for rendering various types of selection controls.
@@ -19,7 +19,7 @@ import { VerticalLayout } from '../Layouts/Layouts';
  * 
  * @returns {JSX.Element} The OptionsComp component.
  */
-const OptionsComp = ({ originalSchema, onSelectionChange, optionsContainer: OptionsContainer, renderOption, renderParentOption, depthPadding = 0 }) => {
+const OptionComp = ({ originalSchema, onSelectionChange, optionsContainer: OptionsContainer, renderOption, renderParentOption, depthPadding = 0 }) => {
 
   const deepCloneWithState = (obj, initialState = 1) => {
     const clone = {};
@@ -114,4 +114,4 @@ const OptionsComp = ({ originalSchema, onSelectionChange, optionsContainer: Opti
   );
 };
 
-export default memo(OptionsComp);
+export default memo(OptionComp);
