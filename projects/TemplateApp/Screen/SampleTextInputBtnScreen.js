@@ -41,8 +41,9 @@ function SampleTextInputBtnScreen({ navigation, route }) {
           value={searchQuery}
           onChange={setSearchQuery}
           placeholder="search"
+          style={{ marginTop: Const.padSize2 }}
         />
-        <UI.HighlightText text="hello world here" query={searchQuery} variant={'bodyMedium'} />
+        <UI.HighlightText text="hello world here" query={searchQuery} variant={'bodyMedium'} style={{ marginTop: Const.padSize2 }} />
 
       </UI.VerticalLayout>
     </UI.BasicActivity>

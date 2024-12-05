@@ -34,11 +34,16 @@ const ToggleHeader = memo(({ toggleHeaderText = '', isCollapsed }) => {
  * A component that provides a collapsible section.
  * 
  * @param {Object} props - Component props.
+ * @param {Object} [props.style={}] - Additional style on base container.
  * @param {React.ReactNode} props.children - Content to be rendered within the collapsible section.
  * 
  * @returns {JSX.Element} The CollapsibleContainer component.
  */
-export const CollapsibleContainer = memo(({ toggleHeaderText = '', children }) => {
+export const CollapsibleContainer = memo(({ 
+  toggleHeaderText = '',
+  style={},
+  children
+}) => {
   const [isCollapsed, setIsCollapsed] = useState(true);
 
   const toggleCollapse = () => {
@@ -46,7 +51,7 @@ export const CollapsibleContainer = memo(({ toggleHeaderText = '', children }) =
   };
 
   return (
-    <View>
+    <View style={style}>
       <TouchableOpacity onPress={toggleCollapse}>
         <ToggleHeader toggleHeaderText={toggleHeaderText} isCollapsed={isCollapsed} />
       </TouchableOpacity>
@@ -63,12 +68,14 @@ export const CollapsibleContainer = memo(({ toggleHeaderText = '', children }) =
  * 
  * @param {Object} props - Component props.
  * @param {Array<string>} props.sectionTitles - Array of section titles.
+ * @param {Object} [props.style={}] - Additional style on base container.
  * @param {React.ReactNode[]} props.children - Children components for each section content.
  * 
  * @returns {JSX.Element} The AccordionContainer component.
  */
 export const AccordionContainer = memo(({
   sectionTitles,
+  style={},
   children
 }) => {
   if (sectionTitles.length !== React.Children.count(children)) {
@@ -119,6 +126,7 @@ export const AccordionContainer = memo(({
 
   return (
     <Accordion
+      style={style}
       sections={sections}
       activeSections={activeSections}
       renderHeader={(section, i) => renderHeader(section, i)}

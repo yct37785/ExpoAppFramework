@@ -9,6 +9,7 @@ import { textColorForDark, textColorForLight } from '../../../Index/Const';
  * @param {Object} props - Component props.
  * @param {string} mode - RNP prop: text/outlined/contained/elevated/contained-tonal.
  * @param {Function} [props.onPress=()=>{}] - Callback function to handle on press event.
+ * @param {Object} [props.style={}] - Additional style on base container.
  * @param {React.ReactNode} props.children - Content within button.
  * 
  * @returns {JSX.Element} The Button component.
@@ -16,10 +17,11 @@ import { textColorForDark, textColorForLight } from '../../../Index/Const';
 export const Button = memo(({
   mode="contained",
   onPress = () => { },
+  style={},
   children
 }) => {
   return (
-    <RNPButton mode={mode} onPress={onPress}>
+    <RNPButton mode={mode} onPress={onPress} style={style}>
       {children}
     </RNPButton>
   );
@@ -32,6 +34,7 @@ export const Button = memo(({
  * @param {string} icon - See icons directory: https://oblador.github.io/react-native-vector-icons/#MaterialCommunityIcons
  * @param {string} mode - RNP prop: text/outlined/contained/elevated/contained-tonal.
  * @param {Function} [props.onPress=()=>{}] - Callback function to handle on press event.
+ * @param {Object} [props.style={}] - Additional style on base container.
  * @param {React.ReactNode} props.children - Content within button.
  * 
  * @returns {JSX.Element} The Button component.
@@ -40,10 +43,11 @@ export const IconButton = memo(({
   icon = "camera",
   mode = "contained",
   onPress = () => { },
+  style={},
   children
 }) => {
   return (
-    <RNPButton icon={icon} mode={mode} onPress={onPress}>
+    <RNPButton icon={icon} mode={mode} onPress={onPress} style={style}>
       {children}
     </RNPButton>
   );

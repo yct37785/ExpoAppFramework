@@ -14,6 +14,7 @@ import OptionComp from './OptionComp';
  * @param {string} props.schema.label - The label for the menu option.
  * @param {Object} [props.schema.children] - Nested options for the menu.
  * @param {Function} props.onSelectionChange - Callback function to handle selection changes.
+ * @param {Object} [props.style={}] - Additional style on base container.
  * 
  * @returns {JSX.Element} The ChipOptions component.
  *
@@ -27,7 +28,11 @@ import OptionComp from './OptionComp';
  *   },
  * };
  */
-const ChipOption = ({ schema, onSelectionChange }) => {
+const ChipOption = ({
+  schema,
+  onSelectionChange,
+  style={}
+}) => {
   const theme = useTheme();
 
   const renderLabel = ({ option, onPress }) => (
@@ -58,7 +63,8 @@ const ChipOption = ({ schema, onSelectionChange }) => {
       onSelectionChange={onSelectionChange}
       optionsContainer={optionsContainer}
       renderOption={renderChip}
-      renderParentOption={renderLabel} />
+      renderParentOption={renderLabel}
+      style={style} />
   );
 };
 

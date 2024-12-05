@@ -17,6 +17,7 @@ import { Text } from '../Text/Text';
  * @param {boolean} [props.dismissable=false] - If true, tapping outside the dialog will close it.
  * @param {string} [props.submitText='Confirm'] - Text for the submit button.
  * @param {string} [props.closeText='Close'] - Text for the close button.
+ * @param {Object} [props.style={}] - Additional style on base container.
  * 
  * @returns {JSX.Element} The Dialog component.
  */
@@ -29,12 +30,13 @@ const DialogComp = ({
   onClose, 
   dismissable = false, 
   submitText = 'Confirm', 
-  closeText = 'Close' 
+  closeText = 'Close' ,
+  style={}
 }) => {
   const theme = useTheme();
 
   return (
-    <Modal dismissable={dismissable} visible={isVisible} style={{ marginHorizontal: padSize4 }}>
+    <Modal dismissable={dismissable} visible={isVisible} style={[{ marginHorizontal: padSize4 }, style]}>
       <View style={{
         backgroundColor: theme.colors.surfaceVariant, 
         borderRadius: theme.roundness,

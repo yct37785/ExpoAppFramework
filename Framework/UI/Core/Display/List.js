@@ -12,6 +12,7 @@ import { FlashList } from '@shopify/flash-list';
  * @param {Function} props.renderItem - Function to render each item in the list.
  * @param {string} [props.listType='flashlist'] - Type of list to display, either 'flashlist' or 'flatlist'.
  * @param {number} [props.estimatedRowHeight=250] - Estimated height of each row in the list for FlashList.
+ * @param {Object} [props.style={}] - Additional style on base container.
  * 
  * @returns {JSX.Element} The ListDataDisplay component.
  */
@@ -22,6 +23,7 @@ const ListDataDisplay = ({
   renderItem,
   listType = 'flashlist',
   estimatedRowHeight = 250,
+  style={}
 }) => {
   const [filteredData, setFilteredData] = useState([]);
 
@@ -93,7 +95,7 @@ const ListDataDisplay = ({
   };
 
   return (
-    <View style={{ width: '100%', height: '100%' }}>
+    <View style={[{ width: '100%', height: '100%' }, style]}>
       {filteredData.length > 0 ? renderList() : null}
     </View>
   );

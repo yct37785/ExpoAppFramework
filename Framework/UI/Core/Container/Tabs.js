@@ -14,10 +14,18 @@ import { TabView, TabBar } from 'react-native-tab-view';
  * @param {number} tabIndex - Index of the currently selected tab.
  * @param {Function} onTabIdxChange - Function to handle tab index changes.
  * @param {string} position - Position of the tab bar.
+ * @param {Object} [props.style={}] - Additional style on base container.
  * 
  * @returns {JSX.Element} The TabsContainer component.
  */
-function TabsContainer({ routes, sceneMap, tabIndex, onTabIdxChange, position }) {
+function TabsContainer({
+  routes,
+  sceneMap,
+  tabIndex,
+  onTabIdxChange,
+  position,
+  style = {}
+}) {
   const theme = useTheme();
   const textColor = theme.dark ? textColorForDark : textColorForLight;
 
@@ -75,6 +83,7 @@ function TabsContainer({ routes, sceneMap, tabIndex, onTabIdxChange, position })
       renderLazyPlaceholder={loadingScreen}
       onIndexChange={onTabIdxChange}
       tabBarPosition={position}
+      style={style}
     />
   );
 }

@@ -5,13 +5,18 @@ import { Text as RNPText } from 'react-native-paper';
  * text component, wraps react-native-paper text, props identical to react-native-paper
  * 
  * @param {string} Variant - https://callstack.github.io/react-native-paper/docs/components/Text/#variant--available-in-v5x-with-theme-version-3
+ * @param {Object} [props.style={}] - Additional style on base container.
  * @param {React.ReactNode} props.children - Textual content.
  * 
  * @returns {JSX.Element} A React element with the text.
  */
-export const Text = ({ variant = 'bodyMedium', children }) => {
+export const Text = ({
+  variant = 'bodyMedium',
+  style={},
+  children
+}) => {
   return (
-    <RNPText variant={variant}>
+    <RNPText variant={variant} style={style}>
       {children}
     </RNPText>
   );
@@ -24,6 +29,7 @@ export const Text = ({ variant = 'bodyMedium', children }) => {
  * @param {string} query - The search query to highlight.
  * @param {string} highlightColor - The highlight color for query text.
  * @param {string} [label=''] - Optional label to prepend to the text.
+ * @param {Object} [props.style={}] - Additional style on base container.
  * 
  * @returns {JSX.Element} A React element with the highlighted search text.
  */
@@ -32,15 +38,16 @@ export const HighlightText = memo(({
   text,
   query,
   highlightColor = 'yellow',
-  label = ''
+  label = '',
+  style={}
 }) => {
   if (!query) {
-    return <RNPText variant={variant}>{`${label}${text}`}</RNPText>;
+    return <RNPText variant={variant} style={style}>{`${label}${text}`}</RNPText>;
   }
   const regex = new RegExp(`(${query})`, 'gi');
   const parts = text.split(regex);
   return (
-    <RNPText variant={variant}>
+    <RNPText variant={variant} style={style}>
       {label}
       {parts.map((part, index) =>
         part.toLowerCase() === query.toLowerCase() ? (

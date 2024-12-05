@@ -10,14 +10,21 @@ import { useTheme, Appbar } from 'react-native-paper';
  * @param {Object} props.route - React Navigation provided oobject containing route parameters.
  * @param {string} [props.title=''] - Title of the screen to be displayed on app header.
  * @param {React.ReactNode} props.customHeaderContent - Custom content to display in the header.
+ * @param {Object} [props.style={}] - Additional style on base container.
  * @param {React.ReactNode} props.children - The body content of the screen.
  * 
  * @returns {JSX.Element} The BasicActivity component.
  */
-const BasicActivity = ({ navigation, route, title = '', customHeaderContent: CustomHeaderComp, children }) => {
-
+const BasicActivity = ({
+  navigation,
+  route,
+  title = '',
+  customHeaderContent: CustomHeaderComp,
+  style={},
+  children
+}) => {
   return (
-    <View style={{ flex: 1 }}>
+    <View style={[{ flex: 1 }, style]}>
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         {title ? <Appbar.Content style={{ flex: 0 }} title={title} /> : null}

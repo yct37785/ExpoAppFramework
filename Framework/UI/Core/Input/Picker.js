@@ -9,19 +9,22 @@ import { Picker } from '@react-native-picker/picker';
  * @param {string} props.value - The selected value.
  * @param {Array} props.options - Array of options for the picker, each with a label and value.
  * @param {Function} props.onChange - Callback function to handle value change.
+ * @param {Object} [props.style={}] - Additional style on base container.
  * 
  * @returns {JSX.Element} The PickerInput component.
  */
-function PickerInput({ value, options, onChange }) {
+function PickerInput({ 
+  value, 
+  options, 
+  onChange,
+  style={}
+}) {
   const theme = useTheme();
   return (
     <Picker
       mode='dropdown'
       dropdownIconColor={theme.colors.text}
-      style={{
-        color: theme.colors.text,
-        width: '100%',
-      }}
+      style={[{ color: theme.colors.text, width: '100%' }, style]}
       selectedValue={value}
       onValueChange={(v) => onChange(v)}
     >

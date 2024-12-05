@@ -9,12 +9,19 @@ import { Switch } from 'react-native-paper';
  * @param {Object} props - Component props
  * @param {boolean} props.value - current value of the switch.
  * @param {Function} props.onValueChange - Callback function to handle selection changes.
+ * @param {Object} [props.style={}] - Additional style on base container.
  * 
  * @returns {JSX.Element} The SwitchToggle component.
  */
-const SwitchToggle = ({ label, value, onValueChange, layout = 'vertical' }) => {
+const SwitchToggle = ({
+  label,
+  value,
+  onValueChange,
+  layout = 'vertical',
+  style={}
+}) => {
   return (
-    <View style={{ alignItems: 'flex-start' }}>
+    <View style={[{ alignItems: 'flex-start' }, style]}>
       <Switch value={value} onValueChange={(newValue) => onValueChange(newValue)} />
     </View>
   );

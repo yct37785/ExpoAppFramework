@@ -14,10 +14,15 @@ import OptionComp from './OptionComp';
  * @param {string} props.schema.label - The label for the menu option.
  * @param {Object} [props.schema.children] - Nested options for the menu.
  * @param {Function} props.onSelectionChange - Callback function to handle selection changes.
+ * @param {Object} [props.style={}] - Additional style on base container.
  * 
  * @returns {JSX.Element} The CheckOptions component.
  */
-const CheckOption = ({ schema, onSelectionChange }) => {
+const CheckOption = ({ 
+  schema,
+  onSelectionChange,
+  style={}
+}) => {
 
   const renderCheckbox = ({ option, onPress }) => {
     const status = option.state === 1 ? 'checked' : option.state === 2 ? 'unchecked' : 'indeterminate';
@@ -37,12 +42,12 @@ const CheckOption = ({ schema, onSelectionChange }) => {
 
   return (
     <OptionComp
-    originalSchema={schema}
+      originalSchema={schema}
       onSelectionChange={onSelectionChange}
       optionsContainer={optionsContainer}
       renderOption={renderCheckbox}
       depthPadding={padSize2}
-      />
+      style={style} />
   );
 };
 

@@ -11,6 +11,7 @@ import { Text } from '../Text/Text';
  * @param {Object} props.options - options in JSON obj: { value: { label: <string> } }
  * @param {string} props.value - value of currently selected option.
  * @param {Function} props.onValueChange - Callback function to handle selection changes.
+ * @param {Object} [props.style={}] - Additional style on base container.
  * 
  * @returns {JSX.Element} The RadioGroupToggle component.
  *
@@ -21,9 +22,14 @@ import { Text } from '../Text/Text';
  *   green: { label: 'Green' },
  * };
  */
-const RadioGroupToggle = ({ options, value, onValueChange }) => {
+const RadioGroupToggle = ({
+  options,
+  value,
+  onValueChange,
+  style={}
+}) => {
   return (
-    <RadioButton.Group onValueChange={newValue => onValueChange(newValue)} value={value}>
+    <RadioButton.Group onValueChange={newValue => onValueChange(newValue)} style={style} value={value}>
       <View style={{ flexDirection: 'row' }}>
         {Object.entries(options).map(([key, obj], index) => {
           return <View key={index} style={{ flexDirection: 'row', alignItems: 'center' }}>

@@ -12,6 +12,7 @@ import { Searchbar, TextInput } from 'react-native-paper';
  * @param {Function} [props.onChange=({string})=>{}] - Callback function to receive changed input value.
  * @param {Function} [props.onFocus=()=>{}] - Callback function to handle focus event on the input.
  * @param {Function} [props.onBlur=()=>{}] - Callback function to handle blur event on the input.
+ * @param {Object} [props.style={}] - Additional style on base container.
  * 
  * @returns {JSX.Element} The TextInputComp component.
  */
@@ -21,7 +22,8 @@ const TextInputComp = ({
   placeholder = '',
   onChange=(s)=>{},
   onFocus=()=>{},
-  onBlur=()=>{}
+  onBlur=()=>{},
+  style={}
 }) => {
   const inputRef = useRef();
 
@@ -44,6 +46,7 @@ const TextInputComp = ({
           onFocus={onFocus}
           onBlur={onBlur}
           value={value}
+          style={style}
         />
       )}
       {type === "text" && (
@@ -54,6 +57,7 @@ const TextInputComp = ({
           onFocus={onFocus}
           onBlur={onBlur}
           value={value}
+          style={style}
         />
       )}
       {/* Add more conditions here for other types */}

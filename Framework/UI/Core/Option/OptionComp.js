@@ -16,10 +16,19 @@ import { VerticalLayout } from '../Layout/Layout';
  * @param {Function} props.renderParentOption - Function to render parent options, if same as renderOption just set
  * @param {number} props.depthPadding - to apply padding per depth hierarchy.
  * prop to same function value.
+ * @param {Object} [props.style={}] - Additional style on base container.
  * 
  * @returns {JSX.Element} The OptionsComp component.
  */
-const OptionComp = ({ originalSchema, onSelectionChange, optionsContainer: OptionsContainer, renderOption, renderParentOption, depthPadding = 0 }) => {
+const OptionComp = ({
+  originalSchema,
+  onSelectionChange,
+  optionsContainer: OptionsContainer,
+  renderOption,
+  renderParentOption,
+  depthPadding = 0,
+  style={}
+}) => {
 
   const deepCloneWithState = (obj, initialState = 1) => {
     const clone = {};
@@ -108,7 +117,7 @@ const OptionComp = ({ originalSchema, onSelectionChange, optionsContainer: Optio
   };
 
   return (
-    <VerticalLayout>
+    <VerticalLayout style={style}>
       {renderChildrenOptions(schema)}
     </VerticalLayout>
   );
