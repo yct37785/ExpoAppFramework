@@ -76,10 +76,11 @@ const RootComp = ({ screenMap, DEFAULT_SCREEN, LOCAL_DATA_SCHEMA }) => {
   const [theme, setTheme] = useState(CombinedDarkTheme);
 
   useEffect(() => {
-    // tests
     const testRunner = new TestRunner();
     testRunner.runAllTests();
-    // local data management
+  }, []);
+
+  useEffect(() => {
     const isDarkMode = localDataManager.getLocalDataValue("settings_sample.isDarkMode");
     if (localDataManager.isLocalDataLoaded && (isDarkMode !== (theme === CombinedDarkTheme))) {
       const newTheme = isDarkMode ? CombinedDarkTheme : CombinedDefaultTheme;
