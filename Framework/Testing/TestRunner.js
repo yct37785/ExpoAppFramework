@@ -1,28 +1,38 @@
-// TestRunner.js
-import ShellTestRunner from './ShellTestRunner';
-// Import other test runners as needed.
+import AsyncStorageAPI_TestRunner from './AsyncStorageAPI_TestRunner';
 
+/**
+ * Main Test Runner class for running all test suites synchronously.
+ */
 class TestRunner {
   constructor() {
     this.testRunners = [
-      new ShellTestRunner(),
+      new AsyncStorageAPI_TestRunner(),
       // Add other test runner instances here.
     ];
   }
 
   /**
    * Runs all registered tests and logs results synchronously.
+   * 
+   * @returns {Promise<void>} A promise that resolves when all tests are complete.
    */
-  runAllTests() {
+  async runAllTests() {
     const allResults = [];
+
     console.log();
     console.log(`*** Running tests ***`);
     console.log();
 
-    this.testRunners.forEach((runner) => {
-      allResults.push({ className: runner.className, results: runner.runTests() });
-    });
-    
+    for (const runner of this.testRunners) {
+      try {
+        const results = await runner.runTests();
+        allResults.push({ className: runner.className, results });
+      } catch (e) {
+        console.error(`Error in ${runner.className}: ${e.message}`);
+        allResults.push({ className: runner.className, results: [] });
+      }
+    }
+
     this.logResults(allResults);
   }
 
@@ -34,13 +44,12 @@ class TestRunner {
   logResults(allResults) {
     allResults.forEach(({ className, results }) => {
       console.log(`Class ${className}:`);
-      results.forEach((test) => {
-        console.log(
-          `  ${test.test}: ${test.status ? 'Pass' : `Fail`}`
-        );
+      results.forEach(({ test, status }) => {
+        console.log(`  ${test}: ${status ? 'Pass' : 'Fail'}`);
       });
       console.log();
     });
+
     console.log('*** All tests completed ***');
     console.log();
   }

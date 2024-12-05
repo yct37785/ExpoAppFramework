@@ -1,4 +1,3 @@
-// ShellTestRunner.js
 class ShellTestRunner {
   constructor() {
     this.className = 'ShellClass';
