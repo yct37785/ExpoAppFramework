@@ -6,6 +6,7 @@
  * with DEFAULT_SCREEN as the root screen
  */
 import SampleHomeScreen from '../Screens/SampleHomeScreen';
+import SampleTextInputBtnScreen from '../Screens/SampleTextInputBtnScreen';
 import SampleLayoutsScreen from '../Screens/SampleLayoutsScreen';
 import SampleContainersScreen from '../Screens/SampleContainersScreen';
 import SampleMenusScreen from '../Screens/SampleMenusScreen';
@@ -15,6 +16,7 @@ import SampleLocalDataScreen from '../Screens/SampleLocalDataScreen';
 
 export const screenMaps = {
   home: SampleHomeScreen,
+  textInputBtn: SampleTextInputBtnScreen,
   layouts: SampleLayoutsScreen,
   containers: SampleContainersScreen,
   menus: SampleMenusScreen,

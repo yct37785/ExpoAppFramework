@@ -20,6 +20,7 @@ export const LOCAL_DATA_SCHEMA = {
  * screen display names
  */
 export const SAMPLE_SCREENS = {
+  textInputBtn: "text input button example",
   layouts: "layouts example",
   containers: "containers example",
   menus: "menus example",
