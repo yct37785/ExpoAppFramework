@@ -28,29 +28,29 @@ export const Text = ({ variant = 'bodyMedium', children }) => {
  * @returns {JSX.Element} A React element with the highlighted search text.
  */
 export const HighlightText = memo(({
+  variant = 'bodyMedium',
   text,
   query,
   highlightColor = 'yellow',
-  label = '',
-  ...props
+  label = ''
 }) => {
   if (!query) {
-    return <Text {...props}>{`${label}${text}`}</Text>;
+    return <RNPText variant={variant}>{`${label}${text}`}</RNPText>;
   }
   const regex = new RegExp(`(${query})`, 'gi');
   const parts = text.split(regex);
   return (
-    <Text {...props}>
+    <RNPText variant={variant}>
       {label}
       {parts.map((part, index) =>
         part.toLowerCase() === query.toLowerCase() ? (
-          <Text {...props} key={index} style={{ backgroundColor: highlightColor }}>
+          <RNPText variant={variant} key={index} style={{ backgroundColor: highlightColor }}>
             {part}
-          </Text>
+          </RNPText>
         ) : (
           part
         )
       )}
-    </Text>
+    </RNPText>
   );
 });

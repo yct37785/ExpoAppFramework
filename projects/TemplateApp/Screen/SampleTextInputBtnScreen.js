@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
+import { View } from 'react-native';
 import * as UI from '../../../Framework/Index/UI';
 import * as Hook from '../../../Framework/Index/Hook';
 import * as Const from '../../../Framework/Index/Const';
@@ -20,17 +21,15 @@ function SampleTextInputBtnScreen({ navigation, route }) {
         {/* Buttons */}
         <UI.GridLayout
           direction="row"
-          reverse={false}
           spacing={Const.padSize}
           itemsPerLine={2}
-          // itemStyle = {{ backgroundColor: 'yellow' }}
-          // style={{ backgroundColor: 'red', width: 350 }}
         >
           <UI.Button mode="text" onPress={() => { }}>text</UI.Button>
           <UI.Button mode="outlined" onPress={() => { }}>outlined</UI.Button>
           <UI.Button mode="contained" onPress={() => { }}>contained</UI.Button>
           <UI.Button mode="elevated" onPress={() => { }}>elevated</UI.Button>
           <UI.Button mode="contained-tonal" onPress={() => { }}>contained-tonal</UI.Button>
+          <UI.IconButton icon="account-box-multiple-outline" mode="contained" onPress={() => { }}>icon contained</UI.IconButton>
         </UI.GridLayout>
 
         <UI.DividerComp />
