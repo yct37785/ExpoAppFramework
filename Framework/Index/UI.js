@@ -10,7 +10,7 @@ export { default as BasicActivity } from '../UI/Core/Activity/BasicActivity';
 /**
  * button: variations of buttons
  */
-export { default as Button } from '../UI/Core/Button/Button';
+export { Button, IconButton } from '../UI/Core/Button/Button';
 
 /**
  * component: various components

@@ -44,7 +44,6 @@ function SampleLayoutsScreen({ navigation, route }) {
         <UI.Text variant="labelMedium" style={{ marginTop: Const.padSize05 }}>GridLayout</UI.Text>
         <UI.GridLayout
           direction="row"
-          reverse={false}
           spacing={Const.padSize}
           itemsPerLine={3}
           itemStyle = {{ backgroundColor: 'yellow' }}
