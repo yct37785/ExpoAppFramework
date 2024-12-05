@@ -109,7 +109,7 @@ export const GridLayout = memo(({
   reverse = false,
   spacing = 0,
   itemsPerLine = 2,
-  itemStyle={},
+  itemStyle = {},
   style = {},
   children,
 }) => {

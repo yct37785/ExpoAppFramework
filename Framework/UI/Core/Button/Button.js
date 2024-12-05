@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, memo } from 'react';
-import { Button as RNPButton } from 'react-native-paper';
+import { Button as RNPButton, useTheme } from 'react-native-paper';
+import { textColorForDark, textColorForLight } from '../../../Index/Const';
 
 /**
  * Basic button.

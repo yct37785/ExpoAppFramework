@@ -15,7 +15,27 @@ function SampleTextInputBtnScreen({ navigation, route }) {
 
   return (
     <UI.BasicActivity navigation={navigation} route={route} title="Text, input and button Sample">
-      <UI.Text variant="bodyMedium">{`paramText: ${paramText}`}</UI.Text>
+      <UI.VerticalLayout childMargin={Const.padSize} padding={Const.padSize}>
+
+        {/* Buttons */}
+        <UI.GridLayout
+          direction="row"
+          reverse={false}
+          spacing={Const.padSize}
+          itemsPerLine={2}
+          // itemStyle = {{ backgroundColor: 'yellow' }}
+          // style={{ backgroundColor: 'red', width: 350 }}
+        >
+          <UI.Button mode="text" onPress={() => { }}>text</UI.Button>
+          <UI.Button mode="outlined" onPress={() => { }}>outlined</UI.Button>
+          <UI.Button mode="contained" onPress={() => { }}>contained</UI.Button>
+          <UI.Button mode="elevated" onPress={() => { }}>elevated</UI.Button>
+          <UI.Button mode="contained-tonal" onPress={() => { }}>contained-tonal</UI.Button>
+        </UI.GridLayout>
+
+        <UI.DividerComp />
+
+      </UI.VerticalLayout>
     </UI.BasicActivity>
   );
 }
