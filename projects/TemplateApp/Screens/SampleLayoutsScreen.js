@@ -23,7 +23,7 @@ function SampleLayoutsScreen({ navigation, route }) {
   );
 
   return (
-    <UI.BasicActivity navigation={navigation} route={route} screenName="Home Sample">
+    <UI.BasicActivity navigation={navigation} route={route} title="Layouts Sample">
       {/* VerticalLayout: scroll */}
       <UI.Text variant="titleMedium">VerticalLayout: scroll</UI.Text>
       <UI.VerticalLayout childMargin={Const.padSize} constraint='scroll'>

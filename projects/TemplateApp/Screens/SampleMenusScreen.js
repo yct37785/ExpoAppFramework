@@ -89,7 +89,7 @@ function SampleMenusScreen({ navigation, route, screenHeaderComp: ScreenHeaderCo
   }
 
   return (
-    <UI.BasicActivity navigation={navigation} route={route} screenName="Menus Sample" customHeaderContent={customHeaderContent}>
+    <UI.BasicActivity navigation={navigation} route={route} title="Menus Sample" customHeaderContent={customHeaderContent}>
       {/* all dialogs here */}
       <Portal>
         <UI.Dialog

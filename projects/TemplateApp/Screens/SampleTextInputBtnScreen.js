@@ -14,7 +14,7 @@ function SampleTextInputBtnScreen({ navigation, route }) {
   const { paramText } = route.params;
 
   return (
-    <UI.BasicActivity navigation={navigation} route={route} screenName="Text, input and button Sample">
+    <UI.BasicActivity navigation={navigation} route={route} title="Text, input and button Sample">
       <UI.Text variant="bodyMedium">{`paramText: ${paramText}`}</UI.Text>
     </UI.BasicActivity>
   );

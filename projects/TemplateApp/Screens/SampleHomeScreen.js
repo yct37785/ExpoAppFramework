@@ -18,7 +18,7 @@ function SampleHomeScreen({ navigation, route }) {
   });
 
   return (
-    <UI.BasicActivity navigation={navigation} route={route} screenName="Home Sample">
+    <UI.BasicActivity navigation={navigation} route={route} title="Home Sample">
       <UI.VerticalLayout childMargin={Const.padSize} padding={Const.padSize}>
       <UI.Text variant="bodyMedium">Select the screen you want to navigate to</UI.Text>
       {Object.keys(SAMPLE_SCREENS).map((key) => (

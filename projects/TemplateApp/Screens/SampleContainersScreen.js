@@ -99,7 +99,7 @@ function SampleContainersScreen({ navigation, route }) {
   });
 
   return (
-    <UI.BasicActivity navigation={navigation} route={route} applyPadding={false} screenName="Containers Sample">
+    <UI.BasicActivity navigation={navigation} route={route} applyPadding={false} title="Containers Sample">
       <UI.TabsContainer
         routes={TAB_ROUTES}
         tabIndex={tabIndex}

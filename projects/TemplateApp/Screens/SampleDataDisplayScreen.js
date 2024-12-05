@@ -109,7 +109,7 @@ function SampleDataDisplayScreen({ navigation, route }) {
   }
 
   return (
-    <UI.BasicActivity navigation={navigation} route={route} customHeaderContent={customHeaderContent}>
+    <UI.BasicActivity navigation={navigation} route={route} customHeaderContent={customHeaderContent} title="Data Display Sample">
       <UI.VerticalLayout padding={Const.padSize} childMargin={Const.padSize}>
 
         {/* Filter menu */}

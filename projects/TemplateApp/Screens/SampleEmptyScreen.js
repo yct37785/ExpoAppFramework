@@ -14,7 +14,7 @@ function SampleEmptyScreen({ navigation, route }) {
   const { paramText } = route.params;
 
   return (
-    <UI.BasicActivity navigation={navigation} route={route} screenName="Empty Sample">
+    <UI.BasicActivity navigation={navigation} route={route} title="Empty Sample">
       <UI.Text variant="bodyMedium">{`paramText: ${paramText}`}</UI.Text>
     </UI.BasicActivity>
   );

@@ -29,7 +29,7 @@ function SampleLocalDataScreen({ navigation, route }) {
   }
 
   return (
-    <UI.BasicActivity navigation={navigation} route={route} screemName="Local Data Sample">
+    <UI.BasicActivity navigation={navigation} route={route} title="Local Data Management Sample">
       <UI.VerticalLayout>
         <UI.Text variant="titleMedium">Modify and save local data</UI.Text>
         <UI.VerticalLayout>
