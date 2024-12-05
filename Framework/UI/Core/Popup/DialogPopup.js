@@ -21,7 +21,7 @@ import { Text } from '../Text/Text';
  * 
  * @returns {JSX.Element} The Dialog component.
  */
-const DialogComp = ({ 
+const DialogPopupComp = ({ 
   title, 
   subtitle, 
   children, 
@@ -68,4 +68,4 @@ const DialogComp = ({
   );
 };
 
-export default memo(DialogComp);
+export default memo(DialogPopupComp);

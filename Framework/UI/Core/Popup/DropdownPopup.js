@@ -14,7 +14,7 @@ import { Menu, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
  * 
  * @returns {JSX.Element} The Popup component.
  */
-function PopupComp({ 
+function DropdownPopupComp({ 
   triggerComp, 
   disabled = false,
   style={},
@@ -37,4 +37,4 @@ function PopupComp({
   );
 }
 
-export default memo(PopupComp);
+export default memo(DropdownPopupComp);

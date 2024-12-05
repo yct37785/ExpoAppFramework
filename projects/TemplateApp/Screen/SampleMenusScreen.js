@@ -80,11 +80,9 @@ function SampleMenusScreen({ navigation, route, screenHeaderComp: ScreenHeaderCo
 
   function customHeaderContent() {
     return <UI.VerticalLayout align='horizontal' reverse={true}>
-      <UI.Popup triggerComp={<IconButton icon="dots-vertical" size={Const.iconSizeSmall} />}>
-        <UI.VerticalLayout>
-          <UI.CheckOption schema={POPUP_MENU_OPTIONS} onSelectionChange={handleCheckOptionsChange} />
-        </UI.VerticalLayout>
-      </UI.Popup>
+      <UI.DropdownPopup triggerComp={<IconButton icon="dots-vertical" size={Const.iconSizeSmall} />}>
+        <UI.CheckOption schema={POPUP_MENU_OPTIONS} onSelectionChange={handleCheckOptionsChange} />
+      </UI.DropdownPopup>
     </UI.VerticalLayout>
   }
 
@@ -92,7 +90,7 @@ function SampleMenusScreen({ navigation, route, screenHeaderComp: ScreenHeaderCo
     <UI.BasicActivity navigation={navigation} route={route} title="Menus Sample" customHeaderContent={customHeaderContent}>
       {/* all dialogs here */}
       <Portal>
-        <UI.Dialog
+        <UI.DialogPopup
           title='Lorem Ipsum Stuff'
           subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
           isVisible={showDialog}
@@ -102,7 +100,7 @@ function SampleMenusScreen({ navigation, route, screenHeaderComp: ScreenHeaderCo
           <Card.Content>
             <UI.Text variant="bodyMedium">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</UI.Text>
           </Card.Content>
-        </UI.Dialog>
+        </UI.DialogPopup>
       </Portal>
       {/* main content here */}
       <UI.Text variant="bodyMedium">Hello world</UI.Text>

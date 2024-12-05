@@ -24,12 +24,6 @@ export { CollapsibleContainer, AccordionContainer } from '../UI/Core/Container/C
 export { default as TabsContainer } from '../UI/Core/Container/Tabs';
 
 /**
- * dialogs: popup a menu on trigger; eg. dialog menu
- */
-export { default as Dialog } from '../UI/Core/Dialog/Dialog';   // TODO: basic dialog
-export { default as Popup } from '../UI/Core/Dialog/Popup'; // TODO: popup dialog
-
-/**
  * display: display data/media
  */
 export { default as ListDataDisplay } from '../UI/Core/Display/List';
@@ -55,6 +49,12 @@ export { VerticalLayout, HorizontalLayout, GridLayout } from '../UI/Core/Layout/
  */
 export { default as CheckOption } from '../UI/Core/Option/CheckOption';
 export { default as ChipOption } from '../UI/Core/Option/ChipOption';
+
+/**
+ * popups: popup a menu on trigger
+ */
+export { default as DialogPopup } from '../UI/Core/Popup/DialogPopup';
+export { default as DropdownPopup } from '../UI/Core/Popup/DropdownPopup';
 
 /**
  * toggle: one option selectable; eg. check, radio, switch
