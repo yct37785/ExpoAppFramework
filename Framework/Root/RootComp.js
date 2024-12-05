@@ -1,6 +1,8 @@
 // core
 import React, { Node, useCallback, memo, useEffect, useState } from 'react';
 import { View, LogBox, Platform, StatusBar } from 'react-native';
+// test
+import TestRunner from '../Testing/TestRunner';
 // UI
 import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, configureFonts } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
@@ -74,6 +76,10 @@ const RootComp = ({ screenMap, DEFAULT_SCREEN, LOCAL_DATA_SCHEMA }) => {
   const [theme, setTheme] = useState(CombinedDarkTheme);
 
   useEffect(() => {
+    // tests
+    const testRunner = new TestRunner();
+    testRunner.runAllTests();
+    // local data management
     const isDarkMode = localDataManager.getLocalDataValue("settings_sample.isDarkMode");
     if (localDataManager.isLocalDataLoaded && (isDarkMode !== (theme === CombinedDarkTheme))) {
       const newTheme = isDarkMode ? CombinedDarkTheme : CombinedDefaultTheme;
