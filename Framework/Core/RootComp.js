@@ -65,12 +65,11 @@ function ScreenWrapper({ component: Component, ...props }) {
  * The root component of the entire app. Handles initialization, context providers, and navigation.
  * 
  * @param {Object} props - The props passed to the root component.
- * @param {Object} props.screenMaps - A mapping of screen names to their respective components, refer to TemplateApp > App.js.
- * @param {Object} props.screenHeaderMaps - A mapping of screen custom headers mapped to corresponding screen key, refer to TemplateApp > App.js.
+ * @param {Object} props.screenMap - A mapping of screen names to their respective components, refer to TemplateApp > App.js.
  * @param {string} props.DEFAULT_SCREEN - The default screen to display on app launch, refer to TemplateApp > App.js.
  * @param {Object} props.LOCAL_DATA_SCHEMA - The schema for local storage data, refer to TemplateApp > App.js.
  */
-const RootComp = ({ screenMaps, screenHeaderMaps, DEFAULT_SCREEN, LOCAL_DATA_SCHEMA }) => {
+const RootComp = ({ screenMap, DEFAULT_SCREEN, LOCAL_DATA_SCHEMA }) => {
   const localDataManager = useLocalDataManager({ LOCAL_DATA_SCHEMA });
   const [theme, setTheme] = useState(CombinedDarkTheme);
 
@@ -96,10 +95,10 @@ const RootComp = ({ screenMaps, screenHeaderMaps, DEFAULT_SCREEN, LOCAL_DATA_SCH
                   headerShown: false
                 }}
               >
-                {Object.keys(screenMaps).map((key) => (
+                {Object.keys(screenMap).map((key) => (
                   <Stack.Screen name={key} key={key}>
                     {(props) => (
-                      <ScreenWrapper {...props} component={screenMaps[key]} extraData={{}} />
+                      <ScreenWrapper {...props} component={screenMap[key]} extraData={{}} />
                     )}
                   </Stack.Screen>
                 ))}

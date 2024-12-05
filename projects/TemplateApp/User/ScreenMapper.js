@@ -2,7 +2,7 @@
  * include any screens here by importing and including in screenMaps (feel free to remove the sample screens)
  * define default page under DEFAULT_SCREEN, value must match respective key in screenMaps
  * 
- * as the name suggests, screenMaps serve as a directory of all screens in your app, 
+ * as the name suggests, screenMap serve as a directory of all screens in your app, 
  * with DEFAULT_SCREEN as the root screen
  */
 import SampleHomeScreen from '../Screens/SampleHomeScreen';
@@ -14,7 +14,7 @@ import SampleEmptyScreen from '../Screens/SampleEmptyScreen';
 import SampleDataDisplayScreen from '../Screens/SampleDataDisplayScreen';
 import SampleLocalDataScreen from '../Screens/SampleLocalDataScreen';
 
-export const screenMaps = {
+export const screenMap = {
   home: SampleHomeScreen,
   textInputBtn: SampleTextInputBtnScreen,
   layouts: SampleLayoutsScreen,
