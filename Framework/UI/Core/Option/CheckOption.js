@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Checkbox } from 'react-native-paper';
 import { Text } from '../Text/Text';
-import { padSize, padSize2 } from '../../Index/Const';
+import { padSize, padSize2 } from '../../../Index/Const';
 import OptionComp from './OptionComp';
 
 /**

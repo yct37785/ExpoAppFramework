@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { View } from 'react-native';
-import { padSize, padSize2, padSize4 } from '../../Index/Const';
+import { padSize, padSize2, padSize4 } from '../../../Index/Const';
 import { Modal, Button, Card, useTheme } from 'react-native-paper';
 import { Text } from '../Text/Text';
 

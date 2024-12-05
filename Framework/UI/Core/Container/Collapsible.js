@@ -4,7 +4,7 @@ import { useTheme } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
-import { padSize05, padSize, padSize2, iconSizeSmall, iconSizeMedium } from '../../Index/Const';
+import { padSize05, padSize, padSize2, iconSizeSmall, iconSizeMedium } from '../../../Index/Const';
 import { Text } from '../Text/Text';
 
 /**
