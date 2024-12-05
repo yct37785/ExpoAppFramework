@@ -6,9 +6,9 @@ import { Searchbar, TextInput } from 'react-native-paper';
  * KeyInputField Component
  * 
  * @param {Object} props - Component props.
- * @param {string} props.type - 'text', 'numeric', 'passcode', 'search'.
- * @param {string} props.value - Current value of the input.
- * @param {string} - props.placeholder - Placeholder text for the input.
+ * @param {string} [props.type='text'] - 'text', 'numeric', 'passcode', 'search'.
+ * @param {string} [props.value=''] - Current value of the input.
+ * @param {string} -[props.placeholder=''] - Placeholder text for the input.
  * @param {Function} [props.onChange=({string})=>{}] - Callback function to receive changed input value.
  * @param {Function} [props.onFocus=()=>{}] - Callback function to handle focus event on the input.
  * @param {Function} [props.onBlur=()=>{}] - Callback function to handle blur event on the input.
@@ -16,9 +16,9 @@ import { Searchbar, TextInput } from 'react-native-paper';
  * @returns {JSX.Element} The TextInputComp component.
  */
 const TextInputComp = ({
-  type,
-  value,
-  placeholder,
+  type = 'text',
+  value = '',
+  placeholder = '',
   onChange=(s)=>{},
   onFocus=()=>{},
   onBlur=()=>{}

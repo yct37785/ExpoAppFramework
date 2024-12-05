@@ -13,6 +13,7 @@ import * as Const from '../../../Framework/Index/Const';
  */
 function SampleTextInputBtnScreen({ navigation, route }) {
   const { paramText } = route.params;
+  const [searchQuery, setSearchQuery] = useState('');
 
   return (
     <UI.BasicActivity navigation={navigation} route={route} title="Text, input and button Sample">
@@ -33,6 +34,15 @@ function SampleTextInputBtnScreen({ navigation, route }) {
         </UI.GridLayout>
 
         <UI.DividerComp />
+
+        {/* Input + highlight text */}
+        <UI.TextInput
+          type="search"
+          value={searchQuery}
+          onChange={setSearchQuery}
+          placeholder="search"
+        />
+        <UI.HighlightText text="hello world here" query={searchQuery} variant={'bodyMedium'} />
 
       </UI.VerticalLayout>
     </UI.BasicActivity>
