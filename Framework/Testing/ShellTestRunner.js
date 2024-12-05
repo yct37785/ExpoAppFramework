@@ -1,7 +1,7 @@
 // ShellTestRunner.js
 class ShellTestRunner {
   constructor() {
-    this.name = 'ShellTestRunner';
+    this.className = 'ShellClass';
   }
 
   /**
@@ -11,31 +11,33 @@ class ShellTestRunner {
   runTests() {
     const results = [];
 
-    // Example test:
-    try {
-      const exampleTestResult = this.exampleTest();
-      results.push(exampleTestResult);
-    } catch (error) {
-      results.push({ test: 'exampleTest', success: false, error: error.message });
-    }
+    results.push({ test: 'exampleTest', status: this.exampleTest() });
+    results.push({ test: 'exampleTest2', status: this.exampleTest2() });
 
     return results;
   }
 
   /**
    * Example test case.
-   * @returns {Object} Test result object.
+   * 
+   * @returns {Boolean} Test result status.
    */
   exampleTest() {
-    // Simulate a successful test.
-    const success = true;
+    let status = true;
 
-    if (success) {
-      return { test: 'exampleTest', success: true };
-    } else {
-      throw new Error('Example test failed');
-    }
+    return status;
   }
+
+    /**
+   * Example test case.
+   * 
+   * @returns {Boolean} Test result status.
+   */
+    exampleTest2() {
+      let status = false;
+  
+      return status;
+    }
 }
 
 export default ShellTestRunner;
