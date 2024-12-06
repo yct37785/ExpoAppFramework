@@ -4,7 +4,7 @@ import { View, LogBox, Platform, StatusBar } from 'react-native';
 // test
 import TestRunner from '../Testing/TestRunner';
 // UI
-import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, configureFonts } from 'react-native-paper';
+import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, Text } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
 // hooks
 import { LocalDataContext } from '../Hook/LocalDataHook';
@@ -41,6 +41,8 @@ const CombinedDarkTheme = {
     ...MD3DarkTheme.fonts,
   }
 };
+
+const TEST_MODE = true;
 
 LogBox.ignoreLogs(['new NativeEventEmitter']);
 
@@ -118,4 +120,19 @@ const RootComp = ({ screenMap, DEFAULT_SCREEN, LOCAL_DATA_SCHEMA }) => {
   );
 };
 
-export default memo(RootComp);
+/**
+ * The root component to ONLY launch tests.
+ */
+const TestRootComp = () => {
+
+  useEffect(() => {
+    const testRunner = new TestRunner();
+    testRunner.runAllTests();
+  }, []);
+
+  return <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <Text>TEST MODE</Text>
+  </View>;
+};
+
+export default TEST_MODE ? memo(TestRootComp) : memo(RootComp);
