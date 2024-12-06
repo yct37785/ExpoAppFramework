@@ -1,22 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /**
- * Helper that deletes all KV pairs in AsyncStorage.
- * 
- * @param {Array<string>} keys - The keys of the objects to delete.
- * 
- * @returns {Promise<void>} A promise that resolves when the objects are deleted.
- * @throws {Error} If an error occurs during deletion.
- */
-export async function deleteDataAS(keys) {
-  try {
-    await AsyncStorage.multiRemove(keys);
-  } catch (e) {
-    throw new Error(e);
-  }
-}
-
-/**
  * Deletes a KV pair from AsyncStorage.
  * 
  * @param {Array<string>} keys - The keys of the objects to delete.
@@ -80,6 +64,21 @@ export async function writeDataAS(keyValueList) {
     if (keyValueList.length > 0) {
       await AsyncStorage.multiSet(keyValueList);
     }
+  } catch (e) {
+    throw new Error(e);
+  }
+}
+
+/**
+ * Helper that deletes all KV pairs in AsyncStorage.
+ * 
+ * @returns {Promise<void>} A promise that resolves when all the objects are deleted.
+ * @throws {Error} If an error occurs during deletion.
+ */
+export async function deleteAllDataAS() {
+  try {
+    const all_keys = await getAllKeysAS();
+    await AsyncStorage.multiRemove(all_keys);
   } catch (e) {
     throw new Error(e);
   }
