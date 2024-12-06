@@ -41,6 +41,13 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
     },
   };
 
+  const {
+    setLocalDataValue,
+    getLocalDataValue,
+    resetLocalData,
+    getLocalDataStringify,
+  } = useLocalDataManager({ LOCAL_DATA_SCHEMA });
+
   useEffect(() => {
     runTests();
   }, []);
@@ -52,13 +59,6 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
     const results = [];
     await deleteAllDataAS();
     
-    const {
-      setLocalDataValue,
-      getLocalDataValue,
-      resetLocalData,
-      getLocalDataStringify,
-    } = useLocalDataManager({ LOCAL_DATA_SCHEMA });
-
     try {
       results.push({ test: "initialization", status: await testInitialization(getLocalDataValue) });
       results.push({ test: "set and retrieve", status: await testSetAndRetrieve(setLocalDataValue, getLocalDataValue) });
@@ -76,7 +76,6 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
    * Tests initialization and loading of default schema.
    */
   async function testInitialization(getLocalDataValue) {
-    const testName = 'Initialization Test';
     try {
       const theme = getLocalDataValue('userSettings.theme');
       const level = getLocalDataValue('gameData.level');
@@ -86,9 +85,10 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
           `Schema mismatch: theme "${theme}" (expected: "${LOCAL_DATA_SCHEMA.userSettings.theme}"), level "${level}" (expected: "${LOCAL_DATA_SCHEMA.gameData.level}")`
         );
       }
-      return { test: testName, status: true };
+      return true;
     } catch (e) {
-      return { test: testName, status: false, error: e.message };
+      console.error(`Error in testInitialization: ${e.message}`);
+      return false;
     }
   }
 
@@ -96,7 +96,6 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
    * Tests setting and retrieving data.
    */
   async function testSetAndRetrieve(setLocalDataValue, getLocalDataValue) {
-    const testName = 'Set and Retrieve Test';
     try {
       await setLocalDataValue([
         ['userSettings.theme', UPDATED_DATA.userSettings.theme],
@@ -111,9 +110,10 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
           `Data mismatch: theme "${theme}" (expected: "${UPDATED_DATA.userSettings.theme}"), score "${score}" (expected: "${UPDATED_DATA.gameData.score}")`
         );
       }
-      return { test: testName, status: true };
+      return true;
     } catch (e) {
-      return { test: testName, status: false, error: e.message };
+      console.error(`Error in testSetAndRetrieve: ${e.message}`);
+      return false;
     }
   }
 
@@ -121,7 +121,6 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
    * Tests updating nested data.
    */
   async function testUpdateData(setLocalDataValue, getLocalDataValue) {
-    const testName = 'Update Data Test';
     try {
       await setLocalDataValue([
         ['gameData.achievements', UPDATED_DATA.gameData.achievements],
@@ -141,9 +140,10 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
           )}" (expected: "${JSON.stringify(UPDATED_DATA.gameData.achievements)}"), language "${language}" (expected: "${ADDITIONAL_DATA.userSettings.language}")`
         );
       }
-      return { test: testName, status: true };
+      return true;
     } catch (e) {
-      return { test: testName, status: false, error: e.message };
+      console.error(`Error in testUpdateData: ${e.message}`);
+      return false;
     }
   }
 
@@ -151,7 +151,6 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
    * Tests resetting data to default schema.
    */
   async function testReset(resetLocalData, getLocalDataStringify) {
-    const testName = 'Reset Test';
     try {
       await resetLocalData();
       const dataString = getLocalDataStringify();
@@ -163,9 +162,10 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
           )}", got "${dataString}"`
         );
       }
-      return { test: testName, status: true };
+      return true;
     } catch (e) {
-      return { test: testName, status: false, error: e.message };
+      console.error(`Error in testReset: ${e.message}`);
+      return false;
     }
   }
 
