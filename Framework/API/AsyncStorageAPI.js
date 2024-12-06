@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /**
- * Deletes an object from AsyncStorage.
+ * Helper that deletes all KV pairs in AsyncStorage.
  * 
  * @param {Array<string>} keys - The keys of the objects to delete.
  * 
@@ -17,9 +17,25 @@ export async function deleteDataAS(keys) {
 }
 
 /**
- * Reads data from AsyncStorage.
+ * Deletes a KV pair from AsyncStorage.
  * 
- * @param {Array<string>} keyList - The keys of the data to read.
+ * @param {Array<string>} keys - The keys of the objects to delete.
+ * 
+ * @returns {Promise<void>} A promise that resolves when the objects are deleted.
+ * @throws {Error} If an error occurs during deletion.
+ */
+export async function deleteDataAS(keys) {
+  try {
+    await AsyncStorage.multiRemove(keys);
+  } catch (e) {
+    throw new Error(e);
+  }
+}
+
+/**
+ * Reads a list of KV pairs from AsyncStorage.
+ * 
+ * @param {Array<string>} keyList - The keys of the KV pairs to read.
  * 
  * @returns {Promise<Object>} A promise that resolves to an object containing the key-value pairs.
  * @throws {Error} If an error occurs during reading.
@@ -38,7 +54,7 @@ export async function readDataAS(keyList) {
 }
 
 /**
- * Reads all keys from AsyncStorage.
+ * Retrieves all KV pairs from AsyncStorage.
  * 
  * @returns {Promise<Array<string>>} A promise that resolves to an array of all keys.
  * @throws {Error} If an error occurs during reading.
@@ -52,7 +68,7 @@ export async function getAllKeysAS() {
 }
 
 /**
- * Writes data to AsyncStorage.
+ * Writes KV pair to AsyncStorage.
  * 
  * @param {Array<Array<string>>} keyValueList - An array of key-value pairs to write.
  * 
