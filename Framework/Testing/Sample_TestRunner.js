@@ -19,8 +19,8 @@ const Sample_TestRunner = ({logClassTestResult}) => {
   async function runTests() {
     const results = [];
 
-    results.push({ test: 'exampleTest', status: await exampleTest() });
-    results.push({ test: 'exampleTest2', status: await exampleTest2() });
+    results.push({ test: 'example 1', status: await exampleTest() });
+    results.push({ test: 'example 2', status: await exampleTest2() });
 
     logClassTestResult(className, results);
   }

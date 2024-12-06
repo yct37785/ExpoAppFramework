@@ -54,27 +54,27 @@ const AsyncStorageAPI_TestRunner = ({logClassTestResult}) => {
     await deleteAllDataAS();
 
     results.push({
-      test: 'createDataTest',
+      test: 'create',
       status: await createDataTest(),
     });
 
     results.push({
-      test: 'readDataTest',
+      test: 'read',
       status: await readDataTest(),
     });
 
     results.push({
-      test: 'updateDataTest',
+      test: 'update',
       status: await updateDataTest(),
     });
 
     results.push({
-      test: 'deleteDataTest',
+      test: 'delete',
       status: await deleteDataTest(Object.keys(this.UPDATED_SCHEMA)),
     });
 
     results.push({
-      test: 'readAllKeysTest',
+      test: 'read all',
       status: await readAllKeysTest([]),
     });
     
