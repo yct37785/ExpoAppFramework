@@ -5,6 +5,7 @@ import { View } from 'react-native';
 import { Provider as PaperProvider, Text } from 'react-native-paper';
 // test runners
  import Sample_TestRunner from './Sample_TestRunner';
+ import AsyncStorageAPI_TestRunner from './AsyncStorageAPI_TestRunner';
 
 /**
  * Minimalist RootComp to run tests with an actual React Native DOM.
@@ -35,6 +36,7 @@ const TestRootComp = () => {
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>TEST MODE</Text>
       <Sample_TestRunner logClassTestResult={logClassTestResult} />
+      <AsyncStorageAPI_TestRunner logClassTestResult={logClassTestResult} />
     </View>
   );
 };

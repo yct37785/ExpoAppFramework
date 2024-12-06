@@ -1,3 +1,4 @@
+import React, { Node, useCallback, memo, useEffect, useState } from 'react';
 import {
   writeDataAS,
   readDataAS,
@@ -7,12 +8,13 @@ import {
 } from '../API/AsyncStorageAPI';
 
 /**
- * Test AsyncStorage API
+ * AsyncStorageAPI class test
+ * 
+ * @param {Object} props - Component props.
+ * @param {Function} props.logClassTestResult - Logs test results given a list of results.
  */
-class AsyncStorageAPI_TestRunner {
-  constructor() {
-    this.className = 'AsyncStorageAPI';
-  }
+const AsyncStorageAPI_TestRunner = ({logClassTestResult}) => {
+  const className = "AsyncStorageAPI";
 
   TEST_SCHEMA = {
     key1: {
@@ -38,12 +40,14 @@ class AsyncStorageAPI_TestRunner {
     },
   };
 
+  useEffect(() => {
+    runTests();
+  }, []);
+
   /**
    * Runs all tests for this module synchronously.
-   * 
-   * @returns {Promise<Array>} A promise that resolves to an array of test results.
    */
-  async runTests() {
+  async function runTests() {
     const results = [];
 
     // delete all data before test
@@ -51,33 +55,33 @@ class AsyncStorageAPI_TestRunner {
 
     results.push({
       test: 'createDataTest',
-      status: await this.createDataTest(),
+      status: await createDataTest(),
     });
 
     results.push({
       test: 'readDataTest',
-      status: await this.readDataTest(),
+      status: await readDataTest(),
     });
 
     results.push({
       test: 'updateDataTest',
-      status: await this.updateDataTest(),
+      status: await updateDataTest(),
     });
 
     results.push({
       test: 'deleteDataTest',
-      status: await this.deleteDataTest(Object.keys(this.UPDATED_SCHEMA)),
+      status: await deleteDataTest(Object.keys(this.UPDATED_SCHEMA)),
     });
 
     results.push({
       test: 'readAllKeysTest',
-      status: await this.readAllKeysTest([]),
+      status: await readAllKeysTest([]),
     });
     
     // delete all data after test
     await deleteAllDataAS();
-
-    return results;
+    
+    logClassTestResult(className, results);
   }
 
   /**
@@ -85,7 +89,7 @@ class AsyncStorageAPI_TestRunner {
    * 
    * @returns {Promise<boolean>} A promise that resolves to the test result status.
    */
-  async createDataTest() {
+  async function createDataTest() {
     let status = true;
     const keyValueList = Object.entries(this.TEST_SCHEMA).map(([key, value]) => [
       key,
@@ -107,7 +111,7 @@ class AsyncStorageAPI_TestRunner {
    * 
    * @returns {Promise<boolean>} A promise that resolves to the test result status.
    */
-  async readDataTest() {
+  async function readDataTest() {
     let status = true;
     try {
       const keys = Object.keys(this.TEST_SCHEMA);
@@ -135,7 +139,7 @@ class AsyncStorageAPI_TestRunner {
    * 
    * @returns {Promise<boolean>} A promise that resolves to the test result status.
    */
-  async updateDataTest() {
+  async function updateDataTest() {
     let status = true;
     const keyValueList = Object.entries(this.UPDATED_SCHEMA).map(([key, value]) => [
       key,
@@ -171,7 +175,7 @@ class AsyncStorageAPI_TestRunner {
    * 
    * @returns {Promise<boolean>} A promise that resolves to the test result status.
    */
-  async deleteDataTest(deleteKeyList) {
+  async function deleteDataTest(deleteKeyList) {
     let status = true;
 
     try {
@@ -198,7 +202,7 @@ class AsyncStorageAPI_TestRunner {
    * 
    * @returns {Promise<boolean>} A promise that resolves to the test result status.
    */
-  async readAllKeysTest(compareKeyList) {
+  async function readAllKeysTest(compareKeyList) {
     let status = true;
 
     try {
@@ -210,6 +214,8 @@ class AsyncStorageAPI_TestRunner {
     }
     return status;
   }
+
+  return null;
 }
 
-export default AsyncStorageAPI_TestRunner;
+export default memo(AsyncStorageAPI_TestRunner);
