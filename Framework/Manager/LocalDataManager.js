@@ -98,15 +98,18 @@ const useLocalDataManager = ({ LOCAL_DATA_SCHEMA }) => {
   useEffect(() => {
     const fetchData = async () => {
       const storedData = await getLocalUserData(schema);
-      if (storedData) {
-        setData(storedData);
-      } else {
-        setData(await createNewUserData(schema));
-      }
+      const newData = storedData || await createNewUserData(schema);
+  
+      await new Promise((resolve) => {
+        setData(newData);
+        setImmediate(() => resolve());
+      });
+  
       setIsLocalDataLoaded(true);
     };
+  
     fetchData();
-  }, [schema]);
+  }, [schema]);  
 
   /**
    * Set key-value pairs in the data.
@@ -117,25 +120,30 @@ const useLocalDataManager = ({ LOCAL_DATA_SCHEMA }) => {
   const setLocalDataValue = async (kvPairs) => {
     let updatedData = { ...data };
     const rootKeysToUpdate = new Set();
-
+  
     kvPairs.forEach(([path, value]) => {
       const keys = path.split('.');
       let currentLevel = updatedData;
-
+  
       keys.slice(0, -1).forEach((key) => {
         if (!currentLevel[key]) {
           currentLevel[key] = {};
         }
         currentLevel = currentLevel[key];
       });
-
+  
       currentLevel[keys[keys.length - 1]] = value;
       rootKeysToUpdate.add(keys[0]);
     });
-
-    setData(updatedData);
-    setUpdateCount((prev) => prev + 1);
-
+  
+    await new Promise((resolve) => {
+      setData(updatedData);
+      setUpdateCount((prev) => prev + 1);
+  
+      // Wait for the state update
+      setImmediate(() => resolve());
+    });
+  
     const toUpdate = Array.from(rootKeysToUpdate).map((rootKey) => [
       rootKey,
       JSON.stringify(updatedData[rootKey]),
@@ -167,9 +175,16 @@ const useLocalDataManager = ({ LOCAL_DATA_SCHEMA }) => {
     if (allKeys.length > 0) {
       await deleteDataAS(allKeys);
     }
+  
     const newData = await createNewUserData(schema);
-    setData(newData);
-    setUpdateCount((prev) => prev + 1);
+  
+    await new Promise((resolve) => {
+      setData(newData);
+      setUpdateCount((prev) => prev + 1);
+  
+      // Wait for the state update
+      setImmediate(() => resolve());
+    });
   };
 
   /**
