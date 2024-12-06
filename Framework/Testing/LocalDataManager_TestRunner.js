@@ -50,7 +50,6 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
   } = useLocalDataManager({ LOCAL_DATA_SCHEMA });
 
   useEffect(() => {
-    console.log("isLocalDataLoaded: " + isLocalDataLoaded);
     if (isLocalDataLoaded) {
       runTests();
     }
@@ -63,10 +62,10 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
     const results = [];
     await deleteAllDataAS();
     try {
-      results.push({ test: "initialization", status: await testInitialization(getLocalDataValue) });
-      results.push({ test: "set and retrieve", status: await testSetAndRetrieve(setLocalDataValue, getLocalDataValue) });
-      results.push({ test: "update data", status: await testUpdateData(setLocalDataValue, getLocalDataValue) });
-      results.push({ test: "reset", status: await testReset(resetLocalData, getLocalDataStringify) });
+      results.push({ test: "initialization", status: await testInitialization() });
+      results.push({ test: "set and retrieve", status: await testSetAndRetrieve() });
+      results.push({ test: "update data", status: await testUpdateData() });
+      results.push({ test: "reset", status: await testReset() });
     } catch (error) {
       console.error(`Error during test execution: ${error.message}`);
     }
@@ -78,7 +77,7 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
   /**
    * Tests initialization and loading of default schema.
    */
-  async function testInitialization(getLocalDataValue) {
+  async function testInitialization() {
     try {
       const theme = getLocalDataValue('userSettings.theme');
       const level = getLocalDataValue('gameData.level');
@@ -98,7 +97,7 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
   /**
    * Tests setting and retrieving data.
    */
-  async function testSetAndRetrieve(setLocalDataValue, getLocalDataValue) {
+  async function testSetAndRetrieve() {
     try {
       await setLocalDataValue([
         ['userSettings.theme', UPDATED_DATA.userSettings.theme],
@@ -123,7 +122,7 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
   /**
    * Tests updating nested data.
    */
-  async function testUpdateData(setLocalDataValue, getLocalDataValue) {
+  async function testUpdateData() {
     try {
       await setLocalDataValue([
         ['gameData.achievements', UPDATED_DATA.gameData.achievements],
@@ -153,7 +152,7 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
   /**
    * Tests resetting data to default schema.
    */
-  async function testReset(resetLocalData, getLocalDataStringify) {
+  async function testReset() {
     try {
       await resetLocalData();
       const dataString = getLocalDataStringify();
