@@ -4,9 +4,9 @@ import React, { Node, useCallback, memo, useEffect, useState } from 'react';
  * Run unit/integration tests for a single class with an actual React Native DOM.
  * 
  * @param {Object} props - Component props.
- * @param {Function} props.logClassTestResult - Logs test results given a list of results.
+ * @param {Function} props.onTestEnd - Called at the end of the test.
  */
-const Sample_TestRunner = ({logClassTestResult}) => {
+const Sample_TestRunner = ({ onTestEnd }) => {
   const className = "Sample";
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const Sample_TestRunner = ({logClassTestResult}) => {
     results.push({ test: 'example 1', status: await exampleTest() });
     results.push({ test: 'example 2', status: await exampleTest2() });
 
-    logClassTestResult(className, results);
+    onTestEnd(className, results);
   }
 
   /**

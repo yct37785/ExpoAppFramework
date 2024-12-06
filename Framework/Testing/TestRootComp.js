@@ -22,12 +22,12 @@ const TestRootComp = () => {
   }, []);
 
   /**
-   * Logs test results array from React child.
+   * Logs test results array from React child after end of the tests. Must be called last in test runner function.
    *
    * @param {String} className - Name of the class being tested (not the TestRunner classname).
    * @param {Array<Object>} results - An array of results = { test: str, status: bool } from each test function.
    */
-  const logClassTestResult = (className, results) => {
+  const onTestEnd = (className, results) => {
     console.log();
     console.log(`Class ${className}:`);
     results.forEach(({ test, status }) => {
@@ -45,7 +45,7 @@ const TestRootComp = () => {
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>TEST MODE</Text>
       {currentRunner < testRunners.length && (
-        <CurrentTestRunner logClassTestResult={logClassTestResult} />
+        <CurrentTestRunner onTestEnd={onTestEnd} />
       )}
       {currentRunner >= testRunners.length && <Text>All tests completed!</Text>}
     </View>

@@ -11,9 +11,9 @@ import {
  * AsyncStorageAPI class test
  * 
  * @param {Object} props - Component props.
- * @param {Function} props.logClassTestResult - Logs test results given a list of results.
+ * @param {Function} props.onTestEnd - Called at the end of the test.
  */
-const AsyncStorageAPI_TestRunner = ({logClassTestResult}) => {
+const AsyncStorageAPI_TestRunner = ({ onTestEnd }) => {
   const className = "AsyncStorageAPI";
 
   TEST_SCHEMA = {
@@ -81,7 +81,7 @@ const AsyncStorageAPI_TestRunner = ({logClassTestResult}) => {
     // delete all data after test
     await deleteAllDataAS();
     
-    logClassTestResult(className, results);
+    onTestEnd(className, results);
   }
 
   /**

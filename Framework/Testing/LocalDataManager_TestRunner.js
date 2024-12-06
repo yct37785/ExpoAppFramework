@@ -6,9 +6,9 @@ import { deleteAllDataAS } from '../API/AsyncStorageAPI';
  * LocalDataManager Test Runner
  *
  * @param {Object} props - Component props.
- * @param {Function} props.logClassTestResult - Logs test results given a list of results.
+ * @param {Function} props.onTestEnd - Called at the end of the test.
  */
-const LocalDataManager_TestRunner = ({ logClassTestResult }) => {
+const LocalDataManager_TestRunner = ({ onTestEnd }) => {
   const className = 'LocalDataManager';
 
   const LOCAL_DATA_SCHEMA = {
@@ -69,7 +69,7 @@ const LocalDataManager_TestRunner = ({ logClassTestResult }) => {
     }
 
     await deleteAllDataAS();
-    logClassTestResult(className, results);
+    onTestEnd(className, results);
   }
 
   /**
