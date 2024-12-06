@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { deleteDataAS, getAllKeysAS, readDataAS, writeDataAS } from '../API/AsyncStorageAPI';
 import { objToKeyValueArr } from '../Utility/GeneralUtility';
 const _ = require('lodash');
@@ -81,46 +81,48 @@ async function getLocalUserData(LOCAL_DATA_SCHEMA) {
 }
 
 /**
- * custom hook for managing immutable local data instance and loading/saving to local storage
- * data instance can only be modified via functions
- * 
+ * Custom hook for managing immutable local data instance and loading/saving to local storage.
+ * The data instance can only be modified via functions.
+ *
  * @param {Object} LOCAL_DATA_SCHEMA - The schema for new user data.
  */
 const useLocalDataManager = ({ LOCAL_DATA_SCHEMA }) => {
-  const [data, setData] = useState({}); // will not be exposed to consumers
+  const schema = useMemo(() => _.cloneDeep(LOCAL_DATA_SCHEMA), []); // immutable schema
+  const [data, setData] = useState({}); // Local data instance
   const [isLocalDataLoaded, setIsLocalDataLoaded] = useState(false);
   const [updateCount, setUpdateCount] = useState(0);
 
   /**
-   * on init will fetch from local storage
+   * On initialization, fetch data from local storage.
    */
   useEffect(() => {
     const fetchData = async () => {
-      const storedData = await getLocalUserData(LOCAL_DATA_SCHEMA);
+      const storedData = await getLocalUserData(schema);
       if (storedData) {
         setData(storedData);
-        setIsLocalDataLoaded(true);
+      } else {
+        setData(await createNewUserData(schema));
       }
+      setIsLocalDataLoaded(true);
     };
     fetchData();
-  }, []);
+  }, [schema]);
 
   /**
-   * set key value pair
-   * kvPairs: [[keypath, value],... ]
+   * Set key-value pairs in the data.
+   * kvPairs: [[keypath, value], ... ]
    * - key: "level1.level2.level3"
    * - value: any data type
    */
   const setLocalDataValue = async (kvPairs) => {
     let updatedData = { ...data };
-
     const rootKeysToUpdate = new Set();
 
     kvPairs.forEach(([path, value]) => {
       const keys = path.split('.');
       let currentLevel = updatedData;
 
-      keys.slice(0, -1).forEach(key => {
+      keys.slice(0, -1).forEach((key) => {
         if (!currentLevel[key]) {
           currentLevel[key] = {};
         }
@@ -128,22 +130,21 @@ const useLocalDataManager = ({ LOCAL_DATA_SCHEMA }) => {
       });
 
       currentLevel[keys[keys.length - 1]] = value;
-
       rootKeysToUpdate.add(keys[0]);
     });
 
     setData(updatedData);
-    setUpdateCount(updateCount + 1);
+    setUpdateCount((prev) => prev + 1);
 
-    const toUpdate = [];
-    for (let rootKey of rootKeysToUpdate) {
-      toUpdate.push([rootKey, JSON.stringify(updatedData[rootKey])]);
-    }
+    const toUpdate = Array.from(rootKeysToUpdate).map((rootKey) => [
+      rootKey,
+      JSON.stringify(updatedData[rootKey]),
+    ]);
     await writeDataAS(toUpdate);
   };
 
   /**
-   * get value from key
+   * Get value from key path.
    * - key: "level1.level2.level3"
    */
   const getLocalDataValue = (keyString) => {
@@ -151,7 +152,7 @@ const useLocalDataManager = ({ LOCAL_DATA_SCHEMA }) => {
     let currentLevel = data;
 
     for (const key of keys) {
-      if (currentLevel[key] === undefined) return undefined; 
+      if (currentLevel[key] === undefined) return undefined;
       currentLevel = currentLevel[key];
     }
 
@@ -159,26 +160,30 @@ const useLocalDataManager = ({ LOCAL_DATA_SCHEMA }) => {
   };
 
   /**
-   * reset data based on schema
+   * Reset data to the initial schema.
    */
   const resetLocalData = async () => {
-    let allKeys = await getAllKeysAS();
+    const allKeys = await getAllKeysAS();
     if (allKeys.length > 0) {
       await deleteDataAS(allKeys);
     }
-    setData(await createNewUserData(LOCAL_DATA_SCHEMA));
-    setUpdateCount(updateCount + 1);
+    const newData = await createNewUserData(schema);
+    setData(newData);
+    setUpdateCount((prev) => prev + 1);
   };
 
   /**
-   * get data in JSON string format
+   * Get data as a formatted JSON string.
    */
-  const getLocalDataStringify = () => {
-    return JSON.stringify(data, null, 2);
-  };
+  const getLocalDataStringify = () => JSON.stringify(data, null, 2);
 
   return {
-    updateCount, isLocalDataLoaded, setLocalDataValue, getLocalDataValue, resetLocalData, getLocalDataStringify
+    updateCount,
+    isLocalDataLoaded,
+    setLocalDataValue,
+    getLocalDataValue,
+    resetLocalData,
+    getLocalDataStringify,
   };
 };
 
