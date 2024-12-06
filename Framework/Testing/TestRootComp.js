@@ -4,7 +4,7 @@ import { View } from 'react-native';
 // UI
 import { Provider as PaperProvider, Text } from 'react-native-paper';
 // test runners
- import ShellTestRunner from './ShellTestRunner';
+ import Sample_TestRunner from './Sample_TestRunner';
 
 /**
  * Minimalist RootComp to run tests with an actual React Native DOM.
@@ -34,7 +34,7 @@ const TestRootComp = () => {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>TEST MODE</Text>
-      <ShellTestRunner logClassTestResult={logClassTestResult} />
+      <Sample_TestRunner logClassTestResult={logClassTestResult} />
     </View>
   );
 };

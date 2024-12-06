@@ -1,5 +1,4 @@
 import React, { Node, useCallback, memo, useEffect, useState } from 'react';
-import { View, LogBox, Platform, StatusBar } from 'react-native';
 
 /**
  * Run unit/integration tests for a single class with an actual React Native DOM.
@@ -7,7 +6,7 @@ import { View, LogBox, Platform, StatusBar } from 'react-native';
  * @param {Object} props - Component props.
  * @param {Function} props.logClassTestResult - Logs test results given a list of results.
  */
-const ShellTestRunnerComp = ({logClassTestResult}) => {
+const Sample_TestRunner = ({logClassTestResult}) => {
   const className = "Sample";
 
   useEffect(() => {
@@ -51,4 +50,4 @@ const ShellTestRunnerComp = ({logClassTestResult}) => {
   return null;
 }
 
-export default memo(ShellTestRunnerComp);
+export default memo(Sample_TestRunner);
