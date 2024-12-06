@@ -1,5 +1,6 @@
 import React, { memo, useEffect } from 'react';
 import useLocalDataManager from '../Manager/LocalDataManager';
+import { deleteAllDataAS } from '../API/AsyncStorageAPI';
 
 /**
  * LocalDataManager Test Runner
@@ -49,6 +50,8 @@ const LocalDataManager_TestRunner = ({ logClassTestResult }) => {
    */
   async function runTests() {
     const results = [];
+    await deleteAllDataAS();
+    
     const {
       setLocalDataValue,
       getLocalDataValue,
@@ -57,14 +60,15 @@ const LocalDataManager_TestRunner = ({ logClassTestResult }) => {
     } = useLocalDataManager({ LOCAL_DATA_SCHEMA });
 
     try {
-      results.push("initialization", await testInitialization(getLocalDataValue));
-      results.push("set and retrieve", await testSetAndRetrieve(setLocalDataValue, getLocalDataValue));
-      results.push("update data", await testUpdateData(setLocalDataValue, getLocalDataValue));
-      results.push("reset", await testReset(resetLocalData, getLocalDataStringify));
+      results.push({ test: "initialization", status: await testInitialization(getLocalDataValue) });
+      results.push({ test: "set and retrieve", status: await testSetAndRetrieve(setLocalDataValue, getLocalDataValue) });
+      results.push({ test: "update data", status: await testUpdateData(setLocalDataValue, getLocalDataValue) });
+      results.push({ test: "reset", status: await testReset(resetLocalData, getLocalDataStringify) });
     } catch (error) {
       console.error(`Error during test execution: ${error.message}`);
     }
 
+    await deleteAllDataAS();
     logClassTestResult(className, results);
   }
 
