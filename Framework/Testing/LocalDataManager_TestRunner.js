@@ -42,6 +42,7 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
   };
 
   const {
+    isLocalDataLoaded,
     setLocalDataValue,
     getLocalDataValue,
     resetLocalData,
@@ -49,8 +50,11 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
   } = useLocalDataManager({ LOCAL_DATA_SCHEMA });
 
   useEffect(() => {
-    runTests();
-  }, []);
+    console.log("isLocalDataLoaded: " + isLocalDataLoaded);
+    if (isLocalDataLoaded) {
+      runTests();
+    }
+  }, [isLocalDataLoaded]);
 
   /**
    * Runs all tests for this module synchronously.
@@ -58,7 +62,6 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
   async function runTests() {
     const results = [];
     await deleteAllDataAS();
-    
     try {
       results.push({ test: "initialization", status: await testInitialization(getLocalDataValue) });
       results.push({ test: "set and retrieve", status: await testSetAndRetrieve(setLocalDataValue, getLocalDataValue) });
