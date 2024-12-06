@@ -2,7 +2,7 @@
 import React, { Node, useCallback, memo, useEffect, useState } from 'react';
 import { View, LogBox, Platform, StatusBar } from 'react-native';
 // test
-import TestRunner from '../Testing/TestRunner';
+import TestRootComp from '../Testing/TestRootComp';
 // UI
 import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, Text } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
@@ -78,11 +78,6 @@ const RootComp = ({ screenMap, DEFAULT_SCREEN, LOCAL_DATA_SCHEMA }) => {
   const [theme, setTheme] = useState(CombinedDarkTheme);
 
   useEffect(() => {
-    const testRunner = new TestRunner();
-    testRunner.runAllTests();
-  }, []);
-
-  useEffect(() => {
     const isDarkMode = localDataManager.getLocalDataValue("settings_sample.isDarkMode");
     if (localDataManager.isLocalDataLoaded && (isDarkMode !== (theme === CombinedDarkTheme))) {
       const newTheme = isDarkMode ? CombinedDarkTheme : CombinedDefaultTheme;
@@ -118,21 +113,6 @@ const RootComp = ({ screenMap, DEFAULT_SCREEN, LOCAL_DATA_SCHEMA }) => {
       </PaperProvider>
     </LocalDataContext.Provider>
   );
-};
-
-/**
- * The root component to ONLY launch tests.
- */
-const TestRootComp = () => {
-
-  useEffect(() => {
-    const testRunner = new TestRunner();
-    testRunner.runAllTests();
-  }, []);
-
-  return <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-    <Text>TEST MODE</Text>
-  </View>;
 };
 
 export default TEST_MODE ? memo(TestRootComp) : memo(RootComp);
