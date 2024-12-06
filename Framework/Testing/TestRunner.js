@@ -1,4 +1,5 @@
 import AsyncStorageAPI_TestRunner from './AsyncStorageAPI_TestRunner';
+import LocalDataManager_TestRunner from './LocalDataManager_TestRunner';
 
 /**
  * Main Test Runner class for running all test suites synchronously.
@@ -7,6 +8,7 @@ class TestRunner {
   constructor() {
     this.testRunners = [
       new AsyncStorageAPI_TestRunner(),
+      new LocalDataManager_TestRunner(),
       // Add other test runner instances here.
     ];
   }
