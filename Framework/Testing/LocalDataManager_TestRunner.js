@@ -1,172 +1,141 @@
-import React, { memo, useEffect } from 'react';
-import useLocalDataManager from '../Manager/LocalDataManager';
-import { deleteAllDataAS } from '../API/AsyncStorageAPI';
+import React, { useEffect, useState, memo } from 'react';
+import { useLocalDataManager } from '../Hook/LocalDataHook';
 
 /**
- * LocalDataManager Test Runner
- *
+ * Test runner for LocalDataManager.
+ * 
  * @param {Object} props - Component props.
- * @param {Function} props.onTestEnd - Called at the end of the test.
+ * @param {Function} props.onTestEnd - Callback when tests finish.
  */
 const LocalDataManager_TestRunner = ({ onTestEnd }) => {
   const className = 'LocalDataManager';
 
-  const LOCAL_DATA_SCHEMA = {
-    userSettings: {
-      theme: 'light',
-      notifications: true,
-    },
-    gameData: {
-      level: 1,
-      score: 0,
-      achievements: [],
-    },
-  };
-
-  const UPDATED_DATA = {
-    userSettings: {
-      theme: 'dark',
-      notifications: false,
-    },
-    gameData: {
-      level: 5,
-      score: 1000,
-      achievements: ['first_win'],
-    },
-  };
-
-  const ADDITIONAL_DATA = {
-    userSettings: {
-      language: 'en',
-    },
+  // Test data schema
+  const LOCAL_DATA_DEFAULT_KEY_VALUES = {
+    key1: 'value1',
+    key2: 123,
+    key3: { nested: true },
   };
 
   const {
-    isLocalDataLoaded,
-    setLocalDataValue,
-    getLocalDataValue,
-    resetLocalData,
-    getLocalDataStringify,
-  } = useLocalDataManager({ LOCAL_DATA_SCHEMA });
+    isDataReady,
+    writeLocalData,
+    readLocalData,
+    readAllLocalData,
+    deleteLocalData,
+    deleteAllLocalData,
+    retrieveDanglingKeys,
+    onLocalDataUpdated,
+  } = useLocalDataManager({ LOCAL_DATA_DEFAULT_KEY_VALUES });
+
+  const [updateTriggered, setUpdateTriggered] = useState(false);
+
+  // Register update listener
+  useEffect(() => {
+    onLocalDataUpdated(() => setUpdateTriggered(true));
+  }, []);
 
   useEffect(() => {
-    if (isLocalDataLoaded) {
-      runTests();
-    }
-  }, [isLocalDataLoaded]);
+    if (isDataReady) runTests();
+  }, [isDataReady]);
 
   /**
-   * Runs all tests for this module synchronously.
+   * Runs all tests in sequence.
    */
   async function runTests() {
     const results = [];
-    await deleteAllDataAS();
-    try {
-      results.push({ test: "initialization", status: await testInitialization() });
-      results.push({ test: "set and retrieve", status: await testSetAndRetrieve() });
-      results.push({ test: "update data", status: await testUpdateData() });
-      results.push({ test: "reset", status: await testReset() });
-    } catch (error) {
-      console.error(`Error during test execution: ${error.message}`);
-    }
 
-    await deleteAllDataAS();
+    results.push({ test: 'Initialize Local Data', status: await testInitialization() });
+    results.push({ test: 'Write and Read Data', status: await testWriteReadData() });
+    results.push({ test: 'Read All Local Data', status: await testReadAllData() });
+    results.push({ test: 'Delete Data', status: await testDeleteData() });
+    results.push({ test: 'Delete All Data', status: await testDeleteAllData() });
+    results.push({ test: 'Retrieve Dangling Keys', status: await testDanglingKeys() });
+    results.push({ test: 'Update Trigger', status: await testUpdateTrigger() });
+
+    // cleanup
+    await deleteAllLocalData();
+
     onTestEnd(className, results);
   }
 
-  /**
-   * Tests initialization and loading of default schema.
-   */
+  // Test Cases
+
   async function testInitialization() {
     try {
-      const theme = getLocalDataValue('userSettings.theme');
-      const level = getLocalDataValue('gameData.level');
-
-      if (theme !== LOCAL_DATA_SCHEMA.userSettings.theme || level !== LOCAL_DATA_SCHEMA.gameData.level) {
-        throw new Error(
-          `Schema mismatch: theme "${theme}" (expected: "${LOCAL_DATA_SCHEMA.userSettings.theme}"), level "${level}" (expected: "${LOCAL_DATA_SCHEMA.gameData.level}")`
-        );
-      }
-      return true;
-    } catch (e) {
-      console.error(`Error in testInitialization: ${e.message}`);
+      const allData = await readAllLocalData();
+      return (
+        allData.key1 === 'value1' &&
+        allData.key2 === 123 &&
+        JSON.stringify(allData.key3) === JSON.stringify({ nested: true })
+      );
+    } catch {
       return false;
     }
   }
 
-  /**
-   * Tests setting and retrieving data.
-   */
-  async function testSetAndRetrieve() {
+  async function testWriteReadData() {
     try {
-      await setLocalDataValue([
-        ['userSettings.theme', UPDATED_DATA.userSettings.theme],
-        ['gameData.score', UPDATED_DATA.gameData.score],
-      ]);
-
-      const theme = getLocalDataValue('userSettings.theme');
-      const score = getLocalDataValue('gameData.score');
-
-      if (theme !== UPDATED_DATA.userSettings.theme || score !== UPDATED_DATA.gameData.score) {
-        throw new Error(
-          `Data mismatch: theme "${theme}" (expected: "${UPDATED_DATA.userSettings.theme}"), score "${score}" (expected: "${UPDATED_DATA.gameData.score}")`
-        );
-      }
-      return true;
-    } catch (e) {
-      console.error(`Error in testSetAndRetrieve: ${e.message}`);
+      await writeLocalData('key1', 'newValue');
+      const value = await readLocalData('key1');
+      return value === 'newValue';
+    } catch {
       return false;
     }
   }
 
-  /**
-   * Tests updating nested data.
-   */
-  async function testUpdateData() {
+  async function testReadAllData() {
     try {
-      await setLocalDataValue([
-        ['gameData.achievements', UPDATED_DATA.gameData.achievements],
-        ['userSettings.language', ADDITIONAL_DATA.userSettings.language],
-      ]);
-
-      const achievements = getLocalDataValue('gameData.achievements');
-      const language = getLocalDataValue('userSettings.language');
-
-      if (
-        JSON.stringify(achievements) !== JSON.stringify(UPDATED_DATA.gameData.achievements) ||
-        language !== ADDITIONAL_DATA.userSettings.language
-      ) {
-        throw new Error(
-          `Data mismatch: achievements "${JSON.stringify(
-            achievements
-          )}" (expected: "${JSON.stringify(UPDATED_DATA.gameData.achievements)}"), language "${language}" (expected: "${ADDITIONAL_DATA.userSettings.language}")`
-        );
-      }
-      return true;
-    } catch (e) {
-      console.error(`Error in testUpdateData: ${e.message}`);
+      const allData = await readAllLocalData();
+      return (
+        allData.key1 === 'newValue' &&
+        allData.key2 === 123 &&
+        JSON.stringify(allData.key3) === JSON.stringify({ nested: true })
+      );
+    } catch {
       return false;
     }
   }
 
-  /**
-   * Tests resetting data to default schema.
-   */
-  async function testReset() {
+  async function testDeleteData() {
     try {
-      await resetLocalData();
-      const dataString = getLocalDataStringify();
+      await deleteLocalData('key1');
+      const value = await readLocalData('key1');
+      return value === null;
+    } catch {
+      return false;
+    }
+  }
 
-      if (JSON.stringify(JSON.parse(dataString)) !== JSON.stringify(LOCAL_DATA_SCHEMA)) {
-        throw new Error(
-          `Reset mismatch: expected "${JSON.stringify(
-            LOCAL_DATA_SCHEMA
-          )}", got "${dataString}"`
-        );
-      }
-      return true;
-    } catch (e) {
-      console.error(`Error in testReset: ${e.message}`);
+  async function testDeleteAllData() {
+    try {
+      await deleteAllLocalData();
+      const allData = await readAllLocalData();
+      return Object.keys(allData).length === 0;
+    } catch {
+      return false;
+    }
+  }
+
+  async function testDanglingKeys() {
+    try {
+      await writeLocalData('unusedKey', 'dangling', true);
+      const danglingKeys = await retrieveDanglingKeys();
+      return (
+        danglingKeys.unusedKey === 'dangling' &&
+        !LOCAL_DATA_DEFAULT_KEY_VALUES.hasOwnProperty('unusedKey')
+      );
+    } catch {
+      return false;
+    }
+  }
+
+  async function testUpdateTrigger() {
+    try {
+      setUpdateTriggered(false);
+      await writeLocalData('key2', 456);
+      return updateTriggered === true;
+    } catch {
       return false;
     }
   }
