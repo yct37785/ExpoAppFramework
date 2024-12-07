@@ -21,19 +21,6 @@ export const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
   };
 
   /**
-   * Validates the provided key against the schema.
-   * 
-   * @param {string} key - The key to validate.
-   * 
-   * @throws Will throw an error if the key is invalid.
-   */
-  const validateKey = (key) => {
-    if (!key || !schema.hasOwnProperty(key)) {
-      throw new Error(`Key "${key}" is not listed in the schema.`);
-    }
-  };
-
-  /**
    * Initializes local data by checking and filling missing keys.
    * Triggers the `onLocalDataReady` event after completion.
    */
@@ -65,7 +52,9 @@ export const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
    */
   const writeLocalData = async (key, value, bypassSchema = false) => {
     try {
-      if(!bypassSchema) validateKey(key);
+      if (!bypassSchema && (!key || !schema.hasOwnProperty(key))) {
+        throw new Error(`Key "${key}" is not listed in the schema.`);
+      }
       if (!isLocalDataReady) throw new Error("Local data initialization incomplete.");
       await AsyncStorage.setItem(key, JSON.stringify(value));
       triggerUpdateFlag();
@@ -84,7 +73,9 @@ export const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
    */
   const readLocalData = async (key, bypassSchema = false) => {
     try {
-      if(!bypassSchema) validateKey(key);
+      if (!bypassSchema && (!key || !schema.hasOwnProperty(key))) {
+        throw new Error(`Key "${key}" is not listed in the schema.`);
+      }
       if (!isLocalDataReady) throw new Error("Local data initialization incomplete.");
       const result = await AsyncStorage.getItem(key);
       if (result === null) throw new Error(`Key "${key}" not found.`);
@@ -92,42 +83,6 @@ export const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
     } catch (error) {
       console.error(`Failed to read data: ${error.message}`);
       return null;
-    }
-  };
-
-  /**
-   * Retrieves all stored key-value pairs.
-   * 
-   * @returns {Promise<Object>} All stored key-value pairs.
-   */
-  const readAllLocalData = async () => {
-    try {
-      if (!isLocalDataReady) throw new Error("Local data initialization incomplete.");
-      const keys = await AsyncStorage.getAllKeys();
-      const keyValues = await AsyncStorage.multiGet(keys);
-      const allData = {};
-      keyValues.forEach(([key, value]) => {
-        allData[key] = JSON.parse(value);
-      });
-      return allData;
-    } catch (error) {
-      console.error(`Failed to read all data: ${error.message}`);
-      return {};
-    }
-  };
-
-  /**
-   * Deletes a key-value pair from storage.
-   * 
-   * @param {string} key - The key to delete.
-   */
-  const deleteLocalData = async (key) => {
-    try {
-      if (!isLocalDataReady) throw new Error("Local data initialization incomplete.");
-      await AsyncStorage.removeItem(key);
-      triggerUpdateFlag();
-    } catch (error) {
-      console.error(`Failed to delete data: ${error.message}`);
     }
   };
 
@@ -145,37 +100,12 @@ export const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
     }
   };
 
-  /**
-   * Retrieves dangling keys not present in the schema.
-   * 
-   * @returns {Promise<Object>} Key-value pairs of dangling keys.
-   */
-  const retrieveDanglingKeys = async () => {
-    try {
-      if (!isLocalDataReady) throw new Error("Local data initialization incomplete.");
-      const keys = await AsyncStorage.getAllKeys();
-      const danglingKeys = keys.filter((key) => !schema.hasOwnProperty(key));
-      const keyValues = await AsyncStorage.multiGet(danglingKeys);
-      const danglingData = {};
-      keyValues.forEach(([key, value]) => {
-        danglingData[key] = JSON.parse(value);
-      });
-      return danglingData;
-    } catch (error) {
-      console.error(`Failed to retrieve dangling keys: ${error.message}`);
-      return {};
-    }
-  };
-
   return {
     isLocalDataReady,
     updateFlag,
     writeLocalData,
     readLocalData,
-    readAllLocalData,
-    deleteLocalData,
-    deleteAllLocalData,
-    retrieveDanglingKeys
+    deleteAllLocalData
   };
 };
 
@@ -187,10 +117,7 @@ const LocalDataContext = createContext({
   updateFlag: 0,
   writeLocalData: async () => {},
   readLocalData: async () => {},
-  readAllLocalData: async () => {},
-  deleteLocalData: async () => {},
-  deleteAllLocalData: async () => {},
-  retrieveDanglingKeys: async () => {}
+  deleteAllLocalData: async () => {}
 });
 
 /**

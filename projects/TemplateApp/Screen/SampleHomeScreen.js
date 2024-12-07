@@ -9,10 +9,9 @@ import * as Const from '../../../Framework/Index/Const';
  * 
  * @param {Object} props - Component props.
  * @param {Object} props.navigation - React Navigation provided object for navigating between screens.
- * @param {Object} props.route - React Navigation provided oobject containing route parameters.
+ * @param {Object} props.route - React Navigation provided object containing route parameters.
  */
 function SampleHomeScreen({ navigation, route }) {
-  const { updateFlag, writeLocalData, readLocalData } = useContext(Hook.useLocalDataContext);
   
   Hook.onLocalDataUpdate(() => {
     console.log("SampleHomeScreen: updated local data");
