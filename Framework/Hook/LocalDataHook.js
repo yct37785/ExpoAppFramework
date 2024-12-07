@@ -12,7 +12,7 @@ const _ = require('lodash');
  */
 const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
   const schema = useMemo(() => _.cloneDeep(LOCAL_DATA_DEFAULT_KEY_VALUES), []); // immutable schema
-  const [isDataReady, setIsDataReady] = useState(false);
+  const [isLocalDataReady, setisLocalDataReady] = useState(false);
   const [updateFlag, setUpdateFlag] = useState(0);
 
   /**
@@ -48,7 +48,7 @@ const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
         const missingKeyValues = missingKeys.map((key) => [key, JSON.stringify(schema[key])]);
         await AsyncStorage.multiSet(missingKeyValues);
       }
-      setIsDataReady(true);
+      setisLocalDataReady(true);
     } catch (error) {
       console.error(`Error during data initialization: ${error.message}`);
     }
@@ -68,7 +68,7 @@ const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
   const writeLocalData = async (key, value, bypassSchema = false) => {
     try {
       if(!bypassSchema) validateKey(key);
-      if (!isDataReady) throw new Error("Local data initialization incomplete.");
+      if (!isLocalDataReady) throw new Error("Local data initialization incomplete.");
       await AsyncStorage.setItem(key, JSON.stringify(value));
       triggerUpdateFlag();
     } catch (error) {
@@ -87,7 +87,7 @@ const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
   const readLocalData = async (key, bypassSchema = false) => {
     try {
       if(!bypassSchema) validateKey(key);
-      if (!isDataReady) throw new Error("Local data initialization incomplete.");
+      if (!isLocalDataReady) throw new Error("Local data initialization incomplete.");
       const result = await AsyncStorage.getItem(key);
       if (result === null) throw new Error(`Key "${key}" not found.`);
       return JSON.parse(result);
@@ -104,7 +104,7 @@ const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
    */
   const readAllLocalData = async () => {
     try {
-      if (!isDataReady) throw new Error("Local data initialization incomplete.");
+      if (!isLocalDataReady) throw new Error("Local data initialization incomplete.");
       const keys = await AsyncStorage.getAllKeys();
       const keyValues = await AsyncStorage.multiGet(keys);
       const allData = {};
@@ -125,7 +125,7 @@ const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
    */
   const deleteLocalData = async (key) => {
     try {
-      if (!isDataReady) throw new Error("Local data initialization incomplete.");
+      if (!isLocalDataReady) throw new Error("Local data initialization incomplete.");
       await AsyncStorage.removeItem(key);
       triggerUpdateFlag();
     } catch (error) {
@@ -138,7 +138,7 @@ const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
    */
   const deleteAllLocalData = async () => {
     try {
-      if (!isDataReady) throw new Error("Local data initialization incomplete.");
+      if (!isLocalDataReady) throw new Error("Local data initialization incomplete.");
       const keys = await AsyncStorage.getAllKeys();
       await AsyncStorage.multiRemove(keys);
       triggerUpdateFlag();
@@ -154,7 +154,7 @@ const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
    */
   const retrieveDanglingKeys = async () => {
     try {
-      if (!isDataReady) throw new Error("Local data initialization incomplete.");
+      if (!isLocalDataReady) throw new Error("Local data initialization incomplete.");
       const keys = await AsyncStorage.getAllKeys();
       const danglingKeys = keys.filter((key) => !schema.hasOwnProperty(key));
       const keyValues = await AsyncStorage.multiGet(danglingKeys);
@@ -170,7 +170,7 @@ const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
   };
 
   return {
-    isDataReady,
+    isLocalDataReady,
     updateFlag,
     writeLocalData,
     readLocalData,
@@ -185,7 +185,7 @@ const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
  * Local data context for useLocalDataManager.
  */
 const LocalDataContext = createContext({
-  isDataReady: false,
+  isLocalDataReady: false,
   updateFlag: 0,
   writeLocalData: () => {},
   readLocalData: () => {},
@@ -219,11 +219,11 @@ export const useLocalDataContext = () => useContext(LocalDataContext);
  * @param {Function} callback - Triggered when local data update occurs.
  */
 export const onLocalDataUpdate = (callback) => {
-  const { isDataReady, updateFlag } = useLocalDataContext();
+  const { isLocalDataReady, updateFlag } = useLocalDataContext();
 
   useEffect(() => {
-    if (isDataReady) {
+    if (isLocalDataReady) {
       callback();
     }
-  }, [isDataReady, updateFlag, callback]);
+  }, [isLocalDataReady, updateFlag, callback]);
 };

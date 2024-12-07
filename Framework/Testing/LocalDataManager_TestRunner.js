@@ -19,7 +19,7 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
   };
 
   const {
-    isDataReady,
+    isLocalDataReady,
     updateFlag,
     writeLocalData,
     readLocalData,
@@ -32,10 +32,10 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
   const updateFlagRef = useRef(updateFlag);
 
   useEffect(() => {
-    if (isDataReady) {
+    if (isLocalDataReady) {
       runTests();
     }
-  }, [isDataReady]);
+  }, [isLocalDataReady]);
 
   useEffect(() => {
     updateFlagRef.current = updateFlag;

@@ -74,13 +74,13 @@ function ScreenWrapper({ component: Component, ...props }) {
  */
 const RootComp = ({ screenMap, DEFAULT_SCREEN, LOCAL_DATA_SCHEMA }) => {
   const [theme, setTheme] = useState(CombinedDarkTheme);
-  const { isDataReady, readLocalData } = useLocalDataContext(); 
+  const { isLocalDataReady, readLocalData } = useLocalDataContext(); 
 
   /**
    * Triggered on local data ready and update
    */
   useEffect(() => {
-    if (isDataReady) {
+    if (isLocalDataReady) {
       applySystemSettings();
     }
   }, [readLocalData]);
@@ -90,7 +90,7 @@ const RootComp = ({ screenMap, DEFAULT_SCREEN, LOCAL_DATA_SCHEMA }) => {
    */
   async function applySystemSettings() {
     const isDarkMode = await localDataManager.readLocalData("isDarkMode");
-    if (localDataManager.isDataReady && (isDarkMode !== (theme === CombinedDarkTheme))) {
+    if (localDataManager.isLocalDataReady && (isDarkMode !== (theme === CombinedDarkTheme))) {
       const newTheme = isDarkMode ? CombinedDarkTheme : CombinedDefaultTheme;
       setTheme(newTheme);
     }
