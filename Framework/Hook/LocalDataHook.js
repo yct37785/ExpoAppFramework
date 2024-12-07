@@ -195,16 +195,18 @@ export const LocalDataProvider = ({ children, schema }) => {
 export const useLocalDataContext = () => useContext(LocalDataContext);
 
 /**
- * Utility hook that triggers on local data update event.
+ * Utility hook that triggers on local data update event
+ * Will not trigger with isLocalDataReady as local data should've been long loaded before the trigger
+ * of this hook
  * 
  * @param {Function} callback - Triggered when local data update occurs.
  */
 export const onLocalDataUpdate = (callback) => {
-  const { isLocalDataReady, updateFlag } = useLocalDataContext();
+  const { updateFlag } = useLocalDataContext();
 
   useEffect(() => {
-    if (isLocalDataReady) {
+    if (updateFlag) {
       callback();
     }
-  }, [isLocalDataReady, updateFlag]);
+  }, [updateFlag]);
 };
