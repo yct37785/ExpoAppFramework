@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
+import { View } from 'react-native';
 import { SAMPLE_SCREENS } from '../User/Schema';
 import * as UI from '../../../Framework/Index/UI';
 import * as Hook from '../../../Framework/Index/Hook';
@@ -12,14 +13,24 @@ import * as Const from '../../../Framework/Index/Const';
  * @param {Object} props.route - React Navigation provided object containing route parameters.
  */
 function SampleHomeScreen({ navigation, route }) {
+
+  const {
+    readLocalData,
+    writeLocalData
+  } = Hook.useLocalDataContext();
   
   Hook.onLocalDataUpdate(() => {
     console.log("SampleHomeScreen: updated local data");
   });
 
+  const toggleDarkMode = () => {
+    const isDarkMode = readLocalData("isDarkMode");
+    writeLocalData("isDarkMode", !isDarkMode);
+  }
+
   function customHeaderContent() {
     return <View>
-      {/* <UI.SwitchToggle value={getLocalDataValue("settings_sample.isDarkMode")} onValueChange={() => toggleDarkMode()} /> */}
+      <UI.SwitchToggle value={readLocalData("isDarkMode")} onValueChange={() => toggleDarkMode()} />
     </View>
   }
 

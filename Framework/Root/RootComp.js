@@ -41,7 +41,7 @@ const CombinedDarkTheme = {
   }
 };
 
-const TEST_MODE = true;
+const TEST_MODE = false;
 
 LogBox.ignoreLogs(['new NativeEventEmitter']);
 
@@ -74,7 +74,10 @@ function ScreenWrapper({ component: Component, ...props }) {
  */
 const RootComp = ({ screenMap, DEFAULT_SCREEN }) => {
   const [theme, setTheme] = useState(CombinedDarkTheme);
-  const { isLocalDataReady, readLocalData } = useLocalDataContext();
+  const {
+    isLocalDataReady,
+    readLocalData,
+  } = useLocalDataContext();
 
   /**
    * Triggered on local data ready and update
@@ -89,13 +92,12 @@ const RootComp = ({ screenMap, DEFAULT_SCREEN }) => {
    * Apply system settings
    */
   async function applySystemSettings() {
-    const isDarkMode = await readLocalData("isDarkMode");
-    if (isLocalDataReady && (isDarkMode !== (theme === CombinedDarkTheme))) {
+    const isDarkMode = readLocalData("isDarkMode");
+    if (isDarkMode !== (theme === CombinedDarkTheme)) {
       const newTheme = isDarkMode ? CombinedDarkTheme : CombinedDefaultTheme;
       setTheme(newTheme);
     }
   }
-
 
   return (
     <PaperProvider theme={theme}>
