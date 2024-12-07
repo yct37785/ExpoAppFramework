@@ -8,9 +8,9 @@ const _ = require('lodash');
  * @param {Object} props - Component props.
  * @param {Object} props.LOCAL_DATA_DEFAULT_KEY_VALUES - List of keys and their default values.
  */
-export const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
+const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
   const schema = useMemo(() => _.cloneDeep(LOCAL_DATA_DEFAULT_KEY_VALUES), []); // immutable schema
-  const [isLocalDataReady, setisLocalDataReady] = useState(false);
+  const [localCache, setLocalCache] = useState(null);
   const [updateFlag, setUpdateFlag] = useState(0);
 
   /**
@@ -21,26 +21,44 @@ export const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
   };
 
   /**
-   * Initializes local data by checking and filling missing keys.
+   * Load local data by checking and filling missing keys.
    * Triggers the `onLocalDataReady` event after completion.
    */
-  const checkLocalData = async () => {
+  const loadLocalData = async () => {
     try {
+      // retrieve all existing kv pairs
       const existingKeys = await AsyncStorage.getAllKeys();
-      const missingKeys = Object.keys(schema).filter((key) => !existingKeys.includes(key));
+      const keyValues = await AsyncStorage.multiGet(existingKeys);
 
+      // only retrieve keys that exists in schema
+      const allData = {};
+      keyValues.forEach(([key, value]) => {
+        if (schema.hasOwnProperty(key)) {
+          allData[key] = JSON.parse(value);
+        }
+      });
+      
+      // fill missing keys
+      const missingKeys = Object.keys(schema).filter((key) => !existingKeys.includes(key)); // TODO: do not use .includes
       if (missingKeys.length > 0) {
-        const missingKeyValues = missingKeys.map((key) => [key, JSON.stringify(schema[key])]);
+        const missingKeyValues = [];
+        for (let i in missingKeys) {
+          const key = missingKeys[i];
+          allData[key] = _.cloneDeep(schema[key]);
+          missingKeyValues.push([key, JSON.stringify(schema[key])]);
+        }
         await AsyncStorage.multiSet(missingKeyValues);
       }
-      setisLocalDataReady(true);
+
+      // save to localCache
+      setLocalCache({...allData});
     } catch (error) {
       console.error(`Error during data initialization: ${error.message}`);
     }
   };
 
   useEffect(() => {
-    checkLocalData();
+    loadLocalData();
   }, []);
 
   /**
@@ -52,11 +70,20 @@ export const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
    */
   const writeLocalData = async (key, value, bypassSchema = false) => {
     try {
-      if (!bypassSchema && (!key || !schema.hasOwnProperty(key))) {
+      // if localCache not ready
+      if (!localCache) {
+        throw new Error("Local data initialization incomplete.");
+      }
+      // ensure key exists in localCache
+      if (!bypassSchema && (!key || !localCache.hasOwnProperty(key))) {
         throw new Error(`Key "${key}" is not listed in the schema.`);
       }
-      if (!isLocalDataReady) throw new Error("Local data initialization incomplete.");
+      // write to localCache and storage
+      const newLocalCache = { ...localCache };
+      newLocalCache[key] = value;
       await AsyncStorage.setItem(key, JSON.stringify(value));
+      setLocalCache(newLocalCache);
+      // trigger
       triggerUpdateFlag();
     } catch (error) {
       console.error(`Failed to write data: ${error.message}`);
@@ -67,19 +94,20 @@ export const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
    * Reads a value by key from storage.
    * 
    * @param {string} key - The key to retrieve.
-   * @param {boolean} [bypassSchema='false'] - Do not validate key with schema, ONLY FOR TESTING USAGE!
    * 
-   * @returns {Promise<any>} Value of the KV pair.
+   * @returns {any} Value of the KV pair.
    */
-  const readLocalData = async (key, bypassSchema = false) => {
+  const readLocalData = (key) => {
     try {
-      if (!bypassSchema && (!key || !schema.hasOwnProperty(key))) {
+      // if localCache not ready
+      if (!localCache) {
+        throw new Error("Local data initialization incomplete.");
+      }
+      // ensure key exists in localCache
+      if (!key || !localCache.hasOwnProperty(key)) {
         throw new Error(`Key "${key}" is not listed in the schema.`);
       }
-      if (!isLocalDataReady) throw new Error("Local data initialization incomplete.");
-      const result = await AsyncStorage.getItem(key);
-      if (result === null) throw new Error(`Key "${key}" not found.`);
-      return JSON.parse(result);
+      return localCache[key];
     } catch (error) {
       console.error(`Failed to read data: ${error.message}`);
       return null;
@@ -91,9 +119,10 @@ export const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
    */
   const deleteAllLocalData = async () => {
     try {
-      if (!isLocalDataReady) throw new Error("Local data initialization incomplete.");
+      if (!localCache) throw new Error("Local data initialization incomplete.");
       const keys = await AsyncStorage.getAllKeys();
       await AsyncStorage.multiRemove(keys);
+      setLocalCache({});
       triggerUpdateFlag();
     } catch (error) {
       console.error(`Failed to delete all data: ${error.message}`);
@@ -101,7 +130,7 @@ export const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
   };
 
   return {
-    isLocalDataReady,
+    isLocalDataReady: localCache !== null,
     updateFlag,
     writeLocalData,
     readLocalData,
@@ -150,5 +179,5 @@ export const onLocalDataUpdate = (callback) => {
     if (isLocalDataReady) {
       callback();
     }
-  }, [isLocalDataReady, updateFlag, callback]);
+  }, [isLocalDataReady, updateFlag]);
 };

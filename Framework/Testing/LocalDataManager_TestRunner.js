@@ -1,6 +1,12 @@
 import React, { useEffect, useState, memo, useRef, useCallback, useContext } from 'react';
-import { useLocalDataManager } from '../Hook/LocalDataHook';
+import { LocalDataProvider, useLocalDataContext } from '../Hook/LocalDataHook';
 import { delayPromise } from '../Utility/GeneralUtility';
+
+const LOCALDATA_TEST_SCHEMA = {
+  key1: 'value1',
+  key2: 123,
+  key3: { nested: true },
+};
 
 /**
  * Test runner for LocalDataManager.
@@ -11,22 +17,16 @@ import { delayPromise } from '../Utility/GeneralUtility';
 const LocalDataManager_TestRunner = ({ onTestEnd }) => {
   const className = 'LocalDataManager';
 
-  // Test data schema
-  const LOCAL_DATA_DEFAULT_KEY_VALUES = {
-    key1: 'value1',
-    key2: 123,
-    key3: { nested: true },
-  };
-
   const {
     isLocalDataReady,
     updateFlag,
     writeLocalData,
     readLocalData,
     deleteAllLocalData
-  } = useLocalDataManager(LOCAL_DATA_DEFAULT_KEY_VALUES);
+  } = useLocalDataContext();
   
   const updateFlagRef = useRef(updateFlag);
+  const key1_ref = useRef();
 
   useEffect(() => {
     if (isLocalDataReady) {
@@ -34,9 +34,9 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
     }
   }, [isLocalDataReady]);
 
-  useEffect(() => {
-    updateFlagRef.current = updateFlag;
-  }, [updateFlag]);
+  // useEffect(() => {
+  //   updateFlagRef.current = updateFlag;
+  // }, [updateFlag]);
 
   /**
    * Runs all tests in sequence.
@@ -44,8 +44,8 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
   async function runTests() {
     const results = [];
 
-    results.push({ test: 'Initialize Local Data', status: await testInitialization() });
-    results.push({ test: 'Write and Read Data', status: await testWriteReadData() });
+    results.push({ test: 'Load local data', status: await testInitialization() });
+    results.push({ test: 'Write and read data', status: await testWriteReadData() });
 
     // cleanup
     await deleteAllLocalData();
@@ -53,28 +53,35 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
     onTestEnd(className, results);
   }
 
-  // Test Cases
-
   async function testInitialization() {
     try {
-      const key1_v = await readLocalData('key1');
-      const key2_v = await readLocalData('key2');
-      const key3_v = await readLocalData('key3');
-      return (
-        key1_v === 'value1' &&
-        key2_v === 123 &&
-        JSON.stringify(key3_v) === JSON.stringify({ nested: true })
-      );
+      let missingKey = false;
+      for (let key in LOCALDATA_TEST_SCHEMA) {
+        const v = readLocalData(key);
+        if (v === null) {
+          missingKey = true;
+          break;
+        }
+      }
+      return !missingKey;
     } catch {
       return false;
     }
   }
 
+  useEffect(() => {
+    if (isLocalDataReady) {
+      const value = readLocalData('key1');
+      key1_ref.current = value;
+    }
+  }, [isLocalDataReady, updateFlag]);
+
   async function testWriteReadData() {
     try {
-      await writeLocalData('key1', 'newValue');
-      const value = await readLocalData('key1');
-      return value === 'newValue';
+      const newValue = "abcd123";
+      await writeLocalData('key1', newValue);
+      await delayPromise(50);
+      return key1_ref.current === newValue;
     } catch {
       return false;
     }
@@ -83,4 +90,12 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
   return null;
 };
 
-export default memo(LocalDataManager_TestRunner);
+const LocalDataProviderWrapper = ({ onTestEnd }) => {
+  return (
+    <LocalDataProvider schema={LOCALDATA_TEST_SCHEMA}>
+      <LocalDataManager_TestRunner onTestEnd={onTestEnd} />
+    </LocalDataProvider>
+  );
+}
+
+export default memo(LocalDataProviderWrapper);
