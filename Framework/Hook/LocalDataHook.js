@@ -7,8 +7,6 @@ const _ = require('lodash');
  * 
  * @param {Object} props - Component props.
  * @param {Object} props.LOCAL_DATA_DEFAULT_KEY_VALUES - List of keys and their default values.
- * 
- * @returns {Object} Local data management functions.
  */
 const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
   const schema = useMemo(() => _.cloneDeep(LOCAL_DATA_DEFAULT_KEY_VALUES), []); // immutable schema
@@ -82,7 +80,7 @@ const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
    * @param {string} key - The key to retrieve.
    * @param {boolean} [bypassSchema='false'] - Do not validate key with schema, ONLY FOR TESTING USAGE!
    * 
-   * @returns {any} The stored value or `null` if not found.
+   * @returns {Promise<any>} Value of the KV pair.
    */
   const readLocalData = async (key, bypassSchema = false) => {
     try {
@@ -100,7 +98,7 @@ const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
   /**
    * Retrieves all stored key-value pairs.
    * 
-   * @returns {Object} All stored key-value pairs.
+   * @returns {Promise<Object>} All stored key-value pairs.
    */
   const readAllLocalData = async () => {
     try {
@@ -150,7 +148,7 @@ const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
   /**
    * Retrieves dangling keys not present in the schema.
    * 
-   * @returns {Object} Key-value pairs of dangling keys.
+   * @returns {Promise<Object>} Key-value pairs of dangling keys.
    */
   const retrieveDanglingKeys = async () => {
     try {
@@ -187,12 +185,12 @@ const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
 const LocalDataContext = createContext({
   isLocalDataReady: false,
   updateFlag: 0,
-  writeLocalData: () => {},
-  readLocalData: () => {},
-  readAllLocalData: () => {},
-  deleteLocalData: () => {},
-  deleteAllLocalData: () => {},
-  retrieveDanglingKeys: () => {}
+  writeLocalData: async () => {},
+  readLocalData: async () => {},
+  readAllLocalData: async () => {},
+  deleteLocalData: async () => {},
+  deleteAllLocalData: async () => {},
+  retrieveDanglingKeys: async () => {}
 });
 
 /**
