@@ -7,7 +7,7 @@ import TestRootComp from '../Testing/TestRootComp';
 import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, Text } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
 // hooks
-import { useLocalDataManager, LocalDataContext } from '../Hook/LocalDataHook';
+import { LocalDataProvider } from '../Hook/LocalDataHook';
 // deps
 import 'react-native-get-random-values';
 // nav
@@ -41,7 +41,7 @@ const CombinedDarkTheme = {
   }
 };
 
-const TEST_MODE = true;
+const TEST_MODE = false;
 
 LogBox.ignoreLogs(['new NativeEventEmitter']);
 
@@ -73,20 +73,31 @@ function ScreenWrapper({ component: Component, ...props }) {
  * @param {Object} props.LOCAL_DATA_SCHEMA - The schema for local storage data, refer to TemplateApp > App.js.
  */
 const RootComp = ({ screenMap, DEFAULT_SCREEN, LOCAL_DATA_SCHEMA }) => {
-  const localDataManager = useLocalDataManager({ LOCAL_DATA_SCHEMA });
   const [theme, setTheme] = useState(CombinedDarkTheme);
 
-  // useEffect(() => {
-  //   const isDarkMode = localDataManager.getLocalDataValue("settings_sample.isDarkMode");
-  //   if (localDataManager.isLocalDataLoaded && (isDarkMode !== (theme === CombinedDarkTheme))) {
-  //     const newTheme = isDarkMode ? CombinedDarkTheme : CombinedDefaultTheme;
-  //     console.log("RootComp: toggle dark mode: " + localDataManager.getLocalDataValue("settings_sample.isDarkMode"));
-  //     setTheme(newTheme);
-  //   }
-  // }, [localDataManager.updateCount, localDataManager.isLocalDataLoaded]);
+  /**
+   * Triggered on local data ready and update
+   */
+  useEffect(() => {
+    if (localDataManager.isDataReady) {
+      applySystemSettings();
+    }
+  }, [localDataManager.isDataReady]);
+
+  /**
+   * Apply system settings
+   */
+  async function applySystemSettings() {
+    const isDarkMode = await localDataManager.readLocalData("isDarkMode");
+    if (localDataManager.isDataReady && (isDarkMode !== (theme === CombinedDarkTheme))) {
+      const newTheme = isDarkMode ? CombinedDarkTheme : CombinedDefaultTheme;
+      setTheme(newTheme);
+    }
+  }
+
 
   return (
-    <LocalDataContext.Provider value={localDataManager}>
+    <LocalDataProvider schema={LOCAL_DATA_SCHEMA}>
       <PaperProvider theme={theme}>
         <MenuProvider>
           {/* <View style={{ flex: 1, backgroundColor: theme.colors.background, paddingTop: Platform.OS == "android" ? StatusBar.currentHeight : 0 }}> */}
@@ -110,7 +121,7 @@ const RootComp = ({ screenMap, DEFAULT_SCREEN, LOCAL_DATA_SCHEMA }) => {
           </View>
         </MenuProvider>
       </PaperProvider>
-    </LocalDataContext.Provider>
+    </LocalDataProvider>
   );
 };
 

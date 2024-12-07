@@ -6,14 +6,7 @@
  * new user data schema
  */
 export const LOCAL_DATA_SCHEMA = {
-  system: {
-    trackers: {
-      loginCount: 0
-    },
-    settings: {
-      isDarkMode: true
-    }
-  }
+  isDarkMode: false
 };
 
 /**

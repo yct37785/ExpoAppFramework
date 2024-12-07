@@ -13,7 +13,7 @@ import * as Const from '../../../Framework/Index/Const';
  */
 function SampleHomeScreen({ navigation, route }) {
   
-  Hook.useLocalDataUpdate(() => {
+  Hook.onLocalDataUpdate(() => {
     console.log("SampleHomeScreen: updated local data");
   });
 
