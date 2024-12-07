@@ -90,11 +90,10 @@ const RootComp = ({ screenMap, DEFAULT_SCREEN }) => {
    */
   async function applySystemSettings() {
     const isDarkMode = await readLocalData("isDarkMode");
-    if (localDataManager.isLocalDataReady && (isDarkMode !== (theme === CombinedDarkTheme))) {
+    if (isLocalDataReady && (isDarkMode !== (theme === CombinedDarkTheme))) {
       const newTheme = isDarkMode ? CombinedDarkTheme : CombinedDefaultTheme;
       setTheme(newTheme);
     }
-    console.log("isLocalDataReady: " + isLocalDataReady);
   }
 
 
@@ -103,7 +102,7 @@ const RootComp = ({ screenMap, DEFAULT_SCREEN }) => {
       <MenuProvider>
         {/* <View style={{ flex: 1, backgroundColor: theme.colors.background, paddingTop: Platform.OS == "android" ? StatusBar.currentHeight : 0 }}> */}
         <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
-          <NavigationContainer theme={theme}>
+          {isLocalDataReady ? <NavigationContainer theme={theme}>
             <Stack.Navigator
               initialRouteName={DEFAULT_SCREEN}
               screenOptions={{
@@ -118,13 +117,21 @@ const RootComp = ({ screenMap, DEFAULT_SCREEN }) => {
                 </Stack.Screen>
               ))}
             </Stack.Navigator>
-          </NavigationContainer>
+          </NavigationContainer> : null}
         </View>
       </MenuProvider>
     </PaperProvider>
   );
 };
 
+/**
+ * Wrapper for LocalDataProvider to ensure it renders before RootComp
+ * 
+ * @param {Object} props - The props passed to the root component.
+ * @param {Object} props.screenMap - A mapping of screen names to their respective components, refer to TemplateApp > App.js.
+ * @param {string} props.DEFAULT_SCREEN - The default screen to display on app launch, refer to TemplateApp > App.js.
+ * @param {Object} props.LOCAL_DATA_SCHEMA - The schema for local storage data, refer to TemplateApp > App.js.
+ */
 const LocalDataProviderWrapper = ({ screenMap, DEFAULT_SCREEN, LOCAL_DATA_SCHEMA }) => {
   return (
     <LocalDataProvider schema={LOCAL_DATA_SCHEMA}>
