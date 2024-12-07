@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useMemo, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+const _ = require('lodash');
 
 /**
  * Local data manager with built-in update effect.
@@ -9,8 +10,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
  * 
  * @returns {Object} Local data management functions.
  */
-export const useLocalDataManager = ({ LOCAL_DATA_DEFAULT_KEY_VALUES }) => {
-  const schema = useMemo(() => ({ ...LOCAL_DATA_DEFAULT_KEY_VALUES }), []);
+export const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
+  const schema = useMemo(() => _.cloneDeep(LOCAL_DATA_DEFAULT_KEY_VALUES), []); // immutable schema
   const [isDataReady, setIsDataReady] = useState(false);
   const [updateFlag, setUpdateFlag] = useState(0);
 
@@ -40,6 +41,7 @@ export const useLocalDataManager = ({ LOCAL_DATA_DEFAULT_KEY_VALUES }) => {
    */
   const checkLocalData = async () => {
     try {
+      console.log(schema);
       const existingKeys = await AsyncStorage.getAllKeys();
       const missingKeys = Object.keys(schema).filter((key) => !existingKeys.includes(key));
 
@@ -183,7 +185,7 @@ export const useLocalDataManager = ({ LOCAL_DATA_DEFAULT_KEY_VALUES }) => {
 /**
  * Local data context for managing stored data.
  */
-const LocalDataContext = createContext({
+export const LocalDataContext = createContext({
   isDataReady: false,
   updateFlag: 0,
   writeLocalData: () => {},
@@ -198,3 +200,18 @@ const LocalDataContext = createContext({
  * Context consumer hook.
  */
 export const useLocalDataContext = () => useContext(LocalDataContext);
+
+/**
+ * Hook that triggers on local data update event.
+ * 
+ * @param {Function} callback - Triggered when local data update occurs.
+ */
+export const onLocalDataUpdate = (callback) => {
+  const { updateCount } = useLocalDataContext();
+
+  useEffect(() => {
+    if (updateCount) {
+      callback();
+    }
+  }, [updateCount, callback]);
+};
