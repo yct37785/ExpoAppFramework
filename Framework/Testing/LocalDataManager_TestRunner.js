@@ -26,7 +26,6 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
   } = useLocalDataContext();
   
   const updateFlagRef = useRef(updateFlag);
-  const key1_ref = useRef();
 
   useEffect(() => {
     if (isLocalDataReady) {
@@ -34,9 +33,9 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
     }
   }, [isLocalDataReady]);
 
-  // useEffect(() => {
-  //   updateFlagRef.current = updateFlag;
-  // }, [updateFlag]);
+  useEffect(() => {
+    updateFlagRef.current = updateFlag;
+  }, [updateFlag]);
 
   /**
    * Runs all tests in sequence.
@@ -69,19 +68,12 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
     }
   }
 
-  useEffect(() => {
-    if (isLocalDataReady) {
-      const value = readLocalData('key1');
-      key1_ref.current = value;
-    }
-  }, [isLocalDataReady, updateFlag]);
-
   async function testWriteReadData() {
     try {
       const newValue = "abcd123";
       await writeLocalData('key1', newValue);
-      await delayPromise(50);
-      return key1_ref.current === newValue;
+      const value = readLocalData('key1');
+      return value === newValue;
     } catch {
       return false;
     }
