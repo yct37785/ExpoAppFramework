@@ -92,7 +92,7 @@ const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
    * 
    * @param {string} key - The key to retrieve.
    * 
-   * @returns {any} Value of the KV pair.
+   * @returns {any} Value of the KV pairs.
    */
   const readLocalData = (key) => {
     try {
@@ -105,6 +105,33 @@ const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
       return _.cloneDeep(localCache.current[key]);
     } catch (error) {
       console.error(`Failed to read data: ${error.message}`);
+      return null;
+    }
+  };
+
+  /**
+   * Retrieve dangling keys, i.e. keys that are not tracked in schema
+   * 
+   * @returns {Object} An object with all the dangling KV pairs.
+   */
+  const readDanglingKeys = async () => {
+    try {
+      if (!isLocalDataReady) {
+        throw new Error("Local data initialization incomplete.");
+      }
+      const allKeys = await AsyncStorage.getAllKeys();
+      const schemaKeys =  Object.keys(schema);
+      const danglingKeys = allKeys.filter((key) => !schemaKeys.includes(key)); // TODO: do not use .includes
+      const danglingObj = {};
+      if (danglingKeys.length > 0) {
+        const keyValues = await AsyncStorage.multiGet(danglingKeys);
+        keyValues.forEach(([key, value]) => {
+          danglingObj[key] = JSON.parse(value);
+        });
+      }
+      return danglingObj;
+    } catch (error) {
+      console.error(`Failed to delete read dangling keys: ${error.message}`);
       return null;
     }
   };
@@ -132,6 +159,7 @@ const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
     updateFlag,
     writeLocalData,
     readLocalData,
+    readDanglingKeys,
     deleteAllLocalData
   };
 };
@@ -143,7 +171,8 @@ const LocalDataContext = createContext({
   isLocalDataReady: false,
   updateFlag: 0,
   writeLocalData: async () => {},
-  readLocalData: async () => {},
+  readLocalData: () => {},
+  readDanglingKeys: async () => {},
   deleteAllLocalData: async () => {}
 });
 

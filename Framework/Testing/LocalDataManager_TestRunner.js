@@ -22,6 +22,7 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
     updateFlag,
     writeLocalData,
     readLocalData,
+    readDanglingKeys,
     deleteAllLocalData
   } = useLocalDataContext();
   
@@ -45,6 +46,8 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
 
     results.push({ test: 'Load local data', status: await testInitialization() });
     results.push({ test: 'Write and read data', status: await testWriteReadData() });
+    results.push({ test: 'Dangling key read', status: await testDanglingKey() });
+
 
     // cleanup
     await deleteAllLocalData();
@@ -74,6 +77,19 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
       await writeLocalData('key1', newValue);
       const value = readLocalData('key1');
       return value === newValue;
+    } catch {
+      return false;
+    }
+  }
+
+  async function testDanglingKey() {
+    try {
+      const danglingKey = "key4";
+      const newValue = "obsolete value to be removed";
+      await writeLocalData(danglingKey, newValue, true);
+      const danglingObj = await readDanglingKeys();
+      return Object.keys(danglingObj).length === 1 && danglingObj.hasOwnProperty(danglingKey)
+        && danglingObj[danglingKey] === newValue;
     } catch {
       return false;
     }
