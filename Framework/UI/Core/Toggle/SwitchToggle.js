@@ -14,10 +14,8 @@ import { Switch } from 'react-native-paper';
  * @returns {JSX.Element} The SwitchToggle component.
  */
 const SwitchToggle = ({
-  label,
   value,
   onValueChange,
-  layout = 'vertical',
   style={}
 }) => {
   return (

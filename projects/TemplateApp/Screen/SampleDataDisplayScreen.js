@@ -98,14 +98,14 @@ function SampleDataDisplayScreen({ navigation, route }) {
   };
 
   function customHeaderContent() {
-    return <UI.VerticalLayout>
+    return <View>
       <UI.TextInput
         type="search"
         value={searchQuery}
         onChange={setSearchQuery}
         placeholder="search"
       />
-    </UI.VerticalLayout>
+    </View>
   }
 
   return (

@@ -12,13 +12,20 @@ import * as Const from '../../../Framework/Index/Const';
  * @param {Object} props.route - React Navigation provided oobject containing route parameters.
  */
 function SampleHomeScreen({ navigation, route }) {
+  const { updateFlag, writeLocalData, readLocalData } = useContext(Hook.useLocalDataContext);
   
   Hook.onLocalDataUpdate(() => {
     console.log("SampleHomeScreen: updated local data");
   });
 
+  function customHeaderContent() {
+    return <View>
+      {/* <UI.SwitchToggle value={getLocalDataValue("settings_sample.isDarkMode")} onValueChange={() => toggleDarkMode()} /> */}
+    </View>
+  }
+
   return (
-    <UI.BasicActivity navigation={navigation} route={route} title="Home Sample">
+    <UI.BasicActivity navigation={navigation} route={route} customHeaderContent={customHeaderContent} title="Home Sample">
       <UI.VerticalLayout childMargin={Const.padSize} padding={Const.padSize}>
       <UI.Text variant="bodyMedium">Select the screen you want to navigate to</UI.Text>
       {Object.keys(SAMPLE_SCREENS).map((key) => (
