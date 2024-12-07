@@ -1,5 +1,6 @@
-import React, { useEffect, useState, memo } from 'react';
+import React, { useEffect, useState, memo, useRef, useCallback, useContext } from 'react';
 import { useLocalDataManager } from '../Hook/LocalDataHook';
+import { delayPromise } from '../Utility/GeneralUtility';
 
 /**
  * Test runner for LocalDataManager.
@@ -19,25 +20,26 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
 
   const {
     isDataReady,
+    updateFlag,
     writeLocalData,
     readLocalData,
     readAllLocalData,
     deleteLocalData,
     deleteAllLocalData,
-    retrieveDanglingKeys,
-    onLocalDataUpdated,
+    retrieveDanglingKeys
   } = useLocalDataManager({ LOCAL_DATA_DEFAULT_KEY_VALUES });
-
-  const [updateTriggered, setUpdateTriggered] = useState(false);
-
-  // Register update listener
-  useEffect(() => {
-    onLocalDataUpdated(() => setUpdateTriggered(true));
-  }, []);
+  
+  const updateFlagRef = useRef(updateFlag);
 
   useEffect(() => {
-    if (isDataReady) runTests();
+    if (isDataReady) {
+      runTests();
+    }
   }, [isDataReady]);
+
+  useEffect(() => {
+    updateFlagRef.current = updateFlag;
+  }, [updateFlag]);
 
   /**
    * Runs all tests in sequence.
@@ -51,7 +53,7 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
     results.push({ test: 'Delete Data', status: await testDeleteData() });
     results.push({ test: 'Delete All Data', status: await testDeleteAllData() });
     results.push({ test: 'Retrieve Dangling Keys', status: await testDanglingKeys() });
-    results.push({ test: 'Update Trigger', status: await testUpdateTrigger() });
+    results.push({ test: 'Update Trigger', status: await testUpdateFlag() });
 
     // cleanup
     await deleteAllLocalData();
@@ -130,11 +132,13 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
     }
   }
 
-  async function testUpdateTrigger() {
+  async function testUpdateFlag() {
     try {
-      setUpdateTriggered(false);
+      const updateFlag_1 = updateFlagRef.current;
       await writeLocalData('key2', 456);
-      return updateTriggered === true;
+      await delayPromise(100);
+      const updateFlag_2 = updateFlagRef.current;
+      return updateFlag_1 + 1 === updateFlag_2;
     } catch {
       return false;
     }

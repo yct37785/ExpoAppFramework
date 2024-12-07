@@ -27,7 +27,7 @@ const TestRootComp = () => {
     console.log();
     console.log(`Class ${className}:`);
     results.forEach(({ test, status }) => {
-      console.log(`  ${test}: ${status ? 'Pass' : 'Fail'}`);
+      console.log(`  ${test}: ${status ? 'PASS' : 'FAIL'}`);
     });
     console.log();
 
