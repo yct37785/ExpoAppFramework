@@ -23,14 +23,13 @@ function SampleHomeScreen({ navigation, route }) {
     console.log("SampleHomeScreen: updated local data");
   });
 
-  const toggleDarkMode = () => {
-    const isDarkMode = readLocalData("isDarkMode");
-    writeLocalData("isDarkMode", !isDarkMode);
+  const switchTheme = () => {
+    writeLocalData("isDarkMode", !readLocalData("isDarkMode"));
   }
 
   function customHeaderContent() {
-    return <View>
-      <UI.SwitchToggle value={readLocalData("isDarkMode")} onValueChange={() => toggleDarkMode()} />
+    return <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+      <UI.SwitchToggle value={readLocalData("isDarkMode")} onValueChange={() => switchTheme()} />
     </View>
   }
 

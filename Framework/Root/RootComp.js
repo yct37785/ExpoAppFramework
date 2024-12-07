@@ -7,7 +7,7 @@ import TestRootComp from '../Testing/TestRootComp';
 import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, Text } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
 // hooks
-import { useLocalDataContext, LocalDataProvider } from '../Hook/LocalDataHook';
+import { useLocalDataContext, LocalDataProvider, onLocalDataUpdate } from '../Hook/LocalDataHook';
 // deps
 import 'react-native-get-random-values';
 // nav
@@ -89,15 +89,30 @@ const RootComp = ({ screenMap, DEFAULT_SCREEN }) => {
   }, [isLocalDataReady]);
 
   /**
-   * Apply system settings
+   * Toggle theme
    */
-  async function applySystemSettings() {
+  function toggleDarkMode() {
+    // default is light mode, if user setting is dark mode, set theme to dark theme
     const isDarkMode = readLocalData("isDarkMode");
     if (isDarkMode !== (theme === CombinedDarkTheme)) {
       const newTheme = isDarkMode ? CombinedDarkTheme : CombinedDefaultTheme;
       setTheme(newTheme);
     }
   }
+
+  /**
+   * Apply system settings
+   */
+  async function applySystemSettings() {
+    toggleDarkMode();
+  }
+
+  /**
+   * Triggered when a write/delete operation happens (excluding isLocalDataReady)
+   */
+  onLocalDataUpdate(() => {
+    toggleDarkMode();
+  });
 
   return (
     <PaperProvider theme={theme}>
