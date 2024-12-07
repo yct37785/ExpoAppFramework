@@ -107,6 +107,13 @@ Run `yarn add expo` to install expo module first, this step also automatically i
 yarn add expo
 ````
 
+If you encounter the following error despite doing the above step `Cannot determine which native SDK version your project uses because the module 'expo' is not installed`, then run the following instead:
+
+````bash
+npm i expo
+yarn
+````
+
 ## Usage
 ### Running the TemplateApp
 To run the template app, run the `npx expo start` command from **within the root folder of the template app**:
