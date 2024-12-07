@@ -71,10 +71,11 @@ export const useLocalDataManager = ({ LOCAL_DATA_DEFAULT_KEY_VALUES }) => {
    * 
    * @param {string} key - The key to store.
    * @param {any} value - The value to store.
+   * @param {boolean} [bypassSchema='false'] - Do not validate key with schema, ONLY FOR TESTING USAGE!
    */
-  const writeLocalData = async (key, value) => {
+  const writeLocalData = async (key, value, bypassSchema = false) => {
     try {
-      validateKey(key);
+      if(!bypassSchema) validateKey(key);
       if (!isDataReady) throw new Error("Local data initialization incomplete.");
       await AsyncStorage.setItem(key, JSON.stringify(value));
       triggerUpdateSubscribers();
@@ -87,12 +88,13 @@ export const useLocalDataManager = ({ LOCAL_DATA_DEFAULT_KEY_VALUES }) => {
    * Reads a value by key from storage.
    * 
    * @param {string} key - The key to retrieve.
+   * @param {boolean} [bypassSchema='false'] - Do not validate key with schema, ONLY FOR TESTING USAGE!
    * 
    * @returns {any} The stored value or `null` if not found.
    */
-  const readLocalData = async (key) => {
+  const readLocalData = async (key, bypassSchema = false) => {
     try {
-      validateKey(key);
+      if(!bypassSchema) validateKey(key);
       if (!isDataReady) throw new Error("Local data initialization incomplete.");
       const result = await AsyncStorage.getItem(key);
       if (result === null) throw new Error(`Key "${key}" not found.`);
@@ -131,7 +133,6 @@ export const useLocalDataManager = ({ LOCAL_DATA_DEFAULT_KEY_VALUES }) => {
    */
   const deleteLocalData = async (key) => {
     try {
-      validateKey(key);
       if (!isDataReady) throw new Error("Local data initialization incomplete.");
       await AsyncStorage.removeItem(key);
       triggerUpdateSubscribers();
