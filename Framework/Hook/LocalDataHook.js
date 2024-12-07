@@ -8,7 +8,7 @@ const _ = require('lodash');
  * @param {Object} props - Component props.
  * @param {Object} props.LOCAL_DATA_DEFAULT_KEY_VALUES - List of keys and their default values.
  */
-const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
+export const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
   const schema = useMemo(() => _.cloneDeep(LOCAL_DATA_DEFAULT_KEY_VALUES), []); // immutable schema
   const [isLocalDataReady, setisLocalDataReady] = useState(false);
   const [updateFlag, setUpdateFlag] = useState(0);

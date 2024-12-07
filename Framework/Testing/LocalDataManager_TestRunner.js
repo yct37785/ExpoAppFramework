@@ -27,7 +27,7 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
     deleteLocalData,
     deleteAllLocalData,
     retrieveDanglingKeys
-  } = useLocalDataManager({ LOCAL_DATA_DEFAULT_KEY_VALUES });
+  } = useLocalDataManager(LOCAL_DATA_DEFAULT_KEY_VALUES);
   
   const updateFlagRef = useRef(updateFlag);
 
