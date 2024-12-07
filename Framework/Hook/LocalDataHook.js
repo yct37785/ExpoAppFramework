@@ -102,7 +102,7 @@ const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
       if (!localCache.current.hasOwnProperty(key)) {
         throw new Error(`Key "${key}" is not listed in the schema.`);
       }
-      return localCache.current[key];
+      return _.cloneDeep(localCache.current[key]);
     } catch (error) {
       console.error(`Failed to read data: ${error.message}`);
       return null;
