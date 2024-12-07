@@ -72,9 +72,9 @@ function ScreenWrapper({ component: Component, ...props }) {
  * @param {string} props.DEFAULT_SCREEN - The default screen to display on app launch, refer to TemplateApp > App.js.
  * @param {Object} props.LOCAL_DATA_SCHEMA - The schema for local storage data, refer to TemplateApp > App.js.
  */
-const RootComp = ({ screenMap, DEFAULT_SCREEN, LOCAL_DATA_SCHEMA }) => {
+const RootComp = ({ screenMap, DEFAULT_SCREEN }) => {
   const [theme, setTheme] = useState(CombinedDarkTheme);
-  const { isLocalDataReady, readLocalData } = useLocalDataContext(); 
+  const { isLocalDataReady, readLocalData } = useLocalDataContext();
 
   /**
    * Triggered on local data ready and update
@@ -83,47 +83,54 @@ const RootComp = ({ screenMap, DEFAULT_SCREEN, LOCAL_DATA_SCHEMA }) => {
     if (isLocalDataReady) {
       applySystemSettings();
     }
-  }, [readLocalData]);
+  }, [isLocalDataReady]);
 
   /**
    * Apply system settings
    */
   async function applySystemSettings() {
-    const isDarkMode = await localDataManager.readLocalData("isDarkMode");
+    const isDarkMode = await readLocalData("isDarkMode");
     if (localDataManager.isLocalDataReady && (isDarkMode !== (theme === CombinedDarkTheme))) {
       const newTheme = isDarkMode ? CombinedDarkTheme : CombinedDefaultTheme;
       setTheme(newTheme);
     }
+    console.log("isLocalDataReady: " + isLocalDataReady);
   }
 
 
   return (
-    <LocalDataProvider schema={LOCAL_DATA_SCHEMA}>
-      <PaperProvider theme={theme}>
-        <MenuProvider>
-          {/* <View style={{ flex: 1, backgroundColor: theme.colors.background, paddingTop: Platform.OS == "android" ? StatusBar.currentHeight : 0 }}> */}
-          <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
-            <NavigationContainer theme={theme}>
-              <Stack.Navigator
-                initialRouteName={DEFAULT_SCREEN}
-                screenOptions={{
-                  headerShown: false
-                }}
-              >
-                {Object.keys(screenMap).map((key) => (
-                  <Stack.Screen name={key} key={key}>
-                    {(props) => (
-                      <ScreenWrapper {...props} component={screenMap[key]} extraData={{}} />
-                    )}
-                  </Stack.Screen>
-                ))}
-              </Stack.Navigator>
-            </NavigationContainer>
-          </View>
-        </MenuProvider>
-      </PaperProvider>
-    </LocalDataProvider>
+    <PaperProvider theme={theme}>
+      <MenuProvider>
+        {/* <View style={{ flex: 1, backgroundColor: theme.colors.background, paddingTop: Platform.OS == "android" ? StatusBar.currentHeight : 0 }}> */}
+        <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+          <NavigationContainer theme={theme}>
+            <Stack.Navigator
+              initialRouteName={DEFAULT_SCREEN}
+              screenOptions={{
+                headerShown: false
+              }}
+            >
+              {Object.keys(screenMap).map((key) => (
+                <Stack.Screen name={key} key={key}>
+                  {(props) => (
+                    <ScreenWrapper {...props} component={screenMap[key]} extraData={{}} />
+                  )}
+                </Stack.Screen>
+              ))}
+            </Stack.Navigator>
+          </NavigationContainer>
+        </View>
+      </MenuProvider>
+    </PaperProvider>
   );
 };
 
-export default TEST_MODE ? memo(TestRootComp) : memo(RootComp);
+const LocalDataProviderWrapper = ({ screenMap, DEFAULT_SCREEN, LOCAL_DATA_SCHEMA }) => {
+  return (
+    <LocalDataProvider schema={LOCAL_DATA_SCHEMA}>
+      <RootComp screenMap={screenMap} DEFAULT_SCREEN={DEFAULT_SCREEN} />
+    </LocalDataProvider>
+  );
+}
+
+export default TEST_MODE ? memo(TestRootComp) : memo(LocalDataProviderWrapper);
