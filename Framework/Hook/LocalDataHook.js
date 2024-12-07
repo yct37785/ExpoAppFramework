@@ -12,22 +12,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export const useLocalDataManager = ({ LOCAL_DATA_DEFAULT_KEY_VALUES }) => {
   const schema = useMemo(() => ({ ...LOCAL_DATA_DEFAULT_KEY_VALUES }), []);
   const [isDataReady, setIsDataReady] = useState(false);
-  const [updateSubscribers, setUpdateSubscribers] = useState([]);
-
-  /** Triggers all subscribers on data updates. */
-  const triggerUpdateSubscribers = () => {
-    updateSubscribers.forEach((callback) => callback());
-  };
+  const [updateFlag, setUpdateFlag] = useState(0);
 
   /**
-   * Registers a callback for data updates.
-   * 
-   * @param {Function} callback - Callback to run when data updates.
+   * Change value of updateFlag to trigger re-render
    */
-  const onLocalDataUpdated = (callback) => {
-    if (typeof callback === "function") {
-      setUpdateSubscribers((prev) => [...prev, callback]);
-    }
+  const triggerUpdateFlag = () => {
+    setUpdateFlag((prev) => prev + 1);
   };
 
   /**
@@ -78,7 +69,7 @@ export const useLocalDataManager = ({ LOCAL_DATA_DEFAULT_KEY_VALUES }) => {
       if(!bypassSchema) validateKey(key);
       if (!isDataReady) throw new Error("Local data initialization incomplete.");
       await AsyncStorage.setItem(key, JSON.stringify(value));
-      triggerUpdateSubscribers();
+      triggerUpdateFlag();
     } catch (error) {
       console.error(`Failed to write data: ${error.message}`);
     }
@@ -135,7 +126,7 @@ export const useLocalDataManager = ({ LOCAL_DATA_DEFAULT_KEY_VALUES }) => {
     try {
       if (!isDataReady) throw new Error("Local data initialization incomplete.");
       await AsyncStorage.removeItem(key);
-      triggerUpdateSubscribers();
+      triggerUpdateFlag();
     } catch (error) {
       console.error(`Failed to delete data: ${error.message}`);
     }
@@ -149,7 +140,7 @@ export const useLocalDataManager = ({ LOCAL_DATA_DEFAULT_KEY_VALUES }) => {
       if (!isDataReady) throw new Error("Local data initialization incomplete.");
       const keys = await AsyncStorage.getAllKeys();
       await AsyncStorage.multiRemove(keys);
-      triggerUpdateSubscribers();
+      triggerUpdateFlag();
     } catch (error) {
       console.error(`Failed to delete all data: ${error.message}`);
     }
@@ -179,13 +170,13 @@ export const useLocalDataManager = ({ LOCAL_DATA_DEFAULT_KEY_VALUES }) => {
 
   return {
     isDataReady,
+    updateFlag,
     writeLocalData,
     readLocalData,
     readAllLocalData,
     deleteLocalData,
     deleteAllLocalData,
-    retrieveDanglingKeys,
-    onLocalDataUpdated,
+    retrieveDanglingKeys
   };
 };
 
@@ -194,13 +185,13 @@ export const useLocalDataManager = ({ LOCAL_DATA_DEFAULT_KEY_VALUES }) => {
  */
 const LocalDataContext = createContext({
   isDataReady: false,
+  updateFlag: 0,
   writeLocalData: () => {},
   readLocalData: () => {},
   readAllLocalData: () => {},
   deleteLocalData: () => {},
   deleteAllLocalData: () => {},
-  retrieveDanglingKeys: () => {},
-  onLocalDataUpdated: () => {},
+  retrieveDanglingKeys: () => {}
 });
 
 /**
