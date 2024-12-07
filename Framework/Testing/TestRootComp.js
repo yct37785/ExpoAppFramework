@@ -2,7 +2,6 @@ import React, { memo, useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { Text } from 'react-native-paper';
 import Sample_TestRunner from './Sample_TestRunner';
-import AsyncStorageAPI_TestRunner from './AsyncStorageAPI_TestRunner';
 import LocalDataManager_TestRunner from './LocalDataManager_TestRunner';
 
 /**
@@ -12,7 +11,6 @@ const TestRootComp = () => {
   const [currentRunner, setCurrentRunner] = useState(0); // Track the current test runner
   const testRunners = [
     Sample_TestRunner,
-    AsyncStorageAPI_TestRunner,
     LocalDataManager_TestRunner,
   ]; // Array of test runner components
 
