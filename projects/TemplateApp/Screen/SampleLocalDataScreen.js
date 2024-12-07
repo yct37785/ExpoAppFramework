@@ -13,24 +13,24 @@ import * as Const from '../../../Framework/Index/Const';
  * @param {Object} props.route - React Navigation provided oobject containing route parameters.
  */
 function SampleLocalDataScreen({ navigation, route }) {
-  const { setLocalDataValue, getLocalDataValue, resetLocalData, getLocalDataStringify } = useContext(Hook.LocalDataContext);
+  // const { setLocalDataValue, getLocalDataValue, resetLocalData, getLocalDataStringify } = useContext(Hook.LocalDataContext);
 
-  Hook.useLocalDataUpdate(() => {
-    console.log("SampleLocalDataScreen: updated local data");
-  });
+  // Hook.useLocalDataUpdate(() => {
+  //   console.log("SampleLocalDataScreen: updated local data");
+  // });
 
-  const updateTrackersSample = () => {
-    const num = getLocalDataValue("trackers_sample.key1.num");
-    setLocalDataValue([["trackers_sample.key1.num", num + 1]]);
-  }
+  // const updateTrackersSample = () => {
+  //   const num = getLocalDataValue("trackers_sample.key1.num");
+  //   setLocalDataValue([["trackers_sample.key1.num", num + 1]]);
+  // }
 
-  const toggleDarkMode = () => {
-    setLocalDataValue([["settings_sample.isDarkMode", !getLocalDataValue("settings_sample.isDarkMode")]]);
-  }
+  // const toggleDarkMode = () => {
+  //   setLocalDataValue([["settings_sample.isDarkMode", !getLocalDataValue("settings_sample.isDarkMode")]]);
+  // }
 
   return (
     <UI.BasicActivity navigation={navigation} route={route} title="Local Data Management Sample">
-      <UI.VerticalLayout>
+      {/* <UI.VerticalLayout>
         <UI.Text variant="titleMedium">Modify and save local data</UI.Text>
         <UI.VerticalLayout>
           <UI.Button mode="contained" onPress={() => updateTrackersSample()}>++trackers_sample.num</UI.Button>
@@ -52,7 +52,7 @@ function SampleLocalDataScreen({ navigation, route }) {
             <UI.Text variant="bodySmall">{getLocalDataStringify()}</UI.Text>
           </Card.Content>
         </Card>
-      </UI.VerticalLayout>
+      </UI.VerticalLayout> */}
     </UI.BasicActivity>
   );
 }

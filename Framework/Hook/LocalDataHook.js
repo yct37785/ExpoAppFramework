@@ -2,20 +2,6 @@ import React, { createContext, useContext, useMemo, useState, useEffect } from '
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /**
- * Local data context for managing stored data.
- */
-export const LocalDataContext = createContext({
-  isDataReady: false,
-  writeLocalData: () => {},
-  readLocalData: () => {},
-  readAllLocalData: () => {},
-  deleteLocalData: () => {},
-  deleteAllLocalData: () => {},
-  retrieveDanglingKeys: () => {},
-  onLocalDataUpdated: () => {},
-});
-
-/**
  * Local data manager with built-in update effect.
  * 
  * @param {Object} props - Component props.
@@ -203,17 +189,18 @@ export const useLocalDataManager = ({ LOCAL_DATA_DEFAULT_KEY_VALUES }) => {
 };
 
 /**
- * Local data provider for context.
+ * Local data context for managing stored data.
  */
-export const LocalDataProvider = ({ children, LOCAL_DATA_DEFAULT_KEY_VALUES }) => {
-  const localDataManager = useLocalDataManager({ LOCAL_DATA_DEFAULT_KEY_VALUES });
-
-  return (
-    <LocalDataContext.Provider value={localDataManager}>
-      {children}
-    </LocalDataContext.Provider>
-  );
-};
+const LocalDataContext = createContext({
+  isDataReady: false,
+  writeLocalData: () => {},
+  readLocalData: () => {},
+  readAllLocalData: () => {},
+  deleteLocalData: () => {},
+  deleteAllLocalData: () => {},
+  retrieveDanglingKeys: () => {},
+  onLocalDataUpdated: () => {},
+});
 
 /**
  * Context consumer hook.

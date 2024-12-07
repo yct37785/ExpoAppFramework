@@ -7,8 +7,7 @@ import TestRootComp from '../Testing/TestRootComp';
 import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, Text } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
 // hooks
-import { LocalDataContext } from '../Hook/LocalDataHook';
-import useLocalDataManager from '../Manager/LocalDataManager';
+import { useLocalDataManager, LocalDataContext } from '../Hook/LocalDataHook';
 // deps
 import 'react-native-get-random-values';
 // nav
@@ -77,14 +76,14 @@ const RootComp = ({ screenMap, DEFAULT_SCREEN, LOCAL_DATA_SCHEMA }) => {
   const localDataManager = useLocalDataManager({ LOCAL_DATA_SCHEMA });
   const [theme, setTheme] = useState(CombinedDarkTheme);
 
-  useEffect(() => {
-    const isDarkMode = localDataManager.getLocalDataValue("settings_sample.isDarkMode");
-    if (localDataManager.isLocalDataLoaded && (isDarkMode !== (theme === CombinedDarkTheme))) {
-      const newTheme = isDarkMode ? CombinedDarkTheme : CombinedDefaultTheme;
-      console.log("RootComp: toggle dark mode: " + localDataManager.getLocalDataValue("settings_sample.isDarkMode"));
-      setTheme(newTheme);
-    }
-  }, [localDataManager.updateCount, localDataManager.isLocalDataLoaded]);
+  // useEffect(() => {
+  //   const isDarkMode = localDataManager.getLocalDataValue("settings_sample.isDarkMode");
+  //   if (localDataManager.isLocalDataLoaded && (isDarkMode !== (theme === CombinedDarkTheme))) {
+  //     const newTheme = isDarkMode ? CombinedDarkTheme : CombinedDefaultTheme;
+  //     console.log("RootComp: toggle dark mode: " + localDataManager.getLocalDataValue("settings_sample.isDarkMode"));
+  //     setTheme(newTheme);
+  //   }
+  // }, [localDataManager.updateCount, localDataManager.isLocalDataLoaded]);
 
   return (
     <LocalDataContext.Provider value={localDataManager}>
