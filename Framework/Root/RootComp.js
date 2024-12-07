@@ -7,7 +7,7 @@ import TestRootComp from '../Testing/TestRootComp';
 import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, Text } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
 // hooks
-import { LocalDataProvider } from '../Hook/LocalDataHook';
+import { useLocalDataContext, LocalDataProvider } from '../Hook/LocalDataHook';
 // deps
 import 'react-native-get-random-values';
 // nav
@@ -74,15 +74,16 @@ function ScreenWrapper({ component: Component, ...props }) {
  */
 const RootComp = ({ screenMap, DEFAULT_SCREEN, LOCAL_DATA_SCHEMA }) => {
   const [theme, setTheme] = useState(CombinedDarkTheme);
+  const { isDataReady, readLocalData } = useLocalDataContext(); 
 
   /**
    * Triggered on local data ready and update
    */
   useEffect(() => {
-    if (localDataManager.isDataReady) {
+    if (isDataReady) {
       applySystemSettings();
     }
-  }, [localDataManager.isDataReady]);
+  }, [readLocalData]);
 
   /**
    * Apply system settings
