@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { Text } from 'react-native-paper';
-import LocalDataManager_TestRunner from './LocalDataManager_TestRunner';
+import LocalDataHook_TestRunner from './LocalDataHook_TestRunner';
 
 /**
  * Minimalist RootComp to run tests with an actual React Native DOM.
@@ -9,7 +9,7 @@ import LocalDataManager_TestRunner from './LocalDataManager_TestRunner';
 const TestRootComp = () => {
   const [currentRunner, setCurrentRunner] = useState(0); // Track the current test runner
   const testRunners = [
-    LocalDataManager_TestRunner,
+    LocalDataHook_TestRunner,
   ]; // Array of test runner components
 
   useEffect(() => {

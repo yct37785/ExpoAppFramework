@@ -14,7 +14,7 @@ const LOCALDATA_TEST_SCHEMA = {
  * @param {Object} props - Component props.
  * @param {Function} props.onTestEnd - Callback when tests finish.
  */
-const LocalDataManager_TestRunner = ({ onTestEnd }) => {
+const LocalDataHook_TestRunner = ({ onTestEnd }) => {
   const className = 'LocalDataManager';
 
   const {
@@ -101,7 +101,7 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
 const LocalDataProviderWrapper = ({ onTestEnd }) => {
   return (
     <LocalDataProvider schema={LOCALDATA_TEST_SCHEMA}>
-      <LocalDataManager_TestRunner onTestEnd={onTestEnd} />
+      <LocalDataHook_TestRunner onTestEnd={onTestEnd} />
     </LocalDataProvider>
   );
 }
