@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+const _ = require('lodash');
 
 /**
  * Local data manager with built-in update effect.
@@ -16,21 +17,29 @@ const useLocalDataManager = (defaultSchema) => {
 
   /**
    * Load local data by checking and filling missing keys.
-   * Triggers the `onLocalDataReady` event after completion.
    */
   const loadLocalData = async () => {
     try {
       const storedData = await AsyncStorage.multiGet(await AsyncStorage.getAllKeys());
+      // only read keys that exists in schema
       storedData.forEach(([key, value]) => {
-        if (schema.current[key]) localCache.current[key] = JSON.parse(value);
+        if (key in schema.current) {
+          localCache.current[key] = JSON.parse(value);
+        }
       });
-
+      // create missing kv pairs on the spot
       const missingKeys = Object.keys(schema.current).filter((key) => !(key in localCache.current));
       if (missingKeys.length) {
-        const newEntries = missingKeys.map((key) => [key, JSON.stringify(schema.current[key])]);
+        const newEntries = [];
+        missingKeys.forEach((key) => {
+          if (schema.current[key] !== undefined && schema.current[key] !== null) {
+            localCache.current[key] = _.cloneDeep(schema.current[key]);
+            newEntries.push([key, JSON.stringify(schema.current[key])]);
+          }
+        });
         await AsyncStorage.multiSet(newEntries);
-        newEntries.forEach(([key, value]) => (localCache.current[key] = JSON.parse(value)));
       }
+      // local data is ready
       setIsLocalDataReady(true);
     } catch (error) {
       console.error(`Error loading data: ${error.message}`);
@@ -40,7 +49,7 @@ const useLocalDataManager = (defaultSchema) => {
   useEffect(() => { loadLocalData(); }, []);
 
   /**
-   * Writes a key-value pair to storage.
+   * Writes a key-value pair to storage if valid.
    * 
    * @param {string} key - The key to store.
    * @param {any} value - The value to store.
@@ -50,7 +59,7 @@ const useLocalDataManager = (defaultSchema) => {
     try {
       if (!isLocalDataReady) throw new Error("Data not ready.");
       if (!(key instanceof String)) throw new Error(`Key must be string type.`);
-      if (value === null) throw new Error(`value cannot be null.`);
+      if (value === null || value === undefined) throw new Error(`value cannot be null.`);
       if (!bypassSchema && !(key in schema.current)) throw new Error(`Invalid key: ${key}`);
 
       localCache.current[key] = value;
@@ -74,7 +83,7 @@ const useLocalDataManager = (defaultSchema) => {
     if (!(key instanceof String)) throw new Error(`Key must be string type.`);
     if (!(key in localCache.current))  throw new Error(`Key not found: ${key}`);
 
-    return JSON.parse(JSON.stringify(localCache.current[key]));
+    return _.cloneDeep(localCache.current[key]);
     } catch (e) {
       console.error(`Error reading local data: ${e.message}`);
       return null;
