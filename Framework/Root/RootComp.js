@@ -41,7 +41,7 @@ const CombinedDarkTheme = {
   }
 };
 
-const TEST_MODE = true;
+const TEST_MODE = false;
 
 LogBox.ignoreLogs(['new NativeEventEmitter']);
 
@@ -76,7 +76,7 @@ const RootComp = ({ screenMap, DEFAULT_SCREEN }) => {
   const [theme, setTheme] = useState(CombinedDarkTheme);
   const {
     isLocalDataReady,
-    readLocalData,
+    readLocalData
   } = useLocalDataContext();
 
   /**
@@ -89,9 +89,9 @@ const RootComp = ({ screenMap, DEFAULT_SCREEN }) => {
   }, [isLocalDataReady]);
 
   /**
-   * Toggle theme
+   * Apply system settings
    */
-  function toggleDarkMode() {
+  async function applySystemSettings() {
     // default is light mode, if user setting is dark mode, set theme to dark theme
     const isDarkMode = readLocalData("isDarkMode");
     if (isDarkMode !== (theme === CombinedDarkTheme)) {
@@ -101,17 +101,10 @@ const RootComp = ({ screenMap, DEFAULT_SCREEN }) => {
   }
 
   /**
-   * Apply system settings
-   */
-  async function applySystemSettings() {
-    toggleDarkMode();
-  }
-
-  /**
    * Triggered when a write/delete operation happens (excluding isLocalDataReady)
    */
   onLocalDataUpdate(() => {
-    toggleDarkMode();
+    applySystemSettings();
   });
 
   return (
