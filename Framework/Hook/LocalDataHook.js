@@ -1,25 +1,18 @@
-import React, { createContext, useContext, useMemo, useState, useEffect, useRef } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const _ = require('lodash');
 
 /**
  * Local data manager with built-in update effect.
  * 
- * @param {Object} props - Component props.
- * @param {Object} props.LOCAL_DATA_DEFAULT_KEY_VALUES - List of keys and their default values.
+ * @param {Object} defaultSchema - Default key-value schema for local storage.
  */
-const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
-  const schema = useMemo(() => _.cloneDeep(LOCAL_DATA_DEFAULT_KEY_VALUES), []); // immutable schema
-  const localCache = useRef(null);
+const useLocalDataManager = (defaultSchema) => {
+  const schema = useRef({ ...defaultSchema });
+  const localCache = useRef({});
   const [isLocalDataReady, setIsLocalDataReady] = useState(false);
   const [updateFlag, setUpdateFlag] = useState(0);
 
-  /**
-   * Change value of updateFlag to trigger re-render
-   */
-  const triggerUpdateFlag = () => {
-    setUpdateFlag((prev) => prev + 1);
-  };
+  const triggerUpdate = () => setUpdateFlag((prev) => prev + 1);
 
   /**
    * Load local data by checking and filling missing keys.
@@ -27,131 +20,100 @@ const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
    */
   const loadLocalData = async () => {
     try {
-      // retrieve all existing kv pairs
-      const existingKeys = await AsyncStorage.getAllKeys();
-      const keyValues = await AsyncStorage.multiGet(existingKeys);
-
-      // only retrieve keys that exists in schema
-      const allData = {};
-      keyValues.forEach(([key, value]) => {
-        if (schema.hasOwnProperty(key)) {
-          allData[key] = JSON.parse(value);
-        }
+      const storedData = await AsyncStorage.multiGet(await AsyncStorage.getAllKeys());
+      storedData.forEach(([key, value]) => {
+        if (schema.current[key]) localCache.current[key] = JSON.parse(value);
       });
-      
-      // fill missing keys
-      const missingKeys = Object.keys(schema).filter((key) => !existingKeys.includes(key)); // TODO: do not use .includes
-      if (missingKeys.length > 0) {
-        const missingKeyValues = [];
-        for (let i in missingKeys) {
-          const key = missingKeys[i];
-          allData[key] = _.cloneDeep(schema[key]);
-          missingKeyValues.push([key, JSON.stringify(schema[key])]);
-        }
-        await AsyncStorage.multiSet(missingKeyValues);
+
+      const missingKeys = Object.keys(schema.current).filter((key) => !(key in localCache.current));
+      if (missingKeys.length) {
+        const newEntries = missingKeys.map((key) => [key, JSON.stringify(schema.current[key])]);
+        await AsyncStorage.multiSet(newEntries);
+        newEntries.forEach(([key, value]) => (localCache.current[key] = JSON.parse(value)));
       }
-      // save to localCache
-      localCache.current = allData;
-      // notify changes
       setIsLocalDataReady(true);
     } catch (error) {
-      console.error(`Error during data initialization: ${error.message}`);
+      console.error(`Error loading data: ${error.message}`);
     }
   };
 
-  useEffect(() => {
-    loadLocalData();
-  }, []);
+  useEffect(() => { loadLocalData(); }, []);
 
   /**
    * Writes a key-value pair to storage.
    * 
    * @param {string} key - The key to store.
    * @param {any} value - The value to store.
-   * @param {boolean} [bypassSchema='false'] - Do not validate key with schema, ONLY FOR TESTING USAGE!
+   * @param {boolean} [bypassSchema=false] - Skip schema validation (for testing only).
    */
   const writeLocalData = async (key, value, bypassSchema = false) => {
-    try {
-      if (!isLocalDataReady) {
-        throw new Error("Local data initialization incomplete.");
-      }
-      if (!bypassSchema && !localCache.current.hasOwnProperty(key)) {
-        throw new Error(`Key "${key}" is not listed in the schema.`);
-      }
-      localCache.current[key] = value;
-      await AsyncStorage.setItem(key, JSON.stringify(value));
-      // notify changes
-      triggerUpdateFlag();
-    } catch (error) {
-      console.error(`Failed to write data: ${error.message}`);
-    }
+    if (!isLocalDataReady) return console.error("Data not ready.");
+    if (!bypassSchema && !(key in schema.current)) return console.error(`Invalid key: ${key}`);
+
+    localCache.current[key] = value;
+    await AsyncStorage.setItem(key, JSON.stringify(value));
+    triggerUpdate();
   };
 
   /**
    * Reads a value by key from storage.
    * 
    * @param {string} key - The key to retrieve.
-   * 
-   * @returns {any} Value of the KV pairs.
+   * @returns {any} Deep copy of the stored value.
    */
   const readLocalData = (key) => {
-    try {
-      if (!isLocalDataReady) {
-        throw new Error("Local data initialization incomplete.");
-      }
-      if (!localCache.current.hasOwnProperty(key)) {
-        throw new Error(`Key "${key}" is not listed in the schema.`);
-      }
-      return _.cloneDeep(localCache.current[key]);
-    } catch (error) {
-      console.error(`Failed to read data: ${error.message}`);
-      return null;
-    }
+    if (!isLocalDataReady) return console.error("Data not ready.");
+    if (!(key in localCache.current)) return console.error(`Key not found: ${key}`);
+
+    return JSON.parse(JSON.stringify(localCache.current[key]));
   };
 
   /**
-   * Retrieve dangling keys, i.e. keys that are not tracked in schema
+   * Retrieves dangling keys not listed in the schema.
    * 
-   * @returns {Object} An object with all the dangling KV pairs.
+   * @returns {Object} An object with dangling key-value pairs.
    */
   const readDanglingKeys = async () => {
     try {
-      if (!isLocalDataReady) {
-        throw new Error("Local data initialization incomplete.");
-      }
+      if (!isLocalDataReady) throw new Error("Data not ready.");
       const allKeys = await AsyncStorage.getAllKeys();
-      const schemaKeys =  Object.keys(schema);
-      const danglingKeys = allKeys.filter((key) => !schemaKeys.includes(key)); // TODO: do not use .includes
-      const danglingObj = {};
-      if (danglingKeys.length > 0) {
-        const keyValues = await AsyncStorage.multiGet(danglingKeys);
-        keyValues.forEach(([key, value]) => {
-          danglingObj[key] = JSON.parse(value);
-        });
-      }
-      return danglingObj;
+      const danglingKeys = allKeys.filter((key) => !(key in schema.current));
+      if (!danglingKeys.length) return {};
+
+      const keyValues = await AsyncStorage.multiGet(danglingKeys);
+      return Object.fromEntries(keyValues.map(([key, value]) => [key, JSON.parse(value)]));
     } catch (error) {
-      console.error(`Failed to delete read dangling keys: ${error.message}`);
-      return null;
+      console.error(`Error reading dangling keys: ${error.message}`);
+      return {};
     }
   };
 
   /**
-   * Deletes all key-value pairs from storage.
+   * Clears all dangling keys from storage.
    */
-  const deleteAllLocalData = async () => {
+  const clearDanglingKeys = async () => {
     try {
-      if (!isLocalDataReady) {
-        throw new Error("Local data initialization incomplete.");
+      if (!isLocalDataReady) throw new Error("Data not ready.");
+      const danglingKeys = await readDanglingKeys();
+      if (Object.keys(danglingKeys).length) {
+        await AsyncStorage.multiRemove(Object.keys(danglingKeys));
+        console.info("Dangling keys cleared.");
+        triggerUpdate();
+      } else {
+        console.info("No dangling keys to clear.");
       }
-      const keys = await AsyncStorage.getAllKeys();
-      await AsyncStorage.multiRemove(keys);
-      localCache.current = {};
-      // notify changes
-      triggerUpdateFlag();
     } catch (error) {
-      console.error(`Failed to delete all data: ${error.message}`);
+      console.error(`Error clearing dangling keys: ${error.message}`);
     }
+  };
+
+  /**
+   * Clear all key value pairs. For testing usage.
+   */
+  const clearLocalData = async () => {
+    await AsyncStorage.clear();
+    localCache.current = {};
+    triggerUpdate();
   };
 
   return {
@@ -160,20 +122,20 @@ const useLocalDataManager = (LOCAL_DATA_DEFAULT_KEY_VALUES) => {
     writeLocalData,
     readLocalData,
     readDanglingKeys,
-    deleteAllLocalData
+    clearDanglingKeys,
+    clearLocalData
   };
 };
 
-/**
- * Local data context for useLocalDataManager.
- */
+/* Context Setup */
 const LocalDataContext = createContext({
   isLocalDataReady: false,
   updateFlag: 0,
-  writeLocalData: async () => {},
-  readLocalData: () => {},
-  readDanglingKeys: async () => {},
-  deleteAllLocalData: async () => {}
+  writeLocalData: async () => { },
+  readLocalData: () => { },
+  readDanglingKeys: async () => { },
+  clearDanglingKeys: async () => { },
+  clearLocalData: async () => { },
 });
 
 /**
@@ -181,7 +143,6 @@ const LocalDataContext = createContext({
  */
 export const LocalDataProvider = ({ children, schema }) => {
   const localDataManager = useLocalDataManager(schema);
-
   return (
     <LocalDataContext.Provider value={localDataManager}>
       {children}
@@ -195,18 +156,13 @@ export const LocalDataProvider = ({ children, schema }) => {
 export const useLocalDataContext = () => useContext(LocalDataContext);
 
 /**
- * Utility hook that triggers on local data update event
- * Will not trigger with isLocalDataReady as local data should've been long loaded before the trigger
- * of this hook
+ * Utility hook that triggers on local data updates.
  * 
- * @param {Function} callback - Triggered when local data update occurs.
+ * @param {Function} callback - Triggered when local data updates occur.
  */
 export const onLocalDataUpdate = (callback) => {
   const { updateFlag } = useLocalDataContext();
-
   useEffect(() => {
-    if (updateFlag) {
-      callback();
-    }
+    if (updateFlag) callback();
   }, [updateFlag]);
 };
