@@ -47,25 +47,38 @@ const useLocalDataManager = (defaultSchema) => {
    * @param {boolean} [bypassSchema=false] - Skip schema validation (for testing only).
    */
   const writeLocalData = async (key, value, bypassSchema = false) => {
-    if (!isLocalDataReady) return console.error("Data not ready.");
-    if (!bypassSchema && !(key in schema.current)) return console.error(`Invalid key: ${key}`);
+    try {
+      if (!isLocalDataReady) throw new Error("Data not ready.");
+      if (!(key instanceof String)) throw new Error(`Key must be string type.`);
+      if (value === null) throw new Error(`value cannot be null.`);
+      if (!bypassSchema && !(key in schema.current)) throw new Error(`Invalid key: ${key}`);
 
-    localCache.current[key] = value;
-    await AsyncStorage.setItem(key, JSON.stringify(value));
-    triggerUpdate();
+      localCache.current[key] = value;
+      await AsyncStorage.setItem(key, JSON.stringify(value));
+      triggerUpdate();
+    } catch (e) {
+      console.error(`Error writing to local data: ${e.message}`);
+    }
   };
 
   /**
    * Reads a value by key from storage.
    * 
    * @param {string} key - The key to retrieve.
+   * 
    * @returns {any} Deep copy of the stored value.
    */
   const readLocalData = (key) => {
-    if (!isLocalDataReady) return console.error("Data not ready.");
-    if (!(key in localCache.current)) return console.error(`Key not found: ${key}`);
+    try {
+    if (!isLocalDataReady)  throw new Error("Data not ready.");
+    if (!(key instanceof String)) throw new Error(`Key must be string type.`);
+    if (!(key in localCache.current))  throw new Error(`Key not found: ${key}`);
 
     return JSON.parse(JSON.stringify(localCache.current[key]));
+    } catch (e) {
+      console.error(`Error reading local data: ${e.message}`);
+      return null;
+    }
   };
 
   /**

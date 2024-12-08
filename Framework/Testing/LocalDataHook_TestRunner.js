@@ -1,11 +1,14 @@
-import React, { useEffect, useState, memo, useRef, useCallback, useContext } from 'react';
+import React, { useEffect, useRef, memo } from 'react';
 import { LocalDataProvider, useLocalDataContext } from '../Hook/LocalDataHook';
-import { delayPromise } from '../Utility/GeneralUtility';
 
 const LOCALDATA_TEST_SCHEMA = {
-  key1: 'value1',
-  key2: 123,
-  key3: { nested: true },
+  stringKey: 'defaultString',
+  numberKey: 42,
+  booleanKey: true,
+  objectKey: { nested: { deep: "value" } },
+  arrayKey: [1, 2, 3],
+  nullKey: null,
+  undefinedKey: undefined,  // This should be handled as a missing key.
 };
 
 /**
@@ -14,7 +17,7 @@ const LOCALDATA_TEST_SCHEMA = {
  * @param {Object} props - Component props.
  * @param {Function} props.onTestEnd - Callback when tests finish.
  */
-const LocalDataHook_TestRunner = ({ onTestEnd }) => {
+const LocalDataManager_TestRunner = ({ onTestEnd }) => {
   const className = 'LocalDataManager';
 
   const {
@@ -23,9 +26,10 @@ const LocalDataHook_TestRunner = ({ onTestEnd }) => {
     writeLocalData,
     readLocalData,
     readDanglingKeys,
-    deleteAllLocalData
+    clearDanglingKeys,
+    clearLocalData
   } = useLocalDataContext();
-  
+
   const updateFlagRef = useRef(updateFlag);
 
   useEffect(() => {
@@ -39,71 +43,138 @@ const LocalDataHook_TestRunner = ({ onTestEnd }) => {
   }, [updateFlag]);
 
   /**
-   * Runs all tests in sequence.
+   * Utility function for running individual tests.
+   */
+  const runTest = async (description, testFunc) => {
+    try {
+      const status = await testFunc();
+      console.info(`${description}: ${status ? "PASS" : "FAIL"}`);
+      return { test: description, status };
+    } catch (error) {
+      console.error(`${description} failed with error: ${error.message}`);
+      return { test: description, status: false };
+    }
+  };
+
+  /**
+   * Comprehensive test runner.
    */
   async function runTests() {
     const results = [];
 
-    results.push({ test: 'Load local data', status: await testInitialization() });
-    results.push({ test: 'Write and read data', status: await testWriteReadData() });
-    results.push({ test: 'Dangling key read', status: await testDanglingKey() });
+    results.push(await runTest("Initialization Test", testInitialization));
+    results.push(await runTest("Valid Data Write/Read Test", testValidDataWriteRead));
+    results.push(await runTest("Dangling Key Handling Test", testDanglingKeyHandling));
+    results.push(await runTest("Invalid Key Handling Test", testInvalidKeyHandling));
+    results.push(await runTest("Missing Key Handling Test", testMissingKeyHandling));
+    results.push(await runTest("Deep Object Integrity Test", testDeepObjectIntegrity));
+    results.push(await runTest("Array Integrity Test", testArrayIntegrity));
+    results.push(await runTest("Null Value Handling Test", testNullValueHandling));
+    results.push(await runTest("Null Key Handling Test", testNullKeyHandling));
 
-
-    // cleanup
-    await deleteAllLocalData();
+    // Cleanup
+    await clearLocalData();
 
     onTestEnd(className, results);
   }
 
-  async function testInitialization() {
-    try {
-      let missingKey = false;
-      for (let key in LOCALDATA_TEST_SCHEMA) {
-        const v = readLocalData(key);
-        if (v === null) {
-          missingKey = true;
-          break;
-        }
-      }
-      return !missingKey;
-    } catch {
-      return false;
-    }
-  }
+  /* ----------- TEST CASES ----------- */
 
-  async function testWriteReadData() {
-    try {
-      const newValue = "abcd123";
-      await writeLocalData('key1', newValue);
-      const value = readLocalData('key1');
-      return value === newValue;
-    } catch {
-      return false;
+  const testInitialization = async () => {
+    for (let key in LOCALDATA_TEST_SCHEMA) {
+      const value = readLocalData(key);
+      if (value === undefined || value === null) return false;
     }
-  }
+    return true;
+  };
 
-  async function testDanglingKey() {
+  const testValidDataWriteRead = async () => {
+    const testData = {
+      stringKey: "updatedString",
+      numberKey: 12345,
+      booleanKey: false,
+    };
+
+    for (let [key, value] of Object.entries(testData)) {
+      await writeLocalData(key, value);
+      const storedValue = readLocalData(key);
+      if (storedValue !== value) return false;
+    }
+    return true;
+  };
+
+  const testDanglingKeyHandling = async () => {
+    const danglingKey = "danglingKey";
+    const danglingValue = "temporaryValue";
+
+    await writeLocalData(danglingKey, danglingValue, true);
+    const danglingKeys = await readDanglingKeys();
+    return danglingKeys[danglingKey] === danglingValue;
+  };
+
+  const testInvalidKeyHandling = async () => {
     try {
-      const danglingKey = "key4";
-      const newValue = "obsolete value to be removed";
-      await writeLocalData(danglingKey, newValue, true);
-      const danglingObj = await readDanglingKeys();
-      return Object.keys(danglingObj).length === 1 && danglingObj.hasOwnProperty(danglingKey)
-        && danglingObj[danglingKey] === newValue;
+      await writeLocalData("invalidKey", "someValue");
+    } catch {
+      return true;  // Expected failure
+    }
+    return false;  // Should not succeed
+  };
+
+  const testMissingKeyHandling = async () => {
+    try {
+      const value = readLocalData("nonExistentKey");
+      return value === undefined;
     } catch {
       return false;
     }
-  }
+  };
+
+  const testDeepObjectIntegrity = async () => {
+    const deepObjectKey = "objectKey";
+    const updatedObject = { nested: { deep: "newValue", extra: 456 } };
+
+    await writeLocalData(deepObjectKey, updatedObject);
+    const storedValue = readLocalData(deepObjectKey);
+    return JSON.stringify(storedValue) === JSON.stringify(updatedObject);
+  };
+
+  const testArrayIntegrity = async () => {
+    const arrayKey = "arrayKey";
+    const updatedArray = [9, 8, 7, 6];
+
+    await writeLocalData(arrayKey, updatedArray);
+    const storedValue = readLocalData(arrayKey);
+    return JSON.stringify(storedValue) === JSON.stringify(updatedArray);
+  };
+
+  const testNullValueHandling = async () => {
+    const nullKey = "nullKey";
+
+    await writeLocalData(nullKey, "notNull");
+    let value = readLocalData(nullKey);
+    if (value !== "notNull") return false;
+
+    await writeLocalData(nullKey, null);
+    value = readLocalData(nullKey);
+    return value === null;
+  };
+
+  const testNullKeyHandling = async () => {
+    await writeLocalData(null, "null");
+    value = readLocalData(null);
+    return value === null;
+  };
 
   return null;
 };
 
-const LocalDataProviderWrapper = ({ onTestEnd }) => {
-  return (
-    <LocalDataProvider schema={LOCALDATA_TEST_SCHEMA}>
-      <LocalDataHook_TestRunner onTestEnd={onTestEnd} />
-    </LocalDataProvider>
-  );
-}
+/* ----------- PROVIDER WRAPPER ----------- */
+
+const LocalDataProviderWrapper = ({ onTestEnd }) => (
+  <LocalDataProvider schema={LOCALDATA_TEST_SCHEMA}>
+    <LocalDataManager_TestRunner onTestEnd={onTestEnd} />
+  </LocalDataProvider>
+);
 
 export default memo(LocalDataProviderWrapper);
