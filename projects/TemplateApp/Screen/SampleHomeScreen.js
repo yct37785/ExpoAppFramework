@@ -18,18 +18,16 @@ function SampleHomeScreen({ navigation, route }) {
     readLocalData,
     writeLocalData
   } = Hook.useLocalDataContext();
+
+  const { toggleDarkMode } = Hook.useSystemSettingsContext();
   
   Hook.onLocalDataUpdate(() => {
     console.log("SampleHomeScreen: updated local data");
   });
 
-  const switchTheme = () => {
-    writeLocalData("isDarkMode", !readLocalData("isDarkMode"));
-  }
-
   function customHeaderContent() {
     return <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-      <UI.SwitchToggle value={readLocalData("isDarkMode")} onValueChange={() => switchTheme()} />
+      <UI.SwitchToggle value={readLocalData("isDarkMode")} onValueChange={toggleDarkMode} />
     </View>
   }
 

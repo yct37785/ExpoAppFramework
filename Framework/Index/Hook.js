@@ -3,3 +3,4 @@
  */
 export { useLocalDataContext, onLocalDataUpdate } from '../Hook/LocalDataHook';
 export { useOnLayout } from '../Hook/OnLayoutHook';
+export { useSystemSettingsContext } from '../Hook/SystemSettingsHook';

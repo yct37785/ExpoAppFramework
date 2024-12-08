@@ -8,6 +8,7 @@ import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme
 import { MenuProvider } from 'react-native-popup-menu';
 // hooks
 import { useLocalDataContext, LocalDataProvider, onLocalDataUpdate } from '../Hook/LocalDataHook';
+import { SystemSettingsProvider } from '../Hook/SystemSettingsHook';
 // deps
 import 'react-native-get-random-values';
 // nav
@@ -76,24 +77,24 @@ const RootComp = ({ screenMap, DEFAULT_SCREEN }) => {
   const [theme, setTheme] = useState(CombinedDarkTheme);
   const {
     isLocalDataReady,
-    readLocalData
+    readLocalData,
+    writeLocalData
   } = useLocalDataContext();
 
   /**
    * Triggered on local data ready and update
    */
   useEffect(() => {
+    // apply system settings
     if (isLocalDataReady) {
-      applySystemSettings();
+      setDarkMode(readLocalData("isDarkMode"));
     }
   }, [isLocalDataReady]);
 
   /**
-   * Apply system settings
+   * Toggle dark mode
    */
-  async function applySystemSettings() {
-    // default is light mode, if user setting is dark mode, set theme to dark theme
-    const isDarkMode = readLocalData("isDarkMode");
+  function setDarkMode(isDarkMode) {
     if (isDarkMode !== (theme === CombinedDarkTheme)) {
       const newTheme = isDarkMode ? CombinedDarkTheme : CombinedDefaultTheme;
       setTheme(newTheme);
@@ -101,36 +102,39 @@ const RootComp = ({ screenMap, DEFAULT_SCREEN }) => {
   }
 
   /**
-   * Triggered when a write/delete operation happens (excluding isLocalDataReady)
+   * System settings toggle
    */
-  onLocalDataUpdate(() => {
-    applySystemSettings();
-  });
+  async function toggleDarkMode() {
+    await writeLocalData("isDarkMode", !readLocalData("isDarkMode"));
+    setDarkMode(readLocalData("isDarkMode"));
+  }
 
   return (
-    <PaperProvider theme={theme}>
-      <MenuProvider>
-        {/* <View style={{ flex: 1, backgroundColor: theme.colors.background, paddingTop: Platform.OS == "android" ? StatusBar.currentHeight : 0 }}> */}
-        <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
-          {isLocalDataReady ? <NavigationContainer theme={theme}>
-            <Stack.Navigator
-              initialRouteName={DEFAULT_SCREEN}
-              screenOptions={{
-                headerShown: false
-              }}
-            >
-              {Object.keys(screenMap).map((key) => (
-                <Stack.Screen name={key} key={key}>
-                  {(props) => (
-                    <ScreenWrapper {...props} component={screenMap[key]} extraData={{}} />
-                  )}
-                </Stack.Screen>
-              ))}
-            </Stack.Navigator>
-          </NavigationContainer> : null}
-        </View>
-      </MenuProvider>
-    </PaperProvider>
+    <SystemSettingsProvider toggleDarkMode={toggleDarkMode}>
+      <PaperProvider theme={theme}>
+        <MenuProvider>
+          {/* <View style={{ flex: 1, backgroundColor: theme.colors.background, paddingTop: Platform.OS == "android" ? StatusBar.currentHeight : 0 }}> */}
+          <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+            {isLocalDataReady ? <NavigationContainer theme={theme}>
+              <Stack.Navigator
+                initialRouteName={DEFAULT_SCREEN}
+                screenOptions={{
+                  headerShown: false
+                }}
+              >
+                {Object.keys(screenMap).map((key) => (
+                  <Stack.Screen name={key} key={key}>
+                    {(props) => (
+                      <ScreenWrapper {...props} component={screenMap[key]} extraData={{}} />
+                    )}
+                  </Stack.Screen>
+                ))}
+              </Stack.Navigator>
+            </NavigationContainer> : null}
+          </View>
+        </MenuProvider>
+      </PaperProvider>
+    </SystemSettingsProvider>
   );
 };
 
