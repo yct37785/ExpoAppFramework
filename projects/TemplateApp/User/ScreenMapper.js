@@ -12,7 +12,6 @@ import SampleContainersScreen from '../Screen/SampleContainersScreen';
 import SampleMenusScreen from '../Screen/SampleMenusScreen';
 import SampleEmptyScreen from '../Screen/SampleEmptyScreen';
 import SampleDataDisplayScreen from '../Screen/SampleDataDisplayScreen';
-import SampleLocalDataScreen from '../Screen/SampleLocalDataScreen';
 
 export const screenMap = {
   home: SampleHomeScreen,
@@ -21,8 +20,7 @@ export const screenMap = {
   containers: SampleContainersScreen,
   menus: SampleMenusScreen,
   empty: SampleEmptyScreen,
-  dataDisplay: SampleDataDisplayScreen,
-  localData: SampleLocalDataScreen
+  dataDisplay: SampleDataDisplayScreen
 };
 
 export const DEFAULT_SCREEN = 'home';
