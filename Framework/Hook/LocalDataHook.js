@@ -80,7 +80,7 @@ const useLocalDataManager = (defaultSchema) => {
   const readLocalData = (key) => {
     try {
     if (!isLocalDataReady)  throw new Error("Data not ready.");
-    if (!(key instanceof String)) throw new Error(`Key must be string type.`);
+    if (!(typeof key === 'string')) throw new Error(`Key must be string type.`);
     if (!(key in localCache.current))  throw new Error(`Key not found: ${key}`);
 
     return _.cloneDeep(localCache.current[key]);
