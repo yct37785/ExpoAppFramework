@@ -18,6 +18,5 @@ export const SAMPLE_SCREENS = {
   containers: "containers example",
   menus: "menus example",
   empty: "empty example",
-  dataDisplay: "data display example",
-  localData: "local data management example",
+  dataDisplay: "data display example"
 };
