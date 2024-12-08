@@ -58,7 +58,7 @@ const useLocalDataManager = (defaultSchema) => {
   const writeLocalData = async (key, value, bypassSchema = false) => {
     try {
       if (!isLocalDataReady) throw new Error("Data not ready.");
-      if (!(key instanceof String)) throw new Error(`Key must be string type.`);
+      if (!(typeof key === 'string')) throw new Error(`Key must be string type.`);
       if (value === null || value === undefined) throw new Error(`value cannot be null.`);
       if (!bypassSchema && !(key in schema.current)) throw new Error(`Invalid key: ${key}`);
 
