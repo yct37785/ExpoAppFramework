@@ -41,8 +41,9 @@ const useLocalDataManager = (defaultSchema) => {
       }
       // local data is ready
       setIsLocalDataReady(true);
-    } catch (error) {
-      console.error(`Error loading data: ${error.message}`);
+    } catch (e) {
+      console.error(`Error loading data: ${e.message}`);
+      throw e;
     }
   };
 
@@ -67,6 +68,7 @@ const useLocalDataManager = (defaultSchema) => {
       triggerUpdate();
     } catch (e) {
       console.error(`Error writing to local data: ${e.message}`);
+      throw e;
     }
   };
 
@@ -86,7 +88,7 @@ const useLocalDataManager = (defaultSchema) => {
     return _.cloneDeep(localCache.current[key]);
     } catch (e) {
       console.error(`Error reading local data: ${e.message}`);
-      return null;
+      throw e;
     }
   };
 
@@ -106,7 +108,7 @@ const useLocalDataManager = (defaultSchema) => {
       return Object.fromEntries(keyValues.map(([key, value]) => [key, JSON.parse(value)]));
     } catch (error) {
       console.error(`Error reading dangling keys: ${error.message}`);
-      return {};
+      throw e;
     }
   };
 
@@ -126,6 +128,7 @@ const useLocalDataManager = (defaultSchema) => {
       }
     } catch (error) {
       console.error(`Error clearing dangling keys: ${error.message}`);
+      throw e;
     }
   };
 
