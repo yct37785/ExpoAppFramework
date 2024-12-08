@@ -56,7 +56,7 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
   };
 
   /**
-   * Comprehensive test runner.
+   * Main test runner function
    */
   async function runTests() {
     const results = [];
@@ -65,11 +65,11 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
     results.push(await runTest("Valid Data Write/Read Test", testValidDataWriteRead));
     results.push(await runTest("Dangling Key Handling Test", testDanglingKeyHandling));
     results.push(await runTest("Invalid Key Handling Test", testInvalidKeyHandling));
-    // results.push(await runTest("Missing Key Handling Test", testMissingKeyHandling));
-    // results.push(await runTest("Deep Object Integrity Test", testDeepObjectIntegrity));
-    // results.push(await runTest("Array Integrity Test", testArrayIntegrity));
-    // results.push(await runTest("Null Value Handling Test", testNullValueHandling));
-    // results.push(await runTest("Null Key Handling Test", testNullKeyHandling));
+    results.push(await runTest("Missing Key Handling Test", testMissingKeyHandling));
+    results.push(await runTest("Deep Object Integrity Test", testDeepObjectIntegrity));
+    results.push(await runTest("Array Integrity Test", testArrayIntegrity));
+    results.push(await runTest("Null Value Handling Test", testNullValueHandling));
+    results.push(await runTest("Null Key Handling Test", testNullKeyHandling));
 
     // Cleanup
     await clearLocalData();
@@ -96,7 +96,6 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
     };
 
     for (let [key, value] of Object.entries(testData)) {
-      console.log(typeof key, value);
       await writeLocalData(key, value);
       const storedValue = readLocalData(key);
       if (storedValue !== value) return false;
@@ -110,24 +109,28 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
 
     await writeLocalData(danglingKey, danglingValue, true);
     const danglingKeys = await readDanglingKeys();
-    return danglingKeys[danglingKey] === danglingValue;
+    if (danglingKeys[danglingKey] !== danglingValue) return false;
+
+    await clearDanglingKeys();
+    const new_danglingKeys = await readDanglingKeys();
+    return Object.keys(new_danglingKeys).length === 0;
   };
 
   const testInvalidKeyHandling = async () => {
     try {
       await writeLocalData("invalidKey", "someValue");
     } catch {
-      return true;  // Expected failure
+      return true;
     }
-    return false;  // Should not succeed
+    return false;
   };
 
   const testMissingKeyHandling = async () => {
     try {
-      const value = readLocalData("nonExistentKey");
-      return value === undefined;
-    } catch {
+      readLocalData("nonExistentKey");
       return false;
+    } catch {
+      return true;
     }
   };
 
@@ -150,21 +153,25 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
   };
 
   const testNullValueHandling = async () => {
-    const nullKey = "nullKey";
-
-    await writeLocalData(nullKey, "notNull");
-    let value = readLocalData(nullKey);
-    if (value !== "notNull") return false;
-
-    await writeLocalData(nullKey, null);
-    value = readLocalData(nullKey);
-    return value === null;
+    try {
+      await writeLocalData(numberKey, null);
+    } catch {
+      return true;
+    }
+    return false;
   };
 
   const testNullKeyHandling = async () => {
-    await writeLocalData(null, "null");
-    value = readLocalData(null);
-    return value === null;
+    try {
+      await writeLocalData(null, "null");
+    } catch {
+      try {
+        readLocalData(null);
+      } catch {
+        return true;
+      }
+    }
+    return false;
   };
 
   return null;
