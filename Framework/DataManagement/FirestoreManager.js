@@ -144,6 +144,7 @@ const useFirestoreManager = () => {
           onChange(docSnap.data());
         } else {
           console.warn(`Document ${docId} not found in ${collectionName}`);
+          throw new Error(`404`);
         }
       });
       return unsubscribe;
