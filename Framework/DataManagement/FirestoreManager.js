@@ -32,7 +32,7 @@ const useFirestoreManager = () => {
       return true;
     } catch (error) {
       console.error(`Error creating collection: ${error.message}`);
-      return false;
+      throw error;
     }
   };
 
@@ -51,7 +51,7 @@ const useFirestoreManager = () => {
       return true;
     } catch (error) {
       console.error(`Error creating document: ${error.message}`);
-      return false;
+      throw error;
     }
   };
 
@@ -69,7 +69,7 @@ const useFirestoreManager = () => {
       return docSnap.exists() ? docSnap.data() : null;
     } catch (error) {
       console.error(`Error reading document: ${error.message}`);
-      return null;
+      throw error;
     }
   };
 
@@ -88,7 +88,7 @@ const useFirestoreManager = () => {
       return true;
     } catch (error) {
       console.error(`Error updating document: ${error.message}`);
-      return false;
+      throw error;
     }
   };
 
@@ -106,7 +106,7 @@ const useFirestoreManager = () => {
       return true;
     } catch (error) {
       console.error(`Error deleting document: ${error.message}`);
-      return false;
+      throw error;
     }
   };
 
@@ -123,7 +123,56 @@ const useFirestoreManager = () => {
       return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
     } catch (error) {
       console.error(`Error reading all documents: ${error.message}`);
-      return [];
+      throw error;
+    }
+  };
+
+  /**
+   * Listens for changes on a specific document.
+   * 
+   * @param {string} collectionName - The Firestore collection name.
+   * @param {string} docId - The document ID to listen for.
+   * @param {Function} onChange - Callback triggered when the document changes.
+   * 
+   * @returns {Function} A function to unsubscribe from the listener.
+   */
+  const listenToDocument = (collectionName, docId, onChange) => {
+    try {
+      const docRef = doc(db, collectionName, docId);
+      const unsubscribe = onSnapshot(docRef, (docSnap) => {
+        if (docSnap.exists()) {
+          onChange(docSnap.data());
+        } else {
+          console.warn(`Document ${docId} not found in ${collectionName}`);
+        }
+      });
+      return unsubscribe;
+    } catch (error) {
+      console.error(`Error listening to document: ${error.message}`);
+      throw error;
+    }
+  };
+
+  /**
+   * Deletes an entire collection by deleting all its documents.
+   * 
+   * @param {string} collectionName - Name of the collection to delete.
+   * @returns {Promise<boolean>} - True if successful.
+   */
+  const deleteCollection = async (collectionName) => {
+    try {
+      const colRef = collection(db, collectionName);
+      const snapshot = await getDocs(colRef);
+
+      const deletePromises = snapshot.docs.map((docSnap) =>
+        deleteDoc(doc(db, collectionName, docSnap.id))
+      );
+
+      await Promise.all(deletePromises);
+      return true;
+    } catch (error) {
+      console.error(`Error deleting collection: ${error.message}`);
+      throw error;
     }
   };
 
@@ -134,6 +183,8 @@ const useFirestoreManager = () => {
     updateDocument,
     deleteDocument,
     readAllDocuments,
+    listenToDocument,
+    deleteCollection
   };
 };
 
