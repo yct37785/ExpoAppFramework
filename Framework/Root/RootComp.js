@@ -9,7 +9,7 @@ import TestRootComp from '../Testing/TestRootComp';
 import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, Text } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
 // hooks
-import { useLocalDataContext, LocalDataProvider, onLocalDataUpdate } from '../Hook/LocalDataHook';
+import { useLocalDataContext, LocalDataProvider } from '../DataManagement/LocalDataManager';
 import { SystemSettingsProvider } from '../Hook/SystemSettingsHook';
 // deps
 import 'react-native-get-random-values';
@@ -44,7 +44,7 @@ const CombinedDarkTheme = {
   }
 };
 
-const TEST_MODE = false;
+const TEST_MODE = true;
 
 LogBox.ignoreLogs(['new NativeEventEmitter']);
 
