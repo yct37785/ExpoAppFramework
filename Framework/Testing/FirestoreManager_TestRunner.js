@@ -29,7 +29,7 @@ const FirestoreManager_TestRunner = ({ onTestEnd }) => {
     results.push({ test: 'Update Document', status: await testUpdateDocument() });
     results.push({ test: 'Delete Document', status: await testDeleteDocument() });
     results.push({ test: 'Read All Documents', status: await testReadAllDocuments() });
-    // results.push({ test: 'Listen to Document', status: await testListenToDocument() });
+    results.push({ test: 'Listen to Document', status: await testListenToDocument() });
     results.push({ test: 'Delete Collection', status: await testDeleteCollection() });
 
     onTestEnd(className, results);
@@ -70,8 +70,8 @@ const FirestoreManager_TestRunner = ({ onTestEnd }) => {
   async function testListenToDocument() {
     let status = false;
   
-    // Create test document new value
-    await updateDocument("TestCollection", "TestDoc", { value: "initial" });
+    // Set initial value
+    await createDocument("TestCollection", "TestDoc", { value: "initial" });
   
     // Listen to document changes
     const unsubscribe = listenToDocument("TestCollection", "TestDoc", (docData) => {
@@ -81,14 +81,8 @@ const FirestoreManager_TestRunner = ({ onTestEnd }) => {
       }
     });
   
-    // Simulate an update on a separate async thread
-    const updateDocument = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate delay
-      await updateDocument("TestCollection", "TestDoc", { value: "updated" });
-    };
-  
-    // Run the update
-    await Promise.all([updateDocument()]);
+    // Simulate an update
+    await updateDocument("TestCollection", "TestDoc", { value: "updated" });
   
     // Wait briefly to ensure listener catches the change
     await new Promise((resolve) => setTimeout(resolve, 2000));
