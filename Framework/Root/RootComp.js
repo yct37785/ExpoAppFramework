@@ -7,7 +7,8 @@ import TestRootComp from '../Testing/TestRootComp';
 import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, Text } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
 // hooks
-import { useLocalDataContext, LocalDataProvider, onLocalDataUpdate } from '../Hook/LocalDataHook';
+import { useLocalDataContext, LocalDataProvider } from '../DataManagement/LocalDataManager';
+import { FirestoreProvider } from '../DataManagement/FirestoreManager';
 import { SystemSettingsProvider } from '../Hook/SystemSettingsHook';
 // deps
 import 'react-native-get-random-values';
@@ -110,31 +111,33 @@ const RootComp = ({ screenMap, DEFAULT_SCREEN }) => {
   }
 
   return (
-    <SystemSettingsProvider toggleDarkMode={toggleDarkMode}>
-      <PaperProvider theme={theme}>
-        <MenuProvider>
-          {/* <View style={{ flex: 1, backgroundColor: theme.colors.background, paddingTop: Platform.OS == "android" ? StatusBar.currentHeight : 0 }}> */}
-          <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
-            {isLocalDataReady ? <NavigationContainer theme={theme}>
-              <Stack.Navigator
-                initialRouteName={DEFAULT_SCREEN}
-                screenOptions={{
-                  headerShown: false
-                }}
-              >
-                {Object.keys(screenMap).map((key) => (
-                  <Stack.Screen name={key} key={key}>
-                    {(props) => (
-                      <ScreenWrapper {...props} component={screenMap[key]} extraData={{}} />
-                    )}
-                  </Stack.Screen>
-                ))}
-              </Stack.Navigator>
-            </NavigationContainer> : null}
-          </View>
-        </MenuProvider>
-      </PaperProvider>
-    </SystemSettingsProvider>
+    <FirestoreProvider>
+      <SystemSettingsProvider toggleDarkMode={toggleDarkMode}>
+        <PaperProvider theme={theme}>
+          <MenuProvider>
+            {/* <View style={{ flex: 1, backgroundColor: theme.colors.background, paddingTop: Platform.OS == "android" ? StatusBar.currentHeight : 0 }}> */}
+            <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+              {isLocalDataReady ? <NavigationContainer theme={theme}>
+                <Stack.Navigator
+                  initialRouteName={DEFAULT_SCREEN}
+                  screenOptions={{
+                    headerShown: false
+                  }}
+                >
+                  {Object.keys(screenMap).map((key) => (
+                    <Stack.Screen name={key} key={key}>
+                      {(props) => (
+                        <ScreenWrapper {...props} component={screenMap[key]} extraData={{}} />
+                      )}
+                    </Stack.Screen>
+                  ))}
+                </Stack.Navigator>
+              </NavigationContainer> : null}
+            </View>
+          </MenuProvider>
+        </PaperProvider>
+      </SystemSettingsProvider>
+    </FirestoreProvider>
   );
 };
 

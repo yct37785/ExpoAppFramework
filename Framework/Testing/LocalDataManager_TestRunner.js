@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, memo } from 'react';
-import { LocalDataProvider, useLocalDataContext } from '../Hook/LocalDataHook';
+import { LocalDataProvider, useLocalDataContext } from '../DataManagement/LocalDataManager';
 
 const LOCALDATA_TEST_SCHEMA = {
   stringKey: 'defaultString',
