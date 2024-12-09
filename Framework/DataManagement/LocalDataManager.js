@@ -152,7 +152,9 @@ const useLocalDataManager = (defaultSchema) => {
   };
 };
 
-/* Context Setup */
+/**
+ * Context setup.
+ */
 const LocalDataContext = createContext({
   isLocalDataReady: false,
   updateFlag: 0,
@@ -164,7 +166,7 @@ const LocalDataContext = createContext({
 });
 
 /**
- * Local data provider for context.
+ * Provider for context.
  */
 export const LocalDataProvider = ({ children, schema }) => {
   const localDataManager = useLocalDataManager(schema);
