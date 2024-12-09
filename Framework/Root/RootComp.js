@@ -6,8 +6,6 @@ import TestRootComp from '../Testing/TestRootComp';
 // UI
 import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, Text } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
-// firebase
-import { initializeApp } from 'firebase/app';
 // hooks
 import { useLocalDataContext, LocalDataProvider } from '../DataManagement/LocalDataManager';
 import { FirestoreProvider } from '../DataManagement/FirestoreManager';
@@ -45,25 +43,11 @@ const CombinedDarkTheme = {
   }
 };
 
-const TEST_MODE = true;
+const TEST_MODE = false;
 
 LogBox.ignoreLogs(['new NativeEventEmitter']);
 
 const Stack = createNativeStackNavigator();
-
-/**
- * firebase
- */
-const firebaseConfig = {
-  apiKey: "AIzaSyAkjJDRmtsB4cHhPq7RR2fOqoTecqN8EHU",
-  authDomain: "fir-testing-c0811.firebaseapp.com",
-  projectId: "fir-testing-c0811",
-  storageBucket: "fir-testing-c0811.firebasestorage.app",
-  messagingSenderId: "247670005534",
-  appId: "1:247670005534:web:15d9e42a5f25d7aa19f30f",
-  measurementId: "G-RSXYWPNYK9"
-};
-const firebaseApp = initializeApp(firebaseConfig);
 
 /**
  * A wrapper for screens to standardize their layout.
@@ -127,7 +111,7 @@ const RootComp = ({ screenMap, DEFAULT_SCREEN }) => {
   }
 
   return (
-    <FirestoreProvider firebaseApp={firebaseApp}>
+    <FirestoreProvider>
       <SystemSettingsProvider toggleDarkMode={toggleDarkMode}>
         <PaperProvider theme={theme}>
           <MenuProvider>

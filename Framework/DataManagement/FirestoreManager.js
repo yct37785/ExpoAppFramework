@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
+import firebaseApp from '../FirebaseConfig';
 import { getFirestore, collection, doc, setDoc, getDoc, updateDoc, deleteDoc, getDocs } from 'firebase/firestore';
 const _ = require('lodash');
 
@@ -7,7 +8,7 @@ const _ = require('lodash');
  * 
  * @param {Object} firebaseApp - Firebase app created with project config.
  */
-const useFirestoreManager = (firebaseApp) => {
+const useFirestoreManager = () => {
   const db = getFirestore(firebaseApp);
 
   /**
@@ -144,8 +145,8 @@ const FirestoreContext = createContext({});
 /**
  * Provider for context.
  */
-export const FirestoreProvider = ({ children, firebaseConfig }) => {
-  const firestoreManager = useFirestoreManager(firebaseConfig);
+export const FirestoreProvider = ({ children }) => {
+  const firestoreManager = useFirestoreManager();
   return (
     <FirestoreContext.Provider value={firestoreManager}>
       {children}
