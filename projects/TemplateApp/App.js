@@ -1,14 +1,11 @@
-/*****************************************************************************************
-* load RootComp here to run the app
-*****************************************************************************************/
 import React from 'react';
-import { RootComp } from '../../Framework/Index/Core';
-import { screenMaps, DEFAULT_SCREEN } from './User/ScreenMapper';
-import { NEW_USER_DATA } from './User/Schemas';
+import * as Root from '../../Framework/Index/Root';
+import { screenMap, DEFAULT_SCREEN } from './User/ScreenMapper';
+import { LOCAL_DATA_SCHEMA } from './User/Schema';
 
 const App = () => {
   return (
-    <RootComp screenMaps={screenMaps} DEFAULT_SCREEN={DEFAULT_SCREEN} NEW_USER_DATA={NEW_USER_DATA} />
+    <Root.RootComp screenMap={screenMap} DEFAULT_SCREEN={DEFAULT_SCREEN} LOCAL_DATA_SCHEMA={LOCAL_DATA_SCHEMA} />
   );
 };
 

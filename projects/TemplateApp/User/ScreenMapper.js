@@ -1,28 +1,26 @@
-/***************************************************************************************
+/**
  * include any screens here by importing and including in screenMaps (feel free to remove the sample screens)
  * define default page under DEFAULT_SCREEN, value must match respective key in screenMaps
  * 
- * as the name suggests, screenMaps serve as a directory of all screens in your app, 
+ * as the name suggests, screenMap serve as a directory of all screens in your app, 
  * with DEFAULT_SCREEN as the root screen
-***************************************************************************************/
-import SampleHomeScreen from '../Screens/SampleHomeScreen';
-import SampleLayoutsScreen from '../Screens/SampleLayoutsScreen';
-import SampleContainersScreen from '../Screens/SampleContainersScreen';
-import SampleTabsScreen from '../Screens/SampleTabsScreen';
-import SampleMenusScreen from '../Screens/SampleMenusScreen';
-import SampleEmptyScreen from '../Screens/SampleEmptyScreen';
-import SampleDataDisplayScreen from '../Screens/SampleDataDisplayScreen';
-import SampleLocalDataScreen from '../Screens/SampleLocalDataScreen';
+ */
+import SampleHomeScreen from '../Screen/SampleHomeScreen';
+import SampleTextInputBtnScreen from '../Screen/SampleTextInputBtnScreen';
+import SampleLayoutsScreen from '../Screen/SampleLayoutsScreen';
+import SampleContainersScreen from '../Screen/SampleContainersScreen';
+import SampleMenusScreen from '../Screen/SampleMenusScreen';
+import SampleEmptyScreen from '../Screen/SampleEmptyScreen';
+import SampleDataDisplayScreen from '../Screen/SampleDataDisplayScreen';
 
-export const screenMaps = {
+export const screenMap = {
   home: SampleHomeScreen,
+  textInputBtn: SampleTextInputBtnScreen,
   layouts: SampleLayoutsScreen,
   containers: SampleContainersScreen,
-  tabs: SampleTabsScreen,
   menus: SampleMenusScreen,
   empty: SampleEmptyScreen,
-  dataDisplay: SampleDataDisplayScreen,
-  localData: SampleLocalDataScreen
+  dataDisplay: SampleDataDisplayScreen
 };
 
 export const DEFAULT_SCREEN = 'home';
