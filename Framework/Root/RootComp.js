@@ -1,6 +1,8 @@
 // core
 import React, { Node, useCallback, memo, useEffect, useState } from 'react';
 import { View, LogBox, Platform, StatusBar } from 'react-native';
+// firebase
+import { initializeApp } from 'firebase/app';
 // test
 import TestRootComp from '../Testing/TestRootComp';
 // UI
@@ -47,6 +49,21 @@ const TEST_MODE = false;
 LogBox.ignoreLogs(['new NativeEventEmitter']);
 
 const Stack = createNativeStackNavigator();
+
+/**
+ * firebase
+ */
+const firebaseConfig = {
+  apiKey: "AIzaSyAkjJDRmtsB4cHhPq7RR2fOqoTecqN8EHU",
+  authDomain: "fir-testing-c0811.firebaseapp.com",
+  projectId: "fir-testing-c0811",
+  storageBucket: "fir-testing-c0811.firebasestorage.app",
+  messagingSenderId: "247670005534",
+  appId: "1:247670005534:web:15d9e42a5f25d7aa19f30f",
+  measurementId: "G-RSXYWPNYK9"
+};
+
+const firebaseApp = initializeApp(firebaseConfig);
 
 /**
  * A wrapper for screens to standardize their layout.
