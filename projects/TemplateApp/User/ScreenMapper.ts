@@ -7,12 +7,12 @@
  */
 import { FC } from 'react';
 import SampleHomeScreen from '../Screen/SampleHomeScreen';
-import SampleTextInputBtnScreen from '../Screen/SampleTextInputBtnScreen';
-import SampleLayoutsScreen from '../Screen/SampleLayoutsScreen';
-import SampleContainersScreen from '../Screen/SampleContainersScreen';
-import SampleMenusScreen from '../Screen/SampleMenusScreen';
-import SampleEmptyScreen from '../Screen/SampleEmptyScreen';
-import SampleDataDisplayScreen from '../Screen/SampleDataDisplayScreen';
+// import SampleTextInputBtnScreen from '../Screen/SampleTextInputBtnScreen';
+// import SampleLayoutsScreen from '../Screen/SampleLayoutsScreen';
+// import SampleContainersScreen from '../Screen/SampleContainersScreen';
+// import SampleMenusScreen from '../Screen/SampleMenusScreen';
+// import SampleEmptyScreen from '../Screen/SampleEmptyScreen';
+// import SampleDataDisplayScreen from '../Screen/SampleDataDisplayScreen';
 
 export interface IScreenMap {
   [key: string]: FC;
@@ -20,12 +20,12 @@ export interface IScreenMap {
 
 export const screenMap: IScreenMap = {
   home: SampleHomeScreen,
-  textInputBtn: SampleTextInputBtnScreen,
-  layouts: SampleLayoutsScreen,
-  containers: SampleContainersScreen,
-  menus: SampleMenusScreen,
-  empty: SampleEmptyScreen,
-  dataDisplay: SampleDataDisplayScreen
+  // textInputBtn: SampleTextInputBtnScreen,
+  // layouts: SampleLayoutsScreen,
+  // containers: SampleContainersScreen,
+  // menus: SampleMenusScreen,
+  // empty: SampleEmptyScreen,
+  // dataDisplay: SampleDataDisplayScreen
 };
 
 export const DEFAULT_SCREEN: string = 'home';
