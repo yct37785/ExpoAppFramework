@@ -56,7 +56,7 @@ const POPUP_MENU_OPTIONS = {
  * @param {Object} props.navigation - React Navigation provided object for navigating between screens.
  * @param {Object} props.route - React Navigation provided oobject containing route parameters.
  */
-function SampleMenusScreen({ navigation, route, screenHeaderComp: ScreenHeaderComp }) {
+function SampleMenusScreen({ navigation, route }) {
   const searchBarRef = useRef();
   const [showDialog, setShowDialog] = useState(false);
   const [pickerSelection, setPickerSelection] = useState('red');

@@ -6,26 +6,47 @@
  * with DEFAULT_SCREEN as the root screen
  */
 import { FC } from 'react';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RouteProp } from '@react-navigation/native';
 import SampleHomeScreen from '../Screen/SampleHomeScreen';
-// import SampleTextInputBtnScreen from '../Screen/SampleTextInputBtnScreen';
-// import SampleLayoutsScreen from '../Screen/SampleLayoutsScreen';
-// import SampleContainersScreen from '../Screen/SampleContainersScreen';
-// import SampleMenusScreen from '../Screen/SampleMenusScreen';
-// import SampleEmptyScreen from '../Screen/SampleEmptyScreen';
-// import SampleDataDisplayScreen from '../Screen/SampleDataDisplayScreen';
+import SampleTextInputBtnScreen from '../Screen/SampleTextInputBtnScreen';
+import SampleLayoutsScreen from '../Screen/SampleLayoutsScreen';
+import SampleContainersScreen from '../Screen/SampleContainersScreen';
+import SampleMenusScreen from '../Screen/SampleMenusScreen';
+import SampleEmptyScreen from '../Screen/SampleEmptyScreen';
+import SampleDataDisplayScreen from '../Screen/SampleDataDisplayScreen';
+import * as I from '../../../Framework/Index/Interface';
 
-export interface IScreenMap {
-  [key: string]: FC;
+/**
+ * add your screen here
+ */
+const ScreenConfig = {
+  home: SampleHomeScreen,
+  textInputBtn: SampleTextInputBtnScreen,
+  layouts: SampleLayoutsScreen,
+  containers: SampleContainersScreen,
+  menus: SampleMenusScreen,
+  empty: SampleEmptyScreen,
+  dataDisplay: SampleDataDisplayScreen
+} as const;
+
+/**
+ * screen route params
+ */
+type ScreenNames = keyof typeof ScreenConfig;
+
+type RootStackParamList = {
+  [K in ScreenNames]: I.IScreenRouteProps;
+};
+
+interface IScreenProps {
+  navigation: NativeStackNavigationProp<RootStackParamList>,
+  route: RouteProp<RootStackParamList>
 }
 
-export const screenMap: IScreenMap = {
-  home: SampleHomeScreen,
-  // textInputBtn: SampleTextInputBtnScreen,
-  // layouts: SampleLayoutsScreen,
-  // containers: SampleContainersScreen,
-  // menus: SampleMenusScreen,
-  // empty: SampleEmptyScreen,
-  // dataDisplay: SampleDataDisplayScreen
-};
+/**
+ * screen map
+ */
+export const screenMap: { [key in ScreenNames]: FC<IScreenProps> } = ScreenConfig;
 
 export const DEFAULT_SCREEN: string = 'home';
