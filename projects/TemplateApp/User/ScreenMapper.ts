@@ -6,8 +6,6 @@
  * with DEFAULT_SCREEN as the root screen
  */
 import { FC } from 'react';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RouteProp } from '@react-navigation/native';
 import SampleHomeScreen from '../Screen/SampleHomeScreen';
 import SampleTextInputBtnScreen from '../Screen/SampleTextInputBtnScreen';
 import SampleLayoutsScreen from '../Screen/SampleLayoutsScreen';
@@ -30,23 +28,11 @@ const ScreenConfig = {
   dataDisplay: SampleDataDisplayScreen
 } as const;
 
-/**
- * screen route params
- */
 type ScreenNames = keyof typeof ScreenConfig;
-
-type RootStackParamList = {
-  [K in ScreenNames]: PropType.IScreenRouteProps;
-};
-
-interface IScreenProps {
-  navigation: NativeStackNavigationProp<RootStackParamList>,
-  route: RouteProp<RootStackParamList>
-}
 
 /**
  * screen map
  */
-export const screenMap: { [key in ScreenNames]: FC<IScreenProps> } = ScreenConfig;
+export const screenMap: { [key in ScreenNames]: FC<PropType.IScreenProps> } = ScreenConfig;
 
 export const DEFAULT_SCREEN: string = 'home';
