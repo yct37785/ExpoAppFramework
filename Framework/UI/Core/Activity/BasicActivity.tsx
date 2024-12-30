@@ -1,6 +1,17 @@
-import React, { useContext, memo } from 'react';
-import { View } from 'react-native';
-import { useTheme, Appbar } from 'react-native-paper';
+import React, { memo } from 'react';
+import { View, StyleProp, ViewStyle } from 'react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RouteProp } from '@react-navigation/native';
+import { Appbar } from 'react-native-paper';
+
+interface IBasicActivityProps {
+  navigation: NativeStackNavigationProp<any>;
+  route: RouteProp<any>;
+  title?: string;
+  CustomHeaderComp?: React.FC<{}>;
+  style?: StyleProp<ViewStyle>;
+  children: React.ReactNode;
+}
 
 /**
  * A wrapper component to setup an activity quickly by providing the body and custom header content if any.
@@ -15,12 +26,12 @@ import { useTheme, Appbar } from 'react-native-paper';
  * 
  * @returns {JSX.Element} The BasicActivity component.
  */
-const BasicActivity = ({
+const BasicActivity: React.FC<IBasicActivityProps> = ({
   navigation,
   route,
   title = '',
-  customHeaderContent: CustomHeaderComp,
-  style={},
+  CustomHeaderComp,
+  style = {},
   children
 }) => {
   return (
@@ -29,7 +40,7 @@ const BasicActivity = ({
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         {title ? <Appbar.Content style={{ flex: 0 }} title={title} /> : null}
         <View style={{ flex: 1 }}>
-          {CustomHeaderComp && CustomHeaderComp()}
+        {CustomHeaderComp && <CustomHeaderComp />}
         </View>
       </Appbar.Header>
       <View style={{ flex: 1}}>
