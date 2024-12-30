@@ -15,7 +15,7 @@ import SampleContainersScreen from '../Screen/SampleContainersScreen';
 import SampleMenusScreen from '../Screen/SampleMenusScreen';
 import SampleEmptyScreen from '../Screen/SampleEmptyScreen';
 import SampleDataDisplayScreen from '../Screen/SampleDataDisplayScreen';
-import * as I from '../../../Framework/Index/Interface';
+import * as PropType from '../../../Framework/Index/PropType';
 
 /**
  * add your screen here
@@ -36,7 +36,7 @@ const ScreenConfig = {
 type ScreenNames = keyof typeof ScreenConfig;
 
 type RootStackParamList = {
-  [K in ScreenNames]: I.IScreenRouteProps;
+  [K in ScreenNames]: PropType.IScreenRouteProps;
 };
 
 interface IScreenProps {
