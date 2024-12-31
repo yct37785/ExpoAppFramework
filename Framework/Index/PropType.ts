@@ -55,3 +55,11 @@ export interface IFirestoreManagerProps {
   listenToDocument: (collectionName: string, docId: string, onChange: (data: object) => void) => () => void;
   deleteCollection: (collectionName: string) => Promise<boolean>;
 };
+
+/**
+ * on layout change hook props
+ */
+export interface ILayoutSize {
+  width: number;
+  height: number;
+};
