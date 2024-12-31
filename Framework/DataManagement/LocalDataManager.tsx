@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef, ReactNode } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ILocalDataManagerProps } from '../Index/PropType';
 const _ = require('lodash');
@@ -6,7 +6,7 @@ const _ = require('lodash');
 /**
  * Local data manager with built-in update effect.
  * 
- * @param {Object} defaultSchema - Default key-value schema for local storage.
+ * @param defaultSchema - Default key-value schema for local storage.
  */
 const useLocalDataManager = (defaultSchema: Record<string, any>): ILocalDataManagerProps => {
   const schema = useRef<Record<string, any>>({ ...defaultSchema });
@@ -54,11 +54,11 @@ const useLocalDataManager = (defaultSchema: Record<string, any>): ILocalDataMana
   /**
    * Writes a key-value pair to storage if valid.
    * 
-   * @param {string} key - The key to store.
-   * @param {any} value - The value to store.
-   * @param {boolean} [bypassSchema=false] - Skip schema validation (for testing only).
+   * @param key - The key to store.
+   * @param value - The value to store.
+   * @param bypassSchema - Skip schema validation (for testing only).
    */
-  const writeLocalData = async (key, value, bypassSchema = false) => {
+  const writeLocalData = async (key: string, value: any, bypassSchema = false): Promise<void> => {
     try {
       if (!isLocalDataReady) throw new Error("Data not ready.");
       if (!(typeof key === 'string')) throw new Error(`Key must be string type.`);
@@ -77,11 +77,11 @@ const useLocalDataManager = (defaultSchema: Record<string, any>): ILocalDataMana
   /**
    * Reads a value by key from storage.
    * 
-   * @param {string} key - The key to retrieve.
+   * @param key - The key to retrieve.
    * 
-   * @returns {any} Deep copy of the stored value.
+   * @returns Deep copy of the stored value.
    */
-  const readLocalData = (key) => {
+  const readLocalData = (key: string): any => {
     try {
     if (!isLocalDataReady)  throw new Error("Data not ready.");
     if (!(typeof key === 'string')) throw new Error(`Key must be string type.`);
@@ -97,9 +97,9 @@ const useLocalDataManager = (defaultSchema: Record<string, any>): ILocalDataMana
   /**
    * Retrieves dangling keys not listed in the schema.
    * 
-   * @returns {Object} An object with dangling key-value pairs.
+   * @returns An object with dangling key-value pairs.
    */
-  const readDanglingKeys = async () => {
+  const readDanglingKeys = async (): Promise<Record<string, any>> => {
     try {
       if (!isLocalDataReady) throw new Error("Data not ready.");
       const allKeys = await AsyncStorage.getAllKeys();
@@ -107,9 +107,11 @@ const useLocalDataManager = (defaultSchema: Record<string, any>): ILocalDataMana
       if (!danglingKeys.length) return {};
 
       const keyValues = await AsyncStorage.multiGet(danglingKeys);
-      return Object.fromEntries(keyValues.map(([key, value]) => [key, JSON.parse(value)]));
-    } catch (error) {
-      console.error(`Error reading dangling keys: ${error.message}`);
+      return Object.fromEntries(keyValues.map(([key, value]) => {
+        return [key, value ? JSON.parse(value) : ""];
+      }));
+    } catch (e) {
+      console.error(`Error reading dangling keys: ${e.message}`);
       throw e;
     }
   };
@@ -117,7 +119,7 @@ const useLocalDataManager = (defaultSchema: Record<string, any>): ILocalDataMana
   /**
    * Clears all dangling keys from storage.
    */
-  const clearDanglingKeys = async () => {
+  const clearDanglingKeys = async (): Promise<void> => {
     try {
       if (!isLocalDataReady) throw new Error("Data not ready.");
       const danglingKeys = await readDanglingKeys();
@@ -128,16 +130,16 @@ const useLocalDataManager = (defaultSchema: Record<string, any>): ILocalDataMana
       } else {
         console.info("No dangling keys to clear.");
       }
-    } catch (error) {
-      console.error(`Error clearing dangling keys: ${error.message}`);
+    } catch (e) {
+      console.error(`Error clearing dangling keys: ${e.message}`);
       throw e;
     }
   };
 
   /**
-   * Clear all key value pairs. For testing usage.
+   * Clear all key-value pairs. For testing usage.
    */
-  const clearLocalData = async () => {
+  const clearLocalData = async (): Promise<void> => {
     await AsyncStorage.clear();
     localCache.current = {};
     triggerUpdate();
@@ -157,20 +159,17 @@ const useLocalDataManager = (defaultSchema: Record<string, any>): ILocalDataMana
 /**
  * Context setup.
  */
-const LocalDataContext = createContext({
-  isLocalDataReady: false,
-  updateFlag: 0,
-  writeLocalData: async () => { },
-  readLocalData: () => { },
-  readDanglingKeys: async () => { },
-  clearDanglingKeys: async () => { },
-  clearLocalData: async () => { },
-});
+const LocalDataContext = createContext<ILocalDataManagerProps | undefined>(undefined);
 
 /**
  * Provider for context.
  */
-export const LocalDataProvider = ({ children, schema }) => {
+interface ILocalDataProviderProps {
+  children: ReactNode;
+  schema: Record<string, any>;
+}
+
+export const LocalDataProvider: React.FC<ILocalDataProviderProps> = ({ children, schema }) => {
   const localDataManager = useLocalDataManager(schema);
   return (
     <LocalDataContext.Provider value={localDataManager}>
@@ -182,14 +181,20 @@ export const LocalDataProvider = ({ children, schema }) => {
 /**
  * Context consumer hook.
  */
-export const useLocalDataContext = () => useContext(LocalDataContext);
+export const useLocalDataContext = (): ILocalDataManagerProps => {
+  const context = useContext(LocalDataContext);
+  if (!context) {
+    throw new Error('useLocalDataContext must be used within a LocalDataProvider');
+  }
+  return context;
+};
 
 /**
  * Utility hook that triggers on local data updates.
  * 
- * @param {Function} callback - Triggered when local data updates occur.
+ * @param callback - Triggered when local data updates occur.
  */
-export const onLocalDataUpdate = (callback) => {
+export const onLocalDataUpdate = (callback: () => void): void => {
   const { updateFlag } = useLocalDataContext();
   useEffect(() => {
     if (updateFlag) callback();
