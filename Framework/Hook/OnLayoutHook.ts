@@ -1,13 +1,13 @@
-import React, { memo, useContext, useState, useCallback, useEffect } from 'react';
-import { ILayoutSize } from '../Index/PropType';
+import { useState, useCallback } from 'react';
+import { ILayoutSizeProps } from '../Index/PropType';
 
 /**
  * On layout change hook for React UI elements.
  */
-export const useOnLayout = (): [ILayoutSize | null, (event: any) => void] => {
-  const [size, setSize] = useState<ILayoutSize | null>(null);
+export const useOnLayout = (): [ILayoutSizeProps | null, (event: any) => void] => {
+  const [size, setSize] = useState<ILayoutSizeProps | null>(null);
 
-  const onLayout = useCallback((event: { nativeEvent: { layout: ILayoutSize } }) => {
+  const onLayout = useCallback((event: { nativeEvent: { layout: ILayoutSizeProps } }) => {
     const { width, height } = event.nativeEvent.layout;
     setSize({ width, height });
   }, []);

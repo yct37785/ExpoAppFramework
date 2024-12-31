@@ -59,7 +59,21 @@ export interface IFirestoreManagerProps {
 /**
  * on layout change hook props
  */
-export interface ILayoutSize {
+export interface ILayoutSizeProps {
   width: number;
   height: number;
+};
+
+/**
+ * root comp props
+ */
+export interface IRootCompProps {
+  screenMap: Record<string, React.ComponentType<any>>;
+  DEFAULT_SCREEN: string;
+};
+
+export interface ILocalDataProviderWrapperProps {
+  screenMap: Record<string, React.ComponentType<any>>;
+  DEFAULT_SCREEN: string;
+  LOCAL_DATA_VALUES: Record<string, any>;
 };

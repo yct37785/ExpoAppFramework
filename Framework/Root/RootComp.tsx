@@ -1,5 +1,5 @@
 // core
-import React, { Node, useCallback, memo, useEffect, useState } from 'react';
+import React, { ReactNode, useCallback, memo, useEffect, useState } from 'react';
 import { View, LogBox, Platform, StatusBar } from 'react-native';
 // test
 import TestRootComp from '../Testing/TestRootComp';
@@ -15,6 +15,10 @@ import 'react-native-get-random-values';
 // nav
 import { NavigationContainer, DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationDefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+// props
+import { IRootCompProps, ILocalDataProviderWrapperProps } from '../Index/PropType';
+
+// theme adaptation for navigation
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
   reactNavigationLight: NavigationDefaultTheme,
   reactNavigationDark: NavigationDarkTheme,
@@ -52,35 +56,29 @@ const Stack = createNativeStackNavigator();
 /**
  * A wrapper for screens to standardize their layout.
  * 
- * @param {Object} props - The props passed to the screen.
- * @param {React.ComponentType} props.component - The screen component to render.
+ * @param props - The props passed to the screen.
+ * @param props.component - The screen component to render.
  * 
- * @returns {JSX.Element} The screen wrapped with a standardized layout.
+ * @returns - The screen wrapped with a standardized layout.
  */
-function ScreenWrapper({ component: Component, ...props }) {
-
+const ScreenWrapper: React.FC<{ component: React.ComponentType<any>; [key: string]: any }> = ({ component: Component, ...props }) => {
   return (
     <View style={{ flex: 1 }}>
       <Component {...props} />
     </View>
   );
-}
+};
 
 /**
  * The root component of the entire app. Handles initialization, context providers, and navigation.
  * 
- * @param {Object} props - The props passed to the root component.
- * @param {Object} props.screenMap - A mapping of screen names to their respective components, refer to TemplateApp > App.js.
- * @param {string} props.DEFAULT_SCREEN - The default screen to display on app launch, refer to TemplateApp > App.js.
- * @param {Object} props.LOCAL_DATA_SCHEMA - The schema for local storage data, refer to TemplateApp > App.js.
+ * @param props - The props passed to the root component.
+ * @param props.screenMap - A mapping of screen names to their respective components.
+ * @param props.DEFAULT_SCREEN - The default screen to display on app launch.
  */
-const RootComp = ({ screenMap, DEFAULT_SCREEN }) => {
+const RootComp: React.FC<IRootCompProps> = ({ screenMap, DEFAULT_SCREEN }) => {
   const [theme, setTheme] = useState(CombinedDarkTheme);
-  const {
-    isLocalDataReady,
-    readLocalData,
-    writeLocalData
-  } = useLocalDataContext();
+  const { isLocalDataReady, readLocalData, writeLocalData } = useLocalDataContext();
 
   /**
    * Triggered on local data ready and update
@@ -95,7 +93,7 @@ const RootComp = ({ screenMap, DEFAULT_SCREEN }) => {
   /**
    * Toggle dark mode
    */
-  function setDarkMode(isDarkMode) {
+  function setDarkMode(isDarkMode: boolean) {
     if (isDarkMode !== (theme === CombinedDarkTheme)) {
       const newTheme = isDarkMode ? CombinedDarkTheme : CombinedDefaultTheme;
       setTheme(newTheme);
@@ -110,6 +108,7 @@ const RootComp = ({ screenMap, DEFAULT_SCREEN }) => {
     setDarkMode(readLocalData("isDarkMode"));
   }
 
+  const navContainerTheme = theme === CombinedDarkTheme ? NavigationDarkTheme : NavigationDefaultTheme;
   return (
     <FirestoreProvider>
       <SystemSettingsProvider toggleDarkMode={toggleDarkMode}>
@@ -117,7 +116,7 @@ const RootComp = ({ screenMap, DEFAULT_SCREEN }) => {
           <MenuProvider>
             {/* <View style={{ flex: 1, backgroundColor: theme.colors.background, paddingTop: Platform.OS == "android" ? StatusBar.currentHeight : 0 }}> */}
             <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
-              {isLocalDataReady ? <NavigationContainer theme={theme}>
+              {isLocalDataReady ? <NavigationContainer theme={navContainerTheme}>
                 <Stack.Navigator
                   initialRouteName={DEFAULT_SCREEN}
                   screenOptions={{
@@ -144,12 +143,12 @@ const RootComp = ({ screenMap, DEFAULT_SCREEN }) => {
 /**
  * Wrapper for LocalDataProvider to ensure it renders before RootComp
  * 
- * @param {Object} props - The props passed to the root component.
- * @param {Object} props.screenMap - A mapping of screen names to their respective components, refer to TemplateApp > App.js.
- * @param {string} props.DEFAULT_SCREEN - The default screen to display on app launch, refer to TemplateApp > App.js.
- * @param {Object} props.LOCAL_DATA_SCHEMA - The schema for local storage data, refer to TemplateApp > App.js.
+ * @param props - The props passed to the root component.
+ * @param props.screenMap - A mapping of screen names to their respective components.
+ * @param props.DEFAULT_SCREEN - The default screen to display on app launch.
+ * @param props.LOCAL_DATA_VALUES - The schema for local storage data.
  */
-const LocalDataProviderWrapper = ({ screenMap, DEFAULT_SCREEN, LOCAL_DATA_VALUES }) => {
+const LocalDataProviderWrapper: React.FC<ILocalDataProviderWrapperProps> = ({ screenMap, DEFAULT_SCREEN, LOCAL_DATA_VALUES }) => {
   return (
     <LocalDataProvider schema={LOCAL_DATA_VALUES}>
       <RootComp screenMap={screenMap} DEFAULT_SCREEN={DEFAULT_SCREEN} />

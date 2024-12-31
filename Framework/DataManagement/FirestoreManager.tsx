@@ -196,7 +196,7 @@ const FirestoreContext = createContext<IFirestoreManagerProps | undefined>(undef
 /**
  * Provider for Firestore context.
  */
-interface IFirestoreProviderProps extends IFirestoreManagerProps {
+interface IFirestoreProviderProps {
   children: ReactNode;
 };
 
