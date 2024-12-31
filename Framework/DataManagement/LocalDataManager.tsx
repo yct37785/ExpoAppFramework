@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ILocalDataManagerProps } from '../Index/PropType';
 const _ = require('lodash');
 
 /**
@@ -7,9 +8,9 @@ const _ = require('lodash');
  * 
  * @param {Object} defaultSchema - Default key-value schema for local storage.
  */
-const useLocalDataManager = (defaultSchema) => {
-  const schema = useRef({ ...defaultSchema });
-  const localCache = useRef({});
+const useLocalDataManager = (defaultSchema: Record<string, any>): ILocalDataManagerProps => {
+  const schema = useRef<Record<string, any>>({ ...defaultSchema });
+  const localCache = useRef<Record<string, any>>({});
   const [isLocalDataReady, setIsLocalDataReady] = useState(false);
   const [updateFlag, setUpdateFlag] = useState(0);
 
@@ -18,19 +19,20 @@ const useLocalDataManager = (defaultSchema) => {
   /**
    * Load local data by checking and filling missing keys.
    */
-  const loadLocalData = async () => {
+  const loadLocalData = async (): Promise<void> => {
     try {
-      const storedData = await AsyncStorage.multiGet(await AsyncStorage.getAllKeys());
+      const storedData: ReadonlyArray<[string, string | null]> = await AsyncStorage.multiGet(await AsyncStorage.getAllKeys());
+
       // only read keys that exists in schema
       storedData.forEach(([key, value]) => {
-        if (key in schema.current) {
+        if (key in schema.current && value !== null) {
           localCache.current[key] = JSON.parse(value);
         }
       });
       // create missing kv pairs on the spot
       const missingKeys = Object.keys(schema.current).filter((key) => !(key in localCache.current));
       if (missingKeys.length) {
-        const newEntries = [];
+        const newEntries: [string, string][] = [];
         missingKeys.forEach((key) => {
           if (schema.current[key] !== undefined && schema.current[key] !== null) {
             localCache.current[key] = _.cloneDeep(schema.current[key]);

@@ -30,6 +30,19 @@ export interface ISystemSettingsContextProps {
 }
 
 /**
+ * local data manager props
+ */
+export interface ILocalDataManagerProps {
+  isLocalDataReady: boolean;
+  updateFlag: number;
+  writeLocalData: (key: string, value: any, bypassSchema?: boolean) => Promise<void>;
+  readLocalData: (key: string) => any;
+  readDanglingKeys: () => Promise<Record<string, any>>;
+  clearDanglingKeys: () => Promise<void>;
+  clearLocalData: () => Promise<void>;
+}
+
+/**
  * Firebase props
  */
 export interface IFirestoreManagerProps {
