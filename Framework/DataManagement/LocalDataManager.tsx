@@ -62,6 +62,7 @@ const useLocalDataManager = (defaultSchema: Record<string, any>): ILocalDataMana
     try {
       if (!isLocalDataReady) throw new Error("Data not ready.");
       if (!(typeof key === 'string')) throw new Error(`Key must be string type.`);
+      if (!key.length) throw new Error(`Key must be defined.`);
       if (value === null || value === undefined) throw new Error(`value cannot be null.`);
       if (!bypassSchema && !(key in schema.current)) throw new Error(`Invalid key: ${key}`);
 
@@ -85,6 +86,7 @@ const useLocalDataManager = (defaultSchema: Record<string, any>): ILocalDataMana
     try {
     if (!isLocalDataReady)  throw new Error("Data not ready.");
     if (!(typeof key === 'string')) throw new Error(`Key must be string type.`);
+    if (!key.length) throw new Error(`Key must be defined.`);
     if (!(key in localCache.current))  throw new Error(`Key not found: ${key}`);
 
     return _.cloneDeep(localCache.current[key]);
