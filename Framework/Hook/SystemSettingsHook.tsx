@@ -1,19 +1,14 @@
 import React, { createContext, useContext, ReactNode } from 'react';
-
-/* define types for context values */
-interface ISystemSettingsContextType {
-  toggleDarkMode: () => Promise<void>;
-}
+import { ISystemSettingsContextProps } from '../Index/PropType';
 
 /* context Setup */
-const SystemSettingsContext = createContext<ISystemSettingsContextType | undefined>(undefined);
+const SystemSettingsContext = createContext<ISystemSettingsContextProps | undefined>(undefined);
 
 /**
  * local data provider for context.
  */
-interface ISystemSettingsProviderProps {
+interface ISystemSettingsProviderProps extends ISystemSettingsContextProps {
   children: ReactNode;
-  toggleDarkMode: () => Promise<void>;
 }
 
 export const SystemSettingsProvider: React.FC<ISystemSettingsProviderProps> = ({ children, toggleDarkMode }) => {
@@ -27,7 +22,7 @@ export const SystemSettingsProvider: React.FC<ISystemSettingsProviderProps> = ({
 /**
  * context consumer hook.
  */
-export const useSystemSettingsContext = (): ISystemSettingsContextType => {
+export const useSystemSettingsContext = (): ISystemSettingsContextProps => {
   const context = useContext(SystemSettingsContext);
   if (!context) {
     throw new Error("useSystemSettingsContext must be used within a SystemSettingsProvider");

@@ -1,14 +1,13 @@
-import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef, ReactNode } from 'react';
 import firebaseApp from '../FirebaseConfig';
 import { getFirestore, collection, doc, setDoc, getDoc, updateDoc, deleteDoc, getDocs, onSnapshot } from 'firebase/firestore';
+import { IFirestoreManagerProps } from '../Index/PropType';
 const _ = require('lodash');
 
 /**
- * Firebase Firestore manager.
- * 
- * @param {Object} firebaseApp - Firebase app created with project config.
+ * Firebase Firestore manager hook.
  */
-const useFirestoreManager = () => {
+const useFirestoreManager = (): IFirestoreManagerProps => {
   const db = getFirestore(firebaseApp);
 
   /**
@@ -19,7 +18,7 @@ const useFirestoreManager = () => {
    * 
    * @returns {Promise<boolean>} - True if created successfully.
    */
-  const createCollection = async (collectionName, initialData = []) => {
+  const createCollection = async (collectionName: string, initialData: object[] = []): Promise<boolean> => {
     try {
       if (!collectionName) throw new Error("Collection name is required.");
 
@@ -45,7 +44,7 @@ const useFirestoreManager = () => {
    * 
    * @returns {Promise<boolean>} - True if successful.
    */
-  const createDocument = async (collectionName, docId, data) => {
+  const createDocument = async (collectionName: string, docId: string, data: object): Promise<boolean> => {
     try {
       await setDoc(doc(db, collectionName, docId), data);
       return true;
@@ -63,7 +62,7 @@ const useFirestoreManager = () => {
    * 
    * @returns {Promise<Object|null>} - Document data or null if not found.
    */
-  const readDocument = async (collectionName, docId) => {
+  const readDocument = async (collectionName: string, docId: string): Promise<object | null> => {
     try {
       const docSnap = await getDoc(doc(db, collectionName, docId));
       return docSnap.exists() ? docSnap.data() : null;
@@ -82,7 +81,7 @@ const useFirestoreManager = () => {
    * 
    * @returns {Promise<boolean>} - True if successful.
    */
-  const updateDocument = async (collectionName, docId, data) => {
+  const updateDocument = async (collectionName: string, docId: string, data: object): Promise<boolean> => {
     try {
       await updateDoc(doc(db, collectionName, docId), data);
       return true;
@@ -100,7 +99,7 @@ const useFirestoreManager = () => {
    * 
    * @returns {Promise<boolean>} - True if deleted successfully.
    */
-  const deleteDocument = async (collectionName, docId) => {
+  const deleteDocument = async (collectionName: string, docId: string): Promise<boolean> => {
     try {
       await deleteDoc(doc(db, collectionName, docId));
       return true;
@@ -117,7 +116,7 @@ const useFirestoreManager = () => {
    * 
    * @returns {Promise<Object[]>} - Array of documents.
    */
-  const readAllDocuments = async (collectionName) => {
+  const readAllDocuments = async (collectionName: string): Promise<object[]> => {
     try {
       const querySnapshot = await getDocs(collection(db, collectionName));
       return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
@@ -136,7 +135,7 @@ const useFirestoreManager = () => {
    * 
    * @returns {Function} A function to unsubscribe from the listener.
    */
-  const listenToDocument = (collectionName, docId, onChange) => {
+  const listenToDocument = (collectionName: string, docId: string, onChange: (data: object) => void): (() => void) => {
     try {
       const docRef = doc(db, collectionName, docId);
       const unsubscribe = onSnapshot(docRef, (docSnap) => {
@@ -144,7 +143,7 @@ const useFirestoreManager = () => {
           onChange(docSnap.data());
         } else {
           console.warn(`Document ${docId} not found in ${collectionName}`);
-          throw new Error(`404`);
+          throw new Error('404');
         }
       });
       return unsubscribe;
@@ -160,7 +159,7 @@ const useFirestoreManager = () => {
    * @param {string} collectionName - Name of the collection to delete.
    * @returns {Promise<boolean>} - True if successful.
    */
-  const deleteCollection = async (collectionName) => {
+  const deleteCollection = async (collectionName: string): Promise<boolean> => {
     try {
       const colRef = collection(db, collectionName);
       const snapshot = await getDocs(colRef);
@@ -190,14 +189,21 @@ const useFirestoreManager = () => {
 };
 
 /**
- * Context setup.
+ * Context setup for FirestoreManager
  */
-const FirestoreContext = createContext({});
+const FirestoreContext = createContext<IFirestoreManagerProps | undefined>(undefined);
+
+/**
+ * Provider for Firestore context.
+ */
+interface IFirestoreProviderProps extends IFirestoreManagerProps {
+  children: ReactNode;
+};
 
 /**
  * Provider for context.
  */
-export const FirestoreProvider = ({ children }) => {
+export const FirestoreProvider: React.FC<IFirestoreProviderProps> = ({ children }) => {
   const firestoreManager = useFirestoreManager();
   return (
     <FirestoreContext.Provider value={firestoreManager}>
@@ -207,6 +213,12 @@ export const FirestoreProvider = ({ children }) => {
 };
 
 /**
- * Context consumer hook.
+ * Context consumer hook for accessing FirestoreManager.
  */
-export const useFirestoreContext = () => useContext(FirestoreContext);
+export const useFirestoreContext = (): IFirestoreManagerProps => {
+  const context = useContext(FirestoreContext);
+  if (!context) {
+    throw new Error('useFirestoreContext must be used within a FirestoreProvider');
+  }
+  return context;
+};
