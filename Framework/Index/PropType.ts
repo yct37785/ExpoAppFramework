@@ -77,3 +77,12 @@ export interface ILocalDataProviderWrapperProps {
   DEFAULT_SCREEN: string;
   LOCAL_DATA_VALUES: Record<string, any>;
 };
+
+/**
+ * test runner props
+ */
+export type IOnTestEndProps = { test: string; status: boolean }[];
+
+export interface ITestRunnerProps {
+  onTestEnd: (className: string, results: IOnTestEndProps) => void;
+}

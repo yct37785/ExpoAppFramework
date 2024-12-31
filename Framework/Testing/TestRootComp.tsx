@@ -3,16 +3,19 @@ import { View } from 'react-native';
 import { Text } from 'react-native-paper';
 import LocalDataManager_TestRunner from './LocalDataManager_TestRunner';
 import FirestoreManager_TestRunner from './FirestoreManager_TestRunner';
+import { IOnTestEndProps, ITestRunnerProps } from '../Index/PropType';
 
 /**
  * Minimalist RootComp to run tests with an actual React Native DOM.
  */
-const TestRootComp = () => {
-  const [currentRunner, setCurrentRunner] = useState(0); // Track the current test runner
-  const testRunners = [
+const TestRootComp: React.FC = () => {
+  const [currentRunner, setCurrentRunner] = useState<number>(0); // track the current test runner
+
+  // define the array of test runner components
+  const testRunners: React.ComponentType<ITestRunnerProps>[] = [
     LocalDataManager_TestRunner,
     FirestoreManager_TestRunner
-  ]; // Array of test runner components
+  ];
 
   useEffect(() => {
     console.log();
@@ -20,12 +23,10 @@ const TestRootComp = () => {
   }, []);
 
   /**
-   * Logs test results array from React child after end of the tests. Must be called last in test runner function.
-   *
-   * @param {String} className - Name of the class being tested (not the TestRunner classname).
-   * @param {Array<Object>} results - An array of results = { test: str, status: bool } from each test function.
+   * Logs test results array from React child after the end of the tests. 
+   * Must be called last in the test runner function.
    */
-  const onTestEnd = (className, results) => {
+  const onTestEnd = (className: string, results: IOnTestEndProps) => {
     console.log();
     console.log(`Class ${className}:`);
     results.forEach(({ test, status }) => {
@@ -33,7 +34,7 @@ const TestRootComp = () => {
     });
     console.log();
 
-    // Move to the next test runner
+    // move to the next test runner
     setCurrentRunner((prevRunner) => prevRunner + 1);
   };
 
