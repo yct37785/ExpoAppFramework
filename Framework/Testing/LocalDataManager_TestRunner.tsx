@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, memo } from 'react';
 import { LocalDataProvider, useLocalDataContext } from '../DataManagement/LocalDataManager';
+import { IOnTestEndProps, ITestRunnerProps } from '../Index/PropType';
 
 const LOCALDATA_TEST_SCHEMA = {
   stringKey: 'defaultString',
@@ -8,16 +9,16 @@ const LOCALDATA_TEST_SCHEMA = {
   objectKey: { nested: { deep: "value" } },
   arrayKey: [1, 2, 3],
   nullKey: null,
-  undefinedKey: undefined,  // This should be handled as a missing key.
+  undefinedKey: undefined,  // this should be handled as a missing key
 };
 
 /**
  * Test runner for LocalDataManager.
  * 
- * @param {Object} props - Component props.
- * @param {Function} props.onTestEnd - Callback when tests finish.
+ * @param props - Component props.
+ * @param props.onTestEnd - Called at the end of the test.
  */
-const LocalDataManager_TestRunner = ({ onTestEnd }) => {
+const LocalDataManager_TestRunner: React.FC<ITestRunnerProps> = ({ onTestEnd }) => {
   const className = 'LocalDataManager';
 
   const {
@@ -56,10 +57,10 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
   };
 
   /**
-   * Main test runner function
+   * Runs all tests for this module synchronously.
    */
-  async function runTests() {
-    const results = [];
+  async function runTests(): Promise<void> {
+    const results: IOnTestEndProps = [];
 
     results.push(await runTest("Initialization Test", testInitialization));
     results.push(await runTest("Valid Data Write/Read Test", testValidDataWriteRead));
@@ -71,7 +72,7 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
     results.push(await runTest("Null Value Handling Test", testNullValueHandling));
     results.push(await runTest("Null Key Handling Test", testNullKeyHandling));
 
-    // Cleanup
+    // cleanup
     await clearLocalData();
 
     onTestEnd(className, results);
@@ -79,7 +80,7 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
 
   /* ----------- TEST CASES ----------- */
 
-  const testInitialization = async () => {
+  async function testInitialization(): Promise<boolean> {
     for (const [key, value] of Object.entries(LOCALDATA_TEST_SCHEMA)) {
       if (value === null || value === undefined) continue;
       const readvalue = readLocalData(key);
@@ -88,7 +89,7 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
     return true;
   };
 
-  const testValidDataWriteRead = async () => {
+  async function testValidDataWriteRead(): Promise<boolean> {
     const testData = {
       stringKey: "updatedString",
       numberKey: 12345,
@@ -103,7 +104,7 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
     return true;
   };
 
-  const testDanglingKeyHandling = async () => {
+  async function testDanglingKeyHandling(): Promise<boolean> {
     const danglingKey = "danglingKey";
     const danglingValue = "temporaryValue";
 
@@ -116,7 +117,7 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
     return Object.keys(new_danglingKeys).length === 0;
   };
 
-  const testInvalidKeyHandling = async () => {
+  async function testInvalidKeyHandling(): Promise<boolean> {
     try {
       await writeLocalData("invalidKey", "someValue");
     } catch {
@@ -125,7 +126,7 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
     return false;
   };
 
-  const testMissingKeyHandling = async () => {
+  async function testMissingKeyHandling(): Promise<boolean> {
     try {
       readLocalData("nonExistentKey");
       return false;
@@ -134,7 +135,7 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
     }
   };
 
-  const testDeepObjectIntegrity = async () => {
+  async function testDeepObjectIntegrity(): Promise<boolean> {
     const deepObjectKey = "objectKey";
     const updatedObject = { nested: { deep: "newValue", extra: 456 } };
 
@@ -143,7 +144,7 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
     return JSON.stringify(storedValue) === JSON.stringify(updatedObject);
   };
 
-  const testArrayIntegrity = async () => {
+  async function testArrayIntegrity(): Promise<boolean> {
     const arrayKey = "arrayKey";
     const updatedArray = [9, 8, 7, 6];
 
@@ -152,21 +153,21 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
     return JSON.stringify(storedValue) === JSON.stringify(updatedArray);
   };
 
-  const testNullValueHandling = async () => {
+  async function testNullValueHandling(): Promise<boolean> {
     try {
-      await writeLocalData(numberKey, null);
+      await writeLocalData("numberKey", null);
     } catch {
       return true;
     }
     return false;
   };
 
-  const testNullKeyHandling = async () => {
+  async function testNullKeyHandling(): Promise<boolean> {
     try {
-      await writeLocalData(null, "null");
+      await writeLocalData("", "null");
     } catch {
       try {
-        readLocalData(null);
+        readLocalData("");
       } catch {
         return true;
       }
@@ -179,7 +180,7 @@ const LocalDataManager_TestRunner = ({ onTestEnd }) => {
 
 /* ----------- PROVIDER WRAPPER ----------- */
 
-const LocalDataProviderWrapper = ({ onTestEnd }) => (
+const LocalDataProviderWrapper: React.FC<{ onTestEnd: ITestRunnerProps['onTestEnd'] }> = ({ onTestEnd }) => (
   <LocalDataProvider schema={LOCALDATA_TEST_SCHEMA}>
     <LocalDataManager_TestRunner onTestEnd={onTestEnd} />
   </LocalDataProvider>
