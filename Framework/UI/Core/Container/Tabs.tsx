@@ -1,5 +1,5 @@
 import React, { memo, ReactNode } from 'react';
-import { View, ViewStyle } from 'react-native';
+import { View, StyleProp, ViewStyle } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { padSize05, padSize, rippleColorForLight, rippleColorForDark, textColorForLight, textColorForDark } from '../../../Index/Const';
@@ -32,8 +32,8 @@ interface ITabsContainerProps {
   tabIndex: number;
   onTabIdxChange: (index: number) => void;
   position: 'top' | 'bottom';
-  style?: ViewStyle;
-}
+  style?: StyleProp<ViewStyle>;
+};
 
 /**
  * TabsContainer component. Display children in tabs.
@@ -96,6 +96,6 @@ function TabsContainer({
       style={style}
     />
   );
-}
+};
 
 export default memo(TabsContainer);

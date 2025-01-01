@@ -1,5 +1,5 @@
 import React, { useState, useContext, memo, ReactNode } from 'react';
-import { View, TouchableOpacity, ViewStyle } from 'react-native';
+import { View, TouchableOpacity, StyleProp, ViewStyle } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import Collapsible from 'react-native-collapsible';
@@ -16,7 +16,7 @@ import { Text } from '../Text/Text';
 interface IToggleHeaderProps {
   toggleHeaderText: string;
   isCollapsed: boolean;
-}
+};
 
 /**
  * ToggleHeader Component
@@ -43,7 +43,7 @@ const ToggleHeader: React.FC<IToggleHeaderProps> = memo(({ toggleHeaderText, isC
  */
 interface ICollapsibleContainerProps {
   toggleHeaderText: string;
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
   children: ReactNode;
 }
 
@@ -78,9 +78,9 @@ export const CollapsibleContainer: React.FC<ICollapsibleContainerProps> = memo((
  */
 interface IAccordionContainerProps {
   sectionTitles: string[];
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
   children: ReactNode[];
-}
+};
 
 /**
  * A component that provides an accordion with multiple collapsible sections.

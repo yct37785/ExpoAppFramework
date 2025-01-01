@@ -1,31 +1,66 @@
 import React, { useState, useEffect, useCallback, memo } from 'react';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, StyleProp, ViewStyle } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 
 /**
- * A combined list component supporting FlashList and FlatList with filtering and searching logic encapsulated.
+ * data item props
+ * - key value pairs within each of the categories are user defined as needed
  * 
- * @param {Object} props - Component props.
- * @param {Array} props.dataArr - Array of data items to be displayed in the list.
- * @param {string} props.query - Current search query.
- * @param {Object} props.filter - Filter map for filtering items (key-value pairs).
- * @param {Function} props.renderItem - Function to render each item in the list.
- * @param {string} [props.listType='flashlist'] - Type of list to display, either 'flashlist' or 'flatlist'.
- * @param {number} [props.estimatedRowHeight=250] - Estimated height of each row in the list for FlashList.
- * @param {Object} [props.style={}] - Additional style on base container.
+ * @param searchable - Values will be querable.
+ * @param filterable - values will be filterable.
+ * @param none - No querying or filtering will be done on values here.
+ */
+interface IDataItem {
+  searchable: Record<string, string>;
+  filterable: Record<string, string>;
+  none: Record<string, string>;
+}
+
+/**
+ * filter item props
+ * - determine if key in IdataItem.filterable is filtered by equality comparison with its value
+ */
+interface IFilterItem {
+  [key: string]: string;
+}
+
+/**
+ * ListDataDisplay props
+ * 
+ * @param dataArr - Array of data items to be displayed in the list.
+ * @param query - Current search query.
+ * @param filter - Filter map for filtering items (key-value pairs).
+ * @param renderItem - Function to render each item in the list.
+ * @param listType - Type of list to display, either 'flashlist' or 'flatlist'.
+ * @param estimatedRowHeight - Estimated height of each row in the list for FlashList.
+ * @param style - Additional style on base container.
  * 
  * @returns {JSX.Element} The ListDataDisplay component.
  */
-const ListDataDisplay = ({
+interface IListDataDisplayProps {
+  dataArr: IDataItem[];
+  query: string;
+  filter: IFilterItem;
+  renderItem: (item: IDataItem, index: number) => React.ReactNode;
+  listType?: 'flashlist' | 'flatlist';
+  estimatedRowHeight?: number;
+  style?: StyleProp<ViewStyle>;
+}
+
+
+/**
+ * A combined list component supporting FlashList and FlatList with filtering and searching logic encapsulated.
+ */
+const ListDataDisplay: React.FC<IListDataDisplayProps> = ({
   dataArr = [],
   query = '',
   filter = {},
   renderItem,
   listType = 'flashlist',
   estimatedRowHeight = 250,
-  style={}
+  style = {}
 }) => {
-  const [filteredData, setFilteredData] = useState([]);
+  const [filteredData, setFilteredData] = useState<IDataItem[]>([]);
 
   /**
    * Filters the data based on searchable and filterable fields.
@@ -34,15 +69,15 @@ const ListDataDisplay = ({
     const normalizedQuery = query.toLowerCase();
 
     return dataArr.filter((item) => {
-      // Search logic for searchable fields
+      // search logic for searchable fields
       const matchesSearch =
         Object.values(item.searchable).some((value) =>
           value.toLowerCase().includes(normalizedQuery)
         );
 
-      // Filter logic for filterable fields
+      // filter logic for filterable fields
       let matchesFilter = true;
-      if (filter.size > 0) {
+      if (Object.keys(filter).length > 0) {
         matchesFilter = Object.entries(filter).every(
           ([key, value]) => item.filterable[key] === value
         );
@@ -62,7 +97,7 @@ const ListDataDisplay = ({
   /**
    * Renders a single list item.
    */
-  const renderListItem = useCallback(({ item, index }) => {
+  const renderListItem = useCallback(({ item, index }: { item: IDataItem, index: number }) => {
     return (
       <View style={{ flex: 1 }}>
         {renderItem(item, index)}
