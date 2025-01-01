@@ -1,4 +1,4 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp, FirebaseApp } from 'firebase/app';
 
 /**
  * firebase
@@ -13,4 +13,6 @@ const firebaseConfig = {
   measurementId: "G-RSXYWPNYK9"
 };
 
-export default firebaseApp = initializeApp(firebaseConfig);
+const firebaseApp: FirebaseApp = initializeApp(firebaseConfig);
+
+export default firebaseApp;
