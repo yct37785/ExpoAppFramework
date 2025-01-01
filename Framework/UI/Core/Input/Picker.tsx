@@ -1,30 +1,47 @@
 import React, { memo } from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { Picker } from '@react-native-picker/picker';
 
 /**
- * A dropdown picker component.
- * 
- * @param {Object} props - Component props.
- * @param {string} props.value - The selected value.
- * @param {Array} props.options - Array of options for the picker, each with a label and value.
- * @param {Function} props.onChange - Callback function to handle value change.
- * @param {Object} [props.style={}] - Additional style on base container.
- * 
- * @returns {JSX.Element} The PickerInput component.
+ * picker option prop
  */
-function PickerInput({ 
+interface IPickerOption {
+  label: string;
+  value: string;
+};
+
+/**
+ * picker input prop
+ * 
+ * @param value - The selected value.
+ * @param options - Array of options for the picker, each with a label and value.
+ * @param onChange - Callback function to handle value change.
+ * @param style - Additional style on base container.
+ */
+interface IPickerInputProps {
+  value: string;
+  options: IPickerOption[];
+  onChange: (value: string) => void;
+  style?: StyleProp<ViewStyle>;
+};
+
+/**
+ * A dropdown picker component.
+ */
+const PickerInput: React.FC<IPickerInputProps> = ({ 
   value, 
   options, 
-  onChange,
-  style={}
-}) {
+  onChange, 
+  style = {} 
+}) => {
   const theme = useTheme();
+
   return (
     <Picker
       mode='dropdown'
-      dropdownIconColor={theme.colors.text}
-      style={[{ color: theme.colors.text, width: '100%' }, style]}
+      dropdownIconColor='green'
+      style={[{ color: 'green', width: '100%' }, style]}
       selectedValue={value}
       onValueChange={(v) => onChange(v)}
     >
@@ -34,7 +51,7 @@ function PickerInput({
           label={item.label} 
           value={item.value}
           style={{
-            color: theme.colors.text, 
+            color: 'green', 
             backgroundColor: theme.colors.surfaceVariant
           }} 
         />
