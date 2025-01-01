@@ -5,7 +5,7 @@ import { RouteProp } from '@react-navigation/native';
 /**
  * screen route props
  * 
- * @prop paramText - React Navigation route params testing.
+ * @param paramText - React Navigation route params testing.
  */
 export interface IScreenRouteProps {
   paramText?: string;
@@ -24,8 +24,8 @@ type RootStackPropsList = {
 /**
  * screen props
  * 
- * @prop navigation - @react-navigation
- * @prop route - @react-navigation
+ * @param navigation - @react-navigation
+ * @param route - @react-navigation
  */
 export interface IScreenProps {
   navigation: NativeStackNavigationProp<RootStackPropsList>,
@@ -35,11 +35,11 @@ export interface IScreenProps {
 /**
  * BasicActivity props
  * 
- * @prop navigation - React Navigation provided object for navigating between screens.
- * @prop title - Title of the screen to be displayed on app header.
- * @prop customHeaderContent - Custom content to display in the header.
- * @prop style - Additional style on base container.
- * @prop children - The body content of the screen.
+ * @param navigation - React Navigation provided object for navigating between screens.
+ * @param title - Title of the screen to be displayed on app header.
+ * @param customHeaderContent - Custom content to display in the header.
+ * @param style - Additional style on base container.
+ * @param children - The body content of the screen.
  */
 export interface IBasicActivityProps {
   navigation: NativeStackNavigationProp<RootStackPropsList>;
@@ -52,7 +52,7 @@ export interface IBasicActivityProps {
 /**
  * system settings props
  * 
- * @prop toggleDarkMode - Defined function to toggle dark mode.
+ * @param toggleDarkMode - Defined function to toggle dark mode.
  */
 export interface ISystemSettingsContextProps {
   toggleDarkMode: () => Promise<void>;
@@ -60,6 +60,14 @@ export interface ISystemSettingsContextProps {
 
 /**
  * local data manager props
+ * 
+ * @param isLocalDataReady - Flag updates to true when local data is loaded to memory.
+ * @param updateFlag - Triggers re-render when local data is updated.
+ * @param writeLocalData - Writes a key-value pair to storage if valid.
+ * @param readLocalData - Reads a value by key from storage.
+ * @param readDanglingKeys - Retrieves dangling keys not listed in the schema.
+ * @param clearDanglingKeys - Clears all dangling keys from storage.
+ * @param clearLocalData - Clear all key-value pairs. For testing usage.
  */
 export interface ILocalDataManagerProps {
   isLocalDataReady: boolean;
@@ -73,6 +81,15 @@ export interface ILocalDataManagerProps {
 
 /**
  * Firebase props
+ * 
+ * @param createCollection - Creates a collection with optional initial data.
+ * @param createDocument - Creates or overwrites a document.
+ * @param readDocument - Reads a document by ID.
+ * @param updateDocument - Updates fields in an existing document.
+ * @param deleteDocument - Deletes a document by ID.
+ * @param readAllDocuments - Reads all documents from a collection.
+ * @param listenToDocument - Listens for changes on a specific document.
+ * @param deleteCollection - Deletes an entire collection by deleting all its documents.
  */
 export interface IFirestoreManagerProps {
   createCollection: (collectionName: string, initialData?: object[]) => Promise<boolean>;
@@ -87,6 +104,9 @@ export interface IFirestoreManagerProps {
 
 /**
  * on layout change hook props
+ * 
+ * @param width - Receive width of React comp on layout change.
+ * @param height - Receive height of React comp on layout change.
  */
 export interface ILayoutSizeProps {
   width: number;
@@ -95,23 +115,39 @@ export interface ILayoutSizeProps {
 
 /**
  * root comp props
+ * 
+ * @param screenMap - User defined map of screens to key for @react-navigation identification.
+ * @param DEFAULT_SCREEN - Default launching screen.
  */
 export interface IRootCompProps {
   screenMap: Record<string, React.ComponentType<any>>;
   DEFAULT_SCREEN: string;
 };
 
-export interface ILocalDataProviderWrapperProps {
-  screenMap: Record<string, React.ComponentType<any>>;
-  DEFAULT_SCREEN: string;
+/**
+ * root comp props
+ * 
+ * @param LOCAL_DATA_VALUES - Default local data values schema.
+ */
+export interface ILocalDataProviderWrapperProps extends IRootCompProps {
   LOCAL_DATA_VALUES: Record<string, any>;
 };
 
 /**
- * test runner props
+ * test runner OnTestEnd results list
+ * 
+ * @param test - Test ID.
+ * @param status - Status of test.
  */
-export type OnTestEndParams = { test: string; status: boolean }[];
+export type OnTestEndResultsList = { test: string; status: boolean }[];
 
+/**
+ * test runner props
+ * 
+ * @param onTestEnd - Function downstream test runners call to submit test results.
+ * @param onTestEnd.className - Downstream test runner class name.
+ * @param onTestEnd.results - Results list.
+ */
 export interface ITestRunnerProps {
-  onTestEnd: (className: string, results: OnTestEndParams) => void;
+  onTestEnd: (className: string, results: OnTestEndResultsList) => void;
 };

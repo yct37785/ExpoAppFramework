@@ -56,10 +56,9 @@ const Stack = createNativeStackNavigator();
 /**
  * A wrapper for screens to standardize their layout.
  * 
- * @param props - The props passed to the screen.
- * @param props.component - The screen component to render.
+ * @param component - The screen component to render.
  * 
- * @returns - The screen wrapped with a standardized layout.
+ * @returns The screen wrapped with a standardized layout.
  */
 const ScreenWrapper: React.FC<{ component: React.ComponentType<any>; [key: string]: any }> = ({ component: Component, ...props }) => {
   return (
@@ -71,17 +70,13 @@ const ScreenWrapper: React.FC<{ component: React.ComponentType<any>; [key: strin
 
 /**
  * The root component of the entire app. Handles initialization, context providers, and navigation.
- * 
- * @param props - The props passed to the root component.
- * @param props.screenMap - A mapping of screen names to their respective components.
- * @param props.DEFAULT_SCREEN - The default screen to display on app launch.
  */
 const RootComp: React.FC<IRootCompProps> = ({ screenMap, DEFAULT_SCREEN }) => {
   const [theme, setTheme] = useState(CombinedDarkTheme);
   const { isLocalDataReady, readLocalData, writeLocalData } = useLocalDataContext();
 
   /**
-   * Triggered on local data ready and update
+   * triggered on local data ready and update
    */
   useEffect(() => {
     // apply system settings
@@ -91,7 +86,7 @@ const RootComp: React.FC<IRootCompProps> = ({ screenMap, DEFAULT_SCREEN }) => {
   }, [isLocalDataReady]);
 
   /**
-   * Toggle dark mode
+   * toggle dark mode
    */
   function setDarkMode(isDarkMode: boolean) {
     if (isDarkMode !== (theme === CombinedDarkTheme)) {
@@ -101,9 +96,9 @@ const RootComp: React.FC<IRootCompProps> = ({ screenMap, DEFAULT_SCREEN }) => {
   }
 
   /**
-   * System settings toggle
+   * system settings toggle
    */
-  async function toggleDarkMode() {
+  const toggleDarkMode = async (): Promise<void> => {
     await writeLocalData("isDarkMode", !readLocalData("isDarkMode"));
     setDarkMode(readLocalData("isDarkMode"));
   }
@@ -141,12 +136,7 @@ const RootComp: React.FC<IRootCompProps> = ({ screenMap, DEFAULT_SCREEN }) => {
 };
 
 /**
- * Wrapper for LocalDataProvider to ensure it renders before RootComp
- * 
- * @param props - The props passed to the root component.
- * @param props.screenMap - A mapping of screen names to their respective components.
- * @param props.DEFAULT_SCREEN - The default screen to display on app launch.
- * @param props.LOCAL_DATA_VALUES - The schema for local storage data.
+ * Wrapper for LocalDataProvider to ensure it renders before RootComp.
  */
 const LocalDataProviderWrapper: React.FC<ILocalDataProviderWrapperProps> = ({ screenMap, DEFAULT_SCREEN, LOCAL_DATA_VALUES }) => {
   return (

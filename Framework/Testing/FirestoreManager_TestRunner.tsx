@@ -1,13 +1,10 @@
 import React, { useEffect, memo } from 'react';
 import { delayPromise } from '../Utility/GeneralUtility';
 import { useFirestoreContext, FirestoreProvider } from '../DataManagement/FirestoreManager';
-import { OnTestEndParams, ITestRunnerProps } from '../Index/PropType';
+import { OnTestEndResultsList, ITestRunnerProps } from '../Index/PropType';
 
 /**
  * Test runner for FirestoreManager.
- * 
- * @param props - Component props.
- * @param props.onTestEnd - Called at the end of the test.
  */
 const FirestoreManager_TestRunner: React.FC<ITestRunnerProps> = ({ onTestEnd }) => {
   const className = "FirestoreManager";
@@ -25,7 +22,7 @@ const FirestoreManager_TestRunner: React.FC<ITestRunnerProps> = ({ onTestEnd }) 
    * Runs all tests for this module synchronously.
    */
   async function runTests(): Promise<void> {
-    const results: OnTestEndParams = [];
+    const results: OnTestEndResultsList = [];
 
     results.push({ test: 'Create Collection', status: await testCreateCollection() });
     results.push({ test: 'Create Document', status: await testCreateDocument() });

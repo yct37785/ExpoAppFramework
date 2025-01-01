@@ -13,10 +13,10 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
   /**
    * Creates a collection with optional initial data.
    * 
-   * @param {string} collectionName - Name of the collection.
-   * @param {Object[]} [initialData=[]] - Optional initial documents to create.
+   * @param collectionName - Name of the collection.
+   * @param initialData - Optional initial documents to create.
    * 
-   * @returns {Promise<boolean>} - True if created successfully.
+   * @returns True if created successfully.
    */
   const createCollection = async (collectionName: string, initialData: object[] = []): Promise<boolean> => {
     try {
@@ -38,11 +38,11 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
   /**
    * Creates or overwrites a document.
    * 
-   * @param {string} collectionName - Name of the collection.
-   * @param {string} docId - Document ID.
-   * @param {Object} data - Document data.
+   * @param collectionName - Name of the collection.
+   * @param docId - Document ID.
+   * @param data - Document data.
    * 
-   * @returns {Promise<boolean>} - True if successful.
+   * @returns True if successful.
    */
   const createDocument = async (collectionName: string, docId: string, data: object): Promise<boolean> => {
     try {
@@ -57,10 +57,10 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
   /**
    * Reads a document by ID.
    * 
-   * @param {string} collectionName - Name of the collection.
-   * @param {string} docId - Document ID.
+   * @param collectionName - Name of the collection.
+   * @param docId - Document ID.
    * 
-   * @returns {Promise<Object|null>} - Document data or null if not found.
+   * @returns Document data or null if not found.
    */
   const readDocument = async (collectionName: string, docId: string): Promise<object | null> => {
     try {
@@ -75,11 +75,11 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
   /**
    * Updates fields in an existing document.
    * 
-   * @param {string} collectionName - Name of the collection.
-   * @param {string} docId - Document ID.
-   * @param {Object} data - Fields to update.
+   * @param collectionName - Name of the collection.
+   * @param docId - Document ID.
+   * @param data - Fields to update.
    * 
-   * @returns {Promise<boolean>} - True if successful.
+   * @returns True if successful.
    */
   const updateDocument = async (collectionName: string, docId: string, data: object): Promise<boolean> => {
     try {
@@ -94,10 +94,10 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
   /**
    * Deletes a document by ID.
    * 
-   * @param {string} collectionName - Name of the collection.
-   * @param {string} docId - Document ID.
+   * @param collectionName - Name of the collection.
+   * @param docId - Document ID.
    * 
-   * @returns {Promise<boolean>} - True if deleted successfully.
+   * @returns True if deleted successfully.
    */
   const deleteDocument = async (collectionName: string, docId: string): Promise<boolean> => {
     try {
@@ -112,9 +112,9 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
   /**
    * Reads all documents from a collection.
    * 
-   * @param {string} collectionName - Name of the collection.
+   * @param collectionName - Name of the collection.
    * 
-   * @returns {Promise<Object[]>} - Array of documents.
+   * @returns Array of documents.
    */
   const readAllDocuments = async (collectionName: string): Promise<object[]> => {
     try {
@@ -129,11 +129,11 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
   /**
    * Listens for changes on a specific document.
    * 
-   * @param {string} collectionName - The Firestore collection name.
-   * @param {string} docId - The document ID to listen for.
-   * @param {Function} onChange - Callback triggered when the document changes.
+   * @param collectionName - The Firestore collection name.
+   * @param docId - The document ID to listen for.
+   * @param onChange - Callback triggered when the document changes.
    * 
-   * @returns {Function} A function to unsubscribe from the listener.
+   * @returns A function to unsubscribe from the listener.
    */
   const listenToDocument = (collectionName: string, docId: string, onChange: (data: object) => void): (() => void) => {
     try {
@@ -156,8 +156,8 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
   /**
    * Deletes an entire collection by deleting all its documents.
    * 
-   * @param {string} collectionName - Name of the collection to delete.
-   * @returns {Promise<boolean>} - True if successful.
+   * @param collectionName - Name of the collection to delete.
+   * @returns True if successful.
    */
   const deleteCollection = async (collectionName: string): Promise<boolean> => {
     try {

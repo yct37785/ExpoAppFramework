@@ -1,11 +1,8 @@
 import React, { useEffect, memo } from 'react';
-import { OnTestEndParams, ITestRunnerProps } from '../Index/PropType';
+import { OnTestEndResultsList, ITestRunnerProps } from '../Index/PropType';
 
 /**
  * Run unit/integration tests for a single class with an actual React Native DOM.
- * 
- * @param props - Component props.
- * @param props.onTestEnd - Called at the end of the test.
  */
 const Sample_TestRunner: React.FC<ITestRunnerProps> = ({ onTestEnd }) => {
   const className = "Sample";
@@ -18,7 +15,7 @@ const Sample_TestRunner: React.FC<ITestRunnerProps> = ({ onTestEnd }) => {
    * Runs all tests for this module synchronously.
    */
   async function runTests(): Promise<void> {
-    const results: OnTestEndParams = [];
+    const results: OnTestEndResultsList = [];
 
     results.push({ test: 'example 1', status: await exampleTest() });
     results.push({ test: 'example 2', status: await exampleTest2() });
@@ -29,7 +26,7 @@ const Sample_TestRunner: React.FC<ITestRunnerProps> = ({ onTestEnd }) => {
   /**
    * Example test case.
    * 
-   * @returns {Promise<boolean>} A promise that resolves to the test result status.
+   * @returns Test result status.
    */
   async function exampleTest(): Promise<boolean> {
     let status = true;
@@ -39,7 +36,7 @@ const Sample_TestRunner: React.FC<ITestRunnerProps> = ({ onTestEnd }) => {
   /**
    * Example test case 2.
    * 
-   * @returns {Promise<boolean>} A promise that resolves to the test result status.
+   * @returns Test result status.
    */
   async function exampleTest2(): Promise<boolean> {
     let status = false;

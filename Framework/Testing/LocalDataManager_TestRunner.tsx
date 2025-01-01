@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, memo } from 'react';
 import { LocalDataProvider, useLocalDataContext } from '../DataManagement/LocalDataManager';
-import { OnTestEndParams, ITestRunnerProps } from '../Index/PropType';
+import { OnTestEndResultsList, ITestRunnerProps } from '../Index/PropType';
 
 const LOCALDATA_TEST_SCHEMA = {
   stringKey: 'defaultString',
@@ -14,9 +14,6 @@ const LOCALDATA_TEST_SCHEMA = {
 
 /**
  * Test runner for LocalDataManager.
- * 
- * @param props - Component props.
- * @param props.onTestEnd - Called at the end of the test.
  */
 const LocalDataManager_TestRunner: React.FC<ITestRunnerProps> = ({ onTestEnd }) => {
   const className = 'LocalDataManager';
@@ -60,7 +57,7 @@ const LocalDataManager_TestRunner: React.FC<ITestRunnerProps> = ({ onTestEnd }) 
    * Runs all tests for this module synchronously.
    */
   async function runTests(): Promise<void> {
-    const results: OnTestEndParams = [];
+    const results: OnTestEndResultsList = [];
 
     results.push(await runTest("Initialization Test", testInitialization));
     results.push(await runTest("Valid Data Write/Read Test", testValidDataWriteRead));
