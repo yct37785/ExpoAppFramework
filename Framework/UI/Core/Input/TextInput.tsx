@@ -1,35 +1,45 @@
 import React, { useEffect, useRef, memo } from 'react';
-import { Keyboard } from 'react-native';
+import { Keyboard, StyleProp, ViewStyle, TextStyle } from 'react-native';
 import { Searchbar, TextInput } from 'react-native-paper';
 
 /**
- * KeyInputField Component
+ * KeyInputField props
  * 
- * @param {Object} props - Component props.
- * @param {string} [props.type='text'] - 'text', 'numeric', 'passcode', 'search'.
- * @param {string} [props.value=''] - Current value of the input.
- * @param {string} -[props.placeholder=''] - Placeholder text for the input.
- * @param {Function} [props.onChange=({string})=>{}] - Callback function to receive changed input value.
- * @param {Function} [props.onFocus=()=>{}] - Callback function to handle focus event on the input.
- * @param {Function} [props.onBlur=()=>{}] - Callback function to handle blur event on the input.
- * @param {Object} [props.style={}] - Additional style on base container.
- * 
- * @returns {JSX.Element} The TextInputComp component.
+ * @param type - 'text', 'numeric', 'passcode', 'search'.
+ * @param value - Current value of the input.
+ * @param placeholder - Placeholder text for the input.
+ * @param onChange - Callback function to receive changed input value.
+ * @param onFocus - Callback function to handle focus event on the input.
+ * @param onBlur - Callback function to handle blur event on the input.
+ * @param style - Additional style on base container.
  */
-const TextInputComp = ({
+interface ITextInputCompProps {
+  type?: 'text' | 'numeric' | 'passcode' | 'search';
+  value?: string;
+  placeholder?: string;
+  onChange?: (text: string) => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
+  style?: StyleProp<ViewStyle | TextStyle>;
+};
+
+/**
+ * KeyInputField Component
+ */
+const TextInputComp: React.FC<ITextInputCompProps> = ({
   type = 'text',
   value = '',
   placeholder = '',
-  onChange=(s)=>{},
-  onFocus=()=>{},
-  onBlur=()=>{},
-  style={}
+  onChange = () => {},
+  onFocus = () => {},
+  onBlur = () => {},
+  style = {},
 }) => {
-  const inputRef = useRef();
+  const inputRef = useRef<any>(null);
 
   useEffect(() => {
     const keyboardListener = Keyboard.addListener('keyboardDidHide', () => {
-      if (inputRef.current) {
+      if (inputRef.current && 'blur' in inputRef.current) {
         inputRef.current.blur();
       }
     });
