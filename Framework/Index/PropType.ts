@@ -1,4 +1,5 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { StyleProp, ViewStyle } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 
 /**
@@ -20,6 +21,23 @@ type RootStackParamList = {
 export interface IScreenProps {
   navigation: NativeStackNavigationProp<RootStackParamList>,
   route: RouteProp<RootStackParamList>
+};
+
+/**
+ * BasicActivity props
+ * 
+ * @param navigation - React Navigation provided object for navigating between screens.
+ * @param title - Title of the screen to be displayed on app header.
+ * @param customHeaderContent - Custom content to display in the header.
+ * @param style - Additional style on base container.
+ * @param children - The body content of the screen.
+ */
+export interface IBasicActivityProps {
+  navigation: NativeStackNavigationProp<RootStackParamList>;
+  title?: string;
+  CustomHeaderComp?: React.FC<{}>;
+  style?: StyleProp<ViewStyle>;
+  children: React.ReactNode;
 };
 
 /**
