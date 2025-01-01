@@ -1,25 +1,37 @@
-import React, { memo, useContext, useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect, memo, ReactNode } from 'react';
+import { View, ScrollView, StyleSheet, StyleProp, ViewStyle, TextStyle, LayoutChangeEvent } from 'react-native';
 import { useOnLayout } from '../../../Hook/OnLayoutHook';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import _ from 'lodash';
 
 /**
- * Base layout component.
+ * Layout component props.
  * 
- * @param {Object} props - Component props.
- * @param {'row' | 'column'} [props.direction='column'] - Flex direction.
- * @param {'flex-start' | 'center' | 'flex-end'} [props.align='flex-start'] - Alignment of children.
- * @param {boolean} [props.reverse=false] - Reverse the order of children.
- * @param {'wrap' | 'scroll' | 'none'} [props.constraint='wrap'] - Determine if child elements behaviour if exceeds parent dimensions,
- * none by default, up to user to determine if wrap or scroll.
- * @param {number} [props.childMargin=0] - Margin between child elements.
- * @param {number} [props.margin=0] - Outer margin for the layout.
- * @param {number} [props.padding=0] - Inner padding for the layout.
- * @param {object} [props.style={}] - Additional custom styles for the layout.
- * @param {React.ReactNode} props.children - Child elements.
- * 
- * @returns {JSX.Element} The base Layout component.
+ * @param direction - 'row' or 'column' for flex direction.
+ * @param align - 'flex-start' | 'center' | 'flex-end' for alignment.
+ * @param reverse - Reverse the order of children.
+ * @param constraint - 'wrap' | 'scroll' | 'none' for layout constraint.
+ * @param childMargin - Margin between child elements.
+ * @param margin - Outer margin for the layout.
+ * @param padding - Inner padding for the layout.
+ * @param style - Additional custom styles.
+ * @param children - Child elements.
  */
-const Layout = ({
+interface ILayoutProps {
+  direction?: 'row' | 'column';
+  align?: 'flex-start' | 'center' | 'flex-end';
+  reverse?: boolean;
+  constraint?: 'wrap' | 'scroll' | 'none';
+  childMargin?: number;
+  margin?: number;
+  padding?: number;
+  style?: StyleProp<ViewStyle>;
+  children: ReactNode;
+}
+
+/**
+ * Base layout component that handles flexible layout.
+ */
+const Layout: React.FC<ILayoutProps> = ({
   direction = 'column',
   align = 'flex-start',
   reverse = false,
@@ -34,7 +46,7 @@ const Layout = ({
   if (reverse) {
     arrangedChildren.reverse();
   }
-  
+
   const containerStyle = StyleSheet.create({
     container: {
       flexDirection: direction,
@@ -45,18 +57,16 @@ const Layout = ({
     },
   });
 
-  const renderChild = (index, child) => {
-    return <View style={{ padding: childMargin / 2 }} key={index}>{child}</View>
+  const renderChild = (index: number, child: ReactNode) => {
+    return <View style={{ padding: childMargin / 2 }} key={index}>{child}</View>;
   };
-  
+
   if (constraint === 'scroll') {
     return (
       <View style={style}>
         <ScrollView horizontal={direction === 'row'}>
-          <View style={containerStyle.container} horizontal={direction === 'row'}>
-            {arrangedChildren.map((child, index) =>
-              renderChild(index, child)
-            )}
+          <View style={containerStyle.container}>
+            {arrangedChildren.map((child, index) => renderChild(index, child))}
           </View>
         </ScrollView>
       </View>
@@ -65,9 +75,7 @@ const Layout = ({
     return (
       <View style={style}>
         <View style={containerStyle.container}>
-          {arrangedChildren.map((child, index) =>
-              renderChild(index, child)
-          )}
+          {arrangedChildren.map((child, index) => renderChild(index, child))}
         </View>
       </View>
     );
@@ -75,36 +83,40 @@ const Layout = ({
 };
 
 /**
- * Vertical Layout Component.
- *
- * @param {Omit<LayoutProps, 'direction'>} props - Component props.
- * @returns {JSX.Element} Vertical Layout.
+ * Vertical Layout component that inherits from Layout and sets direction to 'column'.
  */
-export const VerticalLayout = memo((props) => <Layout {...props} direction="column" />);
+export const VerticalLayout: React.FC<Omit<ILayoutProps, 'direction'>> = memo((props) => <Layout {...props} direction="column" />);
 
 /**
- * Horizontal Layout Component.
- *
- * @param {Omit<LayoutProps, 'direction'>} props - Component props.
- * @returns {JSX.Element} Horizontal Layout.
+ * Horizontal Layout component that inherits from Layout and sets direction to 'row'.
  */
-export const HorizontalLayout = memo((props) => <Layout {...props} direction="row" />);
+export const HorizontalLayout: React.FC<Omit<ILayoutProps, 'direction'>> = memo((props) => <Layout {...props} direction="row" />);
 
 /**
- * Grid Layout Component.
+ * GridLayout component props.
  * 
- * @param {Object} props - Component props.
- * @param {'row' | 'column'} [props.direction='row'] - Layout direction.
- * @param {boolean} [props.reverse=false] - Reverse the order of children.
- * @param {number} [props.spacing=0] - Space between grid items.
- * @param {number} [props.itemsPerLine=2] - Number of items per row/column.
- * @param {object} [props.itemStyle={}] - Additional custom styles for the child container.
- * @param {object} [props.style={}] - Additional custom styles for the grid.
- * @param {React.ReactNode} props.children - Child elements.
- * 
- * @returns {JSX.Element} The Grid Layout component.
+ * @param direction - Layout direction, 'row' or 'column'.
+ * @param reverse - Reverse the order of items.
+ * @param spacing - Space between grid items.
+ * @param itemsPerLine - Number of items per row/column.
+ * @param itemStyle - Style for each individual item.
+ * @param style - Additional custom styles for the container.
+ * @param children - Child elements.
  */
-export const GridLayout = memo(({
+interface IGridLayoutProps {
+  direction?: 'row' | 'column';
+  reverse?: boolean;
+  spacing?: number;
+  itemsPerLine?: number;
+  itemStyle?: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
+  children: ReactNode;
+}
+
+/**
+ * Grid layout component that renders a grid of items with customizable spacing and number of items per row/column.
+ */
+export const GridLayout: React.FC<IGridLayoutProps> = memo(({
   direction = 'row',
   reverse = false,
   spacing = 0,
@@ -114,31 +126,29 @@ export const GridLayout = memo(({
   children,
 }) => {
   const [size, onLayout] = useOnLayout();
-  const arrangedChildren = React.Children.toArray(children).filter(child =>
-    React.isValidElement(child)
-  );
+  const arrangedChildren = React.Children.toArray(children).filter(child => React.isValidElement(child));
   if (reverse) {
     arrangedChildren.reverse();
   }
 
   const containerStyle = StyleSheet.create({
-    container: {
-      flexDirection: direction === 'row' ? 'row' : 'column',
-      flexWrap: 'wrap',
-      ...style,
-    },
+    layout: _.merge({}, { 
+      flexDirection: direction === 'row' ? 'row' : 'column', 
+      flexWrap: 'wrap' 
+    }, style),
+    item: _.merge({}, { 
+      margin: spacing / 2, 
+      width: size ? Math.floor(size.width / itemsPerLine) - spacing : 0 }, 
+      itemStyle),
   });
 
   return (
-    <View style={containerStyle.container} onLayout={onLayout}>
+    <View style={containerStyle.layout} onLayout={onLayout}>
       {arrangedChildren.map((child, index) => (
         <View
-          style={{
-            margin: spacing / 2,
-            width: size ? Math.floor(size.width / itemsPerLine) - spacing : 0,
-            ...itemStyle
-          }} 
-        key={index}>
+          style={containerStyle.item}
+          key={index}
+        >
           {child}
         </View>
       ))}
