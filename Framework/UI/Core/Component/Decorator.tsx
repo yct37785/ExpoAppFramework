@@ -1,4 +1,4 @@
-import React, { memo, useContext, useState, useCallback, useEffect } from 'react';
+import React, { memo } from 'react';
 import { Divider, DividerProps } from 'react-native-paper';
 
 /**

@@ -1,7 +1,5 @@
-import React, { useEffect, useRef, memo } from 'react';
-import { Button as RNPButton, useTheme } from 'react-native-paper';
-import { MaterialIcons } from '@expo/vector-icons';
-import { textColorForDark, textColorForLight } from '../../../Index/Const';
+import React, { memo } from 'react';
+import { Button as RNPButton } from 'react-native-paper';
 import { IButtonProps, IIconButtonProps } from '../../../Index/PropType';
 
 /**

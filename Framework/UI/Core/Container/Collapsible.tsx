@@ -1,5 +1,5 @@
-import React, { useState, useContext, memo } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import React, { useState, useContext, memo, ReactNode } from 'react';
+import { View, TouchableOpacity, ViewStyle } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 import Collapsible from 'react-native-collapsible';
@@ -8,22 +8,26 @@ import { padSize05, padSize, padSize2, iconSizeSmall, iconSizeMedium } from '../
 import { Text } from '../Text/Text';
 
 /**
- * ToggleHeader Component
+ * ToggleHeader props
  * 
- * @param {Object} param0 - Component props.
- * @param {boolean} param0.isCollapsed - Indicates if the container is collapsed.
- * 
- * @returns {JSX.Element} The ToggleHeader component.
+ * @param toggleHeaderText - Text to be displayed in the header.
+ * @param isCollapsed - Indicates if the container is collapsed.
  */
-const ToggleHeader = memo(({ toggleHeaderText = '', isCollapsed }) => {
-  const theme = useTheme();
+interface IToggleHeaderProps {
+  toggleHeaderText: string;
+  isCollapsed: boolean;
+}
+
+/**
+ * ToggleHeader Component
+ */
+const ToggleHeader: React.FC<IToggleHeaderProps> = memo(({ toggleHeaderText, isCollapsed }) => {
   return (
     <View style={{ padding: padSize, flexDirection: 'row', alignItems: 'center' }}>
       <Text variant='titleSmall'>{toggleHeaderText}</Text>
       <View style={{ flex: 1 }} />
       <MaterialIcons
         name={isCollapsed ? 'keyboard-arrow-down' : 'keyboard-arrow-up'}
-        color={theme.colors.text}
         size={iconSizeMedium}
       />
     </View>
@@ -31,19 +35,22 @@ const ToggleHeader = memo(({ toggleHeaderText = '', isCollapsed }) => {
 });
 
 /**
- * A component that provides a collapsible section.
+ * collapsible container props
  * 
- * @param {Object} props - Component props.
- * @param {Object} [props.style={}] - Additional style on base container.
- * @param {React.ReactNode} props.children - Content to be rendered within the collapsible section.
- * 
- * @returns {JSX.Element} The CollapsibleContainer component.
+ * @param toggleHeaderText - Text for the header.
+ * @param style - Additional style on the base container.
+ * @param children - Content to be rendered within the collapsible section.
  */
-export const CollapsibleContainer = memo(({ 
-  toggleHeaderText = '',
-  style={},
-  children
-}) => {
+interface ICollapsibleContainerProps {
+  toggleHeaderText: string;
+  style?: ViewStyle;
+  children: ReactNode;
+}
+
+/**
+ * A component that provides a collapsible section.
+ */
+export const CollapsibleContainer: React.FC<ICollapsibleContainerProps> = memo(({ toggleHeaderText, style = {}, children }) => {
   const [isCollapsed, setIsCollapsed] = useState(true);
 
   const toggleCollapse = () => {
@@ -63,70 +70,66 @@ export const CollapsibleContainer = memo(({
 });
 
 /**
+ * accordion container props
+ * 
+ * @param sectionTitles - Array of section titles.
+ * @param style - Additional style on the base container.
+ * @param children - Children components for each section content.
+ */
+interface IAccordionContainerProps {
+  sectionTitles: string[];
+  style?: ViewStyle;
+  children: ReactNode[];
+}
+
+/**
  * A component that provides an accordion with multiple collapsible sections.
  * Automatically maps children to sections.
- * 
- * @param {Object} props - Component props.
- * @param {Array<string>} props.sectionTitles - Array of section titles.
- * @param {Object} [props.style={}] - Additional style on base container.
- * @param {React.ReactNode[]} props.children - Children components for each section content.
- * 
- * @returns {JSX.Element} The AccordionContainer component.
  */
-export const AccordionContainer = memo(({
-  sectionTitles,
-  style={},
-  children
-}) => {
+export const AccordionContainer: React.FC<IAccordionContainerProps> = memo(({ sectionTitles, style = {}, children }) => {
   if (sectionTitles.length !== React.Children.count(children)) {
     throw new Error("The number of section titles must match the number of children.");
   }
 
-  const theme = useTheme();
-  const [activeSections, setActiveSections] = useState([]);
+  const [activeSections, setActiveSections] = useState<number[]>([]);
 
-  // Combine section titles and children into sections array
+  // combine section titles and children into sections array
   const sections = sectionTitles.map((title, index) => ({
     title,
     content: React.Children.toArray(children)[index],
   }));
 
   /**
-   * Renders header.
+   * Render header.
    * 
-   * @param {Object} section - Section object.
-   * @param {number} i - Index of current section.
-   * 
-   * @returns {JSX.Element} The header component.
+   * @param section - Section object.
+   * @param i - Index of current section.
    */
-  function renderHeader(section, i) {
-    return <View style={{ padding: padSize, alignItems: 'center', flexDirection: 'row' }}>
-      <Text variant='titleSmall'>{section.title}</Text>
-      <View style={{ flex: 1 }} />
-      <MaterialIcons
-        name={activeSections.length === 1 && activeSections[0] === i ? 'keyboard-arrow-up' : 'keyboard-arrow-down'}
-        color={theme.colors.text}
-        size={iconSizeMedium}
-      />
-    </View>;
+  function renderHeader(section: { title: string }, i: number): JSX.Element {
+    return (
+      <View style={{ padding: padSize, alignItems: 'center', flexDirection: 'row' }}>
+        <Text variant='titleSmall'>{section.title}</Text>
+        <View style={{ flex: 1 }} />
+        <MaterialIcons
+          name={activeSections.length === 1 && activeSections[0] === i ? 'keyboard-arrow-up' : 'keyboard-arrow-down'}
+          size={iconSizeMedium}
+        />
+      </View>
+    );
   }
 
   /**
-   * Renders content.
+   * Render content.
    * 
-   * @param {Object} section - Section object.
-   * 
-   * @returns {JSX.Element} The content component.
+   * @param section - Section object.
    */
-  function renderContent(section) {
-    return <View>
-      {section.content}
-    </View>;
+  function renderContent(section: { content: ReactNode }): JSX.Element {
+    return <View>{section.content}</View>;
   }
 
   return (
     <Accordion
-      style={style}
+      containerStyle={style}
       sections={sections}
       activeSections={activeSections}
       renderHeader={(section, i) => renderHeader(section, i)}
