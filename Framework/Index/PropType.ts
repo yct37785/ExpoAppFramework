@@ -33,23 +33,6 @@ export interface IScreenProps {
 };
 
 /**
- * BasicActivity props
- * 
- * @param navigation - React Navigation provided object for navigating between screens.
- * @param title - Title of the screen to be displayed on app header.
- * @param customHeaderContent - Custom content to display in the header.
- * @param style - Additional style on base container.
- * @param children - The body content of the screen.
- */
-export interface IBasicActivityProps {
-  navigation: NativeStackNavigationProp<RootStackPropsList>;
-  title?: string;
-  CustomHeaderComp?: React.FC<{}>;
-  style?: StyleProp<ViewStyle>;
-  children: React.ReactNode;
-};
-
-/**
  * system settings props
  * 
  * @param toggleDarkMode - Defined function to toggle dark mode.
@@ -151,3 +134,44 @@ export type OnTestEndResultsList = { test: string; status: boolean }[];
 export interface ITestRunnerProps {
   onTestEnd: (className: string, results: OnTestEndResultsList) => void;
 };
+
+/**
+ * BasicActivity props
+ * 
+ * @param navigation - React Navigation provided object for navigating between screens.
+ * @param title - Title of the screen to be displayed on app header.
+ * @param customHeaderContent - Custom content to display in the header.
+ * @param style - Additional style on base container.
+ * @param children - The body content of the screen.
+ */
+export interface IBasicActivityProps {
+  navigation: NativeStackNavigationProp<RootStackPropsList>;
+  title?: string;
+  CustomHeaderComp?: React.FC<{}>;
+  style?: StyleProp<ViewStyle>;
+  children: React.ReactNode;
+};
+
+/**
+ * button props
+ * 
+ * @param mode - RNP button modes.
+ * @param onPress - On press handler.
+ * @param style - Custom style.
+ * @param children - The body content of this component.
+ */
+export interface IButtonProps {
+  mode?: 'text' | 'outlined' | 'contained' | 'elevated' | 'contained-tonal';
+  onPress?: () => void;
+  style?: object;
+  children: React.ReactNode;
+}
+
+/**
+ * IconButton props
+ * 
+ * @param icon - Icon name (default "camera").
+ */
+export interface IIconButtonProps extends IButtonProps {
+  icon?: string;
+}
