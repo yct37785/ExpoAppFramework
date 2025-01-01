@@ -1,6 +1,20 @@
 import React, { memo } from 'react';
 import { Button as RNPButton } from 'react-native-paper';
-import { IButtonProps, IIconButtonProps } from '../../../Index/PropType';
+
+/**
+ * button props
+ * 
+ * @param mode - RNP button modes.
+ * @param onPress - On press handler.
+ * @param style - Custom style.
+ * @param children - The body content of this component.
+ */
+interface IButtonProps {
+  mode?: 'text' | 'outlined' | 'contained' | 'elevated' | 'contained-tonal';
+  onPress?: () => void;
+  style?: object;
+  children: React.ReactNode;
+};
 
 /**
  * Basic button.
@@ -17,6 +31,15 @@ export const Button: React.FC<IButtonProps> = memo(({
     </RNPButton>
   );
 });
+
+/**
+ * IconButton props
+ * 
+ * @param icon - Icon name (default "camera").
+ */
+interface IIconButtonProps extends IButtonProps {
+  icon?: string;
+};
 
 /**
  * Icon button.

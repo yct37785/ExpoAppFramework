@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Text } from 'react-native-paper';
 import LocalDataManager_TestRunner from './LocalDataManager_TestRunner';
 import FirestoreManager_TestRunner from './FirestoreManager_TestRunner';
-import { OnTestEndResultsList, ITestRunnerProps } from '../Index/PropType';
+import { OnTestEndResultsList, ITestRunnerProps } from './Sample_TestRunner';
 
 /**
  * Minimalist RootComp to run tests with an actual React Native DOM.

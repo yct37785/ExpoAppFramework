@@ -1,7 +1,7 @@
 import React, { useEffect, memo } from 'react';
 import { delayPromise } from '../Utility/GeneralUtility';
 import { useFirestoreContext, FirestoreProvider } from '../DataManagement/FirestoreManager';
-import { OnTestEndResultsList, ITestRunnerProps } from '../Index/PropType';
+import { OnTestEndResultsList, ITestRunnerProps } from './Sample_TestRunner';
 
 /**
  * Test runner for FirestoreManager.

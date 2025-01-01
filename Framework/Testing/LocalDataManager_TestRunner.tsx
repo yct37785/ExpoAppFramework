@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, memo } from 'react';
 import { LocalDataProvider, useLocalDataContext } from '../DataManagement/LocalDataManager';
-import { OnTestEndResultsList, ITestRunnerProps } from '../Index/PropType';
+import { OnTestEndResultsList, ITestRunnerProps } from './Sample_TestRunner';
 
 const LOCALDATA_TEST_SCHEMA = {
   stringKey: 'defaultString',

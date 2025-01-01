@@ -1,7 +1,19 @@
 import React, { createContext, useContext, useState, useEffect, useRef, ReactNode } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ILocalDataManagerProps } from '../Index/PropType';
 const _ = require('lodash');
+
+/**
+ * local data manager props
+ */
+interface ILocalDataManagerProps {
+  isLocalDataReady: boolean;
+  updateFlag: number;
+  writeLocalData: (key: string, value: any, bypassSchema?: boolean) => Promise<void>;
+  readLocalData: (key: string) => any;
+  readDanglingKeys: () => Promise<Record<string, any>>;
+  clearDanglingKeys: () => Promise<void>;
+  clearLocalData: () => Promise<void>;
+};
 
 /**
  * Local data manager with built-in update effect.

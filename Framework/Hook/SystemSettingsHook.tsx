@@ -1,5 +1,13 @@
 import React, { createContext, useContext, ReactNode } from 'react';
-import { ISystemSettingsContextProps } from '../Index/PropType';
+
+/**
+ * system settings props
+ * 
+ * @param toggleDarkMode - Defined function to toggle dark mode.
+ */
+interface ISystemSettingsContextProps {
+  toggleDarkMode: () => Promise<void>;
+};
 
 /* context Setup */
 const SystemSettingsContext = createContext<ISystemSettingsContextProps | undefined>(undefined);

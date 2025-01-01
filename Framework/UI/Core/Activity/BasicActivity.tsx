@@ -1,7 +1,25 @@
 import React, { memo } from 'react';
-import { View } from 'react-native';
+import { View, StyleProp, ViewStyle } from 'react-native';
 import { Appbar } from 'react-native-paper';
-import { IBasicActivityProps } from '../../../Index/PropType';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackPropsList } from '../../../Root/ScreenPropTypes';
+
+/**
+ * BasicActivity props
+ * 
+ * @param navigation - React Navigation provided object for navigating between screens.
+ * @param title - Title of the screen to be displayed on app header.
+ * @param customHeaderContent - Custom content to display in the header.
+ * @param style - Additional style on base container.
+ * @param children - The body content of the screen.
+ */
+interface IBasicActivityProps {
+  navigation: NativeStackNavigationProp<RootStackPropsList>;
+  title?: string;
+  CustomHeaderComp?: React.FC<{}>;
+  style?: StyleProp<ViewStyle>;
+  children: React.ReactNode;
+};
 
 /**
  * A wrapper component to setup an activity quickly by providing the body and custom header content if any.

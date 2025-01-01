@@ -1,8 +1,21 @@
 import React, { createContext, useContext, useState, useEffect, useRef, ReactNode } from 'react';
 import firebaseApp from '../FirebaseConfig';
 import { getFirestore, collection, doc, setDoc, getDoc, updateDoc, deleteDoc, getDocs, onSnapshot } from 'firebase/firestore';
-import { IFirestoreManagerProps } from '../Index/PropType';
 const _ = require('lodash');
+
+/**
+ * Firebase props
+ */
+interface IFirestoreManagerProps {
+  createCollection: (collectionName: string, initialData?: object[]) => Promise<boolean>;
+  createDocument: (collectionName: string, docId: string, data: object) => Promise<boolean>;
+  readDocument: (collectionName: string, docId: string) => Promise<object | null>;
+  updateDocument: (collectionName: string, docId: string, data: object) => Promise<boolean>;
+  deleteDocument: (collectionName: string, docId: string) => Promise<boolean>;
+  readAllDocuments: (collectionName: string) => Promise<object[]>;
+  listenToDocument: (collectionName: string, docId: string, onChange: (data: object) => void) => () => void;
+  deleteCollection: (collectionName: string) => Promise<boolean>;
+};
 
 /**
  * Firebase Firestore manager hook.

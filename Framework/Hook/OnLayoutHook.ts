@@ -1,5 +1,15 @@
 import { useState, useCallback } from 'react';
-import { ILayoutSizeProps } from '../Index/PropType';
+
+/**
+ * on layout change hook props
+ * 
+ * @param width - Receive width of React comp on layout change.
+ * @param height - Receive height of React comp on layout change.
+ */
+interface ILayoutSizeProps {
+  width: number;
+  height: number;
+};
 
 /**
  * On layout change hook for React UI elements.

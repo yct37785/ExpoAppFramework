@@ -15,8 +15,6 @@ import 'react-native-get-random-values';
 // nav
 import { NavigationContainer, DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationDefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// props
-import { IRootCompProps, ILocalDataProviderWrapperProps } from '../Index/PropType';
 
 // theme adaptation for navigation
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
@@ -66,6 +64,17 @@ const ScreenWrapper: React.FC<{ component: React.ComponentType<any>; [key: strin
       <Component {...props} />
     </View>
   );
+};
+
+/**
+ * root comp props
+ * 
+ * @param screenMap - User defined map of screens to key for @react-navigation identification.
+ * @param DEFAULT_SCREEN - Default launching screen.
+ */
+interface IRootCompProps {
+  screenMap: Record<string, React.ComponentType<any>>;
+  DEFAULT_SCREEN: string;
 };
 
 /**
@@ -136,6 +145,15 @@ const RootComp: React.FC<IRootCompProps> = ({ screenMap, DEFAULT_SCREEN }) => {
 };
 
 /**
+ * LocalDataProvider wrapper props
+ * 
+ * @param LOCAL_DATA_VALUES - Default local data values schema.
+ */
+interface ILocalDataProviderWrapperProps extends IRootCompProps {
+  LOCAL_DATA_VALUES: Record<string, any>;
+};
+
+/**
  * Wrapper for LocalDataProvider to ensure it renders before RootComp.
  */
 const LocalDataProviderWrapper: React.FC<ILocalDataProviderWrapperProps> = ({ screenMap, DEFAULT_SCREEN, LOCAL_DATA_VALUES }) => {
@@ -144,6 +162,6 @@ const LocalDataProviderWrapper: React.FC<ILocalDataProviderWrapperProps> = ({ sc
       <RootComp screenMap={screenMap} DEFAULT_SCREEN={DEFAULT_SCREEN} />
     </LocalDataProvider>
   );
-}
+};
 
 export default TEST_MODE ? memo(TestRootComp) : memo(LocalDataProviderWrapper);

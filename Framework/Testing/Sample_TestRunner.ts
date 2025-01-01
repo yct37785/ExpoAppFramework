@@ -1,5 +1,23 @@
 import React, { useEffect, memo } from 'react';
-import { OnTestEndResultsList, ITestRunnerProps } from '../Index/PropType';
+
+/**
+ * test runner OnTestEnd results list
+ * 
+ * @param test - Test ID.
+ * @param status - Status of test.
+ */
+export type OnTestEndResultsList = { test: string; status: boolean }[];
+
+/**
+ * test runner props
+ * 
+ * @param onTestEnd - Function downstream test runners call to submit test results.
+ * @param onTestEnd.className - Downstream test runner class name.
+ * @param onTestEnd.results - Results list.
+ */
+export interface ITestRunnerProps {
+  onTestEnd: (className: string, results: OnTestEndResultsList) => void;
+};
 
 /**
  * Run unit/integration tests for a single class with an actual React Native DOM.
