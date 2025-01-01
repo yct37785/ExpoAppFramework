@@ -1,22 +1,42 @@
-import React, { memo } from 'react';
-import { View } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import React, { memo, ReactNode } from 'react';
+import { View, ViewStyle } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { padSize05, padSize, rippleColorForLight, rippleColorForDark, textColorForLight, textColorForDark } from '../../../Index/Const';
 import { useTheme } from 'react-native-paper';
 import { Text } from '../Text/Text';
-import { TabView, TabBar } from 'react-native-tab-view';
+import { TabView, TabBar, SceneRendererProps } from 'react-native-tab-view';
 
 /**
- * Display children in tabs.
+ * structure of route object for each tab
+ */
+interface ITabRouteProps {
+  key: string;
+  title: string;
+  icon?: keyof typeof MaterialCommunityIcons.glyphMap;
+};
+
+/**
+ * TabsContainer props
  * 
- * @param {Object[]} routes - Array of route objects for the tabs.
- * @param {Object} sceneMap - Object mapping route keys to their respective scenes.
- * @param {number} tabIndex - Index of the currently selected tab.
- * @param {Function} onTabIdxChange - Function to handle tab index changes.
- * @param {string} position - Position of the tab bar.
- * @param {Object} [props.style={}] - Additional style on base container.
- * 
- * @returns {JSX.Element} The TabsContainer component.
+ * @param routes - Array of route objects for the tabs.
+ * @param sceneMap - Object mapping route keys to their respective scenes.
+ * @param tabIndex - Index of the currently selected tab.
+ * @param onTabIdxChange - Function to handle tab index changes.
+ * @param position - Position of the tab bar.
+ * @param style - Additional style on base container.
+ */
+interface ITabsContainerProps {
+  routes: ITabRouteProps[];
+  sceneMap: (props: SceneRendererProps & { route: ITabRouteProps }) => ReactNode;
+  tabIndex: number;
+  onTabIdxChange: (index: number) => void;
+  position: 'top' | 'bottom';
+  style?: ViewStyle;
+}
+
+/**
+ * TabsContainer component. Display children in tabs.
  */
 function TabsContainer({
   routes,
@@ -24,41 +44,33 @@ function TabsContainer({
   tabIndex,
   onTabIdxChange,
   position,
-  style = {}
-}) {
+  style = {},
+}: ITabsContainerProps) {
   const theme = useTheme();
   const textColor = theme.dark ? textColorForDark : textColorForLight;
 
   /**
    * Placeholder loading screen for lazy loading.
-   * 
-   * @returns {JSX.Element} An empty View.
    */
-  function loadingScreen() {
+  function loadingScreen(): JSX.Element {
     return <View style={{ flex: 1 }} />;
   }
   
   /**
    * Renders the icon for each tab.
    * 
-   * @param {Object} param0 - Parameters including route, focused state, and color.
-   * @param {Object} param0.route - The route object for the tab.
-   * @param {boolean} param0.focused - Whether the tab is focused.
-   * @param {string} param0.color - The color for the icon.
-   * @returns {JSX.Element} The icon component for the tab.
+   * @param route - The route object for the tab.
+   * @param focused - Whether the tab is focused.
+   * @param color - The color for the icon.
    */
-  function renderIcon(route, focused, color) {
-    return route.icon ? <Icon name={route.icon} size={15} color={textColor} /> : null;
+  function renderIcon(route: ITabRouteProps, focused: boolean, color: string): JSX.Element | null {
+    return route.icon ? <Icon name={route.icon} size={15} color={color} /> : null;
   }
 
   /**
    * Renders the tab bar.
-   * 
-   * @param {Object} props - Props passed to the TabBar component.
-   * 
-   * @returns {JSX.Element} The TabBar component with customized styling and functionality.
    */
-  const renderTabBar = props => (
+  const renderTabBar = (props: any): JSX.Element => (
     <TabBar
       {...props}
       pressColor={theme.dark ? rippleColorForDark : rippleColorForLight}
@@ -73,9 +85,7 @@ function TabsContainer({
     <TabView
       lazy
       commonOptions={{
-        icon: ({ route, focused, color }) => {
-          return renderIcon(route, focused, color)
-        },
+        icon: ({ route, focused, color }) => renderIcon(route, focused, color),
       }}
       navigationState={{ index: tabIndex, routes }}
       renderTabBar={renderTabBar}
