@@ -13,7 +13,7 @@ import SampleContainersScreen from '../Screen/SampleContainersScreen';
 import SampleMenusScreen from '../Screen/SampleMenusScreen';
 import SampleEmptyScreen from '../Screen/SampleEmptyScreen';
 import SampleDataDisplayScreen from '../Screen/SampleDataDisplayScreen';
-import * as PropType from '../../../Framework/Index/PropType';
+import * as ScreenPropType from '../../../Framework/Index/Root';
 
 /**
  * add your screen here
@@ -33,6 +33,6 @@ type ScreenNames = keyof typeof ScreenConfig;
 /**
  * screen map
  */
-export const screenMap: { [key in ScreenNames]: FC<PropType.IScreenProps> } = ScreenConfig;
+export const screenMap: { [key in ScreenNames]: FC<ScreenPropType.IScreenProps> } = ScreenConfig;
 
 export const DEFAULT_SCREEN: string = 'home';

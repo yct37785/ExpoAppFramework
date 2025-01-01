@@ -30,7 +30,7 @@ export function minMax(num: number, min: number, max: number): number {
  */
 export function bubbleSortObjects<T>(inputArr: T[], getValueFromObj: (obj: T) => number): T[] {
   let len = inputArr.length;
-  let checked;
+  let checked: boolean;
   do {
     checked = false;
     for (let i = 0; i < len - 1; i++) {
