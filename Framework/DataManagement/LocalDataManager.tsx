@@ -148,8 +148,8 @@ const useLocalDataManager = (defaultSchema: Record<string, any>): ILocalDataMana
   };
 
   return {
-    isLocalDataReady,
-    updateFlag,
+    isLocalDataReady, // flag updates to true when local data is loaded to memory
+    updateFlag,       // triggers re-render when local data is updated
     writeLocalData,
     readLocalData,
     readDanglingKeys,

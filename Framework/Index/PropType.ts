@@ -3,37 +3,46 @@ import { StyleProp, ViewStyle } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 
 /**
- * route props
+ * screen route props
+ * 
+ * @prop paramText - React Navigation route params testing.
  */
 export interface IScreenRouteProps {
   paramText?: string;
 };
 
 /**
- * screen props
+ * props for each screen
+ * - Each screen receives the same props.
  * 
- * - each screen takes in IScreenRouteProps via @react-navigation
+ * @param key - Identifies the screen for navigation stack navigate() usage.
  */
-type RootStackParamList = {
+type RootStackPropsList = {
   [key: string]: IScreenRouteProps;
 };
 
+/**
+ * screen props
+ * 
+ * @prop navigation - @react-navigation
+ * @prop route - @react-navigation
+ */
 export interface IScreenProps {
-  navigation: NativeStackNavigationProp<RootStackParamList>,
-  route: RouteProp<RootStackParamList>
+  navigation: NativeStackNavigationProp<RootStackPropsList>,
+  route: RouteProp<RootStackPropsList>
 };
 
 /**
  * BasicActivity props
  * 
- * @param navigation - React Navigation provided object for navigating between screens.
- * @param title - Title of the screen to be displayed on app header.
- * @param customHeaderContent - Custom content to display in the header.
- * @param style - Additional style on base container.
- * @param children - The body content of the screen.
+ * @prop navigation - React Navigation provided object for navigating between screens.
+ * @prop title - Title of the screen to be displayed on app header.
+ * @prop customHeaderContent - Custom content to display in the header.
+ * @prop style - Additional style on base container.
+ * @prop children - The body content of the screen.
  */
 export interface IBasicActivityProps {
-  navigation: NativeStackNavigationProp<RootStackParamList>;
+  navigation: NativeStackNavigationProp<RootStackPropsList>;
   title?: string;
   CustomHeaderComp?: React.FC<{}>;
   style?: StyleProp<ViewStyle>;
@@ -42,6 +51,8 @@ export interface IBasicActivityProps {
 
 /**
  * system settings props
+ * 
+ * @prop toggleDarkMode - Defined function to toggle dark mode.
  */
 export interface ISystemSettingsContextProps {
   toggleDarkMode: () => Promise<void>;
@@ -99,8 +110,8 @@ export interface ILocalDataProviderWrapperProps {
 /**
  * test runner props
  */
-export type IOnTestEndProps = { test: string; status: boolean }[];
+export type OnTestEndParams = { test: string; status: boolean }[];
 
 export interface ITestRunnerProps {
-  onTestEnd: (className: string, results: IOnTestEndProps) => void;
-}
+  onTestEnd: (className: string, results: OnTestEndParams) => void;
+};

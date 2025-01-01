@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Text } from 'react-native-paper';
 import LocalDataManager_TestRunner from './LocalDataManager_TestRunner';
 import FirestoreManager_TestRunner from './FirestoreManager_TestRunner';
-import { IOnTestEndProps, ITestRunnerProps } from '../Index/PropType';
+import { OnTestEndParams, ITestRunnerProps } from '../Index/PropType';
 
 /**
  * Minimalist RootComp to run tests with an actual React Native DOM.
@@ -26,7 +26,7 @@ const TestRootComp: React.FC = () => {
    * Logs test results array from React child after the end of the tests. 
    * Must be called last in the test runner function.
    */
-  const onTestEnd = (className: string, results: IOnTestEndProps) => {
+  const onTestEnd = (className: string, results: OnTestEndParams) => {
     console.log();
     console.log(`Class ${className}:`);
     results.forEach(({ test, status }) => {

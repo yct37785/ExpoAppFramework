@@ -1,5 +1,5 @@
 import React, { useEffect, memo } from 'react';
-import { IOnTestEndProps, ITestRunnerProps } from '../Index/PropType';
+import { OnTestEndParams, ITestRunnerProps } from '../Index/PropType';
 
 /**
  * Run unit/integration tests for a single class with an actual React Native DOM.
@@ -18,7 +18,7 @@ const Sample_TestRunner: React.FC<ITestRunnerProps> = ({ onTestEnd }) => {
    * Runs all tests for this module synchronously.
    */
   async function runTests(): Promise<void> {
-    const results: IOnTestEndProps = [];
+    const results: OnTestEndParams = [];
 
     results.push({ test: 'example 1', status: await exampleTest() });
     results.push({ test: 'example 2', status: await exampleTest2() });

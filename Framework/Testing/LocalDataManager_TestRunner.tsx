@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, memo } from 'react';
 import { LocalDataProvider, useLocalDataContext } from '../DataManagement/LocalDataManager';
-import { IOnTestEndProps, ITestRunnerProps } from '../Index/PropType';
+import { OnTestEndParams, ITestRunnerProps } from '../Index/PropType';
 
 const LOCALDATA_TEST_SCHEMA = {
   stringKey: 'defaultString',
@@ -60,7 +60,7 @@ const LocalDataManager_TestRunner: React.FC<ITestRunnerProps> = ({ onTestEnd }) 
    * Runs all tests for this module synchronously.
    */
   async function runTests(): Promise<void> {
-    const results: IOnTestEndProps = [];
+    const results: OnTestEndParams = [];
 
     results.push(await runTest("Initialization Test", testInitialization));
     results.push(await runTest("Valid Data Write/Read Test", testValidDataWriteRead));
