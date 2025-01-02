@@ -1,26 +1,31 @@
 import React, { useState, useContext, memo } from 'react';
-import { View } from 'react-native';
+import { View, StyleProp, ViewStyle } from 'react-native';
 import { Switch } from 'react-native-paper';
 
 /**
- * Component for rendering one set of radio group
+ * Props for the SwitchToggle component.
  *
- * @component
- * @param {Object} props - Component props
- * @param {boolean} props.value - current value of the switch.
- * @param {Function} props.onValueChange - Callback function to handle selection changes.
- * @param {Object} [props.style={}] - Additional style on base container.
- * 
- * @returns {JSX.Element} The SwitchToggle component.
+ * @param value - The current value of the switch.
+ * @param onValueChange - Callback function to handle selection changes.
+ * @param style - Optional style for the container.
  */
-const SwitchToggle = ({
+interface ISwitchToggleProps {
+  value: boolean;
+  onValueChange: (value: boolean) => void;
+  style?: StyleProp<ViewStyle>;
+};
+
+/**
+ * SwitchToggle component for rendering a switch with customizable behavior.
+ */
+const SwitchToggle: React.FC<ISwitchToggleProps> = ({
   value,
   onValueChange,
-  style={}
+  style = {}
 }) => {
   return (
     <View style={[{ alignItems: 'flex-start' }, style]}>
-      <Switch value={value} onValueChange={(newValue) => onValueChange(newValue)} />
+      <Switch value={value} onValueChange={onValueChange} />
     </View>
   );
 };
