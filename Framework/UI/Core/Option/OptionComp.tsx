@@ -1,13 +1,17 @@
 import React, { useContext, memo, useState } from 'react';
 import { View, StyleProp, ViewStyle } from 'react-native';
+import _ from 'lodash';
 
 /**
  * single option props
  * - each option has a state and holds nested children
  * 
- * @param state: 1 = selected, 2 = unselected, 3 = indeterminate
+ * @param label - Label to be used by derived components.
+ * @param state - 1 = selected, 2 = unselected, 3 = indeterminate.
+ * @param children - Nested kv pairs of single options.
  */
 export interface IOptionProps {
+  label: string,
   state: number;
   children?: Record<string, IOptionProps>;
 };
@@ -43,22 +47,7 @@ const OptionComp: React.FC<IOptionCompProps> = ({
   style = {},
 }) => {
 
-  // utility function to clone schema with initial state
-  const deepCloneWithState = (obj: Record<string, IOptionProps>, initialState: number = 1): Record<string, IOptionProps> => {
-    const clone: Record<string, IOptionProps> = {};
-    for (const [key, value] of Object.entries(obj)) {
-      clone[key] = {
-        ...value, // clone existing properties
-        state: initialState,
-      };
-      if (value.children) {
-        // recursively clone children
-        clone[key].children = deepCloneWithState(value.children, initialState);
-      }
-    }
-    return clone;
-  };
-  const [schema, setSchema] = useState<Record<string, IOptionProps>>(deepCloneWithState(originalSchema, 2));
+  const [schema, setSchema] = useState<Record<string, IOptionProps>>(_.cloneDeep(originalSchema));
 
   // handle option selection and state management
   const handleSelect = (path: string[]) => {
