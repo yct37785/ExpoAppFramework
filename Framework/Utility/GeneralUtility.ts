@@ -144,3 +144,17 @@ export function getValueByCondition(...conditionsAndValues: [boolean, any][]): a
   }
   return null;
 }
+
+/**
+ * Handles errors by checking if they are instances of `Error` and logs them accordingly.
+ * 
+ * @param error - The caught error.
+ * @param message - Optional custom message to be logged along with the error.
+ */
+export function handleError(error: unknown, message: string) {
+  if (error instanceof Error) {
+    console.error(`${message}: ${error.message}`);
+  } else {
+    console.error(`${message}: An unknown error occurred`);
+  }
+}

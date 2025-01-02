@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useRef, ReactNode } from 'react';
 import firebaseApp from '../FirebaseConfig';
 import { getFirestore, collection, doc, setDoc, getDoc, updateDoc, deleteDoc, getDocs, onSnapshot } from 'firebase/firestore';
+import { handleError } from '../Utility/GeneralUtility';
 const _ = require('lodash');
 
 /**
@@ -42,8 +43,8 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
 
       await Promise.all(batchWrites);
       return true;
-    } catch (error) {
-      console.error(`Error creating collection: ${error.message}`);
+    } catch (error: unknown) {
+      handleError(error, 'Error creating collection');
       throw error;
     }
   };
@@ -61,8 +62,8 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
     try {
       await setDoc(doc(db, collectionName, docId), data);
       return true;
-    } catch (error) {
-      console.error(`Error creating document: ${error.message}`);
+    } catch (error: unknown) {
+      handleError(error, 'Error creating document');
       throw error;
     }
   };
@@ -80,7 +81,7 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
       const docSnap = await getDoc(doc(db, collectionName, docId));
       return docSnap.exists() ? docSnap.data() : null;
     } catch (error) {
-      console.error(`Error reading document: ${error.message}`);
+      handleError(error, 'Error reading document');
       throw error;
     }
   };
@@ -99,7 +100,7 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
       await updateDoc(doc(db, collectionName, docId), data);
       return true;
     } catch (error) {
-      console.error(`Error updating document: ${error.message}`);
+      handleError(error, 'Error updating document');
       throw error;
     }
   };
@@ -117,7 +118,7 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
       await deleteDoc(doc(db, collectionName, docId));
       return true;
     } catch (error) {
-      console.error(`Error deleting document: ${error.message}`);
+      handleError(error, 'Error deleting document');
       throw error;
     }
   };
@@ -134,7 +135,7 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
       const querySnapshot = await getDocs(collection(db, collectionName));
       return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
     } catch (error) {
-      console.error(`Error reading all documents: ${error.message}`);
+      handleError(error, 'Error reading all documents');
       throw error;
     }
   };
@@ -161,7 +162,7 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
       });
       return unsubscribe;
     } catch (error) {
-      console.error(`Error listening to document: ${error.message}`);
+      handleError(error, 'Error listening to document');
       throw error;
     }
   };
@@ -184,7 +185,7 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
       await Promise.all(deletePromises);
       return true;
     } catch (error) {
-      console.error(`Error deleting collection: ${error.message}`);
+      handleError(error, 'Error deleting collection');
       throw error;
     }
   };
