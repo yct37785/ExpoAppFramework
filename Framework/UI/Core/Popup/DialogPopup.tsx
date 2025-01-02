@@ -1,37 +1,50 @@
 import React, { memo } from 'react';
-import { View } from 'react-native';
-import { padSize, padSize2, padSize4 } from '../../../Index/Const';
+import { View, StyleProp, ViewStyle } from 'react-native';
 import { Modal, Button, Card, useTheme } from 'react-native-paper';
 import { Text } from '../Text/Text';
+import { padSize, padSize2, padSize4 } from '../../../Index/Const';
+
+/**
+ * dialog popup component props
+ * 
+ * @param title - Title of the dialog.
+ * @param subtitle - Subtitle or heading below the title.
+ * @param children - Child components to render inside the dialog.
+ * @param isVisible - Controls the visibility of the dialog.
+ * @param onSubmit - Callback for submit action.
+ * @param onClose - Callback for close action.
+ * @param dismissable - If true, tapping outside closes the dialog.
+ * @param submitText - Text for the submit button.
+ * @param closeText - Text for the close button.
+ * @param style - Additional style for the container.
+ */
+interface IDialogPopupCompProps {
+  title: string;
+  subtitle: string;
+  children: React.ReactNode;
+  isVisible: boolean;
+  onSubmit?: () => void;
+  onClose?: () => void;
+  dismissable?: boolean;
+  submitText?: string;
+  closeText?: string;
+  style?: StyleProp<ViewStyle>;
+};
 
 /**
  * A customizable dialog component.
- * 
- * @param {Object} props - Component props.
- * @param {string} props.title - The title of the dialog.
- * @param {string} props.subtitle - The subtitle or heading below the title.
- * @param {React.ReactNode} props.children - Children components to be rendered inside the dialog.
- * @param {boolean} props.isVisible - Controls the visibility of the dialog.
- * @param {Function} props.onSubmit - Callback function to handle submit action.
- * @param {Function} props.onClose - Callback function to handle close action.
- * @param {boolean} [props.dismissable=false] - If true, tapping outside the dialog will close it.
- * @param {string} [props.submitText='Confirm'] - Text for the submit button.
- * @param {string} [props.closeText='Close'] - Text for the close button.
- * @param {Object} [props.style={}] - Additional style on base container.
- * 
- * @returns {JSX.Element} The Dialog component.
  */
-const DialogPopupComp = ({ 
-  title, 
-  subtitle, 
-  children, 
-  isVisible, 
-  onSubmit, 
-  onClose, 
-  dismissable = false, 
-  submitText = 'Confirm', 
-  closeText = 'Close' ,
-  style={}
+const DialogPopupComp: React.FC<IDialogPopupCompProps> = ({
+  title,
+  subtitle,
+  children,
+  isVisible,
+  onSubmit,
+  onClose,
+  dismissable = false,
+  submitText = 'Confirm',
+  closeText = 'Close',
+  style = {},
 }) => {
   const theme = useTheme();
 
@@ -40,7 +53,7 @@ const DialogPopupComp = ({
       <View style={{
         backgroundColor: theme.colors.surfaceVariant, 
         borderRadius: theme.roundness,
-        minHeight: 160
+        minHeight: 160,
       }}>
         {title && <Text style={{ padding: padSize2 }} variant="titleLarge">{title}</Text>}
         {subtitle && <Text style={{ marginHorizontal: padSize2 }}>{subtitle}</Text>}
