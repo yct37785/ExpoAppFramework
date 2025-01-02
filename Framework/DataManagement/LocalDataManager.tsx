@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useRef, ReactNode } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { handleError } from '../Utility/GeneralUtility';
 const _ = require('lodash');
 
 /**
@@ -55,8 +56,8 @@ const useLocalDataManager = (defaultSchema: Record<string, any>): ILocalDataMana
       }
       // local data is ready
       setIsLocalDataReady(true);
-    } catch (e) {
-      console.error(`Error loading data: ${e.message}`);
+    } catch (e: unknown) {
+      handleError(e, 'Error loading data');
       throw e;
     }
   };
@@ -81,8 +82,8 @@ const useLocalDataManager = (defaultSchema: Record<string, any>): ILocalDataMana
       localCache.current[key] = value;
       await AsyncStorage.setItem(key, JSON.stringify(value));
       triggerUpdate();
-    } catch (e) {
-      console.error(`Error writing to local data: ${e.message}`);
+    } catch (e: unknown) {
+      handleError(e, 'Error writing to local data');
       throw e;
     }
   };
@@ -102,8 +103,8 @@ const useLocalDataManager = (defaultSchema: Record<string, any>): ILocalDataMana
     if (!(key in localCache.current))  throw new Error(`Key not found: ${key}`);
 
     return _.cloneDeep(localCache.current[key]);
-    } catch (e) {
-      console.error(`Error reading local data: ${e.message}`);
+    } catch (e: unknown) {
+      handleError(e, 'Error reading local data');
       throw e;
     }
   };
@@ -124,8 +125,8 @@ const useLocalDataManager = (defaultSchema: Record<string, any>): ILocalDataMana
       return Object.fromEntries(keyValues.map(([key, value]) => {
         return [key, value ? JSON.parse(value) : ""];
       }));
-    } catch (e) {
-      console.error(`Error reading dangling keys: ${e.message}`);
+    } catch (e: unknown) {
+      handleError(e, 'Error reading dangling keys');
       throw e;
     }
   };
@@ -144,8 +145,8 @@ const useLocalDataManager = (defaultSchema: Record<string, any>): ILocalDataMana
       } else {
         console.info("No dangling keys to clear.");
       }
-    } catch (e) {
-      console.error(`Error clearing dangling keys: ${e.message}`);
+    } catch (e: unknown) {
+      handleError(e, 'Error clearing dangling keys');
       throw e;
     }
   };

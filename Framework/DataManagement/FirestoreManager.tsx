@@ -2,7 +2,6 @@ import React, { createContext, useContext, useState, useEffect, useRef, ReactNod
 import firebaseApp from '../FirebaseConfig';
 import { getFirestore, collection, doc, setDoc, getDoc, updateDoc, deleteDoc, getDocs, onSnapshot } from 'firebase/firestore';
 import { handleError } from '../Utility/GeneralUtility';
-const _ = require('lodash');
 
 /**
  * Firebase props
@@ -80,7 +79,7 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
     try {
       const docSnap = await getDoc(doc(db, collectionName, docId));
       return docSnap.exists() ? docSnap.data() : null;
-    } catch (error) {
+    } catch (error: unknown) {
       handleError(error, 'Error reading document');
       throw error;
     }
@@ -99,7 +98,7 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
     try {
       await updateDoc(doc(db, collectionName, docId), data);
       return true;
-    } catch (error) {
+    } catch (error: unknown) {
       handleError(error, 'Error updating document');
       throw error;
     }
@@ -117,7 +116,7 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
     try {
       await deleteDoc(doc(db, collectionName, docId));
       return true;
-    } catch (error) {
+    } catch (error: unknown) {
       handleError(error, 'Error deleting document');
       throw error;
     }
@@ -134,7 +133,7 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
     try {
       const querySnapshot = await getDocs(collection(db, collectionName));
       return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    } catch (error) {
+    } catch (error: unknown) {
       handleError(error, 'Error reading all documents');
       throw error;
     }
@@ -161,7 +160,7 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
         }
       });
       return unsubscribe;
-    } catch (error) {
+    } catch (error: unknown) {
       handleError(error, 'Error listening to document');
       throw error;
     }
@@ -184,7 +183,7 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
 
       await Promise.all(deletePromises);
       return true;
-    } catch (error) {
+    } catch (error: unknown) {
       handleError(error, 'Error deleting collection');
       throw error;
     }
