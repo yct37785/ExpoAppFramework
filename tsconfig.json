@@ -1,6 +1,11 @@
+// https://github.com/tsconfig/bases/blob/main/bases/recommended.json
 {
-  "extends": "expo/tsconfig.base",
   "compilerOptions": {
+    "target": "es2016",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
     "strict": true,
     "paths": {
       "@/*": [
@@ -8,6 +13,8 @@
       ]
     }
   },
+   "display": "Recommended",
+  "$schema": "https://json.schemastore.org/tsconfig",
   "include": [
     "**/*.ts",
     "**/*.tsx",
