@@ -53,7 +53,7 @@ export interface IOptionCompProps {
 }
 
 /**
- * General options component for rendering various types of selection controls.
+ * General options component for rendering various types of selection same layer and nested controls.
  */
 const OptionComp: React.FC<IOptionCompProps> = ({
   originalSchema,

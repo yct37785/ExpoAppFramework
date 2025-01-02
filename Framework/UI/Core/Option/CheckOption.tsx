@@ -1,43 +1,46 @@
 import React, { memo } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, StyleProp, ViewStyle } from 'react-native';
 import { Checkbox } from 'react-native-paper';
 import { Text } from '../Text/Text';
 import { padSize, padSize2 } from '../../../Index/Const';
-import OptionComp from './OptionComp';
+import OptionComp, { IOptionProps, onOptionSelectionChangeFunc, OptionState } from './OptionComp';
 
 /**
  * Component for rendering checkbox options based on a JSON schema.
  *
- * @component
- * @param {Object} props - Component props
- * @param {Object} props.schema - JSON schema representing the menu options.
- * @param {string} props.schema.label - The label for the menu option.
- * @param {Object} [props.schema.children] - Nested options for the menu.
- * @param {Function} props.onSelectionChange - Callback function to handle selection changes.
- * @param {Object} [props.style={}] - Additional style on base container.
- * 
- * @returns {JSX.Element} The CheckOptions component.
+ * @param schema - JSON schema representing the menu options. Refer to OptionComp @example.
+ * @param onSelectionChange - Callback function to handle selection changes.
+ * @param style - Additional style on base container.
  */
-const CheckOption = ({ 
+interface ICheckOptionCompProps {
+  schema: Record<string, IOptionProps>;
+  onSelectionChange: onOptionSelectionChangeFunc;
+  style?: StyleProp<ViewStyle>;
+}
+
+/**
+ * ChipOption component for rendering chip options based on a JSON schema. Supports nesting.
+ */
+const CheckOption: React.FC<ICheckOptionCompProps> = ({ 
   schema,
   onSelectionChange,
-  style={}
+  style = {}
 }) => {
 
-  const renderCheckbox = ({ option, onPress }) => {
-    const status = option.state === 1 ? 'checked' : option.state === 2 ? 'unchecked' : 'indeterminate';
-    return (<TouchableOpacity onPress={onPress}>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Checkbox status={status} />
-        <Text>{option.label}</Text>
-      </View>
-    </TouchableOpacity>)
+  const renderCheckbox = ({ option, onPress }: { option: IOptionProps, onPress: () => void }) => {
+    const status = option.state === OptionState.Selected ? 'checked' : option.state === OptionState.Unselected ? 'unchecked' : 'indeterminate';
+    return (
+      <TouchableOpacity onPress={onPress}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Checkbox status={status} />
+          <Text>{option.label}</Text>
+        </View>
+      </TouchableOpacity>
+    );
   };
   
-  const optionsContainer = ({children}) => (
-    <View>
-      {children}
-    </View>
+  const optionsContainer = ({ children }: { children: React.ReactNode }) => (
+    <View>{children}</View>
   );
 
   return (
@@ -47,7 +50,8 @@ const CheckOption = ({
       optionsContainer={optionsContainer}
       renderOption={renderCheckbox}
       depthPadding={padSize2}
-      style={style} />
+      style={style}
+    />
   );
 };
 
