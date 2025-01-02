@@ -1,0 +1,21 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "Projects/*/*/**/*.ts",     // .ts files inside Projects/<app name>/
+    "Projects/*/*/**/*.tsx",    // .tsx files inside Projects/<app name>/
+    "Framework/**/*/**/*.ts",   // .ts files inside Framework and subdirectories
+    "Framework/**/*/**/*.tsx",  // .tsx files inside Framework and subdirectories
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts"
+  ]
+}
