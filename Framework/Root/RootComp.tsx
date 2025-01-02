@@ -164,4 +164,14 @@ const LocalDataProviderWrapper: React.FC<ILocalDataProviderWrapperProps> = ({ sc
   );
 };
 
-export default TEST_MODE ? memo(TestRootComp) : memo(LocalDataProviderWrapper);
+/**
+ * Wrapper for TestRootComp so that it uses IRootCompProps.
+ */
+const TestRootCompWrapper: React.FC<ILocalDataProviderWrapperProps> = ({ screenMap, DEFAULT_SCREEN, LOCAL_DATA_VALUES }) => {
+  return (
+    <TestRootComp />
+  );
+};
+
+const Component: React.FC<ILocalDataProviderWrapperProps> = TEST_MODE ? memo(TestRootCompWrapper) : memo(LocalDataProviderWrapper);
+export default Component;
