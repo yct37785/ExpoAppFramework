@@ -3,11 +3,11 @@ import * as Root from '../../Framework/Index/Root';
 import { LOCAL_DATA_VALUES, DEFAULT_SCREEN, ScreenNames } from './User/Schema';
 import { FC } from 'react';
 import SampleHomeScreen from './Screen/SampleHomeScreen';
-// import SampleTextInputBtnScreen from '../Screen/SampleTextInputBtnScreen';
+import SampleTextInputBtnScreen from './Screen/SampleTextInputBtnScreen';
 import SampleLayoutsScreen from './Screen/SampleLayoutsScreen';
-// import SampleContainersScreen from '../Screen/SampleContainersScreen';
+import SampleContainersScreen from './Screen/SampleContainersScreen';
 import SampleMenusScreen from './Screen/SampleMenusScreen';
-// import SampleEmptyScreen from '../Screen/SampleEmptyScreen';
+import SampleEmptyScreen from './Screen/SampleEmptyScreen';
 // import SampleDataDisplayScreen from '../Screen/SampleDataDisplayScreen';
 import * as PropTypes from './../../Framework/Index/PropTypes';
 
@@ -16,11 +16,11 @@ import * as PropTypes from './../../Framework/Index/PropTypes';
  */
 export const screenMap: Record<ScreenNames, FC<PropTypes.IScreenProps>> = {
   [ScreenNames.Home]: SampleHomeScreen,
-  [ScreenNames.TextInputBtn]: SampleHomeScreen,
+  [ScreenNames.TextInputBtn]: SampleTextInputBtnScreen,
   [ScreenNames.Layouts]: SampleLayoutsScreen,
-  [ScreenNames.Containers]: SampleHomeScreen,
+  [ScreenNames.Containers]: SampleContainersScreen,
   [ScreenNames.Menus]: SampleMenusScreen,
-  [ScreenNames.Empty]: SampleHomeScreen,
+  [ScreenNames.Empty]: SampleEmptyScreen,
   [ScreenNames.DataDisplay]: SampleHomeScreen,
 }
 
