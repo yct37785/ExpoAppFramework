@@ -16,23 +16,34 @@ import SampleDataDisplayScreen from '../Screen/SampleDataDisplayScreen';
 import * as ScreenPropType from '../../../Framework/Index/Root';
 
 /**
- * add your screen here
+ * define screen
  */
-const ScreenConfig = {
-  home: SampleHomeScreen,
-  textInputBtn: SampleTextInputBtnScreen,
-  layouts: SampleLayoutsScreen,
-  containers: SampleContainersScreen,
-  menus: SampleMenusScreen,
-  empty: SampleEmptyScreen,
-  dataDisplay: SampleDataDisplayScreen
-} as const;
+export enum ScreenNames {
+  Home = 'home',
+  TextInputBtn = 'textInputBtn',
+  Layouts = 'layouts',
+  Containers = 'containers',
+  Menus = 'menus',
+  Empty = 'empty',
+  DataDisplay = 'dataDisplay',
+};
 
-type ScreenNames = keyof typeof ScreenConfig;
+/**
+ * screen components
+ */
+const ScreenConfig: Record<ScreenNames, FC<ScreenPropType.IScreenProps>> = {
+  [ScreenNames.Home]: SampleHomeScreen,
+  [ScreenNames.TextInputBtn]: SampleTextInputBtnScreen,
+  [ScreenNames.Layouts]: SampleLayoutsScreen,
+  [ScreenNames.Containers]: SampleContainersScreen,
+  [ScreenNames.Menus]: SampleMenusScreen,
+  [ScreenNames.Empty]: SampleEmptyScreen,
+  [ScreenNames.DataDisplay]: SampleDataDisplayScreen,
+};
 
 /**
  * screen map
  */
-export const screenMap: { [key in ScreenNames]: FC<ScreenPropType.IScreenProps> } = ScreenConfig;
+export const screenMap = ScreenConfig;
 
-export const DEFAULT_SCREEN: string = 'home';
+export const DEFAULT_SCREEN: ScreenNames = ScreenNames.Home;

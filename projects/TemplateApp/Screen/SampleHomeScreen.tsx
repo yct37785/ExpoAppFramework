@@ -1,9 +1,19 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
 import { View } from 'react-native';
-import { SAMPLE_SCREENS } from '../User/Schema';
 import * as UI from '../../../Framework/Index/UI';
 import * as Hook from '../../../Framework/Index/Hook';
 import * as Const from '../../../Framework/Index/Const';
+import { ScreenNames } from '../User/ScreenMapper';
+
+const SAMPLE_SCREEN_TITLES: Record<ScreenNames, string> = {
+  [ScreenNames.Home]: "home",
+  [ScreenNames.TextInputBtn]: "text input button example",
+  [ScreenNames.Layouts]: "layouts example",
+  [ScreenNames.Containers]: "containers example",
+  [ScreenNames.Menus]: "menus example",
+  [ScreenNames.Empty]: "empty example",
+  [ScreenNames.DataDisplay]: "data display example",
+};
 
 /**
  * Sample home screen.
@@ -35,9 +45,9 @@ function SampleHomeScreen({ navigation, route }) {
     <UI.BasicActivity navigation={navigation} route={route} customHeaderContent={customHeaderContent} title="Home Sample">
       <UI.VerticalLayout childMargin={Const.padSize} padding={Const.padSize}>
       <UI.Text variant="bodyMedium">Select the screen you want to navigate to</UI.Text>
-      {Object.keys(SAMPLE_SCREENS).map((key) => (
+      {Object.keys(SAMPLE_SCREEN_TITLES).map((key) => (
         <UI.Button key={key} onPress={() => navigation.navigate(key, { paramText: `hello ${key} from home` })}>
-          {SAMPLE_SCREENS[key]}
+          {SAMPLE_SCREEN_TITLES[key]}
         </UI.Button>
       ))}
       </UI.VerticalLayout>
