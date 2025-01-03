@@ -9,7 +9,7 @@ import { useState, useCallback } from 'react';
 export interface ILayoutSizeProps {
   width: number;
   height: number;
-};
+}
 
 /**
  * On layout change hook for React UI elements.
@@ -23,4 +23,4 @@ export const useOnLayout = (): [ILayoutSizeProps | null, (event: any) => void] =
   }, []);
 
   return [size, onLayout];
-};
+}

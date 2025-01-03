@@ -15,7 +15,7 @@ export interface IFirestoreManagerProps {
   readAllDocuments: (collectionName: string) => Promise<object[]>;
   listenToDocument: (collectionName: string, docId: string, onChange: (data: object) => void) => () => void;
   deleteCollection: (collectionName: string) => Promise<boolean>;
-};
+}
 
 /**
  * Firebase Firestore manager hook.
@@ -46,7 +46,7 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
       handleError(error, 'Error creating collection');
       throw error;
     }
-  };
+  }
 
   /**
    * Creates or overwrites a document.
@@ -65,7 +65,7 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
       handleError(error, 'Error creating document');
       throw error;
     }
-  };
+  }
 
   /**
    * Reads a document by ID.
@@ -83,7 +83,7 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
       handleError(error, 'Error reading document');
       throw error;
     }
-  };
+  }
 
   /**
    * Updates fields in an existing document.
@@ -102,7 +102,7 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
       handleError(error, 'Error updating document');
       throw error;
     }
-  };
+  }
 
   /**
    * Deletes a document by ID.
@@ -120,7 +120,7 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
       handleError(error, 'Error deleting document');
       throw error;
     }
-  };
+  }
 
   /**
    * Reads all documents from a collection.
@@ -137,7 +137,7 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
       handleError(error, 'Error reading all documents');
       throw error;
     }
-  };
+  }
 
   /**
    * Listens for changes on a specific document.
@@ -164,7 +164,7 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
       handleError(error, 'Error listening to document');
       throw error;
     }
-  };
+  }
 
   /**
    * Deletes an entire collection by deleting all its documents.
@@ -187,7 +187,7 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
       handleError(error, 'Error deleting collection');
       throw error;
     }
-  };
+  }
 
   return {
     createCollection,
@@ -198,8 +198,8 @@ const useFirestoreManager = (): IFirestoreManagerProps => {
     readAllDocuments,
     listenToDocument,
     deleteCollection
-  };
-};
+  }
+}
 
 /**
  * Context setup for FirestoreManager
@@ -211,7 +211,7 @@ const FirestoreContext = createContext<IFirestoreManagerProps | undefined>(undef
  */
 export interface IFirestoreProviderProps {
   children: ReactNode;
-};
+}
 
 /**
  * Provider for context.
@@ -223,7 +223,7 @@ export const FirestoreProvider: React.FC<IFirestoreProviderProps> = ({ children 
       {children}
     </FirestoreContext.Provider>
   );
-};
+}
 
 /**
  * Context consumer hook for accessing FirestoreManager.
@@ -234,4 +234,4 @@ export const useFirestoreContext = (): IFirestoreManagerProps => {
     throw new Error('useFirestoreContext must be used within a FirestoreProvider');
   }
   return context;
-};
+}

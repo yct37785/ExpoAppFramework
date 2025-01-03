@@ -7,6 +7,6 @@ const App = () => {
   return (
     <Root.RootComp screenMap={screenMap} DEFAULT_SCREEN={DEFAULT_SCREEN} LOCAL_DATA_VALUES={LOCAL_DATA_VALUES} />
   );
-};
+}
 
 export default App;

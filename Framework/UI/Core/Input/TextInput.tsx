@@ -21,7 +21,7 @@ export interface ITextInputCompProps {
   onFocus?: () => void;
   onBlur?: () => void;
   style?: StyleProp<ViewStyle | TextStyle>;
-};
+}
 
 /**
  * KeyInputField Component
@@ -73,6 +73,6 @@ const TextInputComp: React.FC<ITextInputCompProps> = ({
       {/* Add more conditions here for other types */}
     </>
   );
-};
+}
 
 export default memo(TextInputComp);

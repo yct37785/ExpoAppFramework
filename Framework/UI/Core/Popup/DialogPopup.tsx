@@ -29,7 +29,7 @@ export interface IDialogPopupCompProps {
   submitText?: string;
   closeText?: string;
   style?: StyleProp<ViewStyle>;
-};
+}
 
 /**
  * A customizable dialog component.
@@ -79,6 +79,6 @@ const DialogPopupComp: React.FC<IDialogPopupCompProps> = ({
       </View>
     </Modal>
   );
-};
+}
 
 export default memo(DialogPopupComp);

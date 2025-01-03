@@ -14,7 +14,7 @@ export interface IDataItem {
   searchable: Record<string, string>;
   filterable: Record<string, string>;
   none: Record<string, string>;
-};
+}
 
 /**
  * filter item props
@@ -22,7 +22,7 @@ export interface IDataItem {
  */
 export interface IFilterItem {
   [key: string]: string;
-};
+}
 
 /**
  * ListDataDisplay props
@@ -45,7 +45,7 @@ export interface IListDataDisplayProps {
   listType?: 'flashlist' | 'flatlist';
   estimatedRowHeight?: number;
   style?: StyleProp<ViewStyle>;
-};
+}
 
 /**
  * A combined list component supporting FlashList and FlatList with filtering and searching logic encapsulated.
@@ -126,13 +126,13 @@ const ListDataDisplay: React.FC<IListDataDisplayProps> = ({
         />
       );
     }
-  };
+  }
 
   return (
     <View style={[{ width: '100%', height: '100%' }, style]}>
       {filteredData.length > 0 ? renderList() : null}
     </View>
   );
-};
+}
 
 export default memo(ListDataDisplay);

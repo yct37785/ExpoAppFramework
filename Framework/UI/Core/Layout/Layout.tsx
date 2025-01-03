@@ -59,7 +59,7 @@ const Layout: React.FC<ILayoutProps> = ({
 
   const renderChild = (index: number, child: ReactNode) => {
     return <View style={{ padding: childMargin / 2 }} key={index}>{child}</View>;
-  };
+  }
 
   if (constraint === 'scroll') {
     return (
@@ -80,7 +80,7 @@ const Layout: React.FC<ILayoutProps> = ({
       </View>
     );
   }
-};
+}
 
 /**
  * Vertical Layout component that inherits from Layout and sets direction to 'column'.

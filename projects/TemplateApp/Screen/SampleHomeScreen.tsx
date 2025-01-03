@@ -45,6 +45,6 @@ const SampleHomeScreen: React.FC<PropTypes.IScreenProps> = ({ navigation, route 
         {renderScreenBtn(ScreenNames.DataDisplay, "data display example")}
       </UI.VerticalLayout>
     </UI.BasicActivity>)
-};
+}
 
 export default memo(SampleHomeScreen);

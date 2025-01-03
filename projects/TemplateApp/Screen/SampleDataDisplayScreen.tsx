@@ -23,11 +23,11 @@ function SampleDataDisplayScreen({ navigation, route }) {
     // Generate product list sample
     const fakeData = faker.helpers.multiple(createRandomProduct, { count: 1000 });
     // Generate filters
-    const chipsSchema = { 'material': { label: 'Material', state: 0, children: {} } };
-    const initialMaterialsSelected = {};
+    const chipsSchema = { 'material': { label: 'Material', state: 0, children: {} } }
+    const initialMaterialsSelected = {}
     fakeData.forEach((item) => {
       if (!(item.material in chipsSchema['material'].children)) {
-        chipsSchema['material'].children[item.material] = { label: item.material, state: 0 };
+        chipsSchema['material'].children[item.material] = { label: item.material, state: 0 }
         initialMaterialsSelected[item.material] = false;
       }
     });
@@ -54,8 +54,8 @@ function SampleDataDisplayScreen({ navigation, route }) {
       none: {
         img: faker.image.urlPicsumPhotos(),
       }
-    };
-  };
+    }
+  }
 
   /**
    * Handles selection of material chips.
@@ -95,7 +95,7 @@ function SampleDataDisplayScreen({ navigation, route }) {
         <UI.DividerComp style={{ marginTop: Const.padSize }} />
       </View>
     );
-  };
+  }
 
   function customHeaderContent() {
     return <View>

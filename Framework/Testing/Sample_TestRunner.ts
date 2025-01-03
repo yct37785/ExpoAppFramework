@@ -17,7 +17,7 @@ export type OnTestEndResultsList = { test: string; status: boolean }[];
  */
 export interface ITestRunnerProps {
   onTestEnd: (className: string, results: OnTestEndResultsList) => void;
-};
+}
 
 /**
  * Run unit/integration tests for a single class with an actual React Native DOM.

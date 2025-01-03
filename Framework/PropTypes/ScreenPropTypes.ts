@@ -8,7 +8,7 @@ import { RouteProp } from '@react-navigation/native';
  */
 export interface IScreenRouteProps {
   paramText?: string;
-};
+}
 
 /**
  * props for each screen
@@ -18,7 +18,7 @@ export interface IScreenRouteProps {
  */
 export type RootStackPropsList = {
   [key: string]: IScreenRouteProps;
-};
+}
 
 /**
  * screen props
@@ -29,4 +29,4 @@ export type RootStackPropsList = {
 export interface IScreenProps {
   navigation: NativeStackNavigationProp<RootStackPropsList>,
   route: RouteProp<RootStackPropsList>
-};
+}

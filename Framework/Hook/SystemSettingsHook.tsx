@@ -7,7 +7,7 @@ import React, { createContext, useContext, ReactNode } from 'react';
  */
 export interface ISystemSettingsContextProps {
   toggleDarkMode: () => Promise<void>;
-};
+}
 
 /* context Setup */
 const SystemSettingsContext = createContext<ISystemSettingsContextProps | undefined>(undefined);
@@ -25,7 +25,7 @@ export const SystemSettingsProvider: React.FC<ISystemSettingsProviderProps> = ({
       {children}
     </SystemSettingsContext.Provider>
   );
-};
+}
 
 /**
  * context consumer hook.
@@ -36,4 +36,4 @@ export const useSystemSettingsContext = (): ISystemSettingsContextProps => {
     throw new Error("useSystemSettingsContext must be used within a SystemSettingsProvider");
   }
   return context;
-};
+}

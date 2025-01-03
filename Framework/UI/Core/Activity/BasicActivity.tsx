@@ -19,7 +19,7 @@ export interface IBasicActivityProps {
   CustomHeaderComp?: React.FC<{}>;
   style?: StyleProp<ViewStyle>;
   children: React.ReactNode;
-};
+}
 
 /**
  * A wrapper component to setup an activity quickly by providing the body and custom header content if any.
@@ -45,6 +45,6 @@ const BasicActivity: React.FC<IBasicActivityProps> = ({
       </View>
     </View>
   );
-};
+}
 
 export default memo(BasicActivity);

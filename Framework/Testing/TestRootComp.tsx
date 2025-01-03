@@ -36,7 +36,7 @@ const TestRootComp: React.FC = () => {
 
     // move to the next test runner
     setCurrentRunner((prevRunner) => prevRunner + 1);
-  };
+  }
 
   const CurrentTestRunner = testRunners[currentRunner];
 
@@ -49,6 +49,6 @@ const TestRootComp: React.FC = () => {
       {currentRunner >= testRunners.length && <Text>All tests completed!</Text>}
     </View>
   );
-};
+}
 
 export default memo(TestRootComp);

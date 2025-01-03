@@ -16,7 +16,7 @@ import { Text } from '../Text/Text';
 interface IToggleHeaderProps {
   toggleHeaderText: string;
   isCollapsed: boolean;
-};
+}
 
 /**
  * ToggleHeader Component
@@ -55,7 +55,7 @@ export const CollapsibleContainer: React.FC<ICollapsibleContainerProps> = memo((
 
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed);
-  };
+  }
 
   return (
     <View style={style}>
@@ -80,7 +80,7 @@ export interface IAccordionContainerProps {
   sectionTitles: string[];
   style?: StyleProp<ViewStyle>;
   children: ReactNode[];
-};
+}
 
 /**
  * A component that provides an accordion with multiple collapsible sections.

@@ -37,7 +37,7 @@ const CheckOption: React.FC<ICheckOptionCompProps> = ({
         </View>
       </TouchableOpacity>
     );
-  };
+  }
   
   const optionsContainer = ({ children }: { children: React.ReactNode }) => (
     <View>{children}</View>
@@ -53,6 +53,6 @@ const CheckOption: React.FC<ICheckOptionCompProps> = ({
       style={style}
     />
   );
-};
+}
 
 export default memo(CheckOption);

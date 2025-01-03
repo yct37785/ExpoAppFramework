@@ -14,7 +14,7 @@ export interface IButtonProps {
   onPress?: () => void;
   style?: object;
   children: React.ReactNode;
-};
+}
 
 /**
  * Basic button.
@@ -39,7 +39,7 @@ export const Button: React.FC<IButtonProps> = memo(({
  */
 export interface IIconButtonProps extends IButtonProps {
   icon?: string;
-};
+}
 
 /**
  * Icon button.

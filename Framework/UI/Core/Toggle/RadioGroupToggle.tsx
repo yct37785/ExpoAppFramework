@@ -12,8 +12,8 @@ import { Text } from '../Text/Text';
 export interface IRadioGroupOptions {
   [key: string]: {
     label: string;
-  };
-};
+  }
+}
 
 /**
  * Props for the RadioGroupToggle component.
@@ -23,7 +23,7 @@ export interface IRadioGroupOptions {
  *   red: { label: 'Red' },
  *   blue: { label: 'Blue' },
  *   green: { label: 'Green' },
- * };
+ * }
  * 
  * @param options - The options for the radio buttons.
  * @param value - The value of the currently selected option.
@@ -35,7 +35,7 @@ interface IRadioGroupToggleProps {
   value: string;
   onValueChange: (value: string) => void;
   style?: StyleProp<ViewStyle>;
-};
+}
 
 
 /**
@@ -61,6 +61,6 @@ const RadioGroupToggle: React.FC<IRadioGroupToggleProps> = ({
       </View>
     </RadioButton.Group>
   );
-};
+}
 
 export default memo(RadioGroupToggle);

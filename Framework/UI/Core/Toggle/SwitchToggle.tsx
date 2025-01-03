@@ -13,7 +13,7 @@ export interface ISwitchToggleProps {
   value: boolean;
   onValueChange: (value: boolean) => void;
   style?: StyleProp<ViewStyle>;
-};
+}
 
 /**
  * SwitchToggle component for rendering a switch with customizable behavior.
@@ -28,6 +28,6 @@ const SwitchToggle: React.FC<ISwitchToggleProps> = ({
       <Switch value={value} onValueChange={onValueChange} />
     </View>
   );
-};
+}
 
 export default memo(SwitchToggle);

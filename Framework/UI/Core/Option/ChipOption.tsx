@@ -62,6 +62,6 @@ const ChipOption: React.FC<IChipOptionCompProps> = ({
       style={style}
     />
   );
-};
+}
 
 export default memo(ChipOption);

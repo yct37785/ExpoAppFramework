@@ -47,7 +47,7 @@ const POPUP_MENU_OPTIONS = {
       }
     }
   }
-};
+}
 
 /**
  * Sample menus screen, demo various menu UI.
@@ -76,7 +76,7 @@ function SampleMenusScreen({ navigation, route }) {
   }
 
   const handleCheckOptionsChange = (updatedSchema, optionPath) => {
-  };
+  }
 
   function customHeaderContent() {
     return <UI.VerticalLayout align='horizontal' reverse={true}>

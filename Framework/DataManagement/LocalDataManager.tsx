@@ -14,7 +14,7 @@ export interface ILocalDataManagerProps {
   readDanglingKeys: () => Promise<Record<string, any>>;
   clearDanglingKeys: () => Promise<void>;
   clearLocalData: () => Promise<void>;
-};
+}
 
 /**
  * Local data manager with built-in update effect.
@@ -60,7 +60,7 @@ const useLocalDataManager = (defaultSchema: Record<string, any>): ILocalDataMana
       handleError(e, 'Error loading data');
       throw e;
     }
-  };
+  }
 
   useEffect(() => { loadLocalData(); }, []);
 
@@ -86,7 +86,7 @@ const useLocalDataManager = (defaultSchema: Record<string, any>): ILocalDataMana
       handleError(e, 'Error writing to local data');
       throw e;
     }
-  };
+  }
 
   /**
    * Reads a value by key from storage.
@@ -107,7 +107,7 @@ const useLocalDataManager = (defaultSchema: Record<string, any>): ILocalDataMana
       handleError(e, 'Error reading local data');
       throw e;
     }
-  };
+  }
 
   /**
    * Retrieves dangling keys not listed in the schema.
@@ -119,7 +119,7 @@ const useLocalDataManager = (defaultSchema: Record<string, any>): ILocalDataMana
       if (!isLocalDataReady) throw new Error("Data not ready.");
       const allKeys = await AsyncStorage.getAllKeys();
       const danglingKeys = allKeys.filter((key) => !(key in schema.current));
-      if (!danglingKeys.length) return {};
+      if (!danglingKeys.length) return {}
 
       const keyValues = await AsyncStorage.multiGet(danglingKeys);
       return Object.fromEntries(keyValues.map(([key, value]) => {
@@ -129,7 +129,7 @@ const useLocalDataManager = (defaultSchema: Record<string, any>): ILocalDataMana
       handleError(e, 'Error reading dangling keys');
       throw e;
     }
-  };
+  }
 
   /**
    * Clears all dangling keys from storage.
@@ -149,16 +149,16 @@ const useLocalDataManager = (defaultSchema: Record<string, any>): ILocalDataMana
       handleError(e, 'Error clearing dangling keys');
       throw e;
     }
-  };
+  }
 
   /**
    * Clear all key-value pairs. For testing usage.
    */
   const clearLocalData = async (): Promise<void> => {
     await AsyncStorage.clear();
-    localCache.current = {};
+    localCache.current = {}
     triggerUpdate();
-  };
+  }
 
   return {
     isLocalDataReady, // flag updates to true when local data is loaded to memory
@@ -168,8 +168,8 @@ const useLocalDataManager = (defaultSchema: Record<string, any>): ILocalDataMana
     readDanglingKeys,
     clearDanglingKeys,
     clearLocalData
-  };
-};
+  }
+}
 
 /**
  * Context setup.
@@ -191,7 +191,7 @@ export const LocalDataProvider: React.FC<ILocalDataProviderProps> = ({ children,
       {children}
     </LocalDataContext.Provider>
   );
-};
+}
 
 /**
  * Context consumer hook.
@@ -202,7 +202,7 @@ export const useLocalDataContext = (): ILocalDataManagerProps => {
     throw new Error('useLocalDataContext must be used within a LocalDataProvider');
   }
   return context;
-};
+}
 
 /**
  * Utility hook that triggers on local data updates.
@@ -214,4 +214,4 @@ export const onLocalDataUpdate = (callback: () => void): void => {
   useEffect(() => {
     if (updateFlag) callback();
   }, [updateFlag]);
-};
+}

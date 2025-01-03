@@ -26,7 +26,7 @@ export enum ScreenNames {
   Menus = 'menus',
   Empty = 'empty',
   DataDisplay = 'dataDisplay',
-};
+}
 
 /**
  * screen map
@@ -39,6 +39,6 @@ export const screenMap: Record<ScreenNames, FC<PropTypes.IScreenProps>> = {
   [ScreenNames.Menus]: SampleMenusScreen,
   [ScreenNames.Empty]: SampleEmptyScreen,
   [ScreenNames.DataDisplay]: SampleDataDisplayScreen,
-};
+}
 
 export const DEFAULT_SCREEN: ScreenNames = ScreenNames.Home;

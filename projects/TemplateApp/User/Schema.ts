@@ -3,11 +3,11 @@
  */
 export interface IUserDataSchema {
   isDarkMode: boolean;
-};
+}
 
 /**
  * local data
  */
 export const LOCAL_DATA_VALUES: IUserDataSchema = {
   isDarkMode: false
-};
+}

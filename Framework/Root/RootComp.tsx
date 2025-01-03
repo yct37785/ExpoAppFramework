@@ -32,7 +32,7 @@ const CombinedDefaultTheme = {
   fonts: {
     ...MD3LightTheme.fonts,
   }
-};
+}
 const CombinedDarkTheme = {
   ...MD3DarkTheme,
   ...DarkTheme,
@@ -43,7 +43,7 @@ const CombinedDarkTheme = {
   fonts: {
     ...MD3DarkTheme.fonts,
   }
-};
+}
 
 const TEST_MODE = false;
 
@@ -64,7 +64,7 @@ const ScreenWrapper: React.FC<{ component: React.ComponentType<any>; [key: strin
       <Component {...props} />
     </View>
   );
-};
+}
 
 /**
  * root comp props
@@ -75,7 +75,7 @@ const ScreenWrapper: React.FC<{ component: React.ComponentType<any>; [key: strin
 export interface IRootCompProps {
   screenMap: Record<string, React.ComponentType<any>>;
   DEFAULT_SCREEN: string;
-};
+}
 
 /**
  * The root component of the entire app. Handles initialization, context providers, and navigation.
@@ -142,7 +142,7 @@ const RootComp: React.FC<IRootCompProps> = ({ screenMap, DEFAULT_SCREEN }) => {
       </SystemSettingsProvider>
     </FirestoreProvider>
   );
-};
+}
 
 /**
  * LocalDataProvider wrapper props
@@ -151,7 +151,7 @@ const RootComp: React.FC<IRootCompProps> = ({ screenMap, DEFAULT_SCREEN }) => {
  */
 interface ILocalDataProviderWrapperProps extends IRootCompProps {
   LOCAL_DATA_VALUES: Record<string, any>;
-};
+}
 
 /**
  * Wrapper for LocalDataProvider to ensure it renders before RootComp.
@@ -162,7 +162,7 @@ const LocalDataProviderWrapper: React.FC<ILocalDataProviderWrapperProps> = ({ sc
       <RootComp screenMap={screenMap} DEFAULT_SCREEN={DEFAULT_SCREEN} />
     </LocalDataProvider>
   );
-};
+}
 
 /**
  * Wrapper for TestRootComp so that it uses IRootCompProps.
@@ -171,7 +171,7 @@ const TestRootCompWrapper: React.FC<ILocalDataProviderWrapperProps> = ({ screenM
   return (
     <TestRootComp />
   );
-};
+}
 
 const Component: React.FC<ILocalDataProviderWrapperProps> = TEST_MODE ? memo(TestRootCompWrapper) : memo(LocalDataProviderWrapper);
 export default Component;

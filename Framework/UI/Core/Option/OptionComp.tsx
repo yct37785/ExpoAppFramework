@@ -113,14 +113,14 @@ const OptionComp: React.FC<IOptionCompProps> = ({
             setAllToState(currChild.children, newState);
           }
         }
-      };
+      }
       setAllToState(obj.children, obj.state);
     }
 
     // trigger re-render with updated schema
     setSchema({ ...schema });
     onSelectionChange({ ...schema }, path);
-  };
+  }
 
   // recursive rendering of child options
   const renderChildrenOptions = (options: Record<string, IOptionProps>, depth: number = 0, depthPaddingVal: number = 0, path: string[] = []) => {
@@ -145,13 +145,13 @@ const OptionComp: React.FC<IOptionCompProps> = ({
         return <View key={index}>{renderOption({ option, onPress: () => handleSelect(optionPath) })}</View>;
       }
     });
-  };
+  }
 
   return (
     <View style={style}>
       {renderChildrenOptions(schema)}
     </View>
   );
-};
+}
 
 export default memo(OptionComp);

@@ -16,7 +16,7 @@ export interface IDropdownPopupCompProps {
   disabled?: boolean;
   style?: StyleProp<ViewStyle>;
   children: ReactNode;
-};
+}
 
 /**
  * A general-purpose popup component that can accept any children to open as a dropdown.
@@ -48,6 +48,6 @@ const DropdownPopupComp: React.FC<IDropdownPopupCompProps> = ({
       </MenuOptions>
     </Menu>
   );
-};
+}
 
 export default memo(DropdownPopupComp);

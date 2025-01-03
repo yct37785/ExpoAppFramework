@@ -14,7 +14,7 @@ export interface ITabRouteProps {
   key: string;
   title: string;
   icon?: keyof typeof MaterialCommunityIcons.glyphMap;
-};
+}
 
 /**
  * sceneMap func
@@ -38,7 +38,7 @@ export interface ITabsContainerProps {
   onTabIdxChange: (index: number) => void;
   position: 'top' | 'bottom';
   style?: StyleProp<ViewStyle>;
-};
+}
 
 /**
  * TabsContainer component. Display children in tabs.
@@ -100,6 +100,6 @@ function TabsContainer({
       style={style}
     />
   );
-};
+}
 
 export default memo(TabsContainer);

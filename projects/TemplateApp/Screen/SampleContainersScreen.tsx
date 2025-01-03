@@ -43,7 +43,7 @@ function SampleContainersScreen({ navigation, route }) {
       default:
         return null;
     }
-  };
+  }
 
   /**
    * Collapsible containers demo.

@@ -11,7 +11,7 @@ const firebaseConfig = {
   messagingSenderId: "247670005534",
   appId: "1:247670005534:web:15d9e42a5f25d7aa19f30f",
   measurementId: "G-RSXYWPNYK9"
-};
+}
 
 const firebaseApp: FirebaseApp = initializeApp(firebaseConfig);
 

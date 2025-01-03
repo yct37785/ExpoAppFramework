@@ -18,7 +18,7 @@ export const Text: React.FC<RNPTextProps<string>> = ({
       {children}
     </RNPText>
   );
-};
+}
 
 /**
  * HighlightText props
@@ -31,7 +31,7 @@ export interface IHighlightTextProps extends RNPTextProps<string> {
   query: string;
   highlightColor?: string;
   label?: string;
-};
+}
 
 /**
  * Highlights search text within a given string.

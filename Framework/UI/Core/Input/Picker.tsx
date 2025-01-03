@@ -9,7 +9,7 @@ import { Picker } from '@react-native-picker/picker';
 export interface IPickerOption {
   label: string;
   value: string;
-};
+}
 
 /**
  * picker input prop
@@ -24,7 +24,7 @@ export interface IPickerInputProps {
   options: IPickerOption[];
   onChange: (value: string) => void;
   style?: StyleProp<ViewStyle>;
-};
+}
 
 /**
  * A dropdown picker component.

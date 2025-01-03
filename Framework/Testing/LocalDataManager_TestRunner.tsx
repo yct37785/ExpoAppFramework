@@ -10,7 +10,7 @@ const LOCALDATA_TEST_SCHEMA = {
   arrayKey: [1, 2, 3],
   nullKey: null,
   undefinedKey: undefined,  // this should be handled as a missing key
-};
+}
 
 /**
  * Test runner for LocalDataManager.
@@ -46,12 +46,12 @@ const LocalDataManager_TestRunner: React.FC<ITestRunnerProps> = ({ onTestEnd }) 
   const runTest = async (description, testFunc) => {
     try {
       const status = await testFunc();
-      return { test: description, status };
+      return { test: description, status }
     } catch (error) {
       console.error(`${description} failed with error: ${error.message}`);
-      return { test: description, status: false };
+      return { test: description, status: false }
     }
-  };
+  }
 
   /**
    * Runs all tests for this module synchronously.
@@ -84,14 +84,14 @@ const LocalDataManager_TestRunner: React.FC<ITestRunnerProps> = ({ onTestEnd }) 
       if (JSON.stringify(value) !== JSON.stringify(readvalue)) return false;
     }
     return true;
-  };
+  }
 
   async function testValidDataWriteRead(): Promise<boolean> {
     const testData = {
       stringKey: "updatedString",
       numberKey: 12345,
       booleanKey: false,
-    };
+    }
 
     for (let [key, value] of Object.entries(testData)) {
       await writeLocalData(key, value);
@@ -99,7 +99,7 @@ const LocalDataManager_TestRunner: React.FC<ITestRunnerProps> = ({ onTestEnd }) 
       if (storedValue !== value) return false;
     }
     return true;
-  };
+  }
 
   async function testDanglingKeyHandling(): Promise<boolean> {
     const danglingKey = "danglingKey";
@@ -112,7 +112,7 @@ const LocalDataManager_TestRunner: React.FC<ITestRunnerProps> = ({ onTestEnd }) 
     await clearDanglingKeys();
     const new_danglingKeys = await readDanglingKeys();
     return Object.keys(new_danglingKeys).length === 0;
-  };
+  }
 
   async function testInvalidKeyHandling(): Promise<boolean> {
     try {
@@ -121,7 +121,7 @@ const LocalDataManager_TestRunner: React.FC<ITestRunnerProps> = ({ onTestEnd }) 
       return true;
     }
     return false;
-  };
+  }
 
   async function testMissingKeyHandling(): Promise<boolean> {
     try {
@@ -130,16 +130,16 @@ const LocalDataManager_TestRunner: React.FC<ITestRunnerProps> = ({ onTestEnd }) 
     } catch {
       return true;
     }
-  };
+  }
 
   async function testDeepObjectIntegrity(): Promise<boolean> {
     const deepObjectKey = "objectKey";
-    const updatedObject = { nested: { deep: "newValue", extra: 456 } };
+    const updatedObject = { nested: { deep: "newValue", extra: 456 } }
 
     await writeLocalData(deepObjectKey, updatedObject);
     const storedValue = readLocalData(deepObjectKey);
     return JSON.stringify(storedValue) === JSON.stringify(updatedObject);
-  };
+  }
 
   async function testArrayIntegrity(): Promise<boolean> {
     const arrayKey = "arrayKey";
@@ -148,7 +148,7 @@ const LocalDataManager_TestRunner: React.FC<ITestRunnerProps> = ({ onTestEnd }) 
     await writeLocalData(arrayKey, updatedArray);
     const storedValue = readLocalData(arrayKey);
     return JSON.stringify(storedValue) === JSON.stringify(updatedArray);
-  };
+  }
 
   async function testNullValueHandling(): Promise<boolean> {
     try {
@@ -157,7 +157,7 @@ const LocalDataManager_TestRunner: React.FC<ITestRunnerProps> = ({ onTestEnd }) 
       return true;
     }
     return false;
-  };
+  }
 
   async function testNullKeyHandling(): Promise<boolean> {
     try {
@@ -170,10 +170,10 @@ const LocalDataManager_TestRunner: React.FC<ITestRunnerProps> = ({ onTestEnd }) 
       }
     }
     return false;
-  };
+  }
 
   return null;
-};
+}
 
 /* ----------- PROVIDER WRAPPER ----------- */
 
