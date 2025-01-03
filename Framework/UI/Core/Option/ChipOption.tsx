@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
 import { View, StyleProp, ViewStyle } from 'react-native';
 import { useTheme, Chip } from 'react-native-paper';
-import { Text } from '../Text/Text';
 import { padSize025, padSize05, padSize, padSize2 } from '../../../Index/Const';
 import OptionComp, { IOptionProps, onOptionSelectionChangeFunc, OptionState } from './OptionComp';
 

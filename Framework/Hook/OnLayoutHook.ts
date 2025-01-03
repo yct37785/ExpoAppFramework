@@ -6,7 +6,7 @@ import { useState, useCallback } from 'react';
  * @param width - Receive width of React comp on layout change.
  * @param height - Receive height of React comp on layout change.
  */
-interface ILayoutSizeProps {
+export interface ILayoutSizeProps {
   width: number;
   height: number;
 };

@@ -72,7 +72,7 @@ const ScreenWrapper: React.FC<{ component: React.ComponentType<any>; [key: strin
  * @param screenMap - User defined map of screens to key for @react-navigation identification.
  * @param DEFAULT_SCREEN - Default launching screen.
  */
-interface IRootCompProps {
+export interface IRootCompProps {
   screenMap: Record<string, React.ComponentType<any>>;
   DEFAULT_SCREEN: string;
 };

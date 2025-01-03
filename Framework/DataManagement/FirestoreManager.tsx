@@ -6,7 +6,7 @@ import { handleError } from '../Utility/GeneralUtility';
 /**
  * Firebase props
  */
-interface IFirestoreManagerProps {
+export interface IFirestoreManagerProps {
   createCollection: (collectionName: string, initialData?: object[]) => Promise<boolean>;
   createDocument: (collectionName: string, docId: string, data: object) => Promise<boolean>;
   readDocument: (collectionName: string, docId: string) => Promise<object | null>;
@@ -209,7 +209,7 @@ const FirestoreContext = createContext<IFirestoreManagerProps | undefined>(undef
 /**
  * Provider for Firestore context.
  */
-interface IFirestoreProviderProps {
+export interface IFirestoreProviderProps {
   children: ReactNode;
 };
 

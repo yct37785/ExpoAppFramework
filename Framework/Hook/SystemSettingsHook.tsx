@@ -5,7 +5,7 @@ import React, { createContext, useContext, ReactNode } from 'react';
  * 
  * @param toggleDarkMode - Defined function to toggle dark mode.
  */
-interface ISystemSettingsContextProps {
+export interface ISystemSettingsContextProps {
   toggleDarkMode: () => Promise<void>;
 };
 

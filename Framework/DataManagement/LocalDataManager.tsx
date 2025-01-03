@@ -6,7 +6,7 @@ var cloneDeep = require('lodash');
 /**
  * local data manager props
  */
-interface ILocalDataManagerProps {
+export interface ILocalDataManagerProps {
   isLocalDataReady: boolean;
   updateFlag: number;
   writeLocalData: (key: string, value: any, bypassSchema?: boolean) => Promise<void>;
@@ -179,7 +179,7 @@ const LocalDataContext = createContext<ILocalDataManagerProps | undefined>(undef
 /**
  * Provider for context.
  */
-interface ILocalDataProviderProps {
+export interface ILocalDataProviderProps {
   children: ReactNode;
   schema: Record<string, any>;
 }

@@ -19,7 +19,7 @@ export interface ICheckOptionCompProps {
 }
 
 /**
- * ChipOption component for rendering chip options based on a JSON schema. Supports nesting.
+ * CheckOption component for rendering check options based on a JSON schema. Supports nesting.
  */
 const CheckOption: React.FC<ICheckOptionCompProps> = ({ 
   schema,
