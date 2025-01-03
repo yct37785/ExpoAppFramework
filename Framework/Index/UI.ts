@@ -21,7 +21,7 @@ export { DividerComp } from '../UI/Core/Component/Decorator';
  * containers: holds children; eg. children collapsible when triggered
  */
 export { CollapsibleContainer, AccordionContainer } from '../UI/Core/Container/Collapsible';
-export { default as TabsContainer } from '../UI/Core/Container/Tabs';
+export { default as TabsContainer, ITabRouteProps, TabsSceneMapFunc, ITabsContainerProps } from '../UI/Core/Container/Tabs';
 
 /**
  * display: display data/media

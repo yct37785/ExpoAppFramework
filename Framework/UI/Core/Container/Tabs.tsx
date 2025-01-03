@@ -10,11 +10,16 @@ import { TabView, TabBar, SceneRendererProps } from 'react-native-tab-view';
 /**
  * structure of route object for each tab
  */
-interface ITabRouteProps {
+export interface ITabRouteProps {
   key: string;
   title: string;
   icon?: keyof typeof MaterialCommunityIcons.glyphMap;
 };
+
+/**
+ * sceneMap func
+ */
+export type TabsSceneMapFunc = (props: SceneRendererProps & { route: ITabRouteProps }) => ReactNode;
 
 /**
  * TabsContainer props
@@ -26,9 +31,9 @@ interface ITabRouteProps {
  * @param position - Position of the tab bar.
  * @param style - Additional style on base container.
  */
-interface ITabsContainerProps {
+export interface ITabsContainerProps {
   routes: ITabRouteProps[];
-  sceneMap: (props: SceneRendererProps & { route: ITabRouteProps }) => ReactNode;
+  sceneMap: TabsSceneMapFunc;
   tabIndex: number;
   onTabIdxChange: (index: number) => void;
   position: 'top' | 'bottom';
@@ -77,7 +82,6 @@ function TabsContainer({
       indicatorStyle={{ backgroundColor: textColor }}
       style={{ backgroundColor: theme.colors.surface }}
       labelStyle={{ color: textColor }}
-      renderLabel={({ route, focused, color }) => route.title ? <Text style={{ color: textColor }}>{route.title}</Text> : null}
     />
   );
 
