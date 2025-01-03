@@ -16,7 +16,7 @@ import { RootStackPropsList } from '../../../PropTypes/ScreenPropTypes';
 export interface IBasicActivityProps {
   navigation: NativeStackNavigationProp<RootStackPropsList>;
   title?: string;
-  CustomHeaderComp?: React.FC<{}>;
+  CustomHeaderComp?: () => JSX.Element;
   style?: StyleProp<ViewStyle>;
   children: React.ReactNode;
 }
@@ -37,7 +37,7 @@ const BasicActivity: React.FC<IBasicActivityProps> = ({
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         {title ? <Appbar.Content style={{ flex: 0 }} title={title} /> : null}
         <View style={{ flex: 1 }}>
-          {CustomHeaderComp && <CustomHeaderComp />}
+          {CustomHeaderComp && CustomHeaderComp()}
         </View>
       </Appbar.Header>
       <View style={{ flex: 1 }}>
