@@ -4,7 +4,7 @@ import * as UI from '../../../Framework/Index/UI';
 import * as Hook from '../../../Framework/Index/Hook';
 import * as Const from '../../../Framework/Index/Const';
 import * as PropTypes from '../../../Framework/Index/PropTypes';
-import { ScreenNames } from '../User/ScreenMapper';
+import { ScreenNames } from '../User/Schema';
 
 /**
  * Sample home screen.
