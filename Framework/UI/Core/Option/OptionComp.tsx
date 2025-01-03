@@ -99,9 +99,7 @@ const OptionComp: React.FC<IOptionCompProps> = ({
       else if (currChildState === OptionState.Selected) {
         parent.state = OptionState.Selected;
       }
-      else {
-        parent.state = childrenState.every((state) => state === currChildState) ? currChildState : OptionState.Indeterminate;
-      }
+      parent.state = childrenState.every((state) => state === currChildState) ? currChildState : OptionState.Indeterminate;
     });
 
     // update the states for all children to match the selected state
