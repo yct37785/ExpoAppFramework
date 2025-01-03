@@ -1,4 +1,4 @@
-import React, { useState, useContext, memo } from 'react';
+import React, { memo } from 'react';
 import { View, StyleProp, ViewStyle } from 'react-native';
 import { useTheme, Chip } from 'react-native-paper';
 import { Text } from '../Text/Text';
@@ -16,7 +16,7 @@ export interface IChipOptionCompProps {
   schema: Record<string, IOptionProps>;
   onSelectionChange: onOptionSelectionChangeFunc;
   style?: StyleProp<ViewStyle>;
-};
+}
 
 /**
  * ChipOption component for rendering chip options based on a JSON schema. Does not support nesting.
@@ -28,26 +28,28 @@ const ChipOption: React.FC<IChipOptionCompProps> = ({
 }) => {
   const theme = useTheme();
 
-  // render label for parent option
-  const renderLabel = ({ option, onPress }: { option: IOptionProps; onPress: () => void }) => (
-    <Text>{option.label}</Text>
-  );
-
   // render chip for each option
-  const renderChip = ({ option, onPress }) => (
+  const renderChip = ({ option, onPress }: { option: IOptionProps; onPress: () => void }) => (
     <Chip
       selected={option.state === OptionState.Selected}
       showSelectedCheck={false}
-      mode='outlined'
-      style={{ backgroundColor: option.state === OptionState.Selected ? theme.colors.primaryContainer : theme.colors.backdrop, margin: padSize05 }}
+      mode="outlined"
+      style={{
+        backgroundColor:
+          option.state === OptionState.Selected
+            ? theme.colors.primaryContainer
+            : theme.colors.backdrop,
+        margin: padSize05,
+      }}
       onPress={onPress}
     >
       {option.label}
     </Chip>
   );
-  
-  const optionsContainer = ({children}) => (
-    <View style={{ flexDirection: 'row', flexWrap: 'wrap'}}>
+
+  // container for the options, wrapping them in a row with wrapping enabled
+  const optionsContainer = ({ children }: { children: React.ReactNode }) => (
+    <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
       {children}
     </View>
   );
@@ -58,7 +60,8 @@ const ChipOption: React.FC<IChipOptionCompProps> = ({
       onSelectionChange={onSelectionChange}
       optionsContainer={optionsContainer}
       renderOption={renderChip}
-      style={style} />
+      style={style}
+    />
   );
 };
 
