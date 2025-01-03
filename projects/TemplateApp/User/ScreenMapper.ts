@@ -13,7 +13,7 @@ import SampleContainersScreen from '../Screen/SampleContainersScreen';
 import SampleMenusScreen from '../Screen/SampleMenusScreen';
 import SampleEmptyScreen from '../Screen/SampleEmptyScreen';
 import SampleDataDisplayScreen from '../Screen/SampleDataDisplayScreen';
-import * as ScreenPropType from '../../../Framework/Index/Root';
+import * as PropTypes from '../../../Framework/Index/PropTypes';
 
 /**
  * define screen
@@ -29,9 +29,9 @@ export enum ScreenNames {
 };
 
 /**
- * screen components
+ * screen map
  */
-const ScreenConfig: Record<ScreenNames, FC<ScreenPropType.IScreenProps>> = {
+export const screenMap: Record<ScreenNames, FC<PropTypes.IScreenProps>> = {
   [ScreenNames.Home]: SampleHomeScreen,
   [ScreenNames.TextInputBtn]: SampleTextInputBtnScreen,
   [ScreenNames.Layouts]: SampleLayoutsScreen,
@@ -40,10 +40,5 @@ const ScreenConfig: Record<ScreenNames, FC<ScreenPropType.IScreenProps>> = {
   [ScreenNames.Empty]: SampleEmptyScreen,
   [ScreenNames.DataDisplay]: SampleDataDisplayScreen,
 };
-
-/**
- * screen map
- */
-export const screenMap = ScreenConfig;
 
 export const DEFAULT_SCREEN: ScreenNames = ScreenNames.Home;
