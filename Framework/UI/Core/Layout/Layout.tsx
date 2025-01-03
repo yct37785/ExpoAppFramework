@@ -1,7 +1,7 @@
 import React, { useState, useEffect, memo, ReactNode } from 'react';
 import { View, ScrollView, StyleSheet, StyleProp, ViewStyle, TextStyle, LayoutChangeEvent } from 'react-native';
 import { useOnLayout } from '../../../Hook/OnLayoutHook';
-var merge = require('lodash');
+const _ = require('lodash');
 
 /**
  * Layout component props.
@@ -132,11 +132,11 @@ export const GridLayout: React.FC<IGridLayoutProps> = memo(({
   }
 
   const containerStyle = StyleSheet.create({
-    layout: merge({}, { 
+    layout: _.merge({}, { 
       flexDirection: direction === 'row' ? 'row' : 'column', 
       flexWrap: 'wrap' 
     }, style),
-    item: merge({}, { 
+    item: _.merge({}, { 
       margin: spacing / 2, 
       width: size ? Math.floor(size.width / itemsPerLine) - spacing : 0 }, 
       itemStyle),
