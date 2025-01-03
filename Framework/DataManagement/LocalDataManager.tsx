@@ -54,7 +54,6 @@ const useLocalDataManager = (defaultSchema: Record<string, any>): ILocalDataMana
         });
         await AsyncStorage.multiSet(newEntries);
       }
-      console.log(JSON.stringify(localCache.current));
       // local data is ready
       setIsLocalDataReady(true);
     } catch (e: unknown) {
@@ -81,7 +80,6 @@ const useLocalDataManager = (defaultSchema: Record<string, any>): ILocalDataMana
       if (!bypassSchema && !(key in schema.current)) throw new Error(`Invalid key: ${key}`);
 
       localCache.current[key] = value;
-      console.log("value: " + value + ", localcache: " + localCache.current[key]);
       await AsyncStorage.setItem(key, JSON.stringify(value));
       triggerUpdate();
     } catch (e: unknown) {
