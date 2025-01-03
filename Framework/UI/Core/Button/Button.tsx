@@ -9,7 +9,7 @@ import { Button as RNPButton } from 'react-native-paper';
  * @param style - Custom style.
  * @param children - The body content of this component.
  */
-interface IButtonProps {
+export interface IButtonProps {
   mode?: 'text' | 'outlined' | 'contained' | 'elevated' | 'contained-tonal';
   onPress?: () => void;
   style?: object;
@@ -37,7 +37,7 @@ export const Button: React.FC<IButtonProps> = memo(({
  * 
  * @param icon - Icon name (default "camera").
  */
-interface IIconButtonProps extends IButtonProps {
+export interface IIconButtonProps extends IButtonProps {
   icon?: string;
 };
 

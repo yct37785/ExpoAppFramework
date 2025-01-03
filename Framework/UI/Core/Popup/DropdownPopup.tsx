@@ -11,7 +11,7 @@ import { StyleProp, ViewStyle } from 'react-native';
  * @param style - Additional style on the base container.
  * @param children - The content to display inside the popup.
  */
-interface IDropdownPopupCompProps {
+export interface IDropdownPopupCompProps {
   triggerComp: ReactNode;
   disabled?: boolean;
   style?: StyleProp<ViewStyle>;

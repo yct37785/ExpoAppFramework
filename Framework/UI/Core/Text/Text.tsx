@@ -27,7 +27,7 @@ export const Text: React.FC<RNPTextProps<string>> = ({
  * @param highlightColor - The highlight color for query text.
  * @param label - Optional label to prepend to the text.
  */
-interface IHighlightTextProps extends RNPTextProps<string> {
+export interface IHighlightTextProps extends RNPTextProps<string> {
   query: string;
   highlightColor?: string;
   label?: string;

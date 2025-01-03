@@ -12,7 +12,7 @@ import OptionComp, { IOptionProps, onOptionSelectionChangeFunc, OptionState } fr
  * @param onSelectionChange - Callback function to handle selection changes.
  * @param style - Additional style on base container.
  */
-interface ICheckOptionCompProps {
+export interface ICheckOptionCompProps {
   schema: Record<string, IOptionProps>;
   onSelectionChange: onOptionSelectionChangeFunc;
   style?: StyleProp<ViewStyle>;

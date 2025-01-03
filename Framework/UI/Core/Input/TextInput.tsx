@@ -13,7 +13,7 @@ import { Searchbar, TextInput } from 'react-native-paper';
  * @param onBlur - Callback function to handle blur event on the input.
  * @param style - Additional style on base container.
  */
-interface ITextInputCompProps {
+export interface ITextInputCompProps {
   type?: 'text' | 'numeric' | 'passcode' | 'search';
   value?: string;
   placeholder?: string;

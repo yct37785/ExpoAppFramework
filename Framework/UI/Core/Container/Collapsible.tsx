@@ -41,7 +41,7 @@ const ToggleHeader: React.FC<IToggleHeaderProps> = memo(({ toggleHeaderText, isC
  * @param style - Additional style on the base container.
  * @param children - Content to be rendered within the collapsible section.
  */
-interface ICollapsibleContainerProps {
+export interface ICollapsibleContainerProps {
   toggleHeaderText: string;
   style?: StyleProp<ViewStyle>;
   children: ReactNode;
@@ -76,7 +76,7 @@ export const CollapsibleContainer: React.FC<ICollapsibleContainerProps> = memo((
  * @param style - Additional style on the base container.
  * @param children - Children components for each section content.
  */
-interface IAccordionContainerProps {
+export interface IAccordionContainerProps {
   sectionTitles: string[];
   style?: StyleProp<ViewStyle>;
   children: ReactNode[];

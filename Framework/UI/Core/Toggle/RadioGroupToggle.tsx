@@ -9,7 +9,7 @@ import { Text } from '../Text/Text';
  * 
  * @param label - label for each option.
  */
-interface IRadioGroupOptions {
+export interface IRadioGroupOptions {
   [key: string]: {
     label: string;
   };

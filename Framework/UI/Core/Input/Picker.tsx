@@ -6,7 +6,7 @@ import { Picker } from '@react-native-picker/picker';
 /**
  * picker option prop
  */
-interface IPickerOption {
+export interface IPickerOption {
   label: string;
   value: string;
 };
@@ -19,7 +19,7 @@ interface IPickerOption {
  * @param onChange - Callback function to handle value change.
  * @param style - Additional style on base container.
  */
-interface IPickerInputProps {
+export interface IPickerInputProps {
   value: string;
   options: IPickerOption[];
   onChange: (value: string) => void;

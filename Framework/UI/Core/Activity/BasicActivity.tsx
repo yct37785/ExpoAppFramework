@@ -13,7 +13,7 @@ import { RootStackPropsList } from '../../../PropTypes/ScreenPropTypes';
  * @param style - Additional style on base container.
  * @param children - The body content of the screen.
  */
-interface IBasicActivityProps {
+export interface IBasicActivityProps {
   navigation: NativeStackNavigationProp<RootStackPropsList>;
   title?: string;
   CustomHeaderComp?: React.FC<{}>;

@@ -18,7 +18,7 @@ import { padSize, padSize2, padSize4 } from '../../../Index/Const';
  * @param closeText - Text for the close button.
  * @param style - Additional style for the container.
  */
-interface IDialogPopupCompProps {
+export interface IDialogPopupCompProps {
   title: string;
   subtitle: string;
   children: React.ReactNode;

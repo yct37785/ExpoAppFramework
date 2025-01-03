@@ -10,19 +10,19 @@ import { FlashList } from '@shopify/flash-list';
  * @param filterable - values will be filterable.
  * @param none - No querying or filtering will be done on values here.
  */
-interface IDataItem {
+export interface IDataItem {
   searchable: Record<string, string>;
   filterable: Record<string, string>;
   none: Record<string, string>;
-}
+};
 
 /**
  * filter item props
  * - determine if key in IdataItem.filterable is filtered by equality comparison with its value
  */
-interface IFilterItem {
+export interface IFilterItem {
   [key: string]: string;
-}
+};
 
 /**
  * ListDataDisplay props
@@ -37,7 +37,7 @@ interface IFilterItem {
  * 
  * @returns {JSX.Element} The ListDataDisplay component.
  */
-interface IListDataDisplayProps {
+export interface IListDataDisplayProps {
   dataArr: IDataItem[];
   query: string;
   filter: IFilterItem;
@@ -45,8 +45,7 @@ interface IListDataDisplayProps {
   listType?: 'flashlist' | 'flatlist';
   estimatedRowHeight?: number;
   style?: StyleProp<ViewStyle>;
-}
-
+};
 
 /**
  * A combined list component supporting FlashList and FlatList with filtering and searching logic encapsulated.

@@ -9,7 +9,7 @@ import { Switch } from 'react-native-paper';
  * @param onValueChange - Callback function to handle selection changes.
  * @param style - Optional style for the container.
  */
-interface ISwitchToggleProps {
+export interface ISwitchToggleProps {
   value: boolean;
   onValueChange: (value: boolean) => void;
   style?: StyleProp<ViewStyle>;

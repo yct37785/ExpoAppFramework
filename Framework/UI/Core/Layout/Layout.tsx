@@ -16,7 +16,7 @@ var merge = require('lodash');
  * @param style - Additional custom styles.
  * @param children - Child elements.
  */
-interface ILayoutProps {
+export interface ILayoutProps {
   direction?: 'row' | 'column';
   align?: 'flex-start' | 'center' | 'flex-end';
   reverse?: boolean;
@@ -103,7 +103,7 @@ export const HorizontalLayout: React.FC<Omit<ILayoutProps, 'direction'>> = memo(
  * @param style - Additional custom styles for the container.
  * @param children - Child elements.
  */
-interface IGridLayoutProps {
+export interface IGridLayoutProps {
   direction?: 'row' | 'column';
   reverse?: boolean;
   spacing?: number;
