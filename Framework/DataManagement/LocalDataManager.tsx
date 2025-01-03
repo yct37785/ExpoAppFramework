@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useRef, ReactNode } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { handleError } from '../Utility/GeneralUtility';
-var cloneDeep = require('lodash');
+const _ = require('lodash');
 
 /**
  * local data manager props
@@ -48,7 +48,7 @@ const useLocalDataManager = (defaultSchema: Record<string, any>): ILocalDataMana
         const newEntries: [string, string][] = [];
         missingKeys.forEach((key) => {
           if (schema.current[key] !== undefined && schema.current[key] !== null) {
-            localCache.current[key] = cloneDeep(schema.current[key]);
+            localCache.current[key] = _.cloneDeep(schema.current[key]);
             newEntries.push([key, JSON.stringify(schema.current[key])]);
           }
         });
@@ -102,7 +102,7 @@ const useLocalDataManager = (defaultSchema: Record<string, any>): ILocalDataMana
     if (!key.length) throw new Error(`Key must be defined.`);
     if (!(key in localCache.current))  throw new Error(`Key not found: ${key}`);
 
-    return cloneDeep(localCache.current[key]);
+    return _.cloneDeep(localCache.current[key]);
     } catch (e: unknown) {
       handleError(e, 'Error reading local data');
       throw e;

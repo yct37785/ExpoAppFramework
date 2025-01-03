@@ -1,7 +1,28 @@
 import React from 'react';
 import * as Root from '../../Framework/Index/Root';
-import { screenMap, DEFAULT_SCREEN } from './User/ScreenMapper';
-import { LOCAL_DATA_VALUES } from './User/Schema';
+import { LOCAL_DATA_VALUES, DEFAULT_SCREEN, ScreenNames } from './User/Schema';
+import { FC } from 'react';
+import SampleHomeScreen from './Screen/SampleHomeScreen';
+// import SampleTextInputBtnScreen from '../Screen/SampleTextInputBtnScreen';
+// import SampleLayoutsScreen from '../Screen/SampleLayoutsScreen';
+// import SampleContainersScreen from '../Screen/SampleContainersScreen';
+// import SampleMenusScreen from '../Screen/SampleMenusScreen';
+// import SampleEmptyScreen from '../Screen/SampleEmptyScreen';
+// import SampleDataDisplayScreen from '../Screen/SampleDataDisplayScreen';
+import * as PropTypes from './../../Framework/Index/PropTypes';
+
+/**
+ * screen map
+ */
+export const screenMap: Record<ScreenNames, FC<PropTypes.IScreenProps>> = {
+  [ScreenNames.Home]: SampleHomeScreen,
+  [ScreenNames.TextInputBtn]: SampleHomeScreen,
+  [ScreenNames.Layouts]: SampleHomeScreen,
+  [ScreenNames.Containers]: SampleHomeScreen,
+  [ScreenNames.Menus]: SampleHomeScreen,
+  [ScreenNames.Empty]: SampleHomeScreen,
+  [ScreenNames.DataDisplay]: SampleHomeScreen,
+}
 
 const App = () => {
   return (

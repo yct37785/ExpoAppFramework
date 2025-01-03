@@ -1,6 +1,6 @@
 import React, { memo, useState } from 'react';
 import { View, StyleProp, ViewStyle } from 'react-native';
-var cloneDeep = require('lodash');
+const _ = require('lodash');
 
 /**
  * Enum for Option States
@@ -64,7 +64,7 @@ const OptionComp: React.FC<IOptionCompProps> = ({
   style = {},
 }) => {
 
-  const [schema, setSchema] = useState<Record<string, IOptionProps>>(cloneDeep(originalSchema));
+  const [schema, setSchema] = useState<Record<string, IOptionProps>>(_.cloneDeep(originalSchema));
 
   // handle option selection and state management
   const handleSelect = (path: string[]) => {
