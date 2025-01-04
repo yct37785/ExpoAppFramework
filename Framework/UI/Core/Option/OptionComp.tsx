@@ -26,26 +26,18 @@ export interface IOptionProps {
 }
 
 /**
- * onSelectionChange function signature
- * 
- * @param updatedSchema - Updated schema shallow cloned.
- * @param optionPath - Array of string with keys of updated option path.
- */
-export type onOptionSelectionChangeFunc = (updatedSchema: Record<string, IOptionProps>, optionPath: string[]) => void;
-
-/**
  * Options component props
  * 
- * @param originalSchema - JSON schema representing the menu options.
- * @param onSelectionChange - Callback function to handle selection changes: updatedSchema, optionPath, optionRef.
+ * @param schema - JSON schema representing the menu options.
+ * @param setSchema - setState function for schema.
  * @param optionsContainer - Container to contain children options.
  * @param renderOption - Function to render the option with the selection control.
  * @param depthPadding - To apply padding per depth hierarchy prop to same function value.
  * @param style - Additional style on base container.
  */
 export interface IOptionCompProps {
-  originalSchema: Record<string, IOptionProps>;
-  onSelectionChange: onOptionSelectionChangeFunc;
+  schema: Record<string, IOptionProps>;
+  setSchema: (updatedSchema: Record<string, IOptionProps>) => void;
   optionsContainer: React.FC<any>;
   renderOption: (props: { option: IOptionProps, onPress: () => void }) => JSX.Element;
   depthPadding?: number;
@@ -56,15 +48,13 @@ export interface IOptionCompProps {
  * General options component for rendering various types of selection same layer and nested controls.
  */
 const OptionComp: React.FC<IOptionCompProps> = ({
-  originalSchema,
-  onSelectionChange,
+  schema,
+  setSchema,
   optionsContainer: OptionsContainer,
   renderOption,
   depthPadding = 0,
   style = {},
 }) => {
-
-  const [schema, setSchema] = useState<Record<string, IOptionProps>>(_.cloneDeep(originalSchema));
 
   // handle option selection and state management
   const handleSelect = (path: string[]) => {
@@ -117,7 +107,6 @@ const OptionComp: React.FC<IOptionCompProps> = ({
 
     // trigger re-render with updated schema
     setSchema({ ...schema });
-    onSelectionChange({ ...schema }, path);
   }
 
   // recursive rendering of child options

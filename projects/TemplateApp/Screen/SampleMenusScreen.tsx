@@ -5,6 +5,7 @@ import * as UI from '../../../Framework/Index/UI';
 import * as Hook from '../../../Framework/Index/Hook';
 import * as Const from '../../../Framework/Index/Const';
 import * as PropTypes from '../../../Framework/Index/PropTypes';
+const _ = require('lodash');
 
 /**
  * Const defines.
@@ -56,6 +57,7 @@ const POPUP_MENU_OPTIONS = {
 const SampleMenusScreen: React.FC<PropTypes.IScreenProps> = ({ navigation, route }) => {
   const searchBarRef = useRef<any>(null);
   const [showDialog, setShowDialog] = useState<boolean>(false);
+  const [popupMenuSelection, setPopupMenuSelection] = useState<Record<string, UI.IOptionProps>>(_.cloneDeep(POPUP_MENU_OPTIONS));
   const [pickerSelection, setPickerSelection] = useState<string>('red');
 
   useEffect(() => {
@@ -72,14 +74,10 @@ const SampleMenusScreen: React.FC<PropTypes.IScreenProps> = ({ navigation, route
     setShowDialog(false);
   }
 
-  const handleCheckOptionsChange = (updatedSchema: Record<string, any>, optionPath: string[]): void => {
-    // handle check options change logic
-  }
-
   function customHeaderContent(): JSX.Element {
     return <UI.HorizontalLayout reverse={true}>
       <UI.DropdownPopup triggerComp={<IconButton icon="dots-vertical" size={Const.iconSizeSmall} />}>
-        <UI.CheckOption schema={POPUP_MENU_OPTIONS} onSelectionChange={handleCheckOptionsChange} />
+        <UI.CheckOption schema={popupMenuSelection} setSchema={setPopupMenuSelection} />
       </UI.DropdownPopup>
     </UI.HorizontalLayout>;
   }

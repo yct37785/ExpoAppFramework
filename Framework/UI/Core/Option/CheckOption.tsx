@@ -3,19 +3,19 @@ import { View, TouchableOpacity, StyleProp, ViewStyle } from 'react-native';
 import { Checkbox } from 'react-native-paper';
 import { Text } from '../Text/Text';
 import { padSize, padSize2 } from '../../../Index/Const';
-import OptionComp, { IOptionProps, onOptionSelectionChangeFunc, OptionState } from './OptionComp';
+import OptionComp, { IOptionProps, OptionState } from './OptionComp';
 
 /**
  * Component for rendering checkbox options based on a JSON schema.
  *
- * @param schema - JSON schema representing the menu options. Refer to OptionComp @example.
- * @param onSelectionChange - Callback function to handle selection changes.
+ * @param schema - JSON schema representing the menu options.
+ * @param setSchema - setState function for schema.
  * @param style - Additional style on base container.
  */
 export interface ICheckOptionCompProps {
-  schema: Record<string, IOptionProps>;
-  onSelectionChange: onOptionSelectionChangeFunc;
-  style?: StyleProp<ViewStyle>;
+    schema: Record<string, IOptionProps>;
+    setSchema: (updatedSchema: Record<string, IOptionProps>) => void;
+    style?: StyleProp<ViewStyle>;
 }
 
 /**
@@ -23,7 +23,7 @@ export interface ICheckOptionCompProps {
  */
 const CheckOption: React.FC<ICheckOptionCompProps> = ({ 
   schema,
-  onSelectionChange,
+  setSchema,
   style = {}
 }) => {
 
@@ -45,8 +45,8 @@ const CheckOption: React.FC<ICheckOptionCompProps> = ({
 
   return (
     <OptionComp
-      originalSchema={schema}
-      onSelectionChange={onSelectionChange}
+      schema={schema}
+      setSchema={setSchema}
       optionsContainer={optionsContainer}
       renderOption={renderCheckbox}
       depthPadding={padSize2}

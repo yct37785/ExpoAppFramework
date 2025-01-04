@@ -3,7 +3,6 @@ import { View, StyleProp, ViewStyle } from 'react-native';
 import { useTheme, Chip } from 'react-native-paper';
 import { padSize025, padSize05, padSize, padSize2 } from '../../../Index/Const';
 import { IOptionProps, OptionState } from './OptionComp';
-const _ = require('lodash');
 
 /**
  * ChipOption component props

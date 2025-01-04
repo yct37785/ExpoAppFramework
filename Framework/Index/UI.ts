@@ -47,7 +47,7 @@ export { VerticalLayout, HorizontalLayout, GridLayout, ILayoutProps, IGridLayout
 /**
  * options: multiple options selection for data; eg. filtering
  */
-export { OptionState, IOptionProps, onOptionSelectionChangeFunc, IOptionCompProps } from '../UI/Core/Option/OptionComp';
+export { OptionState, IOptionProps, IOptionCompProps } from '../UI/Core/Option/OptionComp';
 export { default as CheckOption, ICheckOptionCompProps } from '../UI/Core/Option/CheckOption';
 export { default as ChipOption, IChipOptionCompProps } from '../UI/Core/Option/ChipOption';
 
