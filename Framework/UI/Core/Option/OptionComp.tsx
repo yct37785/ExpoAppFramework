@@ -12,6 +12,11 @@ export enum OptionState {
 }
 
 /**
+ * option schema
+ */
+export type OptionSchema = Record<string, IOptionProps>;
+
+/**
  * Single option props
  * - Each option has a state and holds nested children
  * 
@@ -22,7 +27,7 @@ export enum OptionState {
 export interface IOptionProps {
   label: string;
   state: OptionState;
-  children?: Record<string, IOptionProps>; // children is now optional
+  children?: OptionSchema; // children is now optional
 }
 
 /**
@@ -36,8 +41,8 @@ export interface IOptionProps {
  * @param style - Additional style on base container.
  */
 export interface IOptionCompProps {
-  schema: Record<string, IOptionProps>;
-  setSchema: (updatedSchema: Record<string, IOptionProps>) => void;
+  schema: OptionSchema;
+  setSchema: (updatedSchema: OptionSchema) => void;
   optionsContainer: React.FC<any>;
   renderOption: (props: { option: IOptionProps, onPress: () => void }) => JSX.Element;
   depthPadding?: number;
@@ -94,7 +99,7 @@ const OptionComp: React.FC<IOptionCompProps> = ({
 
     // update the states for all children to match the selected state
     if (obj.children) {
-      const setAllToState = (currObj: Record<string, IOptionProps>, newState: OptionState) => {
+      const setAllToState = (currObj: OptionSchema, newState: OptionState) => {
         for (const [key, currChild] of Object.entries(currObj)) {
           currChild.state = newState;
           if (currChild.children) {
@@ -110,7 +115,7 @@ const OptionComp: React.FC<IOptionCompProps> = ({
   }
 
   // recursive rendering of child options
-  const renderChildrenOptions = (options: Record<string, IOptionProps>, depth: number = 0, depthPaddingVal: number = 0, path: string[] = []) => {
+  const renderChildrenOptions = (options: OptionSchema, depth: number = 0, depthPaddingVal: number = 0, path: string[] = []) => {
     return Object.entries(options).map(([key, option], index) => {
       // track current path/hierarchy
       const optionPath = [...path, key];

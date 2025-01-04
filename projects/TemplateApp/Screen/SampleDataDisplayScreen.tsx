@@ -18,14 +18,14 @@ const SampleDataDisplayScreen: React.FC<PropTypes.IScreenProps> = ({ navigation,
   const [listType, setListType] = useState<UI.ListType>(UI.ListType.flashlist);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [productList, setProductList] = useState<UI.IListDataItem[]>([]);
-  const [chipsSchema, setChipsSchema] = useState<Record<string, UI.IOptionProps>>({});
+  const [chipsSchema, setChipsSchema] = useState<UI.OptionSchema>({});
   const [materialsSelected, setMaterialsSelected] = useState<UI.IListFilterItem>({});
 
   useEffect(() => {
     // Generate product list sample
     const fakeData = faker.helpers.multiple(createRandomProduct, { count: 1000 });
     // Generate filters
-    const chipsSchema: Record<string, UI.IOptionProps> = {};
+    const chipsSchema: UI.OptionSchema = {};
     const initialMaterialsSelected: UI.IListFilterItem = {}
     fakeData.forEach((item) => {
       if (item.filterable.material) {
@@ -73,7 +73,7 @@ const SampleDataDisplayScreen: React.FC<PropTypes.IScreenProps> = ({ navigation,
   //   setChipsSchema(updatedSchema);
   // }, [materialsSelected]);
 
-  function onMaterialChipSelected(updatedSchema: Record<string, UI.IOptionProps>) {
+  function onMaterialChipSelected(updatedSchema: UI.OptionSchema) {
 
   };
 

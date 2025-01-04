@@ -57,7 +57,7 @@ const POPUP_MENU_OPTIONS = {
 const SampleMenusScreen: React.FC<PropTypes.IScreenProps> = ({ navigation, route }) => {
   const searchBarRef = useRef<any>(null);
   const [showDialog, setShowDialog] = useState<boolean>(false);
-  const [popupMenuSelection, setPopupMenuSelection] = useState<Record<string, UI.IOptionProps>>(_.cloneDeep(POPUP_MENU_OPTIONS));
+  const [popupMenuSelection, setPopupMenuSelection] = useState<UI.OptionSchema>(_.cloneDeep(POPUP_MENU_OPTIONS));
   const [pickerSelection, setPickerSelection] = useState<string>('red');
 
   useEffect(() => {

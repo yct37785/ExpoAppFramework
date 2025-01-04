@@ -2,7 +2,7 @@ import React, { memo, useState } from 'react';
 import { View, StyleProp, ViewStyle } from 'react-native';
 import { useTheme, Chip } from 'react-native-paper';
 import { padSize025, padSize05, padSize, padSize2 } from '../../../Index/Const';
-import { IOptionProps, OptionState } from './OptionComp';
+import { OptionSchema, IOptionProps, OptionState } from './OptionComp';
 
 /**
  * ChipOption component props
@@ -12,9 +12,9 @@ import { IOptionProps, OptionState } from './OptionComp';
  * @param style - Additional style on base container.
  */
 export interface IChipOptionCompProps {
-  schema: Record<string, IOptionProps>;
-  setSchema: (updatedSchema: Record<string, IOptionProps>) => void;
-  onSelectionChange: (updatedSchema: Record<string, IOptionProps>) => void;
+  schema: OptionSchema;
+  setSchema: (updatedSchema: OptionSchema) => void;
+  onSelectionChange: (updatedSchema: OptionSchema) => void;
   style?: StyleProp<ViewStyle>;
 }
 

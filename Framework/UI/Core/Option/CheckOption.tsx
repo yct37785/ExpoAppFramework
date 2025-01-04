@@ -3,7 +3,7 @@ import { View, TouchableOpacity, StyleProp, ViewStyle } from 'react-native';
 import { Checkbox } from 'react-native-paper';
 import { Text } from '../Text/Text';
 import { padSize, padSize2 } from '../../../Index/Const';
-import OptionComp, { IOptionProps, OptionState } from './OptionComp';
+import OptionComp, { OptionSchema, IOptionProps, OptionState } from './OptionComp';
 
 /**
  * Component for rendering checkbox options based on a JSON schema.
@@ -13,8 +13,8 @@ import OptionComp, { IOptionProps, OptionState } from './OptionComp';
  * @param style - Additional style on base container.
  */
 export interface ICheckOptionCompProps {
-    schema: Record<string, IOptionProps>;
-    setSchema: (updatedSchema: Record<string, IOptionProps>) => void;
+    schema: OptionSchema;
+    setSchema: (updatedSchema: OptionSchema) => void;
     style?: StyleProp<ViewStyle>;
 }
 
