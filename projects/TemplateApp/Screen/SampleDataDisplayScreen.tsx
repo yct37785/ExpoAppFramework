@@ -76,7 +76,7 @@ const SampleDataDisplayScreen: React.FC<PropTypes.IScreenProps> = ({ navigation,
   /**
    * Renders each item in the list.
    */
-  const renderItem: UI.renderListItemProps = (item: UI.IListDataItem, index: number): React.ReactNode => {
+  const renderItem: UI.renderListItemProps = useCallback((item: UI.IListDataItem, index: number): React.ReactNode => {
     return (
       <View style={{ flex: 1, paddingVertical: Const.padSize }}>
         <UI.HighlightText query={searchQuery} variant={'titleSmall'}>{item.searchable.name}</UI.HighlightText>
@@ -90,7 +90,7 @@ const SampleDataDisplayScreen: React.FC<PropTypes.IScreenProps> = ({ navigation,
         <UI.DividerComp style={{ marginTop: Const.padSize }} />
       </View>
     );
-  }
+  }, [searchQuery]);
 
   function customHeaderContent() {
     return <View>
