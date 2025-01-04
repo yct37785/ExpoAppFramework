@@ -119,7 +119,7 @@ const RootComp: React.FC<IRootCompProps> = ({ screenMap, DEFAULT_SCREEN }) => {
         <PaperProvider theme={theme}>
           <MenuProvider>
             {/* <View style={{ flex: 1, backgroundColor: theme.colors.background, paddingTop: Platform.OS == "android" ? StatusBar.currentHeight : 0 }}> */}
-            <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+            <View style={{ flex: 1 }}>
               {isLocalDataReady ? <NavigationContainer theme={navContainerTheme}>
                 <Stack.Navigator
                   initialRouteName={DEFAULT_SCREEN}

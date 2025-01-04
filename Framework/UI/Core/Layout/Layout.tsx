@@ -63,7 +63,7 @@ const Layout: React.FC<ILayoutProps> = ({
 
   if (constraint === 'scroll') {
     return (
-      <View style={style}>
+      <View style={[style, { flex: 1 }]}>
         <ScrollView horizontal={direction === 'row'}>
           <View style={containerStyle.container}>
             {arrangedChildren.map((child, index) => renderChild(index, child))}
