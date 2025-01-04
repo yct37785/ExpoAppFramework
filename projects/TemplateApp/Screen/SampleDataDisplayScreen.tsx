@@ -18,22 +18,22 @@ const SampleDataDisplayScreen: React.FC<PropTypes.IScreenProps> = ({ navigation,
   const [listType, setListType] = useState<UI.ListType>(UI.ListType.flashlist);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [productList, setProductList] = useState<UI.IListDataItem[]>([]);
-  //const [chipsSchema, setChipsSchema] = useState<Record<string, {}>>({});
-  const [materialsSelected, setMaterialsSelected] = useState<UI.IFilterItem>({});
+  const [chipsSchema, setChipsSchema] = useState<Record<string, UI.IOptionProps>>({});
+  const [materialsSelected, setMaterialsSelected] = useState<UI.IListFilterItem>({});
 
   useEffect(() => {
     // Generate product list sample
     const fakeData = faker.helpers.multiple(createRandomProduct, { count: 1000 });
-    // // Generate filters
-    // const chipsSchema = { 'material': { label: 'Material', state: 0, children: {} } }
-    // const initialMaterialsSelected = {}
-    // fakeData.forEach((item) => {
-    //   if (!(item.material in chipsSchema['material'].children)) {
-    //     chipsSchema['material'].children[item.material] = { label: item.material, state: 0 }
-    //     initialMaterialsSelected[item.material] = false;
-    //   }
-    // });
-    // setChipsSchema(chipsSchema);
+    // Generate filters
+    const chipsSchema: Record<string, UI.IOptionProps> = {};
+    const initialMaterialsSelected: UI.IListFilterItem = {}
+    fakeData.forEach((item) => {
+      if (item.filterable.material) {
+        chipsSchema[item.filterable.material] = { label: item.filterable.material, state: UI.OptionState.Unselected };
+        // initialMaterialsSelected[item.material] = false;
+      }
+    });
+    setChipsSchema(chipsSchema);
     // setMaterialsSelected(initialMaterialsSelected);
     setProductList(fakeData);
   }, []);
@@ -73,6 +73,10 @@ const SampleDataDisplayScreen: React.FC<PropTypes.IScreenProps> = ({ navigation,
   //   setChipsSchema(updatedSchema);
   // }, [materialsSelected]);
 
+  const onMaterialChipSelected: UI.onOptionSelectionChangeFunc = (updatedSchema, optionPath) => {
+
+  };
+
   /**
    * Renders each item in the list.
    */
@@ -108,9 +112,11 @@ const SampleDataDisplayScreen: React.FC<PropTypes.IScreenProps> = ({ navigation,
       <UI.VerticalLayout padding={Const.padSize} childMargin={Const.padSize}>
 
         {/* Filter menu */}
-        {/* {chipsSchema ? <UI.CollapsibleContainer toggleHeaderText="Filter">
-          <UI.ChipOption schema={chipsSchema} onSelectionChange={onMaterialChipSelected} />
-        </UI.CollapsibleContainer> : null} */}
+        <UI.CollapsibleContainer toggleHeaderText="Filter">
+          {Object.keys(chipsSchema).length ?
+            <UI.ChipOption schema={chipsSchema} onSelectionChange={onMaterialChipSelected} />
+            : null}
+        </UI.CollapsibleContainer>
 
         {/* Toggle Flashlist vs FlatList */}
         <UI.RadioGroupToggle
