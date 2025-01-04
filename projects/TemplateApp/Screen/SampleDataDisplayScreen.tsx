@@ -6,23 +6,6 @@ import * as Const from '../../../Framework/Index/Const';
 import * as PropTypes from '../../../Framework/Index/PropTypes';
 import { faker } from '@faker-js/faker';
 
-/**
- * product data structure
- */
-interface IProduct {
-  searchable: {
-    id: string;
-    name: string;
-    desc: string;
-  };
-  filterable: {
-    material: string;
-  };
-  none: {
-    img: string;
-  };
-}
-
 const ListTypes = {
   flashlist: UI.ListType.flashlist,
   flatlist: UI.ListType.flatlist,
@@ -34,7 +17,7 @@ const ListTypes = {
 const SampleDataDisplayScreen: React.FC<PropTypes.IScreenProps> = ({ navigation, route }) => {
   const [listType, setListType] = useState<UI.ListType>(UI.ListType.flashlist);
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [productList, setProductList] = useState<IProduct[]>([]);
+  const [productList, setProductList] = useState<UI.IListDataItem[]>([]);
   //const [chipsSchema, setChipsSchema] = useState<Record<string, {}>>({});
   const [materialsSelected, setMaterialsSelected] = useState<UI.IFilterItem>({});
 
@@ -58,7 +41,7 @@ const SampleDataDisplayScreen: React.FC<PropTypes.IScreenProps> = ({ navigation,
   /**
    * Creates a random product object generated with FakerJS.
    */
-  const createRandomProduct = (): IProduct => {
+  const createRandomProduct = (): UI.IListDataItem => {
     return {
       searchable: {
         id: faker.string.uuid(),
@@ -93,7 +76,7 @@ const SampleDataDisplayScreen: React.FC<PropTypes.IScreenProps> = ({ navigation,
   /**
    * Renders each item in the list.
    */
-  const renderItem: UI.renderListItemProps = (item: UI.IDataItem, index: number): React.ReactNode => {
+  const renderItem: UI.renderListItemProps = (item: UI.IListDataItem, index: number): React.ReactNode => {
     return (
       <View style={{ flex: 1, paddingVertical: Const.padSize }}>
         <UI.HighlightText query={searchQuery} variant={'titleSmall'}>{item.searchable.name}</UI.HighlightText>

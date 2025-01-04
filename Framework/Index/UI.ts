@@ -26,7 +26,7 @@ export { default as TabsContainer, ITabRouteProps, TabsSceneMapFunc, ITabsContai
 /**
  * display: display data/media
  */
-export { default as ListDataDisplay, ListType, IDataItem, IFilterItem, renderListItemProps, IListDataDisplayProps } from '../UI/Core/Display/List';
+export { default as ListDataDisplay, ListType, IListDataItem, IFilterItem, renderListItemProps, IListDataDisplayProps } from '../UI/Core/Display/List';
 
 /**
  * text:

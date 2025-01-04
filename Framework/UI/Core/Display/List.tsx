@@ -18,7 +18,7 @@ export enum ListType {
  * @param filterable - values will be filterable.
  * @param none - No querying or filtering will be done on values here.
  */
-export interface IDataItem {
+export interface IListDataItem {
   searchable: Record<string, string>;
   filterable: Record<string, string>;
   none: Record<string, string>;
@@ -26,7 +26,7 @@ export interface IDataItem {
 
 /**
  * filter item props
- * - determine if key in IdataItem.filterable is filtered by equality comparison with its value
+ * - determine if key in IListDataItem.filterable is filtered by equality comparison with its value
  */
 export interface IFilterItem {
   [key: string]: string;
@@ -35,7 +35,7 @@ export interface IFilterItem {
 /**
  * render list item props
  */
-export type renderListItemProps = (item: IDataItem, index: number) => React.ReactNode;
+export type renderListItemProps = (item: IListDataItem, index: number) => React.ReactNode;
 
 /**
  * ListDataDisplay props
@@ -51,7 +51,7 @@ export type renderListItemProps = (item: IDataItem, index: number) => React.Reac
  * @returns {JSX.Element} The ListDataDisplay component.
  */
 export interface IListDataDisplayProps {
-  dataArr: IDataItem[];
+  dataArr: IListDataItem[];
   query: string;
   filter: IFilterItem;
   renderItem: renderListItemProps;
@@ -72,7 +72,7 @@ const ListDataDisplay: React.FC<IListDataDisplayProps> = ({
   estimatedRowHeight = 250,
   style = {}
 }) => {
-  const [filteredData, setFilteredData] = useState<IDataItem[]>([]);
+  const [filteredData, setFilteredData] = useState<IListDataItem[]>([]);
 
   /**
    * Filters the data based on searchable and filterable fields.
@@ -109,13 +109,13 @@ const ListDataDisplay: React.FC<IListDataDisplayProps> = ({
   /**
    * Renders a single list item.
    */
-  const renderListItem = useCallback(({ item, index }: { item: IDataItem, index: number }) => {
+  const renderListItem = ({ item, index }: { item: IListDataItem, index: number }) => {
     return (
       <View style={{ flex: 1 }}>
         {renderItem(item, index)}
       </View>
     );
-  }, [renderItem]);
+  }
 
   /**
    * Chooses between FlashList and FlatList based on the `listType` prop.
