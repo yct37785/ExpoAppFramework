@@ -117,7 +117,7 @@ const SampleDataDisplayScreen: React.FC<PropTypes.IScreenProps> = ({ navigation,
         <UI.ListDataDisplay
           dataArr={productList}
           query={searchQuery}
-          filter={filterMap}
+          filterMap={filterMap}
           renderItem={renderItem}
           listType={listType}
         />

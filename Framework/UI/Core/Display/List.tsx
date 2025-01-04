@@ -58,7 +58,7 @@ export type renderListItemProps = (item: IListDataItem, index: number) => React.
 export interface IListDataDisplayProps {
   dataArr: IListDataItem[];
   query: string;
-  filter: IListFilterMap;
+  filterMap: IListFilterMap;
   renderItem: renderListItemProps;
   listType?: ListType;
   estimatedRowHeight?: number;
@@ -71,7 +71,7 @@ export interface IListDataDisplayProps {
 const ListDataDisplay: React.FC<IListDataDisplayProps> = ({
   dataArr = [],
   query = '',
-  filter = {},
+  filterMap = {},
   renderItem,
   listType = ListType.flashlist,
   estimatedRowHeight = 250,
@@ -96,20 +96,20 @@ const ListDataDisplay: React.FC<IListDataDisplayProps> = ({
 
       // filter logic for filterable fields
       let matchesFilter: boolean = true;
-      if (Object.keys(filter).length > 0) {
-        matchesFilter = Object.entries(filter).every(
-          ([key, categoryMap]) => {
+      if (Object.keys(filterMap).length > 0) {
+        matchesFilter = Object.entries(filterMap).every(
+          ([category, categoryMap]) => {
             if (!categoryMap || !Object.keys(categoryMap).length) {
               return true;
             }
-            return item.filterable[key] in categoryMap;
+            return item.filterable[category] in categoryMap;
           }
         );
       }
 
       return matchesSearch && matchesFilter;
     });
-  }, [dataArr, query, filter]);
+  }, [dataArr, query, filterMap]);
 
   /**
    * Updates the filtered data whenever `query`, `filter`, or `dataArr` changes.
