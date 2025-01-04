@@ -27,9 +27,14 @@ export interface IListDataItem {
 /**
  * filter item props
  * - determine if key in IListDataItem.filterable is filtered by equality comparison with its value
+ * 
+ * Example:
+ * material: { wood: 0, cloth: 0 }
+ * 
+ * the internal state of wood and cloth does not matter
  */
 export interface IListFilterMap {
-  [key: string]: string;
+  [key: string]: Record<string, boolean>;
 }
 
 /**
@@ -76,22 +81,29 @@ const ListDataDisplay: React.FC<IListDataDisplayProps> = ({
 
   /**
    * Filters the data based on searchable and filterable fields.
+   * 
+   * TODO: debounce
    */
   const applyFilters = useCallback(() => {
-    const normalizedQuery = query.toLowerCase();
+    const normalizedQuery: string = query.toLowerCase();
 
     return dataArr.filter((item) => {
       // search logic for searchable fields
-      const matchesSearch =
+      const matchesSearch: boolean =
         Object.values(item.searchable).some((value) =>
           value.toLowerCase().includes(normalizedQuery)
         );
 
       // filter logic for filterable fields
-      let matchesFilter = true;
+      let matchesFilter: boolean = true;
       if (Object.keys(filter).length > 0) {
         matchesFilter = Object.entries(filter).every(
-          ([key, value]) => item.filterable[key] === value
+          ([key, categoryMap]) => {
+            if (!categoryMap || !Object.keys(categoryMap).length) {
+              return true;
+            }
+            return item.filterable[key] in categoryMap;
+          }
         );
       }
 

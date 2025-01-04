@@ -8,13 +8,12 @@ import { OptionSchema, IOptionProps, OptionState } from './OptionComp';
  * ChipOption component props
  * 
  * @param schema - JSON schema representing the menu options. Refer to OptionComp @example.
- * @param onSelectionChange - Callback function to handle selection changes.
+ * @param setSchema - setState function for schema.
  * @param style - Additional style on base container.
  */
 export interface IChipOptionCompProps {
   schema: OptionSchema;
   setSchema: (updatedSchema: OptionSchema) => void;
-  onSelectionChange: (updatedSchema: OptionSchema) => void;
   style?: StyleProp<ViewStyle>;
 }
 
@@ -24,7 +23,6 @@ export interface IChipOptionCompProps {
 const ChipOption: React.FC<IChipOptionCompProps> = ({
   schema,
   setSchema,
-  onSelectionChange,
   style = {},
 }) => {
   const theme = useTheme();
@@ -34,7 +32,6 @@ const ChipOption: React.FC<IChipOptionCompProps> = ({
       const currState = schema[key].state;
       schema[key].state = currState === OptionState.Selected ? OptionState.Unselected : OptionState.Selected;
     }
-    onSelectionChange(schema);
     setSchema({...schema});
   }
 

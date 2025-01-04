@@ -18,23 +18,20 @@ const SampleDataDisplayScreen: React.FC<PropTypes.IScreenProps> = ({ navigation,
   const [listType, setListType] = useState<UI.ListType>(UI.ListType.flashlist);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [productList, setProductList] = useState<UI.IListDataItem[]>([]);
-  const [chipsSchema, setChipsSchema] = useState<UI.OptionSchema>({});
-  const [materialsSelected, setMaterialsSelected] = useState<UI.IListFilterMap>({});
+  const [matChipsSchema, setMatChipsSchema] = useState<UI.OptionSchema>({});
+  const [filterMap, setFilterMap] = useState<UI.IListFilterMap>({ "material": {} });
 
   useEffect(() => {
     // Generate product list sample
     const fakeData = faker.helpers.multiple(createRandomProduct, { count: 1000 });
     // Generate filters
-    const chipsSchema: UI.OptionSchema = {};
-    const initialMaterialsSelected: UI.IListFilterMap = {}
+    const matChipsSchema: UI.OptionSchema = {};
     fakeData.forEach((item) => {
       if (item.filterable.material) {
-        chipsSchema[item.filterable.material] = { label: item.filterable.material, state: UI.OptionState.Unselected };
-        // initialMaterialsSelected[item.material] = false;
+        matChipsSchema[item.filterable.material] = { label: item.filterable.material, state: UI.OptionState.Unselected };
       }
     });
-    setChipsSchema(chipsSchema);
-    // setMaterialsSelected(initialMaterialsSelected);
+    setMatChipsSchema(matChipsSchema);
     setProductList(fakeData);
   }, []);
 
@@ -59,22 +56,17 @@ const SampleDataDisplayScreen: React.FC<PropTypes.IScreenProps> = ({ navigation,
 
   /**
    * Handles selection of material chips.
-   * 
-   * TODO: params
    */
-  // const onMaterialChipSelected = useCallback((updatedSchema, optionPath, optionRef) => {
-  //   const mat = optionPath.at(-1);
-  //   if (mat in materialsSelected) {
-  //     setMaterialsSelected((prevMaterialsSelected) => ({
-  //       ...prevMaterialsSelected,
-  //       [mat]: !prevMaterialsSelected[mat]
-  //     }));
-  //   }
-  //   setChipsSchema(updatedSchema);
-  // }, [materialsSelected]);
-
-  function onMaterialChipSelected(updatedSchema: UI.OptionSchema) {
-
+  function onChipsSchemaUpdated(updatedSchema: UI.OptionSchema) {
+    const newMaterialsSelected: Record<string, boolean> = {};
+    {Object.keys(updatedSchema).map((key) => {
+      if (updatedSchema[key].state === UI.OptionState.Selected) {
+        newMaterialsSelected[key] = true;
+      }
+    })}
+    filterMap.material = newMaterialsSelected;
+    setMatChipsSchema({ ...updatedSchema });
+    setFilterMap({ ...filterMap });
   };
 
   /**
@@ -113,7 +105,7 @@ const SampleDataDisplayScreen: React.FC<PropTypes.IScreenProps> = ({ navigation,
 
         {/* Filter menu */}
         <UI.CollapsibleContainer toggleHeaderText="Filter">
-          <UI.ChipOption schema={chipsSchema} setSchema={setChipsSchema} onSelectionChange={onMaterialChipSelected} />
+          <UI.ChipOption schema={matChipsSchema} setSchema={onChipsSchemaUpdated} />
         </UI.CollapsibleContainer>
 
         {/* Toggle Flashlist vs FlatList */}
@@ -125,7 +117,7 @@ const SampleDataDisplayScreen: React.FC<PropTypes.IScreenProps> = ({ navigation,
         <UI.ListDataDisplay
           dataArr={productList}
           query={searchQuery}
-          filter={materialsSelected}
+          filter={filterMap}
           renderItem={renderItem}
           listType={listType}
         />
