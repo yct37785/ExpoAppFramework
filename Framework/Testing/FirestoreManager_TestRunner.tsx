@@ -83,8 +83,10 @@ const FirestoreManager_TestRunner: React.FC<ITestRunnerProps> = ({ onTestEnd }) 
     // listen to document changes
     const unsubscribe = listenToDocument("TestCollection", "TestDoc", (docData) => {
       if (docData && 'value' in docData) {
-        status = docData.value === "updated";
-        unsubscribe(); // stop listening after detecting the change
+        if (docData.value === "updated") {
+          status = true;
+          unsubscribe(); // stop listening after detecting the change
+        }
       }
     });
 
