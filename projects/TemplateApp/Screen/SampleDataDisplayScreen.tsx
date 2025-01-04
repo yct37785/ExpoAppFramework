@@ -19,14 +19,14 @@ const SampleDataDisplayScreen: React.FC<PropTypes.IScreenProps> = ({ navigation,
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [productList, setProductList] = useState<UI.IListDataItem[]>([]);
   const [chipsSchema, setChipsSchema] = useState<UI.OptionSchema>({});
-  const [materialsSelected, setMaterialsSelected] = useState<UI.IListFilterItem>({});
+  const [materialsSelected, setMaterialsSelected] = useState<UI.IListFilterMap>({});
 
   useEffect(() => {
     // Generate product list sample
     const fakeData = faker.helpers.multiple(createRandomProduct, { count: 1000 });
     // Generate filters
     const chipsSchema: UI.OptionSchema = {};
-    const initialMaterialsSelected: UI.IListFilterItem = {}
+    const initialMaterialsSelected: UI.IListFilterMap = {}
     fakeData.forEach((item) => {
       if (item.filterable.material) {
         chipsSchema[item.filterable.material] = { label: item.filterable.material, state: UI.OptionState.Unselected };
