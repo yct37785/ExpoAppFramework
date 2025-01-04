@@ -33,7 +33,7 @@ const SampleHomeScreen: React.FC<UI.IScreenProps> = ({ navigation, route }) => {
   }
 
   return (
-    <UI.BasicActivity navigation={navigation} CustomHeaderComp={customHeaderContent} title="Home Sample">
+    <UI.BasicActivity navigation={navigation} CustomHeaderComp={customHeaderContent} title="Home Sample" isRootActivity={true}>
       <UI.VerticalLayout childMargin={Const.padSize} padding={Const.padSize}>
       <UI.Text variant="bodyMedium">Select the screen you want to navigate to</UI.Text>
         {renderScreenBtn(ScreenNames.TextInputBtn, "text input button example")}

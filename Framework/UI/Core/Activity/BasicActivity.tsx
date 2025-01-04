@@ -11,6 +11,7 @@ import { RootStackPropsList } from '../Screen/ScreenPropTypes';
  * @param title - Title of the screen to be displayed on app header.
  * @param customHeaderContent - Custom content to display in the header.
  * @param style - Additional style on base container.
+ * @param isRootActivity - Is this the root activity of the app?
  * @param children - The body content of the screen.
  */
 export interface IBasicActivityProps {
@@ -18,6 +19,7 @@ export interface IBasicActivityProps {
   title?: string;
   CustomHeaderComp?: () => JSX.Element;
   style?: StyleProp<ViewStyle>;
+  isRootActivity?: boolean;
   children: React.ReactNode;
 }
 
@@ -29,12 +31,13 @@ const BasicActivity: React.FC<IBasicActivityProps> = ({
   title = '',
   CustomHeaderComp,
   style = {},
+  isRootActivity = false,
   children
 }) => {
   return (
     <View style={[{ flex: 1 }, style]}>
       <Appbar.Header>
-        <Appbar.BackAction onPress={() => navigation.goBack()} />
+        {!isRootActivity ? <Appbar.BackAction onPress={() => navigation.goBack()} /> : null}
         {title ? <Appbar.Content style={{ flex: 0 }} title={title} /> : null}
         <View style={{ flex: 1 }}>
           {CustomHeaderComp && CustomHeaderComp()}
