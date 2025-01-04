@@ -26,7 +26,7 @@ export { default as TabsContainer, ITabRouteProps, TabsSceneMapFunc, ITabsContai
 /**
  * display: display data/media
  */
-export { default as ListDataDisplay, ListType, IListDataItem, IFilterItem, renderListItemProps, IListDataDisplayProps } from '../UI/Core/Display/List';
+export { default as ListDataDisplay, ListType, IListDataItem, IListFilterItem, renderListItemProps, IListDataDisplayProps } from '../UI/Core/Display/List';
 
 /**
  * text:
@@ -47,7 +47,7 @@ export { VerticalLayout, HorizontalLayout, GridLayout, ILayoutProps, IGridLayout
 /**
  * options: multiple options selection for data; eg. filtering
  */
-export { OptionState, IOptionProps, IOptionCompProps } from '../UI/Core/Option/OptionComp';
+export { OptionState, IOptionProps, onOptionSelectionChangeFunc, IOptionCompProps } from '../UI/Core/Option/OptionComp';
 export { default as CheckOption, ICheckOptionCompProps } from '../UI/Core/Option/CheckOption';
 export { default as ChipOption, IChipOptionCompProps } from '../UI/Core/Option/ChipOption';
 

@@ -28,7 +28,7 @@ export interface IListDataItem {
  * filter item props
  * - determine if key in IListDataItem.filterable is filtered by equality comparison with its value
  */
-export interface IFilterItem {
+export interface IListFilterItem {
   [key: string]: string;
 }
 
@@ -53,7 +53,7 @@ export type renderListItemProps = (item: IListDataItem, index: number) => React.
 export interface IListDataDisplayProps {
   dataArr: IListDataItem[];
   query: string;
-  filter: IFilterItem;
+  filter: IListFilterItem;
   renderItem: renderListItemProps;
   listType?: ListType;
   estimatedRowHeight?: number;
