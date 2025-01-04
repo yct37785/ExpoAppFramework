@@ -3,6 +3,14 @@ import { View, FlatList, StyleProp, ViewStyle } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 
 /**
+ * Enum for list types
+ */
+export enum ListType {
+  flashlist = 'flashlist',
+  flatlist = 'flatlist'
+}
+
+/**
  * data item props
  * - key value pairs within each of the categories are user defined as needed
  * 
@@ -25,6 +33,11 @@ export interface IFilterItem {
 }
 
 /**
+ * render list item props
+ */
+export type renderListItemProps = (item: IDataItem, index: number) => React.ReactNode;
+
+/**
  * ListDataDisplay props
  * 
  * @param dataArr - Array of data items to be displayed in the list.
@@ -41,8 +54,8 @@ export interface IListDataDisplayProps {
   dataArr: IDataItem[];
   query: string;
   filter: IFilterItem;
-  renderItem: (item: IDataItem, index: number) => React.ReactNode;
-  listType?: 'flashlist' | 'flatlist';
+  renderItem: renderListItemProps;
+  listType?: ListType;
   estimatedRowHeight?: number;
   style?: StyleProp<ViewStyle>;
 }
@@ -55,7 +68,7 @@ const ListDataDisplay: React.FC<IListDataDisplayProps> = ({
   query = '',
   filter = {},
   renderItem,
-  listType = 'flashlist',
+  listType = ListType.flashlist,
   estimatedRowHeight = 250,
   style = {}
 }) => {
@@ -108,7 +121,7 @@ const ListDataDisplay: React.FC<IListDataDisplayProps> = ({
    * Chooses between FlashList and FlatList based on the `listType` prop.
    */
   const renderList = () => {
-    if (listType === 'flashlist') {
+    if (listType === ListType.flashlist) {
       return (
         <FlashList
           data={filteredData}
