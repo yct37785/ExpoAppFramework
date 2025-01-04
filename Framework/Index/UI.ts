@@ -58,6 +58,11 @@ export { default as DialogPopup, IDialogPopupCompProps } from '../UI/Core/Popup/
 export { default as DropdownPopup, IDropdownPopupCompProps } from '../UI/Core/Popup/DropdownPopup';
 
 /**
+ * screen: screen props
+ */
+export { IScreenRouteProps, RootStackPropsList, IScreenProps } from '../UI/Core/Screen/ScreenPropTypes';
+
+/**
  * toggle: one option selectable; eg. check, radio, switch
  */
 export { default as RadioGroupToggle, IRadioGroupOptions } from '../UI/Core/Toggle/RadioGroupToggle';

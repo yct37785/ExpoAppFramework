@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { View, StyleProp, ViewStyle } from 'react-native';
 import { Appbar } from 'react-native-paper';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackPropsList } from '../../../PropTypes/ScreenPropTypes';
+import { RootStackPropsList } from '../Screen/ScreenPropTypes';
 
 /**
  * BasicActivity props

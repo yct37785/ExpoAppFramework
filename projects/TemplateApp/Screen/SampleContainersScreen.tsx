@@ -3,7 +3,6 @@ import { View } from 'react-native';
 import * as UI from '../../../Framework/Index/UI';
 import * as Hook from '../../../Framework/Index/Hook';
 import * as Const from '../../../Framework/Index/Const';
-import * as PropTypes from '../../../Framework/Index/PropTypes';
 
 /**
  * Const defines.
@@ -19,7 +18,7 @@ export const ACCORDION_SECTION_TITLES: string[] = ["First", "Second", "Third"];
 /**
  * Sample containers screen, demo simple container UI.
  */
-const SampleContainersScreen: React.FC<PropTypes.IScreenProps> = ({ navigation, route }) => {
+const SampleContainersScreen: React.FC<UI.IScreenProps> = ({ navigation, route }) => {
   const [tabIndex, setTabIndex] = useState(0);
 
   /**

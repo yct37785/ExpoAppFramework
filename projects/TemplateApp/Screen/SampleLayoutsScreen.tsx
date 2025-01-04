@@ -3,12 +3,11 @@ import { View } from 'react-native';
 import * as UI from '../../../Framework/Index/UI';
 import * as Hook from '../../../Framework/Index/Hook';
 import * as Const from '../../../Framework/Index/Const';
-import * as PropTypes from '../../../Framework/Index/PropTypes';
 
 /**
  * Sample layouts screen, demo various layout configurations.
  */
-const SampleLayoutsScreen: React.FC<PropTypes.IScreenProps> = ({ navigation, route }) => {
+const SampleLayoutsScreen: React.FC<UI.IScreenProps> = ({ navigation, route }) => {
   Hook.onLocalDataUpdate(() => {
     console.log("SampleNewScreen: updated local data");
   });

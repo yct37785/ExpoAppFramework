@@ -4,7 +4,6 @@ import { Card, IconButton, Portal } from 'react-native-paper';
 import * as UI from '../../../Framework/Index/UI';
 import * as Hook from '../../../Framework/Index/Hook';
 import * as Const from '../../../Framework/Index/Const';
-import * as PropTypes from '../../../Framework/Index/PropTypes';
 const _ = require('lodash');
 
 /**
@@ -54,7 +53,7 @@ const POPUP_MENU_OPTIONS = {
 /**
  * Sample menus screen, demo various menu UI.
  */
-const SampleMenusScreen: React.FC<PropTypes.IScreenProps> = ({ navigation, route }) => {
+const SampleMenusScreen: React.FC<UI.IScreenProps> = ({ navigation, route }) => {
   const searchBarRef = useRef<any>(null);
   const [showDialog, setShowDialog] = useState<boolean>(false);
   const [popupMenuSelection, setPopupMenuSelection] = useState<UI.OptionSchema>(_.cloneDeep(POPUP_MENU_OPTIONS));

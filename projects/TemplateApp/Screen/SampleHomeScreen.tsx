@@ -3,13 +3,12 @@ import { View } from 'react-native';
 import * as UI from '../../../Framework/Index/UI';
 import * as Hook from '../../../Framework/Index/Hook';
 import * as Const from '../../../Framework/Index/Const';
-import * as PropTypes from '../../../Framework/Index/PropTypes';
 import { ScreenNames } from '../User/Schema';
 
 /**
  * Sample home screen.
  */
-const SampleHomeScreen: React.FC<PropTypes.IScreenProps> = ({ navigation, route }) => {
+const SampleHomeScreen: React.FC<UI.IScreenProps> = ({ navigation, route }) => {
   const {
     readLocalData,
     writeLocalData

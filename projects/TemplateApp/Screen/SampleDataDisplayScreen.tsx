@@ -3,7 +3,6 @@ import { View, Image } from 'react-native';
 import * as UI from '../../../Framework/Index/UI';
 import * as Hook from '../../../Framework/Index/Hook';
 import * as Const from '../../../Framework/Index/Const';
-import * as PropTypes from '../../../Framework/Index/PropTypes';
 import { faker } from '@faker-js/faker';
 
 const ListTypes = {
@@ -14,7 +13,7 @@ const ListTypes = {
 /**
  * Displays a sample screen with a search bar, filter options, and a list of products.
  */
-const SampleDataDisplayScreen: React.FC<PropTypes.IScreenProps> = ({ navigation, route }) => {
+const SampleDataDisplayScreen: React.FC<UI.IScreenProps> = ({ navigation, route }) => {
   const [listType, setListType] = useState<UI.ListType>(UI.ListType.flashlist);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [productList, setProductList] = useState<UI.IListDataItem[]>([]);
