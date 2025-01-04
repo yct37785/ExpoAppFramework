@@ -8,7 +8,7 @@ import SampleLayoutsScreen from './Screen/SampleLayoutsScreen';
 import SampleContainersScreen from './Screen/SampleContainersScreen';
 import SampleMenusScreen from './Screen/SampleMenusScreen';
 import SampleEmptyScreen from './Screen/SampleEmptyScreen';
-// import SampleDataDisplayScreen from '../Screen/SampleDataDisplayScreen';
+import SampleDataDisplayScreen from './Screen/SampleDataDisplayScreen';
 import * as PropTypes from './../../Framework/Index/PropTypes';
 
 /**
@@ -21,7 +21,7 @@ export const screenMap: Record<ScreenNames, FC<PropTypes.IScreenProps>> = {
   [ScreenNames.Containers]: SampleContainersScreen,
   [ScreenNames.Menus]: SampleMenusScreen,
   [ScreenNames.Empty]: SampleEmptyScreen,
-  [ScreenNames.DataDisplay]: SampleHomeScreen,
+  [ScreenNames.DataDisplay]: SampleDataDisplayScreen,
 }
 
 const App = () => {
