@@ -17,9 +17,9 @@ export interface IRadioGroupOptions {
  * 
  * @example
  * const options = {
- *   red: { label: 'Red' },
- *   blue: { label: 'Blue' },
- *   green: { label: 'Green' },
+ *   red: 'Red',
+ *   blue: 'Blue',
+ *   green: 'Green',
  * }
  * 
  * @param options - The options for the radio buttons.
