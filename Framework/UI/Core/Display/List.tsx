@@ -85,31 +85,26 @@ const ListDataDisplay: React.FC<IListDataDisplayProps> = ({
    * TODO: debounce
    */
   const applyFilters = useCallback(() => {
-    const normalizedQuery: string = query.toLowerCase();
-
+    const normalizedQuery = query.toLowerCase();
+  
     return dataArr.filter((item) => {
       // search logic for searchable fields
-      const matchesSearch: boolean =
-        Object.values(item.searchable).some((value) =>
-          value.toLowerCase().includes(normalizedQuery)
-        );
-
+      const matchesSearch = Object.values(item.searchable).some((value) =>
+        value.toLowerCase().includes(normalizedQuery)
+      );
+  
       // filter logic for filterable fields
-      let matchesFilter: boolean = true;
-      if (Object.keys(filterMap).length > 0) {
-        matchesFilter = Object.entries(filterMap).every(
-          ([category, categoryMap]) => {
-            if (!categoryMap || !Object.keys(categoryMap).length) {
-              return true;
-            }
-            return item.filterable[category] in categoryMap;
-          }
-        );
-      }
-
+      const matchesFilter = Object.entries(filterMap).every(
+        ([category, categoryMap]) => {
+          // if no filter is applied for this category, we return true (i.e., bypass filter)
+          if (!categoryMap || !Object.keys(categoryMap).length) return true;
+          return categoryMap.hasOwnProperty(item.filterable[category]);
+        }
+      );
+  
       return matchesSearch && matchesFilter;
     });
-  }, [dataArr, query, filterMap]);
+  }, [dataArr, query, filterMap]);  
 
   /**
    * Updates the filtered data whenever `query`, `filter`, or `dataArr` changes.
