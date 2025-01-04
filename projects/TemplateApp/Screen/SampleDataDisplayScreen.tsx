@@ -73,7 +73,7 @@ const SampleDataDisplayScreen: React.FC<PropTypes.IScreenProps> = ({ navigation,
   //   setChipsSchema(updatedSchema);
   // }, [materialsSelected]);
 
-  const onMaterialChipSelected: UI.onOptionSelectionChangeFunc = (updatedSchema, optionPath) => {
+  function onMaterialChipSelected(updatedSchema: Record<string, UI.IOptionProps>) {
 
   };
 
@@ -113,9 +113,7 @@ const SampleDataDisplayScreen: React.FC<PropTypes.IScreenProps> = ({ navigation,
 
         {/* Filter menu */}
         <UI.CollapsibleContainer toggleHeaderText="Filter">
-          {Object.keys(chipsSchema).length ?
-            <UI.ChipOption schema={chipsSchema} onSelectionChange={onMaterialChipSelected} />
-            : null}
+          <UI.ChipOption schema={chipsSchema} setSchema={setChipsSchema} onSelectionChange={onMaterialChipSelected} />
         </UI.CollapsibleContainer>
 
         {/* Toggle Flashlist vs FlatList */}

@@ -1,8 +1,9 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import { View, StyleProp, ViewStyle } from 'react-native';
 import { useTheme, Chip } from 'react-native-paper';
 import { padSize025, padSize05, padSize, padSize2 } from '../../../Index/Const';
-import OptionComp, { IOptionProps, onOptionSelectionChangeFunc, OptionState } from './OptionComp';
+import { IOptionProps, OptionState } from './OptionComp';
+const _ = require('lodash');
 
 /**
  * ChipOption component props
@@ -13,7 +14,8 @@ import OptionComp, { IOptionProps, onOptionSelectionChangeFunc, OptionState } fr
  */
 export interface IChipOptionCompProps {
   schema: Record<string, IOptionProps>;
-  onSelectionChange: onOptionSelectionChangeFunc;
+  setSchema: (updatedSchema: Record<string, IOptionProps>) => void;
+  onSelectionChange: (updatedSchema: Record<string, IOptionProps>) => void;
   style?: StyleProp<ViewStyle>;
 }
 
@@ -22,14 +24,24 @@ export interface IChipOptionCompProps {
  */
 const ChipOption: React.FC<IChipOptionCompProps> = ({
   schema,
+  setSchema,
   onSelectionChange,
   style = {},
 }) => {
   const theme = useTheme();
 
-  // render chip for each option
-  const renderChip = ({ option, onPress }: { option: IOptionProps; onPress: () => void }) => (
+  function onChipSelected(key: string) {
+    if (key in schema) {
+      const currState = schema[key].state;
+      schema[key].state = currState === OptionState.Selected ? OptionState.Unselected : OptionState.Selected;
+    }
+    onSelectionChange(schema);
+    setSchema({...schema});
+  }
+
+  const renderChip = (key: string, option: IOptionProps) => (
     <Chip
+      key={key}
       selected={option.state === OptionState.Selected}
       showSelectedCheck={false}
       mode="outlined"
@@ -40,27 +52,18 @@ const ChipOption: React.FC<IChipOptionCompProps> = ({
             : theme.colors.backdrop,
         margin: padSize05,
       }}
-      onPress={onPress}
+      onPress={(e) => onChipSelected(key)}
     >
       {option.label}
     </Chip>
   );
-
-  // container for the options, wrapping them in a row with wrapping enabled
-  const optionsContainer = ({ children }: { children: React.ReactNode }) => (
-    <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-      {children}
-    </View>
-  );
-
+  
   return (
-    <OptionComp
-      originalSchema={schema}
-      onSelectionChange={onSelectionChange}
-      optionsContainer={optionsContainer}
-      renderOption={renderChip}
-      style={style}
-    />
+    <View style={[style, { flexDirection: 'row', flexWrap: 'wrap' }]}>
+      {Object.keys(schema).map((key) => {
+        return renderChip(key, schema[key])
+      })}
+    </View>
   );
 }
 
