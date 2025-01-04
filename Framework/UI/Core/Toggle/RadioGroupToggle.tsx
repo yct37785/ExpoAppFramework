@@ -5,14 +5,11 @@ import { Text } from '../Text/Text';
 
 /**
  * radio group options prop
- * - options are a map where each key has a label property.
- * 
- * @param label - label for each option.
+ * - key = key
+ * - value = label
  */
 export interface IRadioGroupOptions {
-  [key: string]: {
-    label: string;
-  }
+  [key: string]: string;
 }
 
 /**
@@ -50,10 +47,10 @@ const RadioGroupToggle: React.FC<IRadioGroupToggleProps> = ({
   return (
     <RadioButton.Group onValueChange={newValue => onValueChange(newValue)} value={value}>
       <View style={[{ flexDirection: 'row' }, style]}>
-        {Object.entries(options).map(([key, obj], index) => {
+        {Object.entries(options).map(([key, label], index) => {
           return (
             <View key={index} style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text>{obj.label}</Text>
+              <Text>{label}</Text>
               <RadioButton value={key} />
             </View>
           );
