@@ -1,6 +1,7 @@
 {
   "private": true,
   "name": "expo-app-framework",
+  "packageManager": "yarn@4.7.0",
   "version": "1.0.0",
   "license": "MIT",
   "workspaces": [
