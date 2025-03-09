@@ -156,6 +156,6 @@ lerna-debug.log*
 Thumbs.db
 
 # ignore all projects except TemplateApp
-/projects/*
-!/projects/TemplateApp/
+/Projects/*
+!/Projects/TemplateApp/
 .expo/
