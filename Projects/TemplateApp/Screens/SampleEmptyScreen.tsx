@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
 import { View, Text } from 'react-native';
-import { ScreenProps } from '@screen/Screen';
+import { ScreenProps } from '@screen';
 
 /**
  * sample empty screen, duplicate for quick start for new screens

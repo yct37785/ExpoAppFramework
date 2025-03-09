@@ -4,8 +4,8 @@
     "strict": true,
     "baseUrl": "./",
     "paths": {
-      "@root/*": ["../../Framework/Root.ts"],
-      "@screen/*": ["../../Framework/Screen.ts"],
+      "@root": ["../../Framework/Root"],
+      "@screen": ["../../Framework/Screen"]
     }
   }
 }

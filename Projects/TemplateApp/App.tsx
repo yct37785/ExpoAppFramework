@@ -1,6 +1,6 @@
 import React from 'react';
-import RootComp from '@root/Root';
-import { screenMap } from 'Screens/ScreenMap';
+import RootComp from '@root';
+import { screenMap } from './Screens/ScreenMap';
 
 export default function App() {
   return (
