@@ -8,7 +8,8 @@ module.exports = function (api) {
         {
           root: ["./"],
           alias: {
-            "@framework": "@expo-app-framework/framework"
+            "@root/*": ["../../Framework/Root.ts"],
+            "@screen/*": ["../../Framework/Screen.ts"],
           }
         }
       ]
