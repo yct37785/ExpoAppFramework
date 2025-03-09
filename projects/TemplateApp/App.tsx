@@ -9,12 +9,12 @@ import SampleContainersScreen from './Screen/SampleContainersScreen';
 import SampleMenusScreen from './Screen/SampleMenusScreen';
 import SampleEmptyScreen from './Screen/SampleEmptyScreen';
 import SampleDataDisplayScreen from './Screen/SampleDataDisplayScreen';
-import * as PropTypes from './../../Framework/Index/PropTypes';
+import * as UI from '../../Framework/Index/UI';
 
 /**
  * screen map
  */
-export const screenMap: Record<ScreenNames, FC<PropTypes.IScreenProps>> = {
+export const screenMap: Record<ScreenNames, FC<UI.IScreenProps>> = {
   [ScreenNames.Home]: SampleHomeScreen,
   [ScreenNames.TextInputBtn]: SampleTextInputBtnScreen,
   [ScreenNames.Layouts]: SampleLayoutsScreen,
