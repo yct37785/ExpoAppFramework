@@ -1,6 +1,8 @@
 import { ScreenMap } from '@screen';
-import SampleEmptyScreen from './SampleEmptyScreen';
+import SampleHomeScreen from './SampleHomeScreen';
+import SampleLayoutScreen from './SampleLayoutScreen';
 
 export const screenMap: ScreenMap = {
-  "empty screen": SampleEmptyScreen
+  "home": SampleHomeScreen,
+  "layout": SampleLayoutScreen
 };
