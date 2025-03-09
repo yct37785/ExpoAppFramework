@@ -11,6 +11,7 @@ module.exports = function (api) {
             "@root": "@expo-app-framework/framework/Root",
             "@screen": "@expo-app-framework/framework/Screen",
             "@ui/*": "@expo-app-framework/framework/UI/*",
+            "@hook/*": "@expo-app-framework/framework/Hook/*",
             "@const": "@expo-app-framework/framework/Const"
           },
           extensions: [".js", ".ts", ".tsx", ".json"]

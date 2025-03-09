@@ -12,6 +12,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
 // screen
 import { RootStackPropsList, ScreenProps, ScreenMap } from './Screen';
+// hooks
+import { useSettings, SettingsProvider } from './Hook/SettingsHook';
 
 // theme adaptation for navigation
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
@@ -78,8 +80,17 @@ type RootCompProps = {
  */
 const RootComp: React.FC<RootCompProps> = ({ DEFAULT_SCREEN, screenMap }) => {
   const [theme, setTheme] = useState(CombinedDarkTheme);
+  const { settings } = useSettings();
+
+  /**
+   * sync theme
+   */
+  useEffect(() => {
+    setTheme(settings.isDarkMode ? CombinedDarkTheme : CombinedDefaultTheme);
+  }, [settings.isDarkMode]);
 
   const navContainerTheme = theme === CombinedDarkTheme ? NavigationDarkTheme : NavigationDefaultTheme;
+  
   return (
     <PaperProvider theme={theme}>
       <MenuProvider>
@@ -113,4 +124,15 @@ const RootComp: React.FC<RootCompProps> = ({ DEFAULT_SCREEN, screenMap }) => {
   );
 }
 
-export default memo(RootComp);
+/**
+ * wrapper for SettingsProvider
+ */
+const SettingsProviderWrapper: React.FC<RootCompProps> = ({ DEFAULT_SCREEN, screenMap }) => {
+  return (
+    <SettingsProvider>
+      <RootComp screenMap={screenMap} DEFAULT_SCREEN={DEFAULT_SCREEN} />
+    </SettingsProvider>
+  );
+}
+
+export default memo(SettingsProviderWrapper);

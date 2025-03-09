@@ -1,7 +1,8 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
 import { View } from 'react-native';
-import { Text, Button } from 'react-native-paper';
+import { Text, Button, Switch } from 'react-native-paper';
 import { ScreenProps } from '@screen';
+import { useSettings } from '@hook/SettingsHook';
 import Activity from '@ui/Activity';
 import { VerticalLayout } from '@ui/Layout';
 import * as Const from '@const';
@@ -10,10 +11,11 @@ import * as Const from '@const';
  * sample home screen
  */
 const SampleHomeScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
+  const { settings, toggleDarkMode } = useSettings();
 
   function customHeaderContent() {
     return <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-      <Text>custom header content</Text>
+      <Switch value={settings.isDarkMode} onValueChange={toggleDarkMode} />
     </View>
   }
 
