@@ -5,7 +5,8 @@
     "baseUrl": "./",
     "paths": {
       "@root": ["../../Framework/Root"],
-      "@screen": ["../../Framework/Screen"]
+      "@screen": ["../../Framework/Screen"],
+      "@ui/*": ["../../Framework/UI/*"]
     }
   }
 }

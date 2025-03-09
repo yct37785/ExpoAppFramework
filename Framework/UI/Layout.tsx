@@ -29,7 +29,7 @@ export type LayoutProps = {
 /**
  * base layout component that handles flexible layout
  */
-export const Layout: React.FC<LayoutProps> = memo(({
+const Layout: React.FC<LayoutProps> = ({
   direction = 'column',
   align = 'flex-start',
   reverse = false,
@@ -78,7 +78,17 @@ export const Layout: React.FC<LayoutProps> = memo(({
       </View>
     );
   }
-});
+};
+
+/**
+ * vertical Layout component that inherits from Layout and sets direction to 'column'
+ */
+export const VerticalLayout: React.FC<Omit<LayoutProps, 'direction'>> = memo((props) => <Layout {...props} direction="column" />);
+
+/**
+ * horizontal Layout component that inherits from Layout and sets direction to 'row'
+ */
+export const HorizontalLayout: React.FC<Omit<LayoutProps, 'direction'>> = memo((props) => <Layout {...props} direction="row" />);
 
 /**
  * @param direction - Layout direction, 'row' or 'column'.

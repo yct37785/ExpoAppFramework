@@ -9,7 +9,8 @@ module.exports = function (api) {
           root: ["./"],
           alias: {
             "@root": "@expo-app-framework/framework/Root",
-            "@screen": "@expo-app-framework/framework/Screen"
+            "@screen": "@expo-app-framework/framework/Screen",
+            "@ui/*": "@expo-app-framework/framework/UI/*"
           },
           extensions: [".js", ".ts", ".tsx", ".json"]
         }
