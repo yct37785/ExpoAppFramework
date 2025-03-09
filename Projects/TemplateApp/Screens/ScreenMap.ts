@@ -1,4 +1,4 @@
-import { ScreenMap } from '@screen/ScreenMap';
+import { ScreenMap } from '@screen';
 import SampleEmptyScreen from './SampleEmptyScreen';
 
 export const screenMap: ScreenMap = {
