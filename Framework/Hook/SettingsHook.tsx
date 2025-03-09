@@ -19,13 +19,13 @@ const defaultSettings: SettingsSchema = {
   isDarkMode: false,
   fontSize: 16,
   notificationsEnabled: true,
-}
+};
 
 /**
  * local settings context
  */
 interface SettingsContextType {
-  settings: SettingsSchema | undefined;
+  settings: SettingsSchema;
   toggleDarkMode: () => void;
   setFontSize: (size: number) => void;
   setNotificationsEnabled: (enabled: boolean) => void;
@@ -37,7 +37,7 @@ const SettingsContext = createContext<SettingsContextType | undefined>(undefined
  * SettingsProvider component
  */
 export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [settings, setSettings] = useState<SettingsSchema | undefined>(undefined);
+  const [settings, setSettings] = useState<SettingsSchema>(defaultSettings);
 
   /**
    * load settings from AsyncStorage on app startup
@@ -47,16 +47,10 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
       try {
         const savedSettings = await AsyncStorage.getItem(SETTINGS_KEY_ASYNC_STORAGE);
         if (savedSettings) {
-          const parsedSettings = JSON.parse(savedSettings);
-          setSettings(parsedSettings);
-        } else {
-          // if no settings are found, use defaults
-          setSettings(defaultSettings);
+          setSettings(JSON.parse(savedSettings));
         }
       } catch (error) {
         console.error("Failed to load settings:", error);
-        // fallback to defaults on error
-        setSettings(defaultSettings);
       }
     };
 
@@ -79,21 +73,15 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
    * toggle functions
    */
   const toggleDarkMode = () => {
-    if (settings) {
-      saveSettings({ ...settings, isDarkMode: !settings.isDarkMode });
-    }
+    saveSettings({ ...settings, isDarkMode: !settings.isDarkMode });
   };
 
   const setFontSize = (size: number) => {
-    if (settings) {
-      saveSettings({ ...settings, fontSize: size });
-    }
+    saveSettings({ ...settings, fontSize: size });
   };
 
   const setNotificationsEnabled = (enabled: boolean) => {
-    if (settings) {
-      saveSettings({ ...settings, notificationsEnabled: enabled });
-    }
+    saveSettings({ ...settings, notificationsEnabled: enabled });
   };
 
   return (
