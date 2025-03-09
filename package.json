@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "name": "expo-app-framework",
+  "version": "1.0.0",
+  "workspaces": {
+    "packages": [
+      "Projects/*",
+      "Framework"
+    ],
+    "nohoist": []
+  }
+}
