@@ -6,7 +6,8 @@
     "paths": {
       "@root": ["../../Framework/Root"],
       "@screen": ["../../Framework/Screen"],
-      "@ui/*": ["../../Framework/UI/*"]
+      "@ui/*": ["../../Framework/UI/*"],
+      "@const": ["../../Framework/Const"]
     }
   }
 }

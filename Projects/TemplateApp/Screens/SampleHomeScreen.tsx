@@ -3,6 +3,8 @@ import { View } from 'react-native';
 import { Text, Button } from 'react-native-paper';
 import { ScreenProps } from '@screen';
 import Activity from '@ui/Activity';
+import { VerticalLayout } from '@ui/Layout';
+import * as Const from '@const';
 
 /**
  * sample home screen
@@ -23,8 +25,10 @@ const SampleHomeScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
   
   return (
     <Activity navigation={navigation} CustomHeaderComp={customHeaderContent} title="Home Sample" isRootActivity={true}>
-      <Text variant="bodyMedium">Select the screen you want to navigate to</Text>
-      {renderScreenBtn("layout", "layouts example")}
+      <VerticalLayout childMargin={Const.padSize} padding={Const.padSize}>
+        <Text variant="bodyMedium">Select the screen you want to navigate to</Text>
+        {renderScreenBtn("layout", "layouts example")}
+      </VerticalLayout>
     </Activity>
   );
 };
