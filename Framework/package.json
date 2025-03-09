@@ -1,6 +1,6 @@
 {
+  "private": true,
   "name": "@expo-app-framework/framework",
   "version": "1.0.0",
-  "license": "MIT",
-  "private": true
+  "main": "index.ts"
 }
