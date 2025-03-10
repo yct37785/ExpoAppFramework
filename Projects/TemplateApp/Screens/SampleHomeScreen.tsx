@@ -30,6 +30,7 @@ const SampleHomeScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
       <VerticalLayout childMargin={Const.padSize} padding={Const.padSize}>
         <Text variant="bodyMedium">Select the screen you want to navigate to</Text>
         {renderScreenBtn("layout", "layouts example")}
+        {renderScreenBtn("menu", "menus example")}
       </VerticalLayout>
     </Activity>
   );
