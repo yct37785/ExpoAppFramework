@@ -38,8 +38,8 @@ export const PickerInput: React.FC<PickerInputProps> = memo(({
   return (
     <Picker
       mode='dropdown'
-      dropdownIconColor='green'
-      style={[{ color: 'green', width: '100%' }, style]}
+      style={[{ width: '100%', color: theme.colors.onSurface, backgroundColor: theme.colors.surface }, style]}
+      dropdownIconColor={theme.colors.onSurface}
       selectedValue={value}
       onValueChange={(v) => onChange(v)}
     >
@@ -48,10 +48,8 @@ export const PickerInput: React.FC<PickerInputProps> = memo(({
           key={idx} 
           label={item.label} 
           value={item.value}
-          style={{
-            color: 'green', 
-            backgroundColor: theme.colors.surfaceVariant
-          }} 
+          color={theme.colors.onSurface}
+          style={{ backgroundColor: theme.colors.background }}
         />
       ))}
     </Picker>
