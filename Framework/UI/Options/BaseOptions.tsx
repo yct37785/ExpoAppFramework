@@ -40,7 +40,7 @@ export type OptionProps = {
  * @param depthPadding - To apply padding per depth hierarchy prop to same function value.
  * @param style - Additional style on base container.
  */
-export type BaseOptionsProps = {
+type BaseOptionsProps = {
   schema: OptionSchema;
   setSchema: (updatedSchema: OptionSchema) => void;
   optionsContainer: React.FC<any>;

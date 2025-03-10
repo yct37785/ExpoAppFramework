@@ -16,7 +16,7 @@ import Const from '../../Const';
  * @param closeText - Text for the close button.
  * @param style - Additional style for the container.
  */
-export type DialogPopupProps = {
+type DialogPopupProps = {
   title: string;
   subtitle: string;
   children: React.ReactNode;
@@ -86,7 +86,7 @@ export const DialogPopup: React.FC<DialogPopupProps> = memo(({
  * @param style - Additional style on the base container.
  * @param children - The content to display inside the popup.
  */
-export type DropdownPopupProps = {
+type DropdownPopupProps = {
   triggerComp: ReactNode;
   disabled?: boolean;
   style?: StyleProp<ViewStyle>;

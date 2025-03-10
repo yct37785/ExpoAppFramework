@@ -14,7 +14,7 @@ const _ = require('lodash');
  * @param style - Additional custom styles.
  * @param children - Child elements.
  */
-export type LayoutProps = {
+type LayoutProps = {
   direction?: 'row' | 'column';
   align?: 'flex-start' | 'center' | 'flex-end';
   reverse?: boolean;
@@ -99,7 +99,7 @@ export const HorizontalLayout: React.FC<Omit<LayoutProps, 'direction'>> = memo((
  * @param style - Additional custom styles for the container.
  * @param children - Child elements.
  */
-export type GridLayoutProps = {
+type GridLayoutProps = {
   direction?: 'row' | 'column';
   reverse?: boolean;
   spacing?: number;

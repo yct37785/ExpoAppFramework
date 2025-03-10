@@ -9,7 +9,7 @@ import { OptionState, OptionSchema, OptionProps, BaseOptions } from './BaseOptio
  * @param setSchema - setState function for schema.
  * @param style - Additional style on base container.
  */
-export interface ICheckOptionCompProps {
+type CheckOptionCompProps = {
     schema: OptionSchema;
     setSchema: (updatedSchema: OptionSchema) => void;
     style?: StyleProp<ViewStyle>;
@@ -19,7 +19,7 @@ export interface ICheckOptionCompProps {
  * component for rendering checkbox options based on a JSON schema
  *  - supports nesting
  */
-export const CheckOptions: React.FC<ICheckOptionCompProps> = memo(({ 
+export const CheckOptions: React.FC<CheckOptionCompProps> = memo(({ 
   schema,
   setSchema,
   style = {}
