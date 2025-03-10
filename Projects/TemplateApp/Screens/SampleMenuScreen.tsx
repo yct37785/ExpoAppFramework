@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
-import { View } from 'react-native';
 import { Text, Portal, Button, Card, IconButton } from 'react-native-paper';
 import { ScreenProps } from '@screen';
 import * as UI from '@ui';
@@ -57,6 +56,7 @@ const SampleMenuScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
   const [showDialog, setShowDialog] = useState<boolean>(false);
   const [popupMenuSelection, setPopupMenuSelection] = useState<UI.OptionSchema>(_.cloneDeep(POPUP_MENU_OPTIONS));
   const [pickerSelection, setPickerSelection] = useState<string>('red');
+  const [searchQuery, setSearchQuery] = useState('');
 
   function onSubmitDialog(): void {
     // some logic here
@@ -89,11 +89,29 @@ const SampleMenuScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
       </Portal>
       {/* main content */}
       <UI.VerticalLayout childMargin={Const.padSize} padding={Const.padSize}>
-        <Text variant="bodyMedium">Hello world</Text>
+        <Text>Hello world</Text>
+
+        {/* launch popup dialog */}
         <Button mode="contained" onPress={() => setShowDialog(true)}>
           Launch dialog
         </Button>
+
+        {/* picker */}
         <UI.Picker value={pickerSelection} options={PICKER_ITEM_LIST} onChange={(v) => setPickerSelection(v)} />
+
+        {/* input + highlight text */}
+        <Text>Search for text in the passage below</Text>
+        <UI.TextInput
+          type="search"
+          value={searchQuery}
+          onChange={setSearchQuery}
+          placeholder="search"
+          style={{ marginTop: Const.padSize2 }}
+        />
+        <UI.HighlightText query={searchQuery} variant={'bodyMedium'} style={{ marginTop: Const.padSize2 }} >
+          Hero is a title reserved for those who perform truly great feats! Too many are undeserving... Just money worshipers playing hero! Until this society wakes up and rectifies itself... I will continue to do my work.
+        </UI.HighlightText>
+
       </UI.VerticalLayout>
     </UI.Activity>
   );
