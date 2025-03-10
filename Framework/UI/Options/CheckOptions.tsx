@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { View, TouchableOpacity, StyleProp, ViewStyle } from 'react-native';
 import { Text, Checkbox } from 'react-native-paper';
 import Const from '../../Const';
-import { OptionContainer, OptionState, OptionSchema, OptionProps } from './OptionContainer';
+import { OptionState, OptionSchema, OptionProps, BaseOptions } from './BaseOptions';
 
 /**
  * @param schema - JSON schema representing the menu options.
@@ -42,7 +42,7 @@ export const CheckOptions: React.FC<ICheckOptionCompProps> = memo(({
   );
 
   return (
-    <OptionContainer
+    <BaseOptions
       schema={schema}
       setSchema={setSchema}
       optionsContainer={optionsContainer}
