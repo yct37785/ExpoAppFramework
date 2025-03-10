@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 import { useTheme } from 'react-native-paper';
-import { Picker } from '@react-native-picker/picker';
+import { Picker as RNPicker } from '@react-native-picker/picker';
 
 /**
  * picker option prop
@@ -17,7 +17,7 @@ export type PickerOption = {
  * @param onChange - Callback function to handle value change.
  * @param style - Additional style on base container.
  */
-type PickerInputProps = {
+type PickerProps = {
   value: string;
   options: PickerOption[];
   onChange: (value: string) => void;
@@ -25,9 +25,9 @@ type PickerInputProps = {
 }
 
 /**
- * A dropdown picker component.
+ * a dropdown picker component
  */
-export const PickerInput: React.FC<PickerInputProps> = memo(({ 
+export const Picker: React.FC<PickerProps> = memo(({ 
   value, 
   options, 
   onChange, 
@@ -36,7 +36,7 @@ export const PickerInput: React.FC<PickerInputProps> = memo(({
   const theme = useTheme();
 
   return (
-    <Picker
+    <RNPicker
       mode='dropdown'
       style={[{ width: '100%', color: theme.colors.onSurface, backgroundColor: theme.colors.surface }, style]}
       dropdownIconColor={theme.colors.onSurface}
@@ -44,7 +44,7 @@ export const PickerInput: React.FC<PickerInputProps> = memo(({
       onValueChange={(v) => onChange(v)}
     >
       {options.map((item, idx) => (
-        <Picker.Item 
+        <RNPicker.Item 
           key={idx} 
           label={item.label} 
           value={item.value}
@@ -52,6 +52,6 @@ export const PickerInput: React.FC<PickerInputProps> = memo(({
           style={{ backgroundColor: theme.colors.background }}
         />
       ))}
-    </Picker>
+    </RNPicker>
   );
 });

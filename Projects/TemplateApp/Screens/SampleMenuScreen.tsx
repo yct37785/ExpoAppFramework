@@ -93,7 +93,7 @@ const SampleMenuScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
         <Button mode="contained" onPress={() => setShowDialog(true)}>
           Launch dialog
         </Button>
-        <UI.PickerInput value={pickerSelection} options={PICKER_ITEM_LIST} onChange={(v) => setPickerSelection(v)} />
+        <UI.Picker value={pickerSelection} options={PICKER_ITEM_LIST} onChange={(v) => setPickerSelection(v)} />
       </UI.VerticalLayout>
     </UI.Activity>
   );
