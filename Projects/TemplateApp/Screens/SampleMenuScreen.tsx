@@ -5,14 +5,52 @@ import { ScreenProps } from '@screen';
 import Activity from '@ui/Activity';
 import { DialogPopup, DropdownPopup } from '@ui/Popup';
 import { VerticalLayout, HorizontalLayout } from '@ui/Layout';
+import { OptionState, OptionSchema, OptionProps } from '@ui/Option/OptionContainer';
+import CheckOptions from '@ui/Option/CheckOptions';
 import Const from '@const';
 const _ = require('lodash');
+
+const POPUP_MENU_OPTIONS = {
+  'colors': {
+    label: 'Colors',
+    state: OptionState.Unselected,
+    children: {
+      'red': { label: 'Red', state: OptionState.Unselected },
+      'blue': { label: 'Blue', state: OptionState.Unselected },
+      'green': { label: 'Green', state: OptionState.Unselected },
+    }
+  },
+  'class': {
+    label: 'Class',
+    state: OptionState.Unselected,
+    children: {
+      'mammals': { 
+        label: 'Mammals',
+        state: OptionState.Unselected,
+        children: {
+          'cat': { label: 'Cat', state: OptionState.Unselected },
+          'dog': { label: 'Dog', state: OptionState.Unselected }
+        }
+      },
+      'reptiles': { 
+        label: 'Reptiles',
+        state: OptionState.Unselected,
+        children: {
+          'turtle': { label: 'Turtle', state: OptionState.Unselected },
+          'frog': { label: 'Frog', state: OptionState.Unselected },
+          'lizard': { label: 'Lizard', state: OptionState.Unselected }
+        }
+      }
+    }
+  }
+}
 
 /**
  * sample menu screen
  */
 const SampleMenuScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
   const [showDialog, setShowDialog] = useState<boolean>(false);
+  const [popupMenuSelection, setPopupMenuSelection] = useState<OptionSchema>(_.cloneDeep(POPUP_MENU_OPTIONS));
 
   function onSubmitDialog(): void {
     // some logic here
@@ -20,9 +58,9 @@ const SampleMenuScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
   }
 
   function customHeaderContent(): JSX.Element {
-    return <HorizontalLayout reverse={true}>
+    return <HorizontalLayout align='flex-end'>
       <DropdownPopup triggerComp={<IconButton icon="dots-vertical" size={Const.iconSizeSmall} />}>
-        <Text>Something</Text>
+        <CheckOptions schema={popupMenuSelection} setSchema={setPopupMenuSelection} />
       </DropdownPopup>
     </HorizontalLayout>;
   }
