@@ -4,7 +4,7 @@ import { Text } from 'react-native-paper';
 import { ScreenProps } from '@screen';
 import Activity from '@ui/Activity';
 import { VerticalLayout, HorizontalLayout, GridLayout } from '@ui/Layout';
-import * as Const from '@const';
+import Const from '@const';
 
 /**
  * sample layout screen
