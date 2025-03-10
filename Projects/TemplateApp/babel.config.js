@@ -10,7 +10,7 @@ module.exports = function (api) {
           alias: {
             "@root": "@expo-app-framework/framework/Root",
             "@screen": "@expo-app-framework/framework/Screen",
-            "@ui/*": "@expo-app-framework/framework/UI/*",
+            "@ui": "@expo-app-framework/framework/UI/index",
             "@hook/*": "@expo-app-framework/framework/Hook/*",
             "@const": "@expo-app-framework/framework/Const"
           },

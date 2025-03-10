@@ -2,8 +2,7 @@ import React, { useContext, useState, useEffect, useCallback, useRef, memo } fro
 import { View } from 'react-native';
 import { Text } from 'react-native-paper';
 import { ScreenProps } from '@screen';
-import Activity from '@ui/Activity';
-import { VerticalLayout, HorizontalLayout, GridLayout } from '@ui/Layout';
+import * as UI from '@ui';
 import Const from '@const';
 
 /**
@@ -18,26 +17,26 @@ const SampleLayoutScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
   );
 
   return (
-    <Activity navigation={navigation} title="Layout Sample">
+    <UI.Activity navigation={navigation} title="Layout Sample">
       {/* VerticalLayout: scroll */}
       <Text variant="titleMedium">VerticalLayout: scroll</Text>
-      <VerticalLayout childMargin={Const.padSize} constraint='scroll'>
+      <UI.VerticalLayout childMargin={Const.padSize} constraint='scroll'>
 
         {/* VerticalLayout: wrap */}
         <Text variant="labelMedium">VerticalLayout: wrap</Text>
-        <VerticalLayout childMargin={Const.padSize} constraint='wrap' style={{ backgroundColor: 'red', height: 290 }}>
+        <UI.VerticalLayout childMargin={Const.padSize} constraint='wrap' style={{ backgroundColor: 'red', height: 290 }}>
           {[...Array(10)].map((e, i) => <BasicContainer key={i} i={i} />)}
-        </VerticalLayout>
+        </UI.VerticalLayout>
 
         {/* HorizontalLayout: wrap */}
         <Text variant="labelMedium" style={{ marginTop: Const.padSize05 }}>HorizontalLayout: wrap</Text>
-        <HorizontalLayout childMargin={Const.padSize} constraint='wrap' style={{ backgroundColor: 'red' }}>
+        <UI.HorizontalLayout childMargin={Const.padSize} constraint='wrap' style={{ backgroundColor: 'red' }}>
           {[...Array(10)].map((e, i) => <BasicContainer key={i} i={i} />)}
-        </HorizontalLayout>
+        </UI.HorizontalLayout>
 
         {/* GridLayout */}
         <Text variant="labelMedium" style={{ marginTop: Const.padSize05 }}>GridLayout</Text>
-        <GridLayout
+        <UI.GridLayout
           direction="row"
           spacing={Const.padSize}
           itemsPerLine={3}
@@ -45,9 +44,9 @@ const SampleLayoutScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
           style={{ backgroundColor: 'red', width: 350 }}
         >
           {[...Array(10)].map((e, i) => <BasicContainer key={i} i={i} />)}
-        </GridLayout>
-      </VerticalLayout>
-    </Activity>
+        </UI.GridLayout>
+      </UI.VerticalLayout>
+    </UI.Activity>
   );
 };
 

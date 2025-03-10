@@ -52,7 +52,7 @@ export type OptionContainerProps = {
 /**
  * base options component for rendering various types of selection same layer and nested controls
  */
-const OptionContainer: React.FC<OptionContainerProps> = ({
+export const OptionContainer: React.FC<OptionContainerProps> = memo(({
   schema,
   setSchema,
   optionsContainer: OptionsContainer,
@@ -144,6 +144,4 @@ const OptionContainer: React.FC<OptionContainerProps> = ({
       {renderChildrenOptions(schema)}
     </View>
   );
-}
-
-export default memo(OptionContainer);
+});

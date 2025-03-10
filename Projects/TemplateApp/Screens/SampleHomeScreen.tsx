@@ -3,8 +3,7 @@ import { View } from 'react-native';
 import { Text, Button, Switch } from 'react-native-paper';
 import { ScreenProps } from '@screen';
 import { useSettings } from '@hook/SettingsHook';
-import Activity from '@ui/Activity';
-import { VerticalLayout } from '@ui/Layout';
+import * as UI from '@ui';
 import Const from '@const';
 
 /**
@@ -26,13 +25,13 @@ const SampleHomeScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
   }
   
   return (
-    <Activity navigation={navigation} CustomHeaderComp={customHeaderContent} title="Home Sample" isRootActivity={true}>
-      <VerticalLayout childMargin={Const.padSize} padding={Const.padSize}>
+    <UI.Activity navigation={navigation} CustomHeaderComp={customHeaderContent} title="Home Sample" isRootActivity={true}>
+      <UI.VerticalLayout childMargin={Const.padSize} padding={Const.padSize}>
         <Text variant="bodyMedium">Select the screen you want to navigate to</Text>
         {renderScreenBtn("layout", "layouts example")}
         {renderScreenBtn("menu", "menus example")}
-      </VerticalLayout>
-    </Activity>
+      </UI.VerticalLayout>
+    </UI.Activity>
   );
 };
 

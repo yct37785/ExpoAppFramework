@@ -1,6 +1,6 @@
 import React, { useState, useEffect, memo, ReactNode } from 'react';
 import { View, ScrollView, StyleSheet, StyleProp, ViewStyle, TextStyle, LayoutChangeEvent } from 'react-native';
-import { useOnLayout } from '../Hook/OnLayoutHook';
+import { useOnLayout } from '../../Hook/OnLayoutHook';
 const _ = require('lodash');
 
 /**

@@ -2,7 +2,7 @@ import React, { useRef, memo, ReactNode } from 'react';
 import { View, StyleProp, ViewStyle } from 'react-native';
 import { Text, Modal, Button, Card, TouchableRipple, useTheme } from 'react-native-paper';
 import { Menu, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
-import Const from '../Const';
+import Const from '../../Const';
 
 /**
  * @param title - Title of the dialog.

@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { View, StyleProp, ViewStyle } from 'react-native';
 import { Appbar } from 'react-native-paper';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackPropsList } from '../Screen';
+import { RootStackPropsList } from '../../Screen';
 
 /**
  * @param navigation - React Navigation provided object for navigating between screens.
@@ -12,7 +12,7 @@ import { RootStackPropsList } from '../Screen';
  * @param isRootActivity - Is this the root activity of the app?
  * @param children - The body content of the screen.
  */
-export type ActivityProps<T extends keyof RootStackPropsList = keyof RootStackPropsList> = {
+type ActivityProps<T extends keyof RootStackPropsList = keyof RootStackPropsList> = {
   navigation: NativeStackNavigationProp<RootStackPropsList, T>;
   title?: string;
   CustomHeaderComp?: () => JSX.Element;
@@ -24,7 +24,7 @@ export type ActivityProps<T extends keyof RootStackPropsList = keyof RootStackPr
 /**
  * a wrapper component to setup an activity quickly by providing the body and custom header content if any
  */
-const Activity: React.FC<ActivityProps> = ({
+export const Activity: React.FC<ActivityProps> = memo(({
   navigation,
   title = '',
   CustomHeaderComp,
@@ -46,6 +46,4 @@ const Activity: React.FC<ActivityProps> = ({
       </View>
     </View>
   );
-}
-
-export default memo(Activity);
+});
