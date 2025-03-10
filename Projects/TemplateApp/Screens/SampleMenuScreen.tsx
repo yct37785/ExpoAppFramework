@@ -6,6 +6,15 @@ import * as UI from '@ui';
 import Const from '@const';
 const _ = require('lodash');
 
+/**
+ * Const defines.
+ */
+const PICKER_ITEM_LIST = [
+  { label: 'Red', value: 'red' },
+  { label: 'Blue', value: 'blue' },
+  { label: 'Green', value: 'green' },
+]
+
 const POPUP_MENU_OPTIONS = {
   'colors': {
     label: 'Colors',
@@ -47,6 +56,7 @@ const POPUP_MENU_OPTIONS = {
 const SampleMenuScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
   const [showDialog, setShowDialog] = useState<boolean>(false);
   const [popupMenuSelection, setPopupMenuSelection] = useState<UI.OptionSchema>(_.cloneDeep(POPUP_MENU_OPTIONS));
+  const [pickerSelection, setPickerSelection] = useState<string>('red');
 
   function onSubmitDialog(): void {
     // some logic here
@@ -83,6 +93,7 @@ const SampleMenuScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
         <Button mode="contained" onPress={() => setShowDialog(true)}>
           Launch dialog
         </Button>
+        <UI.PickerInput value={pickerSelection} options={PICKER_ITEM_LIST} onChange={(v) => setPickerSelection(v)} />
       </UI.VerticalLayout>
     </UI.Activity>
   );
