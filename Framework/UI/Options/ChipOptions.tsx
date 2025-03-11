@@ -1,6 +1,7 @@
 import React, { memo, useState } from 'react';
 import { View, StyleProp, ViewStyle } from 'react-native';
 import { useTheme, Chip } from 'react-native-paper';
+import { GridLayout } from '../Layout/Layout';
 import Const from '../../Const';
 
 /**

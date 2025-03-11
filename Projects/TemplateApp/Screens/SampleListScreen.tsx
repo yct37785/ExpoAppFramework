@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
-import { View, Image } from 'react-native';
+import { ScrollView, View, Image } from 'react-native';
 import { Text, Divider } from 'react-native-paper';
 import { ScreenProps } from '@screen';
 import * as UI from '@ui';
@@ -92,9 +92,10 @@ const SampleListScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
       <UI.VerticalLayout childMargin={Const.padSize} padding={Const.padSize}>
 
         {/* filter menu */}
-        <View>
-          <UI.ChipOptions schema={matChipsSchema} onSelected={onChipsSelected} />
-        </View>
+        <ScrollView horizontal={true}>
+          <UI.ChipOptions style={{  width: 700 }}
+            schema={matChipsSchema} onSelected={onChipsSelected} />
+        </ScrollView>
         
         {/* list */}
         <UI.List
