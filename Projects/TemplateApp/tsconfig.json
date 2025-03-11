@@ -9,7 +9,8 @@
       "@ui": ["../../Framework/UI/index"],
       "@hook/*": ["../../Framework/Hook/*"],
       "@const": ["../../Framework/Const"],
-      "@util": ["../../Framework/Utility"]
+      "@util": ["../../Framework/Utility"],
+      "@firebase/*": ["../../Framework/Firebase/*"]
     }
   }
 }
