@@ -14,6 +14,7 @@ import { RouteProp } from '@react-navigation/native';
 import { RootStackPropsList, ScreenProps, ScreenMap } from './Screen';
 // hooks
 import { useSettings, SettingsProvider } from './Hook/SettingsHook';
+import { FirestoreProvider } from './Firebase/FirestoreHook';
 
 // theme adaptation for navigation
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
@@ -92,35 +93,37 @@ const RootComp: React.FC<RootCompProps> = ({ DEFAULT_SCREEN, screenMap }) => {
   const navContainerTheme = theme === CombinedDarkTheme ? NavigationDarkTheme : NavigationDefaultTheme;
   
   return (
-    <PaperProvider theme={theme}>
-      <MenuProvider>
-        <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
-          <NavigationContainer theme={navContainerTheme}>
-            <Stack.Navigator
-              initialRouteName={DEFAULT_SCREEN}
-              screenOptions={{
-                headerShown: false
-              }}
-            >
-              {Object.keys(screenMap).map((key) => (
-                <Stack.Screen
-                  name={key}
-                  key={key}
-                >
-                  {(props) => (
-                    <ScreenWrapper
-                      Component={screenMap[key]}
-                      navigation={props.navigation}
-                      route={props.route as RouteProp<RootStackPropsList, typeof key>}
-                    />
-                  )}
-                </Stack.Screen>
-              ))}
-            </Stack.Navigator>
-          </NavigationContainer>
-        </View>
-      </MenuProvider>
-    </PaperProvider>
+    <FirestoreProvider>
+      <PaperProvider theme={theme}>
+        <MenuProvider>
+          <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+            <NavigationContainer theme={navContainerTheme}>
+              <Stack.Navigator
+                initialRouteName={DEFAULT_SCREEN}
+                screenOptions={{
+                  headerShown: false
+                }}
+              >
+                {Object.keys(screenMap).map((key) => (
+                  <Stack.Screen
+                    name={key}
+                    key={key}
+                  >
+                    {(props) => (
+                      <ScreenWrapper
+                        Component={screenMap[key]}
+                        navigation={props.navigation}
+                        route={props.route as RouteProp<RootStackPropsList, typeof key>}
+                      />
+                    )}
+                  </Stack.Screen>
+                ))}
+              </Stack.Navigator>
+            </NavigationContainer>
+          </View>
+        </MenuProvider>
+      </PaperProvider>
+    </FirestoreProvider>
   );
 }
 
