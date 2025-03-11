@@ -11,3 +11,4 @@ export * from './Text/HighlightText';
 export * from './List/List';
 export * from './Container/Collapsible';
 export * from './Container/Tabs';
+export * from './Toggle/Toggle';

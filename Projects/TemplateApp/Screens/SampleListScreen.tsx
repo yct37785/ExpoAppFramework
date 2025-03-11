@@ -7,6 +7,11 @@ import Const from '@const';
 import { faker } from '@faker-js/faker';
 const _ = require('lodash');
 
+const ListTypes = {
+  flashlist: UI.ListType.flashlist,
+  flatlist: UI.ListType.flatlist,
+} as const;
+
 /**
  * displays a sample screen with a search bar, filter options, and a list of products
  */
@@ -96,6 +101,11 @@ const SampleListScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
           <UI.ChipOptions style={{  width: 700 }}
             schema={matChipsSchema} onSelected={onChipsSelected} />
         </ScrollView>
+
+        {/* toggle Flashlist vs FlatList */}
+        <UI.RadioGroupToggle
+          options={ListTypes}
+          value={listType} onValueChange={(s: string) => setListType(s as UI.ListType)} />
         
         {/* list */}
         <UI.List
