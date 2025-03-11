@@ -8,7 +8,8 @@
       "@screen": ["../../Framework/Screen"],
       "@ui": ["../../Framework/UI/index"],
       "@hook/*": ["../../Framework/Hook/*"],
-      "@const": ["../../Framework/Const"]
+      "@const": ["../../Framework/Const"],
+      "@util": ["../../Framework/Utility"]
     }
   }
 }
