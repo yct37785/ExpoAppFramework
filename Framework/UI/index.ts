@@ -10,3 +10,4 @@ export * from './Input/TextInput';
 export * from './Text/HighlightText';
 export * from './List/List';
 export * from './Container/Collapsible';
+export * from './Container/Tabs';
