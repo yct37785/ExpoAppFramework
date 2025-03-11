@@ -104,7 +104,7 @@ const SampleListScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
         <UI.CollapsibleContainer toggleHeaderText="Filter">
           <UI.ChipOptions schema={matChipsSchema} setSchema={onChipsSchemaUpdated} />
         </UI.CollapsibleContainer>
-
+        
         {/* list */}
         <UI.List
           dataArr={productList}
