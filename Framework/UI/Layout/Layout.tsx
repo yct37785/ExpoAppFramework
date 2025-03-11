@@ -118,29 +118,31 @@ export const GridLayout: React.FC<GridLayoutProps> = memo(({
   children,
 }) => {
   const [size, onLayout] = useOnLayout();
-  const arrangedChildren = React.Children.toArray(children).filter(child => React.isValidElement(child));
-  if (reverse) {
-    arrangedChildren.reverse();
-  }
 
-  const containerStyle = StyleSheet.create({
-    layout: _.merge({}, { 
-      flexDirection: direction === 'row' ? 'row' : 'column', 
-      flexWrap: 'wrap' 
-    }, style),
-    item: _.merge({}, { 
-      margin: spacing / 2, 
-      width: size ? Math.floor(size.width / itemsPerLine) - spacing : 0 }, 
-      itemStyle),
-  });
+  const arrangedChildren = useMemo(() => {
+    let childArray = React.Children.toArray(children).filter((child) =>
+      React.isValidElement(child)
+    );
+    return reverse ? [...childArray].reverse() : childArray;
+  }, [children, reverse]);
+
+  const itemWidth = useMemo(() => {
+    return size?.width ? Math.floor(size.width / itemsPerLine) - spacing : 0;
+  }, [size?.width, itemsPerLine, spacing]);
 
   return (
-    <View style={containerStyle.layout} onLayout={onLayout}>
+    <View
+      style={[
+        {
+          flexDirection: direction === "row" ? "row" : "column",
+          flexWrap: "wrap",
+        },
+        style,
+      ]}
+      onLayout={onLayout}
+    >
       {arrangedChildren.map((child, index) => (
-        <View
-          style={containerStyle.item}
-          key={index}
-        >
+        <View key={index} style={[{ margin: spacing / 2, width: itemWidth }, itemStyle]} >
           {child}
         </View>
       ))}

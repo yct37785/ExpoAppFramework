@@ -99,7 +99,7 @@ const SampleListScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
     <UI.Activity navigation={navigation} CustomHeaderComp={customHeaderContent}>
       {/* main content */}
       <UI.VerticalLayout childMargin={Const.padSize} padding={Const.padSize}>
-        
+
         {/* filter menu */}
         <UI.CollapsibleContainer toggleHeaderText="Filter">
           <UI.ChipOptions schema={matChipsSchema} setSchema={onChipsSchemaUpdated} />
