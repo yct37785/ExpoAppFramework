@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, memo } from 'react';
+import React, { useState, useMemo, useEffect, useCallback, memo } from 'react';
 import { View, FlatList, StyleProp, ViewStyle } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 
@@ -73,14 +73,10 @@ export const List: React.FC<ListDataDisplayProps> = memo(({
   estimatedRowHeight = 250,
   style = {}
 }) => {
-  const [filteredData, setFilteredData] = useState<ListItem[]>([]);
-
   /**
    * filters the data based on searchable and filterable fields
-   * 
-   * TODO: debounce
    */
-  const applyFilters = useCallback(() => {
+  const filteredData = useMemo(() => {
     const normalizedQuery = query.toLowerCase();
 
     return dataArr.filter((item) => {
@@ -101,13 +97,6 @@ export const List: React.FC<ListDataDisplayProps> = memo(({
       return matchesSearch && matchesFilter;
     });
   }, [dataArr, query, filterMap]);
-
-  /**
-   * updates the filtered data whenever `query`, `filter`, or `dataArr` changes
-   */
-  useEffect(() => {
-    setFilteredData(applyFilters());
-  }, [applyFilters]);
 
   /**
    * renders a single list item
@@ -146,7 +135,7 @@ export const List: React.FC<ListDataDisplayProps> = memo(({
 
   return (
     <View style={[{ width: '100%', height: '100%' }, style]}>
-      {filteredData.length > 0 ? renderList() : null}
+      {renderList()}
     </View>
   );
 });
