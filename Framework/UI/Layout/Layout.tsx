@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo, ReactNode } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, memo, ReactNode } from 'react';
 import { View, ScrollView, StyleSheet, StyleProp, ViewStyle, TextStyle, LayoutChangeEvent } from 'react-native';
 import { useOnLayout } from '../../Hook/OnLayoutHook';
 const _ = require('lodash');
@@ -40,44 +40,40 @@ const Layout: React.FC<LayoutProps> = ({
   style = {},
   children,
 }) => {
-  const arrangedChildren = React.Children.toArray(children).filter(child => React.isValidElement(child));
-  if (reverse) {
-    arrangedChildren.reverse();
-  }
+  const arrangedChildren = useMemo(() => {
+    let childArray = React.Children.toArray(children).filter((child) =>
+      React.isValidElement(child)
+    );
+    return reverse ? [...childArray].reverse() : childArray;
+  }, [children, reverse]);
 
-  const containerStyle = StyleSheet.create({
-    container: {
-      flexDirection: direction,
-      justifyContent: align,
-      flexWrap: constraint === 'wrap' ? 'wrap' : 'nowrap',
-      margin,
-      padding,
-    },
-  });
+  const renderChild = useCallback(
+    (child: ReactNode, index: number) => (
+      <View style={{ padding: childMargin / 2 }} key={index}>
+        {child}
+      </View>
+    ),
+    [childMargin]
+  );
 
-  const renderChild = (index: number, child: ReactNode) => {
-    return <View style={{ padding: childMargin / 2 }} key={index}>{child}</View>;
-  }
-
-  if (constraint === 'scroll') {
+  const flexWrap = constraint === 'wrap' ? 'wrap' : 'nowrap';
+  if (constraint === "scroll") {
     return (
-      <View style={[style, { flex: 1 }]}>
-        <ScrollView horizontal={direction === 'row'}>
-          <View style={containerStyle.container}>
-            {arrangedChildren.map((child, index) => renderChild(index, child))}
+      <View style={[{ flex: 1 }, style]}>
+        <ScrollView horizontal={direction === "row"}>
+          <View style={[{ flexWrap }, { flexDirection: direction, justifyContent: align }]}>
+            {arrangedChildren.map(renderChild)}
           </View>
         </ScrollView>
       </View>
     );
-  } else {
-    return (
-      <View style={style}>
-        <View style={containerStyle.container}>
-          {arrangedChildren.map((child, index) => renderChild(index, child))}
-        </View>
-      </View>
-    );
   }
+
+  return (
+    <View style={[{ flexWrap }, { flexDirection: direction, justifyContent: align, margin, padding }, style]}>
+      {arrangedChildren.map(renderChild)}
+    </View>
+  );
 };
 
 /**
