@@ -78,22 +78,18 @@ export const List: React.FC<ListDataDisplayProps> = memo(({
    */
   const filteredData = useMemo(() => {
     const normalizedQuery = query.toLowerCase();
-
+  
     return dataArr.filter((item) => {
-      // search logic for searchable fields
-      const matchesSearch = Object.values(item.searchable).some((value) =>
+      const matchesSearch = Object.values(item.searchable || {}).some((value) =>
         value.toLowerCase().includes(normalizedQuery)
       );
-
-      // filter logic for filterable fields
-      const matchesFilter = Object.entries(filterMap).every(
-        ([category, categoryMap]) => {
-          // if no filter is applied for this category, we return true (i.e., bypass filter)
-          if (!categoryMap || !Object.keys(categoryMap).length) return true;
-          return categoryMap.hasOwnProperty(item.filterable[category]);
-        }
-      );
-
+  
+      const matchesFilter = Object.entries(filterMap).every(([category, categoryMap]) => {
+        // check if filters exist
+        const hasFilters = Object.keys(categoryMap).length > 0;
+        return !hasFilters || categoryMap[item.filterable?.[category] || ""];
+      });
+  
       return matchesSearch && matchesFilter;
     });
   }, [dataArr, query, filterMap]);
@@ -132,7 +128,7 @@ export const List: React.FC<ListDataDisplayProps> = memo(({
       );
     }
   }
-
+  
   return (
     <View style={[{ width: '100%', height: '100%' }, style]}>
       {renderList()}
