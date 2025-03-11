@@ -26,15 +26,16 @@ export type ListItem = {
 
 /**
  * filter item props
- * - determine if key in ListDataItem.filterable is filtered by equality comparison with its value
+ * - determine if category in ListItem.filterable is filtered by equality comparison with its values
  * 
  * Example:
- * material: { wood: 0, cloth: 0 }
+ * category = material
+ * material: { wood, cloth }
  * 
- * the internal state of wood and cloth does not matter
+ * check if item.filterable?.material is 'wood' or 'cloth'
  */
 export type ListFilterMap = {
-  [key: string]: Record<string, boolean>;
+  [key: string]: Set<string>;
 }
 
 /**
@@ -83,11 +84,9 @@ export const List: React.FC<ListDataDisplayProps> = memo(({
       const matchesSearch = Object.values(item.searchable || {}).some((value) =>
         value.toLowerCase().includes(normalizedQuery)
       );
-  
-      const matchesFilter = Object.entries(filterMap).every(([category, categoryMap]) => {
-        // check if filters exist
-        const hasFilters = Object.keys(categoryMap).length > 0;
-        return !hasFilters || categoryMap[item.filterable?.[category] || ""];
+      const matchesFilter = Object.entries(filterMap).every(([category, categoryValues]) => {
+        const hasFilters = categoryValues.size > 0;
+        return !hasFilters || categoryValues.has(item.filterable?.[category] || "");
       });
   
       return matchesSearch && matchesFilter;
@@ -114,6 +113,7 @@ export const List: React.FC<ListDataDisplayProps> = memo(({
         <FlashList
           data={filteredData}
           renderItem={renderListItem}
+          estimatedItemSize={estimatedRowHeight}
         />
       );
     } else {

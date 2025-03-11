@@ -14,18 +14,16 @@ const SampleListScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
   const [listType, setListType] = useState<UI.ListType>(UI.ListType.flashlist);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [productList, setProductList] = useState<UI.ListItem[]>([]);
-  const [matChipsSchema, setMatChipsSchema] = useState<UI.OptionSchema>({});
-  const [filterMap, setFilterMap] = useState<UI.ListFilterMap>({ "material": {} });
+  const [matChipsSchema, setMatChipsSchema] = useState<Set<string>>(new Set());
+  const [filterMap, setFilterMap] = useState<UI.ListFilterMap>({ 'material': new Set() });
 
   useEffect(() => {
     // generate product list sample
     const fakeData = faker.helpers.multiple(createRandomProduct, { count: 1000 });
     // generate filters
-    const matChipsSchema: UI.OptionSchema = {};
+    const matChipsSchema: Set<string> = new Set();
     fakeData.forEach((item) => {
-      if (item.filterable.material) {
-        matChipsSchema[item.filterable.material] = { label: item.filterable.material, state: UI.OptionState.Unselected };
-      }
+      matChipsSchema.add(item.filterable.material);
     });
     setMatChipsSchema(matChipsSchema);
     setProductList(fakeData);
@@ -53,15 +51,8 @@ const SampleListScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
   /**
    * handles selection of material chips
    */
-  function onChipsSchemaUpdated(updatedSchema: UI.OptionSchema) {
-    const newMaterialsSelected: Record<string, boolean> = {};
-    {Object.keys(updatedSchema).map((key) => {
-      if (updatedSchema[key].state === UI.OptionState.Selected) {
-        newMaterialsSelected[key] = true;
-      }
-    })}
-    filterMap.material = newMaterialsSelected;
-    setMatChipsSchema({ ...updatedSchema });
+  function onChipsSelected(selectedValues: Set<string>) {
+    filterMap.material = selectedValues;
     setFilterMap({ ...filterMap });
   };
 
@@ -101,9 +92,9 @@ const SampleListScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
       <UI.VerticalLayout childMargin={Const.padSize} padding={Const.padSize}>
 
         {/* filter menu */}
-        <UI.CollapsibleContainer toggleHeaderText="Filter">
-          <UI.ChipOptions schema={matChipsSchema} setSchema={onChipsSchemaUpdated} />
-        </UI.CollapsibleContainer>
+        <View>
+          <UI.ChipOptions schema={matChipsSchema} onSelected={onChipsSelected} />
+        </View>
         
         {/* list */}
         <UI.List
