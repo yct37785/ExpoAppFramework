@@ -5,32 +5,12 @@ import { ScreenProps } from '@screen';
 import { useSettings } from '@hook/SettingsHook';
 import * as UI from '@ui';
 import Const from '@const';
-import { useFirestoreContext } from '@firebase/FirestoreHook';
 
 /**
  * sample home screen
  */
 const SampleHomeScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
   const { settings, toggleDarkMode } = useSettings();
-  const {
-    createCollection, createDocument, readDocument,
-    updateDocument, deleteDocument, readAllDocuments,
-    listenToDocument, deleteCollection
-  } = useFirestoreContext();
-
-  useEffect(() => {
-    testFirestore();
-  }, []);
-
-  async function testFirestore() {
-    await createCollection("TestCollection", [{ name: "Test1" }, { name: "Test2" }]);
-    await createDocument("TestCollection", "TestDoc", { name: "Sample" });
-    const doc = await readDocument("TestCollection", "TestDoc");
-    if (doc && 'name' in doc) {
-      console.log("TestDoc: " + doc.name);
-    }
-    await deleteCollection("TestCollection");
-  }
 
   function customHeaderContent() {
     return <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>

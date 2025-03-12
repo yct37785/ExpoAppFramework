@@ -15,6 +15,9 @@ import { RootStackPropsList, ScreenProps, ScreenMap } from './Screen';
 // hooks
 import { useSettings, SettingsProvider } from './Hook/SettingsHook';
 import { FirestoreProvider } from './Firebase/FirestoreHook';
+// test
+import TestRunner from './Test';
+const TEST_MODE = false;
 
 // theme adaptation for navigation
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
@@ -97,6 +100,7 @@ const RootComp: React.FC<RootCompProps> = ({ DEFAULT_SCREEN, screenMap }) => {
       <PaperProvider theme={theme}>
         <MenuProvider>
           <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+            {TEST_MODE ? <TestRunner /> : null}
             <NavigationContainer theme={navContainerTheme}>
               <Stack.Navigator
                 initialRouteName={DEFAULT_SCREEN}

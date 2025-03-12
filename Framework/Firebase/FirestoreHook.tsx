@@ -6,7 +6,7 @@ import { handleError } from '../Utility';
 /**
  * Firebase props
  */
-type FirestoreManagerProps = {
+export type FirestoreManagerProps = {
   createCollection: (collectionName: string, initialData?: object[]) => Promise<boolean>;
   createDocument: (collectionName: string, docId: string, data: object) => Promise<boolean>;
   readDocument: (collectionName: string, docId: string) => Promise<object | null>;
