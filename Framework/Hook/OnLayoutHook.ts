@@ -1,23 +1,21 @@
 import { useState, useCallback } from 'react';
 
 /**
- * on layout change hook props
- * 
  * @param width - Receive width of React comp on layout change.
  * @param height - Receive height of React comp on layout change.
  */
-export interface ILayoutSizeProps {
+export type LayoutSizeProps = {
   width: number;
   height: number;
 }
 
 /**
- * On layout change hook for React UI elements.
+ * on layout change
  */
-export const useOnLayout = (): [ILayoutSizeProps | null, (event: any) => void] => {
-  const [size, setSize] = useState<ILayoutSizeProps | null>(null);
+export const useOnLayout = (): [LayoutSizeProps | null, (event: any) => void] => {
+  const [size, setSize] = useState<LayoutSizeProps | null>(null);
 
-  const onLayout = useCallback((event: { nativeEvent: { layout: ILayoutSizeProps } }) => {
+  const onLayout = useCallback((event: { nativeEvent: { layout: LayoutSizeProps } }) => {
     const { width, height } = event.nativeEvent.layout;
     setSize({ width, height });
   }, []);
