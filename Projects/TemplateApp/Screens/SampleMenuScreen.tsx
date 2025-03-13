@@ -6,7 +6,7 @@ import Const from '@const';
 const _ = require('lodash');
 
 /**
- * Const defines.
+ * const defines
  */
 const PICKER_ITEM_LIST = [
   { label: 'Red', value: 'red' },

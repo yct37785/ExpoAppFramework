@@ -59,7 +59,7 @@ const Layout: React.FC<LayoutProps> = ({
   const flexWrap = constraint === 'wrap' ? 'wrap' : 'nowrap';
   if (constraint === "scroll") {
     return (
-      <View style={[{ flex: 1 }, style]}>
+      <View style={[{ flex: 1, margin, padding }, style]}>
         <ScrollView horizontal={direction === "row"}>
           <View style={[{ flexWrap }, { flexDirection: direction, justifyContent: align }]}>
             {arrangedChildren.map(renderChild)}
