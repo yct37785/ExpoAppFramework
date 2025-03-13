@@ -113,10 +113,10 @@ npm i
 ````
 
 ## Usage
-### Running the TemplateApp
-In root folder, run** Launch_TemplateApp.bat** or **Launch_TemplateApp - prod.bat**.
+### Running TemplateApp
+In the app directory  **/Projects/TemplateApp**, run **launch.bat** or **launch prod.bat**.
 
-Scan the QR code from your Expo GO app to run on mobile or input w into the cmd window to launch the web version.
+Scan the QR code from your Expo GO app to run on mobile or input `w` into the cmd window to launch the web version.
 
 ### Setup a client app
 To set up a client app, simply duplicate **TemplateApp** in the same **/Projects** directory and rename all instances of TemplateApp to that of your client app:
@@ -145,17 +145,13 @@ To set up a client app, simply duplicate **TemplateApp** in the same **/Projects
   ...
 ````
 
-To run the client app, run the `npx expo start` command from **within the root folder of the client app**:
+The .gitignore of the monorepo is set to ignore all projects within **/Projects** except for **TemplateApp**. So feel free to track your project separately.
 
-````bash
-cd Projects/MyNewApp
-npx expo start
-````
-
-The .gitignore of the monorepo is set to ignore all projects within **/Projects** except for **TemplateApp**. So feel free to track your project in a separate repository.
+### Running the client app
+To run the client app, in the app directory **/Projects/MyNewApp**, run **launch.bat** or **launch prod.bat**.
 
 ## Building
-### new common components/functionalities
+### new common components
 To build a new components, simply define it within the proper directory under **/Framework**, test and run it from **TemplateApp**.
 
 *Note: when installing new packages use *`npx expo install` *to get the latest expo compatibile version of each package*
@@ -169,10 +165,10 @@ npx expo install <package1> <package2>
 
 The packages will be installed to within the **node_modules** in root as per monorepo philosophy.
 
-### new app-specific components/functionalities
+### new app-specific components
 To build a new **app specific** components, simply define it within  your app project and install required packages from your app project root.
 
 ````bash
-cd Projects/<NEW_APP_NAME>
+cd Projects/MyNewApp
 npx expo install <package1> <package2>
 ````
