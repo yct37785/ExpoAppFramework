@@ -138,6 +138,13 @@ To set up a client app, simply duplicate **TemplateApp** in the same **/Projects
     ...
 ````
 
+**package.json**:
+````json
+{
+  "name": "<NEW_APP_NAME>"
+  ...
+````
+
 To run the client app, run the `npx expo start` command from **within the root folder of the client app**:
 
 ````bash
