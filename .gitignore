@@ -159,3 +159,6 @@ Thumbs.db
 /Projects/*
 !/Projects/TemplateApp/
 .expo/
+
+# misc
+ExpoAppFramework.code-workspace
