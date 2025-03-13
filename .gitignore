@@ -161,4 +161,4 @@ Thumbs.db
 .expo/
 
 # misc
-ExpoAppFramework.code-workspace
+*.code-workspace
