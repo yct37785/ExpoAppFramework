@@ -15,6 +15,7 @@ import { RootStackPropsList, ScreenProps, ScreenMap } from './Screen';
 // hooks
 import { useSettings, SettingsProvider } from './Hook/SettingsHook';
 import { FirestoreProvider } from './Firebase/FirestoreHook';
+import { RealmProvider } from './Realm/RealmHook';
 // test
 import TestRunner from './Test';
 const TEST_MODE = false;
@@ -96,38 +97,40 @@ const RootComp: React.FC<RootCompProps> = ({ DEFAULT_SCREEN, screenMap }) => {
   const navContainerTheme = theme === CombinedDarkTheme ? NavigationDarkTheme : NavigationDefaultTheme;
   
   return (
-    <FirestoreProvider>
-      <PaperProvider theme={theme}>
-        <MenuProvider>
-          <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
-            {TEST_MODE ? <TestRunner /> : null}
-            <NavigationContainer theme={navContainerTheme}>
-              <Stack.Navigator
-                initialRouteName={DEFAULT_SCREEN}
-                screenOptions={{
-                  headerShown: false
-                }}
-              >
-                {Object.keys(screenMap).map((key) => (
-                  <Stack.Screen
-                    name={key}
-                    key={key}
-                  >
-                    {(props) => (
-                      <ScreenWrapper
-                        Component={screenMap[key]}
-                        navigation={props.navigation}
-                        route={props.route as RouteProp<RootStackPropsList, typeof key>}
-                      />
-                    )}
-                  </Stack.Screen>
-                ))}
-              </Stack.Navigator>
-            </NavigationContainer>
-          </View>
-        </MenuProvider>
-      </PaperProvider>
-    </FirestoreProvider>
+    <RealmProvider>
+      <FirestoreProvider>
+        <PaperProvider theme={theme}>
+          <MenuProvider>
+            <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+              {TEST_MODE ? <TestRunner /> : null}
+              <NavigationContainer theme={navContainerTheme}>
+                <Stack.Navigator
+                  initialRouteName={DEFAULT_SCREEN}
+                  screenOptions={{
+                    headerShown: false
+                  }}
+                >
+                  {Object.keys(screenMap).map((key) => (
+                    <Stack.Screen
+                      name={key}
+                      key={key}
+                    >
+                      {(props) => (
+                        <ScreenWrapper
+                          Component={screenMap[key]}
+                          navigation={props.navigation}
+                          route={props.route as RouteProp<RootStackPropsList, typeof key>}
+                        />
+                      )}
+                    </Stack.Screen>
+                  ))}
+                </Stack.Navigator>
+              </NavigationContainer>
+            </View>
+          </MenuProvider>
+        </PaperProvider>
+      </FirestoreProvider>
+    </RealmProvider>
   );
 }
 
