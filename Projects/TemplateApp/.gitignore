@@ -42,3 +42,6 @@ yarn-error.*
 .vscode/
 *.sublime-workspace
 *.sublime-project
+
+#Android build
+android/
