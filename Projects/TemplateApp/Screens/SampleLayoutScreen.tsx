@@ -20,7 +20,7 @@ const SampleLayoutScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
     <UI.Activity navigation={navigation} title="Layout Sample">
       {/* VerticalLayout: scroll */}
       <Text variant="titleMedium">VerticalLayout: scroll</Text>
-      <UI.VerticalLayout constraint='scroll'>
+      <UI.VerticalLayout constraint='scroll' style={{ backgroundColor: 'blue' }}>
 
         {/* VerticalLayout: wrap */}
         <Text variant="labelMedium">VerticalLayout: wrap</Text>
@@ -29,22 +29,22 @@ const SampleLayoutScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
         </UI.VerticalLayout>
 
         {/* HorizontalLayout: wrap */}
-        <Text variant="labelMedium" style={{ marginTop: Const.padSize05 }}>HorizontalLayout: wrap</Text>
+        <Text variant="labelMedium">HorizontalLayout: wrap</Text>
         <UI.HorizontalLayout constraint='wrap' style={{ backgroundColor: 'red' }}>
           {[...Array(10)].map((e, i) => <BasicContainer key={i} i={i} />)}
         </UI.HorizontalLayout>
 
-        {/* GridLayout */}
-        <Text variant="labelMedium" style={{ marginTop: Const.padSize05 }}>GridLayout</Text>
-        <UI.GridLayout
-          direction="row"
-          spacing={Const.padSize}
-          itemsPerLine={3}
-          itemStyle = {{ backgroundColor: 'yellow' }}
-          style={{ backgroundColor: 'red', width: 350 }}
-        >
-          {[...Array(10)].map((e, i) => <BasicContainer key={i} i={i} />)}
-        </UI.GridLayout>
+        {/* layouts nested */}
+        <Text variant="labelMedium">Layouts nested</Text>
+        <UI.HorizontalLayout constraint='wrap' style={{ backgroundColor: 'red' }}>
+          <UI.VerticalLayout constraint='wrap' style={{ backgroundColor: 'yellow' }}>
+            {[...Array(2)].map((e, i) => <BasicContainer key={i} i={i} />)}
+          </UI.VerticalLayout>
+          <UI.HorizontalLayout constraint='wrap' style={{ backgroundColor: 'yellow' }}>
+            {[...Array(2)].map((e, i) => <BasicContainer key={i} i={i} />)}
+          </UI.HorizontalLayout>
+        </UI.HorizontalLayout>
+
       </UI.VerticalLayout>
     </UI.Activity>
   );

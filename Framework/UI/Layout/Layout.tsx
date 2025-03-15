@@ -9,6 +9,7 @@ const _ = require('lodash');
  * @param align - 'flex-start' | 'center' | 'flex-end' for alignment.
  * @param reverse - Reverse the order of children.
  * @param constraint - 'wrap' | 'scroll' | 'none' for layout constraint.
+ * @param flex - Container flex property.
  * @param gap - Margin between child elements.
  * @param padding - Padding wrapping child elements.
  * @param style - Additional custom styles.
@@ -19,6 +20,7 @@ type LayoutProps = {
   align?: 'flex-start' | 'center' | 'flex-end';
   reverse?: boolean;
   constraint?: 'wrap' | 'scroll' | 'none';
+  flex?: number;
   gap?: number;
   padding?: number;
   style?: StyleProp<ViewStyle>;
@@ -33,6 +35,7 @@ const Layout: React.FC<LayoutProps> = ({
   align = 'flex-start',
   reverse = false,
   constraint = 'none',
+  flex = 1,
   gap = Const.padSize,
   padding = Const.padSize,
   style = {},
@@ -45,7 +48,7 @@ const Layout: React.FC<LayoutProps> = ({
     return (
       <View style={[{ flex: 1 }, style]}>
         <ScrollView horizontal={direction === "row"}>
-          <View style={[{ flexWrap, flexDirection: direction, justifyContent: align, gap, padding }]}>
+          <View style={[{ flex, flexWrap, flexDirection: direction, justifyContent: align, gap, padding }]}>
             {content}
           </View>
         </ScrollView>
@@ -54,7 +57,7 @@ const Layout: React.FC<LayoutProps> = ({
   }
 
   return (
-    <View style={[{ flex: 1, flexWrap, flexDirection: direction, justifyContent: align, gap, padding }, style]}>
+    <View style={[{ flex, flexWrap, flexDirection: direction, justifyContent: align, gap, padding }, style]}>
       {content}
     </View>
   );
