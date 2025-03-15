@@ -46,11 +46,11 @@ const Layout: React.FC<LayoutProps> = ({
   const flexWrap = constraint === 'wrap' ? 'wrap' : 'nowrap';
   if (constraint === "scroll") {
     return (
-        <ScrollView horizontal={direction === "row"}>
-          <View style={[{ flex, flexWrap, flexDirection: direction, justifyContent: justify, gap, padding }, style]}>
-            {content}
-          </View>
-        </ScrollView>
+      <ScrollView horizontal={direction === "row"}>
+        <View style={[{ flex, flexWrap, flexDirection: direction, justifyContent: justify, gap, padding }, style]}>
+          {content}
+        </View>
+      </ScrollView>
     );
   }
 

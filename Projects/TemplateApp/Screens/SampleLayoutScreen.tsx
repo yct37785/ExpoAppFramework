@@ -44,12 +44,12 @@ const SampleLayoutScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
 
         {/* layouts nested */}
         <Text variant="labelMedium">Layouts nested (align: center)</Text>
-        <UI.HorizontalLayout constraint='wrap' style={{ backgroundColor: 'red' }}>
-          <UI.VerticalLayout constraint='wrap' align='center' style={{ backgroundColor: 'yellow' }}>
+        <UI.HorizontalLayout constraint='none' style={{ backgroundColor: 'red', height: 250 }}>
+          <UI.VerticalLayout constraint='wrap' justify='center' style={{ backgroundColor: 'yellow', flex: 1 }}>
             {[...Array(2)].map((e, i) => <BasicContainer key={i} i={i} />)}
           </UI.VerticalLayout>
-          <UI.HorizontalLayout constraint='wrap' align='center' style={{ backgroundColor: 'yellow' }}>
-            {[...Array(2)].map((e, i) => <BasicContainer key={i} i={i} />)}
+          <UI.HorizontalLayout constraint='wrap' justify='center' style={{ backgroundColor: 'yellow', flex: 1 }}>
+            {[...Array(1)].map((e, i) => <BasicContainer key={i} i={i} />)}
           </UI.HorizontalLayout>
         </UI.HorizontalLayout>
 
