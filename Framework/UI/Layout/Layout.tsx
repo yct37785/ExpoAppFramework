@@ -5,10 +5,10 @@ import Const from '../../Const';
 const _ = require('lodash');
 
 /**
- * @param direction - 'row' or 'column' for flex direction.
- * @param align - 'flex-start' | 'center' | 'flex-end' for alignment.
+ * @param direction - For flex direction.
+ * @param justify - For alignment along direction.
  * @param reverse - Reverse the order of children.
- * @param constraint - 'wrap' | 'scroll' | 'none' for layout constraint.
+ * @param constraint - For layout constraint.
  * @param flex - Container flex property.
  * @param gap - Margin between child elements.
  * @param padding - Padding wrapping child elements.
@@ -17,7 +17,7 @@ const _ = require('lodash');
  */
 type LayoutProps = {
   direction?: 'row' | 'column';
-  align?: 'flex-start' | 'center' | 'flex-end';
+  justify?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
   reverse?: boolean;
   constraint?: 'wrap' | 'scroll' | 'none';
   flex?: number;
@@ -32,7 +32,7 @@ type LayoutProps = {
  */
 const Layout: React.FC<LayoutProps> = ({
   direction = 'column',
-  align = 'flex-start',
+  justify = 'flex-start',
   reverse = false,
   constraint = 'none',
   flex = 1,
@@ -46,18 +46,16 @@ const Layout: React.FC<LayoutProps> = ({
   const flexWrap = constraint === 'wrap' ? 'wrap' : 'nowrap';
   if (constraint === "scroll") {
     return (
-      <View style={[{ flex: 1 }, style]}>
         <ScrollView horizontal={direction === "row"}>
-          <View style={[{ flex, flexWrap, flexDirection: direction, justifyContent: align, gap, padding }]}>
+          <View style={[{ flex, flexWrap, flexDirection: direction, justifyContent: justify, gap, padding }, style]}>
             {content}
           </View>
         </ScrollView>
-      </View>
     );
   }
 
   return (
-    <View style={[{ flex, flexWrap, flexDirection: direction, alignContent: align, gap, padding }, style]}>
+    <View style={[{ flex, flexWrap, flexDirection: direction, justifyContent: justify, gap, padding }, style]}>
       {content}
     </View>
   );
