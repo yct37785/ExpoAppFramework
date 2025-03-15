@@ -42,7 +42,7 @@ const Layout: React.FC<LayoutProps> = ({
     return (
       <View style={[{ flex: 1 }, style]}>
         <ScrollView horizontal={direction === "row"}>
-          <View style={[{ flexWrap, flexDirection: direction, justifyContent: align, gap }]}>
+          <View style={[{ flexWrap, flexDirection: direction, justifyContent: align, gap, padding: gap }]}>
             {content}
           </View>
         </ScrollView>
@@ -51,7 +51,7 @@ const Layout: React.FC<LayoutProps> = ({
   }
 
   return (
-    <View style={[{ flexWrap, flexDirection: direction, justifyContent: align, gap }, style]}>
+    <View style={[{ flexWrap, flexDirection: direction, justifyContent: align, gap, padding: gap }, style]}>
       {content}
     </View>
   );
