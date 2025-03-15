@@ -88,7 +88,7 @@ const SampleMenuScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
         </UI.DialogPopup>
       </Portal>
       {/* main content */}
-      <UI.VerticalLayout childMargin={Const.padSize} padding={Const.padSize}>
+      <UI.VerticalLayout gap={Const.padSize} padding={Const.padSize}>
 
         {/* launch popup dialog */}
         <Button mode="contained" onPress={() => setShowDialog(true)}>

@@ -94,7 +94,7 @@ const SampleListScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
   return (
     <UI.Activity navigation={navigation} CustomHeaderComp={customHeaderContent}>
       {/* main content */}
-      <UI.VerticalLayout childMargin={Const.padSize} padding={Const.padSize}>
+      <UI.VerticalLayout gap={Const.padSize} padding={Const.padSize}>
 
         {/* filter menu */}
         <ScrollView horizontal={true}>

@@ -8,7 +8,7 @@ const _ = require('lodash');
  * @param align - 'flex-start' | 'center' | 'flex-end' for alignment.
  * @param reverse - Reverse the order of children.
  * @param constraint - 'wrap' | 'scroll' | 'none' for layout constraint.
- * @param childMargin - Margin between child elements.
+ * @param gap - Margin between child elements.
  * @param margin - Outer margin for the layout.
  * @param padding - Inner padding for the layout.
  * @param style - Additional custom styles.
@@ -19,7 +19,7 @@ type LayoutProps = {
   align?: 'flex-start' | 'center' | 'flex-end';
   reverse?: boolean;
   constraint?: 'wrap' | 'scroll' | 'none';
-  childMargin?: number;
+  gap?: number;
   margin?: number;
   padding?: number;
   style?: StyleProp<ViewStyle>;
@@ -34,35 +34,21 @@ const Layout: React.FC<LayoutProps> = ({
   align = 'flex-start',
   reverse = false,
   constraint = 'none',
-  childMargin = 0,
+  gap = 0,
   margin = 0,
   padding = 0,
   style = {},
   children,
 }) => {
-  const arrangedChildren = useMemo(() => {
-    let childArray = React.Children.toArray(children).filter((child) =>
-      React.isValidElement(child)
-    );
-    return reverse ? [...childArray].reverse() : childArray;
-  }, [children, reverse]);
-
-  const renderChild = useCallback(
-    (child: ReactNode, index: number) => (
-      <View style={{ padding: childMargin / 2 }} key={index}>
-        {child}
-      </View>
-    ),
-    [childMargin]
-  );
+  const content = reverse ? React.Children.toArray(children).reverse() : children;
 
   const flexWrap = constraint === 'wrap' ? 'wrap' : 'nowrap';
   if (constraint === "scroll") {
     return (
       <View style={[{ flex: 1, margin, padding }, style]}>
         <ScrollView horizontal={direction === "row"}>
-          <View style={[{ flexWrap }, { flexDirection: direction, justifyContent: align }]}>
-            {arrangedChildren.map(renderChild)}
+          <View style={[{ flexWrap }, { flexDirection: direction, justifyContent: align, gap }]}>
+            {content}
           </View>
         </ScrollView>
       </View>
@@ -70,8 +56,8 @@ const Layout: React.FC<LayoutProps> = ({
   }
 
   return (
-    <View style={[{ flexWrap }, { flexDirection: direction, justifyContent: align, margin, padding }, style]}>
-      {arrangedChildren.map(renderChild)}
+    <View style={[{ flexWrap }, { flexDirection: direction, justifyContent: align, margin, padding, gap }, style]}>
+      {content}
     </View>
   );
 };

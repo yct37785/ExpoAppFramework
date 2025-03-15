@@ -43,7 +43,7 @@ const SampleContainersScreen: React.FC<ScreenProps> = ({ navigation, route }) =>
    * collapsible containers demo
    */
   const CollapsiblePage = memo(() => {
-    return <UI.VerticalLayout padding={Const.padSize} childMargin={Const.padSize}>
+    return <UI.VerticalLayout padding={Const.padSize} gap={Const.padSize}>
 
       {/* CollapsibleContainer */}
       <Text variant="titleMedium" style={{ marginTop: Const.padSize }}>CollapsibleContainer</Text>
