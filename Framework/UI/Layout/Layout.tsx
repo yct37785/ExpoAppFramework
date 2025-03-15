@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo, memo, ReactNode } from 'react';
 import { View, ScrollView, StyleSheet, StyleProp, ViewStyle, TextStyle, LayoutChangeEvent } from 'react-native';
 import { useOnLayout } from '../../Hook/OnLayoutHook';
+import Const from '../../Const';
 const _ = require('lodash');
 
 /**
@@ -9,8 +10,6 @@ const _ = require('lodash');
  * @param reverse - Reverse the order of children.
  * @param constraint - 'wrap' | 'scroll' | 'none' for layout constraint.
  * @param gap - Margin between child elements.
- * @param margin - Outer margin for the layout.
- * @param padding - Inner padding for the layout.
  * @param style - Additional custom styles.
  * @param children - Child elements.
  */
@@ -20,23 +19,19 @@ type LayoutProps = {
   reverse?: boolean;
   constraint?: 'wrap' | 'scroll' | 'none';
   gap?: number;
-  margin?: number;
-  padding?: number;
   style?: StyleProp<ViewStyle>;
   children: ReactNode;
 }
 
 /**
- * base layout component that handles flexible layout
+ * base layout component, auto space children with padSize gap
  */
 const Layout: React.FC<LayoutProps> = ({
   direction = 'column',
   align = 'flex-start',
   reverse = false,
   constraint = 'none',
-  gap = 0,
-  margin = 0,
-  padding = 0,
+  gap = Const.padSize,
   style = {},
   children,
 }) => {
@@ -45,9 +40,9 @@ const Layout: React.FC<LayoutProps> = ({
   const flexWrap = constraint === 'wrap' ? 'wrap' : 'nowrap';
   if (constraint === "scroll") {
     return (
-      <View style={[{ flex: 1, margin, padding }, style]}>
+      <View style={[{ flex: 1 }, style]}>
         <ScrollView horizontal={direction === "row"}>
-          <View style={[{ flexWrap }, { flexDirection: direction, justifyContent: align, gap }]}>
+          <View style={[{ flexWrap, flexDirection: direction, justifyContent: align, gap }]}>
             {content}
           </View>
         </ScrollView>
@@ -56,7 +51,7 @@ const Layout: React.FC<LayoutProps> = ({
   }
 
   return (
-    <View style={[{ flexWrap }, { flexDirection: direction, justifyContent: align, margin, padding, gap }, style]}>
+    <View style={[{ flexWrap, flexDirection: direction, justifyContent: align, gap }, style]}>
       {content}
     </View>
   );

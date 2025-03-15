@@ -20,17 +20,17 @@ const SampleLayoutScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
     <UI.Activity navigation={navigation} title="Layout Sample">
       {/* VerticalLayout: scroll */}
       <Text variant="titleMedium">VerticalLayout: scroll</Text>
-      <UI.VerticalLayout gap={Const.padSize} constraint='scroll'>
+      <UI.VerticalLayout constraint='scroll'>
 
         {/* VerticalLayout: wrap */}
         <Text variant="labelMedium">VerticalLayout: wrap</Text>
-        <UI.VerticalLayout gap={Const.padSize} constraint='wrap' style={{ backgroundColor: 'red', height: 290 }}>
+        <UI.VerticalLayout constraint='wrap' style={{ backgroundColor: 'red', height: 290 }}>
           {[...Array(10)].map((e, i) => <BasicContainer key={i} i={i} />)}
         </UI.VerticalLayout>
 
         {/* HorizontalLayout: wrap */}
         <Text variant="labelMedium" style={{ marginTop: Const.padSize05 }}>HorizontalLayout: wrap</Text>
-        <UI.HorizontalLayout gap={Const.padSize} constraint='wrap' style={{ backgroundColor: 'red' }}>
+        <UI.HorizontalLayout constraint='wrap' style={{ backgroundColor: 'red' }}>
           {[...Array(10)].map((e, i) => <BasicContainer key={i} i={i} />)}
         </UI.HorizontalLayout>
 
