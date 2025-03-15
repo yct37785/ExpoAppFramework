@@ -83,10 +83,10 @@ const SampleListScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
   function customHeaderContent() {
     return <View>
       <UI.TextInput
-        type="search"
+        type='search'
         value={searchQuery}
         onChange={setSearchQuery}
-        placeholder="search"
+        placeholder='search'
       />
     </View>
   }

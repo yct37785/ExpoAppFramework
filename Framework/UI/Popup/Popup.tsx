@@ -53,7 +53,7 @@ export const DialogPopup: React.FC<DialogPopupProps> = memo(({
         borderRadius: theme.roundness,
         minHeight: 160,
       }}>
-        {title && <Text style={{ padding: Const.padSize2 }} variant="titleLarge">{title}</Text>}
+        {title && <Text style={{ padding: Const.padSize2 }} variant='titleLarge'>{title}</Text>}
         {subtitle && <Text style={{ marginHorizontal: Const.padSize2 }}>{subtitle}</Text>}
         {children ? children : <View style={{ flex: 1 }} />}
         <View style={{ width: '100%', padding: Const.padSize }}>

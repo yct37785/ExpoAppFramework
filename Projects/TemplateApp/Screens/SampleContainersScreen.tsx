@@ -15,7 +15,7 @@ export const TAB_ROUTES: UI.TabRouteProps[] = [
   { title: 'Page 3', key: 'p3', icon: 'palm-tree' },
 ];
 
-export const ACCORDION_SECTION_TITLES: string[] = ["First", "Second", "Third"];
+export const ACCORDION_SECTION_TITLES: string[] = ['First', 'Second', 'Third'];
 
 /**
  * sample containers screen
@@ -46,8 +46,8 @@ const SampleContainersScreen: React.FC<ScreenProps> = ({ navigation, route }) =>
     return <UI.VerticalLayout>
 
       {/* CollapsibleContainer */}
-      <Text variant="titleMedium" style={{ marginTop: Const.padSize }}>CollapsibleContainer</Text>
-      <UI.CollapsibleContainer toggleHeaderText="collapsible">
+      <Text variant='titleMedium' style={{ marginTop: Const.padSize }}>CollapsibleContainer</Text>
+      <UI.CollapsibleContainer toggleHeaderText='collapsible'>
         <View style={{ flex: 1, padding: Const.padSize }}>
           <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
         </View>
@@ -56,7 +56,7 @@ const SampleContainersScreen: React.FC<ScreenProps> = ({ navigation, route }) =>
       <Divider />
 
       {/* AccordionContainer */}
-      <Text variant="titleMedium">AccordionContainer</Text>
+      <Text variant='titleMedium'>AccordionContainer</Text>
       <UI.AccordionContainer sectionTitles={ACCORDION_SECTION_TITLES}>
         <View style={{ flex: 1, padding: Const.padSize }}>
           <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
@@ -87,7 +87,7 @@ const SampleContainersScreen: React.FC<ScreenProps> = ({ navigation, route }) =>
   });
 
   return (
-    <UI.Activity navigation={navigation} title="Container Sample">
+    <UI.Activity navigation={navigation} title='Container Sample'>
       {/* tabs container */}
       <UI.TabsContainer
         routes={TAB_ROUTES}

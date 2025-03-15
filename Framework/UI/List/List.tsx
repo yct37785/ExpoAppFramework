@@ -86,7 +86,7 @@ export const List: React.FC<ListDataDisplayProps> = memo(({
       );
       const matchesFilter = Object.entries(filterMap).every(([category, categoryValues]) => {
         const hasFilters = categoryValues.size > 0;
-        return !hasFilters || categoryValues.has(item.filterable?.[category] || "");
+        return !hasFilters || categoryValues.has(item.filterable?.[category] || '');
       });
   
       return matchesSearch && matchesFilter;

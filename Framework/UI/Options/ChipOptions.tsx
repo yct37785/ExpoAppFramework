@@ -1,7 +1,6 @@
 import React, { memo, useState } from 'react';
 import { View, StyleProp, ViewStyle } from 'react-native';
 import { useTheme, Chip } from 'react-native-paper';
-import { GridLayout } from '../Layout/Layout';
 import Const from '../../Const';
 
 /**
@@ -41,13 +40,13 @@ export const ChipOptions: React.FC<ChipOptionsProps> = memo(({
   }
   
   return (
-    <View style={[style, { flexDirection: "row", flexWrap: "wrap" }]}>
+    <View style={[style, { flexDirection: 'row', flexWrap: 'wrap' }]}>
       {Array.from(schema).map((value) => (
         <Chip
           key={value}
           selected={selectedSet.has(value)}
           showSelectedCheck={false}
-          mode="outlined"
+          mode='outlined'
           style={{
             backgroundColor: selectedSet.has(value)
               ? theme.colors.primaryContainer

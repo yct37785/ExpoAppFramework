@@ -1,7 +1,7 @@
-import React, { createContext, useEffect, useCallback, useContext, useState, ReactNode } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { createContext, useEffect, useCallback, useContext, useState, ReactNode } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const SETTINGS_KEY_ASYNC_STORAGE = "appSettings";
+export const SETTINGS_KEY_ASYNC_STORAGE = 'appSettings';
 
 /**
  * local system settings schema
@@ -50,7 +50,7 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
           setSettings(JSON.parse(savedSettings));
         }
       } catch (error) {
-        console.error("Failed to load settings:", error);
+        console.error('Failed to load settings:', error);
       }
     };
 
@@ -65,7 +65,7 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
       await AsyncStorage.setItem(SETTINGS_KEY_ASYNC_STORAGE, JSON.stringify(newSettings));
       setSettings(newSettings);
     } catch (error) {
-      console.error("Failed to save settings:", error);
+      console.error('Failed to save settings:', error);
     }
   }, [setSettings]);
 
@@ -97,7 +97,7 @@ export const SettingsProvider: React.FC<{ children: ReactNode }> = ({ children }
 export const useSettings = (): SettingsContextType => {
   const context = useContext(SettingsContext);
   if (!context) {
-    throw new Error("useSettings must be used within a SettingsProvider");
+    throw new Error('useSettings must be used within a SettingsProvider');
   }
   return context;
 };

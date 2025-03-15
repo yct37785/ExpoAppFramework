@@ -32,7 +32,7 @@ const useFirestoreManager = (): FirestoreManagerProps => {
    */
   const createCollection = async (collectionName: string, initialData: object[] = []): Promise<boolean> => {
     try {
-      if (!collectionName) throw new Error("Collection name is required.");
+      if (!collectionName) throw new Error('Collection name is required.');
 
       const batchWrites = initialData.map(async (data) => {
         const docRef = doc(collection(db, collectionName));

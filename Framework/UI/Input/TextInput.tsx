@@ -46,7 +46,7 @@ export const TextInput: React.FC<TextInputProps> = memo(({
 
   return (
     <>
-      {type === "search" && (
+      {type === 'search' && (
         <Searchbar
           ref={inputRef}
           placeholder={placeholder}
@@ -57,7 +57,7 @@ export const TextInput: React.FC<TextInputProps> = memo(({
           style={style}
         />
       )}
-      {type === "text" && (
+      {type === 'text' && (
         <RNPTextInput
           ref={inputRef}
           placeholder={placeholder}

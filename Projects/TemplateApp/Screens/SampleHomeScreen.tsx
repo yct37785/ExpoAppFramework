@@ -19,19 +19,19 @@ const SampleHomeScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
   }
 
   function renderScreenBtn(screen: string, btnText: string) {
-    return <Button mode="contained" onPress={() => navigation.navigate(screen, { paramText: `hello ${screen} from home` })}>
+    return <Button mode='contained' onPress={() => navigation.navigate(screen, { paramText: `hello ${screen} from home` })}>
       {btnText}
     </Button>
   }
   
   return (
-    <UI.Activity navigation={navigation} CustomHeaderComp={customHeaderContent} title="Home Sample" isRootActivity={true}>
+    <UI.Activity navigation={navigation} CustomHeaderComp={customHeaderContent} title='Home Sample' isRootActivity={true}>
       <UI.VerticalLayout>
-        <Text variant="bodyMedium">Select the screen you want to navigate to</Text>
-        {renderScreenBtn("layout", "layouts example")}
-        {renderScreenBtn("menu", "menus example")}
-        {renderScreenBtn("list", "list example")}
-        {renderScreenBtn("container", "container example")}
+        <Text variant='bodyMedium'>Select the screen you want to navigate to</Text>
+        {renderScreenBtn('layout', 'layouts example')}
+        {renderScreenBtn('menu', 'menus example')}
+        {renderScreenBtn('list', 'list example')}
+        {renderScreenBtn('container', 'container example')}
       </UI.VerticalLayout>
     </UI.Activity>
   );

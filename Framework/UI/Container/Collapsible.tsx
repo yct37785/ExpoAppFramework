@@ -83,7 +83,7 @@ type AccordionContainerProps = {
  */
 export const AccordionContainer: React.FC<AccordionContainerProps> = memo(({ sectionTitles, style = {}, children }) => {
   if (sectionTitles.length !== React.Children.count(children)) {
-    throw new Error("The number of section titles must match the number of children.");
+    throw new Error('The number of section titles must match the number of children.');
   }
 
   const [activeSections, setActiveSections] = useState<number[]>([]);

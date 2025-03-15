@@ -1,25 +1,25 @@
-import React, { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 
 /**
  * Realm instance
  */
-let Realm: typeof import("realm") | undefined;
-if (process.env.CUSTOM_DEV === "true") {
-  Realm = require("realm");
+let Realm: typeof import('realm') | undefined;
+if (process.env.CUSTOM_DEV === 'true') {
+  Realm = require('realm');
 }
 
 /**
  * ChatMessage schema
  */
 const ChatMessageSchema = {
-  name: "ChatMessage",
-  primaryKey: "id",
+  name: 'ChatMessage',
+  primaryKey: 'id',
   properties: {
-    id: "string",
-    chatId: "string",
-    sender: "string",
-    message: "string",
-    timestamp: "date",
+    id: 'string',
+    chatId: 'string',
+    sender: 'string',
+    message: 'string',
+    timestamp: 'date',
   },
 };
 
@@ -38,10 +38,10 @@ const RealmContext = createContext<RealmContextType | undefined>(undefined);
  * RealmProvider component
  */
 export const RealmProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [realm, setRealm] = useState<import("realm").Realm | null>(null);
+  const [realm, setRealm] = useState<import('realm').Realm | null>(null);
 
   useEffect(() => {
-    if (process.env.CUSTOM_DEV !== "true") return;
+    if (process.env.CUSTOM_DEV !== 'true') return;
 
     async function openRealm() {
       try {
@@ -50,7 +50,7 @@ export const RealmProvider: React.FC<{ children: ReactNode }> = ({ children }) =
           setRealm(realmInstance);
         }
       } catch (error) {
-        console.error("Error opening Realm:", error);
+        console.error('Error opening Realm:', error);
       }
     }
 
@@ -64,7 +64,7 @@ export const RealmProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   const addMessage = (chatId: string, sender: string, message: string) => {
     if (!realm) return;
     realm.write(() => {
-      realm.create("ChatMessage", {
+      realm.create('ChatMessage', {
         id: new Date().toISOString(),
         chatId,
         sender,
@@ -76,13 +76,13 @@ export const RealmProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
   const getMessages = (chatId: string) => {
     if (!realm) return [];
-    return Array.from(realm.objects("ChatMessage").filtered("chatId == $0", chatId)); // ✅ Fix applied here
+    return Array.from(realm.objects('ChatMessage').filtered('chatId == $0', chatId)); // ✅ Fix applied here
   };
 
   const deleteChat = (chatId: string) => {
     if (!realm) return;
     realm.write(() => {
-      const messages = realm.objects("ChatMessage").filtered("chatId == $0", chatId);
+      const messages = realm.objects('ChatMessage').filtered('chatId == $0', chatId);
       realm.delete(messages);
     });
   };
@@ -100,7 +100,7 @@ export const RealmProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 export const useRealmContext = (): RealmContextType => {
   const context = useContext(RealmContext);
   if (!context) {
-    throw new Error("useRealmContext must be used within a RealmProvider");
+    throw new Error('useRealmContext must be used within a RealmProvider');
   }
   return context;
 };

@@ -17,13 +17,13 @@ const SampleLayoutScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
   );
 
   return (
-    <UI.Activity navigation={navigation} title="Layout Sample">
+    <UI.Activity navigation={navigation} title='Layout Sample'>
       {/* VerticalLayout: scroll */}
-      <Text variant="titleMedium">VerticalLayout: scroll</Text>
+      <Text variant='titleMedium'>VerticalLayout: scroll</Text>
       <UI.VerticalLayout constraint='scroll' style={{ backgroundColor: 'blue' }}>
 
         {/* VerticalLayout: wrap */}
-        <Text variant="labelMedium">VerticalLayout: wrap</Text>
+        <Text variant='labelMedium'>VerticalLayout: wrap</Text>
         <View style={{ height: 190 }}>
           <UI.VerticalLayout constraint='wrap' style={{ backgroundColor: 'red' }}>
             {[...Array(7)].map((e, i) => <BasicContainer key={i} i={i} />)}
@@ -31,19 +31,19 @@ const SampleLayoutScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
         </View>
 
         {/* HorizontalLayout: wrap */}
-        <Text variant="labelMedium">HorizontalLayout: wrap</Text>
+        <Text variant='labelMedium'>HorizontalLayout: wrap</Text>
         <UI.HorizontalLayout constraint='wrap' style={{ backgroundColor: 'red' }}>
           {[...Array(7)].map((e, i) => <BasicContainer key={i} i={i} />)}
         </UI.HorizontalLayout>
 
         {/* HorizontalLayout: wrap */}
-        <Text variant="labelMedium">HorizontalLayout: scroll</Text>
+        <Text variant='labelMedium'>HorizontalLayout: scroll</Text>
         <UI.HorizontalLayout constraint='scroll' style={{ backgroundColor: 'red' }}>
           {[...Array(5)].map((e, i) => <BasicContainer key={i} i={i} />)}
         </UI.HorizontalLayout>
 
         {/* layouts nested */}
-        <Text variant="labelMedium">Layouts nested (align: center)</Text>
+        <Text variant='labelMedium'>Layouts nested (align: center)</Text>
         <UI.HorizontalLayout constraint='none' style={{ backgroundColor: 'red', height: 250 }}>
           <UI.VerticalLayout constraint='wrap' justify='center' style={{ backgroundColor: 'yellow', flex: 1 }}>
             {[...Array(2)].map((e, i) => <BasicContainer key={i} i={i} />)}

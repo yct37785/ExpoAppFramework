@@ -14,9 +14,9 @@ const TestRunner: React.FC = () => {
   }, []);
 
   async function run_tests() {
-    console.log("Starting tests...");
+    console.log('Starting tests...');
     await test_firestore(firestore);
-    console.log("Tests completed...");
+    console.log('Tests completed...');
   }
 
   return null;

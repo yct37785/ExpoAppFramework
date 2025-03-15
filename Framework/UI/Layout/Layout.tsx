@@ -44,9 +44,9 @@ const Layout: React.FC<LayoutProps> = ({
   const content = reverse ? React.Children.toArray(children).reverse() : children;
 
   const flexWrap = constraint === 'wrap' ? 'wrap' : 'nowrap';
-  if (constraint === "scroll") {
+  if (constraint === 'scroll') {
     return (
-      <ScrollView horizontal={direction === "row"}>
+      <ScrollView horizontal={direction === 'row'}>
         <View style={[{ flex, flexWrap, flexDirection: direction, justifyContent: justify, gap, padding }, style]}>
           {content}
         </View>
@@ -64,9 +64,9 @@ const Layout: React.FC<LayoutProps> = ({
 /**
  * vertical Layout component that inherits from Layout and sets direction to 'column'
  */
-export const VerticalLayout: React.FC<Omit<LayoutProps, 'direction'>> = memo((props) => <Layout {...props} direction="column" />);
+export const VerticalLayout: React.FC<Omit<LayoutProps, 'direction'>> = memo((props) => <Layout {...props} direction='column' />);
 
 /**
  * horizontal Layout component that inherits from Layout and sets direction to 'row'
  */
-export const HorizontalLayout: React.FC<Omit<LayoutProps, 'direction'>> = memo((props) => <Layout {...props} direction="row" />);
+export const HorizontalLayout: React.FC<Omit<LayoutProps, 'direction'>> = memo((props) => <Layout {...props} direction='row' />);

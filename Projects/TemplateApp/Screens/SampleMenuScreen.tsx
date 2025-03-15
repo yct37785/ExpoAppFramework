@@ -65,25 +65,25 @@ const SampleMenuScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
 
   function customHeaderContent(): JSX.Element {
     return <UI.HorizontalLayout align='flex-end'>
-      <UI.DropdownPopup triggerComp={<IconButton icon="dots-vertical" size={Const.iconSizeSmall} />}>
+      <UI.DropdownPopup triggerComp={<IconButton icon='dots-vertical' size={Const.iconSizeSmall} />}>
         <UI.CheckOptions schema={popupMenuSelection} setSchema={setPopupMenuSelection} />
       </UI.DropdownPopup>
     </UI.HorizontalLayout>;
   }
 
   return (
-    <UI.Activity navigation={navigation} CustomHeaderComp={customHeaderContent} title="Menu Sample">
+    <UI.Activity navigation={navigation} CustomHeaderComp={customHeaderContent} title='Menu Sample'>
       {/* all dialogs here */}
       <Portal>
         <UI.DialogPopup
           title='Lorem Ipsum Stuff'
-          subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+          subtitle='Lorem ipsum dolor sit amet, consectetur adipiscing elit'
           isVisible={showDialog}
           onSubmit={onSubmitDialog}
           onClose={() => setShowDialog(false)}
         >
           <Card.Content>
-            <Text variant="bodyMedium">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
+            <Text variant='bodyMedium'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
           </Card.Content>
         </UI.DialogPopup>
       </Portal>
@@ -91,7 +91,7 @@ const SampleMenuScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
       <UI.VerticalLayout>
 
         {/* launch popup dialog */}
-        <Button mode="contained" onPress={() => setShowDialog(true)}>
+        <Button mode='contained' onPress={() => setShowDialog(true)}>
           Launch dialog
         </Button>
 
@@ -101,10 +101,10 @@ const SampleMenuScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
         {/* input + highlight text */}
         <Text>Search for text in the passage below</Text>
         <UI.TextInput
-          type="search"
+          type='search'
           value={searchQuery}
           onChange={setSearchQuery}
-          placeholder="search"
+          placeholder='search'
           style={{ marginTop: Const.padSize2 }}
         />
         <UI.HighlightText query={searchQuery} variant={'bodyMedium'} style={{ marginTop: Const.padSize2 }} >
