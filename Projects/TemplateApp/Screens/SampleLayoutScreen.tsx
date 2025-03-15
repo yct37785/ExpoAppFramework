@@ -24,23 +24,31 @@ const SampleLayoutScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
 
         {/* VerticalLayout: wrap */}
         <Text variant="labelMedium">VerticalLayout: wrap</Text>
-        <UI.VerticalLayout constraint='wrap' style={{ backgroundColor: 'red', height: 290 }}>
-          {[...Array(10)].map((e, i) => <BasicContainer key={i} i={i} />)}
-        </UI.VerticalLayout>
+        <View style={{ height: 190 }}>
+          <UI.VerticalLayout constraint='wrap' style={{ backgroundColor: 'red' }}>
+            {[...Array(7)].map((e, i) => <BasicContainer key={i} i={i} />)}
+          </UI.VerticalLayout>
+        </View>
 
         {/* HorizontalLayout: wrap */}
         <Text variant="labelMedium">HorizontalLayout: wrap</Text>
         <UI.HorizontalLayout constraint='wrap' style={{ backgroundColor: 'red' }}>
-          {[...Array(10)].map((e, i) => <BasicContainer key={i} i={i} />)}
+          {[...Array(7)].map((e, i) => <BasicContainer key={i} i={i} />)}
+        </UI.HorizontalLayout>
+
+        {/* HorizontalLayout: wrap */}
+        <Text variant="labelMedium">HorizontalLayout: scroll</Text>
+        <UI.HorizontalLayout constraint='scroll' style={{ backgroundColor: 'red' }}>
+          {[...Array(5)].map((e, i) => <BasicContainer key={i} i={i} />)}
         </UI.HorizontalLayout>
 
         {/* layouts nested */}
-        <Text variant="labelMedium">Layouts nested</Text>
+        <Text variant="labelMedium">Layouts nested (align: center)</Text>
         <UI.HorizontalLayout constraint='wrap' style={{ backgroundColor: 'red' }}>
-          <UI.VerticalLayout constraint='wrap' style={{ backgroundColor: 'yellow' }}>
+          <UI.VerticalLayout constraint='wrap' align='center' style={{ backgroundColor: 'yellow' }}>
             {[...Array(2)].map((e, i) => <BasicContainer key={i} i={i} />)}
           </UI.VerticalLayout>
-          <UI.HorizontalLayout constraint='wrap' style={{ backgroundColor: 'yellow' }}>
+          <UI.HorizontalLayout constraint='wrap' align='center' style={{ backgroundColor: 'yellow' }}>
             {[...Array(2)].map((e, i) => <BasicContainer key={i} i={i} />)}
           </UI.HorizontalLayout>
         </UI.HorizontalLayout>

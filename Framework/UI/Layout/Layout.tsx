@@ -57,7 +57,7 @@ const Layout: React.FC<LayoutProps> = ({
   }
 
   return (
-    <View style={[{ flex, flexWrap, flexDirection: direction, justifyContent: align, gap, padding }, style]}>
+    <View style={[{ flex, flexWrap, flexDirection: direction, alignContent: align, gap, padding }, style]}>
       {content}
     </View>
   );
