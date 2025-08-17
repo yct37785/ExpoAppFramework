@@ -10,6 +10,7 @@ web-build/
 expo-env.d.ts
 
 # Native
+.kotlin/
 *.orig.*
 *.jks
 *.p8
@@ -34,14 +35,3 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
-
-# Ignore IDE and editor folders
-.idea/
-*.swp
-*.swo
-.vscode/
-*.sublime-workspace
-*.sublime-project
-
-#Android build
-android/
