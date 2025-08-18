@@ -30,17 +30,6 @@ export default ({ config }) => {
         favicon: "./assets/favicon.png",
       },
       plugins: [
-        [
-          "expo-build-properties",
-          {
-            android: {
-              minSdkVersion: 24
-            },
-            ios: {
-              useFrameworks: "static" // recommended if you use Realm or Swift packages
-            }
-          }
-        ],
         ...(isCustomBuild ? ["expo-dev-client"] : []),
       ],
     },

@@ -9,8 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "framework": "*",
-    "expo-status-bar": "~2.2.3"
+    "framework": "*"
   },
   "private": true
 }
