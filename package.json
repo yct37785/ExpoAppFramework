@@ -7,10 +7,14 @@
     "packages/*"
   ],
   "dependencies": {
+    "@react-navigation/native": "^7.1.17",
     "axios": "^1.11.0",
     "expo": "~53.0.20",
     "react": "19.0.0",
-    "react-native": "0.79.5"
+    "react-native": "0.79.5",
+    "react-native-paper": "^5.14.5",
+    "react-native-safe-area-context": "5.4.0",
+    "react-native-screens": "~4.11.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
