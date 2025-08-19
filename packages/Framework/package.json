@@ -3,12 +3,13 @@
   "private": true,
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "files": ["dist"],
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "files": ["src"],
   "exports": {
-    ".": "./dist/index.js",
-    "./sampleModule": "./dist/sampleModule/index.js"
+    ".": "./src/index.ts",
+    "./root": "./src/Root.tsx",
+    "./sampleModule": "./src/sampleModule/index.ts"
   },
   "keywords": [],
   "author": "",
