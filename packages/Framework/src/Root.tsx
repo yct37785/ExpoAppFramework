@@ -4,12 +4,14 @@ import { View, LogBox, Platform, StatusBar } from 'react-native';
 // UI
 import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, Text, Button } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
-// deps
-import 'react-native-get-random-values';
+// screen
+import { RootStackPropsList, ScreenProps, ScreenMap } from './core/screen';
 // nav
 import { NavigationContainer, DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationDefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
+// deps
+import 'react-native-get-random-values';
 
 // theme adaptation for navigation
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
@@ -44,36 +46,35 @@ const CombinedDarkTheme = {
 LogBox.ignoreLogs(['new NativeEventEmitter']);
 
 // create stack
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackPropsList>();
 
 /**
- * Screen 1
+ * screen wrapper
  */
-const ScreenOne: React.FC<any> = ({ navigation }) => {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text variant='bodyLarge'>Screen One</Text>
-      <Button mode='contained' onPress={() => navigation.navigate('ScreenTwo')}>Go to Screen Two</Button>
-    </View>
-  );
-};
+const ScreenWrapper = ({
+  Component,
+  navigation,
+  route,
+}: {
+  Component: React.FC<ScreenProps>;
+} & ScreenProps) => (
+  <View style={{ flex: 1 }}>
+    <Component navigation={navigation} route={route} />
+  </View>
+);
 
 /**
- * Screen 2
+ * root props
  */
-const ScreenTwo: React.FC<any> = ({ navigation }) => {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Screen Two</Text>
-      <Button mode='contained' onPress={() => navigation.goBack()}>Go Back</Button>
-    </View>
-  );
+type RootProps = {
+  DEFAULT_SCREEN: string;
+  screenMap: ScreenMap;
 };
 
 /**
  * the root component of the entire app. Handles initialization, context providers, and navigation
  */
-const Root: React.FC<{}> = ({ }) => {
+const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
   const [theme, setTheme] = useState(CombinedDarkTheme);
 
   const navContainerTheme = theme === CombinedDarkTheme ? NavigationDarkTheme : NavigationDefaultTheme;
@@ -83,9 +84,23 @@ const Root: React.FC<{}> = ({ }) => {
       <PaperProvider theme={theme}>
         <MenuProvider>
           <NavigationContainer theme={navContainerTheme}>
-            <Stack.Navigator initialRouteName='ScreenOne' screenOptions={{ headerShown: false }}>
-              <Stack.Screen name='ScreenOne' component={ScreenOne} />
-              <Stack.Screen name='ScreenTwo' component={ScreenTwo} />
+            <Stack.Navigator
+              initialRouteName={DEFAULT_SCREEN}
+              screenOptions={{
+                headerShown: false
+              }}
+            >
+              {Object.entries(screenMap).map(([name, Component]) => (
+                <Stack.Screen name={name} key={name}>
+                  {(props) => (
+                    <ScreenWrapper
+                      Component={Component}
+                      navigation={props.navigation}
+                      route={props.route}
+                    />
+                  )}
+                </Stack.Screen>
+              ))}
             </Stack.Navigator>
           </NavigationContainer>
         </MenuProvider>

@@ -9,7 +9,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./root": "./src/Root.tsx",
-    "./sampleModule": "./src/sampleModule/index.ts"
+    "./core/*": "./src/core/*"
   },
   "keywords": [],
   "author": "",
