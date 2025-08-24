@@ -14,7 +14,7 @@ type ActivityProps<T extends keyof RootStackPropsList = keyof RootStackPropsList
 }
 
 /******************************************************************************************************************
- * Activity Component
+ * Activity component
  *
  * Provides a standardized screen layout with:
  * - An AppBar header

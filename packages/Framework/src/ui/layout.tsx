@@ -15,7 +15,7 @@ type LayoutProps = {
 };
 
 /******************************************************************************************************************
- * Layout Component
+ * Layout component
  *
  * A flexible base layout component that arranges its children using flexbox.
  * It automatically applies spacing (`gap`) and padding, and supports constraints
@@ -70,7 +70,7 @@ const Layout: React.FC<LayoutProps> = ({
 };
 
 /******************************************************************************************************************
- * VerticalLayout
+ * Vertical layout component
  *
  * A convenience wrapper for Layout that defaults the direction to 'column'.
  * Useful for vertically stacked children without needing to pass `direction="column"`.
@@ -83,7 +83,7 @@ export const VerticalLayout: React.FC<Omit<LayoutProps, 'direction'>> =
   memo((props) => <Layout {...props} direction="column" />);
 
 /******************************************************************************************************************
- * HorizontalLayout
+ * Horizontal layout component
  *
  * A convenience wrapper for Layout that defaults the direction to 'row'.
  * Useful for horizontally arranged children without needing to pass `direction="row"`.
