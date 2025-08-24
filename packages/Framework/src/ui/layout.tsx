@@ -31,7 +31,7 @@ type LayoutProps = {
  * @param style? - additional container style
  * @param children - elements to render inside the layout
  *
- * @returns JSX.Element - styled flexbox-based layout container
+ * @returns JSX.Element
  ******************************************************************************************************************/
 const Layout: React.FC<LayoutProps> = ({
   direction = 'column',
@@ -77,7 +77,7 @@ const Layout: React.FC<LayoutProps> = ({
  *
  * @param props - inherits all LayoutProps except direction
  *
- * @returns JSX.Element - column-based Layout container
+ * @returns JSX.Element
  ******************************************************************************************************************/
 export const VerticalLayout: React.FC<Omit<LayoutProps, 'direction'>> =
   memo((props) => <Layout {...props} direction="column" />);
@@ -90,7 +90,7 @@ export const VerticalLayout: React.FC<Omit<LayoutProps, 'direction'>> =
  *
  * @param props - inherits all LayoutProps except direction
  *
- * @returns JSX.Element - a row-based Layout container
+ * @returns JSX.Element
  ******************************************************************************************************************/
 export const HorizontalLayout: React.FC<Omit<LayoutProps, 'direction'>> =
   memo((props) => <Layout {...props} direction="row" />);

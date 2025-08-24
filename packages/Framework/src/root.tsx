@@ -58,7 +58,7 @@ const Stack = createNativeStackNavigator<RootStackPropsList>();
  * @param navigation - navigation object for controlling stack navigation
  * @param route - route object containing params and route metadata
  *
- * @returns JSX.Element - rendered screen wrapped in a <View>
+ * @returns JSX.Element
  ******************************************************************************************************************/
 const ScreenWrapper = ({
   Component,
@@ -85,7 +85,7 @@ type RootProps = {
  * @param DEFAULT_SCREEN - name of the initial screen shown on app launch
  * @param screenMap - mapping of screen names to their respective React components
  * 
- * @returns JSX.Element - entire app root containing providers and navigation stack
+ * @returns JSX.Element
  ******************************************************************************************************************/
 const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
   const [theme, setTheme] = useState(CombinedDarkTheme);

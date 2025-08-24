@@ -65,7 +65,7 @@ type BaseOptionsProps = {
  * @param depthPadding - extra padding applied per hierarchy depth
  * @param style - additional style for the root container
  * 
- * @returns JSX.Element - recursively rendered options component
+ * @returns JSX.Element
  ******************************************************************************************************************/
 export const BaseOptions: React.FC<BaseOptionsProps> = memo(
   ({ schema, setSchema, optionsContainer: OptionsContainer, renderOption, depthPadding = 0, style = {} }) => {

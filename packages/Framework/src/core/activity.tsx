@@ -32,7 +32,7 @@ type ActivityProps<T extends keyof RootStackPropsList = keyof RootStackPropsList
  * @param isRootActivity? - if true, hides the back button (intended for the first/root screen)
  * @param children - content area of the screen
  *
- * @returns JSX.Element - complete screen layout with header and body
+ * @returns JSX.Element
  ******************************************************************************************************************/
 export const Activity: React.FC<ActivityProps> = memo(({
   navigation,

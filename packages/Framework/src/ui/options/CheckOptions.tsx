@@ -21,6 +21,8 @@ type CheckOptionCompProps = {
  * @param schema - JSON schema representing the menu options
  * @param setSchema - callback for updating schema
  * @param style - additional style for the container
+ * 
+ * @returns JSX.Element
  ******************************************************************************************************************/
 export const CheckOptions: React.FC<CheckOptionCompProps> = memo(({ schema, setSchema, style = {} }) => {
   /**
