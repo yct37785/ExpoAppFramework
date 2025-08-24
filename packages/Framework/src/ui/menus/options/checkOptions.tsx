@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { View, TouchableOpacity, StyleProp, ViewStyle } from 'react-native';
 import { Text, Checkbox } from 'react-native-paper';
-import * as Const from '../../const';
+import * as Const from '../../../const';
 import { OptionState, OptionSchema, OptionProps, BaseOptions } from './baseOptions';
 
 type CheckOptionCompProps = {
