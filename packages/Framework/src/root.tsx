@@ -72,6 +72,11 @@ const ScreenWrapper = ({
   </View>
 );
 
+type RootProps = {
+  DEFAULT_SCREEN: string;
+  screenMap: ScreenMap;
+};
+
 /******************************************************************************************************************
  * Root component of the framework
  *
@@ -82,11 +87,6 @@ const ScreenWrapper = ({
  * 
  * @returns JSX.Element - entire app root containing providers and navigation stack
  ******************************************************************************************************************/
-type RootProps = {
-  DEFAULT_SCREEN: string;
-  screenMap: ScreenMap;
-};
-
 const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
   const [theme, setTheme] = useState(CombinedDarkTheme);
 

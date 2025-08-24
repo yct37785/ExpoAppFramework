@@ -4,6 +4,15 @@ import { Appbar } from 'react-native-paper';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackPropsList } from './screen';
 
+type ActivityProps<T extends keyof RootStackPropsList = keyof RootStackPropsList> = {
+  navigation: NativeStackNavigationProp<RootStackPropsList, T>;
+  title?: string;
+  CustomHeader?: () => JSX.Element;
+  style?: StyleProp<ViewStyle>;
+  isRootActivity?: boolean;
+  children: React.ReactNode;
+}
+
 /******************************************************************************************************************
  * Activity Component
  *
@@ -25,15 +34,6 @@ import { RootStackPropsList } from './screen';
  *
  * @returns JSX.Element - complete screen layout with header and body
  ******************************************************************************************************************/
-type ActivityProps<T extends keyof RootStackPropsList = keyof RootStackPropsList> = {
-  navigation: NativeStackNavigationProp<RootStackPropsList, T>;
-  title?: string;
-  CustomHeader?: () => JSX.Element;
-  style?: StyleProp<ViewStyle>;
-  isRootActivity?: boolean;
-  children: React.ReactNode;
-}
-
 export const Activity: React.FC<ActivityProps> = memo(({
   navigation,
   title = '',
