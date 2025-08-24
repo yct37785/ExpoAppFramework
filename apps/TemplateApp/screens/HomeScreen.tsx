@@ -1,13 +1,12 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
 import { View } from 'react-native';
 import { Text, Button, Switch } from 'react-native-paper';
-import { Activity } from 'framework/core/activity.tsx';
-import { ScreenProps } from 'framework/core/screen.ts';
+import { Core } from 'framework';
 
 /******************************************************************************************************************
  * Home screen
  ******************************************************************************************************************/
-const SampleHomeScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
+const SampleHomeScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
 
   function CustomHeader() {
     return <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
@@ -22,10 +21,10 @@ const SampleHomeScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
   }
 
   return (
-    <Activity navigation={navigation} CustomHeader={CustomHeader} title='Home Sample' isRootActivity={true}>
+    <Core.Activity navigation={navigation} CustomHeader={CustomHeader} title='Home Sample' isRootActivity={true}>
       <Text variant='bodyMedium'>Select the screen you want to navigate to</Text>
       {renderScreenBtn('hello', 'testing')}
-    </Activity>
+    </Core.Activity>
   );
 };
 

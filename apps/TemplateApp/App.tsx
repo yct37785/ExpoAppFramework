@@ -1,6 +1,6 @@
 import { View } from 'react-native';
-import Root from 'framework/root';
 import { screenMap } from './screens/screenMap';
+import { Root } from 'framework';
 
 export default function App() {
   return (
