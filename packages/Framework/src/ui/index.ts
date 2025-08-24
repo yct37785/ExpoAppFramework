@@ -1,3 +1,3 @@
 export * from './layout';
-export * from './options/BaseOptions';
-export * from './options/CheckOptions';
+export * from './options/baseOptions';
+export * from './options/checkOptions';
