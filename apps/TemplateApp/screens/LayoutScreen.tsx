@@ -8,8 +8,8 @@ import { Core, UI } from 'framework';
  ******************************************************************************************************************/
 const LayoutScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
    const BasicContainer: React.FC<{ i: number }> = ({ i }) => (
-    <View style={{ width: 55, height: 75, alignItems: 'center', justifyContent: 'center', backgroundColor: 'green' }}>
-      <Text key={i}>item {1 + i}</Text>
+    <View style={{ width: 60, height: 75, alignItems: 'center', justifyContent: 'center', backgroundColor: 'green' }}>
+      <Text key={i}>child {1 + i}</Text>
     </View>
   );
 
@@ -19,12 +19,14 @@ const LayoutScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
       <Text variant='titleMedium'>VerticalLayout: scroll</Text>
       <UI.VerticalLayout constraint='scroll' style={{ backgroundColor: 'blue' }}>
 
-        {/* VerticalLayout: wrap */}
+        {/* VerticalLayout: wrap (fills parent height) */}
         <Text variant='labelMedium'>{`VerticalLayout: wrap`}</Text>
         <View style={{ height: 190 }}>
-          <UI.VerticalLayout constraint='wrap' style={{ backgroundColor: 'red' }}>
-            {[...Array(7)].map((e, i) => <BasicContainer key={i} i={i} />)}
-          </UI.VerticalLayout>
+          <View style={{ flex: 1 }}>
+            <UI.VerticalLayout constraint='wrap' style={{ backgroundColor: 'red' }}>
+              {[...Array(7)].map((e, i) => <BasicContainer key={i} i={i} />)}
+            </UI.VerticalLayout>
+          </View>
         </View>
 
         {/* HorizontalLayout: wrap */}
