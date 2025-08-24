@@ -8,7 +8,7 @@
   "files": ["src"],
   "exports": {
     ".": "./src/index.ts",
-    "./root": "./src/Root.tsx",
+    "./root": "./src/root.tsx",
     "./core/*": "./src/core/*"
   },
   "keywords": [],

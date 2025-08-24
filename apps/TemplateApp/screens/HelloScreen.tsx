@@ -3,9 +3,9 @@ import { View } from 'react-native';
 import { Text, Button, Switch } from 'react-native-paper';
 import { ScreenProps } from 'framework/core/screen.ts';
 
-/**
- * hello screen
- */
+/******************************************************************************************************************
+ * Hello screen
+ ******************************************************************************************************************/
 const HelloScreen: React.FC<ScreenProps> = ({ navigation, route }) => {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>

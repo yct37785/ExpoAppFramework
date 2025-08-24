@@ -48,9 +48,18 @@ LogBox.ignoreLogs(['new NativeEventEmitter']);
 // create stack
 const Stack = createNativeStackNavigator<RootStackPropsList>();
 
-/**
- * screen wrapper
- */
+/******************************************************************************************************************
+ * Wraps a screen component with navigation and route props.
+ *
+ * This is used inside the <Stack.Screen> render callback to inject the correct
+ * navigation and route props into client-defined screens, ensuring type-safety.
+ *
+ * @param Component - The screen React component to render
+ * @param navigation - The navigation object for controlling stack navigation
+ * @param route - The route object containing params and route metadata
+ *
+ * @returns JSX.Element - The rendered screen wrapped in a <View>
+ ******************************************************************************************************************/
 const ScreenWrapper = ({
   Component,
   navigation,
@@ -63,17 +72,24 @@ const ScreenWrapper = ({
   </View>
 );
 
-/**
- * root props
- */
+/******************************************************************************************************************
+ * Root component props
+ *
+ * @property DEFAULT_SCREEN - The name of the initial screen shown on app launch
+ * @property screenMap - A mapping of screen names to their respective React components
+ ******************************************************************************************************************/
 type RootProps = {
   DEFAULT_SCREEN: string;
   screenMap: ScreenMap;
 };
 
-/**
- * the root component of the entire app. Handles initialization, context providers, and navigation
- */
+/******************************************************************************************************************
+ * Root component of the framework
+ *
+ * Provides global context providers and configures the navigation stack using the given screen map.
+ *
+ * @returns JSX.Element - The entire app root containing providers and navigation stack
+ ******************************************************************************************************************/
 const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
   const [theme, setTheme] = useState(CombinedDarkTheme);
 
