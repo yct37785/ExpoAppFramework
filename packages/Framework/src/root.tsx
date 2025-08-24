@@ -99,26 +99,28 @@ const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
     <View style={{ width: '100%', flex: 1 }}>
       <PaperProvider theme={theme}>
         <MenuProvider>
-          <NavigationContainer theme={navContainerTheme}>
-            <Stack.Navigator
-              initialRouteName={DEFAULT_SCREEN}
-              screenOptions={{
-                headerShown: false
-              }}
-            >
-              {Object.entries(screenMap).map(([name, Component]) => (
-                <Stack.Screen name={name} key={name}>
-                  {(props) => (
-                    <ScreenWrapper
-                      Component={Component}
-                      navigation={props.navigation}
-                      route={props.route}
-                    />
-                  )}
-                </Stack.Screen>
-              ))}
-            </Stack.Navigator>
-          </NavigationContainer>
+          <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+            <NavigationContainer theme={navContainerTheme}>
+              <Stack.Navigator
+                initialRouteName={DEFAULT_SCREEN}
+                screenOptions={{
+                  headerShown: false
+                }}
+              >
+                {Object.entries(screenMap).map(([name, Component]) => (
+                  <Stack.Screen name={name} key={name}>
+                    {(props) => (
+                      <ScreenWrapper
+                        Component={Component}
+                        navigation={props.navigation}
+                        route={props.route}
+                      />
+                    )}
+                  </Stack.Screen>
+                ))}
+              </Stack.Navigator>
+            </NavigationContainer>
+          </View>
         </MenuProvider>
       </PaperProvider>
     </View>
