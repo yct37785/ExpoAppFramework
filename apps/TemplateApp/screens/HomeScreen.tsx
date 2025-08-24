@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
 import { View } from 'react-native';
 import { Text, Button, Switch } from 'react-native-paper';
-import { Core } from 'framework';
+import { Core, UI } from 'framework';
 
 /******************************************************************************************************************
  * Home screen
@@ -22,8 +22,10 @@ const SampleHomeScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => 
 
   return (
     <Core.Activity navigation={navigation} CustomHeader={CustomHeader} title='Home Sample' isRootActivity={true}>
-      <Text variant='bodyMedium'>Select the screen you want to navigate to</Text>
-      {renderScreenBtn('hello', 'testing')}
+      <UI.VerticalLayout>
+        <Text variant='bodyMedium'>Select the screen you want to navigate to</Text>
+        {renderScreenBtn('layout', 'layouts example')}
+      </UI.VerticalLayout>
     </Core.Activity>
   );
 };

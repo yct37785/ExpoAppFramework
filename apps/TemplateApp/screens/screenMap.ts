@@ -1,5 +1,5 @@
 import HomeScreen from './HomeScreen';
-import HelloScreen from './HelloScreen';
+import LayoutScreen from './LayoutScreen';
 import { Core } from 'framework';
 
 /******************************************************************************************************************
@@ -7,5 +7,5 @@ import { Core } from 'framework';
  ******************************************************************************************************************/
 export const screenMap: Core.ScreenMap = {
   'home': HomeScreen,
-  'hello': HelloScreen,
+  'layout': LayoutScreen,
 };
