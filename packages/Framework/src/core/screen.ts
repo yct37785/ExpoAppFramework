@@ -7,7 +7,7 @@ import { RouteProp } from '@react-navigation/native';
  * Each screen in the stack can define its own expected params.
  * By default, this example includes a single string parameter.
  *
- * @property paramText - Sample text data parameter passed via navigation
+ * @property paramText - sample text data parameter passed via navigation
  ******************************************************************************************************************/
 type ScreenRouteProps = {
   paramText: string;
@@ -29,10 +29,10 @@ export type RootStackPropsList = {
  * Each screen receives a navigation prop (for controlling navigation)
  * and a route prop (containing params and metadata).
  *
- * @template T - The specific screen name from RootStackPropsList
+ * @template T - specific screen name from RootStackPropsList
  *
- * @property navigation - Navigation controller for stack operations
- * @property route - Current route object including name and params
+ * @property navigation - navigation controller for stack operations
+ * @property route - current route object including name and params
  ******************************************************************************************************************/
 export type ScreenProps<T extends keyof RootStackPropsList = keyof RootStackPropsList> = {
   navigation: NativeStackNavigationProp<RootStackPropsList, T>;

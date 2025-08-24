@@ -54,11 +54,11 @@ const Stack = createNativeStackNavigator<RootStackPropsList>();
  * This is used inside the <Stack.Screen> render callback to inject the correct
  * navigation and route props into client-defined screens, ensuring type-safety.
  *
- * @param Component - The screen React component to render
- * @param navigation - The navigation object for controlling stack navigation
- * @param route - The route object containing params and route metadata
+ * @param Component - screen React component to render
+ * @param navigation - navigation object for controlling stack navigation
+ * @param route - route object containing params and route metadata
  *
- * @returns JSX.Element - The rendered screen wrapped in a <View>
+ * @returns JSX.Element - rendered screen wrapped in a <View>
  ******************************************************************************************************************/
 const ScreenWrapper = ({
   Component,
@@ -73,23 +73,20 @@ const ScreenWrapper = ({
 );
 
 /******************************************************************************************************************
- * Root component props
+ * Root component of the framework
  *
- * @property DEFAULT_SCREEN - The name of the initial screen shown on app launch
- * @property screenMap - A mapping of screen names to their respective React components
+ * Provides global context providers and configures the navigation stack using the given screen map.
+ *
+ * @param DEFAULT_SCREEN - name of the initial screen shown on app launch
+ * @param screenMap - mapping of screen names to their respective React components
+ * 
+ * @returns JSX.Element - entire app root containing providers and navigation stack
  ******************************************************************************************************************/
 type RootProps = {
   DEFAULT_SCREEN: string;
   screenMap: ScreenMap;
 };
 
-/******************************************************************************************************************
- * Root component of the framework
- *
- * Provides global context providers and configures the navigation stack using the given screen map.
- *
- * @returns JSX.Element - The entire app root containing providers and navigation stack
- ******************************************************************************************************************/
 const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
   const [theme, setTheme] = useState(CombinedDarkTheme);
 
