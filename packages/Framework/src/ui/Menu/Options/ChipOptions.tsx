@@ -1,7 +1,7 @@
 import React, { memo, useState } from 'react';
 import { View, StyleProp, ViewStyle } from 'react-native';
 import { useTheme, Chip } from 'react-native-paper';
-import * as Const from '../../../const';
+import * as Const from '../../../Const';
 
 type ChipOptionsProps = {
   schema: Set<string>;

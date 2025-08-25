@@ -1,2 +1,2 @@
-export * from '../core/screen';
-export * from '../core/activity';
+export * from '../Core/Screen';
+export * from '../Core/Activity';

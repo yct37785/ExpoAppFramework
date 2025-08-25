@@ -1,6 +1,6 @@
 import React, { memo, ReactNode } from 'react';
 import { View, ScrollView, StyleProp, ViewStyle } from 'react-native';
-import * as Const from '../const';
+import * as Const from '../Const';
 
 type LayoutProps = {
   direction?: 'row' | 'column';

@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { screenMap } from './screens/screenMap';
+import { screenMap } from './Screens/ScreenMap';
 import { Root } from 'framework';
 
 export default function App() {

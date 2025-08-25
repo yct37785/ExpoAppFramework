@@ -5,7 +5,7 @@ import { View, LogBox, Platform, StatusBar } from 'react-native';
 import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, Text, Button } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
 // screen
-import { RootStackPropsList, ScreenProps, ScreenMap } from './core/screen';
+import { RootStackPropsList, ScreenProps, ScreenMap } from './Core/Screen';
 // nav
 import { NavigationContainer, DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationDefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';

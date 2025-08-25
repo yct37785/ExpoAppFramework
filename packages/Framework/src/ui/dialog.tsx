@@ -1,7 +1,7 @@
 import React, { useRef, memo, ReactNode } from 'react';
 import { View, StyleProp, ViewStyle } from 'react-native';
 import { Text, Modal, Button, Card, TouchableRipple, useTheme } from 'react-native-paper';
-import * as Const from '../const';
+import * as Const from '../Const';
 
 type DialogProps = {
   title: string;

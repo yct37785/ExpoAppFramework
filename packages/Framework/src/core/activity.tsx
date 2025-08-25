@@ -2,7 +2,7 @@ import React, { JSX, memo } from 'react';
 import { View, StyleProp, ViewStyle } from 'react-native';
 import { Appbar } from 'react-native-paper';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackPropsList } from './screen';
+import { RootStackPropsList } from './Screen';
 
 type ActivityProps<T extends keyof RootStackPropsList = keyof RootStackPropsList> = {
   navigation: NativeStackNavigationProp<RootStackPropsList, T>;
