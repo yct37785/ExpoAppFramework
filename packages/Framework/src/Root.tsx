@@ -9,7 +9,8 @@ import { RootStackPropsList, ScreenProps, ScreenMap } from './Core/Screen';
 // nav
 import { NavigationContainer, DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationDefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { RouteProp } from '@react-navigation/native';
+// data
+import { useLocalData, LocalDataProvider } from './Managers/LocalData/LocalDataContext';
 // deps
 import 'react-native-get-random-values';
 
@@ -88,7 +89,16 @@ type RootProps = {
  * @returns JSX.Element
  ******************************************************************************************************************/
 const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
+  const { getItem, isLoaded } = useLocalData();
   const [theme, setTheme] = useState(CombinedDarkTheme);
+
+  // sync theme with stored setting
+  useEffect(() => {
+    if (isLoaded) {
+      const darkMode = getItem('isDarkMode');
+      setTheme(darkMode ? CombinedDarkTheme : CombinedDefaultTheme);
+    }
+  }, [isLoaded, getItem('isDarkMode')]);
 
   const navContainerTheme = theme === CombinedDarkTheme ? NavigationDarkTheme : NavigationDefaultTheme;
 
@@ -97,26 +107,28 @@ const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
       <PaperProvider theme={theme}>
         <MenuProvider>
           <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
-            <NavigationContainer theme={navContainerTheme}>
-              <Stack.Navigator
-                initialRouteName={DEFAULT_SCREEN}
-                screenOptions={{
-                  headerShown: false
-                }}
-              >
-                {Object.entries(screenMap).map(([name, Component]) => (
-                  <Stack.Screen name={name} key={name}>
-                    {(props) => (
-                      <ScreenWrapper
-                        Component={Component}
-                        navigation={props.navigation}
-                        route={props.route}
-                      />
-                    )}
-                  </Stack.Screen>
-                ))}
-              </Stack.Navigator>
-            </NavigationContainer>
+            {isLoaded && (
+              <NavigationContainer theme={navContainerTheme}>
+                <Stack.Navigator
+                  initialRouteName={DEFAULT_SCREEN}
+                  screenOptions={{
+                    headerShown: false
+                  }}
+                >
+                  {Object.entries(screenMap).map(([name, Component]) => (
+                    <Stack.Screen name={name} key={name}>
+                      {(props) => (
+                        <ScreenWrapper
+                          Component={Component}
+                          navigation={props.navigation}
+                          route={props.route}
+                        />
+                      )}
+                    </Stack.Screen>
+                  ))}
+                </Stack.Navigator>
+              </NavigationContainer>
+            )}
           </View>
         </MenuProvider>
       </PaperProvider>
@@ -124,4 +136,12 @@ const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
   );
 }
 
-export default memo(Root);
+const LocalDataProviderWrapper: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
+  return (
+    <LocalDataProvider>
+      <Root screenMap={screenMap} DEFAULT_SCREEN={DEFAULT_SCREEN} />
+    </LocalDataProvider>
+  );
+}
+
+export default memo(LocalDataProviderWrapper);
