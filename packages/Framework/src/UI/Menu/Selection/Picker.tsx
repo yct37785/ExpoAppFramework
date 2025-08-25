@@ -24,7 +24,7 @@ type PickerProps = {
 };
 
 /******************************************************************************************************************
- * Picker
+ * Picker component
  *
  * A styled dropdown picker built on top of @react-native-picker/picker.
  *

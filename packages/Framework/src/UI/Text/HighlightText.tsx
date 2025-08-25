@@ -9,7 +9,7 @@ interface HighlightTextProps extends TextProps<string> {
 }
 
 /******************************************************************************************************************
- * Highlight text
+ * Highlight text component
  *
  * A text component that highlights occurrences of a query string within its children.
  *

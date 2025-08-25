@@ -78,7 +78,7 @@ type RootProps = {
 };
 
 /******************************************************************************************************************
- * Root component of the framework
+ * Root component
  *
  * Provides global context providers and configures the navigation stack using the given screen map.
  *
