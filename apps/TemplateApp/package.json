@@ -1,0 +1,15 @@
+{
+  "name": "template-app",
+  "version": "1.0.0",
+  "main": "./src/index.ts",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "framework": "*"
+  },
+  "private": true
+}
