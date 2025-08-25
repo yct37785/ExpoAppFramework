@@ -1,16 +1,21 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
 import { View } from 'react-native';
 import { Text, Button, Switch } from 'react-native-paper';
-import { Core, UI } from 'framework';
+import { Core, UI, Managers } from 'framework';
 
 /******************************************************************************************************************
  * Home screen
  ******************************************************************************************************************/
-const SampleHomeScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
+const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
+  const { getItem, setItem } = Managers.useLocalData();
+  const isDarkMode = getItem('isDarkMode');
 
   function CustomHeader() {
     return <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-      <Switch value={true} onValueChange={() => { }} />
+      <Switch
+        value={!!isDarkMode}
+        onValueChange={(val) => setItem('isDarkMode', val)}
+      />
     </View>
   }
 
@@ -32,4 +37,4 @@ const SampleHomeScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => 
   );
 };
 
-export default memo(SampleHomeScreen);
+export default memo(HomeScreen);
