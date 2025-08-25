@@ -32,6 +32,7 @@ const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
         {renderScreenBtn('layout', 'layouts example')}
         {renderScreenBtn('menu', 'menus example')}
         {renderScreenBtn('list', 'list example')}
+        {renderScreenBtn('container', 'containers example')}
       </UI.VerticalLayout>
     </Core.Activity>
   );
