@@ -19,9 +19,11 @@ interface HighlightTextProps extends TextProps<string> {
  * - Customizable highlight color
  *
  * @usage
+ * ```tsx
  * <HighlightText query='React' highlightColor='lightgreen'>
  *   React Native makes mobile development easy with React.
  * </HighlightText>
+ * ```
  *
  * @param query - string to highlight within children
  * @param highlightColor - color applied to highlighted substrings

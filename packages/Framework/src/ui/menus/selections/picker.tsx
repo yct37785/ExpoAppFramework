@@ -34,6 +34,7 @@ type PickerProps = {
  * - Full-width responsive dropdown
  *
  * @usage
+ * ```tsx
  * <Picker
  *   value={selected}
  *   options={[
@@ -42,6 +43,7 @@ type PickerProps = {
  *   ]}
  *   onChange={(val) => setSelected(val)}
  * />
+ * ```
  *
  * @param value - current selected value
  * @param options - array of PickerOption objects defining the dropdown items
