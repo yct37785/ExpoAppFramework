@@ -33,3 +33,9 @@ export const textOpacityMEmphasis = 0.6;
 
 export const iconSizeSmall = 20;
 export const iconSizeMedium = 30;
+
+// reserved default values for storage
+export const localDataDefaults = {
+  isDarkMode: false,
+  language: 'en',
+};

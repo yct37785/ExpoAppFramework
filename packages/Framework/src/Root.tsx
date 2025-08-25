@@ -10,7 +10,7 @@ import { RootStackPropsList, ScreenProps, ScreenMap } from './Core/Screen';
 import { NavigationContainer, DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationDefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // data
-import { useLocalData, LocalDataProvider } from './Managers/LocalData/LocalDataContext';
+import { useLocalData, LocalDataProvider } from './Managers/LocalDataContext';
 // deps
 import 'react-native-get-random-values';
 

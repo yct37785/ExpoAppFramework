@@ -1,2 +1,1 @@
-export * from '../Managers/LocalData/LocalDataContext';
-export * from '../Managers/LocalData/LocalDataTypes';
+export * from '../Managers/LocalDataContext';
