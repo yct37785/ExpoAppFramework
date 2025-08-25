@@ -26,6 +26,7 @@ const SampleHomeScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => 
         <Text variant='bodyMedium'>Select the screen you want to navigate to</Text>
         {renderScreenBtn('layout', 'layouts example')}
         {renderScreenBtn('menu', 'menus example')}
+        {renderScreenBtn('list', 'list example')}
       </UI.VerticalLayout>
     </Core.Activity>
   );

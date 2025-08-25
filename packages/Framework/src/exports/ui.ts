@@ -7,4 +7,5 @@ export * from '../ui/menus/selections/radioGroup';
 export * from '../ui/text/highlightText';
 export * from '../ui/dialog';
 export * from '../ui/layout';
+export * from '../ui/list';
 export * from '../ui/popup';
