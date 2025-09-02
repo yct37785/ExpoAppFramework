@@ -1,22 +1,10 @@
 {
+  "extends": "../../templates/tsconfig.base.json",
   "compilerOptions": {
-    "target": "ES2022",
     "module": "ESNext",
-    "jsx": "react-jsx",
     "moduleResolution": "bundler",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "noEmit": true
   },
-  "include": ["src"],
-  "exclude": ["dist", "node_modules"],
-  "references": [
-    {
-      "path": "../../packages/Framework"
-    }
-  ],
-  "extends": "expo/tsconfig.base"
+  "include": ["src"]
 }
