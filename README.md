@@ -1,141 +1,118 @@
 # Expo App Framework
-This project is a monorepo for Expo apps. Core functionalities, UI elements, hooks, constants and utilities (henceforth referred to as **components**) are shared across all Expo app projects.
+This project is a monorepo for building Expo apps with a shared framework.
 
-Dependencies for the common framework are managed centrally per monorepo philosophy.
+Core functionality such as UI elements, hooks, constants, and utilities (collectively referred to as **components**) is centralized and reused across all Expo app projects.
+
+By consolidating dependencies and common logic into a single framework, apps can be developed quickly without redefining the same building blocks.
 
 *What is a monorepo: A monorepo is a single repository containing multiple distinct projects, with well-defined relationships.*
 
 ## End Goals
-The aim for this project is a quick and easy ready to use template to quickly build apps upon a common framework without having to define common components again for each new app project.
+- Provide a ready-to-use template for quickly building new Expo apps.
+- Maintain a shared framework of reusable components.
+- Manage dependencies centrally (monorepo philosophy).
+- Keep app projects lightweight by only adding app-specific code.
 
 ## Project Structure
 ### Overview
 The monorepo is structured as follows:
 ```
-/ExpoAppFramework
-│
-├── Framework
-├── node_modules
-├── Projects
-│	├── TemplateApp
-│	└── MyApp
-└── package.json
+root/
+├── apps/
+│   └── TemplateApp/          # example Expo app consuming the framework
+├── packages/
+│   └── Framework/            # core framework
+│       ├── src/              # framework source code
+│       ├── package.json
+│       └── tsconfig.json
+├── install.bat               # runs npm install in monorepo root
+└── package.json              # Monorepo root (workspaces defined here)
 ```
 
-All node modules, including expo, are managed in the **root** folder. All app projects are handled in the **Projects** folder. App projects will import shared components from **Framework**:
-
-![Expo App Framework_ overview](https://github.com/yct37785/ExpoAppFramework/assets/8434189/abc3e4f2-9544-4154-b144-9c5aea95e4d3)
-
-## Framework
-Shared library of aforementioned components.
-
-The Framework project is structured as follows:
-```
-/ExpoAppFramework
-...
-└── Framework
-	├── Const.ts
-	├── package.json
-	├── Root.tsx
-	├── Screen.ts
-	├── Test.tsx
-	├── Utility.ts
-	├── Firebase
-	├── Hook
-	└── UI
-```
-
-**Const.ts:** Holds constant values.
-
-**package.json:** Shared dependencies.
-
-**Root.tsx:** Root component with navigation, contexts and providers setup. The launching point for an app.
-
-**Screen.ts:** Screen type definitions and props for building React Navigation compatible screens.
-
-**Test.tsx:** Optionally run test cases at start.
-
-**Utility.ts:** Utility functions.
-
-**Firebase:** Firebase functions.
-
-**Hook:** Common hooks.
-
-**UI:** UI elements.
+## High Level Overview
+- **Framework**: Centralized shared components.
+- **TemplateApp**: Example app + testbed for new features.
+- **New apps**: Created by duplicating TemplateApp.
+- **Dependencies**: Installed at root for shared packages, or per-app for unique needs.
 
 ## TemplateApp
-TemplateApp serves as a quick start template for developing apps with examples for every component defined in **/Framework**. It is also the platform for building new components.
+TemplateApp demonstrates how to build an app on top of **Framework**.
+It also serves as a testbed for developing and validating new shared components.
 
 The TemplateApp project is structured as follows:
 ```
-/ExpoAppFramework
-...
-└── projects
-	└── TemplateApp
-		├── assets
-		├── Screens
-		│	├── ScreenMap.ts
-		│	└── ~ screen files (.tsx)
-		├── .env
-		├── app.json
-		├── App.tsx
-		├── babel.config.js
-		├── index.ts
-		├── metro.config.js
-		├── package.json
-		└── tsconfig.json
+apps/TemplateApp
+├── assets/
+├── src/
+│   ├── Screens/
+│   │   ├── <ScreenName>.tsx  # app-specific screen files
+│   │   └── ScreenMap.ts      # maps and registers screens with navigator
+│   ├── App.tsx               # root app entry point
+│   └── index.ts
+├── app.config.js             # Expo app configuration
+├── babel.config.js           # Babel configuration
+├── package.json              # App-specific dependencies (if any)
+├── run-expo-go.bat           # shortcut to run app in Expo Go
+└── tsconfig.json             # TypeScript config
 ```
 
 ### Screens
-
 **screen files (.tsx):** This is where you define your app specific screens (see sample screens).
 
 **ScreenMap.ts:** This is where you define your screen mapping for registration with the navigator (see sample screens).
 
 ### Config
+**app.config.js:** Expo configuration (name, slug, etc.).
 
-**app.json:** Change the values under `expo.name`, `expo.slug` and any other app project specific values as you see fit
+**babel.config.js:** Babel setup.
 
-**package.json:** Install any app specific dependencies here
+**package.json:** Only add app-specific dependencies here.
+
+**tsconfig.json:** TypeScript setup.
 
 ## Setup
-Clone and navigate to **/Framework**:
-
+Clone monorepo:
 ````bash
 git clone git@github.com:yct37785/ExpoAppFramework.git
-cd ExpoAppFramework/Framework
+cd ExpoAppFramework
 ````
 
-Within **/Framework**, install all shared dependencies:
-
+Install all shared dependencies from **root**:
 ````bash
-npm i
+./install.bat
 ````
+
+That's it, all setup complete!
 
 ## Usage
 ### Running TemplateApp
-In the app directory  **/Projects/TemplateApp**, run **launch.bat** or **launch prod.bat**.
+From inside **apps/TemplateApp**, run:
+````bash
+./run-expo-go.bat
+````
 
-Scan the QR code from your Expo GO app to run on mobile or input `w` into the cmd window to launch the web version.
+- Scan the QR code with the Expo Go app to run on a device.
+- Or press w in the terminal to launch the web version.
 
-### Setup a client app
-To set up a client app, simply duplicate **TemplateApp** in the same **/Projects** directory and rename all instances of TemplateApp to that of your client app:
+### Creating a New Client App
+Duplicate **TemplateApp** under **apps/** and rename it:
 
 ```
-/ExpoAppFramework
-...
-└── Projects
-	├── TemplateApp
-	└── MyNewApp
+apps/
+├── TemplateApp
+└── MyNewApp
 ```
 
-**app.json**:
+Update app config values:
+
+**app.config.js**:
 ````json
 {
   "expo": {
     "name": "<NEW_APP_NAME>",
     "slug": "<NEW_APP_NAME>",
     ...
+}
 ````
 
 **package.json**:
@@ -143,32 +120,30 @@ To set up a client app, simply duplicate **TemplateApp** in the same **/Projects
 {
   "name": "<NEW_APP_NAME>"
   ...
+}
 ````
 
-The .gitignore of the monorepo is set to ignore all projects within **/Projects** except for **TemplateApp**. So feel free to track your project separately.
+The .gitignore of the monorepo is set to ignore all folders within **app/** except for **TemplateApp**. So feel free to track your project separately.
 
-### Running the client app
-To run the client app, in the app directory **/Projects/MyNewApp**, run **launch.bat** or **launch prod.bat**.
+## Development
+### Adding New Shared Components
+- Add the new component to the appropriate folder in **packages/Framework/src**.
+- Test and run it inside **TemplateApp**.
 
-## Building
-### new common components
-To build a new components, simply define it within the proper directory under **/Framework**, test and run it from **TemplateApp**.
-
-*Note: when installing new packages use *`npx expo install` *to get the latest expo compatibile version of each package*
-
-Install new dependencies from within **/Framework**:
+Install new dependencies from within **root**:
 
 ````bash
-cd Framework
 npx expo install <package1> <package2>
 ````
 
-The packages will be installed to within the **node_modules** in root as per monorepo philosophy.
+*Note: when installing new packages use *`npx expo install` *to get the latest expo compatibile version of each package*
 
-### new app-specific components
-To build a new **app specific** components, simply define it within  your app project and install required packages from your app project root.
+The packages will be installed to the **node_modules** in root as per monorepo philosophy.
+
+### Adding App-Specific Components
+To build new **app specific** components, simply install from your app project root.
 
 ````bash
-cd Projects/MyNewApp
+cd app/MyNewApp
 npx expo install <package1> <package2>
 ````
