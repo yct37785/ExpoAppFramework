@@ -7,8 +7,7 @@
   "types": "src/index.ts",
   "files": ["src"],
   "exports": {
-    ".": "./src/index.ts",
-    "./sampleModule": "./src/sampleModule/index.ts"
+    ".": "./src/index.ts"
   },
   "keywords": [],
   "author": "",

@@ -12,7 +12,18 @@
     "framework": "*",
     "expo": "0",
     "react": "0",
-    "react-native": "0"
+    "react-native": "0",
+    "@react-native-async-storage/async-storage": "0",
+    "@react-native-picker/picker": "0",
+    "react-native-gesture-handler": "0",
+    "react-native-get-random-values": "0",
+    "react-native-pager-view": "0",
+    "react-native-reanimated": "0",
+    "react-native-safe-area-context": "0",
+    "react-native-screens": "0",
+    "expo-status-bar": "0",
+    "expo-auth-session": "0",
+    "expo-crypto": "0"
   },
   "private": true
 }
