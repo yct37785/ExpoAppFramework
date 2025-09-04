@@ -11,6 +11,8 @@ import { NavigationContainer, DarkTheme as NavigationDarkTheme, DefaultTheme as 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // data
 import { useLocalData, LocalDataProvider } from './Managers/LocalDataContext';
+// Firebase
+import { getFirebaseApp } from './Firebase/FirebaseApp';
 // deps
 import 'react-native-get-random-values';
 
@@ -92,8 +94,8 @@ const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
   const { getItem, isLoaded } = useLocalData();
   const [theme, setTheme] = useState(CombinedDarkTheme);
 
-  // sync theme with stored setting
   useEffect(() => {
+    // sync theme with stored setting
     if (isLoaded) {
       const darkMode = getItem('isDarkMode');
       setTheme(darkMode ? CombinedDarkTheme : CombinedDefaultTheme);
@@ -137,6 +139,14 @@ const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
 }
 
 const LocalDataProviderWrapper: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
+  // load Firebase at startup
+  const firebaseApp = getFirebaseApp();
+  if (firebaseApp) {
+    console.log('Firebase configured');
+  } else {
+    console.log('Firebase not configured');
+  }
+
   return (
     <LocalDataProvider>
       <Root screenMap={screenMap} DEFAULT_SCREEN={DEFAULT_SCREEN} />

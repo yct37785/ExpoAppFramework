@@ -1,5 +1,5 @@
 {
-  "name": "template-app",
+  "name": "template-app",  // RENAME THIS
   "version": "1.0.0",
   "main": "./src/index.ts",
   "scripts": {

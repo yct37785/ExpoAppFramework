@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
 import { View } from 'react-native';
 import { Text, Button, Switch } from 'react-native-paper';
-import { Core, UI, Managers } from 'framework';
+import { Core, Firebase, Managers, UI } from 'framework';
 
 /******************************************************************************************************************
  * Home screen
@@ -9,6 +9,10 @@ import { Core, UI, Managers } from 'framework';
 const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
   const { getItem, setItem } = Managers.useLocalData();
   const isDarkMode = getItem('isDarkMode');
+
+  useEffect(() => {
+    Firebase.getFirebaseApp();
+  }, []);
 
   function CustomHeader() {
     return <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>

@@ -40,3 +40,6 @@ yarn-error.*
 /apps/*
 !/apps/TemplateApp
 !/apps/TemplateApp/**
+
+# firebase
+firebase.env

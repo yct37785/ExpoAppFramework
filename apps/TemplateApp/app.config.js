@@ -1,11 +1,16 @@
+import { config as loadEnv } from 'dotenv';
+loadEnv({ path: './firebase.env' });
+
 export default ({ config }) => {
   const isCustomBuild = process.env.CUSTOM_DEV === "true";
 
   return {
     ...config,
     expo: {
-      name: "TemplateApp",
-      slug: "TemplateApp",
+      ...config.expo,
+      name: "TemplateApp",  // RENAME THIS
+      slug: "TemplateApp",  // RENAME THIS
+      scheme: "TemplateApp",  // RENAME THIS
       version: "1.0.0",
       orientation: "portrait",
       icon: "./assets/icon.png",
@@ -18,9 +23,10 @@ export default ({ config }) => {
       },
       ios: {
         supportsTablet: true,
+        bundleIdentifier: "com.yourorg.templateapp",  // RENAME THIS
       },
       android: {
-        package: "com.anonymous.TemplateApp",
+        package: "com.anonymous.TemplateApp", // RENAME THIS
         adaptiveIcon: {
           foregroundImage: "./assets/adaptive-icon.png",
           backgroundColor: "#ffffff",
