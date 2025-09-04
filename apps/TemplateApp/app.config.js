@@ -8,8 +8,9 @@ export default ({ config }) => {
     ...config,
     expo: {
       ...config.expo,
-      name: "TemplateApp",
-      slug: "TemplateApp",
+      name: "TemplateApp",  // RENAME THIS
+      slug: "TemplateApp",  // RENAME THIS
+      scheme: "TemplateApp",  // RENAME THIS
       version: "1.0.0",
       orientation: "portrait",
       icon: "./assets/icon.png",
@@ -22,9 +23,10 @@ export default ({ config }) => {
       },
       ios: {
         supportsTablet: true,
+        bundleIdentifier: "com.yourorg.templateapp",  // RENAME THIS
       },
       android: {
-        package: "com.anonymous.TemplateApp",
+        package: "com.anonymous.TemplateApp", // RENAME THIS
         adaptiveIcon: {
           foregroundImage: "./assets/adaptive-icon.png",
           backgroundColor: "#ffffff",
