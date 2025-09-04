@@ -32,6 +32,7 @@ yarn-error.*
 
 # local env files
 .env*.local
+apps/TemplateApp/firebase.env
 
 # typescript
 *.tsbuildinfo

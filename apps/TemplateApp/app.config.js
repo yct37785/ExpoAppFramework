@@ -1,9 +1,13 @@
+import { config as loadEnv } from 'dotenv';
+loadEnv({ path: './firebase.env' });
+
 export default ({ config }) => {
   const isCustomBuild = process.env.CUSTOM_DEV === "true";
 
   return {
     ...config,
     expo: {
+      ...config.expo,
       name: "TemplateApp",
       slug: "TemplateApp",
       version: "1.0.0",
