@@ -11,7 +11,7 @@ const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
   const isDarkMode = getItem('isDarkMode');
 
   useEffect(() => {
-    Firebase.testFirebaseEnvVars();
+    Firebase.getFirebaseApp();
   }, []);
 
   function CustomHeader() {
