@@ -6,6 +6,10 @@
     "apps/*",
     "packages/*"
   ],
+  "scripts": {
+    "sync:apps": "node scripts/sync-app-deps.cjs",
+    "setup": "npm run sync:apps && npm install"
+  },
   "dependencies": {
   },
   "devDependencies": {
