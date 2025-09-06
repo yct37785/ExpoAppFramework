@@ -1,15 +1,43 @@
 {
-  "name": "template-app",  // RENAME THIS
+  "name": "template-app",
   "version": "1.0.0",
   "main": "./src/index.ts",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web"
   },
   "dependencies": {
-    "framework": "*"
+    "@expo/vector-icons": "0",
+    "@faker-js/faker": "0",
+    "@react-native-async-storage/async-storage": "0",
+    "@react-native-picker/picker": "0",
+    "@react-navigation/native": "0",
+    "@react-navigation/native-stack": "0",
+    "@shopify/flash-list": "0",
+    "axios": "0",
+    "expo": "0",
+    "expo-auth-session": "0",
+    "expo-crypto": "0",
+    "expo-status-bar": "0",
+    "firebase": "0",
+    "form-data": "0",
+    "lodash": "0",
+    "react": "0",
+    "react-native": "0",
+    "react-native-collapsible": "0",
+    "react-native-dotenv": "0",
+    "react-native-gesture-handler": "0",
+    "react-native-get-random-values": "0",
+    "react-native-pager-view": "0",
+    "react-native-paper": "0",
+    "react-native-popup-menu": "0",
+    "react-native-reanimated": "0",
+    "react-native-safe-area-context": "0",
+    "react-native-screens": "0",
+    "react-native-tab-view": "0",
+    "uuid": "0"
   },
   "private": true
 }
