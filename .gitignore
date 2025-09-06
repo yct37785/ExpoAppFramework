@@ -43,3 +43,6 @@ yarn-error.*
 
 # firebase
 firebase.env
+
+# TemplateApp special
+apps/TemplateApp/android/
