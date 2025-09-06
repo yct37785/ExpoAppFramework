@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "sync:apps": "node scripts/sync-app-deps.cjs",
-    "setup": "npm run sync:apps && npm install"
+    "setup": "npm run sync:apps && npm install --package-lock-only && npm install"
   },
   "dependencies": {
   },
