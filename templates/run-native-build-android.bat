@@ -10,7 +10,7 @@ if errorlevel 1 (
   exit /b 1
 )
 
-echo [2/3] Build & install (non-interactive)...
+echo [2/3] Build ^& install (non-interactive)...
 set "CI=1"
 call npx expo run:android
 set "CI="
