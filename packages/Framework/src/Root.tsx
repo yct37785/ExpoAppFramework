@@ -103,18 +103,12 @@ const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
       const auth = getAuth(firebaseApp);
 
       // log proof that native config was loaded from google-services.json
-      const { projectId, appId, apiKey, messagingSenderId } = firebaseApp.options;
-      console.log('[Firebase] App name:', firebaseApp.name); // typically "[DEFAULT]"
-      console.log('[Firebase] Options:', {
-        projectId,
-        appId,
-        apiKey: apiKey?.slice(0, 8) + '…',
-        messagingSenderId,
-      });
+      const { projectId } = firebaseApp.options;
+      console.log('[Firebase] Loaded with projectId:', projectId);
 
       // confirm Auth is alive using modular free function
       const unsub = onAuthStateChanged(auth, (user) => {
-        console.log('[Firebase] Auth state ready. Signed in?', !!user);
+        console.log('[Firebase] Auth state ready. Signed in =', !!user);
       });
 
       return unsub;

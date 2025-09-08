@@ -18,5 +18,4 @@ if errorlevel 1 (
   exit /b 1
 )
 
-echo [✓] Done. (Metro should be running with hot reload enabled)
 endlocal
