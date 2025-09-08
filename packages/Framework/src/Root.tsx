@@ -16,6 +16,8 @@ import { useLocalData, LocalDataProvider } from './Managers/LocalDataContext';
 // Firebase
 import { getApp } from '@react-native-firebase/app';
 import { getAuth, onAuthStateChanged } from '@react-native-firebase/auth';
+// const
+import { logColors } from './Const';
 
 // theme adaptation for navigation
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
@@ -104,16 +106,16 @@ const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
 
       // log proof that native config was loaded from google-services.json
       const { projectId } = firebaseApp.options;
-      console.log('[Firebase] Loaded with projectId:', projectId);
+      console.log(`${logColors.cyan}[Firebase]${logColors.reset} Loaded with projectId: ${logColors.green}${projectId}`);
 
       // confirm Auth is alive using modular free function
       const unsub = onAuthStateChanged(auth, (user) => {
-        console.log('[Firebase] Auth state ready. Signed in =', !!user);
+        console.log(`${logColors.cyan}[Firebase]${logColors.reset} Auth state ready. Signed in = ${logColors.green}${!!user}`);
       });
 
       return unsub;
     } catch (err) {
-      console.error('[Firebase] NOT ready (native config missing?)', err);
+      console.error(`${logColors.cyan}[Firebase]${logColors.reset} NOT ready (native config missing?): ${err}`);
     }
   }, []);
 

@@ -9,7 +9,7 @@
  ******************************************************************************************************************/
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { localDataDefaults } from '../Const';
+import { localDataDefaults, logColors } from '../Const';
 
 /******************************************************************************************************************
  * Local data schema and reserved defaults.
@@ -87,9 +87,9 @@ export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
         setData(merged);
       } catch (err) {
-        console.error('[LocalData] Failed to load local data', err);
+        console.log(`${logColors.cyan}[LocalData]${logColors.reset} Failed to load local data: ${err}`);
       } finally {
-        console.log('[LocalData] Local data loaded');
+        console.log(`${logColors.cyan}[LocalData]${logColors.reset} Local data loaded`);
         setIsLoaded(true);
       }
     })();
