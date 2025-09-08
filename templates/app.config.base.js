@@ -24,15 +24,6 @@ export default function withBaseConfig({ config }) {
         // package: 'com.mycorp.myapp'
       },
 
-      ios: {
-        ...(config?.expo?.ios ?? {}),
-        // each app should place its GoogleService-Info.plist in its own folder
-        googleServicesFile: './GoogleService-Info.plist',
-
-        // IMPORTANT: bundleIdentifier is app-specific; do NOT set here
-        // bundleIdentifier: 'com.mycorp.myapp'
-      },
-
       // ---- plugins shared by all apps ----
       plugins: [
         // keep any app-level plugins already provided by the caller
@@ -41,12 +32,6 @@ export default function withBaseConfig({ config }) {
         // RN Firebase core modules
         '@react-native-firebase/app',
         '@react-native-firebase/auth',
-
-        // iOS: use static frameworks (recommended with many RN Firebase modules)
-        [
-          'expo-build-properties',
-          { ios: { useFrameworks: 'static' } }
-        ],
       ],
     },
   };

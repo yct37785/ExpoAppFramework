@@ -142,9 +142,6 @@ Change the duplicated app’s configs with your app name:
     "name": "MyNewApp",
     "slug": "MyNewApp",
     ...
-  "ios": {
-    "bundleIdentifier": "com.anonymous.MyNewApp",
-    ...
   "android": {
     "package": "com.anonymous.MyNewApp",
     ...

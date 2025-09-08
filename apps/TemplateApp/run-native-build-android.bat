@@ -15,14 +15,11 @@ REM ---- Move to the app folder (script location) ----
 set APP_DIR=%~dp0
 pushd "%APP_DIR%"
 
-REM ---- 1) Check required Firebase files (Android required, iOS optional here) ----
+REM ---- 1) Check required Firebase files (Android) ----
 if not exist ".\google-services.json" (
   echo [!] Missing google-services.json in this app folder: %CD%
   echo     Place your Firebase Android config at: %CD%\google-services.json
   exit /b 1
-)
-if not exist ".\GoogleService-Info.plist" (
-  echo [i] GoogleService-Info.plist not found. (OK for Android-only build)
 )
 
 REM ---- 2) Prebuild (clean) ----
