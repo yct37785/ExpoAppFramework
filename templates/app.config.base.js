@@ -29,9 +29,9 @@ export default function withBaseConfig({ config }) {
         // keep any app-level plugins already provided by the caller
         ...((config?.expo?.plugins ?? [])),
 
-        // RN Firebase core modules
         '@react-native-firebase/app',
         '@react-native-firebase/auth',
+        "@react-native-google-signin/google-signin",
       ],
     },
   };
