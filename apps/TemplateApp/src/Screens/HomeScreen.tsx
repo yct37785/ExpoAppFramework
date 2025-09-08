@@ -7,6 +7,7 @@ import { Core, Managers, UI } from 'framework';
  * Home screen
  ******************************************************************************************************************/
 const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
+  const { user, signIn, signOut } = Managers.useAuth();
   const { getItem, setItem } = Managers.useLocalData();
   const isDarkMode = getItem('isDarkMode');
   
@@ -25,9 +26,28 @@ const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
     </Button>
   }
 
+  function renderAuthOptions() {
+    return <>
+      <Text variant='bodyMedium' style={{ marginBottom: 16 }}>
+        {user ? `Signed in as ${user.email ?? user.uid}` : 'Not signed in'}
+      </Text>
+
+      {user ? (
+        <Button mode='outlined' onPress={signOut}>
+          Sign out
+        </Button>
+      ) : (
+        <Button mode='contained' onPress={signIn}>
+          Sign in with Google
+        </Button>
+      )}
+    </>
+  }
+
   return (
     <Core.Activity navigation={navigation} CustomHeader={CustomHeader} title='Home Sample' isRootActivity={true}>
       <UI.VerticalLayout>
+        {renderAuthOptions()}
         <Text variant='bodyMedium'>Select the screen you want to navigate to</Text>
         {renderScreenBtn('layout', 'layouts example')}
         {renderScreenBtn('menu', 'menus example')}

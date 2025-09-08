@@ -16,6 +16,7 @@ import { useLocalData, LocalDataProvider } from './Managers/LocalDataContext';
 // Firebase
 import { getApp } from '@react-native-firebase/app';
 import { getAuth, onAuthStateChanged } from '@react-native-firebase/auth';
+import { AuthProvider } from './Managers/FirebaseAuthContext';
 // const
 import { logColors } from './Const';
 
@@ -165,7 +166,9 @@ const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
 const LocalDataProviderWrapper: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
   return (
     <LocalDataProvider>
-      <Root screenMap={screenMap} DEFAULT_SCREEN={DEFAULT_SCREEN} />
+      <AuthProvider /* webClientId={process.env.GOOGLE_WEB_CLIENT_ID} */>
+        <Root screenMap={screenMap} DEFAULT_SCREEN={DEFAULT_SCREEN} />
+      </AuthProvider>
     </LocalDataProvider>
   );
 }
