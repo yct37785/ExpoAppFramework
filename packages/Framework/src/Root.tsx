@@ -1,3 +1,5 @@
+// deps
+import 'react-native-get-random-values';
 // core
 import React, { ReactNode, useCallback, memo, useEffect, useState } from 'react';
 import { View, LogBox, Platform, StatusBar } from 'react-native';
@@ -11,8 +13,9 @@ import { NavigationContainer, DarkTheme as NavigationDarkTheme, DefaultTheme as 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // data
 import { useLocalData, LocalDataProvider } from './Managers/LocalDataContext';
-// deps
-import 'react-native-get-random-values';
+// Firebase
+import { getApp } from '@react-native-firebase/app';
+import { getAuth, onAuthStateChanged } from '@react-native-firebase/auth';
 
 // theme adaptation for navigation
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
@@ -93,11 +96,38 @@ const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
   const [theme, setTheme] = useState(CombinedDarkTheme);
 
   useEffect(() => {
-    // sync theme with stored setting
-    if (isLoaded) {
-      const darkMode = getItem('isDarkMode');
-      setTheme(darkMode ? CombinedDarkTheme : CombinedDefaultTheme);
+    // Firebase pulse check
+    try {
+      // get the default app that RN Firebase auto-initialized from native files
+      const firebaseApp = getApp();
+      const auth = getAuth(firebaseApp);
+
+      // log proof that native config was loaded from google-services.json
+      const { projectId, appId, apiKey, messagingSenderId } = firebaseApp.options;
+      console.log('[Firebase] App name:', firebaseApp.name); // typically "[DEFAULT]"
+      console.log('[Firebase] Options:', {
+        projectId,
+        appId,
+        apiKey: apiKey?.slice(0, 8) + '…',
+        messagingSenderId,
+      });
+
+      // confirm Auth is alive using modular free function
+      const unsub = onAuthStateChanged(auth, (user) => {
+        console.log('[Firebase] Auth state ready. Signed in?', !!user);
+      });
+
+      return unsub;
+    } catch (err) {
+      console.error('[Firebase] NOT ready (native config missing?)', err);
     }
+  }, []);
+
+  useEffect(() => {
+    if (!isLoaded) return;
+    // sync theme with stored setting
+    const darkMode = getItem('isDarkMode');
+    setTheme(darkMode ? CombinedDarkTheme : CombinedDefaultTheme);
   }, [isLoaded, getItem('isDarkMode')]);
 
   const navContainerTheme = theme === CombinedDarkTheme ? NavigationDarkTheme : NavigationDefaultTheme;

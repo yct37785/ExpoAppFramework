@@ -87,8 +87,9 @@ export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
         setData(merged);
       } catch (err) {
-        console.warn('Failed to load local data', err);
+        console.error('[LocalData] Failed to load local data', err);
       } finally {
+        console.log('[LocalData] Local data loaded');
         setIsLoaded(true);
       }
     })();
