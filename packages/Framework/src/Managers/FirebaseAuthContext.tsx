@@ -77,6 +77,19 @@ export const AuthProvider: React.FC<Props> = ({ children, webClientId }) => {
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
   const configuredRef = useRef(false);
 
+  // in-progress guard — prevents concurrent sign-in calls (e.g., double-taps)
+  const signingRef = useRef(false);
+
+  // timeout wrapper to avoid silent hangs from native bridges
+  const withTimeout = <T,>(p: Promise<T>, ms = 20000) =>
+    new Promise<T>((resolve, reject) => {
+      const t = setTimeout(() => reject(new Error('Google sign-in timed out')), ms);
+      p.then(
+        v => { clearTimeout(t); resolve(v); },
+        e => { clearTimeout(t); reject(e); }
+      );
+    });
+
   /****************************************************************************************************************
    * Configure Google Sign-In once:
    * - Why webClientId? Google Sign-In often requires the Web client ID so that it returns an ID token (JWT).
@@ -124,12 +137,19 @@ export const AuthProvider: React.FC<Props> = ({ children, webClientId }) => {
    *     you’d fetch a Firebase ID token via currentUser.getIdToken() and send it as a Bearer token.
    ****************************************************************************************************************/
   const signIn = async (): Promise<FirebaseAuthTypes.User> => {
+    // prevent concurrent calls (double-tap)
+    if (signingRef.current) {
+      throw new Error(`${logColors.red}[Auth]${logColors.reset} Sign-in already in progress`);
+    }
+    signingRef.current = true;
+
     try {
       // 1) Play Services readiness (Android-specific guard).
       await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
 
       // 2) Bring up account picker; retrieve Google ID token (OpenID Connect JWT).
-      const res: any = await GoogleSignin.signIn();
+      // wrap with timeout so the promise can't hang forever
+      const res: any = await withTimeout(GoogleSignin.signIn(), 30000);
       const idToken = res?.idToken ?? res?.data?.idToken;
       if (!idToken) {
         // if this error is triggered, double-check webClientId + SHA-1 + package name
@@ -141,11 +161,14 @@ export const AuthProvider: React.FC<Props> = ({ children, webClientId }) => {
       const credential = GoogleAuthProvider.credential(idToken);
       const { user } = await signInWithCredential(auth, credential);
 
-      // SUCCESS: Firebase now holds (a) a Firebase ID token (JWT) and (b) a refresh token.
+      // 4) SUCCESS. Firebase now holds (a) a Firebase ID token (JWT) and (b) a refresh token.
       // - the SDK refreshes tokens automatically; you typically won’t handle refreshes manually
       return user;
     } catch (err) {
       throw new Error(`${logColors.red}[Auth]${logColors.reset} Google sign-in failed: ${err}`);
+    } finally {
+      // release the in-progress flag
+      signingRef.current = false;
     }
   };
 
