@@ -12,6 +12,7 @@ import {
 } from '@react-native-firebase/auth';
 import type { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { logColors } from '../Const';
 
 /******************************************************************************************************************
  * Context type
@@ -28,10 +29,10 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType>({
   user: null,
   signIn: async () => {
-    throw new Error('AuthProvider not mounted');
+    throw new Error(`${logColors.red}[Auth]${logColors.reset} AuthProvider not mounted`);
   },
   signOut: async () => {
-    throw new Error('AuthProvider not mounted');
+    throw new Error(`${logColors.red}[Auth]${logColors.reset} AuthProvider not mounted`);
   },
 });
 

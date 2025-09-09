@@ -87,7 +87,7 @@ export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
         setData(merged);
       } catch (err) {
-        console.log(`${logColors.cyan}[LocalData]${logColors.reset} Failed to load local data: ${err}`);
+        console.log(`${logColors.red}[LocalData]${logColors.reset} Failed to load local data: ${err}`);
       } finally {
         console.log(`${logColors.cyan}[LocalData]${logColors.reset} Local data loaded`);
         setIsLoaded(true);
@@ -112,7 +112,7 @@ export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     try {
       await AsyncStorage.setItem(key, JSON.stringify(value));
     } catch (err) {
-      console.warn(`Failed to save local data for key "${key}"`, err);
+      console.log(`${logColors.red}[LocalData]${logColors.reset} Failed to save local data for key "${key}": ${err}`);
     }
   };
 
@@ -148,7 +148,7 @@ export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     try {
       await AsyncStorage.clear();
     } catch (err) {
-      console.warn('Failed to reset local data', err);
+      console.log(`${logColors.red}[LocalData]${logColors.reset} Failed to reset local data: ${err}`);
     }
   };
 

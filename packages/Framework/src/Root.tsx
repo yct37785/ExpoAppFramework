@@ -116,7 +116,7 @@ const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
 
       return unsub;
     } catch (err) {
-      console.error(`${logColors.cyan}[Firebase]${logColors.reset} NOT ready (native config missing?): ${err}`);
+      console.log(`${logColors.red}[Firebase]${logColors.reset} NOT ready (native config missing?): ${err}`);
     }
   }, []);
 
