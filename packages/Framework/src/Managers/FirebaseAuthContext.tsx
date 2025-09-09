@@ -46,7 +46,7 @@ const AuthContext = createContext<AuthContextType>({
  ******************************************************************************************************************/
 type Props = {
   children: React.ReactNode;
-  webClientId?: string; // optional Web client ID (needed if idToken is null without it)
+  webClientId?: string;
 };
 
 export const AuthProvider: React.FC<Props> = ({ children, webClientId }) => {
@@ -58,16 +58,15 @@ export const AuthProvider: React.FC<Props> = ({ children, webClientId }) => {
 
   /****************************************************************************************************************
    * Configure Google Sign-In once.
-   * - If webClientId is passed, use it explicitly (avoids idToken=null issue).
-   * - Otherwise rely on auto-detection via google-services.json.
+   * - auto-detection via google-services.json does not work, hence pass webClientId manually.
    ****************************************************************************************************************/
   useEffect(() => {
     if (configuredRef.current) return;
-    if (webClientId) {
-      GoogleSignin.configure({ webClientId });
-    } else {
-      GoogleSignin.configure();
+    if (!webClientId) {
+      throw new Error(`${logColors.red}[Auth]${logColors.reset} GoogleSignin load failed: Missing webClientId`);
     }
+    GoogleSignin.configure({ webClientId });
+    console.log(`${logColors.cyan}[Auth]${logColors.reset} GoogleSignin loaded with webClientId: ${logColors.green}${webClientId.slice(0, 8)}..`);
     configuredRef.current = true;
   }, [webClientId]);
 
@@ -88,24 +87,22 @@ export const AuthProvider: React.FC<Props> = ({ children, webClientId }) => {
    * - Converts idToken into a Firebase credential and signs in.
    ****************************************************************************************************************/
   const signIn = async (): Promise<FirebaseAuthTypes.User> => {
-    console.log("1");
-    await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-    console.log("2");
+    try {
+      await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
 
-    const res: any = await GoogleSignin.signIn();
-    console.log("3");
-    const idToken = res?.idToken ?? res?.data?.idToken;
-    console.log("4");
-    if (!idToken) throw new Error('Google sign-in failed: missing idToken');
-    console.log("5");
+      const res: any = await GoogleSignin.signIn();
+      const idToken = res?.idToken ?? res?.data?.idToken;
+      if (!idToken) {
+        throw new Error(`${logColors.red}[Auth]${logColors.reset} Google sign-in failed: missing idToken`);
+      }
 
-    const auth = getAuth(getApp());
-    console.log("6");
-    const credential = GoogleAuthProvider.credential(idToken);
-    console.log("7");
-    const { user } = await signInWithCredential(auth, credential);
-    console.log("8");
-    return user;
+      const auth = getAuth(getApp());
+      const credential = GoogleAuthProvider.credential(idToken);
+      const { user } = await signInWithCredential(auth, credential);
+      return user;
+    } catch (err) {
+      throw new Error(`${logColors.red}[Auth]${logColors.reset} Google sign-in failed: ${err}`);
+    }
   };
 
   /****************************************************************************************************************
