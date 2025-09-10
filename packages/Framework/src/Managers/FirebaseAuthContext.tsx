@@ -13,12 +13,11 @@
  *
  * Notes:
  * - The Firebase account has a stable **uid** (user id in this project).
- * - For “anonymous → Google” upgrades that keep the same uid, use linkWithCredential in the sign-in flow (handled elsewhere).
+ * - For “anonymous → Google” upgrades that keep the same uid, we **link** Google to the current anonymous user.
  ******************************************************************************************************************/
 import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { logColors } from '../Const';
 import { withTimeout } from '../Utils';
-
 import { getApp } from '@react-native-firebase/app';
 import {
   getAuth,
@@ -26,6 +25,8 @@ import {
   GoogleAuthProvider,
   signInWithCredential,
   signOut as fbSignOut,
+  signInAnonymously,
+  linkWithCredential,
 } from '@react-native-firebase/auth';
 import type { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
@@ -97,9 +98,37 @@ export const AuthProvider: React.FC<Props> = ({ children, webClientId }) => {
   }, []);
 
   /****************************************************************************************************************
+   * Ensure an anonymous session exists early (local-first).
+   * - If there is no current user, create an **anonymous** user so we have a stable uid immediately (even offline).
+   * - Later, when the user chooses Google, we **link** to keep the same uid.
+   ****************************************************************************************************************/
+  useEffect(() => {
+    (async () => {
+      const auth = getAuth(getApp());
+
+      if (!auth.currentUser) {
+        try {
+          const { user } = await signInAnonymously(auth);
+          console.log(
+            `${logColors.cyan}[Auth]${logColors.reset} Anonymous sign-in success, uid: ${logColors.green}${user.uid}`);
+        } catch (e) {
+          // non-fatal: UI can still render; sign-in can be retried later
+          console.log(
+            `${logColors.cyan}[Auth]${logColors.reset} Anonymous sign-in failed: ${e}`);
+        }
+      } else {
+        console.log(
+          `${logColors.cyan}[Auth]${logColors.reset} Existing user detected, uid: ${logColors.green}${auth.currentUser.uid}`);
+      }
+    })();
+  }, []);
+
+  /****************************************************************************************************************
    * Sign in with Google → Firebase.
    * - Shows native account picker.
    * - Exchanges Google ID token for Firebase credential.
+   * - If the current user is **anonymous**, LINK the Google credential to **retain the same uid**.
+   * - Otherwise, do a standard Google credential sign-in.
    * - Returns the Firebase user.
    ****************************************************************************************************************/
   const signIn = async (): Promise<FirebaseAuthTypes.User> => {
@@ -120,13 +149,21 @@ export const AuthProvider: React.FC<Props> = ({ children, webClientId }) => {
         throw new Error(`${logColors.red}[Auth]${logColors.reset} Google sign-in failed: missing idToken`);
       }
 
-      // 3) Exchange Google ID token → Firebase sign-in.
+      // 3) Link-or-sign-in with Google credential.
       const auth = getAuth(getApp());
       const credential = GoogleAuthProvider.credential(idToken);
-      const { user } = await signInWithCredential(auth, credential);
+
+      let linkedUser: FirebaseAuthTypes.User;
+      if (auth.currentUser?.isAnonymous) {
+        // Upgrade path: keep the SAME uid by linking Google to the existing anonymous user
+        ({ user: linkedUser } = await linkWithCredential(auth.currentUser, credential));
+      } else {
+        // standard Google sign-in
+        ({ user: linkedUser } = await signInWithCredential(auth, credential));
+      }
 
       // 4) Firebase now manages the session (ID token + refresh token under the hood).
-      return user;
+      return linkedUser;
     } catch (err) {
       throw new Error(`${logColors.red}[Auth]${logColors.reset} Google sign-in failed: ${err}`);
     } finally {
