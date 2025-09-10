@@ -1,25 +1,24 @@
 /******************************************************************************************************************
- * A simple authentication provider using:
- *   - React Native Firebase (modular API) for Firebase Authentication, and
- *   - @react-native-google-signin/google-signin for the native Google account picker.
+ * Singleton auth provider: Google Sign-In → Firebase Authentication.
  *
- * WHAT HAPPENS (high level JWT flow):
- *  1) Google Sign-In returns an OpenID Connect ID token (a JWT) for the chosen account.
- *     - That token’s audience = your Web client ID.
- *     - It is signed by Google and contains user identity claims (sub/email/etc.).
- *  2) We pass that ID token to Firebase via GoogleAuthProvider.credential(idToken).
- *     - Firebase verifies the token with Google and, if valid, signs the user into YOUR Firebase project.
- *  3) Firebase issues its own Firebase ID token (also a JWT) + refresh token managed by the SDK.
- *     - The SDK refreshes the Firebase ID token automatically (typ. hourly) using the refresh token.
+ * Prerequisites:
+ * - Provide the Google web OAuth client ID (from Firebase) via .env → GOOGLE_WEB_CLIENT_ID.
+ * - Get this ID from Firebase > Authentication > Sign-in method > Sign-in providers > Google.
  *
- * CONTEXT EXPOSES ONLY:
- *   - user   : FirebaseAuthTypes.User | null
- *   - signIn : () => Promise<FirebaseAuthTypes.User>
- *   - signOut: () => Promise<void>
+ * Mental model (how it works):
+ * - Google Sign-In returns an **ID token** (OIDC JWT) for the chosen Google account.
+ * - We send that ID token to Firebase Auth to **sign in** (or create) the Firebase account for this project.
+ * - The Firebase SDK manages the session (issues/refreshes Firebase ID tokens automatically).
+ * - The current Firebase user (or null) is exposed via context.
+ *
+ * Notes:
+ * - The Firebase account has a stable **uid** (user id in this project).
+ * - For “anonymous → Google” upgrades that keep the same uid, use linkWithCredential in the sign-in flow (handled elsewhere).
  ******************************************************************************************************************/
 import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { logColors } from '../Const';
-// Firebase (modular API)
+import { withTimeout } from '../Utils';
+
 import { getApp } from '@react-native-firebase/app';
 import {
   getAuth,
@@ -29,20 +28,19 @@ import {
   signOut as fbSignOut,
 } from '@react-native-firebase/auth';
 import type { FirebaseAuthTypes } from '@react-native-firebase/auth';
-// native Google account picker (produces the Google ID token we exchange with Firebase)
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 /******************************************************************************************************************
- * Context type.
+ * Context shape.
  ******************************************************************************************************************/
 type AuthContextType = {
-  user: FirebaseAuthTypes.User | null;            // Firebase user object; null if signed out
-  signIn: () => Promise<FirebaseAuthTypes.User>;  // Google → Firebase login, resolves to Firebase user
-  signOut: () => Promise<void>;                   // Clears Firebase session and Google session
+  user: FirebaseAuthTypes.User | null;
+  signIn: () => Promise<FirebaseAuthTypes.User>;
+  signOut: () => Promise<void>;
 };
 
 /******************************************************************************************************************
- * Default context.
+ * Default context (guard against usage without provider).
  ******************************************************************************************************************/
 const AuthContext = createContext<AuthContextType>({
   user: null,
@@ -56,45 +54,24 @@ const AuthContext = createContext<AuthContextType>({
 
 type Props = {
   children: React.ReactNode;
-  webClientId?: string; // the Web OAuth client ID, required on many Android setups to get idToken != null
+  /** web OAuth client ID; required for consistent Google ID token issuance on Android */
+  webClientId?: string;
 };
 
 /******************************************************************************************************************
- * AuthProvider
- *
- * Responsibilities:
- *   1) Configure Google Sign-In (idempotent, once per app lifetime).
- *   2) Subscribe to Firebase Auth state and expose `user` (null when signed out).
- *   3) Provide signIn/signOut methods that bridge Google ↔ Firebase.
- *
- * NOTE on tokens:
- *   - GoogleSignin.signIn() → returns a Google ID token (JWT). We never store it; it’s used immediately.
- *   - Firebase then issues a Firebase ID token (JWT) + keeps a refresh token internally.
- *   - The Firebase SDK refreshes tokens automatically. You typically don’t need to manage them yourself.
+ * AuthProvider.
  ******************************************************************************************************************/
 export const AuthProvider: React.FC<Props> = ({ children, webClientId }) => {
-  // current Firebase user (null -> signed out), derived purely from Firebase Auth state
+  // current Firebase user (null when signed out)
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
-  const configuredRef = useRef(false);
 
-  // in-progress guard — prevents concurrent sign-in calls (e.g., double-taps)
+  // guards
+  const configuredRef = useRef(false);
   const signingRef = useRef(false);
 
-  // timeout wrapper to avoid silent hangs from native bridges
-  const withTimeout = <T,>(p: Promise<T>, ms = 20000) =>
-    new Promise<T>((resolve, reject) => {
-      const t = setTimeout(() => reject(new Error('Google sign-in timed out')), ms);
-      p.then(
-        v => { clearTimeout(t); resolve(v); },
-        e => { clearTimeout(t); reject(e); }
-      );
-    });
-
   /****************************************************************************************************************
-   * Configure Google Sign-In once:
-   * - Why webClientId? Google Sign-In often requires the Web client ID so that it returns an ID token (JWT).
-   * - Without the Web client ID, Android flows can return idToken = null → Firebase credential exchange fails.
-   * - We fail fast if not provided because project relies on explicit configuration.
+   * Configure Google Sign-In once.
+   * - Provide webClientId to ensure we receive an idToken.
    ****************************************************************************************************************/
   useEffect(() => {
     if (configuredRef.current) return;
@@ -110,11 +87,8 @@ export const AuthProvider: React.FC<Props> = ({ children, webClientId }) => {
   }, [webClientId]);
 
   /****************************************************************************************************************
-   * Subscribe to Firebase Auth state changes (onAuthStateChanged).
-   * HOW IT WORKS:
-   *   - After a successful sign-in, Firebase stores refresh token + issues ID token (JWT).
-   *   - It keeps the session and refreshes ID tokens automatically in the background.
-   *   - This listener fires with the current Firebase user on any change.
+   * Keep `user` in sync with Firebase Auth state.
+   * - After sign-in, Firebase maintains session, refreshes tokens, and rehydrates across app restarts.
    ****************************************************************************************************************/
   useEffect(() => {
     const auth = getAuth(getApp());
@@ -123,67 +97,54 @@ export const AuthProvider: React.FC<Props> = ({ children, webClientId }) => {
   }, []);
 
   /****************************************************************************************************************
-   * Sign in with Google.
-   *
-   * STEPS:
-   *   1) Ensure Google Play Services are OK (Android).
-   *   2) Show native account picker → receive Google ID token (JWT).
-   *   3) Exchange the Google ID token for a Firebase credential & sign into Firebase.
-   *
-   * TOKEN NOTES:
-   *   - The Google ID token is a short-lived JWT used once to prove identity to Firebase.
-   *   - Firebase then issues its own ID token (JWT) and manages a refresh token internally.
-   *   - Post-login, use auth().currentUser or getAuth().currentUser to query user; for a server call,
-   *     you’d fetch a Firebase ID token via currentUser.getIdToken() and send it as a Bearer token.
+   * Sign in with Google → Firebase.
+   * - Shows native account picker.
+   * - Exchanges Google ID token for Firebase credential.
+   * - Returns the Firebase user.
    ****************************************************************************************************************/
   const signIn = async (): Promise<FirebaseAuthTypes.User> => {
-    // prevent concurrent calls (double-tap)
+    // prevent double-taps / concurrent calls
     if (signingRef.current) {
       throw new Error(`${logColors.red}[Auth]${logColors.reset} Sign-in already in progress`);
     }
     signingRef.current = true;
 
     try {
-      // 1) Play Services readiness (Android-specific guard).
+      // 1) Ensure Play Services on Android.
       await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
 
-      // 2) Bring up account picker; retrieve Google ID token (OpenID Connect JWT).
-      // wrap with timeout so the promise can't hang forever
+      // 2) Launch Google account picker and fetch ID token (bounded to avoid silent hangs).
       const res: any = await withTimeout(GoogleSignin.signIn(), 30000);
       const idToken = res?.idToken ?? res?.data?.idToken;
       if (!idToken) {
-        // if this error is triggered, double-check webClientId + SHA-1 + package name
         throw new Error(`${logColors.red}[Auth]${logColors.reset} Google sign-in failed: missing idToken`);
       }
 
-      // 3) Exchange Google ID token → Firebase credential; sign into your Firebase project.
+      // 3) Exchange Google ID token → Firebase sign-in.
       const auth = getAuth(getApp());
       const credential = GoogleAuthProvider.credential(idToken);
       const { user } = await signInWithCredential(auth, credential);
 
-      // 4) SUCCESS. Firebase now holds (a) a Firebase ID token (JWT) and (b) a refresh token.
-      // - the SDK refreshes tokens automatically; you typically won’t handle refreshes manually
+      // 4) Firebase now manages the session (ID token + refresh token under the hood).
       return user;
     } catch (err) {
       throw new Error(`${logColors.red}[Auth]${logColors.reset} Google sign-in failed: ${err}`);
     } finally {
-      // release the in-progress flag
       signingRef.current = false;
     }
   };
 
   /****************************************************************************************************************
-   * Sign out of both Firebase (clears Firebase session & refresh token locally)
-   * and Google Sign-In (clears Google session on device for this app).
+   * Sign out from Firebase and clear Google session state for this app.
    ****************************************************************************************************************/
   const signOut = async (): Promise<void> => {
     const auth = getAuth(getApp());
     try {
-      // ends Firebase session locally (ID token/refresh token no longer used)
+      // 1) Ends Firebase session locally.
       await fbSignOut(auth);
     } finally {
       try {
-        // clears Google session state for this app’s sign-in library
+        // 2) Clears Google Sign-In session for this app.
         await GoogleSignin.signOut();
       } catch {
         /* ignore non-fatal Google sign-out issues */
@@ -191,13 +152,12 @@ export const AuthProvider: React.FC<Props> = ({ children, webClientId }) => {
     }
   };
 
-  // memoize context value so children don’t re-render unless `user` changes
   const value = useMemo(() => ({ user, signIn, signOut }), [user]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 /******************************************************************************************************************
- * Hook for consumers.
+ * Consumer hook.
  ******************************************************************************************************************/
 export const useAuth = () => useContext(AuthContext);
