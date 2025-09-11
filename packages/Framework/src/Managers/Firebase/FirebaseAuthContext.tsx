@@ -79,7 +79,18 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
 
     // 3) Keep user in sync with Firebase Auth state.
     const auth = getAuth(getApp());
-    const unsub = onAuthStateChanged(auth, setUser); // subscribe immediately
+
+    // seed immediately so downstream can reflect an existing session (if any)
+    setUser(auth.currentUser ?? null);
+
+    // subscribe immediately
+    const unsub = onAuthStateChanged(auth, (u) => {
+      console.log(
+        `${logColors.cyan}[Auth]${logColors.reset} onAuthStateChanged: `,
+        u ? `${u.isAnonymous ? 'anon' : 'google'} uid = ${logColors.green}${u.uid.slice(0, 8)}...` : `null${logColors.reset}`
+      );
+      setUser(u);
+    });
 
     // kick off async startup work
     (async () => {
