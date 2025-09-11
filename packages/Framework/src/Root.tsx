@@ -103,18 +103,9 @@ const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
     try {
       // get the default app that RN Firebase auto-initialized from native files
       const firebaseApp = getApp();
-      const auth = getAuth(firebaseApp);
-
       // log proof that native config was loaded from google-services.json
       const { projectId } = firebaseApp.options;
       console.log(`${logColors.cyan}[Firebase]${logColors.reset} Loaded with projectId: ${logColors.green}${projectId}`);
-
-      // confirm Auth is alive using modular free function
-      const unsub = onAuthStateChanged(auth, (user) => {
-        console.log(`${logColors.cyan}[Firebase]${logColors.reset} Auth state ready. Signed in = ${logColors.green}${!!user}`);
-      });
-
-      return unsub;
     } catch (err) {
       console.log(`${logColors.red}[Firebase]${logColors.reset} NOT ready (native config missing?): ${err}`);
     }
