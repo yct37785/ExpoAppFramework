@@ -35,8 +35,8 @@ const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
     let statusText = 'Setting up session...';
     if (user) {
       statusText = isAnon
-        ? `anonymous account mode, uid: ${uid}`
-        : `Signed in with Google, uid: ${uid}`;
+        ? `anonymous account mode\nuid: ${uid?.slice(0, 10)}..`
+        : `Signed in with Google\nuid: ${uid?.slice(0, 10)}..\nGmail: ${user.email}`;
     }
 
     return (
