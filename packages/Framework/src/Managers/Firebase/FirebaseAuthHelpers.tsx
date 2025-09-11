@@ -3,6 +3,7 @@ import { getApp } from '@react-native-firebase/app';
 import { getAuth, signInAnonymously } from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { getFirestore, disableNetwork, enableNetwork } from '@react-native-firebase/firestore';
+import { doLog, AppError } from '../../Utils';
 
 /****************************************************************************************************************
  * Configure Google Sign-In.
@@ -12,13 +13,10 @@ import { getFirestore, disableNetwork, enableNetwork } from '@react-native-fireb
 export async function configureGoogleSignIn() {
   const webClientId = process.env.GOOGLE_WEB_CLIENT_ID;
   if (!webClientId) {
-    throw new Error(`${logColors.red}[Auth]${logColors.reset} GoogleSignin load failed: Missing webClientId`);
+    throw new AppError('auth', 'configureGoogleSignIn', 'GoogleSignin load failed: Missing webClientId');
   }
   GoogleSignin.configure({ webClientId });
-  console.log(
-    `${logColors.cyan}[Auth]${logColors.reset} GoogleSignin loaded with webClientId: ` +
-    `${logColors.green}${webClientId.slice(0, 8)}..`
-  );
+  doLog('auth', 'configureGoogleSignIn', `GoogleSignin loaded with webClientId: ${logColors.green}${webClientId.slice(0, 10)}..`);
 }
 
 /****************************************************************************************************************
@@ -45,16 +43,12 @@ export async function doAnonymousSignIn() {
   if (!auth.currentUser) {
     try {
       const { user } = await signInAnonymously(auth);
-      console.log(
-        `${logColors.cyan}[Auth]${logColors.reset} Anonymous sign-in success, uid: ${logColors.green}${user.uid}`
-      );
+      doLog('auth', 'doAnonymousSignIn', `Anonymous sign-in success, uid: ${logColors.green}${user.uid.slice(0, 10)}..`);
       await goLocalOnly(); // anonymous = local-only
     } catch (e) {
-      console.log(`${logColors.cyan}[Auth]${logColors.reset} Anonymous sign-in failed: ${e}`);
+      doLog('auth', 'doAnonymousSignIn', `Anonymous sign-in failed: ${e}`);
     }
   } else {
-    console.log(
-      `${logColors.cyan}[Auth]${logColors.reset} Existing user detected, uid: ${logColors.green}${auth.currentUser.uid}`
-    );
+    doLog('auth', 'doAnonymousSignIn', `Existing user detected, uid: ${logColors.green}${auth.currentUser.uid.slice(0, 10)}..`);
   }
 }

@@ -9,7 +9,8 @@
  ******************************************************************************************************************/
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { localDataDefaults, logColors } from '../Const';
+import { localDataDefaults } from '../Const';
+import { doLog, AppError } from '../Utils';
 
 /******************************************************************************************************************
  * Local data schema and reserved defaults.
@@ -87,9 +88,9 @@ export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
         setData(merged);
       } catch (err) {
-        console.log(`${logColors.red}[LocalData]${logColors.reset} Failed to load local data: ${err}`);
+        throw new AppError('LocalData', 'setItem', `Failed to load local data: ${err}`);
       } finally {
-        console.log(`${logColors.cyan}[LocalData]${logColors.reset} Local data loaded`);
+        doLog('LocalData', 'setItem', `Local data loaded`);
         setIsLoaded(true);
       }
     })();
@@ -112,7 +113,7 @@ export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     try {
       await AsyncStorage.setItem(key, JSON.stringify(value));
     } catch (err) {
-      console.log(`${logColors.red}[LocalData]${logColors.reset} Failed to save local data for key "${key}": ${err}`);
+      throw new AppError('LocalData', 'setItem', `Failed to save local data for key "${key}": ${err}`);
     }
   };
 
@@ -148,7 +149,7 @@ export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     try {
       await AsyncStorage.clear();
     } catch (err) {
-      console.log(`${logColors.red}[LocalData]${logColors.reset} Failed to reset local data: ${err}`);
+      throw new AppError('LocalData', 'setItem', `Failed to reset local data: ${err}`);
     }
   };
 

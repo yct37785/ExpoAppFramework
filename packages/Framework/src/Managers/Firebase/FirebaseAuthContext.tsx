@@ -18,7 +18,7 @@
  ******************************************************************************************************************/
 import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { logColors } from '../../Const';
-import { withTimeout } from '../../Utils';
+import { withTimeout, AppError, doLog } from '../../Utils';
 import { getApp } from '@react-native-firebase/app';
 import {
   getAuth,
@@ -47,10 +47,10 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType>({
   user: null,
   signIn: async () => {
-    throw new Error(`${logColors.red}[Auth]${logColors.reset} AuthProvider not mounted`);
+    throw new AppError('auth', 'AuthContext', 'AuthProvider not mounted');
   },
   signOut: async () => {
-    throw new Error(`${logColors.red}[Auth]${logColors.reset} AuthProvider not mounted`);
+    throw new AppError('auth', 'AuthContext', 'AuthProvider not mounted');
   },
 });
 
@@ -85,10 +85,11 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
 
     // subscribe immediately
     const unsub = onAuthStateChanged(auth, (u) => {
-      console.log(
-        `${logColors.cyan}[Auth]${logColors.reset} onAuthStateChanged: `,
-        u ? `${u.isAnonymous ? 'anon' : 'google'} uid = ${logColors.green}${u.uid.slice(0, 8)}...` : `null${logColors.reset}`
-      );
+      let logMsg = '';
+      if (u && !u.isAnonymous) logMsg = `google uid = ${logColors.green}${u.uid.slice(0, 10)}..`;
+      else if (u && u.isAnonymous) logMsg = `anon uid = ${logColors.green}${u.uid.slice(0, 10)}..`;
+      else if (!u) logMsg = `no user`;
+      doLog('auth', 'onAuthStateChanged', logMsg);
       setUser(u);
     });
 
@@ -106,7 +107,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
           await goOnline();
         }
       } catch (e) {
-        console.log(`${logColors.red}[Auth]${logColors.reset} Startup init failed: ${e}`);
+        doLog('auth', 'start up checks', `Startup init failed: ${e}`);
       }
     })();
 
@@ -125,7 +126,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   const signIn = async (): Promise<FirebaseAuthTypes.User> => {
     // prevent double-taps / concurrent calls
     if (signingRef.current) {
-      throw new Error(`${logColors.red}[Auth]${logColors.reset} Sign-in already in progress`);
+    throw new AppError('auth', 'AuthContext', 'Sign-in already in progress');
     }
     signingRef.current = true;
 
@@ -148,7 +149,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       const res: any = await withTimeout(GoogleSignin.signIn(), 30000);
       const idToken = res?.idToken ?? res?.data?.idToken;
       if (!idToken) {
-        throw new Error(`${logColors.red}[Auth]${logColors.reset} Google sign-in failed: missing idToken`);
+        throw new AppError('auth', 'AuthContext', 'Google sign-in failed: missing idToken');
       }
 
       /** 3) Link-or-sign-in with Google credential **/
@@ -181,7 +182,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       return signedIn;
 
     } catch (err) {
-      throw new Error(`${logColors.red}[Auth]${logColors.reset} Google sign-in failed: ${err}`);
+      throw new AppError('auth', 'AuthContext', `Google sign-in failed: ${err}`);
     } finally {
       signingRef.current = false;
     }
@@ -196,12 +197,12 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       try {
         await fbSignOut(auth);
       } catch (e) {
-        console.warn(`${logColors.red}[Auth] Firebase signOut failed: ${e}`); // best-effort: do not reject
+        doLog('auth', 'start up checks', `Firebase signOut failed: ${e}`); // best-effort: do not reject
       }
       try {
         await GoogleSignin.signOut();
       } catch (e) {
-        console.warn(`${logColors.red}[Auth] Google signOut failed: ${e}`);   // best-effort
+        doLog('auth', 'start up checks', `Google signOut failed: ${e}`);  // best-effort
       }
     } finally {
       // fresh anonymous workspace; keep it local-only (never appears in console)

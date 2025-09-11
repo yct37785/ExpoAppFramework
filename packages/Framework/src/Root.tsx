@@ -15,10 +15,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useLocalData, LocalDataProvider } from './Managers/LocalDataContext';
 // Firebase
 import { getApp } from '@react-native-firebase/app';
-import { getAuth, onAuthStateChanged } from '@react-native-firebase/auth';
 import { AuthProvider } from './Managers/Firebase/FirebaseAuthContext';
 // const
 import { logColors } from './Const';
+// utils
+import { doLog } from './Utils';
 
 // theme adaptation for navigation
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
@@ -105,9 +106,9 @@ const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
       const firebaseApp = getApp();
       // log proof that native config was loaded from google-services.json
       const { projectId } = firebaseApp.options;
-      console.log(`${logColors.cyan}[Firebase]${logColors.reset} Loaded with projectId: ${logColors.green}${projectId}`);
+      doLog('root', 'Firebase pulse check', `Loaded with projectId: ${logColors.green}${projectId}`);
     } catch (err) {
-      console.log(`${logColors.red}[Firebase]${logColors.reset} NOT ready (native config missing?): ${err}`);
+      doLog('root', 'Firebase pulse check', `NOT ready (native config missing?): ${err}`);
     }
   }, []);
 
