@@ -16,8 +16,8 @@
  * - For “anonymous → Google” upgrades that keep the same uid, we **link** Google to the current anonymous user.
  ******************************************************************************************************************/
 import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { logColors } from '../Const';
-import { withTimeout } from '../Utils';
+import { logColors } from '../../Const';
+import { withTimeout } from '../../Utils';
 import { getApp } from '@react-native-firebase/app';
 import {
   getAuth,
@@ -25,11 +25,11 @@ import {
   GoogleAuthProvider,
   signInWithCredential,
   signOut as fbSignOut,
-  signInAnonymously,
   linkWithCredential,
 } from '@react-native-firebase/auth';
 import type { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { configureGoogleSignIn, doAnonymousSignIn } from './FirebaseAuthHelpers';
 
 /******************************************************************************************************************
  * Context shape.
@@ -69,59 +69,27 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   const signingRef = useRef(false);
 
   /****************************************************************************************************************
-   * Configure Google Sign-In once.
-   * - Provide web OAuth client ID via env.
+   * Start up checks.
    ****************************************************************************************************************/
+  // Configure Google Sign-In once.
   useEffect(() => {
-    // web OAuth client ID; required for consistent Google ID token issuance on Android
-    const webClientId = process.env.GOOGLE_WEB_CLIENT_ID;
-    console.log(webClientId);
-    if (configuredRef.current) return;
-    if (!webClientId) {
-      throw new Error(`${logColors.red}[Auth]${logColors.reset} GoogleSignin load failed: Missing webClientId`);
-    }
-    GoogleSignin.configure({ webClientId });
-    console.log(
-      `${logColors.cyan}[Auth]${logColors.reset} GoogleSignin loaded with webClientId: ` +
-      `${logColors.green}${webClientId.slice(0, 8)}..${logColors.reset}`
-    );
-    configuredRef.current = true;
+    (async () => {
+      if (configuredRef.current) return;
+      await configureGoogleSignIn();
+      configuredRef.current = true;
+    })();
   }, []);
 
-  /****************************************************************************************************************
-   * Keep `user` in sync with Firebase Auth state.
-   * - After sign-in, Firebase maintains session, refreshes tokens, and rehydrates across app restarts.
-   ****************************************************************************************************************/
+  // Ensure an anonymous session exists early (local-first) if no existing session.
+  useEffect(() => {
+    doAnonymousSignIn();
+  }, []);
+
+  // Keep `user` in sync with Firebase Auth state.
   useEffect(() => {
     const auth = getAuth(getApp());
     const unsub = onAuthStateChanged(auth, setUser);
     return unsub;
-  }, []);
-
-  /****************************************************************************************************************
-   * Ensure an anonymous session exists early (local-first).
-   * - If there is no current user, create an **anonymous** user so we have a stable uid immediately (even offline).
-   * - Later, when the user chooses Google, we **link** to keep the same uid.
-   ****************************************************************************************************************/
-  useEffect(() => {
-    (async () => {
-      const auth = getAuth(getApp());
-
-      if (!auth.currentUser) {
-        try {
-          const { user } = await signInAnonymously(auth);
-          console.log(
-            `${logColors.cyan}[Auth]${logColors.reset} Anonymous sign-in success, uid: ${logColors.green}${user.uid}`);
-        } catch (e) {
-          // non-fatal: UI can still render; sign-in can be retried later
-          console.log(
-            `${logColors.cyan}[Auth]${logColors.reset} Anonymous sign-in failed: ${e}`);
-        }
-      } else {
-        console.log(
-          `${logColors.cyan}[Auth]${logColors.reset} Existing user detected, uid: ${logColors.green}${auth.currentUser.uid}`);
-      }
-    })();
   }, []);
 
   /****************************************************************************************************************
@@ -186,6 +154,9 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
         await GoogleSignin.signOut();
       } catch {
         /* ignore non-fatal Google sign-out issues */
+      } finally {
+        // 3) Do new anonymous session to "fill the gap".
+        await doAnonymousSignIn();
       }
     }
   };

@@ -16,7 +16,7 @@ import { useLocalData, LocalDataProvider } from './Managers/LocalDataContext';
 // Firebase
 import { getApp } from '@react-native-firebase/app';
 import { getAuth, onAuthStateChanged } from '@react-native-firebase/auth';
-import { AuthProvider } from './Managers/FirebaseAuthContext';
+import { AuthProvider } from './Managers/Firebase/FirebaseAuthContext';
 // const
 import { logColors } from './Const';
 
