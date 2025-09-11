@@ -65,30 +65,35 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
 
   // guards
-  const configuredRef = useRef(false);
+  const startupRef = useRef(false);
   const signingRef = useRef(false);
 
   /****************************************************************************************************************
    * Start up checks.
    ****************************************************************************************************************/
-  // Configure Google Sign-In once.
   useEffect(() => {
-    (async () => {
-      if (configuredRef.current) return;
-      await configureGoogleSignIn();
-      configuredRef.current = true;
-    })();
-  }, []);
+    // prevent any retriggers
+    if (startupRef.current) return;
+    startupRef.current = true;
 
-  // Ensure an anonymous session exists early (local-first) if no existing session.
-  useEffect(() => {
-    doAnonymousSignIn();
-  }, []);
-
-  // Keep `user` in sync with Firebase Auth state.
-  useEffect(() => {
+    // 3) Keep user in sync with Firebase Auth state.
     const auth = getAuth(getApp());
-    const unsub = onAuthStateChanged(auth, setUser);
+    const unsub = onAuthStateChanged(auth, setUser); // subscribe immediately
+
+    // kick off async startup work
+    (async () => {
+      try {
+        // 1) Configure Google Sign-In once.
+        await configureGoogleSignIn(); // idempotent internally
+
+        // 2) Ensure an anonymous session exists early (local-first) if no existing session.
+        await doAnonymousSignIn(); // will trigger the auth listener if it signs in
+      } catch (e) {
+        console.warn('[Auth] Startup init failed:', e);
+      }
+    })();
+
+    // cleanup
     return unsub;
   }, []);
 
