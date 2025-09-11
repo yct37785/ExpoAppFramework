@@ -161,6 +161,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
         try {
           const { user: linked } = await linkWithCredential(auth.currentUser, credential);
           await goOnline(); // now allowed to sync
+          setUser(linked); // manually update context state to trigger downstream
           return linked;
         } catch (e: any) {
           const code = e?.code || e?.nativeErrorCode;
