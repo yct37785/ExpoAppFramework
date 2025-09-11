@@ -133,6 +133,17 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       /** 1) Ensure Play Services on Android **/
       await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
 
+      // force account picker by clearing any cached Google session (otherwise it may sign in silently)
+      try {
+        if (GoogleSignin.hasPreviousSignIn()) {
+          await GoogleSignin.signOut();
+          // optional: also revoke to re-prompt consent when needed
+          // await GoogleSignin.revokeAccess();
+        }
+      } catch {
+        /* ignore, best-effort */
+      }
+
       /** 2) Launch Google account picker and fetch ID token (bounded to avoid silent hangs) **/
       const res: any = await withTimeout(GoogleSignin.signIn(), 30000);
       const idToken = res?.idToken ?? res?.data?.idToken;
