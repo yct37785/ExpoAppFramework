@@ -1,6 +1,7 @@
 import { logColors } from '../../Const';
 import { getApp } from '@react-native-firebase/app';
 import { getAuth, signInAnonymously } from '@react-native-firebase/auth';
+import { reload } from '@react-native-firebase/auth'; // ✅ modular API
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { getFirestore, disableNetwork, enableNetwork } from '@react-native-firebase/firestore';
 import { doLog, AppError } from '../../Utils';
@@ -16,7 +17,11 @@ export async function configureGoogleSignIn() {
     throw new AppError('auth', 'configureGoogleSignIn', 'GoogleSignin load failed: Missing webClientId');
   }
   GoogleSignin.configure({ webClientId });
-  doLog('auth', 'configureGoogleSignIn', `GoogleSignin loaded with webClientId: ${logColors.green}${webClientId.slice(0, 10)}..`);
+  doLog(
+    'auth',
+    'configureGoogleSignIn',
+    `GoogleSignin loaded with webClientId: ${logColors.green}${webClientId.slice(0, 10)}..`
+  );
 }
 
 /****************************************************************************************************************
@@ -50,5 +55,40 @@ export async function doAnonymousSignIn() {
     }
   } else {
     doLog('auth', 'doAnonymousSignIn', `Existing user detected, uid: ${logColors.green}${auth.currentUser.uid.slice(0, 10)}..`);
+  }
+}
+
+/****************************************************************************************************************
+ * Verify current user against Firebase server.
+ * - Used to detect when an account is deleted/disabled in Firebase Console.
+ * - If the account is invalid, return false so the caller can signOut() and fallback to anon.
+ *
+ * Returns:
+ *   - true  → user still valid
+ *   - false → disabled/deleted/invalid on the server
+ ****************************************************************************************************************/
+export async function verifyCurrentUser(): Promise<boolean> {
+  const auth = getAuth(getApp());
+  const u = auth.currentUser;
+  if (!u) return false;
+
+  try {
+    await reload(u);
+    return true;
+  } catch (e: any) {
+    const code: string | undefined = e?.code || e?.message;
+    const isInvalid =
+      code?.includes('user-disabled') ||
+      code?.includes('user-not-found') ||
+      code?.includes('user-token-expired') ||
+      code?.includes('invalid-user-token') ||
+      false;
+
+    if (isInvalid) {
+      doLog('auth', 'verifyCurrentUser', `Remote account invalidated (${code})`);
+      return false;
+    }
+    // unexpected error: bubble up so the caller can decide (usually ignore and retry later)
+    throw e;
   }
 }

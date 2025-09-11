@@ -17,6 +17,7 @@
  * - Anonymous accounts will get orphaned when it is signed out inadvertently, need to be cleaned up on Firebase end.
  ******************************************************************************************************************/
 import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { AppState } from 'react-native';
 import { logColors } from '../../Const';
 import { withTimeout, AppError, doLog } from '../../Utils';
 import { getApp } from '@react-native-firebase/app';
@@ -28,9 +29,10 @@ import {
   signOut as fbSignOut,
   linkWithCredential,
 } from '@react-native-firebase/auth';
+import { onIdTokenChanged } from '@react-native-firebase/auth';
 import type { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { configureGoogleSignIn, doAnonymousSignIn, goLocalOnly, goOnline } from './FirebaseAuthHelpers';
+import { configureGoogleSignIn, doAnonymousSignIn, goLocalOnly, goOnline, verifyCurrentUser } from './FirebaseAuthHelpers';
 
 /******************************************************************************************************************
  * Context shape.
@@ -116,6 +118,36 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   }, []);
 
   /****************************************************************************************************************
+   * Event-driven health checks:
+   * - Once on mount
+   * - On token refresh: verify as well
+   ****************************************************************************************************************/
+  useEffect(() => {
+    const auth = getAuth(getApp());
+
+    // all verification logic is centralized in the helper for clarity
+    const handleInvalidation = async () => {
+      try {
+        const ok = await verifyCurrentUser();
+        if (!ok) {
+          await signOut(); // falls back to anon local-only
+        }
+      } catch {
+        // ignore transient errors; will retry on next event
+      }
+    };
+
+    const offToken = onIdTokenChanged(auth, handleInvalidation);
+
+    // one-time check on mount (useful right after sign-in)
+    handleInvalidation();
+
+    return () => {
+      offToken();
+    };
+  }, []);
+
+  /****************************************************************************************************************
    * Sign in with Google → Firebase.
    * - Shows native account picker.
    * - Exchanges Google ID token for Firebase credential.
@@ -126,7 +158,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   const signIn = async (): Promise<FirebaseAuthTypes.User> => {
     // prevent double-taps / concurrent calls
     if (signingRef.current) {
-    throw new AppError('auth', 'AuthContext', 'Sign-in already in progress');
+      throw new AppError('auth', 'signIn', 'Sign-in already in progress');
     }
     signingRef.current = true;
 
@@ -149,7 +181,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       const res: any = await withTimeout(GoogleSignin.signIn(), 30000);
       const idToken = res?.idToken ?? res?.data?.idToken;
       if (!idToken) {
-        throw new AppError('auth', 'AuthContext', 'Google sign-in failed: missing idToken');
+        throw new AppError('auth', 'signIn', 'Google sign-in failed: missing idToken');
       }
 
       /** 3) Link-or-sign-in with Google credential **/
@@ -183,7 +215,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       return signedIn;
 
     } catch (err) {
-      throw new AppError('auth', 'AuthContext', `Google sign-in failed: ${err}`);
+      throw new AppError('auth', 'signIn', `Google sign-in failed: ${err}`);
     } finally {
       signingRef.current = false;
     }
