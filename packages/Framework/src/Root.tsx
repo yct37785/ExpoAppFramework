@@ -166,7 +166,7 @@ const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
 const LocalDataProviderWrapper: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
   return (
     <LocalDataProvider>
-      <AuthProvider webClientId={process.env.GOOGLE_WEB_CLIENT_ID}>
+      <AuthProvider>
         <Root screenMap={screenMap} DEFAULT_SCREEN={DEFAULT_SCREEN} />
       </AuthProvider>
     </LocalDataProvider>

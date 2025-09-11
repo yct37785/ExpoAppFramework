@@ -55,14 +55,12 @@ const AuthContext = createContext<AuthContextType>({
 
 type Props = {
   children: React.ReactNode;
-  /** web OAuth client ID; required for consistent Google ID token issuance on Android */
-  webClientId?: string;
 };
 
 /******************************************************************************************************************
  * AuthProvider.
  ******************************************************************************************************************/
-export const AuthProvider: React.FC<Props> = ({ children, webClientId }) => {
+export const AuthProvider: React.FC<Props> = ({ children }) => {
   // current Firebase user (null when signed out)
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
 
@@ -72,9 +70,12 @@ export const AuthProvider: React.FC<Props> = ({ children, webClientId }) => {
 
   /****************************************************************************************************************
    * Configure Google Sign-In once.
-   * - Provide webClientId to ensure we receive an idToken.
+   * - Provide web OAuth client ID via env.
    ****************************************************************************************************************/
   useEffect(() => {
+    // web OAuth client ID; required for consistent Google ID token issuance on Android
+    const webClientId = process.env.GOOGLE_WEB_CLIENT_ID;
+    console.log(webClientId);
     if (configuredRef.current) return;
     if (!webClientId) {
       throw new Error(`${logColors.red}[Auth]${logColors.reset} GoogleSignin load failed: Missing webClientId`);
@@ -85,7 +86,7 @@ export const AuthProvider: React.FC<Props> = ({ children, webClientId }) => {
       `${logColors.green}${webClientId.slice(0, 8)}..${logColors.reset}`
     );
     configuredRef.current = true;
-  }, [webClientId]);
+  }, []);
 
   /****************************************************************************************************************
    * Keep `user` in sync with Firebase Auth state.
