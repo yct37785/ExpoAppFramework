@@ -14,6 +14,7 @@
  * Notes:
  * - The Firebase account has a stable **uid** (user id in this project).
  * - For “anonymous → Google” upgrades that keep the same uid, we **link** Google to the current anonymous user.
+ * - Anonymous accounts will get orphaned when it is signed out inadvertently, need to be cleaned up on Firebase end.
  ******************************************************************************************************************/
 import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { logColors } from '../../Const';
@@ -29,7 +30,7 @@ import {
 } from '@react-native-firebase/auth';
 import type { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { configureGoogleSignIn, doAnonymousSignIn } from './FirebaseAuthHelpers';
+import { configureGoogleSignIn, doAnonymousSignIn, goLocalOnly, goOnline } from './FirebaseAuthHelpers';
 
 /******************************************************************************************************************
  * Context shape.
@@ -41,7 +42,7 @@ type AuthContextType = {
 };
 
 /******************************************************************************************************************
- * Default context (guard against usage without provider).
+ * Default context.
  ******************************************************************************************************************/
 const AuthContext = createContext<AuthContextType>({
   user: null,
@@ -88,8 +89,13 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
 
         // 2) Ensure an anonymous session exists early (local-first) if no existing session.
         await doAnonymousSignIn(); // will trigger the auth listener if it signs in
+
+        // if we already have a non-anon user (e.g., hot reload), ensure network on
+        if (auth.currentUser && !auth.currentUser.isAnonymous) {
+          await goOnline();
+        }
       } catch (e) {
-        console.warn('[Auth] Startup init failed:', e);
+        console.log(`${logColors.red}[Auth]${logColors.reset} Startup init failed: ${e}`);
       }
     })();
 
@@ -113,31 +119,45 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     signingRef.current = true;
 
     try {
-      // 1) Ensure Play Services on Android.
+      /** 1) Ensure Play Services on Android **/
       await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
 
-      // 2) Launch Google account picker and fetch ID token (bounded to avoid silent hangs).
+      /** 2) Launch Google account picker and fetch ID token (bounded to avoid silent hangs) **/
       const res: any = await withTimeout(GoogleSignin.signIn(), 30000);
       const idToken = res?.idToken ?? res?.data?.idToken;
       if (!idToken) {
         throw new Error(`${logColors.red}[Auth]${logColors.reset} Google sign-in failed: missing idToken`);
       }
 
-      // 3) Link-or-sign-in with Google credential.
+      /** 3) Link-or-sign-in with Google credential **/
       const auth = getAuth(getApp());
       const credential = GoogleAuthProvider.credential(idToken);
 
-      let linkedUser: FirebaseAuthTypes.User;
+      // anonymous → try to LINK first
       if (auth.currentUser?.isAnonymous) {
-        // Upgrade path: keep the SAME uid by linking Google to the existing anonymous user
-        ({ user: linkedUser } = await linkWithCredential(auth.currentUser, credential));
-      } else {
-        // standard Google sign-in
-        ({ user: linkedUser } = await signInWithCredential(auth, credential));
+        try {
+          const { user: linked } = await linkWithCredential(auth.currentUser, credential);
+          await goOnline(); // now allowed to sync
+          return linked;
+        } catch (e: any) {
+          const code = e?.code || e?.nativeErrorCode;
+          const alreadyLinked =
+            code === 'auth/credential-already-in-use' || code === 'auth/account-exists-with-different-credential';
+
+          if (!alreadyLinked) throw e;
+
+          // fall back: switch to that Google account
+          const { user: target } = await signInWithCredential(auth, credential);
+          await goOnline(); // sync for signed-in account
+          return target;
+        }
       }
 
-      // 4) Firebase now manages the session (ID token + refresh token under the hood).
-      return linkedUser;
+      // not anonymous → normal sign-in
+      const { user: signedIn } = await signInWithCredential(auth, credential);
+      await goOnline();
+      return signedIn;
+
     } catch (err) {
       throw new Error(`${logColors.red}[Auth]${logColors.reset} Google sign-in failed: ${err}`);
     } finally {
@@ -146,23 +166,25 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   };
 
   /****************************************************************************************************************
-   * Sign out from Firebase and clear Google session state for this app.
+   * Sign out (best-effort) → always lands in a fresh anonymous, local-only session.
    ****************************************************************************************************************/
   const signOut = async (): Promise<void> => {
     const auth = getAuth(getApp());
     try {
-      // 1) Ends Firebase session locally.
-      await fbSignOut(auth);
-    } finally {
       try {
-        // 2) Clears Google Sign-In session for this app.
-        await GoogleSignin.signOut();
-      } catch {
-        /* ignore non-fatal Google sign-out issues */
-      } finally {
-        // 3) Do new anonymous session to "fill the gap".
-        await doAnonymousSignIn();
+        await fbSignOut(auth);
+      } catch (e) {
+        console.warn(`${logColors.red}[Auth] Firebase signOut failed: ${e}`); // best-effort: do not reject
       }
+      try {
+        await GoogleSignin.signOut();
+      } catch (e) {
+        console.warn(`${logColors.red}[Auth] Google signOut failed: ${e}`);   // best-effort
+      }
+    } finally {
+      // fresh anonymous workspace; keep it local-only (never appears in console)
+      await doAnonymousSignIn();
+      await goLocalOnly();
     }
   };
 
