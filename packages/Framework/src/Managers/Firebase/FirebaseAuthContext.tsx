@@ -17,7 +17,6 @@
  * - Anonymous accounts will get orphaned when it is signed out inadvertently, need to be cleaned up on Firebase end.
  ******************************************************************************************************************/
 import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { AppError } from '../../Utils';
 import { getApp } from '@react-native-firebase/app';
 import {
   getAuth,
@@ -35,21 +34,27 @@ import {
   startAuthObservers,
   verifyCurrentUser,
 } from './FirebaseAuthHelpers';
-import { withTimeout } from '../../Utils';
+import { withTimeout, doErrLog } from '../../Utils';
 
 /******************************************************************************************************************
  * Context shape.
  ******************************************************************************************************************/
 type AuthContextType = {
   user: FirebaseAuthTypes.User | null;
-  signIn: () => Promise<FirebaseAuthTypes.User>;
+  signIn: () => Promise<void>;
   signOut: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
-  signIn: async () => { throw new AppError('auth', 'AuthContext', 'AuthProvider not mounted'); },
-  signOut: async () => { throw new AppError('auth', 'AuthContext', 'AuthProvider not mounted'); },
+  signIn: async () => {
+    doErrLog('auth', 'AuthContext', 'AuthProvider not mounted');
+    return Promise.resolve();
+  },
+  signOut: async () => {
+    doErrLog('auth', 'AuthContext', 'AuthProvider not mounted');
+    return Promise.resolve();
+  },
 });
 
 type Props = { children: React.ReactNode; };
@@ -100,9 +105,10 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   /****************************************************************************************************************
    * Sign in with Google → Firebase.
    ****************************************************************************************************************/
-  const signIn = async (): Promise<FirebaseAuthTypes.User> => {
+  const signIn = async (): Promise<void> => {
     if (signingRef.current) {
-      throw new AppError('auth', 'signIn', 'Sign-in already in progress');
+      doErrLog('auth', 'signIn', 'Sign-in already in progress');
+      return Promise.resolve();
     }
     signingRef.current = true;
 
@@ -115,7 +121,8 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       const res: any = await withTimeout(GoogleSignin.signIn(), 30000);
       const idToken = res?.idToken ?? res?.data?.idToken;
       if (!idToken) {
-        throw new AppError('auth', 'signIn', 'Google sign-in failed: missing idToken');
+        doErrLog('auth', 'signIn', 'Google sign-in failed: missing idToken');
+        return Promise.resolve();
       }
 
       /** 3) Link-or-sign-in with Google credential **/
@@ -125,8 +132,8 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       /** 4) Anonymous → try to LINK first **/
       if (auth.currentUser?.isAnonymous) {
         try {
-          const { user } = await linkWithCredential(auth.currentUser, credential); // retain uid
-          return user;
+          await linkWithCredential(auth.currentUser, credential); // retain uid
+          return Promise.resolve();
         } catch (e: any) {
           const code = e?.code || e?.nativeErrorCode;
 
@@ -138,14 +145,20 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       }
 
       /** 4b) Google account picked is already linked, sign in with that account instead **/
-      const { user: signedIn } = await signInWithCredential(auth, credential);
+      try {
+        await signInWithCredential(auth, credential);
+      } catch (e) {
+        throw e;
+      }
 
       /** 4c) Google account we tried to sign in is invalidated, sign out instead **/
       if (!(await verifyCurrentUser())) {
         await signOut();
-        throw new AppError('auth', 'signIn', 'Invalid user after sign-in');
+        doErrLog('auth', 'signIn', 'Invalid user after sign-in, signed out');
+        return Promise.resolve();
       }
-      return signedIn;
+    } catch(e) {
+      doErrLog('auth', 'signIn', `Undefined error: ${e}`);
     } finally {
       signingRef.current = false;
     }

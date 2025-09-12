@@ -10,7 +10,7 @@ import {
 } from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { getFirestore, disableNetwork, enableNetwork } from '@react-native-firebase/firestore';
-import { doLog, AppError } from '../../Utils';
+import { doLog, doErrLog } from '../../Utils';
 
 /****************************************************************************************************************
  * Configure Google Sign-In (once).
@@ -19,10 +19,11 @@ import { doLog, AppError } from '../../Utils';
 export async function configureGoogleSignIn() {
   const webClientId = process.env.GOOGLE_WEB_CLIENT_ID;
   if (!webClientId) {
-    throw new AppError('auth', 'configureGoogleSignIn', 'GoogleSignin load failed: Missing webClientId');
+    doErrLog('auth', 'configureGoogleSignIn', 'GoogleSignin load failed: Missing webClientId');
+  } else {
+    GoogleSignin.configure({ webClientId });
+    doLog('auth', 'configureGoogleSignIn', `GoogleSignin loaded: ${logColors.green}${webClientId.slice(0, 10)}..`);
   }
-  GoogleSignin.configure({ webClientId });
-  doLog('auth', 'configureGoogleSignIn', `GoogleSignin loaded: ${logColors.green}${webClientId.slice(0, 10)}..`);
 }
 
 /****************************************************************************************************************
