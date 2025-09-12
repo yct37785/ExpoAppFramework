@@ -127,10 +127,11 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       const credential = GoogleAuthProvider.credential(idToken);
 
       /** 4) Anonymous → try to LINK first **/
+      let isGoogleLoggedIn = false;
       if (auth.currentUser?.isAnonymous) {
         try {
           await linkWithCredential(auth.currentUser, credential); // retain uid
-          return;
+          isGoogleLoggedIn = true;
         } catch (e: any) {
           /** 4a) Non-linkage error when trying to link **/
           const raw = (e?.code ?? e?.nativeErrorCode ?? '').toString().toLowerCase();
@@ -141,17 +142,25 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       }
 
       /** 4b) Google account picked is already linked, sign in with that account instead **/
-      try {
-        await signInWithCredential(auth, credential);
-      } catch (e) {
-        throw e;
+      if (!isGoogleLoggedIn) {
+        try {
+          await signInWithCredential(auth, credential);
+        } catch (e) {
+          throw e;
+        }
       }
 
-      /** 4c) Google account we tried to sign in is invalidated, sign out instead **/
+      /** 5) Do invalidation check, if exists sign out **/
       if (!(await verifyCurrentUser())) {
         await signOut();
         doErrLog('auth', 'signIn', 'Invalid user after sign-in, signed out');
         return;
+      }
+
+      /** 6) Force refresh of user context **/
+      const refreshed = getAuth(getApp()).currentUser;
+      if (refreshed) {
+        setUser(refreshed);
       }
     } catch(e) {
       doErrLog('auth', 'signIn', `Undefined error: ${e}`);
@@ -172,6 +181,11 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     } finally {
       /** 2) Ensure anonymous session **/
       await ensureAnonymousSession();
+       /** 3) Force refresh of user context **/
+      const refreshed = getAuth(getApp()).currentUser;
+      if (refreshed) {
+        setUser(refreshed);
+      }
     }
   };
 

@@ -36,10 +36,8 @@ export async function applyNetworkPolicyFor(user: FirebaseAuthTypes.User | null)
     const db = getFirestore(getApp());
     if (user?.isAnonymous) {
       await disableNetwork(db);
-      doLog('auth', 'applyNetworkPolicyFor', 'Applied local-only (anonymous)');
     } else if (user) {
       await enableNetwork(db);
-      doLog('auth', 'applyNetworkPolicyFor', 'Applied online (google user)');
     }
   } catch {
     // Firestore might not be installed yet; ignore gracefully
