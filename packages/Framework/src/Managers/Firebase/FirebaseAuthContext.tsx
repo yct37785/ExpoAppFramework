@@ -17,22 +17,25 @@
  * - Anonymous accounts will get orphaned when it is signed out inadvertently, need to be cleaned up on Firebase end.
  ******************************************************************************************************************/
 import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { AppState } from 'react-native';
-import { logColors } from '../../Const';
-import { withTimeout, AppError, doLog } from '../../Utils';
+import { AppError } from '../../Utils';
 import { getApp } from '@react-native-firebase/app';
 import {
   getAuth,
-  onAuthStateChanged,
   GoogleAuthProvider,
+  linkWithCredential,
   signInWithCredential,
   signOut as fbSignOut,
-  linkWithCredential,
 } from '@react-native-firebase/auth';
-import { onIdTokenChanged } from '@react-native-firebase/auth';
 import type { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { configureGoogleSignIn, doAnonymousSignIn, goLocalOnly, goOnline, verifyCurrentUser } from './FirebaseAuthHelpers';
+import {
+  configureGoogleSignIn,
+  ensureAnonymousSession,
+  ensureAccountPicker,
+  startAuthObservers,
+  verifyCurrentUser,
+} from './FirebaseAuthHelpers';
+import { withTimeout } from '../../Utils';
 
 /******************************************************************************************************************
  * Context shape.
@@ -43,22 +46,13 @@ type AuthContextType = {
   signOut: () => Promise<void>;
 };
 
-/******************************************************************************************************************
- * Default context.
- ******************************************************************************************************************/
 const AuthContext = createContext<AuthContextType>({
   user: null,
-  signIn: async () => {
-    throw new AppError('auth', 'AuthContext', 'AuthProvider not mounted');
-  },
-  signOut: async () => {
-    throw new AppError('auth', 'AuthContext', 'AuthProvider not mounted');
-  },
+  signIn: async () => { throw new AppError('auth', 'AuthContext', 'AuthProvider not mounted'); },
+  signOut: async () => { throw new AppError('auth', 'AuthContext', 'AuthProvider not mounted'); },
 });
 
-type Props = {
-  children: React.ReactNode;
-};
+type Props = { children: React.ReactNode; };
 
 /******************************************************************************************************************
  * AuthProvider.
@@ -66,97 +60,47 @@ type Props = {
 export const AuthProvider: React.FC<Props> = ({ children }) => {
   // current Firebase user (null when signed out)
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
-
   // guards
-  const startupRef = useRef(false);
+  const startedRef = useRef(false);
   const signingRef = useRef(false);
 
   /****************************************************************************************************************
-   * Start up checks.
+   * Setup.
    ****************************************************************************************************************/
   useEffect(() => {
-    // prevent any retriggers
-    if (startupRef.current) return;
-    startupRef.current = true;
+    if (startedRef.current) return;
+    startedRef.current = true;
 
-    // 3) Keep user in sync with Firebase Auth state.
+    /** 1) Seed immediately so downstream can reflect an existing session (if any) **/
     const auth = getAuth(getApp());
-
-    // seed immediately so downstream can reflect an existing session (if any)
     setUser(auth.currentUser ?? null);
 
-    // subscribe immediately
-    const unsub = onAuthStateChanged(auth, (u) => {
-      let logMsg = '';
-      if (u && !u.isAnonymous) logMsg = `google uid = ${logColors.green}${u.uid.slice(0, 10)}..`;
-      else if (u && u.isAnonymous) logMsg = `anon uid = ${logColors.green}${u.uid.slice(0, 10)}..`;
-      else if (!u) logMsg = `no user`;
-      doLog('auth', 'onAuthStateChanged', logMsg);
-      setUser(u);
+    /** 2) Subscribe to observers immediately **/
+    const stop = startAuthObservers({
+      onUser: setUser,    // ensure user is always updated for downstream
+      onInvalidation: async () => {
+        await signOut();  // account invalidation on Firebase side; sign out locally
+      },
     });
 
-    // kick off async startup work
     (async () => {
       try {
-        // 1) Configure Google Sign-In once.
-        await configureGoogleSignIn(); // idempotent internally
-
-        // 2) Ensure an anonymous session exists early (local-first) if no existing session.
-        await doAnonymousSignIn(); // will trigger the auth listener if it signs in
-
-        // if we already have a non-anon user (e.g., hot reload), ensure network on
-        if (auth.currentUser && !auth.currentUser.isAnonymous) {
-          await goOnline();
-        }
+        /** 3) Configure Google Sign-In once **/
+        await configureGoogleSignIn();
+        /** 4) Ensure an anonymous session exists early (local-first) if no existing session **/
+        await ensureAnonymousSession();
       } catch (e) {
-        doLog('auth', 'start up checks', `Startup init failed: ${e}`);
+        // non-fatal startup errors are okay; observers still keep state
       }
     })();
 
-    // cleanup
-    return unsub;
-  }, []);
-
-  /****************************************************************************************************************
-   * Event-driven health checks:
-   * - Once on mount
-   * - On token refresh: verify as well
-   ****************************************************************************************************************/
-  useEffect(() => {
-    const auth = getAuth(getApp());
-
-    // all verification logic is centralized in the helper for clarity
-    const handleInvalidation = async () => {
-      try {
-        const ok = await verifyCurrentUser();
-        if (!ok) {
-          await signOut(); // falls back to anon local-only
-        }
-      } catch {
-        // ignore transient errors; will retry on next event
-      }
-    };
-
-    const offToken = onIdTokenChanged(auth, handleInvalidation);
-
-    // one-time check on mount (useful right after sign-in)
-    handleInvalidation();
-
-    return () => {
-      offToken();
-    };
+    return stop;
   }, []);
 
   /****************************************************************************************************************
    * Sign in with Google → Firebase.
-   * - Shows native account picker.
-   * - Exchanges Google ID token for Firebase credential.
-   * - If the current user is **anonymous**, LINK the Google credential to **retain the same uid**.
-   * - Otherwise, do a standard Google credential sign-in.
-   * - Returns the Firebase user.
    ****************************************************************************************************************/
   const signIn = async (): Promise<FirebaseAuthTypes.User> => {
-    // prevent double-taps / concurrent calls
     if (signingRef.current) {
       throw new AppError('auth', 'signIn', 'Sign-in already in progress');
     }
@@ -165,17 +109,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     try {
       /** 1) Ensure Play Services on Android **/
       await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-
-      // force account picker by clearing any cached Google session (otherwise it may sign in silently)
-      try {
-        if (GoogleSignin.hasPreviousSignIn()) {
-          await GoogleSignin.signOut();
-          // optional: also revoke to re-prompt consent when needed
-          // await GoogleSignin.revokeAccess();
-        }
-      } catch {
-        /* ignore, best-effort */
-      }
+      await ensureAccountPicker();
 
       /** 2) Launch Google account picker and fetch ID token (bounded to avoid silent hangs) **/
       const res: any = await withTimeout(GoogleSignin.signIn(), 30000);
@@ -188,34 +122,30 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       const auth = getAuth(getApp());
       const credential = GoogleAuthProvider.credential(idToken);
 
-      // anonymous → try to LINK first
+      /** 4) Anonymous → try to LINK first **/
       if (auth.currentUser?.isAnonymous) {
         try {
-          const { user: linked } = await linkWithCredential(auth.currentUser, credential);
-          await goOnline(); // now allowed to sync
-          setUser(linked); // manually update context state to trigger downstream
-          return linked;
+          const { user } = await linkWithCredential(auth.currentUser, credential); // retain uid
+          return user;
         } catch (e: any) {
           const code = e?.code || e?.nativeErrorCode;
-          const alreadyLinked =
-            code === 'auth/credential-already-in-use' || code === 'auth/account-exists-with-different-credential';
 
-          if (!alreadyLinked) throw e;
-
-          // fall back: switch to that Google account
-          const { user: target } = await signInWithCredential(auth, credential);
-          await goOnline(); // sync for signed-in account
-          return target;
+          /** 4a) Non-linkage error when trying to link **/
+          if (code !== 'auth/credential-already-in-use' && code !== 'auth/account-exists-with-different-credential') {
+            throw e;
+          }
         }
       }
 
-      // not anonymous → normal sign-in
+      /** 4b) Google account picked is already linked, sign in with that account instead **/
       const { user: signedIn } = await signInWithCredential(auth, credential);
-      await goOnline();
-      return signedIn;
 
-    } catch (err) {
-      throw new AppError('auth', 'signIn', `Google sign-in failed: ${err}`);
+      /** 4c) Google account we tried to sign in is invalidated, sign out instead **/
+      if (!(await verifyCurrentUser())) {
+        await signOut();
+        throw new AppError('auth', 'signIn', 'Invalid user after sign-in');
+      }
+      return signedIn;
     } finally {
       signingRef.current = false;
     }
@@ -227,29 +157,17 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   const signOut = async (): Promise<void> => {
     const auth = getAuth(getApp());
     try {
-      try {
-        await fbSignOut(auth);
-      } catch (e) {
-        doLog('auth', 'start up checks', `Firebase signOut failed: ${e}`); // best-effort: do not reject
-      }
-      try {
-        await GoogleSignin.signOut();
-      } catch (e) {
-        doLog('auth', 'start up checks', `Google signOut failed: ${e}`);  // best-effort
-      }
+      /** 1) Do Firebase and Google sign out **/
+      try { await fbSignOut(auth); } catch {}
+      try { await GoogleSignin.signOut(); } catch {}
     } finally {
-      // fresh anonymous workspace; keep it local-only (never appears in console)
-      await doAnonymousSignIn();
-      await goLocalOnly();
+      /** 2) Ensure anonymous session **/
+      await ensureAnonymousSession();
     }
   };
 
   const value = useMemo(() => ({ user, signIn, signOut }), [user]);
-
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-/******************************************************************************************************************
- * Consumer hook.
- ******************************************************************************************************************/
 export const useAuth = () => useContext(AuthContext);

@@ -1,15 +1,20 @@
 import { logColors } from '../../Const';
 import { getApp } from '@react-native-firebase/app';
-import { getAuth, signInAnonymously } from '@react-native-firebase/auth';
-import { reload } from '@react-native-firebase/auth'; // ✅ modular API
+import {
+  getAuth,
+  signInAnonymously,
+  onAuthStateChanged,
+  onIdTokenChanged,
+  reload,
+  type FirebaseAuthTypes,
+} from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { getFirestore, disableNetwork, enableNetwork } from '@react-native-firebase/firestore';
 import { doLog, AppError } from '../../Utils';
 
 /****************************************************************************************************************
- * Configure Google Sign-In.
- * - Done once at the start.
- * - Provide web OAuth client ID via env.
+ * Configure Google Sign-In (once).
+ * - Provide web OAuth client ID via env: GOOGLE_WEB_CLIENT_ID
  ****************************************************************************************************************/
 export async function configureGoogleSignIn() {
   const webClientId = process.env.GOOGLE_WEB_CLIENT_ID;
@@ -17,52 +22,49 @@ export async function configureGoogleSignIn() {
     throw new AppError('auth', 'configureGoogleSignIn', 'GoogleSignin load failed: Missing webClientId');
   }
   GoogleSignin.configure({ webClientId });
-  doLog(
-    'auth',
-    'configureGoogleSignIn',
-    `GoogleSignin loaded with webClientId: ${logColors.green}${webClientId.slice(0, 10)}..`
-  );
+  doLog('auth', 'configureGoogleSignIn', `GoogleSignin loaded: ${logColors.green}${webClientId.slice(0, 10)}..`);
 }
 
 /****************************************************************************************************************
- * Firestore network controls.
- * - keep anonymous sessions local-only (no server traffic)
- * - enable sync when user is Google-signed-in
+ * Network policy:
+ * - Anonymous  → local only (disable Firestore network)
+ * - Google user → online (enable Firestore network)
  ****************************************************************************************************************/
-export async function goLocalOnly() {
-  await disableNetwork(getFirestore(getApp()));
-}
-
-export async function goOnline() {
-  await enableNetwork(getFirestore(getApp()));
-}
-
-/****************************************************************************************************************
- * Do anonymous session sign in.
- * - Only if no active user session, else nothing happens.
- * - Ensures anonymous sessions are strictly local-only (no sync).
- ****************************************************************************************************************/
-export async function doAnonymousSignIn() {
-  const auth = getAuth(getApp());
-
-  if (!auth.currentUser) {
-    try {
-      const { user } = await signInAnonymously(auth);
-      doLog('auth', 'doAnonymousSignIn', `Anonymous sign-in success, uid: ${logColors.green}${user.uid.slice(0, 10)}..`);
-      await goLocalOnly(); // anonymous = local-only
-    } catch (e) {
-      doLog('auth', 'doAnonymousSignIn', `Anonymous sign-in failed: ${e}`);
+export async function applyNetworkPolicyFor(user: FirebaseAuthTypes.User | null) {
+  try {
+    const db = getFirestore(getApp());
+    if (user?.isAnonymous) {
+      await disableNetwork(db);
+      doLog('auth', 'applyNetworkPolicyFor', 'Applied local-only (anonymous)');
+    } else if (user) {
+      await enableNetwork(db);
+      doLog('auth', 'applyNetworkPolicyFor', 'Applied online (google user)');
     }
-  } else {
-    doLog('auth', 'doAnonymousSignIn', `Existing user detected, uid: ${logColors.green}${auth.currentUser.uid.slice(0, 10)}..`);
+  } catch {
+    // Firestore might not be installed yet; ignore gracefully
   }
 }
 
 /****************************************************************************************************************
- * Verify current user against Firebase server.
- * - Used to detect when an account is deleted/disabled in Firebase Console.
- * - If the account is invalid, return false so the caller can signOut() and fallback to anon.
- *
+ * Ensure an anonymous session exists (local-first).
+ ****************************************************************************************************************/
+export async function ensureAnonymousSession() {
+  const auth = getAuth(getApp());
+  if (!auth.currentUser) {
+    try {
+      const { user } = await signInAnonymously(auth);
+      doLog('auth', 'ensureAnonymousSession', `Anon uid: ${logColors.green}${user.uid.slice(0, 10)}..`);
+      await applyNetworkPolicyFor(user);
+    } catch (e) {
+      doLog('auth', 'ensureAnonymousSession', `Anonymous sign-in failed: ${e}`);
+    }
+  } else {
+    await applyNetworkPolicyFor(auth.currentUser);
+  }
+}
+
+/****************************************************************************************************************
+ * Verify current user against Firebase server (detect disable/delete).
  * Returns:
  *   - true  → user still valid
  *   - false → disabled/deleted/invalid on the server
@@ -71,24 +73,74 @@ export async function verifyCurrentUser(): Promise<boolean> {
   const auth = getAuth(getApp());
   const u = auth.currentUser;
   if (!u) return false;
-
   try {
     await reload(u);
     return true;
   } catch (e: any) {
     const code: string | undefined = e?.code || e?.message;
-    const isInvalid =
+    const invalid =
       code?.includes('user-disabled') ||
       code?.includes('user-not-found') ||
       code?.includes('user-token-expired') ||
       code?.includes('invalid-user-token') ||
       false;
-
-    if (isInvalid) {
-      doLog('auth', 'verifyCurrentUser', `Remote account invalidated (${code})`);
+    if (invalid) {
+      doLog('auth', 'verifyCurrentUser', `Remote invalidation (${code})`);
       return false;
     }
-    // unexpected error: bubble up so the caller can decide (usually ignore and retry later)
     throw e;
+  }
+}
+
+/****************************************************************************************************************
+ * Start auth lifecycle observers.
+ * - onAuthStateChanged: keeps `user` in sync and applies network policy
+ * - onIdTokenChanged: triggers verification (caller decides what to do if invalid)
+ * Returns a single cleanup function.
+ ****************************************************************************************************************/
+export function startAuthObservers(params: {
+  onUser: (u: FirebaseAuthTypes.User | null) => void;
+  onInvalidation: () => Promise<void> | void;
+}) {
+  const auth = getAuth(getApp());
+
+  const unsubAuth = onAuthStateChanged(auth, async (u) => {
+    let logMsg = '';
+    if (u && !u.isAnonymous) logMsg = `google uid = ${logColors.green}${u.uid.slice(0, 10)}..`;
+    else if (u && u.isAnonymous) logMsg = `anon uid = ${logColors.green}${u.uid.slice(0, 10)}..`;
+    else logMsg = 'no user';
+    doLog('auth', 'onAuthStateChanged', logMsg);
+
+    // keep consumer state in sync, then enforce network policy for new state
+    params.onUser(u);
+    await applyNetworkPolicyFor(u);
+  });
+
+  const offToken = onIdTokenChanged(auth, async () => {
+    try {
+      const ok = await verifyCurrentUser();
+      if (!ok) await params.onInvalidation();
+    } catch {
+      // ignore transient issues; will check again on next event
+    }
+  });
+
+  return () => {
+    offToken();
+    unsubAuth();
+  };
+}
+
+/****************************************************************************************************************
+ * Utility: ensure account picker shows (clear cached Google session if any).
+ ****************************************************************************************************************/
+export async function ensureAccountPicker() {
+  try {
+    if (GoogleSignin.hasPreviousSignIn()) {
+      await GoogleSignin.signOut();
+      // optionally: await GoogleSignin.revokeAccess();
+    }
+  } catch {
+    // best-effort
   }
 }
