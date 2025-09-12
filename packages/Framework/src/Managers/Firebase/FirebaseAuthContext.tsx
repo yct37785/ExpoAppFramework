@@ -17,6 +17,7 @@
  * - Anonymous accounts will get orphaned when it is signed out inadvertently, need to be cleaned up on Firebase end.
  ******************************************************************************************************************/
 import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { Platform } from 'react-native';
 import { getApp } from '@react-native-firebase/app';
 import {
   getAuth,
@@ -47,14 +48,8 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
-  signIn: async () => {
-    doErrLog('auth', 'AuthContext', 'AuthProvider not mounted');
-    return Promise.resolve();
-  },
-  signOut: async () => {
-    doErrLog('auth', 'AuthContext', 'AuthProvider not mounted');
-    return Promise.resolve();
-  },
+  signIn: async () => doErrLog('auth', 'AuthContext', 'AuthProvider not mounted'),
+  signOut: async () => doErrLog('auth', 'AuthContext', 'AuthProvider not mounted'),
 });
 
 type Props = { children: React.ReactNode; };
@@ -108,13 +103,15 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   const signIn = async (): Promise<void> => {
     if (signingRef.current) {
       doErrLog('auth', 'signIn', 'Sign-in already in progress');
-      return Promise.resolve();
+      return;
     }
     signingRef.current = true;
 
     try {
       /** 1) Ensure Play Services on Android **/
-      await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+      if (Platform.OS === 'android') {
+        await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+      }
       await ensureAccountPicker();
 
       /** 2) Launch Google account picker and fetch ID token (bounded to avoid silent hangs) **/
@@ -122,7 +119,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       const idToken = res?.idToken ?? res?.data?.idToken;
       if (!idToken) {
         doErrLog('auth', 'signIn', 'Google sign-in failed: missing idToken');
-        return Promise.resolve();
+        return;
       }
 
       /** 3) Link-or-sign-in with Google credential **/
@@ -133,14 +130,13 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       if (auth.currentUser?.isAnonymous) {
         try {
           await linkWithCredential(auth.currentUser, credential); // retain uid
-          return Promise.resolve();
+          return;
         } catch (e: any) {
-          const code = e?.code || e?.nativeErrorCode;
-
           /** 4a) Non-linkage error when trying to link **/
-          if (code !== 'auth/credential-already-in-use' && code !== 'auth/account-exists-with-different-credential') {
-            throw e;
-          }
+          const raw = (e?.code ?? e?.nativeErrorCode ?? '').toString().toLowerCase();
+          const alreadyLinked = raw.includes('credential-already-in-use');
+          const differentCred = raw.includes('account-exists-with-different-credential');
+          if (!alreadyLinked && !differentCred) throw e;
         }
       }
 
@@ -155,7 +151,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       if (!(await verifyCurrentUser())) {
         await signOut();
         doErrLog('auth', 'signIn', 'Invalid user after sign-in, signed out');
-        return Promise.resolve();
+        return;
       }
     } catch(e) {
       doErrLog('auth', 'signIn', `Undefined error: ${e}`);
