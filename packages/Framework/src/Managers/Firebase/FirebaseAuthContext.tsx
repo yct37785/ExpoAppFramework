@@ -63,6 +63,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   // guards
   const startedRef = useRef(false);
   const signingRef = useRef(false);
+  const signingOutRef = useRef(false);
 
   /****************************************************************************************************************
    * Setup.
@@ -79,7 +80,10 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     const stop = startAuthObservers({
       onUser: setUser,    // ensure user is always updated for downstream
       onInvalidation: async () => {
-        await signOut();  // account invalidation on Firebase side; sign out locally
+        // account invalidation on Firebase side; sign out locally
+        if (!signingOutRef.current) {
+          await signOut();
+        }
       },
     });
 
@@ -173,6 +177,9 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
    * Sign out (best-effort) → always lands in a fresh anonymous, local-only session.
    ****************************************************************************************************************/
   const signOut = async (): Promise<void> => {
+    if (signingOutRef.current) return;
+    signingOutRef.current = true;
+
     const auth = getAuth(getApp());
     try {
       /** 1) Do Firebase and Google sign out **/
@@ -186,6 +193,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       if (refreshed) {
         setUser(refreshed);
       }
+      signingOutRef.current = false;
     }
   };
 
