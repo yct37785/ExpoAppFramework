@@ -92,10 +92,7 @@ export async function verifyCurrentUser(): Promise<boolean> {
 }
 
 /****************************************************************************************************************
- * Start auth lifecycle observers.
- * - onAuthStateChanged: keeps `user` in sync and applies network policy
- * - onIdTokenChanged: triggers verification (caller decides what to do if invalid)
- * Returns a single cleanup function.
+ * Auth observers subscriber.
  ****************************************************************************************************************/
 export function startAuthObservers(params: {
   onUser: (u: FirebaseAuthTypes.User | null) => void;
@@ -103,6 +100,11 @@ export function startAuthObservers(params: {
 }) {
   const auth = getAuth(getApp());
 
+  /**************************************************************************************************************
+   * Auth-state observer:
+   * - Fires on meaningful identity changes (sign in/out, link, anon→Google, etc.)
+   * - Updates the context user and enforces network policy for the new state
+   **************************************************************************************************************/
   const unsubAuth = onAuthStateChanged(auth, async (u) => {
     let logMsg = '';
     if (u && !u.isAnonymous) logMsg = `google uid = ${logColors.green}${u.uid.slice(0, 10)}..`;
@@ -115,7 +117,14 @@ export function startAuthObservers(params: {
     await applyNetworkPolicyFor(u);
   });
 
-  const offToken = onIdTokenChanged(auth, async () => {
+  /**************************************************************************************************************
+   * ID-token observer:
+   * - Fires on token refreshes (and also on sign in/out)
+   * - Do NOT update context user here to avoid re-renders on every refresh
+   * - Run a health check for anon/Google users; if invalid, let caller handle sign-out
+   **************************************************************************************************************/
+  const offToken = onIdTokenChanged(auth, async (u) => {
+    if (!u) return; // skip null
     try {
       const ok = await verifyCurrentUser();
       if (!ok) await params.onInvalidation();
