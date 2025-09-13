@@ -150,8 +150,18 @@ function main() {
     process.exit(1);
   }
   const rootPkg = readJson(rootPkgPath);
-  const overrides = rootPkg.overrides || {};
-  console.log(`[sync] mirroring ${Object.keys(overrides).length} overrides into apps (exact versions)`);
+
+  // sort root overrides alphabetically & write back if changed
+  let overrides = rootPkg.overrides || {};
+  const sortedOverrides = sortObjectKeys(overrides);
+  if (JSON.stringify(sortedOverrides) !== JSON.stringify(overrides)) {
+    rootPkg.overrides = sortedOverrides;
+    writeJson(rootPkgPath, rootPkg);
+    console.log('[sync] new deps detected, root overrides sorted alphabetically');
+  }
+  overrides = sortedOverrides;
+
+  console.log(`[sync] mirroring ${Object.keys(overrides).length} overrides into apps (exact versions)...`);
 
   const apps = listSubdirs(appsDir);
   let scanned = 0, updatedCount = 0;

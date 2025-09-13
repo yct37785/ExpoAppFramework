@@ -1,3 +1,5 @@
+// deps
+import 'react-native-get-random-values';
 // core
 import React, { ReactNode, useCallback, memo, useEffect, useState } from 'react';
 import { View, LogBox, Platform, StatusBar } from 'react-native';
@@ -12,9 +14,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // data
 import { useLocalData, LocalDataProvider } from './Managers/LocalDataContext';
 // Firebase
-import { getFirebaseApp } from './Firebase/FirebaseApp';
-// deps
-import 'react-native-get-random-values';
+import { getApp } from '@react-native-firebase/app';
+import { AuthProvider } from './Managers/Firebase/FirebaseAuthContext';
+// const
+import { logColors } from './Const';
+// utils
+import { doLog } from './Utils';
 
 // theme adaptation for navigation
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
@@ -95,11 +100,23 @@ const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
   const [theme, setTheme] = useState(CombinedDarkTheme);
 
   useEffect(() => {
-    // sync theme with stored setting
-    if (isLoaded) {
-      const darkMode = getItem('isDarkMode');
-      setTheme(darkMode ? CombinedDarkTheme : CombinedDefaultTheme);
+    // Firebase pulse check
+    try {
+      // get the default app that RN Firebase auto-initialized from native files
+      const firebaseApp = getApp();
+      // log proof that native config was loaded from google-services.json
+      const { projectId } = firebaseApp.options;
+      doLog('root', 'Firebase pulse check', `Loaded with projectId: ${logColors.green}${projectId}`);
+    } catch (err) {
+      doLog('root', 'Firebase pulse check', `NOT ready (native config missing?): ${err}`);
     }
+  }, []);
+
+  useEffect(() => {
+    if (!isLoaded) return;
+    // sync theme with stored setting
+    const darkMode = getItem('isDarkMode');
+    setTheme(darkMode ? CombinedDarkTheme : CombinedDefaultTheme);
   }, [isLoaded, getItem('isDarkMode')]);
 
   const navContainerTheme = theme === CombinedDarkTheme ? NavigationDarkTheme : NavigationDefaultTheme;
@@ -139,17 +156,11 @@ const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
 }
 
 const LocalDataProviderWrapper: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
-  // load Firebase at startup
-  const firebaseApp = getFirebaseApp();
-  if (firebaseApp) {
-    console.log('Firebase configured');
-  } else {
-    console.log('Firebase not configured');
-  }
-
   return (
     <LocalDataProvider>
-      <Root screenMap={screenMap} DEFAULT_SCREEN={DEFAULT_SCREEN} />
+      <AuthProvider>
+        <Root screenMap={screenMap} DEFAULT_SCREEN={DEFAULT_SCREEN} />
+      </AuthProvider>
     </LocalDataProvider>
   );
 }

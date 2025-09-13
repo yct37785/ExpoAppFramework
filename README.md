@@ -143,8 +143,7 @@ Change the duplicated app’s configs with your app name:
     "slug": "MyNewApp",
     ...
   "android": {
-    "name": "MyNewApp"
-    "package": "com.anonymous.MyNewApp"
+    "package": "com.anonymous.MyNewApp",
     ...
   }
 }

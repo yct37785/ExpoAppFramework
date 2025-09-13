@@ -41,8 +41,5 @@ yarn-error.*
 !/apps/TemplateApp
 !/apps/TemplateApp/**
 
-# firebase
-firebase.env
-
-# TemplateApp special
+# exclude build folder (TemplateApp only, actual apps will track their build folders)
 apps/TemplateApp/android/
