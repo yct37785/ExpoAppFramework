@@ -17,11 +17,11 @@ type ActivityProps<T extends keyof RootStackPropsList = keyof RootStackPropsList
  * Activity component
  *
  * Provides a standardized screen layout with:
- * - An AppBar header
- * - Optional back navigation (hidden if marked as root activity)
- * - Optional screen title
- * - Slot for injecting custom header content (e.g. buttons, switches)
- * - Flexible body area for arbitrary child components
+ * - An AppBar header.
+ * - Optional back navigation (hidden if marked as root activity).
+ * - Optional screen title.
+ * - Slot for injecting custom header content (e.g. buttons, switches).
+ * - Flexible body area for arbitrary child components.
  *
  * Typical usage: wrap all screens in <Activity> to ensure consistent layout and navigation handling.
  * 
@@ -30,9 +30,18 @@ type ActivityProps<T extends keyof RootStackPropsList = keyof RootStackPropsList
  * @param customHeaderContent? - function that renders custom header content (actions, toggles, etc.)
  * @param style? - additional style applied to the root container
  * @param isRootActivity? - if true, hides the back button (intended for the first/root screen)
- * @param children - content area of the screen
- *
- * @returns JSX.Element
+ * @param children - content area of the 
+ * 
+ * @usage
+ * ```tsx
+ * <Activity 
+ *  navigation={navigation}
+ *  CustomHeader={CustomHeader}
+ *  title="My Title"
+ *  isRootActivity>
+      ...
+    </Activity>
+ * ```
  ******************************************************************************************************************/
 export const Activity: React.FC<ActivityProps> = memo(({
   navigation,

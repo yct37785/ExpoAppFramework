@@ -2,10 +2,10 @@
  * Generic local data provider built on AsyncStorage.
  *
  * Features:
- * - Loads all key/value pairs from AsyncStorage on startup
- * - Ensures reserved default keys (isDarkMode, language, etc.) always exist
- * - Exposes in-memory object for quick access
- * - Provides setItem, getItem, and reset utilities
+ * - Loads all key/value pairs from AsyncStorage on startup.
+ * - Ensures reserved default keys (isDarkMode, language, etc.) always exist.
+ * - Exposes in-memory object for quick access.
+ * - Provides setItem, getItem, and reset utilities.
  ******************************************************************************************************************/
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -19,6 +19,12 @@ type LocalData = Record<string, any>;
 
 /******************************************************************************************************************
  * API exposed by the LocalDataContext.
+ * 
+ * @property data - AsyncStorage keys loaded into memory
+ * @property setItem - refer to func
+ * @property getItem - refer to func
+ * @property clear - refer to func
+ * @property isLoaded - true if all AsyncStorage keys are loaded to data
  ******************************************************************************************************************/
 type LocalDataContextType = {
   data: LocalData;
@@ -37,24 +43,22 @@ const LocalDataContext = createContext<LocalDataContextType>({
 });
 
 /******************************************************************************************************************
- * Local data context provider
- *
- * - Loads AsyncStorage keys on mount
- * - Ensures reserved defaults exist (creates them if missing)
- * - Provides setItem, getItem, reset
+ * Local data context provider:
+ * - Loads AsyncStorage keys on mount.
+ * - Ensures reserved defaults exist (creates them if missing).
+ * - Provides setItem, getItem, reset.
  ******************************************************************************************************************/
 export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [data, setData] = useState<LocalData>(localDataDefaults);
   const [isLoaded, setIsLoaded] = useState(false);
 
   /****************************************************************************************************************
-   * Loads all persisted key/value pairs into memory on startup.
-   *
-   * - Reads all AsyncStorage keys via `multiGet`
-   * - Parses values into JS objects
+   * Loads all persisted key/value pairs into memory on startup:
+   * - Reads all AsyncStorage keys via `multiGet`.
+   * - Parses values into JS objects.
    * - Ensures that reserved default keys (`localDataDefaults`) are present,
-   *   writing them to AsyncStorage if missing
-   * - Updates internal state with the merged defaults + stored values
+   *   writing them to AsyncStorage if missing.
+   * - Updates internal state with the merged defaults + stored values.
    ****************************************************************************************************************/
   useEffect(() => {
     (async () => {
@@ -99,13 +103,13 @@ export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   /****************************************************************************************************************
    * Sets a value in local data and persists it to AsyncStorage.
    *
-   * @example
-   * ```ts
+   * @param key - the string key to set
+   * @param value - the value to store (will be JSON.stringified)
+   * 
+   * @usage
+   * ```tsx
    * setItem('isDarkMode', true);
    * ```
-   * 
-   * @param key - The string key to set
-   * @param value - The value to store (will be JSON.stringified)
    ****************************************************************************************************************/
   const setItem = async (key: string, value: any) => {
     const newData = { ...data, [key]: value };
@@ -120,27 +124,26 @@ export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   /****************************************************************************************************************
    * Retrieves a value from local data.
    * 
-   * @example
-   * ```ts
+   * @param key - the key to fetch
+   * 
+   * @return - the stored value typed as T, or undefined if missing
+   * 
+   * @usage
+   * ```tsx
    * const lang = getItem<string>('language');
    * ```
-   *
-   * @param key - The key to fetch
-   * 
-   * @returns The stored value typed as T, or undefined if missing
    ****************************************************************************************************************/
   function getItem<T = any>(key: string): T | undefined {
     return data[key] as T | undefined;
   }
 
   /****************************************************************************************************************
-   * Resets local data back to the reserved default values.
+   * Resets local data back to the reserved default values:
+   * - Overwrites current state with `localDataDefaults`.
+   * - Persists default values back into AsyncStorage.
    *
-   * - Overwrites current state with `localDataDefaults`
-   * - Persists default values back into AsyncStorage
-   *
-   * @example
-   * ```ts
+   * @usage
+   * ```tsx
    * await reset();
    * ```
    ****************************************************************************************************************/
@@ -161,11 +164,9 @@ export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 };
 
 /******************************************************************************************************************
- * useLocalData
- *
  * Hook for consuming the LocalDataContext.
  *
- * @example
+ * @usage
  * ```tsx
  * const { getItem, setItem, reset, data } = useLocalData();
  * const darkMode = getItem<boolean>('isDarkMode');
