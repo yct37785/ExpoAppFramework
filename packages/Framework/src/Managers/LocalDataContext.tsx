@@ -19,12 +19,6 @@ type LocalData = Record<string, any>;
 
 /******************************************************************************************************************
  * API exposed by the LocalDataContext.
- * 
- * @property data - AsyncStorage keys loaded into memory
- * @property setItem - refer to func
- * @property getItem - refer to func
- * @property clear - refer to func
- * @property isLoaded - true if all AsyncStorage keys are loaded to data
  ******************************************************************************************************************/
 type LocalDataContextType = {
   data: LocalData;
@@ -47,6 +41,12 @@ const LocalDataContext = createContext<LocalDataContextType>({
  * - Loads AsyncStorage keys on mount.
  * - Ensures reserved defaults exist (creates them if missing).
  * - Provides setItem, getItem, reset.
+ * 
+ * @property data - AsyncStorage keys loaded into memory
+ * @property setItem - set item
+ * @property getItem - get item
+ * @property clear - clear all data
+ * @property isLoaded - true if all AsyncStorage keys are loaded to data
  ******************************************************************************************************************/
 export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [data, setData] = useState<LocalData>(localDataDefaults);
