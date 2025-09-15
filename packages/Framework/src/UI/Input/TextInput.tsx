@@ -13,25 +13,26 @@ type TextInputProps = {
 };
 
 /******************************************************************************************************************
- * Text input
+ * Render a unified text input built on react-native-paper that auto-blurs when the keyboard hides.
  *
- * A unified text input component built on top of react-native-paper.
- * Automatically blurs when the keyboard is dismissed.
+ * @param props - text input props:
+ *   - type?: 'text' | 'numeric' | 'passcode' | 'search' - input mode to render
+ *   - value?: string - current input value
+ *   - placeholder?: string - placeholder text
+ *   - onChange?: (text: string) => void - called when value changes
+ *   - onFocus?: () => void - called when input gains focus
+ *   - onBlur?: () => void - called when input loses focus
+ *   - style?: StyleProp<ViewStyle | TextStyle> - optional custom styling
  *
- * Features:
- * - Configurable input types ('text', 'search', etc.)
- * - Standardized theming
- * - Reusable wrapper for common keyboard interactions
- *
- * @param type - input type ('text' | 'numeric' | 'passcode' | 'search')
- * @param value - current input value
- * @param placeholder - placeholder text
- * @param onChange - callback triggered when input value changes
- * @param onFocus - callback triggered when input gains focus
- * @param onBlur - callback triggered when input loses focus
- * @param style - optional custom styling applied
- *
- * @returns JSX.Element
+ * @usage
+ * ```tsx
+ * <TextInput
+ *   type="search"
+ *   value={query}
+ *   placeholder="search items"
+ *   onChange={setQuery}
+ * />
+ * ```
  ******************************************************************************************************************/
 export const TextInput: React.FC<TextInputProps> = memo(({
   type = 'text',
