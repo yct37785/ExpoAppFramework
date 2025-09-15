@@ -37,16 +37,24 @@ const LocalDataContext = createContext<LocalDataContextType>({
 });
 
 /******************************************************************************************************************
- * Local data context provider:
- * - Loads AsyncStorage keys on mount.
- * - Ensures reserved defaults exist (creates them if missing).
- * - Provides setItem, getItem, reset.
+ * Provider that exposes local key/value data backed by AsyncStorage, ensuring reserved defaults and
+ * convenience helpers for set/get/clear along with a readiness flag.
  * 
- * @property data - AsyncStorage keys loaded into memory
- * @property setItem - set item
- * @property getItem - get item
- * @property clear - clear all data
- * @property isLoaded - true if all AsyncStorage keys are loaded to data
+ * @param props - provider props:
+ *   - children: ReactNode - subtree that consumes the context
+ *
+ * @property data: obj - in-memory snapshot of stored key/value pairs
+ * @property setItem: fn - persist a value and update in-memory state
+ * @property getItem: fn - retrieve a typed value or undefined
+ * @property clear: fn - clear all stored values and reset state
+ * @property isLoaded: boolean - true when initial load from AsyncStorage completes
+ *
+ * @usage
+ * ```tsx
+ * <LocalDataProvider>
+ *   <App />
+ * </LocalDataProvider>
+ * ```
  ******************************************************************************************************************/
 export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [data, setData] = useState<LocalData>(localDataDefaults);
@@ -163,13 +171,4 @@ export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   );
 };
 
-/******************************************************************************************************************
- * Hook for consuming the LocalDataContext.
- *
- * @usage
- * ```tsx
- * const { getItem, setItem, reset, data } = useLocalData();
- * const darkMode = getItem<boolean>('isDarkMode');
- * ```
- ******************************************************************************************************************/
 export const useLocalData = () => useContext(LocalDataContext);

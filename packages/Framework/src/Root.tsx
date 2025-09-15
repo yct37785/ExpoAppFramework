@@ -57,16 +57,14 @@ LogBox.ignoreLogs(['new NativeEventEmitter']);
 const Stack = createNativeStackNavigator<RootStackPropsList>();
 
 /******************************************************************************************************************
- * Wraps a screen component with navigation and route props.
+ * Wraps a screen component to inject the correct navigation and route props within a stack screen render callback.
  *
- * This is used inside the <Stack.Screen> render callback to inject the correct
- * navigation and route props into client-defined screens, ensuring type-safety.
- *
- * @param Component - screen React component to render
- * @param navigation - navigation object for controlling stack navigation
- * @param route - route object containing params and route metadata
- *
- * @returns JSX.Element
+ * @param props - wrapper props:
+ *   - Component: fn - screen component to render (receives { navigation, route })
+ *   - navigation: obj - navigation controller for stack operations
+ *   - route: obj - current route info:
+ *       + name: string - route name
+ *       + params?: obj - route parameters (shape depends on screen)
  ******************************************************************************************************************/
 const ScreenWrapper = ({
   Component,
@@ -86,14 +84,12 @@ type RootProps = {
 };
 
 /******************************************************************************************************************
- * Root component
+ * Root component that wires global providers and configures the navigation stack from a screen map.
  *
- * Provides global context providers and configures the navigation stack using the given screen map.
- *
- * @param DEFAULT_SCREEN - name of the initial screen shown on app launch
- * @param screenMap - mapping of screen names to their respective React components
- * 
- * @returns JSX.Element
+ * @param props - root props:
+ *   - DEFAULT_SCREEN: string - initial route name used by the navigator
+ *   - screenMap: obj - mapping of route names to screen components:
+ *       + <routeName>: fn - React screen component
  ******************************************************************************************************************/
 const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
   const { getItem, isLoaded } = useLocalData();

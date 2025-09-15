@@ -14,33 +14,29 @@ type ActivityProps<T extends keyof RootStackPropsList = keyof RootStackPropsList
 }
 
 /******************************************************************************************************************
- * Activity component
- *
- * Provides a standardized screen layout with:
- * - An AppBar header.
- * - Optional back navigation (hidden if marked as root activity).
- * - Optional screen title.
- * - Slot for injecting custom header content (e.g. buttons, switches).
- * - Flexible body area for arbitrary child components.
+ * Provides a standardized screen layout with AppBar header, optional back navigation, optional title,
+ * a slot for custom header content, and a flexible body area for arbitrary children.
  *
  * Typical usage: wrap all screens in <Activity> to ensure consistent layout and navigation handling.
  * 
- * @param navigation - navigation prop for controlling stack navigation
- * @param title? - title string displayed in the AppBar
- * @param customHeaderContent? - function that renders custom header content (actions, toggles, etc.)
- * @param style? - additional style applied to the root container
- * @param isRootActivity? - if true, hides the back button (intended for the first/root screen)
- * @param children - content area of the 
+ * @param props - Activity props:
+ *   - navigation: obj - navigation controller for stack operations
+ *   - title?: string - title text shown in the AppBar
+ *   - CustomHeader?: fn - renders custom header content (e.g., buttons, toggles)
+ *   - style?: obj - additional container style
+ *   - isRootActivity?: boolean - when true, hides back button (root screen)
+ *   - children: ReactNode - screen content
  * 
  * @usage
  * ```tsx
- * <Activity 
- *  navigation={navigation}
- *  CustomHeader={CustomHeader}
- *  title="My Title"
- *  isRootActivity>
-      ...
-    </Activity>
+ * <Activity
+ *   navigation={navigation}
+ *   title="My Title"
+ *   CustomHeader={() => <MyActions />}
+ *   isRootActivity
+ * >
+ *   <ScreenBody />
+ * </Activity>
  * ```
  ******************************************************************************************************************/
 export const Activity: React.FC<ActivityProps> = memo(({

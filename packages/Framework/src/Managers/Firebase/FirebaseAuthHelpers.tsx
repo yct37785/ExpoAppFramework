@@ -12,10 +12,9 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { getFirestore, disableNetwork, enableNetwork } from '@react-native-firebase/firestore';
 import { doLog, doErrLog } from '../../Utils';
 
-/****************************************************************************************************************
- * Configure Google Sign-In (once).
- * - Provide web OAuth client ID via env: GOOGLE_WEB_CLIENT_ID
- ****************************************************************************************************************/
+/******************************************************************************************************************
+ * [ASYNC] Configure Google Sign-In one time using GOOGLE_WEB_CLIENT_ID from environment.
+ ******************************************************************************************************************/
 export async function configureGoogleSignIn() {
   const webClientId = process.env.GOOGLE_WEB_CLIENT_ID;
   if (!webClientId) {
@@ -26,11 +25,13 @@ export async function configureGoogleSignIn() {
   }
 }
 
-/****************************************************************************************************************
- * Network policy:
- * - Anonymous  → local only (disable Firestore network)
- * - Google user → online (enable Firestore network)
- ****************************************************************************************************************/
+/******************************************************************************************************************
+ * [ASYNC] Apply Firestore network policy based on user type:
+ * - Anonymous → disable network (local-only)
+ * - Google user → enable network (online)
+ *
+ * @param user - current Firebase user or null
+ ******************************************************************************************************************/
 export async function applyNetworkPolicyFor(user: FirebaseAuthTypes.User | null) {
   try {
     const db = getFirestore(getApp());
@@ -44,9 +45,9 @@ export async function applyNetworkPolicyFor(user: FirebaseAuthTypes.User | null)
   }
 }
 
-/****************************************************************************************************************
- * Ensure an anonymous session exists (local-first).
- ****************************************************************************************************************/
+/******************************************************************************************************************
+ * [ASYNC] Ensure there is a signed-in user; if none, create an anonymous session (local-first).
+ ******************************************************************************************************************/
 export async function ensureAnonymousSession() {
   const auth = getAuth(getApp());
   if (!auth.currentUser) {
@@ -62,12 +63,11 @@ export async function ensureAnonymousSession() {
   }
 }
 
-/****************************************************************************************************************
- * Verify current user against Firebase server (detect disable/delete).
- * Returns:
- *   - true  → user still valid
- *   - false → disabled/deleted/invalid on the server
- ****************************************************************************************************************/
+/******************************************************************************************************************
+ * [ASYNC] Verify the current Firebase user against the server (detect disable/delete/invalidation).
+ *
+ * @return - true if user is still valid, false if user is disabled/deleted/invalid on the server
+ ******************************************************************************************************************/
 export async function verifyCurrentUser(): Promise<boolean> {
   const auth = getAuth(getApp());
   const u = auth.currentUser;
@@ -92,7 +92,20 @@ export async function verifyCurrentUser(): Promise<boolean> {
 }
 
 /****************************************************************************************************************
- * Auth observers subscriber.
+ * Start Firebase auth observers (auth-state + ID-token). Keeps context in sync and reacts to invalidation.
+ *
+ * @param params - observer callbacks:
+ *   - onUser: fn - receives Firebase user or null on auth-state changes
+ *   - onInvalidation: fn - called when the current user becomes invalid (should sign out)
+ *
+ * @return - unsubscribe function that stops all observers
+ *
+ * @usage
+ * ```ts
+ * const stop = startAuthObservers({ onUser: setUser, onInvalidation: signOut });
+ * // later…
+ * stop();
+ * ```
  ****************************************************************************************************************/
 export function startAuthObservers(params: {
   onUser: (u: FirebaseAuthTypes.User | null) => void;
@@ -140,7 +153,7 @@ export function startAuthObservers(params: {
 }
 
 /****************************************************************************************************************
- * Utility: ensure account picker shows (clear cached Google session if any).
+ * [ASYNC] Ensure Google account picker appears by clearing any cached Google session.
  ****************************************************************************************************************/
 export async function ensureAccountPicker() {
   try {
