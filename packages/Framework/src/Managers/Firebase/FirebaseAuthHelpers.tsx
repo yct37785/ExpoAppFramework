@@ -13,7 +13,9 @@ import { getFirestore, disableNetwork, enableNetwork } from '@react-native-fireb
 import { doLog, doErrLog } from '../../Utils';
 
 /******************************************************************************************************************
- * [ASYNC] Configure Google Sign-In one time using GOOGLE_WEB_CLIENT_ID from environment.
+ * [ASYNC] Configure Google Sign-In using the GOOGLE_WEB_CLIENT_ID environment variable.
+ *
+ * @throws {Error} if configuration fails or web client id is missing (logged)
  ******************************************************************************************************************/
 export async function configureGoogleSignIn() {
   const webClientId = process.env.GOOGLE_WEB_CLIENT_ID;
@@ -26,9 +28,7 @@ export async function configureGoogleSignIn() {
 }
 
 /******************************************************************************************************************
- * [ASYNC] Apply Firestore network policy based on user type:
- * - Anonymous → disable network (local-only)
- * - Google user → enable network (online)
+ * [ASYNC] Apply Firestore network policy based on user type.
  *
  * @param user - current Firebase user or null
  ******************************************************************************************************************/
@@ -46,7 +46,7 @@ export async function applyNetworkPolicyFor(user: FirebaseAuthTypes.User | null)
 }
 
 /******************************************************************************************************************
- * [ASYNC] Ensure there is a signed-in user; if none, create an anonymous session (local-first).
+ * [ASYNC] Ensure there is a signed-in user by creating an anonymous session when none exists (local-first).
  ******************************************************************************************************************/
 export async function ensureAnonymousSession() {
   const auth = getAuth(getApp());
@@ -64,9 +64,9 @@ export async function ensureAnonymousSession() {
 }
 
 /******************************************************************************************************************
- * [ASYNC] Verify the current Firebase user against the server (detect disable/delete/invalidation).
- *
- * @return - true if user is still valid, false if user is disabled/deleted/invalid on the server
+ * [ASYNC] Verify that the current Firebase user is still valid on the server.
+ * 
+ * @return - true if the user remains valid, false if disabled, deleted, or otherwise invalid
  ******************************************************************************************************************/
 export async function verifyCurrentUser(): Promise<boolean> {
   const auth = getAuth(getApp());
@@ -92,19 +92,19 @@ export async function verifyCurrentUser(): Promise<boolean> {
 }
 
 /****************************************************************************************************************
- * Start Firebase auth observers (auth-state + ID-token). Keeps context in sync and reacts to invalidation.
+ * Start Firebase auth observers (auth-state and ID-token) to keep UI state and network policy in sync.
  *
  * @param params - observer callbacks:
  *   - onUser: fn - receives Firebase user or null on auth-state changes
- *   - onInvalidation: fn - called when the current user becomes invalid (should sign out)
+ *   - onInvalidation: fn - called when the current user becomes invalid and should be signed out
  *
  * @return - unsubscribe function that stops all observers
  *
  * @usage
  * ```ts
- * const stop = startAuthObservers({ onUser: setUser, onInvalidation: signOut });
+ * const stop = startAuthObservers({ onUser: setUser, onInvalidation: signOut })
  * // later…
- * stop();
+ * stop()
  * ```
  ****************************************************************************************************************/
 export function startAuthObservers(params: {
@@ -153,7 +153,7 @@ export function startAuthObservers(params: {
 }
 
 /****************************************************************************************************************
- * [ASYNC] Ensure Google account picker appears by clearing any cached Google session.
+ * [ASYNC] Force the Google account picker to appear by clearing any cached Google session.
  ****************************************************************************************************************/
 export async function ensureAccountPicker() {
   try {

@@ -13,9 +13,9 @@ type ScreenRouteProps = {
 };
 
 /******************************************************************************************************************
- * Stack route mapping:
- * - Maps route names (keys) to their expected parameter definitions.
- * - Allows TypeScript to infer the correct params for each screen.
+ * Map route names to their expected parameter definitions for the stack.
+ *
+ * @property [key] - a screen route name mapped to its ScreenRouteProps contract
  ******************************************************************************************************************/
 export type RootStackPropsList = {
   [key: string]: ScreenRouteProps;
@@ -26,10 +26,12 @@ export type RootStackPropsList = {
  * - Each screen receives a navigation prop (for controlling navigation) 
  *   and a route prop (containing params and metadata).
  *
- * @template T - specific screen name from RootStackPropsList
+ * @template T - specific screen name from RootStackPropsList (defaults to any key)
  *
  * @property navigation - navigation controller for stack operations
- * @property route - current route object including name and params
+ * @property route - current route object for the screen:
+ *   - name: string - active route name
+ *   - params: RootStackPropsList[T] - typed route parameters for the active screen
  ******************************************************************************************************************/
 export type ScreenProps<T extends keyof RootStackPropsList = keyof RootStackPropsList> = {
   navigation: NativeStackNavigationProp<RootStackPropsList, T>;
@@ -41,6 +43,8 @@ export type ScreenProps<T extends keyof RootStackPropsList = keyof RootStackProp
  * - A dictionary mapping screen names to React functional components.
  * - This is passed into the Root component to register all screens.
  *
+ * @property [screenName] - a route name mapped to a React.FC that consumes ScreenProps
+ * 
  * @usage
  * ```tsx
  * const screenMap: ScreenMap = {

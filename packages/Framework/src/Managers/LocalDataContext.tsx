@@ -37,9 +37,8 @@ const LocalDataContext = createContext<LocalDataContextType>({
 });
 
 /******************************************************************************************************************
- * Provider that exposes local key/value data backed by AsyncStorage, ensuring reserved defaults and
- * convenience helpers for set/get/clear along with a readiness flag.
- * 
+ * Provide local key/value state backed by AsyncStorage, enforce reserved defaults, and expose simple helpers.
+ *
  * @param props - provider props:
  *   - children: ReactNode - subtree that consumes the context
  *

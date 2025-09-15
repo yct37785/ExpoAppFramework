@@ -14,28 +14,25 @@ type ActivityProps<T extends keyof RootStackPropsList = keyof RootStackPropsList
 }
 
 /******************************************************************************************************************
- * Provides a standardized screen layout with AppBar header, optional back navigation, optional title,
- * a slot for custom header content, and a flexible body area for arbitrary children.
+ * Render a standardized screen layout with an appbar header (optional back button + title + custom content)
+ * and a flexible body area for children.
  *
- * Typical usage: wrap all screens in <Activity> to ensure consistent layout and navigation handling.
- * 
- * @param props - Activity props:
- *   - navigation: obj - navigation controller for stack operations
- *   - title?: string - title text shown in the AppBar
- *   - CustomHeader?: fn - renders custom header content (e.g., buttons, toggles)
- *   - style?: obj - additional container style
- *   - isRootActivity?: boolean - when true, hides back button (root screen)
- *   - children: ReactNode - screen content
- * 
+ * @param props - activity rendering props:
+ *   - navigation: obj - stack navigation controller used for goBack() when not a root activity
+ *   - title?: string - title text shown via appbar.content
+ *   - CustomHeader?: fn - function that returns custom header nodes (e.g., buttons, toggles)
+ *   - style?: obj - container viewstyle merged with { flex: 1 }
+ *   - isRootActivity?: boolean - when true, hides the back button
+ *   - children: ReactNode - body content rendered beneath the header
+ *
  * @usage
  * ```tsx
  * <Activity
  *   navigation={navigation}
- *   title="My Title"
- *   CustomHeader={() => <MyActions />}
- *   isRootActivity
+ *   title="details"
+ *   CustomHeader={() => <HeaderActions />}
  * >
- *   <ScreenBody />
+ *   <DetailsScreen />
  * </Activity>
  * ```
  ******************************************************************************************************************/

@@ -58,12 +58,12 @@ type Props = { children: React.ReactNode; };
  * Singleton auth provider that surfaces Firebase Authentication state and Google Sign-In flows to the app.
  *
  * @property user - current Firebase user or null
- * @property signIn - launch Google Sign-In and authenticate with Firebase (links anon → Google when possible)
+ * @property signIn - launch Google Sign-In and authenticate with Firebase, linking anon → Google when possible
  * @property signOut - sign out from Firebase & Google, then ensure an anonymous session
  *
  * @param props - provider props:
  *   - children: ReactNode - subtree that consumes the auth context
- * 
+ *
  * @usage
  * ```tsx
  * <AuthProvider>
@@ -116,13 +116,13 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   }, []);
 
   /****************************************************************************************************************
-   * [ASYNC] Google Sign-In → Firebase Authentication.
+   * [ASYNC] Perform Google Sign-In and authenticate with Firebase, linking anonymous users when possible.
    *
-   * @throws {Error} any caught undefined errors
+   * @throws {Error} any uncaught internal error during sign-in
    *
    * @usage
    * ```ts
-   * await signIn();
+   * await signIn()
    * ```
    ****************************************************************************************************************/
   const signIn = async (): Promise<void> => {
@@ -195,13 +195,13 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   };
 
   /****************************************************************************************************************
-   * [ASYNC] Sign out from Firebase and Google; guarantees a fresh anonymous, local-only session afterwards.
+   * [ASYNC] Sign out from Firebase and Google, then guarantee a fresh anonymous local-only session.
    *
-   * @throws {Error} any caught undefined errors
-   * 
+   * @throws {Error} any uncaught internal error during sign-out
+   *
    * @usage
    * ```ts
-   * await signOut();
+   * await signOut()
    * ```
    ****************************************************************************************************************/
   const signOut = async (): Promise<void> => {
