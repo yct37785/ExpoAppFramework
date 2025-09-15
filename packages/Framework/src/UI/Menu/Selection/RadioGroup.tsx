@@ -3,18 +3,12 @@ import { View, StyleProp, ViewStyle } from 'react-native';
 import { RadioButton, Text } from 'react-native-paper';
 
 /******************************************************************************************************************
- * Radio group options
+ * Define the set of selectable radio options for a group.
+ * each key is the internal value and each value is the display label.
  *
- * Defines the set of selectable radio options.
- * Each key is the internal value, and each value is the human-readable label.
- *
- * @example:
+ * @usage
  * ```ts
- * const options: RadioGroupOptions = {
- *   red: 'Red',
- *   blue: 'Blue',
- *   green: 'Green',
- * };
+ * const options: RadioGroupOptions = { red: 'red', blue: 'blue', green: 'green' }
  * ```
  ******************************************************************************************************************/
 export type RadioGroupOptions = {
@@ -29,31 +23,22 @@ type RadioGroupProps = {
 };
 
 /******************************************************************************************************************
- * Radio group component
+ * Render a horizontal group of radio buttons with labels.
  *
- * A simple horizontal group of radio buttons with labels.
- * Built on top of react-native-paper's <RadioButton.Group>.
- *
- * Features:
- * - Renders options dynamically from an object
- * - Displays labels alongside radio buttons
- * - Supports controlled selection state
+ * @param props - radio group props:
+ *   - options: RadioGroupOptions - key/label pairs for the group
+ *   - value: string - currently selected key
+ *   - onValueChange: (value: string) => void - callback when a new option is selected
+ *   - style?: StyleProp<ViewStyle> - optional container style
  *
  * @usage
  * ```tsx
  * <RadioGroup
- *   options={{ red: 'Red', blue: 'Blue', green: 'Green' }}
- *   value={selectedColor}
- *   onValueChange={(val) => setSelectedColor(val)}
+ *   options={{ red: 'red', blue: 'blue', green: 'green' }}
+ *   value={selected}
+ *   onValueChange={setSelected}
  * />
  * ```
- *
- * @param options - key/label pairs for the group
- * @param value - current selected key
- * @param onValueChange - Callback fired when a new option is selected
- * @param style - optional style override for the container
- *
- * @returns JSX.Element
  ******************************************************************************************************************/
 export const RadioGroup: React.FC<RadioGroupProps> = memo(({
   options,

@@ -2,8 +2,6 @@ import React, { memo, JSX } from 'react';
 import { View, StyleProp, ViewStyle } from 'react-native';
 
 /******************************************************************************************************************
- * Option state
- *
  * Enum representing the three possible states of an option:
  * - Selected: option is checked/active
  * - Unselected: option is not checked/inactive
@@ -16,21 +14,17 @@ export enum OptionState {
 }
 
 /******************************************************************************************************************
- * Option schema
- *
- * A recursive JSON schema structure describing the tree of selectable options.
+ * Describe the recursive tree schema for selectable options.
  * Each key corresponds to an option, which may itself contain nested children.
  ******************************************************************************************************************/
 export type OptionSchema = Record<string, OptionProps>;
 
 /******************************************************************************************************************
- * Option props
- *
- * Represents a single option node in the schema.
+ * Describe a single option node within the schema.
  *
  * @property label - human-readable label for the option
- * @property state - current selection state (Selected, Unselected, Indeterminate)
- * @property children - optional nested schema of child options
+ * @property state - current selection state
+ * @property children - optional nested child options
  ******************************************************************************************************************/
 export type OptionProps = {
   label: string;
@@ -48,32 +42,35 @@ type BaseOptionsProps = {
 };
 
 /******************************************************************************************************************
- * Base options component
+ * Render a recursive options tree with selection propagation and indeterminate aggregation.
+ * Toggles a node, cascades to children, and recomputes ancestor states.
  *
- * Recursive engine component that powers option selection and rendering.
+ * @param props - base options props:
+ *   - schema: OptionSchema - current options tree
+ *   - setSchema: (updated: OptionSchema) => void - state setter invoked after mutations
+ *   - optionsContainer: React.FC - wrapper component for child groups
+ *   - renderOption: ({ option, onPress }) => JSX.Element - renderer for a single option row
+ *   - depthPadding?: number - additional padding applied per hierarchy depth
+ *   - style?: StyleProp<ViewStyle> - optional style for the root container
  *
- * Responsibilities:
- * - Handles toggling between Selected / Unselected
- * - Propagates selection state downward to children
- * - Aggregates children states upward to compute Indeterminate state
- * - Supports recursive rendering of nested options
- *
- * @param schema - JSON schema representing the menu options
- * @param setSchema - callback to update schema state
- * @param optionsContainer - component to wrap child option groups
- * @param renderOption - render function for a single option (with selection control)
- * @param depthPadding - extra padding applied per hierarchy depth
- * @param style - additional style for the root container
- * 
- * @returns JSX.Element
+ * @usage
+ * ```tsx
+ * <BaseOptions
+ *   schema={schema}
+ *   setSchema={setSchema}
+ *   optionsContainer={({ children }) => <View>{children}</View>}
+ *   renderOption={({ option, onPress }) => <MyOptionRow option={option} onPress={onPress} />}
+ *   depthPadding={8}
+ * />
+ * ```
  ******************************************************************************************************************/
 export const BaseOptions: React.FC<BaseOptionsProps> = memo(
   ({ schema, setSchema, optionsContainer: OptionsContainer, renderOption, depthPadding = 0, style = {} }) => {
     /**
-     * Handles selecting/deselecting an option.
-     * - Flips the state of the target node
-     * - Updates all child nodes (cascade)
-     * - Recomputes all parent states (indeterminate logic)
+     * Handles selecting/deselecting an option:
+     * - Flips the state of the target node.
+     * - Updates all child nodes (cascade).
+     * - Recomputes all parent states (indeterminate logic).
      */
     const handleSelect = (path: string[]) => {
       if (path.length === 0) return;
