@@ -140,7 +140,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       await ensureAccountPicker();
 
       /** 2) Launch Google account picker and fetch ID token (bounded to avoid silent hangs) **/
-      const res: any = await withTimeout(GoogleSignin.signIn(), 30000);
+      const res: any = await withTimeout(GoogleSignin.signIn(), 30000, 'Google sign-in timeout');
       const idToken = res?.idToken ?? res?.data?.idToken;
       if (!idToken) {
         doErrLog('auth', 'signIn', 'Google sign-in failed: missing idToken');

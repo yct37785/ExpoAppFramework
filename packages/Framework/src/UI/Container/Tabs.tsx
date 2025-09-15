@@ -7,13 +7,16 @@ import * as Const from '../../Const';
 import { TabView, TabBar, SceneRendererProps } from 'react-native-tab-view';
 
 /******************************************************************************************************************
- * Tab route props
- *
- * Structure of the route object for each tab in the TabsContainer.
+ * Describe the route object for each tab in the tabs container.
  *
  * @property key - unique identifier for the tab
  * @property title - display title for the tab
- * @property icon - optional MaterialCommunityIcons name for the tab icon
+ * @property icon - optional material community icon name
+ *
+ * @usage
+ * ```ts
+ * const routes: TabRouteProps[] = [{ key: 'home', title: 'home', icon: 'home' }]
+ * ```
  ******************************************************************************************************************/
 export type TabRouteProps = {
   key: string;
@@ -22,13 +25,23 @@ export type TabRouteProps = {
 };
 
 /******************************************************************************************************************
- * Tabs SceneMap function
+ * Define the function signature that maps a tab route to its rendered scene.
  *
- * Function signature for mapping routes to their respective scene components.
+ * @param props - scene renderer props combined with the specific tab route
  *
- * @param props - SceneRendererProps merged with the specific tab route
- * 
- * @returns ReactNode to render for the given tab
+ * @return - react node to render for the given tab
+ *
+ * @usage
+ * ```ts
+ * const renderScene: UI.TabsSceneMapFunc = ({ route, jumpTo }) => {
+ *   switch (route.key) {
+ *     case 'p1':
+ *       return <Page1 />;
+ *     case 'p2':
+ *       return <Page2 />;
+ *   }
+ * }
+ * ```
  ******************************************************************************************************************/
 export type TabsSceneMapFunc = (props: SceneRendererProps & { route: TabRouteProps }) => ReactNode;
 
@@ -42,20 +55,15 @@ type TabsContainerProps = {
 };
 
 /******************************************************************************************************************
- * Tabs container component
+ * Render a tabbed interface using react-native-tab-view with optional icons and lazy loading.
  *
- * Component that renders a tabbed interface using react-native-tab-view.
- * - Supports icons, lazy loading, and custom themes.
- * - Can position the tab bar at the top or bottom.
- *
- * @param routes - array of tab route definitions
- * @param sceneMap - function mapping routes to their content
- * @param tabIndex - index of the currently active tab
- * @param onTabIdxChange - callback triggered when the tab index changes
- * @param position - tab bar position ('top' | 'bottom')
- * @param style - optional style for the base TabView container
- *
- * @returns JSX.Element
+ * @param props - tabs container props:
+ *   - routes: TabRouteProps[] - array of tab definitions
+ *   - sceneMap: TabsSceneMapFunc - function that renders a scene for a given route
+ *   - tabIndex: number - index of the active tab
+ *   - onTabIdxChange: (index: number) => void - callback when the active tab changes
+ *   - position: 'top' | 'bottom' - tab bar position
+ *   - style?: StyleProp<ViewStyle> - optional wrapper style for the tab view
  ******************************************************************************************************************/
 export const TabsContainer: React.FC<TabsContainerProps> = memo(({
   routes,
@@ -68,35 +76,35 @@ export const TabsContainer: React.FC<TabsContainerProps> = memo(({
   const theme = useTheme();
   const textColor = theme.dark ? Const.textColorForDark : Const.textColorForLight;
 
-  /**
-   * Renders a placeholder while scenes are lazily loaded.
+  /****************************************************************************************************************
+   * Render an empty placeholder while tab scenes are lazily loaded.
    *
-   * @returns JSX.Element
-   */
+   * @return - jsx element used as the lazy placeholder
+   ****************************************************************************************************************/
   function loadingScreen(): JSX.Element {
     return <View style={{ flex: 1 }} />;
   }
 
-  /**
-   * Renders the icon for a given tab if defined.
+  /****************************************************************************************************************
+   * Render a material community icon for the tab if one is defined on the route.
    *
-   * @param route - route object containing icon metadata
+   * @param route - tab route object that may include an icon name
    * @param focused - whether the tab is currently focused
-   * @param color - computed color for the icon
+   * @param color - color computed by the tab bar
    *
-   * @returns JSX.Element | null
-   */
+   * @return - jsx icon element or null when no icon is defined
+   ****************************************************************************************************************/
   function renderIcon(route: TabRouteProps, focused: boolean, color: string): JSX.Element | null {
     return route.icon ? <Icon name={route.icon} size={15} color={color} /> : null;
   }
 
-  /**
-   * Renders the tab bar with customized styles and ripple effects.
+  /****************************************************************************************************************
+   * Render a styled tab bar with theme-aware ripple, indicator, and label colors.
    *
-   * @param props - props injected by react-native-tab-view's TabBar
+   * @param props - tab bar renderer props from react-native-tab-view
    *
-   * @returns JSX.Element
-   */
+   * @return - jsx element that renders the tab bar
+   ****************************************************************************************************************/
   const renderTabBar = (props: any): JSX.Element => (
     <TabBar
       {...props}
