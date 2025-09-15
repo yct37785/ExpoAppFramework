@@ -4,12 +4,18 @@ import { useTheme } from 'react-native-paper';
 import { Picker as RNPicker } from '@react-native-picker/picker';
 
 /******************************************************************************************************************
- * Picker option
+ * Define a selectable option for the picker.
  *
- * Defines a selectable option for the Picker component.
+ * @property label - human-readable text shown in the dropdown
+ * @property value - internal value associated with the option
  *
- * @property label - Human-readable text shown in the dropdown
- * @property value - Internal value associated with the option
+ * @usage
+ * ```ts
+ * const opts: PickerOption[] = [
+ *   { label: 'option a', value: 'a' },
+ *   { label: 'option b', value: 'b' },
+ * ]
+ * ```
  ******************************************************************************************************************/
 export type PickerOption = {
   label: string;
@@ -24,33 +30,22 @@ type PickerProps = {
 };
 
 /******************************************************************************************************************
- * Picker component
+ * Render a styled dropdown picker built on @react-native-picker/picker.
  *
- * A styled dropdown picker built on top of @react-native-picker/picker.
- *
- * Features:
- * - Theming via react-native-paper
- * - Customizable options and labels
- * - Full-width responsive dropdown
- *
+ * @param props - picker props:
+ *   - value: string - current selected value
+ *   - options: PickerOption[] - array of options to display
+ *   - onChange: fn - callback fired when selection changes
+ *   - style?: StyleProp<ViewStyle> - optional style override for the picker
+ * 
  * @usage
  * ```tsx
  * <Picker
  *   value={selected}
- *   options={[
- *     { label: 'Option A', value: 'a' },
- *     { label: 'Option B', value: 'b' },
- *   ]}
- *   onChange={(val) => setSelected(val)}
+ *   options={[{ label: 'option a', value: 'a' }, { label: 'option b', value: 'b' }]}
+ *   onChange={setSelected}
  * />
  * ```
- *
- * @param value - current selected value
- * @param options - array of PickerOption objects defining the dropdown items
- * @param onChange - callback to update selected value
- * @param style - optional style override
- *
- * @returns JSX.Element
  ******************************************************************************************************************/
 export const Picker: React.FC<PickerProps> = memo(({ 
   value, 

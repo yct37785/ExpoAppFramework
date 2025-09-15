@@ -17,26 +17,31 @@ type DialogProps = {
 };
 
 /******************************************************************************************************************
- * Dialog component
+ * Render a customizable modal dialog using react-native-paper's Modal.
+ * Provides title, optional subtitle, flexible content, and optional close/submit actions.
  *
- * A customizable modal dialog component using react-native-paper's Modal.
- * Provides:
- * - Title and optional subtitle
- * - Flexible content area
- * - Optional close/submit buttons with customizable text
+ * @param props - dialog props:
+ *   - title: string - title text displayed at the top
+ *   - subtitle?: string - optional subtitle text displayed below the title
+ *   - children?: ReactNode - body content of the dialog
+ *   - isVisible: boolean - whether the dialog is visible
+ *   - onSubmit?: fn - callback for confirm/submit action
+ *   - onClose?: fn - callback for close/cancel action
+ *   - dismissable?: boolean - whether tapping outside dismisses the dialog
+ *   - submitText?: string - custom text for the submit button (default: "confirm")
+ *   - closeText?: string - custom text for the close button (default: "close")
+ *   - style?: StyleProp<ViewStyle> - additional style for the modal container
  *
- * @param title - title displayed at the top of the dialog
- * @param subtitle? - optional subtitle text displayed below the title
- * @param children? - content body of the dialog
- * @param isVisible? - controls dialog visibility
- * @param onSubmit? - optional callback for confirm/submit action
- * @param onClose? - optional callback for close/cancel action
- * @param dismissable? - if true, tapping outside closes the dialog
- * @param submitText? - custom text for the submit button (default: "Confirm")
- * @param closeText? - custom text for the close button (default: "Close")
- * @param style? - additional style applied to the modal container
- *
- * @returns JSX.Element
+ * @usage
+ * ```tsx
+ * <Dialog
+ *   title="delete item"
+ *   subtitle="are you sure?"
+ *   isVisible={open}
+ *   onSubmit={handleDelete}
+ *   onClose={() => setOpen(false)}
+ * />
+ * ```
  ******************************************************************************************************************/
 export const Dialog: React.FC<DialogProps> = memo(({
   title,

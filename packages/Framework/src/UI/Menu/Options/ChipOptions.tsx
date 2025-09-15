@@ -10,15 +10,18 @@ type ChipOptionsProps = {
 };
 
 /******************************************************************************************************************
- * Chip options component
- *
- * A selectable chip group component built with react-native-paper's <Chip>.
+ * Render a selectable chip group with multi-select support using react-native-paper chips.
  *
  * Features:
  * - Supports multi-selection of chips
  * - Provides selected/unselected visual states
  * - Callback returns updated selected values as a Set<string>
  * - Responsive row wrapping for variable chip counts
+ * 
+ * @param props - chip options props:
+ *   - schema: Set<string> - available chip labels
+ *   - onSelected: (values: Set<string>) => void - callback receiving updated selection
+ *   - style?: StyleProp<ViewStyle> - optional wrapper style
  *
  * @usage
  * ```tsx
@@ -27,12 +30,6 @@ type ChipOptionsProps = {
  *   onSelected={(values) => console.log('Selected chips:', values)}
  * />
  * ```
- *
- * @param schema - set of available chip labels
- * @param onSelected - callback with updated selected values
- * @param style - optional custom style applied to the root container
- *
- * @returns JSX.Element
  ******************************************************************************************************************/
 export const ChipOptions: React.FC<ChipOptionsProps> = memo(({
   schema,

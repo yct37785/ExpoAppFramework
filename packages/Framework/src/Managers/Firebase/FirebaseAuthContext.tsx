@@ -1,5 +1,5 @@
 /******************************************************************************************************************
- * Singleton auth provider: Google Sign-In → Firebase Authentication.
+ * Google Sign-In → Firebase Authentication.
  *
  * Prerequisites:
  * - Provide the Google web OAuth client ID (from Firebase) via .env → GOOGLE_WEB_CLIENT_ID.
@@ -55,7 +55,21 @@ const AuthContext = createContext<AuthContextType>({
 type Props = { children: React.ReactNode; };
 
 /******************************************************************************************************************
- * AuthProvider.
+ * Singleton auth provider that surfaces Firebase Authentication state and Google Sign-In flows to the app.
+ *
+ * @property user - current Firebase user or null
+ * @property signIn - launch Google Sign-In and authenticate with Firebase, linking anon → Google when possible
+ * @property signOut - sign out from Firebase & Google, then ensure an anonymous session
+ *
+ * @param props - provider props:
+ *   - children: ReactNode - subtree that consumes the auth context
+ *
+ * @usage
+ * ```tsx
+ * <AuthProvider>
+ *   <App />
+ * </AuthProvider>
+ * ```
  ******************************************************************************************************************/
 export const AuthProvider: React.FC<Props> = ({ children }) => {
   // current Firebase user (null when signed out)
@@ -102,7 +116,14 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   }, []);
 
   /****************************************************************************************************************
-   * Sign in with Google → Firebase.
+   * [ASYNC] Perform Google Sign-In and authenticate with Firebase, linking anonymous users when possible.
+   *
+   * @throws {Error} any uncaught internal error during sign-in
+   *
+   * @usage
+   * ```ts
+   * await signIn()
+   * ```
    ****************************************************************************************************************/
   const signIn = async (): Promise<void> => {
     if (signingRef.current) {
@@ -119,7 +140,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       await ensureAccountPicker();
 
       /** 2) Launch Google account picker and fetch ID token (bounded to avoid silent hangs) **/
-      const res: any = await withTimeout(GoogleSignin.signIn(), 30000);
+      const res: any = await withTimeout(GoogleSignin.signIn(), 30000, 'Google sign-in timeout');
       const idToken = res?.idToken ?? res?.data?.idToken;
       if (!idToken) {
         doErrLog('auth', 'signIn', 'Google sign-in failed: missing idToken');
@@ -174,7 +195,14 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   };
 
   /****************************************************************************************************************
-   * Sign out (best-effort) → always lands in a fresh anonymous, local-only session.
+   * [ASYNC] Sign out from Firebase and Google, then guarantee a fresh anonymous local-only session.
+   *
+   * @throws {Error} any uncaught internal error during sign-out
+   *
+   * @usage
+   * ```ts
+   * await signOut()
+   * ```
    ****************************************************************************************************************/
   const signOut = async (): Promise<void> => {
     if (signingOutRef.current) return;

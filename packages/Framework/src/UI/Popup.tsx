@@ -11,22 +11,24 @@ type PopupProps = {
 };
 
 /******************************************************************************************************************
- * Popup component
+ * Render a general-purpose popup menu using react-native-popup-menu.
+ * Provides a trigger component and flexible popup content area.
  *
- * A general-purpose popup component powered by react-native-popup-menu.
- * Provides:
- * - Customizable trigger component
- * - Disabled state support
- * - Flexible popup content area
+ * NOTE: triggerComp must not include its own onPress, as it can override option callbacks.
  *
- * ⚠ NOTE: `triggerComp` must not contain its own onPress callback, as it may override option callbacks.
- * 
- * @param triggerComp - ReactNode element that triggers the popup when pressed
- * @param disabled? - if true, disables the trigger
- * @param style? - additional style for the container
- * @param children - content of the popup menu
- * 
- * @returns JSX.Element
+ * @param props - popup props:
+ *   - triggerComp: ReactNode - element that triggers the popup
+ *   - disabled?: boolean - whether the trigger is disabled
+ *   - style?: StyleProp<ViewStyle> - optional container style
+ *   - children: ReactNode - content of the popup menu
+ *
+ * @usage
+ * ```tsx
+ * <Popup triggerComp={<IconButton icon="dots-vertical" />}>
+ *   <MenuOption onSelect={doSomething} text="option a" />
+ *   <MenuOption onSelect={doOther} text="option b" />
+ * </Popup>
+ * ```
  ******************************************************************************************************************/
 export const Popup: React.FC<PopupProps> = memo(
   ({ triggerComp, disabled = false, style = {}, children }) => {

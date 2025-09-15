@@ -9,28 +9,21 @@ interface HighlightTextProps extends TextProps<string> {
 }
 
 /******************************************************************************************************************
- * Highlight text component
+ * Render text that highlights occurrences of a query within its children.
  *
- * A text component that highlights occurrences of a query string within its children.
- *
- * Features:
- * - Case-insensitive substring matching
- * - Supports optional prefix labels
- * - Customizable highlight color
+ * @param props - highlight text props:
+ *   - query: string - substring to highlight, case-insensitive
+ *   - highlightColor?: string - background color applied to highlighted matches
+ *   - label?: string - optional prefix text rendered before the content
+ *   - children: ReactNode - text body to search within
+ *   - style?: obj - optional style overrides passed to the underlying text
  *
  * @usage
  * ```tsx
- * <HighlightText query='React' highlightColor='lightgreen'>
+ * <HighlightText query="react" highlightColor="lightgreen">
  *   React Native makes mobile development easy with React.
  * </HighlightText>
  * ```
- *
- * @param query - string to highlight within children
- * @param highlightColor - color applied to highlighted substrings
- * @param label - optional prefix text
- * @param children - text body to search within
- *
- * @returns JSX.Element
  ******************************************************************************************************************/
 export const HighlightText: React.FC<HighlightTextProps> = memo(({
   variant = 'bodyMedium',

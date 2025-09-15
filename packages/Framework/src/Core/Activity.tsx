@@ -14,25 +14,27 @@ type ActivityProps<T extends keyof RootStackPropsList = keyof RootStackPropsList
 }
 
 /******************************************************************************************************************
- * Activity component
+ * Render a standardized screen layout with an appbar header (optional back button + title + custom content)
+ * and a flexible body area for children.
  *
- * Provides a standardized screen layout with:
- * - An AppBar header
- * - Optional back navigation (hidden if marked as root activity)
- * - Optional screen title
- * - Slot for injecting custom header content (e.g. buttons, switches)
- * - Flexible body area for arbitrary child components
+ * @param props - activity rendering props:
+ *   - navigation: obj - stack navigation controller used for goBack() when not a root activity
+ *   - title?: string - title text shown via appbar.content
+ *   - CustomHeader?: fn - function that returns custom header nodes (e.g., buttons, toggles)
+ *   - style?: obj - container viewstyle merged with { flex: 1 }
+ *   - isRootActivity?: boolean - when true, hides the back button
+ *   - children: ReactNode - body content rendered beneath the header
  *
- * Typical usage: wrap all screens in <Activity> to ensure consistent layout and navigation handling.
- * 
- * @param navigation - navigation prop for controlling stack navigation
- * @param title? - title string displayed in the AppBar
- * @param customHeaderContent? - function that renders custom header content (actions, toggles, etc.)
- * @param style? - additional style applied to the root container
- * @param isRootActivity? - if true, hides the back button (intended for the first/root screen)
- * @param children - content area of the screen
- *
- * @returns JSX.Element
+ * @usage
+ * ```tsx
+ * <Activity
+ *   navigation={navigation}
+ *   title="details"
+ *   CustomHeader={() => <HeaderActions />}
+ * >
+ *   <DetailsScreen />
+ * </Activity>
+ * ```
  ******************************************************************************************************************/
 export const Activity: React.FC<ActivityProps> = memo(({
   navigation,

@@ -11,18 +11,18 @@ type CheckOptionCompProps = {
 };
 
 /******************************************************************************************************************
- * Check options component
+ * Render a checkbox-based UI for the options tree powered by BaseOptions.
+ * Shows checked, unchecked, and indeterminate states with recursive nesting.
  *
- * UI implementation of BaseOptions that renders each option as a checkbox.
- * - Uses react-native-paper’s <Checkbox>
- * - Supports nested schemas with recursive rendering
- * - Shows indeterminate state when children differ
+ * @param props - check options props:
+ *   - schema: OptionSchema - current options tree
+ *   - setSchema: (updated: OptionSchema) => void - state setter
+ *   - style?: StyleProp<ViewStyle> - optional wrapper style
  *
- * @param schema - JSON schema representing the menu options
- * @param setSchema - callback for updating schema
- * @param style - additional style for the container
- * 
- * @returns JSX.Element
+ * @usage
+ * ```tsx
+ * <CheckOptions schema={schema} setSchema={setSchema} />
+ * ```
  ******************************************************************************************************************/
 export const CheckOptions: React.FC<CheckOptionCompProps> = memo(({ schema, setSchema, style = {} }) => {
   /**
