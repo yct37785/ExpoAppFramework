@@ -1,2 +1,2 @@
-export * from '../Managers/Firebase/FirebaseAuthContext';
-export * from '../Managers/LocalDataContext';
+export * from '../Managers/Firebase/FirebaseAuthManager';
+export * from '../Managers/LocalDataManager';

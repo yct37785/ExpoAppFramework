@@ -12,10 +12,10 @@ import { RootStackPropsList, ScreenProps, ScreenMap } from './Core/Screen';
 import { NavigationContainer, DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationDefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // data
-import { useLocalData, LocalDataProvider } from './Managers/LocalDataContext';
+import { useLocalData, LocalDataProvider } from './Managers/LocalDataManager';
 // Firebase
 import { getApp } from '@react-native-firebase/app';
-import { AuthProvider } from './Managers/Firebase/FirebaseAuthContext';
+import { AuthProvider } from './Managers/Firebase/FirebaseAuthManager';
 // const
 import { logColors } from './Const';
 // utils
