@@ -1,3 +1,4 @@
+import Constants from 'expo-constants';
 import { logColors } from '../../Const';
 import { getApp } from '@react-native-firebase/app';
 import {
@@ -18,7 +19,7 @@ import { doLog, doErrLog } from '../../Utils';
  * @throws {Error} if configuration fails or web client id is missing (logged)
  ******************************************************************************************************************/
 export async function configureGoogleSignIn() {
-  const webClientId = process.env.GOOGLE_WEB_CLIENT_ID;
+  const webClientId = Constants.expoConfig?.extra?.googleWebClientId;
   if (!webClientId) {
     doErrLog('auth', 'configureGoogleSignIn', 'GoogleSignin load failed: Missing webClientId');
   } else {
