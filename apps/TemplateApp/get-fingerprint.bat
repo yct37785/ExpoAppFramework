@@ -1,6 +1,8 @@
 @echo off
 setlocal
-pushd "%~dp0"
-call .\android\gradlew signingReport
-popd
+
+cd /d "%~dp0android"
+call gradlew signingReport
+
 endlocal
+pause
