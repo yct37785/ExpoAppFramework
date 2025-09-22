@@ -8,12 +8,11 @@ import {
   deleteDoc,
   serverTimestamp,
 } from '@react-native-firebase/firestore';
-import { z, type ZodType } from 'zod';
 
 /******************************************************************************************************************
  * Normalize an arbitrary document path into a clean slash-joined string.
  *
- * @param parts - path parts (string or string[] accepted by public APIs)
+ * @param parts - path parts (string or string[]) accepted by public APIs
  *
  * @return - normalized path segment (no leading/trailing slashes)
  *
@@ -39,81 +38,67 @@ function normalizePath(parts: string | string[]): string {
  * @throws {Error} if no authenticated Firebase user is available
  ******************************************************************************************************************/
 function userScopedPath(root: string, documentPath: string | string[]): string {
-  const auth = getAuth(getApp());
-  const uid = auth.currentUser?.uid;
+  const uid = getAuth(getApp()).currentUser?.uid;
   if (!uid) throw new Error('No Firebase user found');
   const docPath = normalizePath(documentPath);
   return `${normalizePath(root)}/${uid}/${docPath}`;
 }
 
 /******************************************************************************************************************
- * [ASYNC] Read validated data at `/{root}/{uid}/{document=**}` using a Zod schema.
+ * [ASYNC] Read data (schemaless JSON) at `/{root}/{uid}/{document=**}`.
  *
- * @template T - inferred from the provided Zod schema
- *
- * @param schema - Zod schema that defines and validates the expected shape
  * @param root - root collection/table (e.g., "allergies")
  * @param documentPath - trailing document path under the user (e.g., "type/solid")
  *
- * @return - the validated data if the document exists; otherwise `undefined`
+ * @return - plain JSON (Record<string, any>) if the document exists, otherwise `undefined`
  *
- * @throws {Error} if no Firebase user, Firestore access fails, or validation fails
+ * @throws {Error} if there is no Firebase user or Firestore access fails
  *
  * @usage
  * ```ts
- * const Allergy = z.object({ kind: z.enum(['solid','liquid']), name: z.string() });
- * const data = await readCloudData(Allergy, 'allergies', 'type/solid'); // typed as inferred from schema
+ * const data = await readCloudData('allergies', 'type/solid');
+ * if (data) console.log(data.name);
  * ```
  ******************************************************************************************************************/
-export async function readCloudData<T>(
-  schema: ZodType<T>,
+export async function readCloudData(
   root: string,
   documentPath: string | string[],
-): Promise<T | undefined> {
+): Promise<Record<string, any> | undefined> {
   const db = getFirestore(getApp());
   const ref = doc(db, userScopedPath(root, documentPath));
   const snap = await getDoc(ref);
-  if (!snap.exists()) return undefined;
-  const parsed = schema.parse(snap.data()); // throws with a readable ZodError if shape mismatches
-  return parsed;
+  return snap.exists() ? (snap.data() as Record<string, any>) : undefined;
 }
 
 /******************************************************************************************************************
- * [ASYNC] Create or replace/merge data at `/{root}/{uid}/{document=**}` with `_updatedAt`, validated by Zod.
+ * [ASYNC] Create or update data (schemaless JSON) at `/{root}/{uid}/{document=**}`.
  *
- * NOTE: To keep the manager simple and safe, we validate the FULL object by default.
- *       If you want partial updates, pass a schema.partial() explicitly.
+ * NOTE:
+ * - Accepts full or partial objects. Use `merge=true` (default) for partial updates; set `merge=false` to replace.
+ * - An automatic `_updatedAt` server timestamp is included on every write.
  *
- * @template T - inferred from the provided Zod schema
- *
- * @param schema - Zod schema that defines and validates the data being written
  * @param root - root collection/table (e.g., "allergies")
  * @param documentPath - trailing document path under the user (e.g., ["type","solid"])
- * @param data - data to be written; must satisfy `schema` (or `schema.partial()` if you choose)
+ * @param data - JSON to write (full or partial)
  * @param merge? - if true (default), merges fields; if false, replaces the document
  *
- * @throws {Error} if no Firebase user, Firestore access fails, or validation fails
+ * @throws {Error} if there is no Firebase user or Firestore access fails
  *
  * @usage
  * ```ts
- * const Allergy = z.object({ name: z.string(), kind: z.enum(['solid','liquid']) });
- * await updateCloudData(Allergy, 'allergies', ['type','solid'], { name: 'Peanuts', kind: 'solid' });
- *
- * // For partial merges, call with Allergy.partial()
- * await updateCloudData(Allergy.partial(), 'allergies', ['type','solid'], { name: 'Tree Nuts' }, true);
+ * await updateCloudData('allergies', ['type','solid'], { name: 'Peanuts' }, true); // merge
+ * await updateCloudData('allergies', ['type','solid'], { name: 'Almonds', kind: 'solid' }, false); // replace
  * ```
  ******************************************************************************************************************/
-export async function updateCloudData<T extends object>(
-  schema: ZodType<T>,
+export async function updateCloudData(
   root: string,
   documentPath: string | string[],
-  data: T,
+  data: Record<string, any>,
   merge: boolean = true,
 ): Promise<void> {
   const db = getFirestore(getApp());
   const ref = doc(db, userScopedPath(root, documentPath));
-  const parsed = schema.parse(data); // throws if invalid
-  await setDoc(ref, { ...parsed, _updatedAt: serverTimestamp() } as any, { merge });
+  await setDoc(ref, { ...data, _updatedAt: serverTimestamp() }, { merge });
 }
 
 /******************************************************************************************************************
@@ -121,6 +106,8 @@ export async function updateCloudData<T extends object>(
  *
  * @param root - root collection/table (e.g., "allergies")
  * @param documentPath - trailing document path under the user (e.g., "type/solid")
+ *
+ * @return - void (resolves when the SDK accepts the delete)
  *
  * @throws {Error} if there is no Firebase user or Firestore access fails
  *
