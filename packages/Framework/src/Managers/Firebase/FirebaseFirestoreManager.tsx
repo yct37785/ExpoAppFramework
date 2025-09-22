@@ -8,6 +8,7 @@ import {
   deleteDoc,
   serverTimestamp,
 } from '@react-native-firebase/firestore';
+import { z, type ZodType } from 'zod';
 
 /******************************************************************************************************************
  * Normalize an arbitrary document path into a clean slash-joined string.
@@ -46,62 +47,73 @@ function userScopedPath(root: string, documentPath: string | string[]): string {
 }
 
 /******************************************************************************************************************
- * [ASYNC] Read typed data from Firestore at `/{root}/{uid}/{document=**}`.
+ * [ASYNC] Read validated data at `/{root}/{uid}/{document=**}` using a Zod schema.
  *
- * @template T - domain type of the stored document (shape of your data)
+ * @template T - inferred from the provided Zod schema
  *
+ * @param schema - Zod schema that defines and validates the expected shape
  * @param root - root collection/table (e.g., "allergies")
  * @param documentPath - trailing document path under the user (e.g., "type/solid")
  *
- * @return - the document data if it exists, otherwise `undefined`
+ * @return - the validated data if the document exists; otherwise `undefined`
  *
- * @throws {Error} if there is no Firebase user or Firestore access fails
+ * @throws {Error} if no Firebase user, Firestore access fails, or validation fails
  *
  * @usage
  * ```ts
- * type Allergy = { kind: 'solid' | 'liquid', name: string };
- * const data = await readData<Allergy>('allergies', 'type/solid');
+ * const Allergy = z.object({ kind: z.enum(['solid','liquid']), name: z.string() });
+ * const data = await readCloudData(Allergy, 'allergies', 'type/solid'); // typed as inferred from schema
  * ```
  ******************************************************************************************************************/
-export async function readCloudData<T = any>(
+export async function readCloudData<T>(
+  schema: ZodType<T>,
   root: string,
   documentPath: string | string[],
 ): Promise<T | undefined> {
   const db = getFirestore(getApp());
   const ref = doc(db, userScopedPath(root, documentPath));
   const snap = await getDoc(ref);
-  return snap.exists() ? (snap.data() as T) : undefined;
+  if (!snap.exists()) return undefined;
+  const parsed = schema.parse(snap.data()); // throws with a readable ZodError if shape mismatches
+  return parsed;
 }
 
 /******************************************************************************************************************
- * [ASYNC] Create or update typed data at `/{root}/{uid}/{document=**}` with an automatic `_updatedAt` timestamp.
+ * [ASYNC] Create or replace/merge data at `/{root}/{uid}/{document=**}` with `_updatedAt`, validated by Zod.
  *
- * @template T - domain type of the stored document (shape of your data)
+ * NOTE: To keep the manager simple and safe, we validate the FULL object by default.
+ *       If you want partial updates, pass a schema.partial() explicitly.
  *
+ * @template T - inferred from the provided Zod schema
+ *
+ * @param schema - Zod schema that defines and validates the data being written
  * @param root - root collection/table (e.g., "allergies")
  * @param documentPath - trailing document path under the user (e.g., ["type","solid"])
- * @param partial - fields to set/merge (use full object for first write)
+ * @param data - data to be written; must satisfy `schema` (or `schema.partial()` if you choose)
  * @param merge? - if true (default), merges fields; if false, replaces the document
  *
- * @return - void (completes when the local/remote write is accepted by the SDK)
- *
- * @throws {Error} if there is no Firebase user or Firestore access fails
+ * @throws {Error} if no Firebase user, Firestore access fails, or validation fails
  *
  * @usage
  * ```ts
- * await updateData('allergies', ['type','solid'], { name: 'Peanuts', kind: 'solid' });
- * await updateData('allergies', 'type/solid', { name: 'Tree Nuts' }, false); // replace
+ * const Allergy = z.object({ name: z.string(), kind: z.enum(['solid','liquid']) });
+ * await updateCloudData(Allergy, 'allergies', ['type','solid'], { name: 'Peanuts', kind: 'solid' });
+ *
+ * // For partial merges, call with Allergy.partial()
+ * await updateCloudData(Allergy.partial(), 'allergies', ['type','solid'], { name: 'Tree Nuts' }, true);
  * ```
  ******************************************************************************************************************/
 export async function updateCloudData<T extends object>(
+  schema: ZodType<T>,
   root: string,
   documentPath: string | string[],
-  partial: Partial<T>,
+  data: T,
   merge: boolean = true,
 ): Promise<void> {
   const db = getFirestore(getApp());
   const ref = doc(db, userScopedPath(root, documentPath));
-  await setDoc(ref, { ...partial, _updatedAt: serverTimestamp() } as any, { merge });
+  const parsed = schema.parse(data); // throws if invalid
+  await setDoc(ref, { ...parsed, _updatedAt: serverTimestamp() } as any, { merge });
 }
 
 /******************************************************************************************************************
@@ -110,13 +122,11 @@ export async function updateCloudData<T extends object>(
  * @param root - root collection/table (e.g., "allergies")
  * @param documentPath - trailing document path under the user (e.g., "type/solid")
  *
- * @return - void (completes when the local/remote delete is accepted by the SDK)
- *
  * @throws {Error} if there is no Firebase user or Firestore access fails
  *
  * @usage
  * ```ts
- * await deleteData('allergies', 'type/solid');
+ * await deleteCloudData('allergies', 'type/solid');
  * ```
  ******************************************************************************************************************/
 export async function deleteCloudData(
