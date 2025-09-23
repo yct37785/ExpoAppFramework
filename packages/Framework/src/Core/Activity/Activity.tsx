@@ -2,7 +2,7 @@ import React, { JSX, memo, useMemo, useState } from 'react';
 import { View, StyleProp, ViewStyle } from 'react-native';
 import { Appbar, Menu, Avatar } from 'react-native-paper';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackPropsList } from './Screen';
+import { RootStackPropsList } from '../Screen';
 import { Managers } from 'framework';
 
 export interface ActivityOptions {
