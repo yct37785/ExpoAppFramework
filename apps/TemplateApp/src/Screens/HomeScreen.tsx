@@ -5,9 +5,6 @@ import { Core, Managers, UI } from 'framework';
 
 /******************************************************************************************************************
  * Home screen
- * - Shows current auth mode + uid
- *   - Anonymous: "Sign in with Google" + "anonymous account mode, uid: <uid>"
- *   - Google    : "Sign out"            + "Signed in with Google, uid: <uid>"
  ******************************************************************************************************************/
 const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
   const { user, signIn, signOut } = Managers.useAuth();
@@ -32,14 +29,13 @@ const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
   );
 
   const renderScreenBtn = (screen: string, btnText: string) => (
-    <Button mode="contained" onPress={() => navigation.navigate(screen, { paramText: 'hello from home' })}>
+    <Button mode='contained' onPress={() => navigation.navigate(screen, { paramText: 'hello from home' })}>
       {btnText}
     </Button>
   );
 
   const renderAuthSection = () => {
-    // While the provider is bootstrapping, user might be temporarily null; your AuthProvider
-    // ensures an anonymous session shortly after launch.
+    // debug purposes only, show the current uid and linked acc if available
     const isAnon = !!user?.isAnonymous;
     const uid = user?.uid;
 
@@ -52,29 +48,19 @@ const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
 
     return (
       <>
-        <Text variant="bodyMedium" style={{ marginBottom: 12 }}>
+        <Text variant='bodyMedium' style={{ marginBottom: 12 }}>
           {statusText}
         </Text>
-
-        {isAnon || !user ? (
-          <Button mode="contained" onPress={signIn} accessibilityLabel="Sign in with Google">
-            Sign in with Google
-          </Button>
-        ) : (
-          <Button mode="outlined" onPress={signOut} accessibilityLabel="Sign out">
-            Sign out
-          </Button>
-        )}
       </>
     );
   };
 
   return (
-    <Core.Activity navigation={navigation} CustomHeader={CustomHeader} title="Home Sample" isRootActivity>
+    <Core.Activity navigation={navigation} CustomHeader={CustomHeader} title='Home Sample'>
       <UI.VerticalLayout>
         {renderAuthSection()}
 
-        <Text variant="bodyMedium" style={{ marginTop: 16 }}>
+        <Text variant='bodyMedium' style={{ marginTop: 16 }}>
           Select the screen you want to navigate to
         </Text>
 
