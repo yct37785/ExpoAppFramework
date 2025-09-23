@@ -33,6 +33,12 @@ export default function withBaseConfig({ config }) {
         '@react-native-firebase/auth',
         "@react-native-google-signin/google-signin",
       ],
+
+      // ---- env vars declaration ----
+      extra: {
+        ...(config?.expo?.extra ?? {}),
+        googleWebClientId: process.env.GOOGLE_WEB_CLIENT_ID ?? '',
+      }
     },
   };
 }

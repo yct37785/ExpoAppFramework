@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { View } from 'react-native';
 import { Text, Button, Switch } from 'react-native-paper';
 import { Core, Managers, UI } from 'framework';
@@ -13,6 +13,17 @@ const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
   const { user, signIn, signOut } = Managers.useAuth();
   const { getItem, setItem } = Managers.useLocalData();
   const isDarkMode = getItem('isDarkMode');
+
+  useEffect(() => {
+    (async () => {
+      console.log('list all docs...');
+      const listOfDocs = await Managers.listAllFirestoreDocs('allergies', 'solids');
+      console.log(listOfDocs);
+      console.log('read data...');
+      const docData = await Managers.readFirestoreDoc('allergies', 'solids/peanut');
+      console.log(docData);
+    })();
+  }, []);
 
   const CustomHeader = () => (
     <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
