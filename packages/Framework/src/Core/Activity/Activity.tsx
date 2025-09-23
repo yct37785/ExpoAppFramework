@@ -1,8 +1,9 @@
-import React, { JSX, memo, useMemo, useState } from 'react';
+import React, { JSX, memo, useMemo } from 'react';
 import { View, StyleProp, ViewStyle } from 'react-native';
-import { Appbar, Menu, Avatar } from 'react-native-paper';
+import { Appbar, Avatar } from 'react-native-paper';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackPropsList } from '../Screen';
+import { ProfileOptions } from './ProfileOptions';
 import { Managers } from 'framework';
 
 export interface ActivityOptions {
@@ -55,73 +56,39 @@ export const Activity: React.FC<ActivityProps> = memo(({
   opts,
   children,
 }) => {
-  const { showProfile } = useMemo(() => ({
-    showProfile: opts?.showProfile ?? true,
-  }), [opts?.showProfile]);
+  const { showProfile } = useMemo(
+    () => ({ showProfile: opts?.showProfile ?? true }),
+    [opts?.showProfile],
+  );
 
+  // auth from shared provider
   const { user, signIn, signOut } = Managers.useAuth();
-  const [menuVisible, setMenuVisible] = useState(false);
-  const openMenu  = () => setMenuVisible(true);
-  const closeMenu = () => setMenuVisible(false);
-
-  const isAnon   = !!user?.isAnonymous;
+  const canGoBack = navigation.canGoBack();
+  const isAnon   = !!user?.isAnonymous || !user;
   const photoURL = user?.photoURL || undefined;
   const email    = user?.email || '';
-
-  const onPressSignIn  = async () => { closeMenu(); await signIn(); };
-  const onPressSignOut = async () => { closeMenu(); await signOut(); };
 
   return (
     <View style={[{ flex: 1 }, style]}>
       <Appbar.Header>
-        {/* always show back button if navigation can go back */}
-        {navigation.canGoBack() && <Appbar.BackAction onPress={() => navigation.goBack()} />}
+        {canGoBack && <Appbar.BackAction onPress={() => navigation.goBack()} />}
         {title ? <Appbar.Content style={{ flex: 0 }} title={title} /> : null}
 
         {/* flexible spacer for custom header content */}
         <View style={{ flex: 1 }}>
-          {CustomHeader && CustomHeader()}
+          {CustomHeader && <CustomHeader />}
         </View>
 
-        {/* profile avatar with sign in/out menu */}
-        {showProfile ? (
-          <Menu
-            visible={menuVisible}
-            onDismiss={closeMenu}
-            anchor={
-              <Appbar.Action
-                accessibilityLabel='Profile menu'
-                onPress={openMenu}
-                icon={() =>
-                  photoURL
-                    ? <Avatar.Image size={28} source={{ uri: photoURL }} />
-                    : <Avatar.Icon size={28} icon='account-circle' />
-                }
-              />
-            }
-          >
-            {isAnon || !user ? (
-              <Menu.Item
-                title='Sign in with Google'
-                onPress={onPressSignIn}
-                leadingIcon='google'
-              />
-            ) : (
-              <>
-                <Menu.Item
-                  title={email ? `Signed in as ${email}` : 'Signed in'}
-                  disabled
-                  leadingIcon='account'
-                />
-                <Menu.Item
-                  title='Sign out'
-                  onPress={onPressSignOut}
-                  leadingIcon='logout'
-                />
-              </>
-            )}
-          </Menu>
-        ) : null}
+        {/* profile popup */}
+        {showProfile && (
+          <ProfileOptions
+            photoURL={photoURL}
+            email={email}
+            isAnonymous={isAnon}
+            onSignIn={signIn}
+            onSignOut={signOut}
+          />
+        )}
       </Appbar.Header>
 
       <View style={{ flex: 1 }}>
