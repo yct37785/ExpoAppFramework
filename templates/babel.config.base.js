@@ -12,8 +12,8 @@ module.exports = function (api) {
           allowUndefined: true,
         },
       ],
-      // required for react-native-reanimated, must be LAST to ensure it's transforms run after everything else
-      'react-native-reanimated/plugin'
+      // required for worklets, must be LAST to ensure transforms run after everything else
+      'react-native-worklets/plugin'
     ],
     env: {
       production: {
