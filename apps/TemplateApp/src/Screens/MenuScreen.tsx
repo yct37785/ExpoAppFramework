@@ -12,6 +12,14 @@ const PICKER_ITEM_LIST = [
   { label: 'Green', value: 'green' },
 ]
 
+const MENU_ITEM_LIST = [
+  { label: 'Redo', value: 'redo', leadingIcon: 'redo' },
+  { label: 'Undo', value: 'undo', leadingIcon: 'undo' },
+  { label: 'Cut', value: 'cut', leadingIcon: 'content-cut', disabled: true },
+  { label: 'Copy', value: 'copy', leadingIcon: 'content-copy' },
+  { label: 'Paste', value: 'paste', leadingIcon: 'content-paste' },
+];
+
 const POPUP_MENU_OPTIONS = {
   'colors': {
     label: 'Colors',
@@ -95,6 +103,9 @@ const SampleMenuScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => 
 
         {/* picker */}
         <UI.Picker value={pickerSelection} options={PICKER_ITEM_LIST} onChange={(v) => setPickerSelection(v)} />
+        
+        {/* menu */}
+        <UI.MenuList options={MENU_ITEM_LIST} onSelect={(v) => console.log(`clicked on ${v}`)} />
 
         {/* input + highlight text */}
         <Text>Search for text in the passage below</Text>

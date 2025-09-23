@@ -48,10 +48,10 @@ type PickerProps = {
  * ```
  ******************************************************************************************************************/
 export const Picker: React.FC<PickerProps> = memo(({ 
-  value, 
-  options, 
-  onChange, 
-  style = {} 
+  value,
+  options,
+  onChange,
+  style = {}
 }) => {
   const theme = useTheme();
 
