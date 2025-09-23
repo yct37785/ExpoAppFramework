@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, JSX, memo } from 'react';
+import { View } from 'react-native';
 import { Text, Portal, Button, Card, IconButton } from 'react-native-paper';
 import { Core, UI, Const } from 'framework';
 const _ = require('lodash');

@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { View, StyleProp, ViewStyle } from 'react-native';
-import { Menu as PaperMenu, Divider } from 'react-native-paper';
+import { Menu as PaperMenu, useTheme, Divider, List } from 'react-native-paper';
 
 /******************************************************************************************************************
  * Declarative description of a single menu action row.
@@ -68,16 +68,17 @@ export const MenuList: React.FC<MenuListProps> = memo(({
   showDividers = false,
   dense = false,
 }) => {
+  const theme = useTheme();
   return (
     <View style={[{ width: '100%' }, style]}>
       {options.map((item, idx) => (
         <React.Fragment key={`${item.value}-${idx}`}>
-          <PaperMenu.Item
-            leadingIcon={item.leadingIcon}
+          <List.Item
             title={item.label}
             onPress={() => !item.disabled && onSelect(item.value)}
+            left={(props) => item.leadingIcon ? <List.Icon {...props} icon={item.leadingIcon} /> : null}
             disabled={!!item.disabled}
-            dense={dense}
+            background={{ color: theme.colors.backdrop, foreground: true }}
           />
           {showDividers && idx < options.length - 1 ? <Divider /> : null}
         </React.Fragment>

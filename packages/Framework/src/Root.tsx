@@ -4,6 +4,7 @@ import 'react-native-get-random-values';
 import React, { ReactNode, useCallback, memo, useEffect, useState } from 'react';
 import { View, LogBox, Platform, StatusBar } from 'react-native';
 // UI
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, Text, Button } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
 // screen
@@ -119,34 +120,34 @@ const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
 
   return (
     <View style={{ width: '100%', flex: 1 }}>
-      <PaperProvider theme={theme}>
-        <MenuProvider>
-          <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
-            {isLoaded && (
-              <NavigationContainer theme={navContainerTheme}>
-                <Stack.Navigator
-                  initialRouteName={DEFAULT_SCREEN}
-                  screenOptions={{
-                    headerShown: false
-                  }}
-                >
-                  {Object.entries(screenMap).map(([name, Component]) => (
-                    <Stack.Screen name={name} key={name}>
-                      {(props) => (
-                        <ScreenWrapper
-                          Component={Component}
-                          navigation={props.navigation}
-                          route={props.route}
-                        />
-                      )}
-                    </Stack.Screen>
-                  ))}
-                </Stack.Navigator>
-              </NavigationContainer>
-            )}
-          </View>
-        </MenuProvider>
-      </PaperProvider>
+        <PaperProvider theme={theme}>
+          <MenuProvider>
+            <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+              {isLoaded && (
+                <NavigationContainer theme={navContainerTheme}>
+                  <Stack.Navigator
+                    initialRouteName={DEFAULT_SCREEN}
+                    screenOptions={{
+                      headerShown: false
+                    }}
+                  >
+                    {Object.entries(screenMap).map(([name, Component]) => (
+                      <Stack.Screen name={name} key={name}>
+                        {(props) => (
+                          <ScreenWrapper
+                            Component={Component}
+                            navigation={props.navigation}
+                            route={props.route}
+                          />
+                        )}
+                      </Stack.Screen>
+                    ))}
+                  </Stack.Navigator>
+                </NavigationContainer>
+              )}
+            </View>
+          </MenuProvider>
+        </PaperProvider>
     </View>
   );
 }
