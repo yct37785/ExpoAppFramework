@@ -106,7 +106,7 @@ const SampleMenuScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => 
         <UI.Picker value={pickerSelection} options={PICKER_ITEM_LIST} onChange={(v) => setPickerSelection(v)} />
         
         {/* menu */}
-        <UI.MenuList options={MENU_ITEM_LIST} onSelect={(v) => console.log(`clicked on ${v}`)} />
+        <UI.MenuList options={MENU_ITEM_LIST} onSelect={(v) => console.log(`clicked on ${v}`)} dense={true} />
 
         {/* input + highlight text */}
         <Text>Search for text in the passage below</Text>

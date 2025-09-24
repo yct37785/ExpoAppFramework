@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { View, StyleProp, ViewStyle } from 'react-native';
 import { Menu as PaperMenu, useTheme, Divider, List } from 'react-native-paper';
+import { iconSizeSmall, iconSizeMedium, padSize, padSize05 } from '../../../Const';
 
 /******************************************************************************************************************
  * Declarative description of a single menu action row.
@@ -70,19 +71,38 @@ export const MenuList: React.FC<MenuListProps> = memo(({
 }) => {
   const theme = useTheme();
   return (
-    <View style={[{ width: '100%' }, style]}>
-      {options.map((item, idx) => (
-        <React.Fragment key={`${item.value}-${idx}`}>
+    <View style={[{ flex: 1 }, style]}>
+      {options.map((item, idx) => {
+        // values
+        const color = item.disabled ? theme.colors.onSurfaceDisabled : theme.colors.onSurface;
+        const padding = dense ? 0 : padSize;
+        const fontSize = dense ? theme.fonts.bodySmall.fontSize : theme.fonts.bodyLarge.fontSize;
+
+        // left render
+        const left = (props: any) => {
+          if (!item.leadingIcon) {
+            return null;
+          }
+          if (!dense) {
+            return <List.Icon {...props} icon={item.leadingIcon} color={color} />;
+          } else {
+            return <List.Icon {...props} icon={item.leadingIcon} color={color} style={{ padding }} />;
+          }
+        };
+
+        return <React.Fragment key={`${item.value}-${idx}`}>
           <List.Item
             title={item.label}
             onPress={() => !item.disabled && onSelect(item.value)}
-            left={(props) => item.leadingIcon ? <List.Icon {...props} icon={item.leadingIcon} /> : null}
+            left={left}
             disabled={!!item.disabled}
             background={{ color: theme.colors.backdrop, foreground: true }}
+            titleStyle={{ color, fontSize }}
+            style={{ paddingVertical: padding }}
           />
           {showDividers && idx < options.length - 1 ? <Divider /> : null}
         </React.Fragment>
-      ))}
+      })}
     </View>
   );
 });
