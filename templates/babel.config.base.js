@@ -12,7 +12,7 @@ module.exports = function (api) {
           allowUndefined: true,
         },
       ],
-      // required for react-native-reanimated, must be LAST to ensure it's transforms run after everything else
+      // must be LAST to ensure transforms run after everything else
       'react-native-reanimated/plugin'
     ],
     env: {
