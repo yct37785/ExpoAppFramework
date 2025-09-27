@@ -88,7 +88,6 @@ type ActivityProps<T extends keyof RootStackPropsList = keyof RootStackPropsList
  *   - navigation: NativeStackNavigationProp - stack navigation controller
  *   - title?: string - title text for the app bar
  *   - CustomHeader?: JSX.Element - component renderer for additional header actions
- *   - style?: StyleProp<ViewStyle> - optional container styling
  *   - opts?: ActivityOptions - config options bag:
  *     + showProfile?: boolean - whether to display the profile avatar + auth menu
  *   - children: ReactNode - body content to render inside layout
@@ -109,7 +108,6 @@ export const Activity: React.FC<ActivityProps> = memo(({
   navigation,
   title = '',
   CustomHeader,
-  style = {},
   opts,
   children,
 }) => {
@@ -126,7 +124,7 @@ export const Activity: React.FC<ActivityProps> = memo(({
   const email    = user?.email || '';
 
   return (
-    <View style={[{ flex: 1 }, style]}>
+    <View style={{ flex: 1 }}>
       <Appbar.Header>
         {canGoBack && <Appbar.BackAction onPress={() => navigation.goBack()} />}
         {title ? <Appbar.Content style={{ flex: 0 }} title={title} /> : null}
