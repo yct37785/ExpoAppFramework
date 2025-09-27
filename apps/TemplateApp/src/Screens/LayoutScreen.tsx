@@ -20,30 +20,30 @@ const LayoutScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
       <UI.VerticalLayout constraint='scroll' backgroundColor='blue'>
 
         {/* VerticalLayout: wrap (fills parent height) */}
-        <Text variant='labelMedium'>{`VerticalLayout: wrap`}</Text>
+        <Text variant='labelMedium'>VerticalLayout: wrap</Text>
+        <Text variant='labelSmall'>fills parent height, content wraps within</Text>
         <View style={{ height: 190 }}>
-          <View style={{ flex: 1 }}>
-            <UI.VerticalLayout constraint='wrap' backgroundColor='red'>
-              {[...Array(7)].map((e, i) => <BasicContainer key={i} i={i} />)}
-            </UI.VerticalLayout>
-          </View>
+          <UI.VerticalLayout constraint='wrap' backgroundColor='red'>
+            {[...Array(7)].map((e, i) => <BasicContainer key={i} i={i} />)}
+          </UI.VerticalLayout>
         </View>
 
         {/* HorizontalLayout: wrap */}
-        <Text variant='labelMedium'>{`HorizontalLayout: wrap`}</Text>
+        <Text variant='labelMedium'>HorizontalLayout: wrap</Text>
+        <Text variant='labelSmall'>fills parent width, content wraps within</Text>
         <UI.HorizontalLayout constraint='wrap' backgroundColor='red'>
           {[...Array(7)].map((e, i) => <BasicContainer key={i} i={i} />)}
         </UI.HorizontalLayout>
 
         {/* HorizontalLayout: wrap */}
-        <Text variant='labelMedium'>{`HorizontalLayout: scroll`}</Text>
+        <Text variant='labelMedium'>HorizontalLayout: scroll</Text>
+        <Text variant='labelSmall'>fills parent width, content overflows within</Text>
         <UI.HorizontalLayout constraint='scroll' backgroundColor='red'>
           {[...Array(8)].map((e, i) => <BasicContainer key={i} i={i} />)}
         </UI.HorizontalLayout>
 
         {/* layouts nested */}
-        <Text variant='labelMedium'>{`Layouts nested (align: center)`}</Text>
-        {/* height: 250 */}
+        <Text variant='labelMedium'>Layouts nested</Text>
         <UI.HorizontalLayout constraint='none' backgroundColor='red'>
           <UI.VerticalLayout constraint='wrap' justify='center' flex={1} backgroundColor='yellow'>
             {[...Array(2)].map((e, i) => <BasicContainer key={i} i={i} />)}
