@@ -1,5 +1,6 @@
 // deps
 import 'react-native-get-random-values';
+import 'react-native-gesture-handler';
 // core
 import React, { ReactNode, useCallback, memo, useEffect, useState } from 'react';
 import { View, LogBox, Platform, StatusBar } from 'react-native';
@@ -119,36 +120,36 @@ const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
   const navContainerTheme = theme === CombinedDarkTheme ? NavigationDarkTheme : NavigationDefaultTheme;
 
   return (
-    <View style={{ width: '100%', flex: 1 }}>
-        <PaperProvider theme={theme}>
-          <MenuProvider>
-            <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
-              {isLoaded && (
-                <NavigationContainer theme={navContainerTheme}>
-                  <Stack.Navigator
-                    initialRouteName={DEFAULT_SCREEN}
-                    screenOptions={{
-                      headerShown: false
-                    }}
-                  >
-                    {Object.entries(screenMap).map(([name, Component]) => (
-                      <Stack.Screen name={name} key={name}>
-                        {(props) => (
-                          <ScreenWrapper
-                            Component={Component}
-                            navigation={props.navigation}
-                            route={props.route}
-                          />
-                        )}
-                      </Stack.Screen>
-                    ))}
-                  </Stack.Navigator>
-                </NavigationContainer>
-              )}
-            </View>
-          </MenuProvider>
-        </PaperProvider>
-    </View>
+    <GestureHandlerRootView style={{ width: '100%', flex: 1 }}>
+      <PaperProvider theme={theme}>
+        <MenuProvider>
+          <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+            {isLoaded && (
+              <NavigationContainer theme={navContainerTheme}>
+                <Stack.Navigator
+                  initialRouteName={DEFAULT_SCREEN}
+                  screenOptions={{
+                    headerShown: false
+                  }}
+                >
+                  {Object.entries(screenMap).map(([name, Component]) => (
+                    <Stack.Screen name={name} key={name}>
+                      {(props) => (
+                        <ScreenWrapper
+                          Component={Component}
+                          navigation={props.navigation}
+                          route={props.route}
+                        />
+                      )}
+                    </Stack.Screen>
+                  ))}
+                </Stack.Navigator>
+              </NavigationContainer>
+            )}
+          </View>
+        </MenuProvider>
+      </PaperProvider>
+    </GestureHandlerRootView>
   );
 }
 

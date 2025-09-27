@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, JSX, memo } from 'react';
 import { View } from 'react-native';
-import { Text, Portal, Button, Card, IconButton } from 'react-native-paper';
+import { Text, Portal, Button, Card, IconButton, TouchableRipple } from 'react-native-paper';
 import { Core, UI, Const } from 'framework';
 const _ = require('lodash');
 
@@ -117,6 +117,9 @@ const SampleMenuScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => 
           placeholder='search'
           style={{ marginTop: Const.padSize2 }}
         />
+        <TouchableRipple rippleColor={'blue'} style={{ width: 100, height: 100, backgroundColor: 'red' }} onPress={ () => console.log("Pressed")} >
+          <Text>asdsadsad</Text>
+        </TouchableRipple>
         <UI.HighlightText query={searchQuery} variant={'bodyMedium'} style={{ marginTop: Const.padSize2 }} >
           Hero is a title reserved for those who perform truly great feats! Too many are undeserving... Just money worshipers playing hero! Until this society wakes up and rectifies itself... I will continue to do my work.
         </UI.HighlightText>
