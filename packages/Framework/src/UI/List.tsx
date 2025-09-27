@@ -139,7 +139,6 @@ export const List: React.FC<ListDataDisplayProps> = memo(({
         <FlashList
           data={filteredData}
           renderItem={renderListItem}
-          estimatedItemSize={estimatedRowHeight}
         />
       );
     }
