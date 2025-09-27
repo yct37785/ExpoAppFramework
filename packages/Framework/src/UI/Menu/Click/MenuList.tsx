@@ -71,7 +71,7 @@ export const MenuList: React.FC<MenuListProps> = memo(({
 }) => {
   const theme = useTheme();
   return (
-    <View style={[{ flex: 1 }, style]}>
+    <View style={style}>
       {options.map((item, idx) => {
         // values
         const color = item.disabled ? theme.colors.onSurfaceDisabled : theme.colors.onSurface;
@@ -96,7 +96,6 @@ export const MenuList: React.FC<MenuListProps> = memo(({
             onPress={() => !item.disabled && onSelect(item.value)}
             left={left}
             disabled={!!item.disabled}
-            background={{ color: theme.colors.backdrop, foreground: true }}
             titleStyle={{ color, fontSize }}
             style={{ paddingVertical: padding }}
           />
