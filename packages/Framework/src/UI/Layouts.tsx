@@ -10,7 +10,8 @@ type LayoutProps = {
   flex?: number;
   gap?: number;
   padding?: number;
-  style?: StyleProp<ViewStyle>;
+  navBarScrollAllowance?: boolean;
+  backgroundColor?: string;
   children: ReactNode;
 };
 
@@ -27,7 +28,8 @@ type LayoutProps = {
  *   - flex?: number - flex grow/shrink value for container
  *   - gap?: number - spacing between children
  *   - padding?: number - padding inside container
- *   - style?: StyleProp<ViewStyle> - additional container style
+ *   - navBarScrollAllowance?: bool - allowance for nav bar if layout exceeds bottom of screen space
+ *   - backgroundColor?: string - background color
  *   - children: ReactNode - elements rendered inside
  ******************************************************************************************************************/
 const Layout: React.FC<LayoutProps> = ({
@@ -38,7 +40,8 @@ const Layout: React.FC<LayoutProps> = ({
   flex = 1,
   gap = Const.padSize,
   padding = Const.padSize,
-  style = {},
+  navBarScrollAllowance = false,
+  backgroundColor = 'transparent',
   children,
 }) => {
   // reverse children order if requested
@@ -51,7 +54,10 @@ const Layout: React.FC<LayoutProps> = ({
   if (constraint === 'scroll') {
     return (
       <ScrollView horizontal={direction === 'row'}>
-        <View style={[{ flex, flexWrap, flexDirection: direction, justifyContent: justify, gap, padding }, style]}>
+        <View style={{
+          flex, flexWrap, flexDirection: direction, justifyContent: justify, gap, padding, backgroundColor,
+          paddingBottom: direction == 'column' && navBarScrollAllowance ? 50 : padding
+        }}>
           {content}
         </View>
       </ScrollView>
@@ -60,7 +66,7 @@ const Layout: React.FC<LayoutProps> = ({
 
   // default case: plain flexbox container
   return (
-    <View style={[{ flex, flexWrap, flexDirection: direction, justifyContent: justify, gap, padding }, style]}>
+    <View style={{ flex, flexWrap, flexDirection: direction, justifyContent: justify, gap, padding, backgroundColor }}>
       {content}
     </View>
   );
@@ -81,7 +87,7 @@ const Layout: React.FC<LayoutProps> = ({
  * ```
  ******************************************************************************************************************/
 export const VerticalLayout: React.FC<Omit<LayoutProps, 'direction'>> =
-  memo((props) => <Layout {...props} direction="column" />);
+  memo((props) => <Layout {...props} direction='column' />);
 
 /******************************************************************************************************************
  * Render a layout container with direction defaulted to 'row'.
@@ -98,4 +104,4 @@ export const VerticalLayout: React.FC<Omit<LayoutProps, 'direction'>> =
  * ```
  ******************************************************************************************************************/
 export const HorizontalLayout: React.FC<Omit<LayoutProps, 'direction'>> =
-  memo((props) => <Layout {...props} direction="row" />);
+  memo((props) => <Layout {...props} direction='row' />);

@@ -67,7 +67,6 @@ type ListDataDisplayProps = {
   filterMap: ListFilterMap;
   renderItem: renderListItemFunc;
   listType?: ListType;
-  estimatedRowHeight?: number;
   style?: StyleProp<ViewStyle>;
 };
 
@@ -81,7 +80,6 @@ type ListDataDisplayProps = {
  *   - filterMap: ListFilterMap - active filters applied to filterable keys
  *   - renderItem: renderListItemFunc - function that renders a row for a given item
  *   - listType?: ListType - underlying list implementation (default flashlist)
- *   - estimatedRowHeight?: number - estimated row size for flashlist optimization
  *   - style?: StyleProp<ViewStyle> - optional wrapper style
  *
  * @usage
@@ -101,7 +99,6 @@ export const List: React.FC<ListDataDisplayProps> = memo(({
   filterMap = {},
   renderItem,
   listType = ListType.flashlist,
-  estimatedRowHeight = 250,
   style = {},
 }) => {
   /**
@@ -139,7 +136,6 @@ export const List: React.FC<ListDataDisplayProps> = memo(({
         <FlashList
           data={filteredData}
           renderItem={renderListItem}
-          estimatedItemSize={estimatedRowHeight}
         />
       );
     }

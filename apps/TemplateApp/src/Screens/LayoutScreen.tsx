@@ -15,39 +15,38 @@ const LayoutScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
 
   return (
     <Core.Activity navigation={navigation} title='Layout Sample'>
-      {/* VerticalLayout: scroll */}
-      <Text variant='titleMedium'>VerticalLayout: scroll</Text>
-      <UI.VerticalLayout constraint='scroll' style={{ backgroundColor: 'blue' }}>
+      <UI.VerticalLayout constraint='scroll' backgroundColor='blue' navBarScrollAllowance>
 
         {/* VerticalLayout: wrap (fills parent height) */}
-        <Text variant='labelMedium'>{`VerticalLayout: wrap`}</Text>
+        <Text variant='labelMedium'>VerticalLayout: wrap</Text>
+        <Text variant='labelSmall'>fills parent height, content wraps within</Text>
         <View style={{ height: 190 }}>
-          <View style={{ flex: 1 }}>
-            <UI.VerticalLayout constraint='wrap' style={{ backgroundColor: 'red' }}>
-              {[...Array(7)].map((e, i) => <BasicContainer key={i} i={i} />)}
-            </UI.VerticalLayout>
-          </View>
+          <UI.VerticalLayout constraint='wrap' backgroundColor='red'>
+            {[...Array(7)].map((e, i) => <BasicContainer key={i} i={i} />)}
+          </UI.VerticalLayout>
         </View>
 
         {/* HorizontalLayout: wrap */}
-        <Text variant='labelMedium'>{`HorizontalLayout: wrap`}</Text>
-        <UI.HorizontalLayout constraint='wrap' style={{ backgroundColor: 'red' }}>
+        <Text variant='labelMedium'>HorizontalLayout: wrap</Text>
+        <Text variant='labelSmall'>fills parent width, content wraps within</Text>
+        <UI.HorizontalLayout constraint='wrap' backgroundColor='red'>
           {[...Array(7)].map((e, i) => <BasicContainer key={i} i={i} />)}
         </UI.HorizontalLayout>
 
         {/* HorizontalLayout: wrap */}
-        <Text variant='labelMedium'>{`HorizontalLayout: scroll`}</Text>
-        <UI.HorizontalLayout constraint='scroll' style={{ backgroundColor: 'red' }}>
+        <Text variant='labelMedium'>HorizontalLayout: scroll</Text>
+        <Text variant='labelSmall'>fills parent width, content overflows within</Text>
+        <UI.HorizontalLayout constraint='scroll' backgroundColor='red'>
           {[...Array(8)].map((e, i) => <BasicContainer key={i} i={i} />)}
         </UI.HorizontalLayout>
 
         {/* layouts nested */}
-        <Text variant='labelMedium'>{`Layouts nested (align: center)`}</Text>
-        <UI.HorizontalLayout constraint='none' style={{ backgroundColor: 'red', height: 250 }}>
-          <UI.VerticalLayout constraint='wrap' justify='center' style={{ backgroundColor: 'yellow', flex: 1 }}>
+        <Text variant='labelMedium'>Layouts nested</Text>
+        <UI.HorizontalLayout constraint='none' backgroundColor='red'>
+          <UI.VerticalLayout constraint='wrap' justify='center' flex={1} backgroundColor='yellow'>
             {[...Array(2)].map((e, i) => <BasicContainer key={i} i={i} />)}
           </UI.VerticalLayout>
-          <UI.HorizontalLayout constraint='wrap' justify='center' style={{ backgroundColor: 'yellow', flex: 1 }}>
+          <UI.HorizontalLayout constraint='wrap' justify='center' flex={1} backgroundColor='yellow'>
             {[...Array(1)].map((e, i) => <BasicContainer key={i} i={i} />)}
           </UI.HorizontalLayout>
         </UI.HorizontalLayout>
