@@ -31,7 +31,7 @@ export async function configureGoogleSignIn() {
 /******************************************************************************************************************
  * [ASYNC] Apply Firestore network policy based on user type.
  *
- * @param user - current Firebase user or null
+ * @param user - Current Firebase user or null
  ******************************************************************************************************************/
 export async function applyNetworkPolicyFor(user: FirebaseAuthTypes.User | null) {
   try {
@@ -67,7 +67,7 @@ export async function ensureAnonymousSession() {
 /******************************************************************************************************************
  * [ASYNC] Verify that the current Firebase user is still valid on the server.
  * 
- * @return - true if the user remains valid, false if disabled, deleted, or otherwise invalid
+ * @return - True if the user remains valid, false if disabled, deleted, or otherwise invalid
  ******************************************************************************************************************/
 export async function verifyCurrentUser(): Promise<boolean> {
   const auth = getAuth(getApp());
@@ -95,11 +95,11 @@ export async function verifyCurrentUser(): Promise<boolean> {
 /****************************************************************************************************************
  * Start Firebase auth observers (auth-state and ID-token) to keep UI state and network policy in sync.
  *
- * @param params - observer callbacks:
- *   - onUser: fn - receives Firebase user or null on auth-state changes
- *   - onInvalidation: fn - called when the current user becomes invalid and should be signed out
+ * @param params - Observer callbacks:
+ *   - onUser: fn           - Receives Firebase user or null on auth-state changes
+ *   - onInvalidation: fn   - Called when the current user becomes invalid and should be signed out
  *
- * @return - unsubscribe function that stops all observers
+ * @return - Unsubscribe function that stops all observers
  *
  * @usage
  * ```ts

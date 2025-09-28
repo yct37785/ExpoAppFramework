@@ -15,14 +15,14 @@ type TextInputProps = {
 /******************************************************************************************************************
  * Render a unified text input built on react-native-paper that auto-blurs when the keyboard hides.
  *
- * @param props - text input props:
- *   - type?: 'text' | 'numeric' | 'passcode' | 'search' - input mode to render
- *   - value?: string - current input value
- *   - placeholder?: string - placeholder text
- *   - onChange?: (text: string) => void - called when value changes
- *   - onFocus?: () => void - called when input gains focus
- *   - onBlur?: () => void - called when input loses focus
- *   - style?: StyleProp<ViewStyle | TextStyle> - optional custom styling
+ * @param props - Text input props:
+ *   - type?: string          - Input mode to render
+ *   - value?: string         - Current input value
+ *   - placeholder?: string   - Placeholder text
+ *   - onChange?: fn          - Called when value changes
+ *   - onFocus?: fn           - Called when input gains focus
+ *   - onBlur?: fn            - Called when input loses focus
+ *   - style?: StyleProp      - Optional custom styling
  *
  * @usage
  * ```tsx

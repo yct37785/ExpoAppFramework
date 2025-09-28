@@ -14,20 +14,20 @@ export type ToggleHeaderProps = {
 /******************************************************************************************************************
  * Render a compact header with a title and a chevron that reflects collapse state.
  *
- * @param props - toggle header props:
- *   - toggleHeaderText: string - text label displayed in the header
- *   - isCollapsed: boolean - whether the section is currently collapsed
+ * @param props - Toggle header props:
+ *   - toggleHeaderText: string   - Text label displayed in the header
+ *   - isCollapsed: boolean       - Whether the section is currently collapsed
  *
  * @usage
  * ```tsx
- * <ToggleHeader toggleHeaderText="advanced" isCollapsed />
+ * <ToggleHeader toggleHeaderText='advanced' isCollapsed />
  * ```
  ******************************************************************************************************************/
 export const ToggleHeader: React.FC<ToggleHeaderProps> = memo(({ toggleHeaderText, isCollapsed }) => {
   const theme = useTheme();
   return (
     <View style={{ padding: Const.padSize, flexDirection: 'row', alignItems: 'center' }}>
-      <Text variant="titleSmall">{toggleHeaderText}</Text>
+      <Text variant='titleSmall'>{toggleHeaderText}</Text>
       <View style={{ flex: 1 }} />
       <MaterialIcons
         name={isCollapsed ? 'keyboard-arrow-down' : 'keyboard-arrow-up'}
@@ -47,14 +47,14 @@ export type CollapsibleContainerProps = {
 /******************************************************************************************************************
  * Provide a self-contained collapsible section with a pressable header and hidden/revealed content.
  *
- * @param props - container props:
- *   - toggleHeaderText: string - text for the header button
- *   - style?: StyleProp<ViewStyle> - optional container style
- *   - children: ReactNode - content rendered inside the collapsible body
+ * @param props - Container props:
+ *   - toggleHeaderText: string     - Text for the header button
+ *   - style?: StyleProp<ViewStyle> - Optional container style
+ *   - children: ReactNode          - Content rendered inside the collapsible body
  *
  * @usage
  * ```tsx
- * <CollapsibleContainer toggleHeaderText="details">
+ * <CollapsibleContainer toggleHeaderText='details'>
  *   <Text>hidden content</Text>
  * </CollapsibleContainer>
  * ```
@@ -90,10 +90,10 @@ export type AccordionContainerProps = {
 /******************************************************************************************************************
  * Provide a multi-section accordion where only one section is expanded at a time.
  *
- * @param props - accordion props:
- *   - sectionTitles: string[] - titles for each section in order
- *   - style?: StyleProp<ViewStyle> - optional container style
- *   - children: ReactNode[] - content nodes matched 1:1 with sectionTitles
+ * @param props - Accordion props:
+ *   - sectionTitles: string[]      - Titles for each section in order
+ *   - style?: StyleProp<ViewStyle> - Optional container style
+ *   - children: ReactNode[]        - Content nodes matched 1:1 with sectionTitles
  *
  * @throws {Error} when the number of section titles does not match the number of children
  *
@@ -122,15 +122,15 @@ export const AccordionContainer: React.FC<AccordionContainerProps> = memo(
     /**************************************************************************************************************
      * Render the header row for an accordion section, including a chevron that reflects open state.
      *
-     * @param section - object with the section title
-     * @param i - index of the current section
+     * @param section - Object with the section title
+     * @param i       - Index of the current section
      *
-     * @return - jsx element for the section header
+     * @return - JSX element for the section header
      **************************************************************************************************************/
     function renderHeader(section: { title: string }, i: number): JSX.Element {
       return (
         <View style={{ padding: Const.padSize, alignItems: 'center', flexDirection: 'row' }}>
-          <Text variant="titleSmall">{section.title}</Text>
+          <Text variant='titleSmall'>{section.title}</Text>
           <View style={{ flex: 1 }} />
           <MaterialIcons
             name={
@@ -147,9 +147,9 @@ export const AccordionContainer: React.FC<AccordionContainerProps> = memo(
     /**************************************************************************************************************
      * Render the collapsible body for an accordion section.
      *
-     * @param section - object with a content react node
+     * @param section - Object with a content react node
      *
-     * @return - jsx element for the section content
+     * @return - JSX element for the section content
      **************************************************************************************************************/
     function renderContent(section: { content: ReactNode }): JSX.Element {
       return <View>{section.content}</View>;

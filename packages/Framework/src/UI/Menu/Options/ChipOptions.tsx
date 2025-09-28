@@ -18,10 +18,10 @@ type ChipOptionsProps = {
  * - Callback returns updated selected values as a Set<string>
  * - Responsive row wrapping for variable chip counts
  * 
- * @param props - chip options props:
- *   - schema: Set<string> - available chip labels
- *   - onSelected: (values: Set<string>) => void - callback receiving updated selection
- *   - style?: StyleProp<ViewStyle> - optional wrapper style
+ * @param props - Chip options props:
+ *   - schema: Set<string>  - Available chip labels
+ *   - onSelected: fn       - Callback receiving updated selection
+ *   - style?: StyleProp    - Optional wrapper style
  *
  * @usage
  * ```tsx

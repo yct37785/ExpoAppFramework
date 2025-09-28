@@ -57,12 +57,12 @@ type Props = { children: React.ReactNode; };
 /******************************************************************************************************************
  * Singleton auth provider that surfaces Firebase Authentication state and Google Sign-In flows to the app.
  *
- * @property user - current Firebase user or null
- * @property signIn - launch Google Sign-In and authenticate with Firebase, linking anon → Google when possible
- * @property signOut - sign out from Firebase & Google, then ensure an anonymous session
+ * @property user     - Current Firebase user or null
+ * @property signIn   - Launch Google Sign-In and authenticate with Firebase, linking anon → Google when possible
+ * @property signOut  - Sign out from Firebase & Google, then ensure an anonymous session
  *
- * @param props - provider props:
- *   - children: ReactNode - subtree that consumes the auth context
+ * @param props - Provider props:
+ *   - children: ReactNode - Subtree that consumes the auth context
  *
  * @usage
  * ```tsx

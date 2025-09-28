@@ -11,12 +11,12 @@ interface HighlightTextProps extends TextProps<string> {
 /******************************************************************************************************************
  * Render text that highlights occurrences of a query within its children.
  *
- * @param props - highlight text props:
- *   - query: string - substring to highlight, case-insensitive
- *   - highlightColor?: string - background color applied to highlighted matches
- *   - label?: string - optional prefix text rendered before the content
- *   - children: ReactNode - text body to search within
- *   - style?: obj - optional style overrides passed to the underlying text
+ * @param props - Highlight text props:
+ *   - query: string            - Substring to highlight, case-insensitive
+ *   - highlightColor?: string  - Background color applied to highlighted matches
+ *   - label?: string           - Optional prefix text rendered before the content
+ *   - children: ReactNode      - Text body to search within
+ *   - style?: obj              - Optional style overrides passed to the underlying text
  *
  * @usage
  * ```tsx

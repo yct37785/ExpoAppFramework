@@ -20,17 +20,17 @@ type LayoutProps = {
  * Supports spacing, padding, wrapping, scrolling, and child reversal.
  * Used via VerticalLayout and HorizontalLayout wrappers rather than standalone.
  *
- * @param props - layout props:
- *   - direction?: 'row' | 'column' - flex direction
- *   - justify?: string - flexbox justification along the main axis
- *   - reverse?: boolean - whether to render children in reverse order
- *   - constraint?: 'wrap' | 'scroll' | 'none' - layout constraint mode
- *   - flex?: number - flex grow/shrink value for container
- *   - gap?: number - spacing between children
- *   - padding?: number - padding inside container
- *   - navBarScrollAllowance?: bool - allowance for nav bar if layout exceeds bottom of screen space
- *   - backgroundColor?: string - background color
- *   - children: ReactNode - elements rendered inside
+ * @param props - Layout props:
+ *   - direction?: 'row' | 'column'   - Flex direction
+ *   - justify?: string               - Flexbox justification along the main axis
+ *   - reverse?: boolean              - Whether to render children in reverse order
+ *   - constraint?: 'wrap' | 'scroll' | 'none' - Layout constraint mode
+ *   - flex?: number      - Flex grow/shrink value for container
+ *   - gap?: number       - Spacing between children
+ *   - padding?: number   - Padding inside container
+ *   - navBarScrollAllowance?: bool   - Allowance for nav bar if layout exceeds bottom of screen space
+ *   - backgroundColor?: string       - Background color
+ *   - children: ReactNode            - Elements rendered inside
  ******************************************************************************************************************/
 const Layout: React.FC<LayoutProps> = ({
   direction = 'column',

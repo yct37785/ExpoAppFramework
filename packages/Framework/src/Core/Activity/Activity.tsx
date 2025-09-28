@@ -15,12 +15,12 @@ export interface ActivityOptions {
 /******************************************************************************************************************
  * Renders the profile avatar as the popup trigger and the auth options using <MenuList dense>.
  *
- * @param props - auth data and handlers:
- *   - photoURL?: string      - optional avatar image
- *   - email?: string         - optional email (shown as a disabled row when signed in)
- *   - isAnonymous: bool      - true if user is anonymous or no user
- *   - onSignIn: fn           - sign in function
- *   - onSignOut: fn          - sign out function
+ * @param props - Auth data and handlers:
+ *   - photoURL?: string      - Optional avatar image
+ *   - email?: string         - Optional email (shown as a disabled row when signed in)
+ *   - isAnonymous: bool      - True if user is anonymous or no user
+ *   - onSignIn: fn           - Sign in function
+ *   - onSignOut: fn          - Sign out function
  ******************************************************************************************************************/
 const ProfileMenu: React.FC<{
   photoURL?: string;
@@ -84,13 +84,13 @@ type ActivityProps<T extends keyof RootStackPropsList = keyof RootStackPropsList
  *   - Optional profile avatar with sign-in/sign-out menu integrated with FirebaseAuthManager.
  *   - Flexible body container for screen content.
  *
- * @param props - rendering params:
- *   - navigation: NativeStackNavigationProp - stack navigation controller
- *   - title?: string - title text for the app bar
- *   - CustomHeader?: JSX.Element - component renderer for additional header actions
- *   - opts?: ActivityOptions - config options bag:
- *     + showProfile?: boolean - whether to display the profile avatar + auth menu
- *   - children: ReactNode - body content to render inside layout
+ * @param props - Rendering params:
+ *   - navigation: NativeStackNavigationProp  - Stack navigation controller
+ *   - title?: string                         - Title text for the app bar
+ *   - CustomHeader?: JSX.Element             - Component renderer for additional header actions
+ *   - opts?: ActivityOptions                 - Config options bag:
+ *     + showProfile?: boolean                - Whether to display the profile avatar + auth menu
+ *   - children: ReactNode                    - Body content to render inside layout
  *
  * @usage
  * ```tsx

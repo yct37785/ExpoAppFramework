@@ -25,11 +25,11 @@ type RadioGroupProps = {
 /******************************************************************************************************************
  * Render a horizontal group of radio buttons with labels.
  *
- * @param props - radio group props:
- *   - options: RadioGroupOptions - key/label pairs for the group
- *   - value: string - currently selected key
- *   - onValueChange: (value: string) => void - callback when a new option is selected
- *   - style?: StyleProp<ViewStyle> - optional container style
+ * @param props - Radio group props:
+ *   - options: RadioGroupOptions   - Key/label pairs for the group
+ *   - value: string                - Currently selected key
+ *   - onValueChange: fn            - Callback when a new option is selected
+ *   - style?: StyleProp            - Optional container style
  *
  * @usage
  * ```tsx

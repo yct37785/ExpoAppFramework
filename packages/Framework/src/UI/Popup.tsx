@@ -16,11 +16,11 @@ type PopupProps = {
  *
  * NOTE: triggerComp must not include its own onPress, as it can override option callbacks.
  *
- * @param props - popup props:
- *   - triggerComp: ReactNode - element that triggers the popup
- *   - disabled?: boolean - whether the trigger is disabled
- *   - style?: StyleProp<ViewStyle> - optional container style
- *   - children: ReactNode - content of the popup menu
+ * @param props - Popup props:
+ *   - triggerComp: ReactNode         - Element that triggers the popup
+ *   - disabled?: boolean             - Whether the trigger is disabled
+ *   - style?: StyleProp<ViewStyle>   - Optional container style
+ *   - children: ReactNode            - Content of the popup menu
  *
  * @usage
  * ```tsx

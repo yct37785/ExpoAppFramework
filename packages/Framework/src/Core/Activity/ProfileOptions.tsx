@@ -6,12 +6,12 @@ import { Menu, MenuTrigger, MenuOptions, MenuOption } from 'react-native-popup-m
 /******************************************************************************************************************
  * ProfileOptions (avatar trigger + popup auth menu)
  *
- * @param props - behavior and data for the auth menu:
- *   - photoURL?: string - optional avatar photo URL; if not present, a default account-circle icon is used
- *   - email?: string - optional user email to display when signed in
- *   - isAnonymous: boolean - whether the current user is anonymous or unauthenticated
- *   - onSignIn: () => Promise<void> - async sign-in handler (e.g., Google)
- *   - onSignOut: () => Promise<void> - async sign-out handler
+ * @param props - Behavior and data for the auth menu:
+ *   - photoURL?: string      - Optional avatar photo URL; if not present, a default account-circle icon is used
+ *   - email?: string         - Optional user email to display when signed in
+ *   - isAnonymous: bool      - Whether the current user is anonymous or unauthenticated
+ *   - onSignIn: fn           - Async sign-in handler (e.g., Google)
+ *   - onSignOut: fn          - Async sign-out handler
  ******************************************************************************************************************/
 export interface ProfileOptionsProps {
   photoURL?: string;

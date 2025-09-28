@@ -14,10 +14,10 @@ type CheckOptionCompProps = {
  * Render a checkbox-based UI for the options tree powered by BaseOptions.
  * Shows checked, unchecked, and indeterminate states with recursive nesting.
  *
- * @param props - check options props:
- *   - schema: OptionSchema - current options tree
- *   - setSchema: (updated: OptionSchema) => void - state setter
- *   - style?: StyleProp<ViewStyle> - optional wrapper style
+ * @param props - Check options props:
+ *   - schema: OptionSchema   - Current options tree
+ *   - setSchema: fn          - State setter
+ *   - style?: StyleProp      - Optional wrapper style
  *
  * @usage
  * ```tsx

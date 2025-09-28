@@ -61,12 +61,12 @@ const Stack = createNativeStackNavigator<RootStackPropsList>();
 /******************************************************************************************************************
  * Wrap a screen component so it receives typed { navigation, route } props from the stack render callback.
  *
- * @param props - wrapper props:
- *   - Component: fn - screen component to render (receives { navigation, route })
- *   - navigation: obj - navigation controller for stack operations
- *   - route: obj - current route info:
- *     + name: string - route name
- *     + params?: obj - route parameters (shape depends on the screen)
+ * @param props - Wrapper props:
+ *   - Component: React.FC  - Screen component to render (receives { navigation, route })
+ *   - navigation: obj      - Navigation controller for stack operations
+ *   - route: obj           - Current route info:
+ *     + name: string       - Route name
+ *     + params?: obj       - Route parameters (shape depends on the screen)
  ******************************************************************************************************************/
 const ScreenWrapper = ({
   Component,
@@ -89,9 +89,9 @@ type RootProps = {
  * Compose global providers (paper, popup menu, localdata, auth) and configure the navigation container + stack
  * using a provided screen map, synchronizing theme with stored user preference.
  *
- * @param props - root props:
- *   - DEFAULT_SCREEN: string - initial route name for the stack navigator
- *   - screenMap: ScreenMap - mapping of route names to screen components
+ * @param props - Root props:
+ *   - DEFAULT_SCREEN: string   - Initial route name for the stack navigator
+ *   - screenMap: ScreenMap     - Mapping of route names to screen components
  ******************************************************************************************************************/
 const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
   const { getItem, isLoaded } = useLocalData();
@@ -156,9 +156,9 @@ const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
 /******************************************************************************************************************
  * Provide localdata and auth contexts around the root component and export the wrapped app entry.
  *
- * @param props - same as root:
- *   - DEFAULT_SCREEN: string - initial route name
- *   - screenMap: ScreenMap - mapping of route names to screen components
+ * @param props - Same as root:
+ *   - DEFAULT_SCREEN: string   - Initial route name
+ *   - screenMap: ScreenMap     - Mapping of route names to screen components
  ******************************************************************************************************************/
 const LocalDataProviderWrapper: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
   return (

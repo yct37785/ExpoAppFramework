@@ -20,17 +20,17 @@ type DialogProps = {
  * Render a customizable modal dialog using react-native-paper's Modal.
  * Provides title, optional subtitle, flexible content, and optional close/submit actions.
  *
- * @param props - dialog props:
- *   - title: string - title text displayed at the top
- *   - subtitle?: string - optional subtitle text displayed below the title
- *   - children?: ReactNode - body content of the dialog
- *   - isVisible: boolean - whether the dialog is visible
- *   - onSubmit?: fn - callback for confirm/submit action
- *   - onClose?: fn - callback for close/cancel action
- *   - dismissable?: boolean - whether tapping outside dismisses the dialog
- *   - submitText?: string - custom text for the submit button (default: "confirm")
- *   - closeText?: string - custom text for the close button (default: "close")
- *   - style?: StyleProp<ViewStyle> - additional style for the modal container
+ * @param props - Dialog props:
+ *   - title: string          - Title text displayed at the top
+ *   - subtitle?: string      - Optional subtitle text displayed below the title
+ *   - children?: ReactNode   - Body content of the dialog
+ *   - isVisible: boolean     - Whether the dialog is visible
+ *   - onSubmit?: fn          - Callback for confirm/submit action
+ *   - onClose?: fn           - Callback for close/cancel action
+ *   - dismissable?: boolean  - Whether tapping outside dismisses the dialog
+ *   - submitText?: string    - Custom text for the submit button (default: "confirm")
+ *   - closeText?: string     - Custom text for the close button (default: "close")
+ *   - style?: StyleProp<ViewStyle> - Additional style for the modal container
  *
  * @usage
  * ```tsx
