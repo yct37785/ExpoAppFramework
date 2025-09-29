@@ -1,5 +1,5 @@
-import type { Theme } from './Theme';
-import { defaultTheme } from './default-theme';
+import type { Theme } from '../Theme';
+import { defaultTheme } from '../default-theme';
 
 /******************************************************************************************************************
  * Provide a dark Theme by overriding defaultTheme with dark-safe tokens (MUI dark palette).
