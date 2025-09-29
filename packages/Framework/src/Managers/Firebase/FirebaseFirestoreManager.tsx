@@ -58,9 +58,9 @@ function normalizePath(parts: string | string[]): string {
  * @param root  - Top-level collection/table (e.g., "allergies")
  * @param tail  - Remaining path under the user (document or collection path)
  *
- * @return - { absPath, tailSegs } where:
- *           - absPath is the absolute Firestore path
- *           - tailSegs is the normalized array of tail segments (after `{uid}`)
+ * @return - where:
+ *  - absPath   - The absolute Firestore path
+ *  - tailSegs  - The normalized array of tail segments (after `{uid}`)
  *
  * @throws {Error} if no authenticated Firebase user is available
  ******************************************************************************************************************/

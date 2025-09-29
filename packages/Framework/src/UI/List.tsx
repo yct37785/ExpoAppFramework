@@ -61,6 +61,16 @@ export type ListFilterMap = {
  ******************************************************************************************************************/
 export type renderListItemFunc = (item: ListItem, index: number) => React.ReactNode;
 
+/******************************************************************************************************************
+ * List props.
+ * 
+ * @property dataArr      - Input dataset to render
+ * @property query        - Case-insensitive search query applied to searchable values
+ * @property filterMap    - Active filters applied to filterable keys
+ * @property renderItem   - Function that renders a row for a given item
+ * @property listType?    - Underlying list implementation (default flashlist)
+ * @property style?       - Optional wrapper style
+ ******************************************************************************************************************/
 type ListDataDisplayProps = {
   dataArr: ListItem[];
   query: string;
@@ -74,13 +84,7 @@ type ListDataDisplayProps = {
  * Render a searchable, filterable list backed by either FlashList or FlatList.
  * Encapsulates filtering logic and delegates row rendering to a caller-provided renderer.
  *
- * @param props - List props:
- *   - dataArr: ListItem[]        - Input dataset to render
- *   - query: string              - Case-insensitive search query applied to searchable values
- *   - filterMap: ListFilterMap   - Active filters applied to filterable keys
- *   - renderItem: renderListItemFunc   - Function that renders a row for a given item
- *   - listType?: ListType              - Underlying list implementation (default flashlist)
- *   - style?: StyleProp<ViewStyle>     - Optional wrapper style
+ * @param props - Refer to ListDataDisplayProps
  *
  * @usage
  * ```tsx

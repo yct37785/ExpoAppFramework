@@ -18,7 +18,13 @@ import { doLog, doErrLog } from '../Utils';
 type LocalData = Record<string, any>;
 
 /******************************************************************************************************************
- * API exposed by the LocalDataContext.
+ * Type defining the APIs exposed by LocalDataContext.Provider.
+ * 
+ * @property data     - In-memory snapshot of stored key/value pairs
+ * @property setItem  - Persist a value and update in-memory state
+ * @property getItem  - Retrieve a typed value or undefined
+ * @property clear    - Clear all stored values and reset state
+ * @property isLoaded - True when initial load from AsyncStorage completes
  ******************************************************************************************************************/
 type LocalDataContextType = {
   data: LocalData;
@@ -42,11 +48,7 @@ const LocalDataContext = createContext<LocalDataContextType>({
  * @param props - Provider props:
  *   - children: ReactNode - Subtree that consumes the context
  *
- * @property data: obj          - In-memory snapshot of stored key/value pairs
- * @property setItem: fn        - Persist a value and update in-memory state
- * @property getItem: fn        - Retrieve a typed value or undefined
- * @property clear: fn          - Clear all stored values and reset state
- * @property isLoaded: bool     - True when initial load from AsyncStorage completes
+ * @property LocalDataContext - Refer to LocalDataContextType
  *
  * @usage
  * ```tsx

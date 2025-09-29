@@ -4,14 +4,14 @@ import { Avatar, TouchableRipple, List } from 'react-native-paper';
 import { Menu, MenuTrigger, MenuOptions, MenuOption } from 'react-native-popup-menu';
 
 /******************************************************************************************************************
- * ProfileOptions (avatar trigger + popup auth menu)
+ * ProfileOptions props.
  *
  * @param props - Behavior and data for the auth menu:
- *   - photoURL?: string      - Optional avatar photo URL; if not present, a default account-circle icon is used
- *   - email?: string         - Optional user email to display when signed in
- *   - isAnonymous: bool      - Whether the current user is anonymous or unauthenticated
- *   - onSignIn: fn           - Async sign-in handler (e.g., Google)
- *   - onSignOut: fn          - Async sign-out handler
+ *   - photoURL?    - Optional avatar photo URL; if not present, a default account-circle icon is used
+ *   - email?       - Optional user email to display when signed in
+ *   - isAnonymous  - Whether the current user is anonymous or unauthenticated
+ *   - onSignIn     - Async sign-in handler (e.g., Google)
+ *   - onSignOut    - Async sign-out handler
  ******************************************************************************************************************/
 export interface ProfileOptionsProps {
   photoURL?: string;
@@ -21,6 +21,11 @@ export interface ProfileOptionsProps {
   onSignOut: () => Promise<void>;
 }
 
+/******************************************************************************************************************
+ * ProfileOptions (avatar trigger + popup auth menu)
+ *
+ * @param props - Refer to ProfileOptionsProps
+ ******************************************************************************************************************/
 export const ProfileOptions: React.FC<ProfileOptionsProps> = memo(({
   photoURL,
   email,

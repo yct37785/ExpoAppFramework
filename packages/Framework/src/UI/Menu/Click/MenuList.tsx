@@ -27,6 +27,15 @@ export type MenuOption = {
   disabled?: boolean;
 };
 
+/******************************************************************************************************************
+ * MenuList props.
+ * 
+ * @property options        - Array of MenuOption rows to display (order preserved)
+ * @property onSelect       - Callback invoked with the clicked option's `value`
+ * @property style?         - Wrapper style for the outer container
+ * @property showDividers?  - When true, draws a Divider between items
+ * @property dense?         - When true, renders compact rows
+ ******************************************************************************************************************/
 type MenuListProps = {
   options: MenuOption[];
   onSelect: (value: string) => void;
@@ -39,12 +48,7 @@ type MenuListProps = {
  * Stateless action menu built with React Native Paper.
  * - Suitable for navigation and quick actions (e.g., profile popup, overflow menus).
  *
- * @param props - Menu props:
- *   - options: []          - Array of MenuOption rows to display (order preserved)
- *   - onSelect: fn         - Callback invoked with the clicked option's `value`
- *   - style?: StyleProp    - Wrapper style for the outer container
- *   - showDividers?: bool  - When true, draws a Divider between items
- *   - dense?: bool         - When true, renders compact rows
+ * @param props - Refer to MenuListProps
  *
  * @usage
  * ```tsx

@@ -96,8 +96,8 @@ export async function verifyCurrentUser(): Promise<boolean> {
  * Start Firebase auth observers (auth-state and ID-token) to keep UI state and network policy in sync.
  *
  * @param params - Observer callbacks:
- *   - onUser: fn           - Receives Firebase user or null on auth-state changes
- *   - onInvalidation: fn   - Called when the current user becomes invalid and should be signed out
+ *   - onUser         - Receives Firebase user or null on auth-state changes
+ *   - onInvalidation - Called when the current user becomes invalid and should be signed out
  *
  * @return - Unsubscribe function that stops all observers
  *

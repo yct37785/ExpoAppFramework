@@ -2,6 +2,20 @@ import React, { memo, ReactNode } from 'react';
 import { View, ScrollView, StyleProp, ViewStyle } from 'react-native';
 import * as Const from '../Const';
 
+/******************************************************************************************************************
+ * Layout props.
+ * 
+ * @property direction?     - Flex direction
+ * @property justify?       - Flexbox justification along the main axis
+ * @property reverse?       - Whether to render children in reverse order
+ * @property constraint?    - Layout constraint mode
+ * @property flex?          - Flex grow/shrink value for container
+ * @property gap?           - Spacing between children
+ * @property padding?       - Padding inside container
+ * @property navBarScrollAllowance? - Allowance for nav bar if layout exceeds bottom of screen space
+ * @property backgroundColor?       - Background color
+ * @property children               - Elements rendered inside
+ ******************************************************************************************************************/
 type LayoutProps = {
   direction?: 'row' | 'column';
   justify?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
@@ -20,17 +34,7 @@ type LayoutProps = {
  * Supports spacing, padding, wrapping, scrolling, and child reversal.
  * Used via VerticalLayout and HorizontalLayout wrappers rather than standalone.
  *
- * @param props - Layout props:
- *   - direction?: 'row' | 'column'   - Flex direction
- *   - justify?: string               - Flexbox justification along the main axis
- *   - reverse?: boolean              - Whether to render children in reverse order
- *   - constraint?: 'wrap' | 'scroll' | 'none' - Layout constraint mode
- *   - flex?: number      - Flex grow/shrink value for container
- *   - gap?: number       - Spacing between children
- *   - padding?: number   - Padding inside container
- *   - navBarScrollAllowance?: bool   - Allowance for nav bar if layout exceeds bottom of screen space
- *   - backgroundColor?: string       - Background color
- *   - children: ReactNode            - Elements rendered inside
+ * @param props - Refer to LayoutProps
  ******************************************************************************************************************/
 const Layout: React.FC<LayoutProps> = ({
   direction = 'column',
@@ -76,7 +80,7 @@ const Layout: React.FC<LayoutProps> = ({
  * Render a layout container with direction defaulted to 'column'.
  * Convenience wrapper for vertical stacking.
  *
- * @param props - inherits all layout props except direction
+ * @param props - LayoutProps except @property direction
  *
  * @usage
  * ```tsx
@@ -93,7 +97,7 @@ export const VerticalLayout: React.FC<Omit<LayoutProps, 'direction'>> =
  * Render a layout container with direction defaulted to 'row'.
  * Convenience wrapper for horizontal arrangement.
  *
- * @param props - inherits all layout props except direction
+ * @param props - LayoutProps except @property direction
  *
  * @usage
  * ```tsx

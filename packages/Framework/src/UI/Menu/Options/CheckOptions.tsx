@@ -4,6 +4,13 @@ import { Text, Checkbox } from 'react-native-paper';
 import * as Const from '../../../Const';
 import { OptionState, OptionSchema, OptionProps, BaseOptions } from './BaseOptions';
 
+/******************************************************************************************************************
+ * CheckOptions props.
+ * 
+ * @property schema     - Current options tree
+ * @property setSchema  - State setter
+ * @property style?     - Optional wrapper style
+ ******************************************************************************************************************/
 type CheckOptionCompProps = {
   schema: OptionSchema;
   setSchema: (updatedSchema: OptionSchema) => void;
@@ -14,10 +21,7 @@ type CheckOptionCompProps = {
  * Render a checkbox-based UI for the options tree powered by BaseOptions.
  * Shows checked, unchecked, and indeterminate states with recursive nesting.
  *
- * @param props - Check options props:
- *   - schema: OptionSchema   - Current options tree
- *   - setSchema: fn          - State setter
- *   - style?: StyleProp      - Optional wrapper style
+ * @param props - Refer to CheckOptionCompProps
  *
  * @usage
  * ```tsx

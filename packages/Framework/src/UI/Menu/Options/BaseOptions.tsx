@@ -32,6 +32,16 @@ export type OptionProps = {
   children?: OptionSchema;
 };
 
+/******************************************************************************************************************
+ * BaseOptions props.
+ * 
+ * @property schema           - Current options tree
+ * @property setSchema        - State setter invoked after mutations
+ * @property optionsContainer - Wrapper component for child groups
+ * @property renderOption     - Renderer for a single option row
+ * @property depthPadding?    - Additional padding applied per hierarchy depth
+ * @property style?           - Optional style for the root container
+ ******************************************************************************************************************/
 type BaseOptionsProps = {
   schema: OptionSchema;
   setSchema: (updatedSchema: OptionSchema) => void;
@@ -45,13 +55,7 @@ type BaseOptionsProps = {
  * Render a recursive options tree with selection propagation and indeterminate aggregation.
  * Toggles a node, cascades to children, and recomputes ancestor states.
  *
- * @param props - Base options props:
- *   - schema: OptionSchema       - Current options tree
- *   - setSchema: fn              - State setter invoked after mutations
- *   - optionsContainer: React.FC - Wrapper component for child groups
- *   - renderOption: JSX          - Renderer for a single option row
- *   - depthPadding?: number      - Additional padding applied per hierarchy depth
- *   - style?: StyleProp          - Optional style for the root container
+ * @param props - Refer to BaseOptionsProps
  *
  * @usage
  * ```tsx

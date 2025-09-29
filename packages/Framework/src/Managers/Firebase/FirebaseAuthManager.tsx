@@ -62,7 +62,7 @@ type Props = { children: React.ReactNode; };
  * @property signOut  - Sign out from Firebase & Google, then ensure an anonymous session
  *
  * @param props - Provider props:
- *   - children: ReactNode - Subtree that consumes the auth context
+ *   - children - Subtree that consumes the auth context
  *
  * @usage
  * ```tsx

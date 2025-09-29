@@ -1,6 +1,16 @@
 import React, { memo, ReactNode } from 'react';
 import { Text, TextProps } from 'react-native-paper';
 
+/******************************************************************************************************************
+ * HighlightText props.
+ * 
+ * @property options          - Key/label pairs for the group
+ * @property query            - Substring to highlight, case-insensitive
+ * @property highlightColor?  - Background color applied to highlighted matches
+ * @property label?           - Optional prefix text rendered before the content
+ * @property children         - Text body to search within
+ * @property style?           - Optional style overrides passed to the underlying text
+ ******************************************************************************************************************/
 interface HighlightTextProps extends TextProps<string> {
   query: string;
   highlightColor?: string;
@@ -11,12 +21,7 @@ interface HighlightTextProps extends TextProps<string> {
 /******************************************************************************************************************
  * Render text that highlights occurrences of a query within its children.
  *
- * @param props - Highlight text props:
- *   - query: string            - Substring to highlight, case-insensitive
- *   - highlightColor?: string  - Background color applied to highlighted matches
- *   - label?: string           - Optional prefix text rendered before the content
- *   - children: ReactNode      - Text body to search within
- *   - style?: obj              - Optional style overrides passed to the underlying text
+ * @param props - Refer to HighlightTextProps
  *
  * @usage
  * ```tsx

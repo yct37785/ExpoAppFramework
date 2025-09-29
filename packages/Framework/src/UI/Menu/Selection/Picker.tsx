@@ -22,6 +22,14 @@ export type PickerOption = {
   value: string;
 };
 
+/******************************************************************************************************************
+ * Picker props.
+ * 
+ * @property value      - Current selected value
+ * @property options    - Array of options to display
+ * @property onChange   - Callback fired when selection changes
+ * @property style?     - Optional style override for the picker
+ ******************************************************************************************************************/
 type PickerProps = {
   value: string;
   options: PickerOption[];
@@ -32,11 +40,7 @@ type PickerProps = {
 /******************************************************************************************************************
  * Render a styled dropdown picker built on @react-native-picker/picker.
  *
- * @param props - Picker props:
- *   - value: string            - Current selected value
- *   - options: PickerOption[]  - Array of options to display
- *   - onChange: fn             - Callback fired when selection changes
- *   - style?: StyleProp        - Optional style override for the picker
+ * @param props - Refer to PickerProps
  * 
  * @usage
  * ```tsx

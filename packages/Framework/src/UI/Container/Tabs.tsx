@@ -45,6 +45,16 @@ export type TabRouteProps = {
  ******************************************************************************************************************/
 export type TabsSceneMapFunc = (props: SceneRendererProps & { route: TabRouteProps }) => ReactNode;
 
+/******************************************************************************************************************
+ * TabsContainer props.
+ * 
+ * @property routes         - Array of tab definitions
+ * @property sceneMap       - Function that renders a scene for a given route
+ * @property tabIndex       - Index of the active tab
+ * @property onTabIdxChange - Callback when the active tab changes
+ * @property position       - Tab bar position
+ * @property style?         - Optional wrapper style for the tab view
+ ******************************************************************************************************************/
 type TabsContainerProps = {
   routes: TabRouteProps[];
   sceneMap: TabsSceneMapFunc;
@@ -57,13 +67,7 @@ type TabsContainerProps = {
 /******************************************************************************************************************
  * Render a tabbed interface using react-native-tab-view with optional icons and lazy loading.
  *
- * @param props - Tabs container props:
- *   - routes: TabRouteProps[]      - Array of tab definitions
- *   - sceneMap: TabsSceneMapFunc   - Function that renders a scene for a given route
- *   - tabIndex: number             - Index of the active tab
- *   - onTabIdxChange: fn           - Callback when the active tab changes
- *   - position: 'top' | 'bottom'   - Tab bar position
- *   - style?: StyleProp<ViewStyle> - Optional wrapper style for the tab view
+ * @param props - Refer to TabsContainerProps
  ******************************************************************************************************************/
 export const TabsContainer: React.FC<TabsContainerProps> = memo(({
   routes,
@@ -92,7 +96,7 @@ export const TabsContainer: React.FC<TabsContainerProps> = memo(({
    * @param focused   - Whether the tab is currently focused
    * @param color     - Color computed by the tab bar
    *
-   * @return - jsx icon element or null when no icon is defined
+   * @return - JSX icon element or null when no icon is defined
    ****************************************************************************************************************/
   function renderIcon(route: TabRouteProps, focused: boolean, color: string): JSX.Element | null {
     return route.icon ? <Icon name={route.icon} size={15} color={color} /> : null;
