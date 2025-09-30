@@ -121,8 +121,9 @@ export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ chi
    * ```
    ****************************************************************************************************************/
   const setItem = async (key: string, value: any) => {
-    const newData = { ...data, [key]: value };
-    setData(newData);
+    setData(prev =>
+      Object.is(prev[key], value) ? prev : { ...prev, [key]: value }
+    );
     try {
       await AsyncStorage.setItem(key, JSON.stringify(value));
     } catch (err) {
