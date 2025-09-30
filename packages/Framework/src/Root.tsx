@@ -5,7 +5,7 @@ import 'react-native-gesture-handler';
 import React, { ReactNode, useCallback, memo, useEffect, useState } from 'react';
 import { View, LogBox, Platform, StatusBar } from 'react-native';
 // theme
-import { ThemeProvider, useTheme, useThemeMode } from './Theme/ThemeProvider';
+import { Mode, ThemeProvider, useTheme, useThemeMode } from './Theme/ThemeProvider';
 import type { Theme } from './Theme/Theme';
 // UI
 import { Provider as PaperProvider, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, Text, Button } from 'react-native-paper';
@@ -122,7 +122,7 @@ type RootProps = {
  *
  * @param props - Refer to RootProps
  ******************************************************************************************************************/
-const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
+const Root: React.FC<Omit<RootProps, 'lightTheme' | 'darkTheme'>> = ({ DEFAULT_SCREEN, screenMap }) => {
   const t = useTheme();
   // legacy RN Paper -------------------------------------------------------------/
   const paperTheme = t.isDark ? CombinedDarkTheme : CombinedDefaultTheme;
@@ -168,19 +168,17 @@ const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
  *
  * @param props - Refer to RootProps
  ******************************************************************************************************************/
-const ThemingGate: React.FC<Omit<RootProps, 'lightTheme' | 'darkTheme'> & {
-  lightTheme: Theme; darkTheme: Theme;
-}> = ({ lightTheme, darkTheme, ...rest }) => {
+const ThemingGate: React.FC<RootProps> = ({ lightTheme, darkTheme, ...rest }) => {
   const { isLoaded, getItem } = useLocalData();
   if (!isLoaded) return <View style={{ flex: 1 }} />;
 
-  const initialMode: 'light' | 'dark' = getItem<boolean>('isDarkMode') ? 'dark' : 'light';
+  const initialMode: Mode = getItem<boolean>('isDarkMode') ? 'dark' : 'light';
 
   return (
     <ThemeProvider lightTheme={lightTheme} darkTheme={darkTheme} initialMode={initialMode}>
       <LocalDataSyncHelper />
       <AuthProvider>
-        <Root {...rest} lightTheme={lightTheme} darkTheme={darkTheme} />
+        <Root {...rest} />
       </AuthProvider>
     </ThemeProvider>
   );
