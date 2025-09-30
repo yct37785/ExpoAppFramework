@@ -8,7 +8,6 @@ import { View, LogBox, Platform, StatusBar } from 'react-native';
 import { ThemeProvider, useTheme, useThemeMode } from './Theme/ThemeProvider';
 import type { Theme } from './Theme/Theme';
 // UI
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Provider as PaperProvider, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, Text, Button } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
 // screen
@@ -61,6 +60,25 @@ LogBox.ignoreLogs(['new NativeEventEmitter']);
 
 // create stack
 const Stack = createNativeStackNavigator<RootStackPropsList>();
+
+/******************************************************************************************************************
+ * Local data sync helper.
+ ******************************************************************************************************************/
+const LocalDataSyncHelper: React.FC = () => {
+  const { isLoaded, getItem } = useLocalData();
+  const { setMode } = useThemeMode();
+
+  // LocalData context re-renders when values change,
+  // reading the key as a render-time value works as a dependency:
+  const darkPref = isLoaded ? !!getItem<boolean>('isDarkMode') : false;
+
+  React.useEffect(() => {
+    if (!isLoaded) return;
+    setMode(darkPref ? 'dark' : 'light');
+  }, [isLoaded, darkPref, setMode]);
+
+  return null;
+};
 
 /******************************************************************************************************************
  * Wrap a screen component so it receives typed { navigation, route } props from the stack render callback.
@@ -160,6 +178,7 @@ const ThemingGate: React.FC<Omit<RootProps, 'lightTheme' | 'darkTheme'> & {
 
   return (
     <ThemeProvider lightTheme={lightTheme} darkTheme={darkTheme} initialMode={initialMode}>
+      <LocalDataSyncHelper />
       <AuthProvider>
         <Root {...rest} lightTheme={lightTheme} darkTheme={darkTheme} />
       </AuthProvider>
