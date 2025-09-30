@@ -4,9 +4,12 @@ import 'react-native-gesture-handler';
 // core
 import React, { ReactNode, useCallback, memo, useEffect, useState } from 'react';
 import { View, LogBox, Platform, StatusBar } from 'react-native';
+// theme
+import { ThemeProvider, useTheme, useThemeMode } from './Theme/ThemeProvider';
+import type { Theme } from './Theme/Theme';
 // UI
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, Text, Button } from 'react-native-paper';
+import { Provider as PaperProvider, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, Text, Button } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
 // screen
 import { RootStackPropsList, ScreenProps, ScreenMap } from './Core/Screen';
@@ -23,7 +26,7 @@ import { logColors } from './Const';
 // utils
 import { doLog } from './Utils';
 
-// theme adaptation for navigation
+// legacy RN Paper -------------------------------------------------------------/
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
   reactNavigationLight: NavigationDefaultTheme,
   reactNavigationDark: NavigationDarkTheme,
@@ -51,6 +54,7 @@ const CombinedDarkTheme = {
     ...MD3DarkTheme.fonts,
   }
 }
+// legacy RN Paper -------------------------------------------------------------/
 
 // config
 LogBox.ignoreLogs(['new NativeEventEmitter']);
@@ -85,10 +89,14 @@ const ScreenWrapper = ({
  *
  * @property DEFAULT_SCREEN - Initial route name for the stack navigator
  * @property screenMap      - Mapping of route names to screen components
+ * @property lightTheme     - Fully-specified light Theme
+ * @property darkTheme      - Fully-specified dark Theme
  ******************************************************************************************************************/
 type RootProps = {
   DEFAULT_SCREEN: string;
   screenMap: ScreenMap;
+  lightTheme: Theme;
+  darkTheme: Theme;
 };
 
 /******************************************************************************************************************
@@ -97,9 +105,12 @@ type RootProps = {
  *
  * @param props - Refer to RootProps
  ******************************************************************************************************************/
-const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
+const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap, lightTheme, darkTheme }) => {
   const { getItem, isLoaded } = useLocalData();
-  const [theme, setTheme] = useState(CombinedDarkTheme);
+  const { mode, setMode } = useThemeMode();
+  // legacy RN Paper -------------------------------------------------------------/
+  const [paperTheme, setPaperTheme] = useState(CombinedDarkTheme);
+  // legacy RN Paper -------------------------------------------------------------/
 
   useEffect(() => {
     // Firebase pulse check
@@ -118,42 +129,43 @@ const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
     if (!isLoaded) return;
     // sync theme with stored setting
     const darkMode = getItem('isDarkMode');
-    setTheme(darkMode ? CombinedDarkTheme : CombinedDefaultTheme);
-  }, [isLoaded, getItem('isDarkMode')]);
+    setMode(darkMode ? 'dark' : 'light');
+    // legacy RN Paper -------------------------------------------------------------/
+    setPaperTheme(darkMode ? CombinedDarkTheme : CombinedDefaultTheme);
+    // legacy RN Paper -------------------------------------------------------------/
+  }, [isLoaded, getItem('isDarkMode')]);  // TODO: getItem('isDarkMode') should not be in hooks, should be a trigger
 
-  const navContainerTheme = theme === CombinedDarkTheme ? NavigationDarkTheme : NavigationDefaultTheme;
+  const navContainerTheme = mode === 'dark' ? NavigationDarkTheme : NavigationDefaultTheme;
 
   return (
-    <GestureHandlerRootView style={{ width: '100%', flex: 1 }}>
-      <PaperProvider theme={theme}>
-        <MenuProvider>
-          <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
-            {isLoaded && (
-              <NavigationContainer theme={navContainerTheme}>
-                <Stack.Navigator
-                  initialRouteName={DEFAULT_SCREEN}
-                  screenOptions={{
-                    headerShown: false
-                  }}
-                >
-                  {Object.entries(screenMap).map(([name, Component]) => (
-                    <Stack.Screen name={name} key={name}>
-                      {(props) => (
-                        <ScreenWrapper
-                          Component={Component}
-                          navigation={props.navigation}
-                          route={props.route}
-                        />
-                      )}
-                    </Stack.Screen>
-                  ))}
-                </Stack.Navigator>
-              </NavigationContainer>
-            )}
-          </View>
-        </MenuProvider>
-      </PaperProvider>
-    </GestureHandlerRootView>
+    <PaperProvider theme={paperTheme}>
+      <MenuProvider>
+        <View style={{ flex: 1, backgroundColor: paperTheme.colors.background }}>
+          {isLoaded && (
+            <NavigationContainer theme={navContainerTheme}>
+              <Stack.Navigator
+                initialRouteName={DEFAULT_SCREEN}
+                screenOptions={{
+                  headerShown: false
+                }}
+              >
+                {Object.entries(screenMap).map(([name, Component]) => (
+                  <Stack.Screen name={name} key={name}>
+                    {(props) => (
+                      <ScreenWrapper
+                        Component={Component}
+                        navigation={props.navigation}
+                        route={props.route}
+                      />
+                    )}
+                  </Stack.Screen>
+                ))}
+              </Stack.Navigator>
+            </NavigationContainer>
+          )}
+        </View>
+      </MenuProvider>
+    </PaperProvider>
   );
 }
 
@@ -162,13 +174,15 @@ const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
  *
  * @param props - Refer to RootProps
  ******************************************************************************************************************/
-const LocalDataProviderWrapper: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
+const LocalDataProviderWrapper: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap, lightTheme, darkTheme }) => {
   return (
-    <LocalDataProvider>
-      <AuthProvider>
-        <Root screenMap={screenMap} DEFAULT_SCREEN={DEFAULT_SCREEN} />
-      </AuthProvider>
-    </LocalDataProvider>
+    <ThemeProvider lightTheme={lightTheme} darkTheme={darkTheme}>
+      <LocalDataProvider>
+        <AuthProvider>
+          <Root screenMap={screenMap} DEFAULT_SCREEN={DEFAULT_SCREEN} lightTheme={lightTheme} darkTheme={darkTheme} />
+        </AuthProvider>
+      </LocalDataProvider>
+    </ThemeProvider>
   );
 }
 
