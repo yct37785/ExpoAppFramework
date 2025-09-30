@@ -6,7 +6,6 @@ import { defaultTheme } from '../default-theme';
  ******************************************************************************************************************/
 export const myThemeDark: Theme = {
   ...defaultTheme,
-  isDark: true,
   colors: {
     ...defaultTheme.colors,
     background: '#121212',

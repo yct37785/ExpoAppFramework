@@ -4,7 +4,6 @@ import type { Theme } from './Theme';
  * Provide Material UI–inspired default Theme (light) used as the base for all app themes.
  ******************************************************************************************************************/
 export const defaultTheme: Theme = {
-  isDark: false,
   colors: {
     background: '#FFFFFF',
     surface: '#FFFFFF',

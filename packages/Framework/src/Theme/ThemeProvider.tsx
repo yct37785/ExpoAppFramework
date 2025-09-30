@@ -66,8 +66,8 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   // ensure isDark matches the active mode, do not mutate inputs
   const theme = useMemo<Theme>((): Theme => {
     return mode === 'dark'
-      ? { ...darkTheme, isDark: true }
-      : { ...lightTheme, isDark: false };
+      ? { ...darkTheme }
+      : { ...lightTheme };
   }, [mode, lightTheme, darkTheme]);
 
   const value = useMemo<ThemeContextValue>(

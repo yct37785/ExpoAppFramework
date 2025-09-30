@@ -69,14 +69,12 @@ export type Spacing = (multiplier?: number) => number;
 /******************************************************************************************************************
  * Theme - Runtime theme object consumed by UI.
  *
- * @property isDark       - True when representing a dark color scheme
  * @property colors       - Resolved color tokens
  * @property typography   - Resolved type tokens
  * @property radius       - Resolved radii tokens
  * @property spacing      - Resolved spacing function
  ******************************************************************************************************************/
 export type Theme = {
-  isDark: boolean;
   colors: ColorPalette;
   typography: Typography;
   radius: Radius;
