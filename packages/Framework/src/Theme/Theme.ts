@@ -24,17 +24,33 @@ export type ColorPalette = {
 };
 
 /******************************************************************************************************************
- * Typography - Font family, sizes, weights, and line heights.
- *
- * @property size       - Scaled font sizes (dp)
- * @property weight     - Platform weight tokens
- * @property lineHeight - Matching line heights (dp)
+ * Typography.
+ * 
+ * @property fontFamily - Font family
+ * @property weight     - Boldness (regular, medium, bold)
+ * @property variants   - Fixed text variants defined by the theme 
  ******************************************************************************************************************/
+export type TextVariant =
+  | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+  | 'subtitle' | 'subtitle2'
+  | 'body' | 'body2'
+  | 'label' | 'label2'
+  | 'caption' | 'overline';
+
+export type TextStyleToken = {
+  fontSize: number;               // dp
+  lineHeight: number;             // dp
+  fontWeight?: string | number;   // defaults to Typography.weight.regular if omitted
+  letterSpacing?: number;         // dp
+  fontFamily?: string;            // defaults to Typography.fontFamily if omitted
+};
+
 export type Typography = {
   fontFamily: string;
-  size: { xs: number; sm: number; md: number; lg: number; xl: number };
   weight: { regular: string | number; medium: string | number; bold: string | number };
-  lineHeight: { normal: number; dense: number; roomy: number };
+
+  /** REQUIRED per-variant tokens for all universal typography roles */
+  variants: Record<TextVariant, TextStyleToken>;
 };
 
 /******************************************************************************************************************

@@ -9,14 +9,15 @@ export const myThemeLight: Theme = {
   isDark: false,
   colors: {
     ...defaultTheme.colors,
-    // brighter, punchier primary than stock MUI blue
     primary: '#1F6AFF',
-    // subtle card contrast (akin to MUI grey[50])
     surface: '#FAFAFA',
   },
   typography: {
     ...defaultTheme.typography,
-    // nudge body text for readability on mobile
-    size: { ...defaultTheme.typography.size, md: 17 },
+    variants: {
+      ...defaultTheme.typography.variants,
+      h1: { ...defaultTheme.typography.variants.h1, fontSize: 42 },
+      body: { ...defaultTheme.typography.variants.body, letterSpacing: 0.25 },
+    },
   },
 };
