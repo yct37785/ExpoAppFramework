@@ -6,10 +6,10 @@ import { iconSizeSmall, iconSizeMedium, padSize, padSize05 } from '../../../Cons
 /******************************************************************************************************************
  * Declarative description of a single menu action row.
  *
- * @property label       - human-readable text shown for the row
- * @property value       - opaque value emitted on selection (e.g., route name, action key)
- * @property leadingIcon - Material icon name for the left adornment (e.g., "account", "logout")
- * @property disabled    - when true, the row is non-interactive and dimmed
+ * @property label       - Human-readable text shown for the row
+ * @property value       - Opaque value emitted on selection (e.g., route name, action key)
+ * @property leadingIcon - Material icon name for the left adornment (e.g., 'account', 'logout')
+ * @property disabled    - When true, the row is non-interactive and dimmed
  *
  * @usage
  * ```ts
@@ -27,6 +27,15 @@ export type MenuOption = {
   disabled?: boolean;
 };
 
+/******************************************************************************************************************
+ * MenuList props.
+ * 
+ * @property options        - Array of MenuOption rows to display (order preserved)
+ * @property onSelect       - Callback invoked with the clicked option's `value`
+ * @property style?         - Wrapper style for the outer container
+ * @property showDividers?  - When true, draws a Divider between items
+ * @property dense?         - When true, renders compact rows
+ ******************************************************************************************************************/
 type MenuListProps = {
   options: MenuOption[];
   onSelect: (value: string) => void;
@@ -39,12 +48,7 @@ type MenuListProps = {
  * Stateless action menu built with React Native Paper.
  * - Suitable for navigation and quick actions (e.g., profile popup, overflow menus).
  *
- * @param props - menu props:
- *   - options: [] - array of MenuOption rows to display (order preserved)
- *   - onSelect: fn - callback invoked with the clicked option's `value`
- *   - style?: StyleProp<ViewStyle> - wrapper style for the outer container
- *   - showDividers?: bool - when true, draws a Divider between items
- *   - dense?: bool - when true, renders compact rows
+ * @param props - Refer to MenuListProps
  *
  * @usage
  * ```tsx

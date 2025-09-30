@@ -15,9 +15,9 @@ export enum ListType {
 /******************************************************************************************************************
  * Define the structure of a single list item used for search and filter.
  *
- * @property searchable - key/value pairs included in text search
- * @property filterable - key/value pairs used for equality-based filtering
- * @property none - arbitrary values not involved in search or filter
+ * @property searchable   - Key/value pairs included in text search
+ * @property filterable   - Key/value pairs used for equality-based filtering
+ * @property none         - Arbitrary values not involved in search or filter
  *
  * @usage
  * ```ts
@@ -51,8 +51,8 @@ export type ListFilterMap = {
 /******************************************************************************************************************
  * Function signature for rendering a list item row.
  *
- * @param item - list item data
- * @param index - item index
+ * @param item  - List item data
+ * @param index - Item index
  *
  * @usage
  * ```ts
@@ -61,6 +61,16 @@ export type ListFilterMap = {
  ******************************************************************************************************************/
 export type renderListItemFunc = (item: ListItem, index: number) => React.ReactNode;
 
+/******************************************************************************************************************
+ * List props.
+ * 
+ * @property dataArr      - Input dataset to render
+ * @property query        - Case-insensitive search query applied to searchable values
+ * @property filterMap    - Active filters applied to filterable keys
+ * @property renderItem   - Function that renders a row for a given item
+ * @property listType?    - Underlying list implementation (default flashlist)
+ * @property style?       - Optional wrapper style
+ ******************************************************************************************************************/
 type ListDataDisplayProps = {
   dataArr: ListItem[];
   query: string;
@@ -74,13 +84,7 @@ type ListDataDisplayProps = {
  * Render a searchable, filterable list backed by either FlashList or FlatList.
  * Encapsulates filtering logic and delegates row rendering to a caller-provided renderer.
  *
- * @param props - list props:
- *   - dataArr: ListItem[] - input dataset to render
- *   - query: string - case-insensitive search query applied to searchable values
- *   - filterMap: ListFilterMap - active filters applied to filterable keys
- *   - renderItem: renderListItemFunc - function that renders a row for a given item
- *   - listType?: ListType - underlying list implementation (default flashlist)
- *   - style?: StyleProp<ViewStyle> - optional wrapper style
+ * @param props - Refer to ListDataDisplayProps
  *
  * @usage
  * ```tsx

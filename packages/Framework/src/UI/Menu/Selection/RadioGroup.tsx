@@ -15,6 +15,14 @@ export type RadioGroupOptions = {
   [key: string]: string;
 };
 
+/******************************************************************************************************************
+ * RadioGroup props.
+ * 
+ * @property options        - Key/label pairs for the group
+ * @property value          - Currently selected key
+ * @property onValueChange  - Callback when a new option is selected
+ * @property style?         - Optional container style
+ ******************************************************************************************************************/
 type RadioGroupProps = {
   options: RadioGroupOptions;
   value: string;
@@ -25,11 +33,7 @@ type RadioGroupProps = {
 /******************************************************************************************************************
  * Render a horizontal group of radio buttons with labels.
  *
- * @param props - radio group props:
- *   - options: RadioGroupOptions - key/label pairs for the group
- *   - value: string - currently selected key
- *   - onValueChange: (value: string) => void - callback when a new option is selected
- *   - style?: StyleProp<ViewStyle> - optional container style
+ * @param props - Refer to RadioGroupProps
  *
  * @usage
  * ```tsx

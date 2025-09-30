@@ -2,6 +2,17 @@ import React, { useEffect, useRef, memo } from 'react';
 import { Keyboard, StyleProp, ViewStyle, TextStyle } from 'react-native';
 import { Searchbar, TextInput as RNPTextInput } from 'react-native-paper';
 
+/******************************************************************************************************************
+ * TextInput props.
+ * 
+ * @property type?        - Input mode to render
+ * @property value?       - Current input value
+ * @property placeholder? - Placeholder text
+ * @property onChange?    - Called when value changes
+ * @property onFocus?     - Called when input gains focus
+ * @property onBlur?      - Called when input loses focus
+ * @property style?       - Optional custom styling
+ ******************************************************************************************************************/
 type TextInputProps = {
   type?: 'text' | 'numeric' | 'passcode' | 'search';
   value?: string;
@@ -15,21 +26,14 @@ type TextInputProps = {
 /******************************************************************************************************************
  * Render a unified text input built on react-native-paper that auto-blurs when the keyboard hides.
  *
- * @param props - text input props:
- *   - type?: 'text' | 'numeric' | 'passcode' | 'search' - input mode to render
- *   - value?: string - current input value
- *   - placeholder?: string - placeholder text
- *   - onChange?: (text: string) => void - called when value changes
- *   - onFocus?: () => void - called when input gains focus
- *   - onBlur?: () => void - called when input loses focus
- *   - style?: StyleProp<ViewStyle | TextStyle> - optional custom styling
+ * @param props - Refer to TextInputProps.
  *
  * @usage
  * ```tsx
  * <TextInput
- *   type="search"
+ *   type='search'
  *   value={query}
- *   placeholder="search items"
+ *   placeholder='search items'
  *   onChange={setQuery}
  * />
  * ```

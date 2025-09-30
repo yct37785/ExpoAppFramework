@@ -6,8 +6,8 @@ import { Picker as RNPicker } from '@react-native-picker/picker';
 /******************************************************************************************************************
  * Define a selectable option for the picker.
  *
- * @property label - human-readable text shown in the dropdown
- * @property value - internal value associated with the option
+ * @property label - Human-readable text shown in the dropdown
+ * @property value - Internal value associated with the option
  *
  * @usage
  * ```ts
@@ -22,6 +22,14 @@ export type PickerOption = {
   value: string;
 };
 
+/******************************************************************************************************************
+ * Picker props.
+ * 
+ * @property value      - Current selected value
+ * @property options    - Array of options to display
+ * @property onChange   - Callback fired when selection changes
+ * @property style?     - Optional style override for the picker
+ ******************************************************************************************************************/
 type PickerProps = {
   value: string;
   options: PickerOption[];
@@ -32,11 +40,7 @@ type PickerProps = {
 /******************************************************************************************************************
  * Render a styled dropdown picker built on @react-native-picker/picker.
  *
- * @param props - picker props:
- *   - value: string - current selected value
- *   - options: PickerOption[] - array of options to display
- *   - onChange: fn - callback fired when selection changes
- *   - style?: StyleProp<ViewStyle> - optional style override for the picker
+ * @param props - Refer to PickerProps
  * 
  * @usage
  * ```tsx

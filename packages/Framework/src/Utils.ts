@@ -3,13 +3,13 @@ import { logColors } from './Const';
 /******************************************************************************************************************
  * [ASYNC] Wrap a promise with a timeout that rejects if it does not settle within the given duration.
  *
- * @template T - type of the wrapped promise result
+ * @template T - Type of the wrapped promise result
  *
- * @param p - promise to wrap
- * @param ms - timeout duration in milliseconds
- * @param timeoutMsg - timeout msg
+ * @param p     - Promise to wrap
+ * @param ms    - Timeout duration in milliseconds
+ * @param timeoutMsg - Timeout msg
  *
- * @return - a promise that resolves with the same value as p or rejects with timeout error
+ * @return - A promise that resolves with the same value as p or rejects with timeout error
  *
  * @throws {Error} if the timeout is reached before p settles
  *
@@ -30,9 +30,9 @@ export const withTimeout = <T,>(p: Promise<T>, ms: number, timeoutMsg: string) =
 /******************************************************************************************************************
  * Log a formatted message to the console with cyan module label and yellow function label.
  *
- * @param module - module name string
- * @param func - function name string
- * @param message - message text to output
+ * @param module  - Module name string
+ * @param func    - Function name string
+ * @param message - Message text to output
  *
  * @usage
  * ```ts
@@ -50,9 +50,9 @@ export function doLog(module: string, func: string, message: string) {
 /******************************************************************************************************************
  * Log an error message to the console with red module label and yellow function label.
  *
- * @param module - module name string
- * @param func - function name string
- * @param message - error text to output
+ * @param module  - Module name string
+ * @param func    - Function name string
+ * @param message - Error text to output
  *
  * @usage
  * ```ts

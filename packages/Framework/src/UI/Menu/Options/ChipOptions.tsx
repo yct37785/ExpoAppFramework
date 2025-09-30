@@ -3,6 +3,13 @@ import { View, StyleProp, ViewStyle } from 'react-native';
 import { useTheme, Chip } from 'react-native-paper';
 import * as Const from '../../../Const';
 
+/******************************************************************************************************************
+ * ChipOptions props.
+ * 
+ * @property schema       - Available chip labels
+ * @property onSelected   - Callback receiving updated selection
+ * @property style?       - Optional wrapper style
+ ******************************************************************************************************************/
 type ChipOptionsProps = {
   schema: Set<string>;
   onSelected: (selectedValues: Set<string>) => void;
@@ -18,10 +25,7 @@ type ChipOptionsProps = {
  * - Callback returns updated selected values as a Set<string>
  * - Responsive row wrapping for variable chip counts
  * 
- * @param props - chip options props:
- *   - schema: Set<string> - available chip labels
- *   - onSelected: (values: Set<string>) => void - callback receiving updated selection
- *   - style?: StyleProp<ViewStyle> - optional wrapper style
+ * @param props - Refer to ChipOptionsProps
  *
  * @usage
  * ```tsx

@@ -37,9 +37,9 @@ import {
 /******************************************************************************************************************
  * Normalize an arbitrary path into a clean slash-joined string.
  *
- * @param parts - path parts (string or string[]) accepted by public APIs
+ * @param parts - Path parts (string or string[]) accepted by public APIs
  *
- * @return - normalized path segment (no leading/trailing slashes)
+ * @return - Normalized path segment (no leading/trailing slashes)
  *
  * @throws {Error} if no parts are provided after normalization
  ******************************************************************************************************************/
@@ -55,12 +55,12 @@ function normalizePath(parts: string | string[]): string {
 /******************************************************************************************************************
  * Compute `${root}/${uid}/${tail}` and return tail segments for parity checks.
  *
- * @param root - top-level collection/table (e.g., "allergies")
- * @param tail  - remaining path under the user (document or collection path)
+ * @param root  - Top-level collection/table (e.g., "allergies")
+ * @param tail  - Remaining path under the user (document or collection path)
  *
- * @return - { absPath, tailSegs } where:
- *           - absPath is the absolute Firestore path
- *           - tailSegs is the normalized array of tail segments (after `{uid}`)
+ * @return - where:
+ *  - absPath   - The absolute Firestore path
+ *  - tailSegs  - The normalized array of tail segments (after `{uid}`)
  *
  * @throws {Error} if no authenticated Firebase user is available
  ******************************************************************************************************************/
@@ -113,10 +113,10 @@ function assertCollectionTail(tailSegs: string[]): void {
  *
  * Path requirement: DOCUMENT path (even number of segments after `{uid}`).
  *
- * @param root - root collection/table (e.g., "allergies")
- * @param documentPath - trailing path under the user that ends at a document (e.g., "type/solid")
+ * @param root          - Root collection/table (e.g., "allergies")
+ * @param documentPath  - Trailing path under the user that ends at a document (e.g., "type/solid")
  *
- * @return - plain JSON (Record<string, any>) if the document exists, otherwise `undefined`
+ * @return - Plain JSON (Record<string, any>) if the document exists, otherwise `undefined`
  *
  * @throws {Error} if there is no Firebase user, the path is not a document path, or Firestore access fails
  *
@@ -148,10 +148,10 @@ export async function readFirestoreDoc(
  * - Accepts full or partial objects. Use `merge=true` (default) for partial updates; set `merge=false` to replace.
  * - Automatically writes `_updatedAt` with a server timestamp on every write.
  *
- * @param root - root collection/table (e.g., "allergies")
- * @param documentPath - trailing path under the user that ends at a document (e.g., ["type","solid"])
- * @param data - JSON to write (full or partial)
- * @param merge? - if true (default), merges fields; if false, replaces the document
+ * @param root          - Root collection/table (e.g., "allergies")
+ * @param documentPath  - Trailing path under the user that ends at a document (e.g., ["type","solid"])
+ * @param data          - JSON to write (full or partial)
+ * @param merge?        - If true (default), merges fields; if false, replaces the document
  *
  * @throws {Error} if there is no Firebase user, the path is not a document path, or Firestore access fails
  *
@@ -180,8 +180,8 @@ export async function updateFirestoreDoc(
  *
  * Path requirement: DOCUMENT path (even number of segments after `{uid}`).
  *
- * @param root - root collection/table (e.g., "allergies")
- * @param documentPath - trailing path under the user that ends at a document (e.g., "type/solid")
+ * @param root          - Root collection/table (e.g., "allergies")
+ * @param documentPath  - Trailing path under the user that ends at a document (e.g., "type/solid")
  *
  * @throws {Error} if there is no Firebase user, the path is not a document path, or Firestore access fails
  *
@@ -207,10 +207,10 @@ export async function deleteFirestoreDoc(
  *
  * Path requirement: COLLECTION path (odd number of segments after `{uid}`).
  *
- * @param root - root collection/table (e.g., "allergies")
- * @param collectionPath - trailing path under the user that ends at a collection (e.g., "type")
+ * @param root            - Root collection/table (e.g., "allergies")
+ * @param collectionPath  - Trailing path under the user that ends at a collection (e.g., "type")
  *
- * @return - array of Firestore document IDs (string)
+ * @return - Array of Firestore document IDs (string)
  *
  * @throws {Error} if there is no Firebase user, the path is not a collection path, or Firestore access fails
  *

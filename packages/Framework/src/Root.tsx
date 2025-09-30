@@ -4,9 +4,11 @@ import 'react-native-gesture-handler';
 // core
 import React, { ReactNode, useCallback, memo, useEffect, useState } from 'react';
 import { View, LogBox, Platform, StatusBar } from 'react-native';
+// theme
+import { Mode, ThemeProvider, useTheme, useThemeMode } from './Theme/ThemeProvider';
+import type { Theme } from './Theme/Theme';
 // UI
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { Provider as PaperProvider, useTheme, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, Text, Button } from 'react-native-paper';
+import { Provider as PaperProvider, adaptNavigationTheme, MD3DarkTheme, MD3LightTheme, Text, Button } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
 // screen
 import { RootStackPropsList, ScreenProps, ScreenMap } from './Core/Screen';
@@ -23,7 +25,7 @@ import { logColors } from './Const';
 // utils
 import { doLog } from './Utils';
 
-// theme adaptation for navigation
+// legacy RN Paper -------------------------------------------------------------/
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
   reactNavigationLight: NavigationDefaultTheme,
   reactNavigationDark: NavigationDarkTheme,
@@ -51,6 +53,7 @@ const CombinedDarkTheme = {
     ...MD3DarkTheme.fonts,
   }
 }
+// legacy RN Paper -------------------------------------------------------------/
 
 // config
 LogBox.ignoreLogs(['new NativeEventEmitter']);
@@ -59,14 +62,33 @@ LogBox.ignoreLogs(['new NativeEventEmitter']);
 const Stack = createNativeStackNavigator<RootStackPropsList>();
 
 /******************************************************************************************************************
+ * Local data sync helper.
+ ******************************************************************************************************************/
+const LocalDataSyncHelper: React.FC = () => {
+  const { isLoaded, getItem } = useLocalData();
+  const { setMode } = useThemeMode();
+
+  // LocalData context re-renders when values change,
+  // reading the key as a render-time value works as a dependency:
+  const darkPref = isLoaded ? !!getItem<boolean>('isDarkMode') : false;
+
+  React.useEffect(() => {
+    if (!isLoaded) return;
+    setMode(darkPref ? 'dark' : 'light');
+  }, [isLoaded, darkPref, setMode]);
+
+  return null;
+};
+
+/******************************************************************************************************************
  * Wrap a screen component so it receives typed { navigation, route } props from the stack render callback.
  *
- * @param props - wrapper props:
- *   - Component: fn - screen component to render (receives { navigation, route })
- *   - navigation: obj - navigation controller for stack operations
- *   - route: obj - current route info:
- *     + name: string - route name
- *     + params?: obj - route parameters (shape depends on the screen)
+ * @param props - Wrapper props:
+ *   - Component  - Screen component to render (receives { navigation, route })
+ *   - navigation - Navigation controller for stack operations
+ *   - route: {}  - Current route info:
+ *     + name: string   - Route name
+ *     + params?: {}    - Route parameters (shape depends on the screen)
  ******************************************************************************************************************/
 const ScreenWrapper = ({
   Component,
@@ -80,25 +102,35 @@ const ScreenWrapper = ({
   </View>
 );
 
+/******************************************************************************************************************
+ * Root component props.
+ *
+ * @property DEFAULT_SCREEN - Initial route name for the stack navigator
+ * @property screenMap      - Mapping of route names to screen components
+ * @property lightTheme     - Fully-specified light Theme
+ * @property darkTheme      - Fully-specified dark Theme
+ ******************************************************************************************************************/
 type RootProps = {
   DEFAULT_SCREEN: string;
   screenMap: ScreenMap;
+  lightTheme: Theme;
+  darkTheme: Theme;
 };
 
 /******************************************************************************************************************
- * Compose global providers (paper, popup menu, localdata, auth) and configure the navigation container + stack
- * using a provided screen map, synchronizing theme with stored user preference.
+ * Root: consume theme, derive Paper + Navigation themes from it (no local state/effects).
  *
- * @param props - root props:
- *   - DEFAULT_SCREEN: string - initial route name for the stack navigator
- *   - screenMap: ScreenMap - mapping of route names to screen components
+ * @param props - Refer to RootProps
  ******************************************************************************************************************/
-const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
-  const { getItem, isLoaded } = useLocalData();
-  const [theme, setTheme] = useState(CombinedDarkTheme);
+const Root: React.FC<Omit<RootProps, 'lightTheme' | 'darkTheme'>> = ({ DEFAULT_SCREEN, screenMap }) => {
+  const t = useTheme();
+  // legacy RN Paper -------------------------------------------------------------/
+  const paperTheme = t.isDark ? CombinedDarkTheme : CombinedDefaultTheme;
+  // legacy RN Paper -------------------------------------------------------------/
+  const navContainerTheme = t.isDark ? NavigationDarkTheme : NavigationDefaultTheme;
 
+  // Firebase pulse check
   useEffect(() => {
-    // Firebase pulse check
     try {
       // get the default app that RN Firebase auto-initialized from native files
       const firebaseApp = getApp();
@@ -110,64 +142,59 @@ const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
     }
   }, []);
 
-  useEffect(() => {
-    if (!isLoaded) return;
-    // sync theme with stored setting
-    const darkMode = getItem('isDarkMode');
-    setTheme(darkMode ? CombinedDarkTheme : CombinedDefaultTheme);
-  }, [isLoaded, getItem('isDarkMode')]);
-
-  const navContainerTheme = theme === CombinedDarkTheme ? NavigationDarkTheme : NavigationDefaultTheme;
-
   return (
-    <GestureHandlerRootView style={{ width: '100%', flex: 1 }}>
-      <PaperProvider theme={theme}>
-        <MenuProvider>
-          <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
-            {isLoaded && (
-              <NavigationContainer theme={navContainerTheme}>
-                <Stack.Navigator
-                  initialRouteName={DEFAULT_SCREEN}
-                  screenOptions={{
-                    headerShown: false
-                  }}
-                >
-                  {Object.entries(screenMap).map(([name, Component]) => (
-                    <Stack.Screen name={name} key={name}>
-                      {(props) => (
-                        <ScreenWrapper
-                          Component={Component}
-                          navigation={props.navigation}
-                          route={props.route}
-                        />
-                      )}
-                    </Stack.Screen>
-                  ))}
-                </Stack.Navigator>
-              </NavigationContainer>
-            )}
-          </View>
-        </MenuProvider>
-      </PaperProvider>
-    </GestureHandlerRootView>
+    <PaperProvider theme={paperTheme}>
+      <MenuProvider>
+        <View style={{ flex: 1, backgroundColor: paperTheme.colors.background }}>
+          <NavigationContainer theme={navContainerTheme}>
+            <Stack.Navigator initialRouteName={DEFAULT_SCREEN} screenOptions={{ headerShown: false }}>
+              {Object.entries(screenMap).map(([name, Component]) => (
+                <Stack.Screen name={name} key={name}>
+                  {(props) => (
+                    <ScreenWrapper Component={Component} navigation={props.navigation} route={props.route} />
+                  )}
+                </Stack.Screen>
+              ))}
+            </Stack.Navigator>
+          </NavigationContainer>
+        </View>
+      </MenuProvider>
+    </PaperProvider>
   );
 }
 
 /******************************************************************************************************************
+ * Local data > pick initial theme mode > mount ThemeProvider > mount auth + Root.
+ *
+ * @param props - Refer to RootProps
+ ******************************************************************************************************************/
+const ThemingGate: React.FC<RootProps> = ({ lightTheme, darkTheme, ...rest }) => {
+  const { isLoaded, getItem } = useLocalData();
+  if (!isLoaded) return <View style={{ flex: 1 }} />;
+
+  const initialMode: Mode = getItem<boolean>('isDarkMode') ? 'dark' : 'light';
+
+  return (
+    <ThemeProvider lightTheme={lightTheme} darkTheme={darkTheme} initialMode={initialMode}>
+      <LocalDataSyncHelper />
+      <AuthProvider>
+        <Root {...rest} />
+      </AuthProvider>
+    </ThemeProvider>
+  );
+};
+
+/******************************************************************************************************************
  * Provide localdata and auth contexts around the root component and export the wrapped app entry.
  *
- * @param props - same as root:
- *   - DEFAULT_SCREEN: string - initial route name
- *   - screenMap: ScreenMap - mapping of route names to screen components
+ * @param props - Refer to RootProps
  ******************************************************************************************************************/
-const LocalDataProviderWrapper: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
+const LocalDataGate: React.FC<RootProps> = (props) => {
   return (
     <LocalDataProvider>
-      <AuthProvider>
-        <Root screenMap={screenMap} DEFAULT_SCREEN={DEFAULT_SCREEN} />
-      </AuthProvider>
+      <ThemingGate {...props} />
     </LocalDataProvider>
   );
 }
 
-export default memo(LocalDataProviderWrapper);
+export default memo(LocalDataGate);

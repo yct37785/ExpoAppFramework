@@ -3,6 +3,14 @@ import { View, StyleProp, ViewStyle } from 'react-native';
 import { Text, Modal, Button, Card, TouchableRipple, useTheme } from 'react-native-paper';
 import { Menu, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 
+/******************************************************************************************************************
+ * Popup props.
+ * 
+ * @property triggerComp  - Element that triggers the popup
+ * @property disabled?    - Whether the trigger is disabled
+ * @property style?       - Optional container style
+ * @property children     - Content of the popup menu
+ ******************************************************************************************************************/
 type PopupProps = {
   triggerComp: ReactNode;
   disabled?: boolean;
@@ -16,11 +24,7 @@ type PopupProps = {
  *
  * NOTE: triggerComp must not include its own onPress, as it can override option callbacks.
  *
- * @param props - popup props:
- *   - triggerComp: ReactNode - element that triggers the popup
- *   - disabled?: boolean - whether the trigger is disabled
- *   - style?: StyleProp<ViewStyle> - optional container style
- *   - children: ReactNode - content of the popup menu
+ * @param props - Refer to PopupProps
  *
  * @usage
  * ```tsx

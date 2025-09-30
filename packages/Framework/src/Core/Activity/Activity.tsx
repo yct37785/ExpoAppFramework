@@ -8,19 +8,15 @@ import { MenuOption, MenuList } from '../../UI/Menu/Click/MenuList';
 import { Managers } from 'framework';
 import * as Const from '../../Const';
 
-export interface ActivityOptions {
-  showProfile?: boolean;
-}
-
 /******************************************************************************************************************
- * Renders the profile avatar as the popup trigger and the auth options using <MenuList dense>.
+ * Renders the profile avatar as the popup trigger and the auth options.
  *
- * @param props - auth data and handlers:
- *   - photoURL?: string      - optional avatar image
- *   - email?: string         - optional email (shown as a disabled row when signed in)
- *   - isAnonymous: bool      - true if user is anonymous or no user
- *   - onSignIn: fn           - sign in function
- *   - onSignOut: fn          - sign out function
+ * @param props - Auth data and handlers:
+ *   - photoURL?    - Optional avatar image
+ *   - email?       - Optional email (shown as a disabled row when signed in)
+ *   - isAnonymous  - True if user is anonymous or no user
+ *   - onSignIn     - Sign in function
+ *   - onSignOut    - Sign out function
  ******************************************************************************************************************/
 const ProfileMenu: React.FC<{
   photoURL?: string;
@@ -67,11 +63,28 @@ const ProfileMenu: React.FC<{
   );
 });
 
+/******************************************************************************************************************
+ * Activity options props.
+ * 
+ * @property showProfile? - Show profile menu
+ ******************************************************************************************************************/
+export interface ActivityOptions {
+  showProfile?: boolean;
+}
+
+/******************************************************************************************************************
+ * Activity component props.
+ * 
+ * @property navigation     - Stack navigation controller
+ * @property title?         - Title text for the app bar
+ * @property CustomHeader?  - Component renderer for additional header actions
+ * @property opts?          - Config options bag
+ * @property children       - Body content to render inside layout
+ ******************************************************************************************************************/
 type ActivityProps<T extends keyof RootStackPropsList = keyof RootStackPropsList> = {
   navigation: NativeStackNavigationProp<RootStackPropsList, T>;
   title?: string;
   CustomHeader?: () => JSX.Element;
-  style?: StyleProp<ViewStyle>;
   opts?: ActivityOptions;
   children: React.ReactNode;
 };
@@ -84,13 +97,7 @@ type ActivityProps<T extends keyof RootStackPropsList = keyof RootStackPropsList
  *   - Optional profile avatar with sign-in/sign-out menu integrated with FirebaseAuthManager.
  *   - Flexible body container for screen content.
  *
- * @param props - rendering params:
- *   - navigation: NativeStackNavigationProp - stack navigation controller
- *   - title?: string - title text for the app bar
- *   - CustomHeader?: JSX.Element - component renderer for additional header actions
- *   - opts?: ActivityOptions - config options bag:
- *     + showProfile?: boolean - whether to display the profile avatar + auth menu
- *   - children: ReactNode - body content to render inside layout
+ * @param props - Refer to ActivityProps
  *
  * @usage
  * ```tsx

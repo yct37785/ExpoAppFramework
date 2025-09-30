@@ -18,7 +18,13 @@ import { doLog, doErrLog } from '../Utils';
 type LocalData = Record<string, any>;
 
 /******************************************************************************************************************
- * API exposed by the LocalDataContext.
+ * Type defining the APIs exposed by LocalDataContext.Provider.
+ * 
+ * @property data     - In-memory snapshot of stored key/value pairs
+ * @property setItem  - Persist a value and update in-memory state
+ * @property getItem  - Retrieve a typed value or undefined
+ * @property clear    - Clear all stored values and reset state
+ * @property isLoaded - True when initial load from AsyncStorage completes
  ******************************************************************************************************************/
 type LocalDataContextType = {
   data: LocalData;
@@ -39,14 +45,10 @@ const LocalDataContext = createContext<LocalDataContextType>({
 /******************************************************************************************************************
  * Provide local key/value state backed by AsyncStorage, enforce reserved defaults, and expose simple helpers.
  *
- * @param props - provider props:
- *   - children: ReactNode - subtree that consumes the context
+ * @param props - Provider props:
+ *   - children: ReactNode - Subtree that consumes the context
  *
- * @property data: obj - in-memory snapshot of stored key/value pairs
- * @property setItem: fn - persist a value and update in-memory state
- * @property getItem: fn - retrieve a typed value or undefined
- * @property clear: fn - clear all stored values and reset state
- * @property isLoaded: boolean - true when initial load from AsyncStorage completes
+ * @property LocalDataContext - Refer to LocalDataContextType
  *
  * @usage
  * ```tsx
@@ -110,8 +112,8 @@ export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   /****************************************************************************************************************
    * Sets a value in local data and persists it to AsyncStorage.
    *
-   * @param key - the string key to set
-   * @param value - the value to store (will be JSON.stringified)
+   * @param key     - String key to set
+   * @param value   - Value to store (will be JSON.stringified)
    * 
    * @usage
    * ```tsx
@@ -119,8 +121,9 @@ export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ chi
    * ```
    ****************************************************************************************************************/
   const setItem = async (key: string, value: any) => {
-    const newData = { ...data, [key]: value };
-    setData(newData);
+    setData(prev =>
+      Object.is(prev[key], value) ? prev : { ...prev, [key]: value }
+    );
     try {
       await AsyncStorage.setItem(key, JSON.stringify(value));
     } catch (err) {
@@ -131,9 +134,9 @@ export const LocalDataProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   /****************************************************************************************************************
    * Retrieves a value from local data.
    * 
-   * @param key - the key to fetch
+   * @param key - Key to fetch
    * 
-   * @return - the stored value typed as T, or undefined if missing
+   * @return - Stored value typed as T, or undefined if missing
    * 
    * @usage
    * ```tsx

@@ -22,9 +22,9 @@ export type OptionSchema = Record<string, OptionProps>;
 /******************************************************************************************************************
  * Describe a single option node within the schema.
  *
- * @property label - human-readable label for the option
- * @property state - current selection state
- * @property children - optional nested child options
+ * @property label    - Human-readable label for the option
+ * @property state    - Current selection state
+ * @property children - Optional nested child options
  ******************************************************************************************************************/
 export type OptionProps = {
   label: string;
@@ -32,6 +32,16 @@ export type OptionProps = {
   children?: OptionSchema;
 };
 
+/******************************************************************************************************************
+ * BaseOptions props.
+ * 
+ * @property schema           - Current options tree
+ * @property setSchema        - State setter invoked after mutations
+ * @property optionsContainer - Wrapper component for child groups
+ * @property renderOption     - Renderer for a single option row
+ * @property depthPadding?    - Additional padding applied per hierarchy depth
+ * @property style?           - Optional style for the root container
+ ******************************************************************************************************************/
 type BaseOptionsProps = {
   schema: OptionSchema;
   setSchema: (updatedSchema: OptionSchema) => void;
@@ -45,13 +55,7 @@ type BaseOptionsProps = {
  * Render a recursive options tree with selection propagation and indeterminate aggregation.
  * Toggles a node, cascades to children, and recomputes ancestor states.
  *
- * @param props - base options props:
- *   - schema: OptionSchema - current options tree
- *   - setSchema: (updated: OptionSchema) => void - state setter invoked after mutations
- *   - optionsContainer: React.FC - wrapper component for child groups
- *   - renderOption: ({ option, onPress }) => JSX.Element - renderer for a single option row
- *   - depthPadding?: number - additional padding applied per hierarchy depth
- *   - style?: StyleProp<ViewStyle> - optional style for the root container
+ * @param props - Refer to BaseOptionsProps
  *
  * @usage
  * ```tsx
