@@ -100,20 +100,19 @@ type RootProps = {
 };
 
 /******************************************************************************************************************
- * Compose global providers (paper, popup menu, localdata, auth) and configure the navigation container + stack
- * using a provided screen map, synchronizing theme with stored user preference.
+ * Root: consume theme, derive Paper + Navigation themes from it (no local state/effects).
  *
  * @param props - Refer to RootProps
  ******************************************************************************************************************/
-const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap, lightTheme, darkTheme }) => {
-  const { getItem, isLoaded } = useLocalData();
-  const { mode, setMode } = useThemeMode();
+const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
+  const t = useTheme();
   // legacy RN Paper -------------------------------------------------------------/
-  const [paperTheme, setPaperTheme] = useState(CombinedDarkTheme);
+  const paperTheme = t.isDark ? CombinedDarkTheme : CombinedDefaultTheme;
   // legacy RN Paper -------------------------------------------------------------/
+  const navContainerTheme = t.isDark ? NavigationDarkTheme : NavigationDefaultTheme;
 
+  // Firebase pulse check
   useEffect(() => {
-    // Firebase pulse check
     try {
       // get the default app that RN Firebase auto-initialized from native files
       const firebaseApp = getApp();
@@ -125,44 +124,21 @@ const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap, lightTheme, dark
     }
   }, []);
 
-  useEffect(() => {
-    if (!isLoaded) return;
-    // sync theme with stored setting
-    const darkMode = getItem('isDarkMode');
-    setMode(darkMode ? 'dark' : 'light');
-    // legacy RN Paper -------------------------------------------------------------/
-    setPaperTheme(darkMode ? CombinedDarkTheme : CombinedDefaultTheme);
-    // legacy RN Paper -------------------------------------------------------------/
-  }, [isLoaded, getItem('isDarkMode')]);  // TODO: getItem('isDarkMode') should not be in hooks, should be a trigger
-
-  const navContainerTheme = mode === 'dark' ? NavigationDarkTheme : NavigationDefaultTheme;
-
   return (
     <PaperProvider theme={paperTheme}>
       <MenuProvider>
         <View style={{ flex: 1, backgroundColor: paperTheme.colors.background }}>
-          {isLoaded && (
-            <NavigationContainer theme={navContainerTheme}>
-              <Stack.Navigator
-                initialRouteName={DEFAULT_SCREEN}
-                screenOptions={{
-                  headerShown: false
-                }}
-              >
-                {Object.entries(screenMap).map(([name, Component]) => (
-                  <Stack.Screen name={name} key={name}>
-                    {(props) => (
-                      <ScreenWrapper
-                        Component={Component}
-                        navigation={props.navigation}
-                        route={props.route}
-                      />
-                    )}
-                  </Stack.Screen>
-                ))}
-              </Stack.Navigator>
-            </NavigationContainer>
-          )}
+          <NavigationContainer theme={navContainerTheme}>
+            <Stack.Navigator initialRouteName={DEFAULT_SCREEN} screenOptions={{ headerShown: false }}>
+              {Object.entries(screenMap).map(([name, Component]) => (
+                <Stack.Screen name={name} key={name}>
+                  {(props) => (
+                    <ScreenWrapper Component={Component} navigation={props.navigation} route={props.route} />
+                  )}
+                </Stack.Screen>
+              ))}
+            </Stack.Navigator>
+          </NavigationContainer>
         </View>
       </MenuProvider>
     </PaperProvider>
@@ -170,20 +146,38 @@ const Root: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap, lightTheme, dark
 }
 
 /******************************************************************************************************************
+ * Local data > pick initial theme mode > mount ThemeProvider > mount auth + Root.
+ *
+ * @param props - Refer to RootProps
+ ******************************************************************************************************************/
+const ThemingGate: React.FC<Omit<RootProps, 'lightTheme' | 'darkTheme'> & {
+  lightTheme: Theme; darkTheme: Theme;
+}> = ({ lightTheme, darkTheme, ...rest }) => {
+  const { isLoaded, getItem } = useLocalData();
+  if (!isLoaded) return <View style={{ flex: 1 }} />;
+
+  const initialMode: 'light' | 'dark' = getItem<boolean>('isDarkMode') ? 'dark' : 'light';
+
+  return (
+    <ThemeProvider lightTheme={lightTheme} darkTheme={darkTheme} initialMode={initialMode}>
+      <AuthProvider>
+        <Root {...rest} lightTheme={lightTheme} darkTheme={darkTheme} />
+      </AuthProvider>
+    </ThemeProvider>
+  );
+};
+
+/******************************************************************************************************************
  * Provide localdata and auth contexts around the root component and export the wrapped app entry.
  *
  * @param props - Refer to RootProps
  ******************************************************************************************************************/
-const LocalDataProviderWrapper: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap, lightTheme, darkTheme }) => {
+const LocalDataGate: React.FC<RootProps> = (props) => {
   return (
-    <ThemeProvider lightTheme={lightTheme} darkTheme={darkTheme}>
-      <LocalDataProvider>
-        <AuthProvider>
-          <Root screenMap={screenMap} DEFAULT_SCREEN={DEFAULT_SCREEN} lightTheme={lightTheme} darkTheme={darkTheme} />
-        </AuthProvider>
-      </LocalDataProvider>
-    </ThemeProvider>
+    <LocalDataProvider>
+      <ThemingGate {...props} />
+    </LocalDataProvider>
   );
 }
 
-export default memo(LocalDataProviderWrapper);
+export default memo(LocalDataGate);
