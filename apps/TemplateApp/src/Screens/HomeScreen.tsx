@@ -68,11 +68,12 @@ const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
         <Text variant='bodyMedium' style={{ marginTop: 16 }}>
           Select the screen you want to navigate to
         </Text>
-
-        {renderScreenBtn('layout', 'layouts example')}
+        
+        {renderScreenBtn('typography', 'typography example')}
+        {/* {renderScreenBtn('layout', 'layouts example')}
         {renderScreenBtn('menu', 'menus example')}
         {renderScreenBtn('list', 'list example')}
-        {renderScreenBtn('container', 'containers example')}
+        {renderScreenBtn('container', 'containers example')} */}
       </UI.VerticalLayout>
     </Core.Activity>
   );

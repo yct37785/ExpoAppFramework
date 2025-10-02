@@ -8,6 +8,7 @@ export * from '../UI/Menu/Options/ChipOptions';
 export * from '../UI/Menu/Selection/Picker';
 export * from '../UI/Menu/Selection/RadioGroup';
 export * from '../UI/Text/HighlightText';
+export * from '../UI/Text/Text';
 export * from '../UI/Dialog';
 export * from '../UI/Layouts';
 export * from '../UI/List';
