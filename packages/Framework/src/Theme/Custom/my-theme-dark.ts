@@ -15,13 +15,5 @@ export const myThemeDark: Theme = {
     text: 'rgba(255,255,255,0.87)',
     muted: 'rgba(255,255,255,0.6)',
     border: 'rgba(255,255,255,0.12)',
-  },
-  typography: {
-    ...defaultTheme.typography,
-    variants: {
-      ...defaultTheme.typography.variants,
-      body:  { ...defaultTheme.typography.variants.body,  letterSpacing: 0.40 },
-      body2: { ...defaultTheme.typography.variants.body2, letterSpacing: 0.35 },
-    },
-  },
+  }
 };

@@ -10,13 +10,5 @@ export const myThemeLight: Theme = {
     ...defaultTheme.colors,
     primary: '#1F6AFF',
     surface: '#FAFAFA',
-  },
-  typography: {
-    ...defaultTheme.typography,
-    variants: {
-      ...defaultTheme.typography.variants,
-      h1: { ...defaultTheme.typography.variants.h1, fontSize: 42 },
-      body: { ...defaultTheme.typography.variants.body, letterSpacing: 0.25 },
-    },
-  },
+  }
 };
