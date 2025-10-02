@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import type { TextStyle, StyleProp } from 'react-native';
+import { useTheme } from '../../Theme/ThemeProvider';
 import { Text } from './Text';
 import type { TextProps } from './Text';
 
@@ -55,6 +56,8 @@ export const TextHighlight: React.FC<HighlightTextProps> = memo(
     children,
     ...rest
   }) => {
+    const t = useTheme();
+
     // only operate on plain strings, otherwise fall back to a single node
     if (typeof children !== 'string' || !query) {
       return (
@@ -69,6 +72,9 @@ export const TextHighlight: React.FC<HighlightTextProps> = memo(
     const re = new RegExp(`(${safe})`, flags);
     const parts = children.split(re);
 
+    const resolvedHighlightStyle: StyleProp<TextStyle> =
+      highlightStyle ?? { backgroundColor: t.colors.highlight };
+
     return (
       <Text variant={variant} color={color} style={style} {...rest}>
         {parts.map((part, i) => {
@@ -76,7 +82,7 @@ export const TextHighlight: React.FC<HighlightTextProps> = memo(
             caseSensitive ? part === query : part.toLowerCase() === query.toLowerCase();
 
           return match ? (
-            <Text key={`h-${i}`} variant={variant} style={highlightStyle}>
+            <Text key={`h-${i}`} variant={variant} style={resolvedHighlightStyle}>
               {part}
             </Text>
           ) : (
