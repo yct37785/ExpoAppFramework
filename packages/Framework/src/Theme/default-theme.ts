@@ -14,6 +14,7 @@ export const defaultTheme: Theme = {
     border: 'rgba(0,0,0,0.12)',
     error: '#D32F2F',
     success: '#2E7D32',
+    highlight: '#eaff00ff'
   },
   typography: {
     fontFamily: 'System',

@@ -15,5 +15,6 @@ export const myThemeDark: Theme = {
     text: 'rgba(255,255,255,0.87)',
     muted: 'rgba(255,255,255,0.6)',
     border: 'rgba(255,255,255,0.12)',
+    highlight: '#rgba(0, 47, 255, 1)'
   }
 };

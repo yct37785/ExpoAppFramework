@@ -10,6 +10,7 @@
  * @property border     - Hairline/border color
  * @property error      - Error states, validation messages
  * @property success    - Success states, confirmations
+ * @property highlight  - Background color for highlighted text
  ******************************************************************************************************************/
 export type ColorPalette = {
   background: string;
@@ -21,6 +22,7 @@ export type ColorPalette = {
   border: string;
   error: string;
   success: string;
+  highlight: string;
 };
 
 /******************************************************************************************************************
