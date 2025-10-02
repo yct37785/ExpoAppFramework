@@ -30,6 +30,22 @@ const TypographyScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => 
         {/* caption + overline text */}
         <UI.Text variant='caption'>Hello World caption</UI.Text>
         <UI.Text variant='overline'>Hello World overline</UI.Text>
+        <View style={{ width: '100%', height: 1, backgroundColor: theme.colors.border }} />
+        {/* highlight text */}
+        <UI.TextHighlight
+          variant='body'
+          query='react'
+          highlightStyle={{ backgroundColor: 'yellow' }}
+        >
+          React Native makes mobile development easy with React.
+        </UI.TextHighlight>
+        <UI.TextHighlight
+          variant='label'
+          query='react'
+          highlightStyle={{ backgroundColor: 'yellow' }}
+        >
+          React Native makes mobile development easy with React.
+        </UI.TextHighlight>
       </UI.VerticalLayout>
     </Core.Activity>
   );

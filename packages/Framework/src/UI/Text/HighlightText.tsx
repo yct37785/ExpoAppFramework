@@ -1,66 +1,91 @@
-import React, { memo, ReactNode } from 'react';
-import { Text, TextProps } from 'react-native-paper';
+import React, { memo } from 'react';
+import type { TextStyle, StyleProp } from 'react-native';
+import { Text } from './Text';
+import type { TextProps } from './Text';
 
-/******************************************************************************************************************
- * HighlightText props.
- * 
- * @property options          - Key/label pairs for the group
- * @property query            - Substring to highlight, case-insensitive
- * @property highlightColor?  - Background color applied to highlighted matches
- * @property label?           - Optional prefix text rendered before the content
- * @property children         - Text body to search within
- * @property style?           - Optional style overrides passed to the underlying text
- ******************************************************************************************************************/
-interface HighlightTextProps extends TextProps<string> {
-  query: string;
-  highlightColor?: string;
-  label?: string;
-  children: ReactNode;
+function escapeRegExp(s: string) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 /******************************************************************************************************************
- * Render text that highlights occurrences of a query within its children.
+ * Highlight text props.
+ * 
+ * @property query            - Substring to highlight
+ * @property caseSensitive?   - Match case (default: false)
+ * @property highlightStyle?  - Extra style for highlighted parts (e.g., { backgroundColor: 'yellow' })
+ * @property children         - Content of the popup menu
+ ******************************************************************************************************************/
+type HighlightTextProps = Omit<TextProps, 'children'> & {
+  query: string;
+  caseSensitive?: boolean;
+  highlightStyle?: StyleProp<TextStyle>;
+  children: string | React.ReactNode;
+};
+
+/******************************************************************************************************************
+ * Highlight occurrences of a query inside text content.
+ *
+ * Summary:
+ * - Composes your headless <Text>; no Paper dependency.
+ * - Escapes regex specials in `query`.
+ * - Case-insensitive by default; toggle with `caseSensitive`.
+ * - If `query` is empty or `children` isn't a string, renders plain text.
  *
  * @param props - Refer to HighlightTextProps
- *
+ * 
  * @usage
  * ```tsx
- * <HighlightText query="react" highlightColor="lightgreen">
- *   React Native makes mobile development easy with React.
- * </HighlightText>
+ * <TextHighlight
+      variant='body'
+      query='react'
+      highlightStyle={{ backgroundColor: t.colors.primary, color: t.colors.onPrimary }}
+    >
+      React Native makes mobile development easy with React.
+    </TextHighlight>
  * ```
  ******************************************************************************************************************/
-export const HighlightText: React.FC<HighlightTextProps> = memo(({
-  variant = 'bodyMedium',
-  children,
-  query,
-  highlightColor = 'yellow',
-  label = '',
-  style = {},
-}) => {
-  const text = String(children);
+export const TextHighlight: React.FC<HighlightTextProps> = memo(
+  ({
+    variant = 'body',
+    query,
+    caseSensitive = false,
+    highlightStyle,
+    color,
+    style,
+    children,
+    ...rest
+  }) => {
+    // only operate on plain strings, otherwise fall back to a single node
+    if (typeof children !== 'string' || !query) {
+      return (
+        <Text variant={variant} color={color} style={style} {...rest}>
+          {children}
+        </Text>
+      );
+    }
 
-  // no query: render plain text
-  if (!query) {
-    return <Text variant={variant} style={style}>{`${label}${text}`}</Text>;
+    const flags = caseSensitive ? 'g' : 'gi';
+    const safe = escapeRegExp(query);
+    const re = new RegExp(`(${safe})`, flags);
+    const parts = children.split(re);
+
+    return (
+      <Text variant={variant} color={color} style={style} {...rest}>
+        {parts.map((part, i) => {
+          const match =
+            caseSensitive ? part === query : part.toLowerCase() === query.toLowerCase();
+
+          return match ? (
+            <Text key={`h-${i}`} variant={variant} style={highlightStyle}>
+              {part}
+            </Text>
+          ) : (
+            <React.Fragment key={`t-${i}`}>{part}</React.Fragment>
+          );
+        })}
+      </Text>
+    );
   }
+);
 
-  // split text into parts with query matches
-  const regex = new RegExp(`(${query})`, 'gi');
-  const parts = text.split(regex);
-
-  return (
-    <Text variant={variant} style={style}>
-      {label}
-      {parts.map((part, index) =>
-        part.toLowerCase() === query.toLowerCase() ? (
-          <Text variant={variant} key={index} style={{ backgroundColor: highlightColor }}>
-            {part}
-          </Text>
-        ) : (
-          part
-        )
-      )}
-    </Text>
-  );
-});
+TextHighlight.displayName = 'TextHighlight';

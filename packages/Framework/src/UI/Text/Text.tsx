@@ -15,7 +15,7 @@ import type { TextVariant } from '../../Theme/Theme';
  * @property style?       - Additional style(s), merged last
  * @property children     - Content of the popup menu
  ******************************************************************************************************************/
-export type HeadlessTextProps = React.ComponentPropsWithoutRef<typeof RNText> & {
+export type TextProps = React.ComponentPropsWithoutRef<typeof RNText> & {
   variant?: TextVariant;
   color?: string;
   style?: StyleProp<TextStyle>;
@@ -28,6 +28,8 @@ export type HeadlessTextProps = React.ComponentPropsWithoutRef<typeof RNText> & 
  * - Supports semantic variants defined in `theme.typography.variants` (e.g., 'h1', 'body', 'label2', ...).
  * - Merges caller-provided `style` last; default text color comes from `theme.colors.text`, unless `color` is given.
  *
+ * @param props - Refer to TextProps
+ * 
  * @usage
  * ```tsx
  * <Text variant='h1'>Page Title</Text>
@@ -36,7 +38,7 @@ export type HeadlessTextProps = React.ComponentPropsWithoutRef<typeof RNText> & 
  * <Text variant='label2' color={t.colors.muted}>Secondary label</Text>
  * ```
  ******************************************************************************************************************/
-const TextBase = forwardRef<RNText, HeadlessTextProps>(function Text(
+const TextBase = forwardRef<RNText, TextProps>(function Text(
   {
     variant = 'body',
     color,
