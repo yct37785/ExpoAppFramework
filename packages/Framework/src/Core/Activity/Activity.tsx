@@ -114,7 +114,6 @@ export const Activity: React.FC<ActivityProps> = memo(({
     [opts?.showProfile],
   );
 
-  // auth from shared provider
   const { user, signIn, signOut } = Managers.useAuth();
   const isAnon   = !!user?.isAnonymous || !user;
   const photoURL = user?.photoURL || undefined;
@@ -126,15 +125,20 @@ export const Activity: React.FC<ActivityProps> = memo(({
         title={title}
         onBack={navigation.canGoBack() ? () => navigation.goBack() : undefined}
         right={
-          showProfile ? (
-            <ProfileMenu
-              photoURL={photoURL}
-              email={email}
-              isAnonymous={isAnon}
-              onSignIn={signIn}
-              onSignOut={signOut}
-            />
-          ) : null
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            {CustomHeader ? <CustomHeader /> : null}
+            {showProfile ? (
+              <View style={{ marginLeft: 8 }}>
+                <ProfileMenu
+                  photoURL={photoURL}
+                  email={email}
+                  isAnonymous={isAnon}
+                  onSignIn={signIn}
+                  onSignOut={signOut}
+                />
+              </View>
+            ) : null}
+          </View>
         }
       />
 
