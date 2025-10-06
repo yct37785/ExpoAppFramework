@@ -130,7 +130,7 @@ const Root: React.FC<Omit<RootProps, 'lightTheme' | 'darkTheme'>> = ({ DEFAULT_S
   const paperTheme = themeMode === 'dark' ? CombinedDarkTheme : CombinedDefaultTheme;
   // legacy RN Paper -------------------------------------------------------------/
   const navContainerTheme = themeMode === 'dark' ? NavigationDarkTheme : NavigationDefaultTheme;
-  
+
   // Firebase pulse check
   useEffect(() => {
     try {
@@ -177,7 +177,7 @@ const ThemingGate: React.FC<Omit<RootProps, 'themeMode'>> = ({ lightTheme, darkT
   const themeMode: Mode = getItem<boolean>('isDarkMode') ? 'dark' : 'light';
 
   return (
-    <ThemeProvider lightTheme={lightTheme} darkTheme={darkTheme} initialMode={themeMode}>
+    <ThemeProvider lightTheme={lightTheme} darkTheme={darkTheme} themeMode={themeMode}>
       <LocalDataSyncHelper />
       <AuthProvider>
         <Root {...rest} themeMode={themeMode} />
