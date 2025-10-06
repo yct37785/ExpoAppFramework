@@ -27,7 +27,7 @@ const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
     })();
   }, []);
 
-  const CustomHeader = () => (
+  const LeftContent = () => (
     <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
       <Switch value={!!isDarkMode} onValueChange={(val) => setItem('isDarkMode', val)} />
     </View>
@@ -61,7 +61,7 @@ const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
   };
 
   return (
-    <Core.Activity navigation={navigation} CustomHeader={CustomHeader} title='Home Sample'>
+    <Core.Activity navigation={navigation} LeftContent={LeftContent} title='Home Sample'>
       <UI.VerticalLayout>
         {renderAuthSection()}
 

@@ -68,14 +68,14 @@ export interface ActivityOptions {
  * 
  * @property navigation     - Stack navigation controller
  * @property title?         - Title text for the app bar
- * @property CustomHeader?  - Component renderer for additional header actions
+ * @property LeftContent?   - Component renderer for app bar left-side content
  * @property opts?          - Config options bag
  * @property children       - Body content to render inside layout
  ******************************************************************************************************************/
 type ActivityProps<T extends keyof RootStackPropsList = keyof RootStackPropsList> = {
   navigation: NativeStackNavigationProp<RootStackPropsList, T>;
   title?: string;
-  CustomHeader?: () => JSX.Element;
+  LeftContent?: () => JSX.Element;
   opts?: ActivityOptions;
   children: React.ReactNode;
 };
@@ -95,7 +95,7 @@ type ActivityProps<T extends keyof RootStackPropsList = keyof RootStackPropsList
  * <Activity
  *   navigation={navigation}
  *   title='Home'
- *   CustomHeader={() => <MyHeaderActions />}
+ *   LeftContent={() => <MyHeaderActions />}
  *   opts={{ showProfile: true }}
  * >
  *   <Text>Welcome to the home screen</Text>
@@ -105,7 +105,7 @@ type ActivityProps<T extends keyof RootStackPropsList = keyof RootStackPropsList
 export const Activity: React.FC<ActivityProps> = memo(({
   navigation,
   title = '',
-  CustomHeader,
+  LeftContent,
   opts,
   children,
 }) => {
@@ -126,7 +126,7 @@ export const Activity: React.FC<ActivityProps> = memo(({
         onBack={navigation.canGoBack() ? () => navigation.goBack() : undefined}
         right={
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            {CustomHeader ? <CustomHeader /> : null}
+            {LeftContent ? <LeftContent /> : null}
             {showProfile ? (
               <View style={{ marginLeft: 8 }}>
                 <ProfileMenu
