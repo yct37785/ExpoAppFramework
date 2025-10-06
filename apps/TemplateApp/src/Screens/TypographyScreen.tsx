@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
 import { View } from 'react-native';
 import { Core, Theme, UI } from 'framework';
+import { Divider } from 'react-native-paper';
 
 /******************************************************************************************************************
  * Typography demo
@@ -18,19 +19,19 @@ const TypographyScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => 
         <UI.Text variant='h4'>Hello World h4</UI.Text>
         <UI.Text variant='h5'>Hello World h5</UI.Text>
         <UI.Text variant='h6'>Hello World h6</UI.Text>
-        <View style={{ width: '100%', height: 1, backgroundColor: theme.colors.border }} />
+        <UI.Divider />
         {/* body text */}
         <UI.Text variant='body'>Hello World body</UI.Text>
         <UI.Text variant='body2'>Hello World body2</UI.Text>
-        <View style={{ width: '100%', height: 1, backgroundColor: theme.colors.border }} />
+        <UI.Divider />
         {/* label text */}
         <UI.Text variant='label'>Hello World label</UI.Text>
         <UI.Text variant='label2'>Hello World label2</UI.Text>
-        <View style={{ width: '100%', height: 1, backgroundColor: theme.colors.border }} />
+        <UI.Divider />
         {/* caption + overline text */}
         <UI.Text variant='caption'>Hello World caption</UI.Text>
         <UI.Text variant='overline'>Hello World overline</UI.Text>
-        <View style={{ width: '100%', height: 1, backgroundColor: theme.colors.border }} />
+        <UI.Divider />
         {/* highlight text */}
         <UI.TextHighlight
           variant='body'

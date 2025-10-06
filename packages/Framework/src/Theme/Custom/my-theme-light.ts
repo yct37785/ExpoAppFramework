@@ -8,7 +8,8 @@ export const myThemeLight: Theme = {
   ...defaultTheme,
   colors: {
     ...defaultTheme.colors,
-    primary: '#1F6AFF',
     surface: '#FAFAFA',
+    primary: '#1F6AFF',
+    border: 'rgba(0,0,0,0.2)',
   }
 };
