@@ -1,6 +1,5 @@
 import React, { forwardRef, memo } from 'react';
-import {
-  Pressable,
+import { Pressable,
   type PressableProps,
   type ViewStyle,
   type StyleProp,
