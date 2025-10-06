@@ -29,8 +29,7 @@ export type AvatarProps = {
 };
 
 /******************************************************************************************************************
- * Avatar
- * Theme-aware avatar with image or text fallback; optional status badge.
+ * Avatar: Theme-aware avatar with image or text fallback; optional status badge.
  *
  * @param props - Refer to AvatarProps
  * 

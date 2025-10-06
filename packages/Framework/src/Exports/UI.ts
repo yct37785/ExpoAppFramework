@@ -1,3 +1,4 @@
+export * from '../UI/Container/AppBar';
 export * from '../UI/Container/Collapsible';
 export * from '../UI/Container/Tabs';
 export * from '../UI/Input/TextInput';
