@@ -1,5 +1,6 @@
 import React, { JSX, memo, useMemo } from 'react';
 import { View, StyleProp, ViewStyle } from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackPropsList } from '../Screen';
 import { Managers } from 'framework';
@@ -7,7 +8,6 @@ import { AppBar } from '../../UI/Container/AppBar';
 import { Avatar } from '../../UI/Avatar';
 import { Popup } from '../../UI/Popup';
 import { MenuList, type MenuOption } from '../../UI/Menu/Click/MenuList';
-import { Text } from '../../UI/Text/Text';
 import * as Const from '../../Const';
 
 /******************************************************************************************************************
@@ -142,9 +142,9 @@ export const Activity: React.FC<ActivityProps> = memo(({
         }
       />
 
-      <View style={{ flex: 1 }}>
+      <SafeAreaView edges={['bottom']} style={{ flex: 1 }}>
         {children}
-      </View>
+      </SafeAreaView>
     </View>
   );
 });
