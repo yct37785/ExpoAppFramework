@@ -109,12 +109,14 @@ const ScreenWrapper = ({
  * @property screenMap      - Mapping of route names to screen components
  * @property lightTheme     - Fully-specified light Theme
  * @property darkTheme      - Fully-specified dark Theme
+ * @property themeMode - Current theme mode, provided by ThemingGate
  ******************************************************************************************************************/
 type RootProps = {
   DEFAULT_SCREEN: string;
   screenMap: ScreenMap;
   lightTheme: Theme;
   darkTheme: Theme;
+  themeMode: Mode;
 };
 
 /******************************************************************************************************************
@@ -122,13 +124,13 @@ type RootProps = {
  *
  * @param props - Refer to RootProps
  ******************************************************************************************************************/
-const Root: React.FC<Omit<RootProps, 'lightTheme' | 'darkTheme'>> = ({ DEFAULT_SCREEN, screenMap }) => {
+const Root: React.FC<Omit<RootProps, 'lightTheme' | 'darkTheme'>> = ({ DEFAULT_SCREEN, screenMap, themeMode }) => {
   const t = useTheme();
   // legacy RN Paper -------------------------------------------------------------/
-  const paperTheme = t.isDark ? CombinedDarkTheme : CombinedDefaultTheme;
+  const paperTheme = themeMode === 'dark' ? CombinedDarkTheme : CombinedDefaultTheme;
   // legacy RN Paper -------------------------------------------------------------/
-  const navContainerTheme = t.isDark ? NavigationDarkTheme : NavigationDefaultTheme;
-
+  const navContainerTheme = themeMode === 'dark' ? NavigationDarkTheme : NavigationDefaultTheme;
+  
   // Firebase pulse check
   useEffect(() => {
     try {
@@ -168,17 +170,17 @@ const Root: React.FC<Omit<RootProps, 'lightTheme' | 'darkTheme'>> = ({ DEFAULT_S
  *
  * @param props - Refer to RootProps
  ******************************************************************************************************************/
-const ThemingGate: React.FC<RootProps> = ({ lightTheme, darkTheme, ...rest }) => {
+const ThemingGate: React.FC<Omit<RootProps, 'themeMode'>> = ({ lightTheme, darkTheme, ...rest }) => {
   const { isLoaded, getItem } = useLocalData();
   if (!isLoaded) return <View style={{ flex: 1 }} />;
 
-  const initialMode: Mode = getItem<boolean>('isDarkMode') ? 'dark' : 'light';
+  const themeMode: Mode = getItem<boolean>('isDarkMode') ? 'dark' : 'light';
 
   return (
-    <ThemeProvider lightTheme={lightTheme} darkTheme={darkTheme} initialMode={initialMode}>
+    <ThemeProvider lightTheme={lightTheme} darkTheme={darkTheme} initialMode={themeMode}>
       <LocalDataSyncHelper />
       <AuthProvider>
-        <Root {...rest} />
+        <Root {...rest} themeMode={themeMode} />
       </AuthProvider>
     </ThemeProvider>
   );
@@ -189,7 +191,7 @@ const ThemingGate: React.FC<RootProps> = ({ lightTheme, darkTheme, ...rest }) =>
  *
  * @param props - Refer to RootProps
  ******************************************************************************************************************/
-const LocalDataGate: React.FC<RootProps> = (props) => {
+const LocalDataGate: React.FC<Omit<RootProps, 'themeMode'>> = (props) => {
   return (
     <LocalDataProvider>
       <ThemingGate {...props} />
