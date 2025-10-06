@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../../Theme/ThemeProvider';
 import { Text } from '../Text/Text';
 import { Touchable } from '../Interactive/Touchable';
+import * as Const from '../../Const';
 
 /******************************************************************************************************************
  * AppBar props.
@@ -33,7 +34,7 @@ export type AppBarProps = {
  * 
  * @usage
  * ```tsx
- * <AppBar title="Settings" onBack={() => navigation.goBack()} right={<Avatar label="A" />} />
+ * <AppBar title='Settings' onBack={() => navigation.goBack()} right={<Avatar label='A' />} />
  * ```
  ******************************************************************************************************************/
 export const AppBar: React.FC<AppBarProps> = memo(
@@ -47,7 +48,6 @@ export const AppBar: React.FC<AppBarProps> = memo(
       paddingTop: topPad,
       flexDirection: 'row',
       alignItems: 'center',
-      paddingHorizontal: 12,
       backgroundColor: t.colors.surface,
       borderBottomWidth: elevated ? 0 : StyleSheet.hairlineWidth,
       borderBottomColor: elevated ? 'transparent' : t.colors.border,
@@ -62,14 +62,14 @@ export const AppBar: React.FC<AppBarProps> = memo(
     return (
       <View style={[container, style]}>
         {/* Back / Left */}
-        <View style={{ width: 48, marginRight: 4 }}>
+        <View style={{ paddingHorizontal: Const.padSize }}>
           {onBack ? (
             <Touchable
               onPress={onBack}
-              accessibilityRole="button"
+              accessibilityRole='button'
               style={{ width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center' }}
             >
-              <Text variant="h5">{'‹'}</Text>
+              <Text variant='h4'>{'‹'}</Text>
             </Touchable>
           ) : left ? (
             left
@@ -81,14 +81,14 @@ export const AppBar: React.FC<AppBarProps> = memo(
           {TitleComponent ? (
             <TitleComponent />
           ) : !!title ? (
-            <Text variant="h5" numberOfLines={1}>
+            <Text variant='h5' numberOfLines={1}>
               {title}
             </Text>
           ) : null}
         </View>
 
         {/* Right */}
-        <View style={{ minWidth: 48, marginLeft: 8, alignItems: 'flex-end' }}>{right}</View>
+        <View style={{ minWidth: 48, paddingLeft: Const.padSize, paddingRight: Const.padSize2, alignItems: 'flex-end' }}>{right}</View>
       </View>
     );
   }
