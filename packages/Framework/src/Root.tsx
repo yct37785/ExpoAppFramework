@@ -4,6 +4,7 @@ import 'react-native-gesture-handler';
 // core
 import React, { ReactNode, useCallback, memo, useEffect, useState } from 'react';
 import { View, LogBox, Platform, StatusBar } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 // theme
 import { Mode, ThemeProvider, useTheme, useThemeMode } from './Theme/ThemeProvider';
 import type { Theme } from './Theme/Theme';
@@ -177,12 +178,14 @@ const ThemingGate: React.FC<Omit<RootProps, 'themeMode'>> = ({ lightTheme, darkT
   const themeMode: Mode = getItem<boolean>('isDarkMode') ? 'dark' : 'light';
 
   return (
-    <ThemeProvider lightTheme={lightTheme} darkTheme={darkTheme} themeMode={themeMode}>
-      <LocalDataSyncHelper />
-      <AuthProvider>
-        <Root {...rest} themeMode={themeMode} />
-      </AuthProvider>
-    </ThemeProvider>
+    <SafeAreaProvider>
+      <ThemeProvider lightTheme={lightTheme} darkTheme={darkTheme} themeMode={themeMode}>
+        <LocalDataSyncHelper />
+        <AuthProvider>
+          <Root {...rest} themeMode={themeMode} />
+        </AuthProvider>
+      </ThemeProvider>
+    </SafeAreaProvider>
   );
 };
 

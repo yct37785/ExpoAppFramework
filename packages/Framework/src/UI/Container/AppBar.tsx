@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import { View, StyleSheet, type StyleProp, type ViewStyle } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../../Theme/ThemeProvider';
 import { Text } from '../Text/Text';
 import { Touchable } from '../Interactive/Touchable';
@@ -38,9 +39,12 @@ export type AppBarProps = {
 export const AppBar: React.FC<AppBarProps> = memo(
   ({ title, TitleComponent, onBack, left, right, elevated = false, style }) => {
     const t = useTheme();
+    const insets = useSafeAreaInsets();
+    const topPad = insets.top; // iOS notch / Android status bar height
 
     const container: ViewStyle = {
-      height: 56,
+      height: 56 + topPad,
+      paddingTop: topPad,
       flexDirection: 'row',
       alignItems: 'center',
       paddingHorizontal: 12,
