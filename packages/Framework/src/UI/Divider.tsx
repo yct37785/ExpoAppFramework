@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { View, StyleSheet, type ViewStyle, type StyleProp } from 'react-native';
-import { padSize } from '../Const';
+import * as Const from '../Const';
 import { useTheme } from '../Theme/ThemeProvider';
 
 /******************************************************************************************************************
@@ -37,7 +37,7 @@ export const Divider: React.FC<DividerProps> = memo(({
   orientation = 'horizontal',
   thickness = StyleSheet.hairlineWidth,
   color,
-  spacing = padSize,
+  spacing = Const.padSize,
   style,
 }) => {
   const t = useTheme();
