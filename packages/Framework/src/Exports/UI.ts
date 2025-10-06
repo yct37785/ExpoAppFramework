@@ -1,6 +1,7 @@
 export * from '../UI/Container/Collapsible';
 export * from '../UI/Container/Tabs';
 export * from '../UI/Input/TextInput';
+export * from '../UI/Interactive/Touchable';
 export * from '../UI/Menu/Click/MenuList';
 export * from '../UI/Menu/Options/BaseOptions';
 export * from '../UI/Menu/Options/CheckOptions';
