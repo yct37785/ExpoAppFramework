@@ -1,11 +1,8 @@
 @echo off
 REM ==============================================================================
-REM Lint runner for Windows
-REM - Runs ESLint over the whole monorepo (TS/TSX)
-REM - Fails on any error; warnings are allowed (tweak with --max-warnings=0)
+REM Lint runner for Windows (ESLint v9 flat config)
 REM ==============================================================================
 
-REM Ensure node_modules are installed
 IF NOT EXIST "node_modules" (
   echo [lint] Installing dependencies...
   npm install
@@ -14,8 +11,12 @@ IF NOT EXIST "node_modules" (
 echo [lint] Running ESLint...
 npx eslint . --ext .ts,.tsx
 IF %ERRORLEVEL% NEQ 0 (
+  echo.
   echo [lint] ESLint found issues.
+  echo Press any key to close...
+  pause >nul
   exit /b %ERRORLEVEL%
 )
 
 echo [lint] OK
+pause
