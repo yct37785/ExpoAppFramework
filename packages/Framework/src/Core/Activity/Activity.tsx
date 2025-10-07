@@ -8,6 +8,7 @@ import { AppBar } from '../../UI/Container/AppBar';
 import { Avatar } from '../../UI/Avatar';
 import { Popup } from '../../UI/Popup';
 import { MenuList, type MenuOption } from '../../UI/Menu/Click/MenuList';
+import { Text } from '../../Exports/UI';  // REMOVE lint fail
 import * as Const from '../../Const';
 
 /******************************************************************************************************************
