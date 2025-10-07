@@ -8,21 +8,12 @@
   ],
   "scripts": {
     "sync:apps": "node scripts/sync-app-deps.cjs",
-    "setup": "npm run sync:apps && npm install --package-lock-only && npm install",
-    "lint": "eslint . --ext .ts,.tsx",
-    "lint:fix": "eslint . --ext .ts,.tsx --fix"
+    "setup": "npm run sync:apps && npm install --package-lock-only && npm install"
   },
   "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.28.4",
     "@types/react": "~19.1.0",
-    "@typescript-eslint/eslint-plugin": "^8.46.0",
-    "@typescript-eslint/parser": "^8.46.0",
-    "eslint": "^9.37.0",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^6.1.1",
     "typescript": "~5.9.2"
   },
   "overrides": {
