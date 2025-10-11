@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
 import { View } from 'react-native';
 import { Core, Theme, UI } from 'framework';
-import { Divider } from 'react-native-paper';
 
 /******************************************************************************************************************
  * Typography demo

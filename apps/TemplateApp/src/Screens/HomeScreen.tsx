@@ -7,7 +7,7 @@ import { Core, Managers, Theme, UI } from 'framework';
  * Home screen
  ******************************************************************************************************************/
 const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
-  const { user, signIn, signOut } = Managers.useAuth();
+  const { user } = Managers.useAuth();
   const { getItem, setItem } = Managers.useLocalData();
   const { mode } = Theme.useThemeMode();
   const isDarkMode = getItem('isDarkMode');
@@ -16,16 +16,16 @@ const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
     console.log(`Theme mode: ${mode}`);
   }, [mode]);
 
-  useEffect(() => {
-    (async () => {
-      console.log('list all docs...');
-      const listOfDocs = await Managers.listAllFirestoreDocs('allergies', 'solids');
-      console.log(listOfDocs);
-      console.log('read data...');
-      const docData = await Managers.readFirestoreDoc('allergies', 'solids/peanut');
-      console.log(docData);
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     console.log('list all docs...');
+  //     const listOfDocs = await Managers.listAllFirestoreDocs('allergies', 'solids');
+  //     console.log(listOfDocs);
+  //     console.log('read data...');
+  //     const docData = await Managers.readFirestoreDoc('allergies', 'solids/peanut');
+  //     console.log(docData);
+  //   })();
+  // }, []);
 
   const LeftContent = () => (
     <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
@@ -69,6 +69,7 @@ const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
           Select the screen you want to navigate to
         </Text>
         
+        {renderScreenBtn('testbed', 'test bed example')}
         {renderScreenBtn('typography', 'typography example')}
         {/* {renderScreenBtn('layout', 'layouts example')}
         {renderScreenBtn('menu', 'menus example')}
