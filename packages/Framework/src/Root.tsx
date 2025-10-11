@@ -24,7 +24,7 @@ import { AuthProvider } from './Managers/Firebase/FirebaseAuthManager';
 // const
 import { logColors } from './Const';
 // utils
-import { doLog } from './Utils';
+import { doLog } from './Utils/General';
 
 // legacy RN Paper -------------------------------------------------------------/
 const { LightTheme, DarkTheme } = adaptNavigationTheme({

@@ -1,4 +1,4 @@
-import { logColors } from './Const';
+import * as Const from '../Const';
 
 /******************************************************************************************************************
  * [ASYNC] Wrap a promise with a timeout that rejects if it does not settle within the given duration.
@@ -41,8 +41,8 @@ export const withTimeout = <T,>(p: Promise<T>, ms: number, timeoutMsg: string) =
  ******************************************************************************************************************/
 export function doLog(module: string, func: string, message: string) {
   console.log(
-    `${logColors.cyan}[${module.charAt(0).toUpperCase() + module.slice(1)}]${logColors.reset} ` +
-    `${logColors.yellow}${func}:${logColors.reset} ` +
+    `${Const.logColors.cyan}[${module.charAt(0).toUpperCase() + module.slice(1)}]${Const.logColors.reset} ` +
+    `${Const.logColors.yellow}${func}:${Const.logColors.reset} ` +
     message
   );
 };
@@ -50,7 +50,7 @@ export function doLog(module: string, func: string, message: string) {
 /******************************************************************************************************************
  * Log an error message to the console with red module label and yellow function label.
  *
- * @param module  - Module name string
+ * @param module  - Class/Module name string
  * @param func    - Function name string
  * @param message - Error text to output
  *
@@ -61,8 +61,8 @@ export function doLog(module: string, func: string, message: string) {
  ******************************************************************************************************************/
 export function doErrLog(module: string, func: string, message: string) {
   console.log(
-    `${logColors.red}[${module.charAt(0).toUpperCase() + module.slice(1)}]${logColors.reset} ` +
-    `${logColors.yellow}${func}:${logColors.reset} ` +
+    `${Const.logColors.red}[${module.charAt(0).toUpperCase() + module.slice(1)}]${Const.logColors.reset} ` +
+    `${Const.logColors.yellow}${func}:${Const.logColors.reset} ` +
     message
   );
 };
