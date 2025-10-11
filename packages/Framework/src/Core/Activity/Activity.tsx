@@ -3,12 +3,11 @@ import { View, StyleProp, ViewStyle } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackPropsList } from '../Screen';
-import { Managers } from 'framework';
+import { useAuth } from '../../Managers/Firebase/FirebaseAuthManager';
 import { AppBar } from '../../UI/Container/AppBar';
 import { Avatar } from '../../UI/Avatar';
 import { Popup } from '../../UI/Popup';
 import { MenuList, type MenuOption } from '../../UI/Menu/Click/MenuList';
-import { Text } from '../../Exports/UI';  // REMOVE lint fail
 import * as Const from '../../Const';
 
 /******************************************************************************************************************
@@ -115,7 +114,7 @@ export const Activity: React.FC<ActivityProps> = memo(({
     [opts?.showProfile],
   );
 
-  const { user, signIn, signOut } = Managers.useAuth();
+  const { user, signIn, signOut } = useAuth();
   const isAnon   = !!user?.isAnonymous || !user;
   const photoURL = user?.photoURL || undefined;
   const email    = user?.email || '';
