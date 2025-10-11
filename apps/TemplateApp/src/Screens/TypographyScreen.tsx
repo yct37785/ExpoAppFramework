@@ -10,7 +10,31 @@ const TypographyScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => 
 
   return (
     <Core.Activity navigation={navigation} title='Layout Sample'>
-      <UI.VerticalLayout constraint='scroll' navBarScrollAllowance>
+      <UI.VerticalLayout constraint='scroll'>
+        {/* header text */}
+        <UI.Text variant='h1'>Hello World h1</UI.Text>
+        <UI.Text variant='h2'>Hello World h2</UI.Text>
+        <UI.Text variant='h3'>Hello World h3</UI.Text>
+        <UI.Text variant='h4'>Hello World h4</UI.Text>
+        <UI.Text variant='h5'>Hello World h5</UI.Text>
+        <UI.Text variant='h6'>Hello World h6</UI.Text>
+        <UI.Divider />
+        {/* header text */}
+        <UI.Text variant='h1'>Hello World h1</UI.Text>
+        <UI.Text variant='h2'>Hello World h2</UI.Text>
+        <UI.Text variant='h3'>Hello World h3</UI.Text>
+        <UI.Text variant='h4'>Hello World h4</UI.Text>
+        <UI.Text variant='h5'>Hello World h5</UI.Text>
+        <UI.Text variant='h6'>Hello World h6</UI.Text>
+        <UI.Divider />
+        {/* header text */}
+        <UI.Text variant='h1'>Hello World h1</UI.Text>
+        <UI.Text variant='h2'>Hello World h2</UI.Text>
+        <UI.Text variant='h3'>Hello World h3</UI.Text>
+        <UI.Text variant='h4'>Hello World h4</UI.Text>
+        <UI.Text variant='h5'>Hello World h5</UI.Text>
+        <UI.Text variant='h6'>Hello World h6</UI.Text>
+        <UI.Divider />
         {/* header text */}
         <UI.Text variant='h1'>Hello World h1</UI.Text>
         <UI.Text variant='h2'>Hello World h2</UI.Text>

@@ -12,7 +12,6 @@ import * as Const from '../Const';
  * @property flex?          - Flex grow/shrink value for container
  * @property gap?           - Spacing between children
  * @property padding?       - Padding inside container
- * @property navBarScrollAllowance? - Allowance for nav bar if layout exceeds bottom of screen space
  * @property backgroundColor?       - Background color
  * @property children               - Elements rendered inside
  ******************************************************************************************************************/
@@ -24,7 +23,6 @@ type LayoutProps = {
   flex?: number;
   gap?: number;
   padding?: number;
-  navBarScrollAllowance?: boolean;
   backgroundColor?: string;
   children: ReactNode;
 };
@@ -44,7 +42,6 @@ const Layout: React.FC<LayoutProps> = ({
   flex = 1,
   gap = Const.padSize,
   padding = Const.padSize,
-  navBarScrollAllowance = false,
   backgroundColor = 'transparent',
   children,
 }) => {
@@ -59,8 +56,7 @@ const Layout: React.FC<LayoutProps> = ({
     return (
       <ScrollView horizontal={direction === 'row'}>
         <View style={{
-          flex, flexWrap, flexDirection: direction, justifyContent: justify, gap, padding, backgroundColor,
-          paddingBottom: direction == 'column' && navBarScrollAllowance ? 50 : padding
+          flex, flexWrap, flexDirection: direction, justifyContent: justify, gap, padding, backgroundColor
         }}>
           {content}
         </View>

@@ -9,7 +9,7 @@ const TestbedScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
 
   return (
     <Core.Activity navigation={navigation} title='Layout Sample'>
-      <UI.VerticalLayout constraint='scroll' navBarScrollAllowance>
+      <UI.VerticalLayout constraint='scroll'>
         {/* header text */}
         <UI.Text variant='h1'>Test bed</UI.Text>
       </UI.VerticalLayout>

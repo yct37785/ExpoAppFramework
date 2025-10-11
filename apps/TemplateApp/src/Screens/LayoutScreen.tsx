@@ -15,7 +15,7 @@ const LayoutScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
 
   return (
     <Core.Activity navigation={navigation} title='Layout Sample'>
-      <UI.VerticalLayout constraint='scroll' backgroundColor='blue' navBarScrollAllowance>
+      <UI.VerticalLayout constraint='scroll' backgroundColor='blue'>
 
         {/* VerticalLayout: wrap (fills parent height) */}
         <Text variant='labelMedium'>VerticalLayout: wrap</Text>
