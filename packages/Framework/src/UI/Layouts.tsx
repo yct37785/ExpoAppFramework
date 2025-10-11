@@ -54,12 +54,20 @@ const Layout: React.FC<LayoutProps> = ({
   // if scroll constraint is set, wrap children in a ScrollView
   if (constraint === 'scroll') {
     return (
-      <ScrollView horizontal={direction === 'row'}>
-        <View style={{
-          flex, flexWrap, flexDirection: direction, justifyContent: justify, gap, padding, backgroundColor
-        }}>
-          {content}
-        </View>
+      <ScrollView
+        showsVerticalScrollIndicator={true}
+        horizontal={direction === 'row'}
+        style={{ flex }}  // scrollView should have defined height to calculate scroll
+        contentContainerStyle={{
+          flexDirection: direction,
+          justifyContent: justify,
+          flexWrap,
+          gap,
+          padding,
+          backgroundColor,
+        }}
+      >
+        {content}
       </ScrollView>
     );
   }
