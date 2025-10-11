@@ -40,11 +40,11 @@ export const withTimeout = <T,>(p: Promise<T>, ms: number, timeoutMsg: string) =
  * ```
  ******************************************************************************************************************/
 export function doLog(module: string, func: string, message: string) {
-  console.log(
-    `${Const.logColors.cyan}[${module.charAt(0).toUpperCase() + module.slice(1)}]${Const.logColors.reset} ` +
-    `${Const.logColors.yellow}${func}:${Const.logColors.reset} ` +
-    message
-  );
+  let str = '';
+  if (module) str += `${Const.logColors.cyan}[${module.charAt(0).toUpperCase() + module.slice(1)}]${Const.logColors.reset} `;
+  if (func) str += `${Const.logColors.yellow}${func}:${Const.logColors.reset} `;
+  str += message;
+  console.log(str);
 };
 
 /******************************************************************************************************************
@@ -60,9 +60,9 @@ export function doLog(module: string, func: string, message: string) {
  * ```
  ******************************************************************************************************************/
 export function doErrLog(module: string, func: string, message: string) {
-  console.log(
-    `${Const.logColors.red}[${module.charAt(0).toUpperCase() + module.slice(1)}]${Const.logColors.reset} ` +
-    `${Const.logColors.yellow}${func}:${Const.logColors.reset} ` +
-    message
-  );
+  let str = '';
+  if (module) str += `${Const.logColors.red}[${module.charAt(0).toUpperCase() + module.slice(1)}]${Const.logColors.reset} `;
+  if (func) str += `${Const.logColors.yellow}${func}:${Const.logColors.reset} `;
+  str += message;
+  console.log(str);
 };
