@@ -1,4 +1,6 @@
 import React, { memo } from 'react';
+import { View } from 'react-native';
+import { Text, Button, Switch } from 'react-native-paper';
 import { Core, Theme, UI } from 'framework';
 
 /******************************************************************************************************************
@@ -10,8 +12,15 @@ const TestbedScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
   return (
     <Core.Activity navigation={navigation} title='Layout Sample'>
       <UI.VerticalLayout constraint='scroll'>
-        {/* header text */}
-        <UI.Text variant='h1'>Test bed</UI.Text>
+        
+        <UI.Touchable>
+          <View style={{ backgroundColor: 'red', width: '100%', height: 100 }}>
+          </View>
+        </UI.Touchable>
+        <Button mode='contained' onPress={() => {}}>
+          asdasdsadasd
+        </Button>
+
       </UI.VerticalLayout>
     </Core.Activity>
   );
