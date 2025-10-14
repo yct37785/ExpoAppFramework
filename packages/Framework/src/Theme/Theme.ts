@@ -69,16 +69,31 @@ export type Radius = { sm: number; md: number; lg: number; pill: number };
 export type Spacing = (multiplier?: number) => number;
 
 /******************************************************************************************************************
+ * Touch - Touchable ripple effect values used by component.
+ *
+ * @property pressOpacity       - Opacity on press
+ * @property pressInDurationMs  - Press-in duration
+ * @property pressOutDurationMs - Press-out duration
+ ******************************************************************************************************************/
+export type Touch = {
+  pressOpacity: number;
+  pressInDurationMs: number;
+  pressOutDurationMs: number;
+};
+
+/******************************************************************************************************************
  * Theme - Runtime theme object consumed by UI.
  *
  * @property colors       - Resolved color tokens
  * @property typography   - Resolved type tokens
  * @property radius       - Resolved radii tokens
  * @property spacing      - Resolved spacing function
+ * @property touch        - Resolved touch tokens
  ******************************************************************************************************************/
 export type Theme = {
   colors: ColorPalette;
   typography: Typography;
   radius: Radius;
   spacing: Spacing;
+  touch: Touch;
 };

@@ -43,4 +43,9 @@ export const defaultTheme: Theme = {
   },
   radius: { sm: 4, md: 8, lg: 12, pill: 999 },
   spacing: (n = 1) => 8 * n,
+  touch: {
+    pressOpacity: 0.8,
+    pressInDurationMs: 110,
+    pressOutDurationMs: 160
+  }
 };
