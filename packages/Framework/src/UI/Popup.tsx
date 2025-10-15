@@ -1,7 +1,6 @@
 import React, { useRef, memo, ReactNode, useMemo } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 import { Menu, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
-import { useTheme } from '../Theme/ThemeProvider';
 import { Touchable } from './Interactive/Touchable';
 
 /******************************************************************************************************************
@@ -34,25 +33,11 @@ type PopupProps = {
  ******************************************************************************************************************/
 export const Popup: React.FC<PopupProps> = memo(
   ({ triggerComp, disabled = false, style, children }) => {
-    const t = useTheme();
     const menuRef = useRef<Menu | null>(null);
 
-    const menuBg = t.colors.surface;
-    const radius = t.radius.sm;
     const triggerStyles = useMemo(
       () => ({ TriggerTouchableComponent: Touchable }),
       []
-    );
-
-    const optionsStyles = useMemo(
-      () => ({
-        optionsWrapper: {
-          backgroundColor: menuBg,
-          borderRadius: radius,
-          // elevation/shadow tokens etc
-        } as ViewStyle,
-      }),
-      [menuBg, radius]
     );
 
     return (
@@ -60,7 +45,7 @@ export const Popup: React.FC<PopupProps> = memo(
         <MenuTrigger disabled={disabled} customStyles={triggerStyles}>
           {triggerComp}
         </MenuTrigger>
-        <MenuOptions customStyles={optionsStyles}>{children}</MenuOptions>
+        <MenuOptions>{children}</MenuOptions>
       </Menu>
     );
   }
