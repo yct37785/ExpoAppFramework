@@ -8,7 +8,7 @@ import {
   Animated,
   Easing
 } from 'react-native';
-import { useTheme } from '../../Theme/ThemeProvider';
+import * as Const from '../../Const';
 
 /******************************************************************************************************************
  * TouchableProps
@@ -82,8 +82,6 @@ const TouchableBase = forwardRef<any, TouchableProps>(function Touchable(
   },
   ref
 ) {
-  const t = useTheme();
-
   /**
    * State: Animated driver for opacity.
    * Using a single Animated.Value avoids re-renders,
@@ -116,7 +114,7 @@ const TouchableBase = forwardRef<any, TouchableProps>(function Touchable(
   const handlePressIn = useCallback(
     (e: any) => {
       if (!disabled && isOpacityFeedback) {
-        runOpacityTo(t.touch.pressOpacity, t.touch.pressInDurationMs);
+        runOpacityTo(Const.pressOpacity, Const.pressInDurationMS);
       }
       onPressIn?.(e);
     },
@@ -126,7 +124,7 @@ const TouchableBase = forwardRef<any, TouchableProps>(function Touchable(
   const handlePressOut = useCallback(
     (e: any) => {
       if (isOpacityFeedback) {
-        runOpacityTo(1, t.touch.pressOutDurationMs);
+        runOpacityTo(1, Const.pressOutDurationMS);
       }
       onPressOut?.(e);
     },

@@ -34,6 +34,10 @@ export const textOpacityMEmphasis = 0.6;
 export const iconSizeSmall = 20;
 export const iconSizeMedium = 30;
 
+export const pressOpacity = 0.8;
+export const pressInDurationMS = 110;
+export const pressOutDurationMS = 160;
+
 // reserved default values for storage
 export const localDataDefaults = {
   isDarkMode: false,
