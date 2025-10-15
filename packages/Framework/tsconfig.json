@@ -3,7 +3,16 @@
   "compilerOptions": {
     "module": "ESNext",
     "rootDir": "src",
-    "outDir": "dist"
+    "baseUrl": "src",
+    "paths": {
+      "@Core/*": ["Core/*"],
+      "@Managers/*": ["Managers/*"],
+      "@Theme/*": ["Theme/*"],
+      "@UI/*": ["UI/*"],
+      "@Const": ["Const.ts"],
+      "@Root": ["Root.tsx"],
+      "@Utils": ["Utils.ts"]
+    }
   },
-  "include": ["src"]
+  "include": ["src"],
 }

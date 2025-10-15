@@ -12,7 +12,6 @@ import * as Const from '../Const';
  * @property flex?          - Flex grow/shrink value for container
  * @property gap?           - Spacing between children
  * @property padding?       - Padding inside container
- * @property navBarScrollAllowance? - Allowance for nav bar if layout exceeds bottom of screen space
  * @property backgroundColor?       - Background color
  * @property children               - Elements rendered inside
  ******************************************************************************************************************/
@@ -24,7 +23,6 @@ type LayoutProps = {
   flex?: number;
   gap?: number;
   padding?: number;
-  navBarScrollAllowance?: boolean;
   backgroundColor?: string;
   children: ReactNode;
 };
@@ -44,7 +42,6 @@ const Layout: React.FC<LayoutProps> = ({
   flex = 1,
   gap = Const.padSize,
   padding = Const.padSize,
-  navBarScrollAllowance = false,
   backgroundColor = 'transparent',
   children,
 }) => {
@@ -57,13 +54,20 @@ const Layout: React.FC<LayoutProps> = ({
   // if scroll constraint is set, wrap children in a ScrollView
   if (constraint === 'scroll') {
     return (
-      <ScrollView horizontal={direction === 'row'}>
-        <View style={{
-          flex, flexWrap, flexDirection: direction, justifyContent: justify, gap, padding, backgroundColor,
-          paddingBottom: direction == 'column' && navBarScrollAllowance ? 50 : padding
-        }}>
-          {content}
-        </View>
+      <ScrollView
+        showsVerticalScrollIndicator={true}
+        horizontal={direction === 'row'}
+        style={{ flex }}  // scrollView should have defined height to calculate scroll
+        contentContainerStyle={{
+          flexDirection: direction,
+          justifyContent: justify,
+          flexWrap,
+          gap,
+          padding,
+          backgroundColor,
+        }}
+      >
+        {content}
       </ScrollView>
     );
   }

@@ -35,7 +35,7 @@ import {
   startAuthObservers,
   verifyCurrentUser,
 } from './FirebaseAuthHelpers';
-import { withTimeout, doErrLog } from '../../Utils';
+import { withTimeout, doErrLog } from '../../Utils/General';
 
 /******************************************************************************************************************
  * Context shape.

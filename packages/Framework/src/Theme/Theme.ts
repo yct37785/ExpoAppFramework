@@ -10,6 +10,7 @@
  * @property border     - Hairline/border color
  * @property error      - Error states, validation messages
  * @property success    - Success states, confirmations
+ * @property highlight  - Background color for highlighted text
  ******************************************************************************************************************/
 export type ColorPalette = {
   background: string;
@@ -21,20 +22,37 @@ export type ColorPalette = {
   border: string;
   error: string;
   success: string;
+  highlight: string;
 };
 
 /******************************************************************************************************************
- * Typography - Font family, sizes, weights, and line heights.
- *
- * @property size       - Scaled font sizes (dp)
- * @property weight     - Platform weight tokens
- * @property lineHeight - Matching line heights (dp)
+ * Typography.
+ * 
+ * @property fontFamily - Font family
+ * @property weight     - Boldness (regular, medium, bold)
+ * @property variants   - Fixed text variants defined by the theme 
  ******************************************************************************************************************/
+export type TextVariant =
+  | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+  | 'subtitle' | 'subtitle2'
+  | 'body' | 'body2'
+  | 'label' | 'label2'
+  | 'caption' | 'overline';
+
+export type TextStyleToken = {
+  fontSize: number;               // dp
+  lineHeight: number;             // dp
+  fontWeight?: string | number;   // defaults to Typography.weight.regular if omitted
+  letterSpacing?: number;         // dp
+  fontFamily?: string;            // defaults to Typography.fontFamily if omitted
+};
+
 export type Typography = {
   fontFamily: string;
-  size: { xs: number; sm: number; md: number; lg: number; xl: number };
   weight: { regular: string | number; medium: string | number; bold: string | number };
-  lineHeight: { normal: number; dense: number; roomy: number };
+
+  /** REQUIRED per-variant tokens for all universal typography roles */
+  variants: Record<TextVariant, TextStyleToken>;
 };
 
 /******************************************************************************************************************
@@ -51,18 +69,31 @@ export type Radius = { sm: number; md: number; lg: number; pill: number };
 export type Spacing = (multiplier?: number) => number;
 
 /******************************************************************************************************************
+ * Touch - Touchable ripple effect values used by component.
+ *
+ * @property pressOpacity       - Opacity on press
+ * @property pressInDurationMs  - Press-in duration
+ * @property pressOutDurationMs - Press-out duration
+ ******************************************************************************************************************/
+export type Touch = {
+  pressOpacity: number;
+  pressInDurationMs: number;
+  pressOutDurationMs: number;
+};
+
+/******************************************************************************************************************
  * Theme - Runtime theme object consumed by UI.
  *
- * @property isDark       - True when representing a dark color scheme
  * @property colors       - Resolved color tokens
  * @property typography   - Resolved type tokens
  * @property radius       - Resolved radii tokens
  * @property spacing      - Resolved spacing function
+ * @property touch        - Resolved touch tokens
  ******************************************************************************************************************/
 export type Theme = {
-  isDark: boolean;
   colors: ColorPalette;
   typography: Typography;
   radius: Radius;
   spacing: Spacing;
+  touch: Touch;
 };

@@ -1,11 +1,13 @@
 import React, { JSX, memo, useMemo } from 'react';
 import { View, StyleProp, ViewStyle } from 'react-native';
-import { Appbar, Avatar } from 'react-native-paper';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackPropsList } from '../Screen';
+import { useAuth } from '../../Managers/Firebase/FirebaseAuthManager';
+import { AppBar } from '../../UI/Container/AppBar';
+import { Avatar } from '../../UI/Avatar';
 import { Popup } from '../../UI/Popup';
-import { MenuOption, MenuList } from '../../UI/Menu/Click/MenuList';
-import { Managers } from 'framework';
+import { MenuList, type MenuOption } from '../../UI/Menu/Click/MenuList';
 import * as Const from '../../Const';
 
 /******************************************************************************************************************
@@ -25,20 +27,12 @@ const ProfileMenu: React.FC<{
   onSignIn: () => Promise<void>;
   onSignOut: () => Promise<void>;
 }> = memo(({ photoURL, email, isAnonymous, onSignIn, onSignOut }) => {
-  // build menu options: single-tap actions, no active state
   const options: MenuOption[] = isAnonymous
-    ? [
-        { label: 'Sign in with Google', value: 'signin', leadingIcon: 'google' },
-      ]
+    ? [{ label: 'Sign in with Google', value: 'signin', leadingIcon: 'google' }]
     : [
-        { label: email ? `Signed in as ${email}` : 'Signed in', value: 'noop', leadingIcon: 'account', disabled: true },
-        { label: 'Sign out', value: 'signout', leadingIcon: 'logout' },
-      ];
-
-  // trigger avatar
-  const triggerAvatar = photoURL
-    ? <Avatar.Image size={Const.iconSizeMedium} source={{ uri: photoURL }} />
-    : <Avatar.Icon size={Const.iconSizeMedium} icon='account-circle' />;
+      { label: email ? `Signed in as ${email}` : 'Signed in', value: 'noop', leadingIcon: 'account', disabled: true },
+      { label: 'Sign out', value: 'signout', leadingIcon: 'logout' },
+    ];
 
   const handleSelect = async (value: string) => {
     switch (value) {
@@ -49,16 +43,13 @@ const ProfileMenu: React.FC<{
         await onSignOut();
         break;
       default:
-        // 'noop' or unknown values: do nothing
         break;
     }
   };
 
   return (
-    <Popup triggerComp={triggerAvatar}>
-      <View style={{ padding: Const.padSize }}>
+    <Popup triggerComp={<Avatar uri={photoURL} label="A" size="md" />}>
       <MenuList options={options} onSelect={handleSelect} dense showDividers />
-      </View>
     </Popup>
   );
 });
@@ -77,14 +68,14 @@ export interface ActivityOptions {
  * 
  * @property navigation     - Stack navigation controller
  * @property title?         - Title text for the app bar
- * @property CustomHeader?  - Component renderer for additional header actions
+ * @property LeftContent?   - Component renderer for app bar left-side content
  * @property opts?          - Config options bag
  * @property children       - Body content to render inside layout
  ******************************************************************************************************************/
 type ActivityProps<T extends keyof RootStackPropsList = keyof RootStackPropsList> = {
   navigation: NativeStackNavigationProp<RootStackPropsList, T>;
   title?: string;
-  CustomHeader?: () => JSX.Element;
+  LeftContent?: () => JSX.Element;
   opts?: ActivityOptions;
   children: React.ReactNode;
 };
@@ -104,7 +95,7 @@ type ActivityProps<T extends keyof RootStackPropsList = keyof RootStackPropsList
  * <Activity
  *   navigation={navigation}
  *   title='Home'
- *   CustomHeader={() => <MyHeaderActions />}
+ *   LeftContent={() => <MyHeaderActions />}
  *   opts={{ showProfile: true }}
  * >
  *   <Text>Welcome to the home screen</Text>
@@ -114,7 +105,7 @@ type ActivityProps<T extends keyof RootStackPropsList = keyof RootStackPropsList
 export const Activity: React.FC<ActivityProps> = memo(({
   navigation,
   title = '',
-  CustomHeader,
+  LeftContent,
   opts,
   children,
 }) => {
@@ -123,41 +114,37 @@ export const Activity: React.FC<ActivityProps> = memo(({
     [opts?.showProfile],
   );
 
-  // auth from shared provider
-  const { user, signIn, signOut } = Managers.useAuth();
-  const canGoBack = navigation.canGoBack();
+  const { user, signIn, signOut } = useAuth();
   const isAnon   = !!user?.isAnonymous || !user;
   const photoURL = user?.photoURL || undefined;
   const email    = user?.email || '';
 
   return (
     <View style={{ flex: 1 }}>
-      <Appbar.Header>
-        {canGoBack && <Appbar.BackAction onPress={() => navigation.goBack()} />}
-        {title ? <Appbar.Content style={{ flex: 0 }} title={title} /> : null}
+      <AppBar
+        title={title}
+        onBack={navigation.canGoBack() ? () => navigation.goBack() : undefined}
+        right={
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            {LeftContent ? <LeftContent /> : null}
+            {showProfile ? (
+              <View style={{ marginLeft: 8 }}>
+                <ProfileMenu
+                  photoURL={photoURL}
+                  email={email}
+                  isAnonymous={isAnon}
+                  onSignIn={signIn}
+                  onSignOut={signOut}
+                />
+              </View>
+            ) : null}
+          </View>
+        }
+      />
 
-        {/* flexible spacer for custom header content */}
-        <View style={{ flex: 1 }}>
-          {CustomHeader && <CustomHeader />}
-        </View>
-
-        {/* profile popup */}
-        <View style={{ marginHorizontal: Const.padSize }}>
-          {showProfile && (
-            <ProfileMenu
-              photoURL={photoURL}
-              email={email}
-              isAnonymous={isAnon}
-              onSignIn={signIn}
-              onSignOut={signOut}
-            />
-          )}
-        </View>
-      </Appbar.Header>
-
-      <View style={{ flex: 1 }}>
+      <SafeAreaView edges={['bottom']} style={{ flex: 1 }}>
         {children}
-      </View>
+      </SafeAreaView>
     </View>
   );
 });

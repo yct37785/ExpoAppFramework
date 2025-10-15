@@ -10,7 +10,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { localDataDefaults } from '../Const';
-import { doLog, doErrLog } from '../Utils';
+import { doLog, doErrLog } from '../Utils/General';
 
 /******************************************************************************************************************
  * Local data schema and reserved defaults.

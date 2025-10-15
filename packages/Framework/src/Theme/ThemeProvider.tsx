@@ -23,13 +23,13 @@ const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
  * 
  * @property lightTheme     - Fully specified light theme object
  * @property darkTheme      - Fully specified dark theme object
- * @property initialMode?   - Initial scheme (default: 'light')
+ * @property themeMode?     - Initial/current scheme (default: 'light')
  * @property children       - Themed subtree
  ******************************************************************************************************************/
 type ThemeProviderProps = {
   lightTheme: Theme;
   darkTheme: Theme;
-  initialMode?: Mode;
+  themeMode?: Mode;
   children: React.ReactNode;
 };
 
@@ -58,16 +58,16 @@ type ThemeProviderProps = {
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   lightTheme,
   darkTheme,
-  initialMode = 'light',
+  themeMode = 'light',
   children,
 }) => {
-  const [mode, setMode] = useState<Mode>(initialMode);
+  const [mode, setMode] = useState<Mode>(themeMode);
 
   // ensure isDark matches the active mode, do not mutate inputs
   const theme = useMemo<Theme>((): Theme => {
     return mode === 'dark'
-      ? { ...darkTheme, isDark: true }
-      : { ...lightTheme, isDark: false };
+      ? { ...darkTheme }
+      : { ...lightTheme };
   }, [mode, lightTheme, darkTheme]);
 
   const value = useMemo<ThemeContextValue>(

@@ -7,7 +7,7 @@ import { Core, Managers, Theme, UI } from 'framework';
  * Home screen
  ******************************************************************************************************************/
 const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
-  const { user, signIn, signOut } = Managers.useAuth();
+  const { user } = Managers.useAuth();
   const { getItem, setItem } = Managers.useLocalData();
   const { mode } = Theme.useThemeMode();
   const isDarkMode = getItem('isDarkMode');
@@ -16,18 +16,18 @@ const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
     console.log(`Theme mode: ${mode}`);
   }, [mode]);
 
-  useEffect(() => {
-    (async () => {
-      console.log('list all docs...');
-      const listOfDocs = await Managers.listAllFirestoreDocs('allergies', 'solids');
-      console.log(listOfDocs);
-      console.log('read data...');
-      const docData = await Managers.readFirestoreDoc('allergies', 'solids/peanut');
-      console.log(docData);
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     console.log('list all docs...');
+  //     const listOfDocs = await Managers.listAllFirestoreDocs('allergies', 'solids');
+  //     console.log(listOfDocs);
+  //     console.log('read data...');
+  //     const docData = await Managers.readFirestoreDoc('allergies', 'solids/peanut');
+  //     console.log(docData);
+  //   })();
+  // }, []);
 
-  const CustomHeader = () => (
+  const LeftContent = () => (
     <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
       <Switch value={!!isDarkMode} onValueChange={(val) => setItem('isDarkMode', val)} />
     </View>
@@ -61,18 +61,20 @@ const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
   };
 
   return (
-    <Core.Activity navigation={navigation} CustomHeader={CustomHeader} title='Home Sample'>
+    <Core.Activity navigation={navigation} LeftContent={LeftContent} title='Home Sample'>
       <UI.VerticalLayout>
         {renderAuthSection()}
 
         <Text variant='bodyMedium' style={{ marginTop: 16 }}>
           Select the screen you want to navigate to
         </Text>
-
-        {renderScreenBtn('layout', 'layouts example')}
+        
+        {renderScreenBtn('testbed', 'test bed example')}
+        {renderScreenBtn('typography', 'typography example')}
+        {/* {renderScreenBtn('layout', 'layouts example')}
         {renderScreenBtn('menu', 'menus example')}
         {renderScreenBtn('list', 'list example')}
-        {renderScreenBtn('container', 'containers example')}
+        {renderScreenBtn('container', 'containers example')} */}
       </UI.VerticalLayout>
     </Core.Activity>
   );

@@ -11,7 +11,7 @@ import {
 } from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { getFirestore, disableNetwork, enableNetwork } from '@react-native-firebase/firestore';
-import { doLog, doErrLog } from '../../Utils';
+import { doLog, doErrLog } from '../../Utils/General';
 
 /******************************************************************************************************************
  * [ASYNC] Configure Google Sign-In using the GOOGLE_WEB_CLIENT_ID environment variable.

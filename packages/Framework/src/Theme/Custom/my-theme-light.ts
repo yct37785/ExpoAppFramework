@@ -6,17 +6,10 @@ import { defaultTheme } from '../default-theme';
  ******************************************************************************************************************/
 export const myThemeLight: Theme = {
   ...defaultTheme,
-  isDark: false,
   colors: {
     ...defaultTheme.colors,
-    // brighter, punchier primary than stock MUI blue
-    primary: '#1F6AFF',
-    // subtle card contrast (akin to MUI grey[50])
     surface: '#FAFAFA',
-  },
-  typography: {
-    ...defaultTheme.typography,
-    // nudge body text for readability on mobile
-    size: { ...defaultTheme.typography.size, md: 17 },
-  },
+    primary: '#1F6AFF',
+    border: 'rgba(0,0,0,0.2)',
+  }
 };
