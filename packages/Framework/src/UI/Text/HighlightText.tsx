@@ -1,8 +1,8 @@
 import React, { memo } from 'react';
 import type { TextStyle, StyleProp } from 'react-native';
-import { useTheme } from '../../Theme/ThemeProvider';
 import { Text } from './Text';
 import type { TextProps } from './Text';
+import * as Const from '../../Const';
 
 function escapeRegExp(s: string) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -56,7 +56,6 @@ export const TextHighlight: React.FC<HighlightTextProps> = memo(
     children,
     ...rest
   }) => {
-    const t = useTheme();
 
     // only operate on plain strings, otherwise fall back to a single node
     if (typeof children !== 'string' || !query) {
@@ -73,7 +72,7 @@ export const TextHighlight: React.FC<HighlightTextProps> = memo(
     const parts = children.split(re);
 
     const resolvedHighlightStyle: StyleProp<TextStyle> =
-      highlightStyle ?? { backgroundColor: t.colors.highlight };
+      highlightStyle ?? { backgroundColor: Const.highlightColor };
 
     return (
       <Text variant={variant} color={color} style={style} {...rest}>

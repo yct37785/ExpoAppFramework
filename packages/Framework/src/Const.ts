@@ -9,6 +9,7 @@ export const borderRad = 3;
 
 export const textColorForDark = 'rgb(299, 299, 231)';
 export const textColorForLight = 'rgb(28, 28, 30)';
+export const highlightColor = 'yellow';
 
 export const rippleColorForLight = 'rgba(0,0,0,0.26)';
 export const rippleColorForDark = 'rgba(255,255,255,0.26)';
