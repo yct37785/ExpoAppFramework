@@ -16,11 +16,10 @@ function escapeRegExp(s: string) {
  * @property highlightStyle?  - Extra style for highlighted parts (e.g., { backgroundColor: 'yellow' })
  * @property children         - Content of the popup menu
  ******************************************************************************************************************/
-type HighlightTextProps = Omit<TextProps, 'children'> & {
+type HighlightTextProps = TextProps & {
   query: string;
   caseSensitive?: boolean;
   highlightStyle?: StyleProp<TextStyle>;
-  children: string | React.ReactNode;
 };
 
 /******************************************************************************************************************
@@ -47,12 +46,12 @@ type HighlightTextProps = Omit<TextProps, 'children'> & {
  ******************************************************************************************************************/
 export const TextHighlight: React.FC<HighlightTextProps> = memo(
   ({
-    variant = 'body',
+    variant = 'bodyMedium',
+    color,
+    style,
     query,
     caseSensitive = false,
     highlightStyle,
-    color,
-    style,
     children,
     ...rest
   }) => {

@@ -34,7 +34,8 @@ export interface TextProps {
   variant?: TextVariant;
   color?: string;
   style?: StyleProp<TextStyle>;
-  children: ReactNode;
+  numberOfLines?: number;
+  children: string | ReactNode;
 }
 
 /******************************************************************************************************************
@@ -51,9 +52,9 @@ export interface TextProps {
  * <Text variant='label2' color={t.colors.muted}>Secondary label</Text>
  * ```
  ******************************************************************************************************************/
-const TextBase: React.FC<TextProps> = ({ variant = 'bodyMedium', color, style, children }) => {
+const TextBase: React.FC<TextProps> = ({ variant = 'bodyMedium', color, style, numberOfLines = 1, children }) => {
   return (
-    <PaperText variant={variant} style={[color ? { color } : null, style]}>
+    <PaperText variant={variant} numberOfLines={numberOfLines} style={[color ? { color } : null, style]}>
       {children}
     </PaperText>
   );
