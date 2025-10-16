@@ -1,14 +1,14 @@
 import React, { JSX, memo, useMemo } from 'react';
-import { View, StyleProp, ViewStyle } from 'react-native';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackPropsList } from '../Screen';
 import { useAuth } from '../../Managers/Firebase/FirebaseAuthManager';
 import { AppBar } from '../../UI/Container/AppBar';
 import { Avatar } from '../../UI/Avatar';
 import { Popup } from '../../UI/Popup';
-import { MenuList, type MenuOption } from '../../UI/Menu/Click/MenuList';
-import * as Const from '../../Const';
+import { MenuOption } from '../../UI/Menu/Click/MenuList.types';
+import { MenuList } from '../../UI/Menu/Click/MenuList';
 
 /******************************************************************************************************************
  * Renders the profile avatar as the popup trigger and the auth options.

@@ -59,4 +59,4 @@ export const HighlightText: HighlightTextType = memo(
   }
 );
 
-HighlightText.displayName = 'TextHighlight';
+HighlightText.displayName = 'HighlightText';

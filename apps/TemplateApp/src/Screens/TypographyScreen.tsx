@@ -1,73 +1,51 @@
-import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
-import { View } from 'react-native';
-import { Core, Theme, UI } from 'framework';
+import React, { memo } from 'react';
+import { Core, UI } from 'framework';
 
 /******************************************************************************************************************
  * Typography demo
  ******************************************************************************************************************/
 const TypographyScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
-  const theme = Theme.useTheme();
 
   return (
     <Core.Activity navigation={navigation} title='Layout Sample'>
       <UI.VerticalLayout constraint='scroll'>
-        {/* header text */}
-        <UI.Text variant='h1'>Hello World h1</UI.Text>
-        <UI.Text variant='h2'>Hello World h2</UI.Text>
-        <UI.Text variant='h3'>Hello World h3</UI.Text>
-        <UI.Text variant='h4'>Hello World h4</UI.Text>
-        <UI.Text variant='h5'>Hello World h5</UI.Text>
-        <UI.Text variant='h6'>Hello World h6</UI.Text>
+        {/* display text */}
+        <UI.Text variant='displayLarge'>Hello World</UI.Text>
+        <UI.Text variant='displayMedium'>Hello World</UI.Text>
+        <UI.Text variant='displaySmall'>Hello World</UI.Text>
+        {/* headline text */}
+        <UI.Text variant='headlineLarge'>Hello World</UI.Text>
+        <UI.Text variant='headlineMedium'>Hello World</UI.Text>
+        <UI.Text variant='headlineSmall'>Hello World</UI.Text>
         <UI.Divider />
-        {/* header text */}
-        <UI.Text variant='h1'>Hello World h1</UI.Text>
-        <UI.Text variant='h2'>Hello World h2</UI.Text>
-        <UI.Text variant='h3'>Hello World h3</UI.Text>
-        <UI.Text variant='h4'>Hello World h4</UI.Text>
-        <UI.Text variant='h5'>Hello World h5</UI.Text>
-        <UI.Text variant='h6'>Hello World h6</UI.Text>
-        <UI.Divider />
-        {/* header text */}
-        <UI.Text variant='h1'>Hello World h1</UI.Text>
-        <UI.Text variant='h2'>Hello World h2</UI.Text>
-        <UI.Text variant='h3'>Hello World h3</UI.Text>
-        <UI.Text variant='h4'>Hello World h4</UI.Text>
-        <UI.Text variant='h5'>Hello World h5</UI.Text>
-        <UI.Text variant='h6'>Hello World h6</UI.Text>
-        <UI.Divider />
-        {/* header text */}
-        <UI.Text variant='h1'>Hello World h1</UI.Text>
-        <UI.Text variant='h2'>Hello World h2</UI.Text>
-        <UI.Text variant='h3'>Hello World h3</UI.Text>
-        <UI.Text variant='h4'>Hello World h4</UI.Text>
-        <UI.Text variant='h5'>Hello World h5</UI.Text>
-        <UI.Text variant='h6'>Hello World h6</UI.Text>
-        <UI.Divider />
-        {/* body text */}
-        <UI.Text variant='body'>Hello World body</UI.Text>
-        <UI.Text variant='body2'>Hello World body2</UI.Text>
+        {/* title text */}
+        <UI.Text variant='titleLarge'>Hello World</UI.Text>
+        <UI.Text variant='titleMedium'>Hello World</UI.Text>
+        <UI.Text variant='titleSmall'>Hello World</UI.Text>
         <UI.Divider />
         {/* label text */}
-        <UI.Text variant='label'>Hello World label</UI.Text>
-        <UI.Text variant='label2'>Hello World label2</UI.Text>
+        <UI.Text variant='labelLarge'>Hello World</UI.Text>
+        <UI.Text variant='labelMedium'>Hello World</UI.Text>
+        <UI.Text variant='labelSmall'>Hello World</UI.Text>
         <UI.Divider />
-        {/* caption + overline text */}
-        <UI.Text variant='caption'>Hello World caption</UI.Text>
-        <UI.Text variant='overline'>Hello World overline</UI.Text>
+        {/* body text */}
+        <UI.Text variant='bodyLarge'>Hello World</UI.Text>
+        <UI.Text variant='bodyMedium'>Hello World</UI.Text>
+        <UI.Text variant='bodySmall'>Hello World</UI.Text>
         <UI.Divider />
         {/* highlight text */}
-        <UI.TextHighlight
-          variant='body'
+        <UI.HighlightText
+          variant='bodyMedium'
           query='react'
         >
           React Native makes mobile development easy with React.
-        </UI.TextHighlight>
-        <UI.TextHighlight
-          variant='label'
+        </UI.HighlightText>
+        <UI.HighlightText
+          variant='labelMedium'
           query='react'
         >
           React Native makes mobile development easy with React.
-        </UI.TextHighlight>
+        </UI.HighlightText>
       </UI.VerticalLayout>
     </Core.Activity>
   );

@@ -79,7 +79,7 @@ const SampleMenuScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => 
   }
 
   return (
-    <Core.Activity navigation={navigation} CustomHeader={CustomHeader} title='Menu Sample'>
+    <Core.Activity navigation={navigation} LeftContent={CustomHeader} title='Menu Sample'>
       {/* all dialogs here */}
       <Portal>
         <UI.Dialog

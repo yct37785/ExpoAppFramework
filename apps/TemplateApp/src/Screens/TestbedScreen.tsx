@@ -1,14 +1,13 @@
 import React, { memo } from 'react';
 import { View } from 'react-native';
-import { Text, Button, Switch } from 'react-native-paper';
-import { Core, Theme, UI } from 'framework';
+import { Button } from 'react-native-paper';
+import { Core, UI } from 'framework';
 
 /******************************************************************************************************************
  * Testbed screen: used for development and testing of new UI elements
  ******************************************************************************************************************/
 const TestbedScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
-  const theme = Theme.useTheme();
-
+  
   return (
     <Core.Activity navigation={navigation} title='Layout Sample'>
       <UI.VerticalLayout constraint='scroll'>

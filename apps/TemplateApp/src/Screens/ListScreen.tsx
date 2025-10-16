@@ -1,13 +1,12 @@
-import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
+import React, { useState, useEffect, useCallback, memo } from 'react';
 import { ScrollView, View, Image } from 'react-native';
-import { Text, Divider } from 'react-native-paper';
 import { Core, UI, Const } from 'framework';
 import { faker } from '@faker-js/faker';
 const _ = require('lodash');
 
 const ListTypes = {
-  flashlist: UI.ListType.flashlist,
-  flatlist: UI.ListType.flatlist,
+  flashlist: UI.ListImplementationType.flashlist,
+  flatlist: UI.ListImplementationType.flatlist,
 } as const;
 
 /******************************************************************************************************************
@@ -16,7 +15,7 @@ const ListTypes = {
  * Displays a sample screen with a search bar, filter options, and a list of products.
  ******************************************************************************************************************/
 const ListScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
-  const [listType, setListType] = useState<UI.ListType>(UI.ListType.flashlist);
+  const [listType, setListType] = useState<UI.ListImplementationType>(UI.ListImplementationType.flashlist);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [productList, setProductList] = useState<UI.ListItem[]>([]);
   const [matChipsSchema, setMatChipsSchema] = useState<Set<string>>(new Set());
@@ -73,9 +72,9 @@ const ListScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
           source={{ uri: item.none.img }}
           resizeMode={'contain'}
         />
-        <Text variant='labelMedium'>{`material: ${item.filterable.material}`}</Text>
+        <UI.Text variant='labelMedium'>{`material: ${item.filterable.material}`}</UI.Text>
         <UI.HighlightText query={searchQuery} variant={'bodyMedium'}>{item.searchable.desc}</UI.HighlightText>
-        <Divider style={{ marginTop: Const.padSize }} />
+        <UI.Divider style={{ marginTop: Const.padSize }} />
       </View>
     );
   }, [searchQuery]);
@@ -92,7 +91,7 @@ const ListScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
   }
 
   return (
-    <Core.Activity navigation={navigation} CustomHeader={CustomHeader}>
+    <Core.Activity navigation={navigation} LeftContent={CustomHeader}>
       {/* main content */}
       <UI.VerticalLayout>
 
@@ -105,7 +104,7 @@ const ListScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
         {/* toggle Flashlist vs FlatList */}
         <UI.RadioGroup
           options={ListTypes}
-          value={listType} onValueChange={(s: string) => setListType(s as UI.ListType)} />
+          value={listType} onValueChange={(s: string) => setListType(s as UI.ListImplementationType)} />
         
         {/* list */}
         <UI.List
@@ -113,7 +112,7 @@ const ListScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
           query={searchQuery}
           filterMap={filterMap}
           renderItem={renderItem}
-          listType={listType}
+          listImplementationType={listType}
         />
 
       </UI.VerticalLayout>

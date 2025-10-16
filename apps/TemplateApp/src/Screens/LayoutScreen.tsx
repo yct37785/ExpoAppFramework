@@ -1,6 +1,5 @@
-import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
+import React, { memo } from 'react';
 import { View } from 'react-native';
-import { Text, Button, Switch } from 'react-native-paper';
 import { Core, UI } from 'framework';
 
 /******************************************************************************************************************
@@ -9,7 +8,7 @@ import { Core, UI } from 'framework';
 const LayoutScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
    const BasicContainer: React.FC<{ i: number }> = ({ i }) => (
     <View style={{ width: 60, height: 75, alignItems: 'center', justifyContent: 'center', backgroundColor: 'green' }}>
-      <Text key={i}>child {1 + i}</Text>
+      <UI.Text key={i}>child {1 + i}</UI.Text>
     </View>
   );
 
@@ -18,8 +17,8 @@ const LayoutScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
       <UI.VerticalLayout constraint='scroll' backgroundColor='blue'>
 
         {/* VerticalLayout: wrap (fills parent height) */}
-        <Text variant='labelMedium'>VerticalLayout: wrap</Text>
-        <Text variant='labelSmall'>fills parent height, content wraps within</Text>
+        <UI.Text variant='labelMedium'>VerticalLayout: wrap</UI.Text>
+        <UI.Text variant='labelSmall'>fills parent height, content wraps within</UI.Text>
         <View style={{ height: 190 }}>
           <UI.VerticalLayout constraint='wrap' backgroundColor='red'>
             {[...Array(7)].map((e, i) => <BasicContainer key={i} i={i} />)}
@@ -27,21 +26,21 @@ const LayoutScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
         </View>
 
         {/* HorizontalLayout: wrap */}
-        <Text variant='labelMedium'>HorizontalLayout: wrap</Text>
-        <Text variant='labelSmall'>fills parent width, content wraps within</Text>
+        <UI.Text variant='labelMedium'>HorizontalLayout: wrap</UI.Text>
+        <UI.Text variant='labelSmall'>fills parent width, content wraps within</UI.Text>
         <UI.HorizontalLayout constraint='wrap' backgroundColor='red'>
           {[...Array(7)].map((e, i) => <BasicContainer key={i} i={i} />)}
         </UI.HorizontalLayout>
 
         {/* HorizontalLayout: wrap */}
-        <Text variant='labelMedium'>HorizontalLayout: scroll</Text>
-        <Text variant='labelSmall'>fills parent width, content overflows within</Text>
+        <UI.Text variant='labelMedium'>HorizontalLayout: scroll</UI.Text>
+        <UI.Text variant='labelSmall'>fills parent width, content overflows within</UI.Text>
         <UI.HorizontalLayout constraint='scroll' backgroundColor='red'>
           {[...Array(8)].map((e, i) => <BasicContainer key={i} i={i} />)}
         </UI.HorizontalLayout>
 
         {/* layouts nested */}
-        <Text variant='labelMedium'>Layouts nested</Text>
+        <UI.Text variant='labelMedium'>Layouts nested</UI.Text>
         <UI.HorizontalLayout constraint='none' backgroundColor='red'>
           <UI.VerticalLayout constraint='wrap' justify='center' flex={1} backgroundColor='yellow'>
             {[...Array(2)].map((e, i) => <BasicContainer key={i} i={i} />)}
