@@ -1,8 +1,6 @@
-import React, { memo } from 'react';
-import { View, TouchableOpacity, StyleProp, ViewStyle } from 'react-native';
-import { Text, Checkbox } from 'react-native-paper';
-import * as Const from '../../../Const';
-import { OptionState, OptionSchema, OptionProps, BaseOptions } from './BaseOptions.types';
+import React from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
+import { OptionSchema } from './BaseOptions.types';
 
 /******************************************************************************************************************
  * CheckOptions props.
@@ -26,4 +24,4 @@ export type CheckOptionCompProps = {
  * <CheckOptions schema={schema} setSchema={setSchema} />
  * ```
  ******************************************************************************************************************/
-export type CheckOptions = React.FC<CheckOptionCompProps>;
+export type CheckOptionsType = React.FC<CheckOptionCompProps>;

@@ -6,7 +6,7 @@ import { StyleProp, ViewStyle } from 'react-native';
  * - flashlist → Uses @shopify/flash-list for improved performance with large datasets
  * - flatlist → Uses React Native's built-in FlatList
  ******************************************************************************************************************/
-export enum ListType {
+export enum ListImplementationType {
   flashlist = 'flashlist',
   flatlist = 'flatlist',
 }
@@ -70,12 +70,12 @@ export type renderListItemFunc = (item: ListItem, index: number) => React.ReactN
  * @property listType?    - Underlying list implementation (default flashlist)
  * @property style?       - Optional wrapper style
  ******************************************************************************************************************/
-export type ListDataDisplayProps = {
+export type ListProps = {
   dataArr: ListItem[];
   query: string;
   filterMap: ListFilterMap;
   renderItem: renderListItemFunc;
-  listType?: ListType;
+  listImplementationType?: ListImplementationType;
   style?: StyleProp<ViewStyle>;
 };
 
@@ -94,4 +94,4 @@ export type ListDataDisplayProps = {
  * />
  * ```
  ******************************************************************************************************************/
-export type ListDataDisplay = React.FC<ListDataDisplayProps>;
+export type ListType = React.FC<ListProps>;

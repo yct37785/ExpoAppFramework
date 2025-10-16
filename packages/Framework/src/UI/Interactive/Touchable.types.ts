@@ -53,4 +53,4 @@ export interface TouchableProps {
  * </Touchable>
  * ```
  ******************************************************************************************************************/
-export type Touchable = React.FC<TouchableProps>;
+export type TouchableType = React.FC<TouchableProps>;

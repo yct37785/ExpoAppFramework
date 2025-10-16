@@ -43,4 +43,4 @@ export type DialogProps = {
  * />
  * ```
  ******************************************************************************************************************/
-export type Dialog = React.FC<DialogProps>;
+export type DialogType = React.FC<DialogProps>;

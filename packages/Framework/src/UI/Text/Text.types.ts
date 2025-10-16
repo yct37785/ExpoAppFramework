@@ -49,4 +49,4 @@ export interface TextProps {
  * <Text variant='label2' color={t.colors.muted}>Secondary label</Text>
  * ```
  ******************************************************************************************************************/
-export type Text = React.FC<TextProps>;
+export type TextType = React.FC<TextProps>;

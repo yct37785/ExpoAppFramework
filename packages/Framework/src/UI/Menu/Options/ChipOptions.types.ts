@@ -1,7 +1,5 @@
-import React, { memo, useState } from 'react';
-import { View, StyleProp, ViewStyle } from 'react-native';
-import { useTheme, Chip } from 'react-native-paper';
-import * as Const from '../../../Const';
+import React from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
 
 /******************************************************************************************************************
  * ChipOptions props.
@@ -33,4 +31,4 @@ export type ChipOptionsProps = {
  * />
  * ```
  ******************************************************************************************************************/
-export type ChipOptions = React.FC<ChipOptionsProps>;
+export type ChipOptionsType = React.FC<ChipOptionsProps>;

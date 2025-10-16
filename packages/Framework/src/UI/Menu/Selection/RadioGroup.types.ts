@@ -41,4 +41,4 @@ export type RadioGroupProps = {
  * />
  * ```
  ******************************************************************************************************************/
-export type RadioGroup = React.FC<RadioGroupProps>;
+export type RadioGroupType = React.FC<RadioGroupProps>;

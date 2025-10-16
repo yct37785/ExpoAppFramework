@@ -1,50 +1,17 @@
 import React, { memo } from 'react';
 import type { TextStyle, StyleProp } from 'react-native';
 import { Text } from './Text';
-import type { TextProps } from './Text';
 import * as Const from '../../Const';
+import { HighlightTextType } from './HighlightText.types';
 
 function escapeRegExp(s: string) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 /******************************************************************************************************************
- * Highlight text props.
- * 
- * @property query            - Substring to highlight
- * @property caseSensitive?   - Match case (default: false)
- * @property highlightStyle?  - Extra style for highlighted parts (e.g., { backgroundColor: 'yellow' })
- * @property children         - Content of the popup menu
+ * HighlightText implementation.
  ******************************************************************************************************************/
-type HighlightTextProps = TextProps & {
-  query: string;
-  caseSensitive?: boolean;
-  highlightStyle?: StyleProp<TextStyle>;
-};
-
-/******************************************************************************************************************
- * Highlight occurrences of a query inside text content.
- *
- * Summary:
- * - Composes your headless <Text>; no Paper dependency.
- * - Escapes regex specials in `query`.
- * - Case-insensitive by default; toggle with `caseSensitive`.
- * - If `query` is empty or `children` isn't a string, renders plain text.
- *
- * @param props - Refer to HighlightTextProps
- * 
- * @usage
- * ```tsx
- * <TextHighlight
-      variant='body'
-      query='react'
-      highlightStyle={{ backgroundColor: t.colors.primary, color: t.colors.onPrimary }}
-    >
-      React Native makes mobile development easy with React.
-    </TextHighlight>
- * ```
- ******************************************************************************************************************/
-export const TextHighlight: React.FC<HighlightTextProps> = memo(
+export const HighlightText: HighlightTextType = memo(
   ({
     variant = 'bodyMedium',
     color,
@@ -92,4 +59,4 @@ export const TextHighlight: React.FC<HighlightTextProps> = memo(
   }
 );
 
-TextHighlight.displayName = 'TextHighlight';
+HighlightText.displayName = 'TextHighlight';

@@ -62,4 +62,4 @@ export type MenuListProps = {
  * />
  * ```
  ******************************************************************************************************************/
-export type MenuList = React.FC<MenuListProps>;
+export type MenuListType = React.FC<MenuListProps>;

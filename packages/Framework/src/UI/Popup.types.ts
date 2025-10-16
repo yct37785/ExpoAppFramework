@@ -29,4 +29,4 @@ export type PopupProps = {
  * </Popup>
  * ```
  ******************************************************************************************************************/
-export type Popup = React.FC<PopupProps>;
+export type PopupType = React.FC<PopupProps>;

@@ -37,4 +37,4 @@ export type TextInputProps = {
  * />
  * ```
  ******************************************************************************************************************/
-export type TextInput = React.FC<TextInputProps>;
+export type TextInputType = React.FC<TextInputProps>;

@@ -1,43 +1,16 @@
 import React, { memo } from 'react';
-import { View, StyleSheet, type StyleProp, type ViewStyle } from 'react-native';
+import { View, StyleSheet, type ViewStyle } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Text } from '../Text/Text';
 import { Touchable } from '../Interactive/Touchable';
 import * as Const from '../../Const';
+import { AppBarType } from './AppBar.types';
 
 /******************************************************************************************************************
- * AppBar props.
- *
- * @property title?           - String title or a custom node via `TitleComponent`
- * @property TitleComponent?  - Optional custom title renderer (overrides `title`)
- * @property onBack?          - If provided, renders a back button and calls this on press
- * @property left?            - Optional left-side content (renders after back button)
- * @property right?           - Optional right-side content (e.g., actions, profile)
- * @property elevated?        - Draw a subtle elevation (shadow) instead of a border
- * @property style?           - Extra style(s) for the container
+ * AppBar implementation
  ******************************************************************************************************************/
-export type AppBarProps = {
-  title?: string;
-  TitleComponent?: React.ComponentType | null;
-  onBack?: () => void;
-  left?: React.ReactNode;
-  right?: React.ReactNode;
-  elevated?: boolean;
-  style?: StyleProp<ViewStyle>;
-};
-
-/******************************************************************************************************************
- * AppBar: A simple theme-aware header bar with optional back button and action slots.
- *
- * @param props - Refer to AppBarProps
- * 
- * @usage
- * ```tsx
- * <AppBar title='Settings' onBack={() => navigation.goBack()} right={<Avatar label='A' />} />
- * ```
- ******************************************************************************************************************/
-export const AppBar: React.FC<AppBarProps> = memo(
+export const AppBar: AppBarType = memo(
   ({ title, TitleComponent, onBack, left, right, elevated = false, style }) => {
     const theme = useTheme();
     const insets = useSafeAreaInsets();

@@ -2,10 +2,6 @@ import React from 'react';
 import type { TextStyle, StyleProp } from 'react-native';
 import type { TextProps } from './Text.types';
 
-function escapeRegExp(s: string) {
-  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
 /******************************************************************************************************************
  * Highlight text props.
  * 
@@ -40,4 +36,4 @@ export type HighlightTextProps = TextProps & {
     </TextHighlight>
  * ```
  ******************************************************************************************************************/
-export type HighlightText = React.FC<HighlightTextProps>;
+export type HighlightTextType = React.FC<HighlightTextProps>;

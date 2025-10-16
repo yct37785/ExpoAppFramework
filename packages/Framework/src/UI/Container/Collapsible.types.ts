@@ -24,7 +24,7 @@ export type CollapsibleContainerProps = {
  * </CollapsibleContainer>
  * ```
  ******************************************************************************************************************/
-export type CollapsibleContainer = React.FC<CollapsibleContainerProps>;
+export type CollapsibleContainerType = React.FC<CollapsibleContainerProps>;
 
 /******************************************************************************************************************
  * AccordionContainer props.
@@ -54,4 +54,4 @@ export type AccordionContainerProps = {
  * </AccordionContainer>
  * ```
  ******************************************************************************************************************/
-export type AccordionContainer = React.FC<AccordionContainerProps>;
+export type AccordionContainerType = React.FC<AccordionContainerProps>;

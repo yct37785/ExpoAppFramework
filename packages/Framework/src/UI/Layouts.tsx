@@ -1,40 +1,12 @@
 import React, { memo, ReactNode } from 'react';
-import { View, ScrollView, StyleProp, ViewStyle } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import * as Const from '../Const';
+import { LayoutType, VerticalLayoutType, HorizontalLayoutType } from './Layouts.types';
 
 /******************************************************************************************************************
- * Layout props.
- * 
- * @property direction?     - Flex direction
- * @property justify?       - Flexbox justification along the main axis
- * @property reverse?       - Whether to render children in reverse order
- * @property constraint?    - Layout constraint mode
- * @property flex?          - Flex grow/shrink value for container
- * @property gap?           - Spacing between children
- * @property padding?       - Padding inside container
- * @property backgroundColor?       - Background color
- * @property children               - Elements rendered inside
+ * Layout implementation.
  ******************************************************************************************************************/
-type LayoutProps = {
-  direction?: 'row' | 'column';
-  justify?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
-  reverse?: boolean;
-  constraint?: 'wrap' | 'scroll' | 'none';
-  flex?: number;
-  gap?: number;
-  padding?: number;
-  backgroundColor?: string;
-  children: ReactNode;
-};
-
-/******************************************************************************************************************
- * Render a flexible base layout container using flexbox.
- * Supports spacing, padding, wrapping, scrolling, and child reversal.
- * Used via VerticalLayout and HorizontalLayout wrappers rather than standalone.
- *
- * @param props - Refer to LayoutProps
- ******************************************************************************************************************/
-const Layout: React.FC<LayoutProps> = ({
+const Layout: LayoutType = ({
   direction = 'column',
   justify = 'flex-start',
   reverse = false,
@@ -81,35 +53,13 @@ const Layout: React.FC<LayoutProps> = ({
 };
 
 /******************************************************************************************************************
- * Render a layout container with direction defaulted to 'column'.
- * Convenience wrapper for vertical stacking.
- *
- * @param props - LayoutProps except @property direction
- *
- * @usage
- * ```tsx
- * <VerticalLayout gap={12}>
- *   <BlockA />
- *   <BlockB />
- * </VerticalLayout>
- * ```
+ * VerticalLayout implementation.
  ******************************************************************************************************************/
-export const VerticalLayout: React.FC<Omit<LayoutProps, 'direction'>> =
+export const VerticalLayout: VerticalLayoutType =
   memo((props) => <Layout {...props} direction='column' />);
 
 /******************************************************************************************************************
- * Render a layout container with direction defaulted to 'row'.
- * Convenience wrapper for horizontal arrangement.
- *
- * @param props - LayoutProps except @property direction
- *
- * @usage
- * ```tsx
- * <HorizontalLayout gap={6}>
- *   <ButtonA />
- *   <ButtonB />
- * </HorizontalLayout>
- * ```
+ * HorizontalLayout implementation.
  ******************************************************************************************************************/
-export const HorizontalLayout: React.FC<Omit<LayoutProps, 'direction'>> =
+export const HorizontalLayout: HorizontalLayoutType =
   memo((props) => <Layout {...props} direction='row' />);

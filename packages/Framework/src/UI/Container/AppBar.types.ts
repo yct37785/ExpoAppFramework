@@ -30,4 +30,4 @@ export type AppBarProps = {
  * <AppBar title='Settings' onBack={() => navigation.goBack()} right={<Avatar label='A' />} />
  * ```
  ******************************************************************************************************************/
-export type AppBar = React.FC<AppBarProps>;
+export type AppBarType = React.FC<AppBarProps>;

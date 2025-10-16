@@ -1,5 +1,5 @@
-import React, { memo, JSX } from 'react';
-import { View, StyleProp, ViewStyle } from 'react-native';
+import React, { JSX } from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
 
 /******************************************************************************************************************
  * Enum representing the three possible states of an option:
@@ -14,12 +14,6 @@ export enum OptionState {
 }
 
 /******************************************************************************************************************
- * Describe the recursive tree schema for selectable options.
- * Each key corresponds to an option, which may itself contain nested children.
- ******************************************************************************************************************/
-export type OptionSchema = Record<string, OptionProps>;
-
-/******************************************************************************************************************
  * Describe a single option node within the schema.
  *
  * @property label    - Human-readable label for the option
@@ -31,6 +25,12 @@ export type OptionProps = {
   state: OptionState;
   children?: OptionSchema;
 };
+
+/******************************************************************************************************************
+ * Describe the recursive tree schema for selectable options.
+ * Each key corresponds to an option, which may itself contain nested children.
+ ******************************************************************************************************************/
+export type OptionSchema = Record<string, OptionProps>;
 
 /******************************************************************************************************************
  * BaseOptions props.
@@ -66,4 +66,4 @@ export type BaseOptionsProps = {
  * />
  * ```
  ******************************************************************************************************************/
-export type BaseOptions = React.FC<BaseOptionsProps>;
+export type BaseOptionsType = React.FC<BaseOptionsProps>;

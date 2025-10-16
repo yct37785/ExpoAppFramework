@@ -47,4 +47,4 @@ export type PickerProps = {
  * />
  * ```
  ******************************************************************************************************************/
-export type Picker = React.FC<PickerProps>;
+export type PickerType = React.FC<PickerProps>;

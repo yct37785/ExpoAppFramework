@@ -2,40 +2,12 @@ import React, { memo } from 'react';
 import { View, StyleSheet, StyleSheet as RNStyleSheet, type ViewStyle, type StyleProp } from 'react-native';
 import { Divider as PaperDivider, useTheme } from 'react-native-paper';
 import * as Const from '../Const';
+import { DividerType } from './Divider.types';
 
 /******************************************************************************************************************
- * Divider props.
- *
- * @property orientation  - Line orientation ('horizontal' | 'vertical'), default: 'horizontal'
- * @property thickness?   - Line thickness in dp (defaults to hairline)
- * @property color?       - Custom color; defaults to theme.colors.outlineVariant (MD3 divider color)
- * @property spacing?     - Margin applied before/after the line (dp). Vertical margin for horizontal dividers,
- *                          horizontal margin for vertical dividers. Default: Const.padSize
- * @property style?       - Additional style for the divider
+ * Divider implementation.
  ******************************************************************************************************************/
-type DividerProps = {
-  orientation?: 'horizontal' | 'vertical';
-  thickness?: number;
-  color?: string;
-  spacing?: number;
-  style?: StyleProp<ViewStyle>;
-};
-
-/******************************************************************************************************************
- * Divider (RN Paper)
- *
- * - Horizontal: uses React Native Paper's <Divider /> and applies thickness, color, spacing via style.
- * - Vertical  : emulates a divider with a themed View (MD3 color + thickness + spacing), full height of container.
- *
- * @param props - Refer to DividerProps
- *
- * @usage
- * ```tsx
- * <Divider spacing={8} />
- * <Divider orientation="vertical" thickness={2} style={{ height: 24 }} />
- * ```
- ******************************************************************************************************************/
-export const Divider: React.FC<DividerProps> = memo(
+export const Divider: DividerType = memo(
   ({
     orientation = 'horizontal',
     thickness = RNStyleSheet.hairlineWidth,

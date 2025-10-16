@@ -66,4 +66,4 @@ export type TabsContainerProps = {
  *
  * @param props - Refer to TabsContainerProps
  ******************************************************************************************************************/
-export type TabsContainer = React.FC<TabsContainerProps>;
+export type TabsContainerType = React.FC<TabsContainerProps>;

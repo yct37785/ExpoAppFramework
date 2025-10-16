@@ -36,4 +36,4 @@ export type AvatarProps = {
  * <Avatar label="A" badgeColor="#2E7D32" />
  * ```
  ******************************************************************************************************************/
-export type Avatar = React.FC<AvatarProps>;
+export type AvatarType = React.FC<AvatarProps>;

@@ -32,7 +32,7 @@ export type LayoutProps = {
  *
  * @param props - Refer to LayoutProps
  ******************************************************************************************************************/
-export type Layout = React.FC<LayoutProps>;
+export type LayoutType = React.FC<LayoutProps>;
 
 /******************************************************************************************************************
  * Render a layout container with direction defaulted to 'column'.
@@ -46,7 +46,7 @@ export type Layout = React.FC<LayoutProps>;
  * </VerticalLayout>
  * ```
  ******************************************************************************************************************/
-export type VerticalLayout = React.FC<Omit<LayoutProps, 'direction'>>;
+export type VerticalLayoutType = React.FC<Omit<LayoutProps, 'direction'>>;
 
 /******************************************************************************************************************
  * Render a layout container with direction defaulted to 'row'.
@@ -60,4 +60,4 @@ export type VerticalLayout = React.FC<Omit<LayoutProps, 'direction'>>;
  * </HorizontalLayout>
  * ```
  ******************************************************************************************************************/
-export type HorizontalLayout = React.FC<Omit<LayoutProps, 'direction'>>;
+export type HorizontalLayoutType = React.FC<Omit<LayoutProps, 'direction'>>;
