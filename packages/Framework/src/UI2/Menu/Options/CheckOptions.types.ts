@@ -26,4 +26,4 @@ export type CheckOptionCompProps = {
  * <CheckOptions schema={schema} setSchema={setSchema} />
  * ```
  ******************************************************************************************************************/
-export type CheckOptionComp = React.FC<CheckOptionCompProps>;
+export type CheckOptions = React.FC<CheckOptionCompProps>;

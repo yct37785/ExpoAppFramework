@@ -2,33 +2,13 @@ import React, { memo } from 'react';
 import { View, TouchableOpacity, StyleProp, ViewStyle } from 'react-native';
 import { Text, Checkbox } from 'react-native-paper';
 import * as Const from '../../../Const';
-import { OptionState, OptionSchema, OptionProps, BaseOptions } from './BaseOptions';
+import { OptionState, OptionSchema, OptionProps } from './BaseOptions.types';
+import { CheckOptions } from './CheckOptions.types';
 
 /******************************************************************************************************************
- * CheckOptions props.
- * 
- * @property schema     - Current options tree
- * @property setSchema  - State setter
- * @property style?     - Optional wrapper style
+ * CheckOptions implementation.
  ******************************************************************************************************************/
-type CheckOptionCompProps = {
-  schema: OptionSchema;
-  setSchema: (updatedSchema: OptionSchema) => void;
-  style?: StyleProp<ViewStyle>;
-};
-
-/******************************************************************************************************************
- * Render a checkbox-based UI for the options tree powered by BaseOptions.
- * Shows checked, unchecked, and indeterminate states with recursive nesting.
- *
- * @param props - Refer to CheckOptionCompProps
- *
- * @usage
- * ```tsx
- * <CheckOptions schema={schema} setSchema={setSchema} />
- * ```
- ******************************************************************************************************************/
-export const CheckOptions: React.FC<CheckOptionCompProps> = memo(({ schema, setSchema, style = {} }) => {
+export const CheckOptionsComp: CheckOptions = memo(({ schema, setSchema, style = {} }) => {
   /**
    * renders a single checkbox option
    */

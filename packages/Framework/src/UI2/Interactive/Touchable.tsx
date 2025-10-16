@@ -7,7 +7,7 @@ import {
   Easing
 } from 'react-native';
 import * as Const from '../../Const';
-import { Touchable } from './Touchable.types';
+import { type Touchable } from './Touchable.types';
 
 /******************************************************************************************************************
  * Touchable implementation.
