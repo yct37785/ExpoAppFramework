@@ -1,7 +1,7 @@
 import React, { memo, useEffect } from 'react';
 import { View } from 'react-native';
 import { Text, Button, Switch } from 'react-native-paper';
-import { Core, Managers, Theme, UI } from 'framework';
+import { Core, Managers, UI } from 'framework';
 
 /******************************************************************************************************************
  * Home screen
@@ -9,12 +9,7 @@ import { Core, Managers, Theme, UI } from 'framework';
 const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
   const { user } = Managers.useAuth();
   const { getItem, setItem } = Managers.useLocalData();
-  const { mode } = Theme.useThemeMode();
   const isDarkMode = getItem('isDarkMode');
-
-  useEffect(() => {
-    console.log(`Theme mode: ${mode}`);
-  }, [mode]);
 
   // useEffect(() => {
   //   (async () => {
