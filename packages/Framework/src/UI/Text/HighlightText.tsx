@@ -1,8 +1,8 @@
 import React, { memo } from 'react';
 import type { TextStyle, StyleProp } from 'react-native';
-import { useTheme } from '../../Theme/ThemeProvider';
 import { Text } from './Text';
 import type { TextProps } from './Text';
+import * as Const from '../../Const';
 
 function escapeRegExp(s: string) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -16,11 +16,10 @@ function escapeRegExp(s: string) {
  * @property highlightStyle?  - Extra style for highlighted parts (e.g., { backgroundColor: 'yellow' })
  * @property children         - Content of the popup menu
  ******************************************************************************************************************/
-type HighlightTextProps = Omit<TextProps, 'children'> & {
+type HighlightTextProps = TextProps & {
   query: string;
   caseSensitive?: boolean;
   highlightStyle?: StyleProp<TextStyle>;
-  children: string | React.ReactNode;
 };
 
 /******************************************************************************************************************
@@ -47,16 +46,15 @@ type HighlightTextProps = Omit<TextProps, 'children'> & {
  ******************************************************************************************************************/
 export const TextHighlight: React.FC<HighlightTextProps> = memo(
   ({
-    variant = 'body',
+    variant = 'bodyMedium',
+    color,
+    style,
     query,
     caseSensitive = false,
     highlightStyle,
-    color,
-    style,
     children,
     ...rest
   }) => {
-    const t = useTheme();
 
     // only operate on plain strings, otherwise fall back to a single node
     if (typeof children !== 'string' || !query) {
@@ -73,7 +71,7 @@ export const TextHighlight: React.FC<HighlightTextProps> = memo(
     const parts = children.split(re);
 
     const resolvedHighlightStyle: StyleProp<TextStyle> =
-      highlightStyle ?? { backgroundColor: t.colors.highlight };
+      highlightStyle ?? { backgroundColor: Const.highlightColor };
 
     return (
       <Text variant={variant} color={color} style={style} {...rest}>

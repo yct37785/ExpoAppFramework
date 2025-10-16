@@ -4,8 +4,8 @@ import { Image, View, StyleSheet,
   type StyleProp,
   type ViewStyle,
 } from 'react-native';
-import { useTheme } from '../Theme/ThemeProvider';
-import { Text } from './Text/Text';
+import { useTheme } from 'react-native-paper';
+import { TextVariant, Text } from './Text/Text';
 
 /******************************************************************************************************************
  * Avatar props.
@@ -42,7 +42,7 @@ export type AvatarProps = {
  ******************************************************************************************************************/
 export const Avatar: React.FC<AvatarProps> = memo(
   ({ uri, label, size = 'md', shape = 'circle', style, imageStyle, badgeColor }) => {
-    const t = useTheme();
+    const theme = useTheme();
 
     const px = useMemo(() => {
       if (typeof size === 'number') return size;
@@ -55,15 +55,15 @@ export const Avatar: React.FC<AvatarProps> = memo(
       width: px,
       height: px,
       borderRadius: radius,
-      backgroundColor: t.colors.surface,
+      backgroundColor: theme.colors.surface,
       borderWidth: StyleSheet.hairlineWidth,
-      borderColor: t.colors.border,
+      borderColor: theme.colors.outline,
       alignItems: 'center',
       justifyContent: 'center',
       overflow: 'hidden',
     };
 
-    const textVariant = px >= 44 ? 'h6' : px >= 36 ? 'label' : 'label2';
+    const textVariant: TextVariant = px >= 44 ? 'bodySmall' : px >= 36 ? 'labelMedium' : 'labelSmall';
 
     return (
       <View style={[container, style]}>
@@ -84,7 +84,7 @@ export const Avatar: React.FC<AvatarProps> = memo(
               borderRadius: 99,
               backgroundColor: badgeColor,
               borderWidth: 2,
-              borderColor: t.colors.surface,
+              borderColor: theme.colors.surface,
             }}
           />
         ) : null}

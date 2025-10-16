@@ -1,32 +1,46 @@
-import React, { forwardRef, ReactNode, memo } from 'react';
-import {
-  Text as RNText,
-  type TextStyle,
-  type StyleProp,
-} from 'react-native';
-import { useTheme } from '../../Theme/ThemeProvider';
-import type { TextVariant } from '../../Theme/Theme';
+import React, { forwardRef, memo, ReactNode } from 'react';
+import { StyleProp, TextStyle } from 'react-native';
+import { Text as PaperText } from 'react-native-paper';
+
+/******************************************************************************************************************
+ * MD3 typography variants.
+ ******************************************************************************************************************/
+export type TextVariant =
+  | 'displayLarge'
+  | 'displayMedium'
+  | 'displaySmall'
+  | 'headlineLarge'
+  | 'headlineMedium'
+  | 'headlineSmall'
+  | 'titleLarge'
+  | 'titleMedium'
+  | 'titleSmall'
+  | 'bodyLarge'
+  | 'bodyMedium'
+  | 'bodySmall'
+  | 'labelLarge'
+  | 'labelMedium'
+  | 'labelSmall';
 
 /******************************************************************************************************************
  * Text props.
  * 
- * @property variant - Semantic text role; defaults to 'body'
- * @property disabled?    - Optional color override (e.g., theme.colors.muted)
- * @property style?       - Additional style(s), merged last
- * @property children     - Content of the popup menu
+ * @property variant  - MD3 text role; defaults to 'bodyMedium'.
+ * @property color?   - Optional color override.
+ * @property style?   - Optional extra styles.
+ * @property children - Text content.
  ******************************************************************************************************************/
-export type TextProps = React.ComponentPropsWithoutRef<typeof RNText> & {
+export interface TextProps {
   variant?: TextVariant;
   color?: string;
   style?: StyleProp<TextStyle>;
-  children: ReactNode;
-};
+  numberOfLines?: number;
+  children: string | ReactNode;
+}
 
 /******************************************************************************************************************
- * Headless Text component with theme-driven variants:
- * - Renders a React Native <Text> using the active Theme from ThemeProvider.
- * - Supports semantic variants defined in `theme.typography.variants` (e.g., 'h1', 'body', 'label2', ...).
- * - Merges caller-provided `style` last; default text color comes from `theme.colors.text`, unless `color` is given.
+ * Wraps React Native Paper's Text.
+ * All typography, color, and spacing behavior comes from Paper's MD3 system.
  *
  * @param props - Refer to TextProps
  * 
@@ -38,34 +52,13 @@ export type TextProps = React.ComponentPropsWithoutRef<typeof RNText> & {
  * <Text variant='label2' color={t.colors.muted}>Secondary label</Text>
  * ```
  ******************************************************************************************************************/
-const TextBase = forwardRef<RNText, TextProps>(function Text(
-  {
-    variant = 'body',
-    color,
-    style,
-    children,
-    ...rest
-  },
-  ref
-) {
-  const t = useTheme();
-  const token = t.typography.variants[variant] ?? t.typography.variants.body;
-
-  const base: TextStyle = {
-    fontFamily: token.fontFamily ?? t.typography.fontFamily,
-    fontSize: token.fontSize,
-    lineHeight: token.lineHeight,
-    letterSpacing: token.letterSpacing,
-    fontWeight: (token.fontWeight ?? t.typography.weight.regular) as any,
-    color: color ?? t.colors.text,
-  };
-  const combined: StyleProp<TextStyle> = [base, style];
+const TextBase: React.FC<TextProps> = ({ variant = 'bodyMedium', color, style, numberOfLines = 1, children }) => {
   return (
-    <RNText ref={ref} {...rest} style={combined}>
+    <PaperText variant={variant} numberOfLines={numberOfLines} style={[color ? { color } : null, style]}>
       {children}
-    </RNText>
+    </PaperText>
   );
-});
+};
 
 export const Text = memo(TextBase);
 Text.displayName = 'Text';
