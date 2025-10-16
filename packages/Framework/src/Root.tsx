@@ -85,20 +85,25 @@ type RootProps = {
  *  2) Chooses Paper MD3 theme + adapted React Navigation theme (no custom theme).
  *  3) Mounts providers and NavigationContainer.
  *
+ * NOTE:
+ *  - Hooks are always called in the same order; we avoid early returns before hooks.
+ *  - We gate effect work with `if (!isLoaded) return;` and gate UI via conditional JSX.
+ *
  * @param props - Refer to RootProps
  ******************************************************************************************************************/
 const RootApp: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
   const { isLoaded, getItem } = useLocalData();
-  if (!isLoaded) return <View style={{ flex: 1 }} />;
 
-  const isDarkMode = !!getItem<boolean>('isDarkMode');
+  // Derive a safe value even when not loaded yet (avoid conditional hooks)
+  const isDarkMode = isLoaded ? !!getItem<boolean>('isDarkMode') : false;
 
   // pick theme
   const paperTheme = isDarkMode ? MD3DarkTheme : MD3LightTheme;
   const navTheme = isDarkMode ? NavDark : NavLight;
 
-  // Firebase pulse check (once)
+  // Firebase pulse check (once we have LocalData)
   useEffect(() => {
+    if (!isLoaded) return;
     try {
       const firebaseApp = getApp(); // default app from native config
       const { projectId } = firebaseApp.options;
@@ -106,7 +111,7 @@ const RootApp: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
     } catch (err) {
       doLog('root', 'Firebase pulse check', `NOT ready (native config missing?): ${String(err)}`);
     }
-  }, []);
+  }, [isLoaded]);
 
   // status bar icons based on theme (NavContainer handles bar colors)
   useEffect(() => {
@@ -123,26 +128,31 @@ const RootApp: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
       <PaperProvider theme={paperTheme}>
         <AuthProvider>
           <MenuProvider>
-            <View style={{ flex: 1, backgroundColor: paperTheme.colors.background }}>
-              <NavigationContainer theme={navTheme}>
-                <Stack.Navigator
-                  initialRouteName={DEFAULT_SCREEN}
-                  screenOptions={{ headerShown: false }}
-                >
-                  {Object.entries(screenMap).map(([name, Component]) => (
-                    <Stack.Screen name={name} key={name}>
-                      {props => (
-                        <ScreenWrapper
-                          Component={Component}
-                          navigation={props.navigation}
-                          route={props.route}
-                        />
-                      )}
-                    </Stack.Screen>
-                  ))}
-                </Stack.Navigator>
-              </NavigationContainer>
-            </View>
+            {/* Gate the rendered tree, not the hooks */}
+            {!isLoaded ? (
+              <View style={{ flex: 1 }} />
+            ) : (
+              <View style={{ flex: 1, backgroundColor: paperTheme.colors.background }}>
+                <NavigationContainer theme={navTheme}>
+                  <Stack.Navigator
+                    initialRouteName={DEFAULT_SCREEN}
+                    screenOptions={{ headerShown: false }}
+                  >
+                    {Object.entries(screenMap).map(([name, Component]) => (
+                      <Stack.Screen name={name} key={name}>
+                        {(props) => (
+                          <ScreenWrapper
+                            Component={Component}
+                            navigation={props.navigation}
+                            route={props.route}
+                          />
+                        )}
+                      </Stack.Screen>
+                    ))}
+                  </Stack.Navigator>
+                </NavigationContainer>
+              </View>
+            )}
           </MenuProvider>
         </AuthProvider>
       </PaperProvider>
