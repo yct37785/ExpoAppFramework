@@ -7,6 +7,7 @@ import { type PressableProps, type ViewStyle, type StyleProp } from 'react-nativ
  * @property feedback              - Press feedback style ('opacity' | 'none'). Default: 'opacity'
  *                                   • 'opacity': Smooth opacity animation + Android ripple
  *                                   • 'none'   : No visual feedback
+ * @property pressOpacity          - Press opacity, defaults to pressOpacity
  * @property disabled              - Disables press handling & visual feedback
  * @property onPress               - Called when the press gesture ends successfully
  * @property onPressIn             - Called when the press gesture starts
@@ -21,6 +22,7 @@ import { type PressableProps, type ViewStyle, type StyleProp } from 'react-nativ
  ******************************************************************************************************************/
 export interface TouchableProps {
   feedback?: 'opacity' | 'none';
+  pressOpacity?: number;
   disabled?: boolean;
   onPress?: PressableProps['onPress'];
   onPressIn?: PressableProps['onPressIn'];

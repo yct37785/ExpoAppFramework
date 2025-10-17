@@ -15,6 +15,7 @@ import { TouchableType } from './Touchable.types';
 export const Touchable: TouchableType = memo(
   ({
     feedback = 'opacity',
+    pressOpacity = Const.pressOpacity,
     style,
     disabled,
     onPress,
@@ -60,7 +61,7 @@ export const Touchable: TouchableType = memo(
      */
     const handleIn = useCallback(
       (e: any) => {
-        if (!disabled && isOpacity) run(Const.pressOpacity, Const.pressInDurationMS);
+        if (!disabled && isOpacity) run(pressOpacity, Const.pressInDurationMS);
         onPressIn?.(e);
       },
       [disabled, isOpacity, onPressIn, run]
