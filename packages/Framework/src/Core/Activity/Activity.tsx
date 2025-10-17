@@ -5,8 +5,8 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackPropsList } from '../Screen';
 import { useAuth } from '../../Managers/Firebase/FirebaseAuthManager';
 import { AppBar } from '../../UI/Container/AppBar';
-import { Avatar } from '../../UI/Avatar';
-import { Popup } from '../../UI/Popup';
+import { Avatar } from '../../UI/Others/Avatar';
+import { Popup } from '../../UI/General/Popup';
 import { MenuOption } from '../../UI/Menu/Click/MenuList.types';
 import { MenuList } from '../../UI/Menu/Click/MenuList';
 
