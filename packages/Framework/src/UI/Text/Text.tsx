@@ -5,9 +5,13 @@ import { TextType } from './Text.types';
 /******************************************************************************************************************
  * Text implementation.
  ******************************************************************************************************************/
-export const Text: TextType = memo(({ variant = 'bodyMedium', color, style, numberOfLines = 1, children }) => {
+export const Text: TextType = memo(({ variant = 'bodyMedium', color, style, numberOfLines, children }) => {
   return (
-    <PaperText variant={variant} numberOfLines={numberOfLines} style={[color ? { color } : null, style]}>
+    <PaperText
+        variant={variant}
+        {...(numberOfLines !== undefined ? { numberOfLines } : {})}
+        style={[color ? { color } : null, style]}
+      >
       {children}
     </PaperText>
   );
