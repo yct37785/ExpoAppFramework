@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
 import { View } from 'react-native';
-import { Divider, Text } from 'react-native-paper';
 import { Core, Const, UI } from 'framework';
 const _ = require('lodash');
 
@@ -44,26 +43,26 @@ const ContainersScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => 
     return <UI.VerticalLayout>
 
       {/* CollapsibleContainer */}
-      <Text variant='titleMedium' style={{ marginTop: Const.padSize }}>CollapsibleContainer</Text>
+      <UI.Text variant='titleMedium' style={{ marginTop: Const.padSize }}>CollapsibleContainer</UI.Text>
       <UI.CollapsibleContainer toggleHeaderText='collapsible'>
         <View style={{ flex: 1, padding: Const.padSize }}>
-          <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
+          <UI.Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</UI.Text>
         </View>
       </UI.CollapsibleContainer>
 
-      <Divider />
+      <UI.Divider />
 
       {/* AccordionContainer */}
-      <Text variant='titleMedium'>AccordionContainer</Text>
+      <UI.Text variant='titleMedium'>AccordionContainer</UI.Text>
       <UI.AccordionContainer sectionTitles={ACCORDION_SECTION_TITLES}>
         <View style={{ flex: 1, padding: Const.padSize }}>
-          <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
+          <UI.Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</UI.Text>
         </View>
         <View style={{ flex: 1, padding: Const.padSize }}>
-          <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
+          <UI.Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</UI.Text>
         </View>
         <View style={{ flex: 1, padding: Const.padSize }}>
-          <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
+          <UI.Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</UI.Text>
         </View>
       </UI.AccordionContainer>
 
@@ -74,14 +73,14 @@ const ContainersScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => 
    * component for page 2
    */
   const Tab2Page = memo(() => {
-    return <View style={{ flex: 1 }}><Text>P2</Text></View>;
+    return <View style={{ flex: 1 }}><UI.Text>P2</UI.Text></View>;
   });
 
   /**
    * component for page 3
    */
   const Tab3Page = memo(() => {
-    return <View style={{ flex: 1 }}><Text>P3</Text></View>;
+    return <View style={{ flex: 1 }}><UI.Text>P3</UI.Text></View>;
   });
 
   return (
