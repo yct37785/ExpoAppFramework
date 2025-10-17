@@ -140,6 +140,8 @@ export const AccordionContainer: AccordionContainerType = memo(
 
     return (
       <Accordion
+        touchableComponent={Touchable}
+        touchableProps={{ pressOpacity: Const.pressOpacityHeavy }}
         containerStyle={style}
         sections={sections}
         activeSections={activeSections}
