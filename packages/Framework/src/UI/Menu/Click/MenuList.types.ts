@@ -30,16 +30,16 @@ export type MenuOption = {
  * 
  * @property options        - Array of MenuOption rows to display (order preserved)
  * @property onSelect       - Callback invoked with the clicked option's `value`
- * @property style?         - Wrapper style for the outer container
  * @property showDividers?  - When true, draws a Divider between items
  * @property dense?         - When true, renders compact rows
+ * @property style?         - Wrapper style for the outer container
  ******************************************************************************************************************/
 export type MenuListProps = {
   options: MenuOption[];
   onSelect: (value: string) => void;
-  style?: StyleProp<ViewStyle>;
   showDividers?: boolean;
   dense?: boolean;
+  style?: StyleProp<ViewStyle>;
 };
 
 /******************************************************************************************************************

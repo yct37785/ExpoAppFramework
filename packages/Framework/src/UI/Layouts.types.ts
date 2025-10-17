@@ -27,10 +27,9 @@ export type LayoutProps = {
 
 /******************************************************************************************************************
  * Render a flexible base layout container using flexbox.
- * Supports spacing, padding, wrapping, scrolling, and child reversal.
- * Used via VerticalLayout and HorizontalLayout wrappers rather than standalone.
- *
- * @param props - Refer to LayoutProps
+ * - Supports spacing, padding, wrapping, scrolling, and child reversal.
+ * - Used via VerticalLayout and HorizontalLayout wrappers rather than standalone.
+ * - Does not support custom styles.
  ******************************************************************************************************************/
 export type LayoutType = React.FC<LayoutProps>;
 

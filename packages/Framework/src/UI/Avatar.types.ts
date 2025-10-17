@@ -21,9 +21,9 @@ export type AvatarProps = {
   label?: string;
   size?: number | 'sm' | 'md' | 'lg';
   shape?: 'circle' | 'rounded';
+  badgeColor?: string;
   style?: StyleProp<ViewStyle>;
   imageStyle?: StyleProp<ImageStyle>;
-  badgeColor?: string;
 };
 
 /******************************************************************************************************************

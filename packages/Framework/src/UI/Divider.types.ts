@@ -5,14 +5,12 @@ import { type ViewStyle, type StyleProp } from 'react-native';
  * Divider props.
  *
  * @property orientation  - Line orientation ('horizontal' | 'vertical'), default: 'horizontal'
- * @property color?       - Custom color; defaults to theme.colors.outlineVariant (MD3 divider color)
  * @property spacing?     - Margin applied before/after the line (dp). Vertical margin for horizontal dividers,
  *                          horizontal margin for vertical dividers. Default: Const.padSize
  * @property style?       - Additional style for the divider
  ******************************************************************************************************************/
 export type DividerProps = {
   orientation?: 'horizontal' | 'vertical';
-  color?: string;
   spacing?: number;
   style?: StyleProp<ViewStyle>;
 };

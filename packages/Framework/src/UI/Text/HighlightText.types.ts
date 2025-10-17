@@ -8,7 +8,6 @@ import type { TextProps } from './Text.types';
  * @property query            - Substring to highlight
  * @property caseSensitive?   - Match case (default: false)
  * @property highlightStyle?  - Extra style for highlighted parts (e.g., { backgroundColor: 'yellow' })
- * @property children         - Content of the popup menu
  ******************************************************************************************************************/
 export type HighlightTextProps = TextProps & {
   query: string;
