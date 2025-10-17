@@ -1,6 +1,6 @@
 import React, { useRef, memo, useMemo } from 'react';
 import { Menu, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
-import { Touchable } from './Interactive/Touchable';
+import { Touchable } from '../Interactive/Touchable';
 import { PopupType } from './Popup.types';
 
 /******************************************************************************************************************

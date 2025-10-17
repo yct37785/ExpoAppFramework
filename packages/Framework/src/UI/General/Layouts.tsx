@@ -1,6 +1,6 @@
 import React, { memo, ReactNode } from 'react';
 import { View, ScrollView } from 'react-native';
-import * as Const from '../Const';
+import * as Const from '../../Const';
 import { LayoutType, VerticalLayoutType, HorizontalLayoutType } from './Layouts.types';
 
 /******************************************************************************************************************

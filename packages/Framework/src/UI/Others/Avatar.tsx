@@ -3,8 +3,8 @@ import { Image, View, StyleSheet,
   type ViewStyle,
 } from 'react-native';
 import { useTheme } from 'react-native-paper';
-import { TextVariant } from './Text/Text.types';
-import { Text } from './Text/Text';
+import { TextVariant } from '../Text/Text.types';
+import { Text } from '../Text/Text';
 import { AvatarType } from './Avatar.types';
 
 /******************************************************************************************************************

@@ -25,8 +25,7 @@ export const Touchable: TouchableType = memo(
     android_disableSound,
     hitSlop,
     pressRetentionOffset,
-    children,
-    testID,
+    children
   }) => {
     /**
      * State: Animated driver for opacity.
@@ -109,7 +108,6 @@ export const Touchable: TouchableType = memo(
         android_disableSound={android_disableSound}
         hitSlop={hitSlop}
         pressRetentionOffset={pressRetentionOffset}
-        testID={testID}
       >
         <Animated.View style={[style as ViewStyle, { opacity }]}>{children}</Animated.View>
       </Pressable>
