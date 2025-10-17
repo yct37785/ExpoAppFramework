@@ -15,7 +15,7 @@ import { TouchableType } from './Touchable.types';
 export const Touchable: TouchableType = memo(
   ({
     feedback = 'opacity',
-    pressOpacity = Const.pressOpacity,
+    pressOpacity = Const.pressOpacityLight,
     style,
     disabled,
     onPress,

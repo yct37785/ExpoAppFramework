@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-paper';
 import { Core, UI } from 'framework';
 
@@ -16,6 +16,10 @@ const TestbedScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
           <View style={{ backgroundColor: 'red', width: '100%', height: 100 }}>
           </View>
         </UI.Touchable>
+        <TouchableOpacity>
+          <View style={{ backgroundColor: 'red', width: '100%', height: 100 }}>
+          </View>
+        </TouchableOpacity>
         <Button mode='contained' onPress={() => {}}>
           asdasdsadasd
         </Button>

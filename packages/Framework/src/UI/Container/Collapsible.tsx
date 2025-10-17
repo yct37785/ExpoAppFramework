@@ -1,5 +1,5 @@
 import React, { useState, JSX, memo, ReactNode, useMemo, useCallback } from 'react';
-import { View } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { Text, useTheme, Icon } from 'react-native-paper';
 import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
@@ -59,9 +59,7 @@ export const CollapsibleContainer: CollapsibleContainerType = memo(
 
     return (
       <View style={style}>
-        <Touchable onPress={toggleCollapse} 
-        style={{ borderRadius: 8, overflow: 'hidden' }}   // ensures ripple is visible/clipped
-        >
+        <Touchable pressOpacity={Const.pressOpacityHeavy} onPress={toggleCollapse}>
           <ToggleHeader toggleHeaderText={toggleHeaderText} isCollapsed={isCollapsed} />
         </Touchable>
         <Collapsible collapsed={isCollapsed}>{children}</Collapsible>
