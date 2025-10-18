@@ -1,7 +1,5 @@
 import React, { ReactNode } from 'react';
 import { type StyleProp, type ViewStyle } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { SceneRendererProps } from 'react-native-tab-view';
 
 /******************************************************************************************************************
  * Describe the route object for each tab in the tabs container.
@@ -17,30 +15,22 @@ import { SceneRendererProps } from 'react-native-tab-view';
  ******************************************************************************************************************/
 export type TabRouteProps = {
   key: string;
-  title: string;
-  icon?: keyof typeof MaterialCommunityIcons.glyphMap;
+  title?: string;
+  icon?: string;
 };
 
 /******************************************************************************************************************
- * Define the function signature that maps a tab route to its rendered scene.
+ * Tabs scene map (headless)
  *
- * @param props - Scene renderer props combined with the specific tab route
+ * A mapping of route keys → scene components, compatible with react-native-tab-view's SceneMap().
  *
- * @return - React node to render for the given tab
- *
- * @usage
- * ```ts
- * const renderScene: UI.TabsSceneMapFunc = ({ route, jumpTo }) => {
- *   switch (route.key) {
- *     case 'p1':
- *       return <Page1 />;
- *     case 'p2':
- *       return <Page2 />;
- *   }
- * }
- * ```
+ * @example
+ * const scenes: TabsSceneMap = {
+ *   music: MusicRoute,
+ *   albums: AlbumsRoute,
+ * };
  ******************************************************************************************************************/
-export type TabsSceneMapFunc = (props: SceneRendererProps & { route: TabRouteProps }) => ReactNode;
+export type TabsSceneMap<T extends string = string> = Record<T, React.ComponentType<unknown>>;
 
 /******************************************************************************************************************
  * TabsContainer props.
@@ -54,7 +44,7 @@ export type TabsSceneMapFunc = (props: SceneRendererProps & { route: TabRoutePro
  ******************************************************************************************************************/
 export type TabsContainerProps = {
   routes: TabRouteProps[];
-  sceneMap: TabsSceneMapFunc;
+  sceneMap: TabsSceneMap;
   tabIndex: number;
   onTabIdxChange: (index: number) => void;
   position: 'top' | 'bottom';
