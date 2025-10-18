@@ -39,9 +39,19 @@ export const TabsContainer: TabsContainerType = memo(
       () => [{ backgroundColor: theme.colors.primary }],
       [theme.colors.primary]
     );
-    const tabBarStyle = useMemo<StyleProp<ViewStyle>>(
-      () => [{ backgroundColor: theme.colors.surface }],
-      [theme.colors.surface]
+    const tabBarStyle = useMemo(
+      () => [
+        {
+          backgroundColor: theme.colors.surface,
+          // have divider instead of elevation when in dark mode
+          elevation: theme.dark ? 0 : 2,
+          borderBottomWidth: theme.dark ? 0.5 : 0,
+          borderBottomColor: theme.dark
+            ? theme.colors.outlineVariant
+            : 'transparent',
+        },
+      ],
+      [theme.dark, theme.colors],
     );
     const labelStyle = useMemo<StyleProp<TextStyle>>(
       () => [theme.fonts?.labelMedium ?? null],
