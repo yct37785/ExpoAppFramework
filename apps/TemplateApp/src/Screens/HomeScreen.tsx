@@ -56,23 +56,23 @@ const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
   };
 
   return (
-    <Core.Activity navigation={navigation} LeftContent={LeftContent} title='Home Sample'>
-      <UI.VerticalLayout>
-        {renderAuthSection()}
+    <UI.VerticalLayout>
+      {renderAuthSection()}
 
-        <Text variant='bodyMedium' style={{ marginTop: 16 }}>
-          Select the screen you want to navigate to
-        </Text>
-        
-        {renderScreenBtn('testbed', 'test bed example')}
-        {renderScreenBtn('typography', 'typography example')}
-        {renderScreenBtn('layout', 'layouts example')}
-        {renderScreenBtn('menu', 'menus example')}
-        {renderScreenBtn('list', 'list example')}
-        {renderScreenBtn('container', 'containers example')}
-      </UI.VerticalLayout>
-    </Core.Activity>
+      <Text variant='bodyMedium' style={{ marginTop: 16 }}>
+        Select the screen you want to navigate to
+      </Text>
+
+      {renderScreenBtn('testbed', 'test bed example')}
+      {renderScreenBtn('typography', 'typography example')}
+      {renderScreenBtn('layout', 'layouts example')}
+      {renderScreenBtn('menu', 'menus example')}
+      {renderScreenBtn('list', 'list example')}
+      {renderScreenBtn('container', 'containers example')}
+    </UI.VerticalLayout>
   );
 };
+
+(HomeScreen as any).screenTitle = 'Home';
 
 export default memo(HomeScreen);

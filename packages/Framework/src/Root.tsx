@@ -4,13 +4,14 @@ import 'react-native-gesture-handler';
 // core
 import React, { memo, useEffect } from 'react';
 import { View, StatusBar, Platform, LogBox } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 // UI
 import {
   Provider as PaperProvider,
   adaptNavigationTheme,
   MD3DarkTheme,
   MD3LightTheme,
+  useTheme,
 } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
 // nav
@@ -27,10 +28,16 @@ import { useLocalData, LocalDataProvider } from './Managers/LocalDataManager';
 // Firebase
 import { getApp } from '@react-native-firebase/app';
 // auth
-import { AuthProvider } from './Managers/Firebase/FirebaseAuthManager';
+import { AuthProvider, useAuth } from './Managers/Firebase/FirebaseAuthManager';
 // utils
 import { doLog } from './Utils/General';
 import { logColors } from './Const';
+// app chrome
+import { AppBar } from './UI/Container/AppBar';
+import { Avatar } from './UI/Others/Avatar';
+import { Popup } from './UI/General/Popup';
+import { MenuOption } from './UI/Menu/Click/MenuList.types';
+import { MenuList } from './UI/Menu/Click/MenuList';
 
 LogBox.ignoreLogs(['new NativeEventEmitter']);
 
@@ -44,27 +51,99 @@ const { LightTheme: NavLight, DarkTheme: NavDark } = adaptNavigationTheme({
 });
 
 /******************************************************************************************************************
- * Wrap a screen component so it receives typed { navigation, route } props from the stack render callback.
+ * ProfileMenu — Renders the authenticated user's avatar and dropdown menu.
+ * 
+ * Used globally in Root's AppBar to handle sign-in/sign-out actions.
  *
- * @param props - Wrapper props:
- *   - Component  - Screen component to render (receives { navigation, route })
- *   - navigation - Navigation controller for stack operations
- *   - route: {}  - Current route info:
- *     + name: string   - Route name
- *     + params?: {}    - Route parameters (shape depends on the screen)
+ * @property photoURL?   - Optional profile picture URL for the avatar.
+ * @property email?      - Signed-in user's email address (displayed in menu).
+ * @property isAnonymous - Whether the current user is anonymous (no account linked).
+ * @property onSignIn    - Called when the user selects “Sign in with Google”.
+ * @property onSignOut   - Called when the user selects “Sign out”.
  ******************************************************************************************************************/
+const ProfileMenu: React.FC<{
+  photoURL?: string;
+  email?: string;
+  isAnonymous: boolean;
+  onSignIn: () => Promise<void>;
+  onSignOut: () => Promise<void>;
+}> = ({ photoURL, email, isAnonymous, onSignIn, onSignOut }) => {
+  const options: MenuOption[] = isAnonymous
+    ? [{ label: 'Sign in with Google', value: 'signin', leadingIcon: 'google' }]
+    : [
+        {
+          label: email ? `Signed in as ${email}` : 'Signed in',
+          value: 'noop',
+          leadingIcon: 'account',
+          disabled: true,
+        },
+        { label: 'Sign out', value: 'signout', leadingIcon: 'logout' },
+      ];
+
+  const handleSelect = async (value: string) => {
+    if (value === 'signin') await onSignIn();
+    if (value === 'signout') await onSignOut();
+  };
+
+  return (
+    <Popup triggerComp={<Avatar uri={photoURL} label="A" size="md" />}>
+      <MenuList options={options} onSelect={handleSelect} dense showDividers />
+    </Popup>
+  );
+};
+
 const Stack = createNativeStackNavigator<RootStackPropsList>();
-const ScreenWrapper = ({
+
+/******************************************************************************************************************
+ * ScreenChrome — Universal layout wrapper providing AppBar + SafeAreaView for all screens.
+ * 
+ * Injected automatically by Root so individual screens do not need their own Activity wrapper.
+ *
+ * @property Component - The screen component being rendered. May include a static `screenTitle` field.
+ * @property navigation - React Navigation object for handling navigation actions.
+ * @property route      - React Navigation route containing screen metadata.
+ ******************************************************************************************************************/
+const ScreenChrome = ({
   Component,
   navigation,
   route,
 }: {
-  Component: React.FC<ScreenProps>;
-} & ScreenProps) => (
-  <View style={{ flex: 1 }}>
-    <Component navigation={navigation} route={route} />
-  </View>
-);
+  Component: React.FC<ScreenProps> & { screenTitle?: string };
+} & ScreenProps) => {
+  const { user, signIn, signOut } = useAuth();
+  const theme = useTheme();
+  const title = Component.screenTitle ?? route.name;
+
+  const isAnon = !!user?.isAnonymous || !user;
+  const photoURL = user?.photoURL || undefined;
+  const email = user?.email || '';
+
+  return (
+    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+      <AppBar
+        title={title}
+        onBack={navigation.canGoBack() ? () => navigation.goBack() : undefined}
+        right={
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            {/* put any global left/right header content here if needed */}
+            <View style={{ marginLeft: 8 }}>
+              <ProfileMenu
+                photoURL={photoURL}
+                email={email}
+                isAnonymous={isAnon}
+                onSignIn={signIn}
+                onSignOut={signOut}
+              />
+            </View>
+          </View>
+        }
+      />
+      <SafeAreaView edges={['bottom']} style={{ flex: 1 }}>
+        <Component navigation={navigation} route={route} />
+      </SafeAreaView>
+    </View>
+  );
+};
 
 /******************************************************************************************************************
  * Root component props.
@@ -88,13 +167,11 @@ type RootProps = {
  * NOTE:
  *  - Hooks are always called in the same order; we avoid early returns before hooks.
  *  - We gate effect work with `if (!isLoaded) return;` and gate UI via conditional JSX.
- *
- * @param props - Refer to RootProps
  ******************************************************************************************************************/
 const RootApp: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
   const { isLoaded, getItem } = useLocalData();
 
-  // Derive a safe value even when not loaded yet (avoid conditional hooks)
+  // derive a safe value even when not loaded yet (avoid conditional hooks)
   const isDarkMode = isLoaded ? !!getItem<boolean>('isDarkMode') : false;
 
   // pick theme
@@ -105,7 +182,7 @@ const RootApp: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
   useEffect(() => {
     if (!isLoaded) return;
     try {
-      const firebaseApp = getApp(); // default app from native config
+      const firebaseApp = getApp();
       const { projectId } = firebaseApp.options;
       doLog('root', 'Firebase pulse check', `Loaded with projectId: ${logColors.green}${projectId}`);
     } catch (err) {
@@ -118,7 +195,7 @@ const RootApp: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
     const bar = isDarkMode ? 'light-content' : 'dark-content';
     StatusBar.setBarStyle(bar, true);
     if (Platform.OS === 'android') {
-      // optionally: StatusBar.setBackgroundColor could be set to navTheme.colors.background
+      // Optionally: StatusBar.setBackgroundColor could be set to navTheme.colors.background
       // if using custom fullscreen layout
     }
   }, [isDarkMode]);
@@ -128,30 +205,25 @@ const RootApp: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
       <PaperProvider theme={paperTheme}>
         <AuthProvider>
           <MenuProvider>
-            {/* Gate the rendered tree, not the hooks */}
+            {/* gate the rendered tree, not the hooks */}
             {!isLoaded ? (
               <View style={{ flex: 1 }} />
             ) : (
-              <View style={{ flex: 1, backgroundColor: paperTheme.colors.background }}>
-                <NavigationContainer theme={navTheme}>
-                  <Stack.Navigator
-                    initialRouteName={DEFAULT_SCREEN}
-                    screenOptions={{ headerShown: false }}
-                  >
-                    {Object.entries(screenMap).map(([name, Component]) => (
-                      <Stack.Screen name={name} key={name}>
-                        {(props) => (
-                          <ScreenWrapper
-                            Component={Component}
-                            navigation={props.navigation}
-                            route={props.route}
-                          />
-                        )}
-                      </Stack.Screen>
-                    ))}
-                  </Stack.Navigator>
-                </NavigationContainer>
-              </View>
+              <NavigationContainer theme={navTheme}>
+                <Stack.Navigator initialRouteName={DEFAULT_SCREEN} screenOptions={{ headerShown: false }}>
+                  {Object.entries(screenMap).map(([name, Component]) => (
+                    <Stack.Screen name={name} key={name}>
+                      {(props) => (
+                        <ScreenChrome
+                          Component={Component as React.FC<ScreenProps> & { screenTitle?: string }}
+                          navigation={props.navigation}
+                          route={props.route}
+                        />
+                      )}
+                    </Stack.Screen>
+                  ))}
+                </Stack.Navigator>
+              </NavigationContainer>
             )}
           </MenuProvider>
         </AuthProvider>
@@ -162,8 +234,6 @@ const RootApp: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
 
 /******************************************************************************************************************
  * App entry: provide LocalData context around RootApp and export the wrapped app entry.
- *
- * @param props - Refer to RootProps
  ******************************************************************************************************************/
 const AppEntry: React.FC<RootProps> = (props) => {
   return (
