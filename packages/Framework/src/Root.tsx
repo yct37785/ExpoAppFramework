@@ -95,11 +95,27 @@ const ProfileMenu: React.FC<{
 const Stack = createNativeStackNavigator<RootStackPropsList>();
 
 /******************************************************************************************************************
+ * AppBarOptions — Per-screen options that control the universal AppBar rendered by Root.
+ *
+ * @property elevated?    - Draw a subtle elevation (shadow) for the AppBar; default: false
+ * @property showBack?    - Show the back button when possible; default: navigation.canGoBack()
+ * @property showProfile? - Show the profile/avatar menu on the right; default: true
+ ******************************************************************************************************************/
+export type AppBarOptions = {
+  elevated?: boolean;
+  showBack?: boolean;
+  showProfile?: boolean;
+};
+
+/******************************************************************************************************************
  * ScreenChrome — Universal layout wrapper providing AppBar + SafeAreaView for all screens.
  * 
  * Injected automatically by Root so individual screens do not need their own Activity wrapper.
  *
- * @property Component - The screen component being rendered. May include a static `screenTitle` field.
+ * @property Component  - The screen component being rendered. May include static:
+ *                         + screenTitle?: string
+ *                         + LeftContent?: React.FC
+ *                         + appBarOptions?: AppBarOptions
  * @property navigation - React Navigation object for handling navigation actions.
  * @property route      - React Navigation route containing screen metadata.
  ******************************************************************************************************************/
@@ -108,11 +124,17 @@ const ScreenChrome = ({
   navigation,
   route,
 }: {
-  Component: React.FC<ScreenProps> & { screenTitle?: string };
+  Component: React.FC<ScreenProps> & {
+    screenTitle?: string;
+    LeftContent?: React.FC | null;
+    appBarOptions?: AppBarOptions;
+  };
 } & ScreenProps) => {
   const { user, signIn, signOut } = useAuth();
   const theme = useTheme();
-  const title = Component.screenTitle ?? route.name;
+
+  const LeftContentComp = Component.LeftContent ?? null;
+  const opts = Component.appBarOptions ?? {};
 
   const isAnon = !!user?.isAnonymous || !user;
   const photoURL = user?.photoURL || undefined;
@@ -121,21 +143,24 @@ const ScreenChrome = ({
   return (
     <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
       <AppBar
-        title={title}
-        onBack={navigation.canGoBack() ? () => navigation.goBack() : undefined}
+        title={Component.screenTitle}
+        elevated={opts.elevated ?? false}
+        onBack={opts.showBack ? () => navigation.goBack() : undefined}
+        left={LeftContentComp ? <LeftContentComp /> : undefined}
         right={
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            {/* put any global left/right header content here if needed */}
-            <View style={{ marginLeft: 8 }}>
-              <ProfileMenu
-                photoURL={photoURL}
-                email={email}
-                isAnonymous={isAnon}
-                onSignIn={signIn}
-                onSignOut={signOut}
-              />
+          opts.showProfile ? (
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{ marginLeft: 8 }}>
+                <ProfileMenu
+                  photoURL={photoURL}
+                  email={email}
+                  isAnonymous={isAnon}
+                  onSignIn={signIn}
+                  onSignOut={signOut}
+                />
+              </View>
             </View>
-          </View>
+          ) : undefined
         }
       />
       <SafeAreaView edges={['bottom']} style={{ flex: 1 }}>

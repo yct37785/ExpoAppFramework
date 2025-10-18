@@ -1,7 +1,23 @@
 import React, { memo, useEffect } from 'react';
-import { View } from 'react-native';
-import { Text, Button, Switch } from 'react-native-paper';
+import { Text, Button, Switch, useTheme } from 'react-native-paper';
 import { Core, Managers, UI } from 'framework';
+
+/******************************************************************************************************************
+ * LeftContent
+ ******************************************************************************************************************/
+const LeftContent: React.FC = () => {
+  const theme = useTheme();
+  const { getItem, setItem } = Managers.useLocalData();
+  const isDarkMode = !!getItem<boolean>('isDarkMode');
+
+  return (
+    <Switch
+      value={isDarkMode}
+      onValueChange={(val) => setItem('isDarkMode', val)}
+      color={theme.colors.primary}
+    />
+  );
+};
 
 /******************************************************************************************************************
  * Home screen
@@ -21,12 +37,6 @@ const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
   //     console.log(docData);
   //   })();
   // }, []);
-
-  const LeftContent = () => (
-    <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-      <Switch value={!!isDarkMode} onValueChange={(val) => setItem('isDarkMode', val)} />
-    </View>
-  );
 
   const renderScreenBtn = (screen: string, btnText: string) => (
     <Button mode='contained' onPress={() => navigation.navigate(screen, { paramText: 'hello from home' })}>
@@ -73,6 +83,15 @@ const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
   );
 };
 
+/******************************************************************************************************************
+ * Static fields
+ ******************************************************************************************************************/
 (HomeScreen as any).screenTitle = 'Home';
+(HomeScreen as any).LeftContent = LeftContent;
+(HomeScreen as any).appBarOptions = {
+  elevated: true,
+  showBack: false,
+  showProfile: true,
+};
 
 export default memo(HomeScreen);
