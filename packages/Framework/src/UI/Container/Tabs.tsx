@@ -1,5 +1,5 @@
 import React, { memo, JSX, useCallback, useMemo } from 'react';
-import { View, StyleProp, ViewStyle } from 'react-native';
+import { View, StyleProp, ViewStyle, TextStyle } from 'react-native';
 import { useTheme, Icon } from 'react-native-paper';
 import * as Const from '../../Const';
 import { TabView, TabBar, TabBarProps, SceneMap } from 'react-native-tab-view';
@@ -16,8 +16,7 @@ export const TabsContainer: TabsContainerType = memo(
     const renderScene = useMemo(() => SceneMap(sceneMap as any), [sceneMap]);
 
     // Fallbacks so we don't rely on magic numbers if your Const isn't present
-    const ripple = theme.dark ? Const?.rippleColorForDark ?? 'rgba(255,255,255,0.12)'
-                              : Const?.rippleColorForLight ?? 'rgba(0,0,0,0.12)';
+    const ripple = theme.dark ? Const.rippleColorForDark : Const.rippleColorForLight;
 
     /****************************************************************************************************************
      * lazy placeholder
@@ -44,10 +43,11 @@ export const TabsContainer: TabsContainerType = memo(
       () => [{ backgroundColor: theme.colors.surface }],
       [theme.colors.surface]
     );
-    const labelStyle = useMemo(
-      () => [{ color: theme.colors.onSurface }],
-      [theme.colors.onSurface]
+    const labelStyle = useMemo<StyleProp<TextStyle>>(
+      () => [theme.fonts?.labelMedium ?? null],
+      [theme.fonts]
     );
+    const onSurface = theme.colors.onSurface;
 
     /****************************************************************************************************************
      * TabBar renderer (stable)
@@ -56,10 +56,11 @@ export const TabsContainer: TabsContainerType = memo(
       (props: any): JSX.Element => (
         <TabBar
           {...props}
-          // renderIcon={({ route, focused, color }) => renderIcon({ route: route as TabRouteProps, color })}
-          //pressColor={ripple}
+          pressColor={ripple}
           indicatorStyle={indicatorStyle}
           style={tabBarStyle}
+          activeColor={onSurface}
+          inactiveColor={onSurface}
           labelStyle={labelStyle}
         />
       ),
