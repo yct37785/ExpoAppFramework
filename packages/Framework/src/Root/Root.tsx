@@ -146,7 +146,6 @@ const ScreenChrome = ({
     <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
       <AppBar
         title={title}
-        elevated={true}
         onBack={showBack ? () => navigation.goBack() : undefined}
         left={LeftContentComp ? <LeftContentComp /> : undefined}
         right={
