@@ -5,7 +5,7 @@ import { Screen, Managers, UI } from 'framework';
 /******************************************************************************************************************
  * Home screen
  ******************************************************************************************************************/
-const HomeScreen: React.FC<Screen.ScreenProps> = ({ navigation, route }) => {
+const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
   const { user } = Managers.useAuth();
   const theme = useTheme();
   const { getItem, setItem } = Managers.useLocalData();

@@ -1,42 +1,25 @@
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RouteProp } from '@react-navigation/native';
+import type { ParamListBase, RouteProp } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type React from 'react';
 
 /******************************************************************************************************************
- * Props for individual screen routes:
- * - Each screen in the stack can define its own expected params.
- * - By default, this example includes a single string parameter.
- * 
- * @property paramText - sample text data parameter passed via navigation
+ * Base props each screen receives.
+ *
+ * @template P - Param list (must extend ParamListBase)
+ * @template N - Route name (key of P)
  ******************************************************************************************************************/
-type ScreenRouteProps = {
-  paramText: string;
+export type ScreenProps<
+  P extends ParamListBase = ParamListBase,
+  N extends keyof P & string = string
+> = {
+  navigation: NativeStackNavigationProp<P, N>;
+  route: RouteProp<P, N>;
 };
 
 /******************************************************************************************************************
- * Map route names to their expected parameter definitions for the stack.
- *
- * @property [key] - a screen route name mapped to its ScreenRouteProps contract
+ * Type for each screen in consumer app.
  ******************************************************************************************************************/
-export type RootStackPropsList = {
-  [key: string]: ScreenRouteProps;
-};
-
-/******************************************************************************************************************
- * Base props provided to all screens:
- * - Each screen receives a navigation prop (for controlling navigation) 
- *   and a route prop (containing params and metadata).
- *
- * @template T - specific screen name from RootStackPropsList (defaults to any key)
- *
- * @property navigation - navigation controller for stack operations
- * @property route - current route object for the screen:
- *   - name: string - active route name
- *   - params: RootStackPropsList[T] - typed route parameters for the active screen
- ******************************************************************************************************************/
-export type ScreenProps<T extends keyof RootStackPropsList = keyof RootStackPropsList> = {
-  navigation: NativeStackNavigationProp<RootStackPropsList, T>;
-  route: RouteProp<RootStackPropsList, T>;
-};
+export type ScreenType = React.FC<ScreenProps>;
 
 /******************************************************************************************************************
  * Schema for the screen map:

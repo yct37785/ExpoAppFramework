@@ -18,10 +18,11 @@ import {
   NavigationContainer,
   DarkTheme as NavigationDarkTheme,
   DefaultTheme as NavigationDefaultTheme,
+  ParamListBase
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // screen typing
-import { RootStackPropsList, ScreenProps, ScreenMap } from '../Screen/Screen.types';
+import { ScreenMap } from '../Screen/Screen.types';
 // data
 import { useLocalData, LocalDataProvider } from '../Managers/LocalDataManager';
 // Firebase
@@ -43,7 +44,7 @@ const { LightTheme: NavLight, DarkTheme: NavDark } = adaptNavigationTheme({
   reactNavigationDark: NavigationDarkTheme,
 });
 
-const Stack = createNativeStackNavigator<RootStackPropsList>();
+const Stack = createNativeStackNavigator<ParamListBase>();
 
 /******************************************************************************************************************
  * Root component props.
