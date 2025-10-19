@@ -1,5 +1,3 @@
-export * from '../UI/Container/AppBar';
-export * from '../UI/Container/AppBar.types';
 export * from '../UI/Container/Collapsible';
 export * from '../UI/Container/Collapsible.types';
 export * from '../UI/Container/Tabs';

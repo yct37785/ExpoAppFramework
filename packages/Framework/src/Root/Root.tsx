@@ -22,22 +22,22 @@ import {
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // screen typing
-import { RootStackPropsList, ScreenProps, ScreenMap } from './Core/Screen';
+import { RootStackPropsList, ScreenProps, ScreenMap } from '../Core/Screen';
 // data
-import { useLocalData, LocalDataProvider } from './Managers/LocalDataManager';
+import { useLocalData, LocalDataProvider } from '../Managers/LocalDataManager';
 // Firebase
 import { getApp } from '@react-native-firebase/app';
 // auth
-import { AuthProvider, useAuth } from './Managers/Firebase/FirebaseAuthManager';
+import { AuthProvider, useAuth } from '../Managers/Firebase/FirebaseAuthManager';
 // utils
-import { doLog } from './Utils/General';
-import { logColors } from './Const';
+import { doLog } from '../Utils/General';
+import { logColors } from '../Const';
 // app chrome
-import { AppBar } from './UI/Container/AppBar';
-import { Avatar } from './UI/Others/Avatar';
-import { Popup } from './UI/General/Popup';
-import { MenuOption } from './UI/Menu/Click/MenuList.types';
-import { MenuList } from './UI/Menu/Click/MenuList';
+import { AppBar } from './AppBar';
+import { Avatar } from '../UI/Others/Avatar';
+import { Popup } from '../UI/General/Popup';
+import { MenuOption } from '../UI/Menu/Click/MenuList.types';
+import { MenuList } from '../UI/Menu/Click/MenuList';
 
 LogBox.ignoreLogs(['new NativeEventEmitter']);
 

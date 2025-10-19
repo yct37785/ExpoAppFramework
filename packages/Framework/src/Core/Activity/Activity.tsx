@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackPropsList } from '../Screen';
 import { useAuth } from '../../Managers/Firebase/FirebaseAuthManager';
-import { AppBar } from '../../UI/Container/AppBar';
+import { AppBar } from '../../Root/AppBar';
 import { Avatar } from '../../UI/Others/Avatar';
 import { Popup } from '../../UI/General/Popup';
 import { MenuOption } from '../../UI/Menu/Click/MenuList.types';

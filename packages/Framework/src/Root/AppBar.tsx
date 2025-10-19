@@ -1,9 +1,9 @@
 import React, { memo } from 'react';
 import { View } from 'react-native';
 import { Appbar, useTheme } from 'react-native-paper';
-import { Touchable } from '../Interactive/Touchable';
+import { Touchable } from '../UI/Interactive/Touchable';
 import { AppBarType } from './AppBar.types';
-import * as Const from '../../Const';
+import * as Const from '../Const';
 
 /******************************************************************************************************************
  * AppBar implementation.
