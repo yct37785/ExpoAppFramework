@@ -5,7 +5,7 @@ import { Core, UI, Const } from 'framework';
 const _ = require('lodash');
 
 /******************************************************************************************************************
- * defines
+ * Defines
  ******************************************************************************************************************/
 const PICKER_ITEM_LIST = [
   { label: 'Red', value: 'red' },
@@ -59,7 +59,7 @@ const POPUP_MENU_OPTIONS = {
 /******************************************************************************************************************
  * Menus demo
  ******************************************************************************************************************/
-const SampleMenuScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
+const SampleMenuScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
   const [showDialog, setShowDialog] = useState<boolean>(false);
   const [popupMenuSelection, setPopupMenuSelection] = useState<UI.OptionSchema>(_.cloneDeep(POPUP_MENU_OPTIONS));
   const [pickerSelection, setPickerSelection] = useState<string>('red');
@@ -79,7 +79,7 @@ const SampleMenuScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => 
   }
 
   return (
-    <Core.Activity navigation={navigation} LeftContent={CustomHeader} title='Menu Sample'>
+    <>
       {/* all dialogs here */}
       <Portal>
         <UI.Dialog
@@ -125,8 +125,13 @@ const SampleMenuScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => 
         </UI.HighlightText>
 
       </UI.VerticalLayout>
-    </Core.Activity>
+    </>
   );
 };
 
-export default memo(SampleMenuScreen);
+/******************************************************************************************************************
+ * Static fields
+ ******************************************************************************************************************/
+export default Object.assign(memo(SampleMenuScreen), {
+  screenTitle: 'Menus'
+});

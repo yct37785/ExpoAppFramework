@@ -87,7 +87,7 @@ const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
  * Static fields
  ******************************************************************************************************************/
 export default Object.assign(memo(HomeScreen), {
-  screenTitle: 'Home2',
+  screenTitle: 'Home',
   LeftContent,
   appBarOptions: {
     showBack: false,

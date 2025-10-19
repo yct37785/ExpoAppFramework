@@ -3,9 +3,9 @@ import { View } from 'react-native';
 import { Core, Const, UI } from 'framework';
 const _ = require('lodash');
 
-/**
- * Const defines.
- */
+/******************************************************************************************************************
+ * Const defines
+ ******************************************************************************************************************/
 export const TAB_ROUTES: UI.TabRouteProps[] = [
   { title: 'Collapsible', key: 'collapsible', icon: 'google-street-view' },
   { title: 'Page 2', key: 'p2', icon: 'camera' },
@@ -54,7 +54,7 @@ const Tab3Page = memo(() => <View style={{ flex: 1 }}><UI.Text>P3</UI.Text></Vie
 /******************************************************************************************************************
  * Containers demo
  ******************************************************************************************************************/
-const ContainersScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
+const ContainersScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
   const [tabIndex, setTabIndex] = useState(0);
 
   /**
@@ -67,17 +67,19 @@ const ContainersScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => 
   };
 
   return (
-    <Core.Activity navigation={navigation} title='Container Sample'>
-      {/* tabs container */}
-      <UI.TabsContainer
-        routes={TAB_ROUTES}
-        tabIndex={tabIndex}
-        onTabIdxChange={setTabIndex}
-        position='top'
-        sceneMap={scenes}
-      />
-    </Core.Activity>
+    <UI.TabsContainer
+      routes={TAB_ROUTES}
+      tabIndex={tabIndex}
+      onTabIdxChange={setTabIndex}
+      position='top'
+      sceneMap={scenes}
+    />
   );
 };
 
-export default memo(ContainersScreen);
+/******************************************************************************************************************
+ * Static fields
+ ******************************************************************************************************************/
+export default Object.assign(memo(ContainersScreen), {
+  screenTitle: 'Containers'
+});

@@ -14,7 +14,7 @@ const ListTypes = {
  * 
  * Displays a sample screen with a search bar, filter options, and a list of products.
  ******************************************************************************************************************/
-const ListScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
+const ListScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
   const [listType, setListType] = useState<UI.ListImplementationType>(UI.ListImplementationType.flashlist);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [productList, setProductList] = useState<UI.ListItem[]>([]);
@@ -91,33 +91,35 @@ const ListScreen: React.FC<Core.ScreenProps> = ({ navigation, route }) => {
   }
 
   return (
-    <Core.Activity navigation={navigation} LeftContent={CustomHeader}>
-      {/* main content */}
-      <UI.VerticalLayout>
+    <UI.VerticalLayout>
 
-        {/* filter menu */}
-        <ScrollView horizontal={true}>
-          <UI.ChipOptions style={{  width: 700 }}
-            schema={matChipsSchema} onSelected={onChipsSelected} />
-        </ScrollView>
-
-        {/* toggle Flashlist vs FlatList */}
-        <UI.RadioGroup
-          options={ListTypes}
-          value={listType} onValueChange={(s: string) => setListType(s as UI.ListImplementationType)} />
-        
-        {/* list */}
-        <UI.List
-          dataArr={productList}
-          query={searchQuery}
-          filterMap={filterMap}
-          renderItem={renderItem}
-          listImplementationType={listType}
-        />
-
-      </UI.VerticalLayout>
-    </Core.Activity>
+      {/* filter menu */}
+      <ScrollView horizontal={true}>
+        <UI.ChipOptions style={{ width: 700 }}
+          schema={matChipsSchema} onSelected={onChipsSelected} />
+      </ScrollView>
+      
+      {/* toggle Flashlist vs FlatList */}
+      <UI.RadioGroup
+        options={ListTypes}
+        value={listType} onValueChange={(s: string) => setListType(s as UI.ListImplementationType)} />
+      
+      {/* list */}
+      <UI.List
+        dataArr={productList}
+        query={searchQuery}
+        filterMap={filterMap}
+        renderItem={renderItem}
+        listImplementationType={listType}
+      />
+    </UI.VerticalLayout>
   );
 };
 
-export default memo(ListScreen);
+/******************************************************************************************************************
+ * Static fields
+ ******************************************************************************************************************/
+export default Object.assign(memo(ListScreen), {
+  screenTitle: 'List',
+  // LeftContent,
+});
