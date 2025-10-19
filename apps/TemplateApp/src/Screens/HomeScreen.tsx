@@ -3,29 +3,13 @@ import { Text, Button, Switch, useTheme } from 'react-native-paper';
 import { Screen, Managers, UI } from 'framework';
 
 /******************************************************************************************************************
- * LeftContent
+ * Home screen
  ******************************************************************************************************************/
-const LeftContent: React.FC = () => {
+const HomeScreen: React.FC<Screen.ScreenProps> = ({ navigation, route }) => {
+  const { user } = Managers.useAuth();
   const theme = useTheme();
   const { getItem, setItem } = Managers.useLocalData();
   const isDarkMode = !!getItem<boolean>('isDarkMode');
-
-  return (
-    <Switch
-      value={isDarkMode}
-      onValueChange={(val) => setItem('isDarkMode', val)}
-      color={theme.colors.primary}
-    />
-  );
-};
-
-/******************************************************************************************************************
- * Home screen
- ******************************************************************************************************************/
-const HomeScreen: React.FC<Screen.ScreenProps> = ({ navigation }) => {
-  const { user } = Managers.useAuth();
-  const { getItem, setItem } = Managers.useLocalData();
-  const isDarkMode = getItem('isDarkMode');
 
   // useEffect(() => {
   //   (async () => {
@@ -37,6 +21,16 @@ const HomeScreen: React.FC<Screen.ScreenProps> = ({ navigation }) => {
   //     console.log(docData);
   //   })();
   // }, []);
+
+  const LeftContent = () => (
+    <UI.HorizontalLayout justify='flex-end'>
+      <Switch
+        value={isDarkMode}
+        onValueChange={(val) => setItem('isDarkMode', val)}
+        color={theme.colors.primary}
+      />
+    </UI.HorizontalLayout>
+  );
 
   const renderScreenBtn = (screen: string, btnText: string) => (
     <Button mode='contained' onPress={() => navigation.navigate(screen, { paramText: 'hello from home' })}>
@@ -66,31 +60,23 @@ const HomeScreen: React.FC<Screen.ScreenProps> = ({ navigation }) => {
   };
 
   return (
-    <UI.VerticalLayout>
-      {renderAuthSection()}
+    <Screen.ScreenWrapper LeftContent={LeftContent}>
+      <UI.VerticalLayout>
+        {renderAuthSection()}
 
-      <Text variant='bodyMedium' style={{ marginTop: 16 }}>
-        Select the screen you want to navigate to
-      </Text>
+        <Text variant='bodyMedium' style={{ marginTop: 16 }}>
+          Select the screen you want to navigate to
+        </Text>
 
-      {renderScreenBtn('testbed', 'test bed example')}
-      {renderScreenBtn('typography', 'typography example')}
-      {renderScreenBtn('layout', 'layouts example')}
-      {renderScreenBtn('menu', 'menus example')}
-      {renderScreenBtn('list', 'list example')}
-      {renderScreenBtn('container', 'containers example')}
-    </UI.VerticalLayout>
+        {renderScreenBtn('testbed', 'test bed example')}
+        {renderScreenBtn('typography', 'typography example')}
+        {renderScreenBtn('layout', 'layouts example')}
+        {renderScreenBtn('menu', 'menus example')}
+        {renderScreenBtn('list', 'list example')}
+        {renderScreenBtn('container', 'containers example')}
+      </UI.VerticalLayout>
+    </Screen.ScreenWrapper>
   );
 };
 
-/******************************************************************************************************************
- * Static fields
- ******************************************************************************************************************/
-export default Object.assign(memo(HomeScreen), {
-  screenTitle: 'Home',
-  LeftContent,
-  appBarOptions: {
-    showBack: false,
-    showProfile: true,
-  },
-});
+export default memo(HomeScreen);

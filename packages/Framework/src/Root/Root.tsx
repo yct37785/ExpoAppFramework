@@ -10,8 +10,7 @@ import {
   Provider as PaperProvider,
   adaptNavigationTheme,
   MD3DarkTheme,
-  MD3LightTheme,
-  useTheme,
+  MD3LightTheme
 } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
 // nav
@@ -32,12 +31,6 @@ import { AuthProvider, useAuth } from '../Managers/Firebase/FirebaseAuthManager'
 // utils
 import { doLog } from '../Utils/General';
 import { logColors } from '../Const';
-// app chrome
-import { AppBar } from './AppBar';
-import { Avatar } from '../UI/Others/Avatar';
-import { Popup } from '../UI/General/Popup';
-import { MenuOption } from '../UI/Menu/Click/MenuList.types';
-import { MenuList } from '../UI/Menu/Click/MenuList';
 
 LogBox.ignoreLogs(['new NativeEventEmitter']);
 
@@ -50,126 +43,7 @@ const { LightTheme: NavLight, DarkTheme: NavDark } = adaptNavigationTheme({
   reactNavigationDark: NavigationDarkTheme,
 });
 
-/******************************************************************************************************************
- * ProfileMenu — Renders the authenticated user's avatar and dropdown menu.
- * 
- * Used globally in Root's AppBar to handle sign-in/sign-out actions.
- *
- * @property photoURL?   - Optional profile picture URL for the avatar.
- * @property email?      - Signed-in user's email address (displayed in menu).
- * @property isAnonymous - Whether the current user is anonymous (no account linked).
- * @property onSignIn    - Called when the user selects “Sign in with Google”.
- * @property onSignOut   - Called when the user selects “Sign out”.
- ******************************************************************************************************************/
-const ProfileMenu: React.FC<{
-  photoURL?: string;
-  email?: string;
-  isAnonymous: boolean;
-  onSignIn: () => Promise<void>;
-  onSignOut: () => Promise<void>;
-}> = ({ photoURL, email, isAnonymous, onSignIn, onSignOut }) => {
-  const options: MenuOption[] = isAnonymous
-    ? [{ label: 'Sign in with Google', value: 'signin', leadingIcon: 'google' }]
-    : [
-        {
-          label: email ? `Signed in as ${email}` : 'Signed in',
-          value: 'noop',
-          leadingIcon: 'account',
-          disabled: true,
-        },
-        { label: 'Sign out', value: 'signout', leadingIcon: 'logout' },
-      ];
-
-  const handleSelect = async (value: string) => {
-    if (value === 'signin') await onSignIn();
-    if (value === 'signout') await onSignOut();
-  };
-
-  return (
-    <Popup triggerComp={<Avatar uri={photoURL} label="A" size="md" />}>
-      <MenuList options={options} onSelect={handleSelect} dense showDividers />
-    </Popup>
-  );
-};
-
 const Stack = createNativeStackNavigator<RootStackPropsList>();
-
-/******************************************************************************************************************
- * AppBarOptions — Per-screen options that control the universal AppBar rendered by Root.
- *
- * @property showBack?    - Show the back button when possible; default: navigation.canGoBack()
- * @property showProfile? - Show the profile/avatar menu on the right; default: true
- ******************************************************************************************************************/
-export type AppBarOptions = {
-  showBack?: boolean;
-  showProfile?: boolean;
-};
-
-/******************************************************************************************************************
- * ScreenChrome — Universal layout wrapper providing AppBar + SafeAreaView for all screens.
- * 
- * Injected automatically by Root so individual screens do not need their own Activity wrapper.
- *
- * @property Component  - The screen component being rendered. May include static:
- *                         + screenTitle?: string
- *                         + LeftContent?: React.FC
- *                         + appBarOptions?: AppBarOptions
- * @property navigation - React Navigation object for handling navigation actions.
- * @property route      - React Navigation route containing screen metadata.
- ******************************************************************************************************************/
-const ScreenChrome = ({
-  Component,
-  navigation,
-  route,
-}: {
-  Component: React.FC<ScreenProps> & {
-    screenTitle?: string;
-    LeftContent?: React.FC | null;
-    appBarOptions?: AppBarOptions;
-  };
-} & ScreenProps) => {
-  const { user, signIn, signOut } = useAuth();
-  const theme = useTheme();
-
-  const LeftContentComp = Component.LeftContent ?? null;
-  const opts = Component.appBarOptions ?? {};
-
-  const isAnon = !!user?.isAnonymous || !user;
-  const photoURL = user?.photoURL || undefined;
-  const email = user?.email || '';
-
-  const title = Component.screenTitle ?? route.name;
-  const showBack = opts.showBack && navigation.canGoBack();
-  const showProfile = opts.showProfile ?? true;
-
-  return (
-    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
-      <AppBar
-        title={title}
-        onBack={showBack ? () => navigation.goBack() : undefined}
-        left={LeftContentComp ? <LeftContentComp /> : undefined}
-        right={
-          showProfile ? (
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <View style={{ marginLeft: 8 }}>
-                <ProfileMenu
-                  photoURL={photoURL}
-                  email={email}
-                  isAnonymous={isAnon}
-                  onSignIn={signIn}
-                  onSignOut={signOut}
-                />
-              </View>
-            </View>
-          ) : undefined
-        }
-      />
-      <SafeAreaView edges={['bottom']} style={{ flex: 1 }}>
-        <Component navigation={navigation} route={route} />
-      </SafeAreaView>
-    </View>
-  );
-};
 
 /******************************************************************************************************************
  * Root component props.
@@ -238,15 +112,7 @@ const RootApp: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
               <NavigationContainer theme={navTheme}>
                 <Stack.Navigator initialRouteName={DEFAULT_SCREEN} screenOptions={{ headerShown: false }}>
                   {Object.entries(screenMap).map(([name, Component]) => (
-                    <Stack.Screen name={name} key={name}>
-                      {(props) => (
-                        <ScreenChrome
-                          Component={Component as React.FC<ScreenProps> & { screenTitle?: string }}
-                          navigation={props.navigation}
-                          route={props.route}
-                        />
-                      )}
-                    </Stack.Screen>
+                    <Stack.Screen name={name} key={name} component={Component as any} />
                   ))}
                 </Stack.Navigator>
               </NavigationContainer>
