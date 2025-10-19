@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useTheme } from 'react-native-paper';
-import { AppBar } from './AppBar';
+import { AppBar } from '../UI/Container/AppBar';
 import { Avatar } from '../UI/Others/Avatar';
 import { Popup } from '../UI/General/Popup';
 import { MenuList } from '../UI/Menu/Click/MenuList';
