@@ -97,12 +97,10 @@ const Stack = createNativeStackNavigator<RootStackPropsList>();
 /******************************************************************************************************************
  * AppBarOptions — Per-screen options that control the universal AppBar rendered by Root.
  *
- * @property elevated?    - Draw a subtle elevation (shadow) for the AppBar; default: false
  * @property showBack?    - Show the back button when possible; default: navigation.canGoBack()
  * @property showProfile? - Show the profile/avatar menu on the right; default: true
  ******************************************************************************************************************/
 export type AppBarOptions = {
-  elevated?: boolean;
   showBack?: boolean;
   showProfile?: boolean;
 };
@@ -140,15 +138,19 @@ const ScreenChrome = ({
   const photoURL = user?.photoURL || undefined;
   const email = user?.email || '';
 
+  const title = Component.screenTitle ?? route.name;
+  const showBack = opts.showBack && navigation.canGoBack();
+  const showProfile = opts.showProfile ?? true;
+
   return (
     <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
       <AppBar
-        title={Component.screenTitle}
-        elevated={opts.elevated ?? false}
-        onBack={opts.showBack ? () => navigation.goBack() : undefined}
+        title={title}
+        elevated={true}
+        onBack={showBack ? () => navigation.goBack() : undefined}
         left={LeftContentComp ? <LeftContentComp /> : undefined}
         right={
-          opts.showProfile ? (
+          showProfile ? (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <View style={{ marginLeft: 8 }}>
                 <ProfileMenu

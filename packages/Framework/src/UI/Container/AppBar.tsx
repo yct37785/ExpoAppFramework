@@ -14,7 +14,6 @@ export const AppBar: AppBarType = memo(
 
     return (
       <Appbar.Header
-        mode={elevated ? 'center-aligned' : 'small'}
         elevated={elevated}
         style={style}
       >
@@ -30,7 +29,7 @@ export const AppBar: AppBarType = memo(
           left ?? null
         )}
 
-        {/* Title / custom component */}
+        {/* title / custom component */}
         {TitleComponent ? (
           <TitleComponent />
         ) : title ? (
