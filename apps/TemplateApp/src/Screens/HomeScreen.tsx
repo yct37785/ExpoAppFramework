@@ -86,12 +86,11 @@ const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
 /******************************************************************************************************************
  * Static fields
  ******************************************************************************************************************/
-(HomeScreen as any).screenTitle = 'Home';
-(HomeScreen as any).LeftContent = LeftContent;
-(HomeScreen as any).appBarOptions = {
-  elevated: true,
-  showBack: false,
-  showProfile: true,
-};
-
-export default memo(HomeScreen);
+export default Object.assign(memo(HomeScreen), {
+  screenTitle: 'Home2',
+  LeftContent,
+  appBarOptions: {
+    showBack: false,
+    showProfile: true,
+  },
+});
