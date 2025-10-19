@@ -1,6 +1,6 @@
 import React, { memo, useEffect } from 'react';
 import { Text, Button, Switch, useTheme } from 'react-native-paper';
-import { Core, Managers, UI } from 'framework';
+import { Screen, Managers, UI } from 'framework';
 
 /******************************************************************************************************************
  * LeftContent
@@ -22,7 +22,7 @@ const LeftContent: React.FC = () => {
 /******************************************************************************************************************
  * Home screen
  ******************************************************************************************************************/
-const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
+const HomeScreen: React.FC<Screen.ScreenProps> = ({ navigation }) => {
   const { user } = Managers.useAuth();
   const { getItem, setItem } = Managers.useLocalData();
   const isDarkMode = getItem('isDarkMode');

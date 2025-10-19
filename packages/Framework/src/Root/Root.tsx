@@ -22,7 +22,7 @@ import {
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // screen typing
-import { RootStackPropsList, ScreenProps, ScreenMap } from '../Core/Screen';
+import { RootStackPropsList, ScreenProps, ScreenMap } from '../Screen/Screen.types';
 // data
 import { useLocalData, LocalDataProvider } from '../Managers/LocalDataManager';
 // Firebase
