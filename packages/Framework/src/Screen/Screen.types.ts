@@ -7,6 +7,11 @@ import type React from 'react';
  *
  * @template P - Param list (must extend ParamListBase)
  * @template N - Route name (key of P)
+ *
+ * @property navigation - React Navigation stack navigation object for the current route.
+ *                        Provides methods such as `navigate`, `goBack`, and `setParams`.
+ * @property route      - React Navigation route object containing the current route name and `params`.
+ *                        Used to access screen-specific parameters or metadata.
  ******************************************************************************************************************/
 export type ScreenProps<
   P extends ParamListBase = ParamListBase,

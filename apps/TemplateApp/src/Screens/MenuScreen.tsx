@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, JSX, memo } from 'react';
 import { View } from 'react-native';
 import { Text, Portal, Button, Card, IconButton, TouchableRipple } from 'react-native-paper';
-import { Core, UI, Const } from 'framework';
+import { Screen, UI, Const } from 'framework';
 const _ = require('lodash');
 
 /******************************************************************************************************************
@@ -59,18 +59,18 @@ const POPUP_MENU_OPTIONS = {
 /******************************************************************************************************************
  * Menus demo
  ******************************************************************************************************************/
-const SampleMenuScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
+const MenusScreen: Screen.ScreenType = ({ navigation, route }) => {
   const [showDialog, setShowDialog] = useState<boolean>(false);
   const [popupMenuSelection, setPopupMenuSelection] = useState<UI.OptionSchema>(_.cloneDeep(POPUP_MENU_OPTIONS));
   const [pickerSelection, setPickerSelection] = useState<string>('red');
   const [searchQuery, setSearchQuery] = useState('');
 
-  function onSubmitDialog(): void {
+  function onSubmitDialog() {
     // some logic here
     setShowDialog(false);
   }
 
-  function CustomHeader(): JSX.Element {
+  function LeftContent() {
     return <UI.HorizontalLayout justify='flex-end'>
       <UI.Popup triggerComp={<IconButton icon='dots-vertical' size={Const.iconSizeSmall} />}>
         <UI.CheckOptions schema={popupMenuSelection} setSchema={setPopupMenuSelection} />
@@ -79,7 +79,7 @@ const SampleMenuScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
   }
 
   return (
-    <>
+    <Screen.ScreenWrapper LeftContent={LeftContent}>
       {/* all dialogs here */}
       <Portal>
         <UI.Dialog
@@ -104,7 +104,7 @@ const SampleMenuScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
 
         {/* picker */}
         <UI.Picker value={pickerSelection} options={PICKER_ITEM_LIST} onChange={(v) => setPickerSelection(v)} />
-        
+
         {/* menu */}
         <UI.MenuList options={MENU_ITEM_LIST} onSelect={(v) => console.log(`clicked on ${v}`)} dense={true} />
 
@@ -117,7 +117,7 @@ const SampleMenuScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
           placeholder='search'
           style={{ marginTop: Const.padSize2 }}
         />
-        <TouchableRipple rippleColor={'blue'} style={{ width: 100, height: 100, backgroundColor: 'red' }} onPress={ () => console.log("Pressed")} >
+        <TouchableRipple rippleColor={'blue'} style={{ width: 100, height: 100, backgroundColor: 'red' }} onPress={() => console.log("Pressed")} >
           <Text>asdsadsad</Text>
         </TouchableRipple>
         <UI.HighlightText query={searchQuery} variant={'bodyMedium'} style={{ marginTop: Const.padSize2 }} >
@@ -125,13 +125,8 @@ const SampleMenuScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
         </UI.HighlightText>
 
       </UI.VerticalLayout>
-    </>
+    </Screen.ScreenWrapper>
   );
 };
 
-/******************************************************************************************************************
- * Static fields
- ******************************************************************************************************************/
-export default Object.assign(memo(SampleMenuScreen), {
-  screenTitle: 'Menus'
-});
+export default memo(MenusScreen);

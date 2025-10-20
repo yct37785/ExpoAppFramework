@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useCallback, useRef, memo } from 'react';
 import { View } from 'react-native';
-import { Core, Const, UI } from 'framework';
+import { Screen, Const, UI } from 'framework';
 const _ = require('lodash');
 
 /******************************************************************************************************************
@@ -54,7 +54,7 @@ const Tab3Page = memo(() => <View style={{ flex: 1 }}><UI.Text>P3</UI.Text></Vie
 /******************************************************************************************************************
  * Containers demo
  ******************************************************************************************************************/
-const ContainersScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
+const ContainersScreen: Screen.ScreenType = ({ navigation, route }) => {
   const [tabIndex, setTabIndex] = useState(0);
 
   /**
@@ -67,19 +67,16 @@ const ContainersScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
   };
 
   return (
-    <UI.TabsContainer
-      routes={TAB_ROUTES}
-      tabIndex={tabIndex}
-      onTabIdxChange={setTabIndex}
-      position='top'
-      sceneMap={scenes}
-    />
+    <Screen.ScreenWrapper>
+      <UI.TabsContainer
+        routes={TAB_ROUTES}
+        tabIndex={tabIndex}
+        onTabIdxChange={setTabIndex}
+        position='top'
+        sceneMap={scenes}
+      />
+    </Screen.ScreenWrapper>
   );
 };
 
-/******************************************************************************************************************
- * Static fields
- ******************************************************************************************************************/
-export default Object.assign(memo(ContainersScreen), {
-  screenTitle: 'Containers'
-});
+export default memo(ContainersScreen);

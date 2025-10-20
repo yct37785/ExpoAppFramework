@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, memo } from 'react';
 import { ScrollView, View, Image } from 'react-native';
-import { Core, UI, Const } from 'framework';
+import { Screen, UI, Const } from 'framework';
 import { faker } from '@faker-js/faker';
 const _ = require('lodash');
 
@@ -14,7 +14,7 @@ const ListTypes = {
  * 
  * Displays a sample screen with a search bar, filter options, and a list of products.
  ******************************************************************************************************************/
-const ListScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
+const ListScreen: Screen.ScreenType = ({ navigation, route }) => {
   const [listType, setListType] = useState<UI.ListImplementationType>(UI.ListImplementationType.flashlist);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [productList, setProductList] = useState<UI.ListItem[]>([]);
@@ -79,7 +79,7 @@ const ListScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
     );
   }, [searchQuery]);
 
-  function CustomHeader() {
+  function LeftContent() {
     return <View>
       <UI.TextInput
         type='search'
@@ -91,35 +91,31 @@ const ListScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
   }
 
   return (
-    <UI.VerticalLayout>
+    <Screen.ScreenWrapper LeftContent={LeftContent}>
+      <UI.VerticalLayout>
 
-      {/* filter menu */}
-      <ScrollView horizontal={true}>
-        <UI.ChipOptions style={{ width: 700 }}
-          schema={matChipsSchema} onSelected={onChipsSelected} />
-      </ScrollView>
-      
-      {/* toggle Flashlist vs FlatList */}
-      <UI.RadioGroup
-        options={ListTypes}
-        value={listType} onValueChange={(s: string) => setListType(s as UI.ListImplementationType)} />
-      
-      {/* list */}
-      <UI.List
-        dataArr={productList}
-        query={searchQuery}
-        filterMap={filterMap}
-        renderItem={renderItem}
-        listImplementationType={listType}
-      />
-    </UI.VerticalLayout>
+        {/* filter menu */}
+        <ScrollView horizontal={true}>
+          <UI.ChipOptions style={{ width: 700 }}
+            schema={matChipsSchema} onSelected={onChipsSelected} />
+        </ScrollView>
+
+        {/* toggle Flashlist vs FlatList */}
+        <UI.RadioGroup
+          options={ListTypes}
+          value={listType} onValueChange={(s: string) => setListType(s as UI.ListImplementationType)} />
+
+        {/* list */}
+        <UI.List
+          dataArr={productList}
+          query={searchQuery}
+          filterMap={filterMap}
+          renderItem={renderItem}
+          listImplementationType={listType}
+        />
+      </UI.VerticalLayout>
+    </Screen.ScreenWrapper>
   );
 };
 
-/******************************************************************************************************************
- * Static fields
- ******************************************************************************************************************/
-export default Object.assign(memo(ListScreen), {
-  screenTitle: 'List',
-  // LeftContent,
-});
+export default memo(ListScreen);
