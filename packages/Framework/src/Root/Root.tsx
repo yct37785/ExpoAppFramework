@@ -13,6 +13,8 @@ import {
   MD3LightTheme
 } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
+import * as NavigationBar from 'expo-navigation-bar';
+import * as SystemUI from 'expo-system-ui';
 // nav
 import {
   NavigationContainer,
@@ -78,6 +80,16 @@ const RootApp: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
   // pick theme
   const paperTheme = isDarkMode ? MD3DarkTheme : MD3LightTheme;
   const navTheme = isDarkMode ? NavDark : NavLight;
+
+  // nav bar config
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      // bottom navigation bar background + icon contrast
+      NavigationBar.setButtonStyleAsync(isDarkMode ? 'light' : 'dark');
+      // optional: keep nav bar visible
+      // NavigationBar.setVisibilityAsync('visible');
+    }
+  }, [isDarkMode, navTheme.colors.background]);
 
   // Firebase pulse check (once we have LocalData)
   useEffect(() => {
