@@ -10,28 +10,29 @@ const TypographyScreen: Screen.ScreenType = ({ navigation }) => {
     <Screen.ScreenWrapper>
       <UI.VerticalLayout constraint='scroll'>
         {/* display text */}
-        <UI.Text variant='displayLarge'>Hello World</UI.Text>
-        <UI.Text variant='displayMedium'>Hello World</UI.Text>
-        <UI.Text variant='displaySmall'>Hello World</UI.Text>
+        <UI.Text variant='displayLarge'>DisplayLarge</UI.Text>
+        <UI.Text variant='displayMedium'>Display Medium</UI.Text>
+        <UI.Text variant='displaySmall'>Display Small</UI.Text>
+        <UI.Divider />
         {/* headline text */}
-        <UI.Text variant='headlineLarge'>Hello World</UI.Text>
-        <UI.Text variant='headlineMedium'>Hello World</UI.Text>
-        <UI.Text variant='headlineSmall'>Hello World</UI.Text>
+        <UI.Text variant='headlineLarge'>Headline Large</UI.Text>
+        <UI.Text variant='headlineMedium'>Headline Medium</UI.Text>
+        <UI.Text variant='headlineSmall'>Headline Small</UI.Text>
         <UI.Divider />
         {/* title text */}
-        <UI.Text variant='titleLarge'>Hello World</UI.Text>
-        <UI.Text variant='titleMedium'>Hello World</UI.Text>
-        <UI.Text variant='titleSmall'>Hello World</UI.Text>
+        <UI.Text variant='titleLarge'>Title Large</UI.Text>
+        <UI.Text variant='titleMedium'>Title Medium</UI.Text>
+        <UI.Text variant='titleSmall'>Title Small</UI.Text>
         <UI.Divider />
         {/* label text */}
-        <UI.Text variant='labelLarge'>Hello World</UI.Text>
-        <UI.Text variant='labelMedium'>Hello World</UI.Text>
-        <UI.Text variant='labelSmall'>Hello World</UI.Text>
+        <UI.Text variant='labelLarge'>Label Large</UI.Text>
+        <UI.Text variant='labelMedium'>Label Medium</UI.Text>
+        <UI.Text variant='labelSmall'>Label Small</UI.Text>
         <UI.Divider />
         {/* body text */}
-        <UI.Text variant='bodyLarge'>Hello World</UI.Text>
-        <UI.Text variant='bodyMedium'>Hello World</UI.Text>
-        <UI.Text variant='bodySmall'>Hello World</UI.Text>
+        <UI.Text variant='bodyLarge'>Body Large</UI.Text>
+        <UI.Text variant='bodyMedium'>Body Medium</UI.Text>
+        <UI.Text variant='bodySmall'>Body Small</UI.Text>
         <UI.Divider />
         {/* highlight text */}
         <UI.HighlightText

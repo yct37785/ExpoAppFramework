@@ -7,6 +7,7 @@ import { AppBar } from '../UI/Container/AppBar';
 import { Avatar } from '../UI/Others/Avatar';
 import { Popup } from '../UI/General/Popup';
 import { MenuList } from '../UI/Menu/Click/MenuList';
+import { VerticalLayout } from '../UI/General/Layouts';
 import type { MenuOption } from '../UI/Menu/Click/MenuList.types';
 import { useAuth } from '../Managers/Firebase/FirebaseAuthManager';
 import * as Const from '../Const';
@@ -49,7 +50,9 @@ const ProfileMenu: React.FC<{
       triggerComp={<Avatar uri={photoURL} label='A' size='md' />}
       triggerContainerStyle={{ borderRadius: 9999, overflow: 'hidden' }} // ensures circular ripple
     >
-      <MenuList options={options} onSelect={handleSelect} dense showDividers />
+      <VerticalLayout>
+        <MenuList options={options} onSelect={handleSelect} dense showDividers />
+      </VerticalLayout>
     </Popup>
   );
 };
@@ -57,7 +60,7 @@ const ProfileMenu: React.FC<{
 /******************************************************************************************************************
  * Screen wrapper props.
  * 
- * @property showTitle?    - To show title text for the AppBar
+ * @property showTitle?    - To show title text for the AppBar (default: false)
  * @property title?        - Title text for the AppBar (defaults to current route name) if showTitle is true
  * @property showBack?     - Show a back button (defaults to navigation.canGoBack())
  * @property showProfile?  - Show the profile/avatar menu on the right (default: true)

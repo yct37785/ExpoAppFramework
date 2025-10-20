@@ -35,7 +35,7 @@ import { AuthProvider, useAuth } from '../Managers/Firebase/FirebaseAuthManager'
 import { doLog } from '../Utils/General';
 import { logColors } from '../Const';
 
-LogBox.ignoreLogs(['new NativeEventEmitter']);
+LogBox.ignoreAllLogs();
 
 /******************************************************************************************************************
  * Navigation theme adaptation (Paper ↔ React Navigation).
