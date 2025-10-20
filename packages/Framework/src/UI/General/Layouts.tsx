@@ -1,10 +1,12 @@
-import React, { memo, ReactNode } from 'react';
+import React, { memo, useMemo } from 'react';
 import { View, ScrollView } from 'react-native';
 import * as Const from '../../Const';
 import { LayoutType, VerticalLayoutType, HorizontalLayoutType } from './Layouts.types';
 
+type FlexWrap = 'wrap' | 'nowrap' | 'wrap-reverse' | 'undefined';
+
 /******************************************************************************************************************
- * Layout implementation.
+ * Layout implementation (perf-tuned + hooks in stable order)
  ******************************************************************************************************************/
 const Layout: LayoutType = ({
   direction = 'column',
@@ -17,49 +19,71 @@ const Layout: LayoutType = ({
   backgroundColor = 'transparent',
   children,
 }) => {
-  // reverse children order if requested
-  const content = reverse ? React.Children.toArray(children).reverse() : children;
+  // reverse only when requested, and memoize so we don't rebuild arrays unnecessarily
+  const content = useMemo(
+    () => (reverse ? React.Children.toArray(children).reverse() : children),
+    [children, reverse]
+  );
 
-  // determine wrapping mode
-  const flexWrap = constraint === 'wrap' ? 'wrap' : 'nowrap';
+  // derived flags
+  const isRow = direction === 'row';
+  const flexWrap: FlexWrap = constraint === 'wrap' ? 'wrap' : 'nowrap';
+  const isScroll = constraint === 'scroll';
 
-  // if scroll constraint is set, wrap children in a ScrollView
-  if (constraint === 'scroll') {
+  // styles computed once per relevant change
+  const scrollStyle = useMemo(() => ({ flex }), [flex]);
+  const contentStyle = useMemo(
+    () => ({
+      flexDirection: direction,
+      justifyContent: justify,
+      flexWrap,
+      gap,
+      padding,
+      backgroundColor,
+    }),
+    [direction, justify, flexWrap, gap, padding, backgroundColor]
+  );
+  const viewStyle = useMemo(
+    () => ({
+      flex,
+      flexWrap,
+      flexDirection: direction,
+      justifyContent: justify,
+      gap,
+      padding,
+      backgroundColor,
+    }),
+    [flex, flexWrap, direction, justify, gap, padding, backgroundColor]
+  );
+
+  // render
+  if (isScroll) {
     return (
       <ScrollView
-        showsVerticalScrollIndicator={true}
-        horizontal={direction === 'row'}
-        style={{ flex }}  // scrollView should have defined height to calculate scroll
-        contentContainerStyle={{
-          flexDirection: direction,
-          justifyContent: justify,
-          flexWrap,
-          gap,
-          padding,
-          backgroundColor,
-        }}
+        horizontal={isRow}
+        showsVerticalScrollIndicator={!isRow}
+        showsHorizontalScrollIndicator={isRow}
+        style={scrollStyle}
+        contentContainerStyle={contentStyle}
       >
         {content}
       </ScrollView>
     );
   }
 
-  // default case: plain flexbox container
-  return (
-    <View style={{ flex, flexWrap, flexDirection: direction, justifyContent: justify, gap, padding, backgroundColor }}>
-      {content}
-    </View>
-  );
+  return <View style={viewStyle}>{content}</View>;
 };
 
 /******************************************************************************************************************
  * VerticalLayout implementation.
  ******************************************************************************************************************/
-export const VerticalLayout: VerticalLayoutType =
-  memo((props) => <Layout {...props} direction='column' />);
+export const VerticalLayout: VerticalLayoutType = memo((props) => (
+  <Layout {...props} direction="column" />
+));
 
 /******************************************************************************************************************
  * HorizontalLayout implementation.
  ******************************************************************************************************************/
-export const HorizontalLayout: HorizontalLayoutType =
-  memo((props) => <Layout {...props} direction='row' />);
+export const HorizontalLayout: HorizontalLayoutType = memo((props) => (
+  <Layout {...props} direction="row" />
+));
