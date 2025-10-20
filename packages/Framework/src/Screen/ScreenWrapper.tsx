@@ -102,15 +102,13 @@ const ScreenWrapperComponent: React.FC<ScreenWrapperProps> = ({
         right={
           showProfile ? (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <View style={{ backgroundColor: 'red' }}>
-                <ProfileMenu
-                  photoURL={photoURL}
-                  email={email}
-                  isAnonymous={isAnon}
-                  onSignIn={signIn}
-                  onSignOut={signOut}
-                />
-              </View>
+              <ProfileMenu
+                photoURL={photoURL}
+                email={email}
+                isAnonymous={isAnon}
+                onSignIn={signIn}
+                onSignOut={signOut}
+              />
             </View>
           ) : undefined
         }

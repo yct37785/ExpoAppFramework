@@ -8,12 +8,12 @@ import { Screen, UI } from 'framework';
  ******************************************************************************************************************/
 const TestbedScreen: Screen.ScreenType = ({ navigation, route }) => {
 
-  function LeftContent() {
-    return <View style={{ flex: 1, backgroundColor: 'green' }}>
-      {/* <View style={{ width: 100, height: 100, backgroundColor: 'green' }}></View> */}
-      {/* <UI.Text color='red'>Custom stuff here</UI.Text> */}
-    </View>;
-  }
+  const LeftContent = () => (
+    <UI.HorizontalLayout backgroundColor='green'>
+      <View style={{ width: 12, height: 12, borderRadius: 6, backgroundColor: 'lime' }} />
+      <UI.Text variant="labelLarge" style={{ marginLeft: 8 }}>Testbed</UI.Text>
+    </UI.HorizontalLayout>
+  );
 
   return (
     <Screen.ScreenWrapper LeftContent={LeftContent}>
