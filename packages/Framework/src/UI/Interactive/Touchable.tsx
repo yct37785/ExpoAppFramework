@@ -92,7 +92,7 @@ export const Touchable: TouchableType = memo(
     const ripple = useMemo(
       () =>
         Platform.OS === 'android' && isOpacity
-          ? ({ foreground: true, borderless: false } as const)
+          ? ({ borderless: false, foreground: true } as const) // draw ripple ABOVE content
           : undefined,
       [isOpacity]
     );

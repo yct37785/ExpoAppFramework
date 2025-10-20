@@ -45,7 +45,10 @@ const ProfileMenu: React.FC<{
   };
 
   return (
-    <Popup triggerComp={<Avatar uri={photoURL} label="A" size="md" />}>
+    <Popup
+      triggerComp={<Avatar uri={photoURL} label='A' size='md' />}
+      triggerContainerStyle={{ borderRadius: 9999, overflow: 'hidden' }} // ensures circular ripple
+    >
       <MenuList options={options} onSelect={handleSelect} dense showDividers />
     </Popup>
   );
