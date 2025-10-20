@@ -16,9 +16,7 @@ export const AppBar: AppBarType = memo(({ title, onBack, left, right, style }) =
     <Appbar.Header elevated style={style}>
       {/* back button */}
       {onBack ? (
-        <Touchable onPress={onBack}>
-          <Appbar.BackAction onPress={onBack} color={theme.colors.onSurface} />
-        </Touchable>
+        <Appbar.BackAction onPress={onBack} color={theme.colors.onSurface} />
       ) : null}
 
       {/* title */}
