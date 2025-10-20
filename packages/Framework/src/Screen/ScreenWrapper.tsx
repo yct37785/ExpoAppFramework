@@ -57,7 +57,8 @@ const ProfileMenu: React.FC<{
 /******************************************************************************************************************
  * Screen wrapper props.
  * 
- * @property title?        - Title text for the AppBar (defaults to current route name)
+ * @property showTitle?    - To show title text for the AppBar
+ * @property title?        - Title text for the AppBar (defaults to current route name) if showTitle is true
  * @property showBack?     - Show a back button (defaults to navigation.canGoBack())
  * @property showProfile?  - Show the profile/avatar menu on the right (default: true)
  * @property LeftContent?  - Optional component rendered in the AppBar’s left slot (after back button).
@@ -65,6 +66,7 @@ const ProfileMenu: React.FC<{
  * @property children      - Screen content rendered below the AppBar inside a SafeAreaView
  ******************************************************************************************************************/
 export type ScreenWrapperProps = {
+  showTitle?: boolean;
   title?: string;
   showBack?: boolean;
   showProfile?: boolean;
@@ -77,6 +79,7 @@ export type ScreenWrapperProps = {
  * Use this in each screen to render a consistent top bar and safe-area content wrapper.
  ******************************************************************************************************************/
 const ScreenWrapperComponent: React.FC<ScreenWrapperProps> = ({
+  showTitle = false,
   title,
   showBack,
   showProfile = true,
@@ -99,7 +102,7 @@ const ScreenWrapperComponent: React.FC<ScreenWrapperProps> = ({
   return (
     <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
       <AppBar
-        title={computedTitle}
+        title={showTitle ? computedTitle : undefined}
         onBack={showBackFinal ? () => (navigation as any).goBack() : undefined}
         left={LeftContent ? <LeftContent /> : undefined}
         right={
