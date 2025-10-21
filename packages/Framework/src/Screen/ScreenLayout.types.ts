@@ -8,14 +8,14 @@ import React from 'react';
  * @property showBack?     - Show a back button (defaults to navigation.canGoBack())
  * @property LeftContent?  - Optional component rendered in the AppBar’s left slot (after back button).
  *                           Receives { navigation, route } so it can call into screen logic.
- * @property children      - Screen content rendered below the AppBar inside a SafeAreaView
+ * @property children?     - Screen content rendered below the AppBar inside a SafeAreaView
  ******************************************************************************************************************/
 export type ScreenLayoutProps = {
   showTitle?: boolean;
   title?: string;
   showBack?: boolean;
   LeftContent?: React.FC | null;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 /******************************************************************************************************************

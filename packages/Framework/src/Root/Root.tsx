@@ -25,6 +25,9 @@ import {
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // screen typing
 import { ScreenMap } from '../Screen/Screen.types';
+// screen layout
+import { ScreenLayoutContext } from '../Screen/ScreenLayout';
+import { ScreenLayoutProps } from '../Screen/ScreenLayout.types';
 // data
 import { useLocalData, LocalDataProvider } from '../Managers/LocalDataManager';
 // Firebase
@@ -53,10 +56,12 @@ const Stack = createNativeStackNavigator<ParamListBase>();
  *
  * @property DEFAULT_SCREEN - Initial route name for the stack navigator
  * @property screenMap      - Mapping of route names to screen components
+ * @property defaultScreenLayoutProps   - app wide screen layout (AppBar left content etc)
  ******************************************************************************************************************/
 type RootProps = {
   DEFAULT_SCREEN: string;
   screenMap: ScreenMap;
+  defaultScreenLayoutProps: ScreenLayoutProps;
 };
 
 /******************************************************************************************************************
@@ -71,7 +76,7 @@ type RootProps = {
  *  - Hooks are always called in the same order; we avoid early returns before hooks.
  *  - We gate effect work with `if (!isLoaded) return;` and gate UI via conditional JSX.
  ******************************************************************************************************************/
-const RootApp: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
+const RootApp: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap, defaultScreenLayoutProps }) => {
   const { isLoaded, getItem } = useLocalData();
 
   // derive a safe value even when not loaded yet (avoid conditional hooks)
@@ -122,13 +127,15 @@ const RootApp: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap }) => {
             {!isLoaded ? (
               <View style={{ flex: 1 }} />
             ) : (
-              <NavigationContainer theme={navTheme}>
-                <Stack.Navigator initialRouteName={DEFAULT_SCREEN} screenOptions={{ headerShown: false }}>
-                  {Object.entries(screenMap).map(([name, Component]) => (
-                    <Stack.Screen name={name} key={name} component={Component as any} />
-                  ))}
-                </Stack.Navigator>
-              </NavigationContainer>
+              <ScreenLayoutContext.Provider value={defaultScreenLayoutProps}>
+                <NavigationContainer theme={navTheme}>
+                  <Stack.Navigator initialRouteName={DEFAULT_SCREEN} screenOptions={{ headerShown: false }}>
+                    {Object.entries(screenMap).map(([name, Component]) => (
+                      <Stack.Screen name={name} key={name} component={Component as any} />
+                    ))}
+                  </Stack.Navigator>
+                </NavigationContainer>
+              </ScreenLayoutContext.Provider>
             )}
           </MenuProvider>
         </AuthProvider>
