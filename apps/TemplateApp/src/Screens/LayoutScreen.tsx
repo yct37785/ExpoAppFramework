@@ -13,7 +13,7 @@ const LayoutScreen: Screen.ScreenType = ({ navigation, route }) => {
   );
 
   return (
-    <Screen.ScreenWrapper>
+    <Screen.ScreenLayout>
       <UI_Core.VerticalLayout constraint='scroll' backgroundColor='blue'>
 
         {/* VerticalLayout: wrap (fills parent height) */}
@@ -51,7 +51,7 @@ const LayoutScreen: Screen.ScreenType = ({ navigation, route }) => {
         </UI_Core.HorizontalLayout>
 
       </UI_Core.VerticalLayout>
-    </Screen.ScreenWrapper>
+    </Screen.ScreenLayout>
   );
 };
 

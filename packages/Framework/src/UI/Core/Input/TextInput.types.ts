@@ -25,8 +25,6 @@ export type TextInputProps = {
 /******************************************************************************************************************
  * Render a unified text input built on react-native-paper that auto-blurs when the keyboard hides.
  *
- * @param props - Refer to TextInputProps.
- *
  * @usage
  * ```tsx
  * <TextInput

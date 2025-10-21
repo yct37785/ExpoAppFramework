@@ -7,7 +7,7 @@ import { Screen, UI_Core } from 'framework';
 const TypographyScreen: Screen.ScreenType = ({ navigation }) => {
 
   return (
-    <Screen.ScreenWrapper>
+    <Screen.ScreenLayout>
       <UI_Core.VerticalLayout constraint='scroll'>
         {/* display text */}
         <UI_Core.Text variant='displayLarge'>DisplayLarge</UI_Core.Text>
@@ -48,7 +48,7 @@ const TypographyScreen: Screen.ScreenType = ({ navigation }) => {
           React Native makes mobile development easy with React.
         </UI_Core.HighlightText>
       </UI_Core.VerticalLayout>
-    </Screen.ScreenWrapper>
+    </Screen.ScreenLayout>
   );
 };
 

@@ -61,7 +61,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
   };
 
   return (
-    <Screen.ScreenWrapper LeftContent={LeftContent}>
+    <Screen.ScreenLayout LeftContent={LeftContent}>
       <UI_Core.VerticalLayout>
         {renderAuthSection()}
 
@@ -76,7 +76,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
         {renderScreenBtn('list', 'list example')}
         {renderScreenBtn('container', 'containers example')}
       </UI_Core.VerticalLayout>
-    </Screen.ScreenWrapper>
+    </Screen.ScreenLayout>
   );
 };
 

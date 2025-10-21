@@ -67,7 +67,7 @@ const ContainersScreen: Screen.ScreenType = ({ navigation, route }) => {
   };
 
   return (
-    <Screen.ScreenWrapper>
+    <Screen.ScreenLayout>
       <UI_Core.TabsContainer
         routes={TAB_ROUTES}
         tabIndex={tabIndex}
@@ -75,7 +75,7 @@ const ContainersScreen: Screen.ScreenType = ({ navigation, route }) => {
         position='top'
         sceneMap={scenes}
       />
-    </Screen.ScreenWrapper>
+    </Screen.ScreenLayout>
   );
 };
 

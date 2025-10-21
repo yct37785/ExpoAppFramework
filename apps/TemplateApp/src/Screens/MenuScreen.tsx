@@ -79,7 +79,7 @@ const MenusScreen: Screen.ScreenType = ({ navigation, route }) => {
   }
 
   return (
-    <Screen.ScreenWrapper LeftContent={LeftContent}>
+    <Screen.ScreenLayout LeftContent={LeftContent}>
       {/* all dialogs here */}
       <Portal>
         <UI_Core.Dialog
@@ -125,7 +125,7 @@ const MenusScreen: Screen.ScreenType = ({ navigation, route }) => {
         </UI_Core.HighlightText>
 
       </UI_Core.VerticalLayout>
-    </Screen.ScreenWrapper>
+    </Screen.ScreenLayout>
   );
 };
 

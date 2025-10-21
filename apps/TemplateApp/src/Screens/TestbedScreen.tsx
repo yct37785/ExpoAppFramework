@@ -16,7 +16,7 @@ const TestbedScreen: Screen.ScreenType = ({ navigation, route }) => {
   );
 
   return (
-    <Screen.ScreenWrapper LeftContent={LeftContent}>
+    <Screen.ScreenLayout LeftContent={LeftContent}>
       <UI_Core.VerticalLayout constraint='scroll'>
 
         <UI_Core.Touchable>
@@ -32,7 +32,7 @@ const TestbedScreen: Screen.ScreenType = ({ navigation, route }) => {
         </Button>
 
       </UI_Core.VerticalLayout>
-    </Screen.ScreenWrapper>
+    </Screen.ScreenLayout>
   );
 };
 

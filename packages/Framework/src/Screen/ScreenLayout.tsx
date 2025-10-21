@@ -4,31 +4,13 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useTheme } from 'react-native-paper';
 import { AppBar } from '../UI/Core/Container/AppBar';
+import { ScreenLayoutType } from './ScreenLayout.types';
 import * as Const from '../Const';
 
 /******************************************************************************************************************
- * Screen wrapper props.
- * 
- * @property showTitle?    - To show title text for the AppBar (default: false)
- * @property title?        - Title text for the AppBar (defaults to current route name) if showTitle is true
- * @property showBack?     - Show a back button (defaults to navigation.canGoBack())
- * @property LeftContent?  - Optional component rendered in the AppBar’s left slot (after back button).
- *                           Receives { navigation, route } so it can call into screen logic.
- * @property children      - Screen content rendered below the AppBar inside a SafeAreaView
+ * Screen layout implementation.
  ******************************************************************************************************************/
-export type ScreenWrapperProps = {
-  showTitle?: boolean;
-  title?: string;
-  showBack?: boolean;
-  LeftContent?: React.FC | null;
-  children: React.ReactNode;
-};
-
-/******************************************************************************************************************
- * Screen wrapper — Base view for screens (AppBar + SafeAreaView + Profile menu).
- * Use this in each screen to render a consistent top bar and safe-area content wrapper.
- ******************************************************************************************************************/
-const ScreenWrapperComponent: React.FC<ScreenWrapperProps> = ({
+export const ScreenLayout: ScreenLayoutType = memo(({
   showTitle = false,
   title,
   showBack,
@@ -56,6 +38,4 @@ const ScreenWrapperComponent: React.FC<ScreenWrapperProps> = ({
       </SafeAreaView>
     </View>
   );
-};
-
-export const ScreenWrapper = memo(ScreenWrapperComponent);
+});

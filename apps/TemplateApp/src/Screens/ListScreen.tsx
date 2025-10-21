@@ -91,7 +91,7 @@ const ListScreen: Screen.ScreenType = ({ navigation, route }) => {
   }
 
   return (
-    <Screen.ScreenWrapper LeftContent={LeftContent}>
+    <Screen.ScreenLayout LeftContent={LeftContent}>
       <UI_Core.VerticalLayout>
 
         {/* filter menu */}
@@ -114,7 +114,7 @@ const ListScreen: Screen.ScreenType = ({ navigation, route }) => {
           listImplementationType={listType}
         />
       </UI_Core.VerticalLayout>
-    </Screen.ScreenWrapper>
+    </Screen.ScreenLayout>
   );
 };
 
