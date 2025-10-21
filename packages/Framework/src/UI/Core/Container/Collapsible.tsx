@@ -3,7 +3,7 @@ import { View, TouchableOpacity } from 'react-native';
 import { Text, useTheme, Icon } from 'react-native-paper';
 import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
-import * as Const from '../../Const';
+import * as Const from '../../../Const';
 import { CollapsibleContainerType, AccordionContainerType } from './Collapsible.types';
 import { Touchable } from '../Interactive/Touchable';
 

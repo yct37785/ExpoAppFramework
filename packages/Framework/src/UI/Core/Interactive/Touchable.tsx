@@ -6,7 +6,7 @@ import {
   Animated,
   Easing
 } from 'react-native';
-import * as Const from '../../Const';
+import * as Const from '../../../Const';
 import { TouchableType } from './Touchable.types';
 
 /******************************************************************************************************************

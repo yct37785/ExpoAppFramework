@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { View, StyleSheet, StyleSheet as RNStyleSheet, type ViewStyle, type StyleProp } from 'react-native';
 import { Divider as PaperDivider } from 'react-native-paper';
-import * as Const from '../../Const';
+import * as Const from '../../../Const';
 import { DividerType } from './Divider.types';
 
 /******************************************************************************************************************

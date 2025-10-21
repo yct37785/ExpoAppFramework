@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { View } from 'react-native';
 import { Text, Modal, Button, Card, useTheme } from 'react-native-paper';
-import * as Const from '../../Const';
+import * as Const from '../../../Const';
 import { DialogType } from './Dialog.types';
 
 /******************************************************************************************************************

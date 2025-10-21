@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import type { TextStyle, StyleProp } from 'react-native';
 import { Text } from './Text';
-import * as Const from '../../Const';
+import * as Const from '../../../Const';
 import { HighlightTextType } from './HighlightText.types';
 
 function escapeRegExp(s: string) {

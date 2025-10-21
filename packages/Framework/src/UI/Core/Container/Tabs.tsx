@@ -1,7 +1,7 @@
 import React, { memo, JSX, useCallback, useMemo } from 'react';
 import { View, StyleProp, ViewStyle, TextStyle } from 'react-native';
 import { useTheme, Icon } from 'react-native-paper';
-import * as Const from '../../Const';
+import * as Const from '../../../Const';
 import { TabView, TabBar, TabBarProps, SceneMap } from 'react-native-tab-view';
 import { TabRouteProps, TabsContainerType } from './Tabs.types';
 

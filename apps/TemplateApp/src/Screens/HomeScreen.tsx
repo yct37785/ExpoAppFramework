@@ -1,6 +1,6 @@
 import React, { memo, useEffect } from 'react';
 import { Text, Button, Switch, useTheme } from 'react-native-paper';
-import { Screen, Managers, UI } from 'framework';
+import { Screen, Managers, UI_Core } from 'framework';
 
 /******************************************************************************************************************
  * Home screen
@@ -23,13 +23,13 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
   // }, []);
 
   const LeftContent = () => (
-    <UI.HorizontalLayout justify='flex-end'>
+    <UI_Core.HorizontalLayout justify='flex-end'>
       <Switch
         value={isDarkMode}
         onValueChange={(val) => setItem('isDarkMode', val)}
         color={theme.colors.primary}
       />
-    </UI.HorizontalLayout>
+    </UI_Core.HorizontalLayout>
   );
 
   const renderScreenBtn = (screen: string, btnText: string) => (
@@ -61,7 +61,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
 
   return (
     <Screen.ScreenWrapper LeftContent={LeftContent}>
-      <UI.VerticalLayout>
+      <UI_Core.VerticalLayout>
         {renderAuthSection()}
 
         <Text variant='bodyMedium' style={{ marginTop: 16 }}>
@@ -74,7 +74,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
         {renderScreenBtn('menu', 'menus example')}
         {renderScreenBtn('list', 'list example')}
         {renderScreenBtn('container', 'containers example')}
-      </UI.VerticalLayout>
+      </UI_Core.VerticalLayout>
     </Screen.ScreenWrapper>
   );
 };
