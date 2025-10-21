@@ -1,6 +1,6 @@
 import React, { memo, useEffect } from 'react';
 import { Text, Button, Switch, useTheme } from 'react-native-paper';
-import { Screen, Managers, UI_Core } from 'framework';
+import { Screen, Managers, UI_Core, UI_Derived } from 'framework';
 
 /******************************************************************************************************************
  * Home screen
@@ -24,6 +24,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
 
   const LeftContent = () => (
     <UI_Core.HorizontalLayout justify='flex-end'>
+      <UI_Derived.ProfileMenu />
       <Switch
         value={isDarkMode}
         onValueChange={(val) => setItem('isDarkMode', val)}
