@@ -1,6 +1,6 @@
 import React, { memo, useEffect } from 'react';
 import { Text, Button, Switch, useTheme } from 'react-native-paper';
-import { Screen, Managers, UI_Core, UI_Derived } from 'framework';
+import { Screen, Managers, UI } from 'framework';
 
 /******************************************************************************************************************
  * Home screen
@@ -23,14 +23,14 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
   // }, []);
 
   const LeftContent = () => (
-    <UI_Core.HorizontalLayout justify='flex-end'>
-      <UI_Derived.ProfileMenu />
+    <UI.HorizontalLayout justify='flex-end'>
+      <UI.ProfileMenu />
       <Switch
         value={isDarkMode}
         onValueChange={(val) => setItem('isDarkMode', val)}
         color={theme.colors.primary}
       />
-    </UI_Core.HorizontalLayout>
+    </UI.HorizontalLayout>
   );
 
   const renderScreenBtn = (screen: string, btnText: string) => (
@@ -62,7 +62,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
 
   return (
     <Screen.ScreenLayout LeftContent={LeftContent}>
-      <UI_Core.VerticalLayout>
+      <UI.VerticalLayout>
         {renderAuthSection()}
 
         <Text variant='bodyMedium' style={{ marginTop: 16 }}>
@@ -75,7 +75,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
         {renderScreenBtn('menu', 'menus example')}
         {renderScreenBtn('list', 'list example')}
         {renderScreenBtn('container', 'containers example')}
-      </UI_Core.VerticalLayout>
+      </UI.VerticalLayout>
     </Screen.ScreenLayout>
   );
 };

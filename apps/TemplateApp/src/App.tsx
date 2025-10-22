@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import { Root } from 'framework';
-import { Screen, Managers, UI_Core, UI_Derived } from 'framework';
+import { Screen, Managers, UI } from 'framework';
 // screens
 import HomeScreen from './Screens/HomeScreen';
 import TestbedScreen from './Screens/TestbedScreen';
@@ -24,7 +24,7 @@ const DefaultLeftContent = () => (
         marginRight: 8,
       }}
     />
-    <UI_Core.Text variant='titleMedium'>TemplateApp</UI_Core.Text>
+    <UI.Text variant='titleMedium'>TemplateApp</UI.Text>
   </View>
 );
 

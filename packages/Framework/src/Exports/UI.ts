@@ -1,3 +1,4 @@
+// core
 export * from '../UI/Core/Container/Collapsible';
 export * from '../UI/Core/Container/Collapsible.types';
 export * from '../UI/Core/Container/Tabs';
@@ -34,3 +35,5 @@ export * from '../UI/Core/General/List';
 export * from '../UI/Core/General/List.types';
 export * from '../UI/Core/General/Popup';
 export * from '../UI/Core/General/Popup.types';
+// derived
+export * from '../UI/Derived/ProfileMenu';

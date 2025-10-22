@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-paper';
-import { Screen, UI_Core } from 'framework';
+import { Screen, UI } from 'framework';
 
 /******************************************************************************************************************
  * Testbed screen: used for development and testing of new UI elements
@@ -9,20 +9,20 @@ import { Screen, UI_Core } from 'framework';
 const TestbedScreen: Screen.ScreenType = ({ navigation, route }) => {
 
   const LeftContent = () => (
-    <UI_Core.HorizontalLayout backgroundColor='green'>
+    <UI.HorizontalLayout backgroundColor='green'>
       <View style={{ width: 12, height: 12, borderRadius: 6, backgroundColor: 'lime' }} />
-      <UI_Core.Text variant="labelLarge" style={{ marginLeft: 8 }}>Testbed</UI_Core.Text>
-    </UI_Core.HorizontalLayout>
+      <UI.Text variant="labelLarge" style={{ marginLeft: 8 }}>Testbed</UI.Text>
+    </UI.HorizontalLayout>
   );
 
   return (
     <Screen.ScreenLayout LeftContent={LeftContent}>
-      <UI_Core.VerticalLayout constraint='scroll'>
+      <UI.VerticalLayout constraint='scroll'>
 
-        <UI_Core.Touchable>
+        <UI.Touchable>
           <View style={{ backgroundColor: 'red', width: '100%', height: 100 }}>
           </View>
-        </UI_Core.Touchable>
+        </UI.Touchable>
         <TouchableOpacity>
           <View style={{ backgroundColor: 'red', width: '100%', height: 100 }}>
           </View>
@@ -31,7 +31,7 @@ const TestbedScreen: Screen.ScreenType = ({ navigation, route }) => {
           asdasdsadasd
         </Button>
 
-      </UI_Core.VerticalLayout>
+      </UI.VerticalLayout>
     </Screen.ScreenLayout>
   );
 };

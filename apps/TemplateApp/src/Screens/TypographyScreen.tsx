@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Screen, UI_Core } from 'framework';
+import { Screen, UI } from 'framework';
 
 /******************************************************************************************************************
  * Typography demo
@@ -8,46 +8,46 @@ const TypographyScreen: Screen.ScreenType = ({ navigation }) => {
 
   return (
     <Screen.ScreenLayout>
-      <UI_Core.VerticalLayout constraint='scroll'>
+      <UI.VerticalLayout constraint='scroll'>
         {/* display text */}
-        <UI_Core.Text variant='displayLarge'>DisplayLarge</UI_Core.Text>
-        <UI_Core.Text variant='displayMedium'>Display Medium</UI_Core.Text>
-        <UI_Core.Text variant='displaySmall'>Display Small</UI_Core.Text>
-        <UI_Core.Divider />
+        <UI.Text variant='displayLarge'>DisplayLarge</UI.Text>
+        <UI.Text variant='displayMedium'>Display Medium</UI.Text>
+        <UI.Text variant='displaySmall'>Display Small</UI.Text>
+        <UI.Divider />
         {/* headline text */}
-        <UI_Core.Text variant='headlineLarge'>Headline Large</UI_Core.Text>
-        <UI_Core.Text variant='headlineMedium'>Headline Medium</UI_Core.Text>
-        <UI_Core.Text variant='headlineSmall'>Headline Small</UI_Core.Text>
-        <UI_Core.Divider />
+        <UI.Text variant='headlineLarge'>Headline Large</UI.Text>
+        <UI.Text variant='headlineMedium'>Headline Medium</UI.Text>
+        <UI.Text variant='headlineSmall'>Headline Small</UI.Text>
+        <UI.Divider />
         {/* title text */}
-        <UI_Core.Text variant='titleLarge'>Title Large</UI_Core.Text>
-        <UI_Core.Text variant='titleMedium'>Title Medium</UI_Core.Text>
-        <UI_Core.Text variant='titleSmall'>Title Small</UI_Core.Text>
-        <UI_Core.Divider />
+        <UI.Text variant='titleLarge'>Title Large</UI.Text>
+        <UI.Text variant='titleMedium'>Title Medium</UI.Text>
+        <UI.Text variant='titleSmall'>Title Small</UI.Text>
+        <UI.Divider />
         {/* label text */}
-        <UI_Core.Text variant='labelLarge'>Label Large</UI_Core.Text>
-        <UI_Core.Text variant='labelMedium'>Label Medium</UI_Core.Text>
-        <UI_Core.Text variant='labelSmall'>Label Small</UI_Core.Text>
-        <UI_Core.Divider />
+        <UI.Text variant='labelLarge'>Label Large</UI.Text>
+        <UI.Text variant='labelMedium'>Label Medium</UI.Text>
+        <UI.Text variant='labelSmall'>Label Small</UI.Text>
+        <UI.Divider />
         {/* body text */}
-        <UI_Core.Text variant='bodyLarge'>Body Large</UI_Core.Text>
-        <UI_Core.Text variant='bodyMedium'>Body Medium</UI_Core.Text>
-        <UI_Core.Text variant='bodySmall'>Body Small</UI_Core.Text>
-        <UI_Core.Divider />
+        <UI.Text variant='bodyLarge'>Body Large</UI.Text>
+        <UI.Text variant='bodyMedium'>Body Medium</UI.Text>
+        <UI.Text variant='bodySmall'>Body Small</UI.Text>
+        <UI.Divider />
         {/* highlight text */}
-        <UI_Core.HighlightText
+        <UI.HighlightText
           variant='bodyMedium'
           query='react'
         >
           React Native makes mobile development easy with React.
-        </UI_Core.HighlightText>
-        <UI_Core.HighlightText
+        </UI.HighlightText>
+        <UI.HighlightText
           variant='labelMedium'
           query='react'
         >
           React Native makes mobile development easy with React.
-        </UI_Core.HighlightText>
-      </UI_Core.VerticalLayout>
+        </UI.HighlightText>
+      </UI.VerticalLayout>
     </Screen.ScreenLayout>
   );
 };
