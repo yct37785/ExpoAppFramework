@@ -69,12 +69,14 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
           Select the screen you want to navigate to
         </Text>
 
-        {renderScreenBtn('testbed', 'test bed example')}
-        {renderScreenBtn('typography', 'typography example')}
-        {renderScreenBtn('layout', 'layouts example')}
-        {renderScreenBtn('menu', 'menus example')}
-        {renderScreenBtn('list', 'list example')}
-        {renderScreenBtn('container', 'containers example')}
+        {renderScreenBtn('testbed', 'test bed')}
+        {renderScreenBtn('typography', 'typography')}
+        {renderScreenBtn('layout', 'layouts')}
+        {renderScreenBtn('menu', 'menus')}
+        {renderScreenBtn('list', 'list')}
+        {renderScreenBtn('collapsible', 'collapsible')}
+        {renderScreenBtn('tabs', 'tabs')}
+        
       </UI.VerticalLayout>
     </Screen.ScreenLayout>
   );

@@ -8,7 +8,8 @@ import TypographyScreen from './Screens/TypographyScreen';
 import LayoutScreen from './Screens/LayoutScreen';
 import MenuScreen from './Screens/MenuScreen';
 import ListScreen from './Screens/ListScreen';
-import ContainerScreen from './Screens/ContainerScreen';
+import CollapsibleScreen from './Screens/CollapsibleScreen';
+import TabsScreen from './Screens/TabsScreen';
 
 /******************************************************************************************************************
  * AppBar: default left content
@@ -38,7 +39,8 @@ export const screenMap: Screen.ScreenMap = {
   'layout': LayoutScreen,
   'menu': MenuScreen,
   'list': ListScreen,
-  'container': ContainerScreen,
+  'collapsible': CollapsibleScreen,
+  'tabs': TabsScreen,
 };
 
 /******************************************************************************************************************
