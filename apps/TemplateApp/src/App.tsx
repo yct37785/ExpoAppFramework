@@ -52,12 +52,10 @@ const defaultScreenLayoutProps = {
 
 export default function App() {
   return (
-    <View style={{ flex: 1 }}>
-      <Root
-        DEFAULT_SCREEN='home'
-        screenMap={screenMap}
-        defaultScreenLayoutProps={defaultScreenLayoutProps}
-      />
-    </View>
+    <Root
+      DEFAULT_SCREEN='home'
+      screenMap={screenMap}
+      defaultScreenLayoutProps={defaultScreenLayoutProps}
+    />
   );
 }
