@@ -19,9 +19,7 @@ export type PopupProps = {
 };
 
 /******************************************************************************************************************
- * General-purpose popup menu using react-native-popup-menu.
- * - Trigger uses our `Touchable` for consistent feedback (animated opacity + native ripple on Android).
- * - Menu background is theme-aware with a safe fallback chain for dark/light parity.
+ * A contextual floating menu or overlay triggered by a user action such as a button press.
  *
  * @usage
  * ```tsx

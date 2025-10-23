@@ -15,7 +15,7 @@ export type CollapsibleContainerProps = {
 };
 
 /******************************************************************************************************************
- * Provide a self-contained collapsible section with a pressable header and hidden/revealed content.
+ * A container that can expand or collapse its content vertically, typically used for toggling visibility of sections.
  *
  * @usage
  * ```tsx
@@ -40,7 +40,7 @@ export type AccordionContainerProps = {
 };
 
 /******************************************************************************************************************
- * Provide a multi-section accordion where only one section is expanded at a time.
+ * A vertically stacked set of collapsible panels where only one section can be expanded at a time.
  *
  * @param props - Refer to AccordionContainerProps
  *

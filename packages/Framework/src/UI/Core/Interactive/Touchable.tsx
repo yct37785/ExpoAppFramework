@@ -11,6 +11,11 @@ import { TouchableType } from './Touchable.types';
 
 /******************************************************************************************************************
  * Touchable implementation.
+ * 
+ * Performance notes:
+ *  - Handlers are memoized (useCallback) to avoid new identities per render.
+ *  - Animations are stopped before re-running to prevent race conditions on fast taps.
+ *  - Platform ripple color is left to the system for zero-cost theming + parity.
  ******************************************************************************************************************/
 export const Touchable: TouchableType = memo(
   ({

@@ -16,10 +16,7 @@ export type DividerProps = {
 };
 
 /******************************************************************************************************************
- * Divider (RN Paper)
- *
- * - Horizontal: uses React Native Paper's <Divider /> and applies thickness, color, spacing via style.
- * - Vertical  : emulates a divider with a themed View (MD3 color + thickness + spacing), full height of container.
+ * A thin visual separator used to group or divide related UI content.
  * 
  * @usage
  * ```tsx

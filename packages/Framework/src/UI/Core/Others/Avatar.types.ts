@@ -27,7 +27,7 @@ export type AvatarProps = {
 };
 
 /******************************************************************************************************************
- * Avatar: Theme-aware avatar with image or text fallback; optional status badge.
+ * A circular image or label representing a user or entity, typically used in lists or headers.
  * 
  * @usage
  * ```tsx

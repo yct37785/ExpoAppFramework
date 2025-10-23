@@ -17,7 +17,7 @@ import { type PressableProps, type ViewStyle, type StyleProp } from 'react-nativ
  * @property android_disableSound  - Disables Android's click sound
  * @property hitSlop               - Extra touch area around the element
  * @property pressRetentionOffset  - Defines how far the touch can move before deactivating press
- * @property style                 - Style(s) applied to the root Animated.View
+ * @property style                 - Style(s) applied to the root container
  * @property children              - React children rendered inside the touchable
  ******************************************************************************************************************/
 export interface TouchableProps {
@@ -37,14 +37,7 @@ export interface TouchableProps {
 }
 
 /******************************************************************************************************************
- * A Pressable wrapper that adds:
- *  • Smooth opacity animation for visual feedback.
- *  • Native Android ripple for perfect platform consistency.
- *
- * Performance notes:
- *  • Handlers are memoized (useCallback) to avoid new identities per render.
- *  • Animations are stopped before re-running to prevent race conditions on fast taps.
- *  • Platform ripple color is left to the system for zero-cost theming + parity.
+ * A generic interactive wrapper providing consistent feedback (ripple or opacity) for pressable elements.
  *
  * @usage
  * ```tsx

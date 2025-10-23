@@ -52,7 +52,7 @@ export type TabsContainerProps = {
 };
 
 /******************************************************************************************************************
- * Render a tabbed interface using react-native-tab-view with optional icons and lazy loading.
+ * A container for managing tabbed navigation where content changes based on the selected tab.
  *
  * @param props - Refer to TabsContainerProps
  ******************************************************************************************************************/

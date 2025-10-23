@@ -29,8 +29,7 @@ export type DialogProps = {
 };
 
 /******************************************************************************************************************
- * Render a customizable modal dialog using react-native-paper's Modal.
- * Provides title, optional subtitle, flexible content, and optional close/submit actions.
+ * A modal surface used for focused user interactions that require acknowledgment or decision.
  *
  * @usage
  * ```tsx

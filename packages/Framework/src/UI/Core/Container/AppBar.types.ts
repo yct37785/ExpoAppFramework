@@ -19,7 +19,7 @@ export type AppBarProps = {
 };
 
 /******************************************************************************************************************
- * AppBar: A simple theme-aware header bar with optional back button and action slots.
+ * A theme-aware top navigation bar that displays titles, navigation actions, and contextual controls.
  * 
  * @usage
  * ```tsx

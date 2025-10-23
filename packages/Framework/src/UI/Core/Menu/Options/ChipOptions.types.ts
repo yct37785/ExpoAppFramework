@@ -15,13 +15,7 @@ export type ChipOptionsProps = {
 };
 
 /******************************************************************************************************************
- * Render a selectable chip group with multi-select support using react-native-paper chips.
- *
- * Features:
- * - Supports multi-selection of chips
- * - Provides selected/unselected visual states
- * - Callback returns updated selected values as a Set<string>
- * - Responsive row wrapping for variable chip counts
+ * A collection of selectable chips representing tags or quick filters.
  * 
  * @usage
  * ```tsx

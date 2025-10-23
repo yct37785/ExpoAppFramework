@@ -36,7 +36,7 @@ export type PickerProps = {
 };
 
 /******************************************************************************************************************
- * Render a styled dropdown picker built on @react-native-picker/picker.
+ * A dropdown selector allowing the user to choose one value from a list.
  * 
  * @usage
  * ```tsx

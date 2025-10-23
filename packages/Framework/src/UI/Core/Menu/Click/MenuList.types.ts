@@ -43,8 +43,7 @@ export type MenuListProps = {
 };
 
 /******************************************************************************************************************
- * Stateless action menu built with React Native Paper.
- * - Suitable for navigation and quick actions (e.g., profile popup, overflow menus).
+ * A structured list of selectable menu items, often used within dropdowns or popups.
  *
  * @usage
  * ```tsx

@@ -81,7 +81,7 @@ export type ButtonProps = {
 };
 
 /******************************************************************************************************************
- * Button, follow MD3 guidelines.
+ * A pressable control that triggers an action or event, supporting multiple visual modes.
  * 
  * @usage
  * ```tsx

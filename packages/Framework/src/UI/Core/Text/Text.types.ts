@@ -39,8 +39,7 @@ export interface TextProps {
 }
 
 /******************************************************************************************************************
- * Wraps React Native Paper's Text.
- * All typography, color, and spacing behavior comes from Paper's MD3 system.
+ * A theme-aware text component supporting typography variants defined by the Material Design 3 spec.
  *
  * @usage
  * ```tsx

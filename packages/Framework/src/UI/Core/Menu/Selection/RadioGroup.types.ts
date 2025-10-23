@@ -30,7 +30,7 @@ export type RadioGroupProps = {
 };
 
 /******************************************************************************************************************
- * Render a horizontal group of radio buttons with labels.
+ * A set of mutually exclusive radio options allowing only one selection.
  *
  * @usage
  * ```tsx

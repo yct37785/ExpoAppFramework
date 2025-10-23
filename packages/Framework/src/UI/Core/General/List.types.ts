@@ -3,8 +3,9 @@ import { StyleProp, ViewStyle } from 'react-native';
 
 /******************************************************************************************************************
  * Select which list implementation to use.
- * - flashlist → Uses @shopify/flash-list for improved performance with large datasets
- * - flatlist → Uses React Native's built-in FlatList
+ * 
+ * @property flashlist  - Uses @shopify/flash-list for improved performance with large datasets
+ * @property flatlist   - Uses React Native's built-in FlatList
  ******************************************************************************************************************/
 export enum ListImplementationType {
   flashlist = 'flashlist',
@@ -80,9 +81,8 @@ export type ListProps = {
 };
 
 /******************************************************************************************************************
- * Render a searchable, filterable list backed by either FlashList or FlatList.
- * Encapsulates filtering logic and delegates row rendering to a caller-provided renderer.
- *
+ * A scrollable vertical container for presenting lists of items, searchable and filterable.
+ * 
  * @usage
  * ```tsx
  * <List
