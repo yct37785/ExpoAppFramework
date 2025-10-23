@@ -1,5 +1,6 @@
 import React, { memo, useEffect } from 'react';
-import { Text, Button, Switch, useTheme } from 'react-native-paper';
+import { View } from 'react-native';
+import { Button, Switch, useTheme } from 'react-native-paper';
 import { Screen, Managers, UI } from 'framework';
 
 /******************************************************************************************************************
@@ -53,29 +54,42 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
 
     return (
       <>
-        <Text variant='bodyMedium' style={{ marginBottom: 12 }}>
+        <UI.Text variant='bodyMedium'>
           {statusText}
-        </Text>
+        </UI.Text>
       </>
     );
   };
 
+  const SECTIONS: string[] = ['Test', 'Container', 'Layout', 'Others'];
   return (
     <Screen.ScreenLayout LeftContent={LeftContent}>
       <UI.VerticalLayout>
         {renderAuthSection()}
 
-        <Text variant='bodyMedium' style={{ marginTop: 16 }}>
+        <UI.Text variant='bodyMedium' style={{ marginTop: 16 }}>
           Select the screen you want to navigate to
-        </Text>
+        </UI.Text>
 
-        {renderScreenBtn('testbed', 'test bed')}
-        {renderScreenBtn('typography', 'typography')}
-        {renderScreenBtn('layout', 'layouts')}
-        {renderScreenBtn('menu', 'menus')}
-        {renderScreenBtn('list', 'list')}
-        {renderScreenBtn('collapsible', 'collapsible')}
-        {renderScreenBtn('tabs', 'tabs')}
+        <UI.AccordionContainer sectionTitles={SECTIONS}>
+          <UI.VerticalLayout>
+            {renderScreenBtn('testbed', 'test bed')}
+          </UI.VerticalLayout>
+          <UI.VerticalLayout>
+            {renderScreenBtn('collapsible', 'collapsible')}
+            {renderScreenBtn('tabs', 'tabs')}
+          </UI.VerticalLayout>
+          <UI.VerticalLayout>
+            {renderScreenBtn('layout', 'layouts')}
+          </UI.VerticalLayout>
+          <UI.VerticalLayout>
+            {renderScreenBtn('typography', 'typography')}
+            {renderScreenBtn('menu', 'menus')}
+            {renderScreenBtn('list', 'list')}
+            {renderScreenBtn('collapsible', 'collapsible')}
+            {renderScreenBtn('tabs', 'tabs')}
+          </UI.VerticalLayout>
+        </UI.AccordionContainer>
         
       </UI.VerticalLayout>
     </Screen.ScreenLayout>
