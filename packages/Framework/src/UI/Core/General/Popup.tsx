@@ -1,5 +1,4 @@
 import React, { useRef, memo, useMemo } from 'react';
-import { type StyleProp, type ViewStyle } from 'react-native';
 import { Menu, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { Touchable } from '../Interactive/Touchable';
 import { PopupType } from './Popup.types';
@@ -20,7 +19,7 @@ export const Popup: PopupType = memo(
     );
 
     return (
-      <Menu ref={menuRef} style={style}>
+      <Menu ref={menuRef} style={[{ justifyContent: 'center' }, style]}>
         <MenuTrigger disabled={disabled} customStyles={triggerStyles}>
           {triggerComp}
         </MenuTrigger>

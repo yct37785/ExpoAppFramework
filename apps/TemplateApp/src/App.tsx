@@ -10,21 +10,8 @@ import MenuScreen from './Screens/MenuScreen';
 import ListScreen from './Screens/ListScreen';
 import CollapsibleScreen from './Screens/CollapsibleScreen';
 import TabsScreen from './Screens/TabsScreen';
-
-/******************************************************************************************************************
- * AppBar: default left content
- ******************************************************************************************************************/
-const DefaultLeftContent = () => (
-  <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: 'green' }}>
-    <UI.Text variant='titleMedium'>Left</UI.Text>
-  </View>
-);
-
-const DefaultRightContent = () => (
-  <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: 'red' }}>
-    <UI.Text variant='titleMedium'>Right</UI.Text>
-  </View>
-);
+// layout
+import { DefaultLeftContent, DefaultRightContent } from './ScreenLayout';
 
 /******************************************************************************************************************
  * Screen mapper

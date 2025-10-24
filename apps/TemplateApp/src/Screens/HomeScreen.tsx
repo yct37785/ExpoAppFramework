@@ -1,6 +1,6 @@
 import React, { memo, useEffect } from 'react';
 import { View } from 'react-native';
-import { Button, Switch, useTheme } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import { Screen, Managers, UI } from 'framework';
 
 /******************************************************************************************************************
@@ -8,9 +8,6 @@ import { Screen, Managers, UI } from 'framework';
  ******************************************************************************************************************/
 const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
   const { user } = Managers.useAuth();
-  const theme = useTheme();
-  const { getItem, setItem } = Managers.useLocalData();
-  const isDarkMode = !!getItem<boolean>('isDarkMode');
 
   // useEffect(() => {
   //   (async () => {
@@ -22,17 +19,6 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
   //     console.log(docData);
   //   })();
   // }, []);
-
-  const LeftContent = () => (
-    <UI.HorizontalLayout justify='flex-end'>
-      <UI.ProfileMenu />
-      <Switch
-        value={isDarkMode}
-        onValueChange={(val) => setItem('isDarkMode', val)}
-        color={theme.colors.primary}
-      />
-    </UI.HorizontalLayout>
-  );
 
   const renderScreenBtn = (screen: string, btnText: string) => (
     <Button mode='contained' onPress={() => navigation.navigate(screen, { paramText: 'hello from home' })}>
