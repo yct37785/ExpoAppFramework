@@ -3,18 +3,21 @@ import React from 'react';
 /******************************************************************************************************************
  * Screen layout props.
  * 
- * @property showTitle?    - To show title text for the AppBar (default: false)
- * @property title?        - Title text for the AppBar (defaults to current route name) if showTitle is true
- * @property showBack?     - Show a back button (defaults to navigation.canGoBack())
- * @property LeftContent?  - Optional component rendered in the AppBar’s left slot (after back button).
- *                           Receives { navigation, route } so it can call into screen logic.
- * @property children?     - Screen content rendered below the AppBar inside a SafeAreaView
+ * @property showTitle?     - To show title text for the AppBar (default: false)
+ * @property title?         - Title text for the AppBar (defaults to current route name) if showTitle is true
+ * @property showBack?      - Show a back button
+ * @property LeftContent?   - Optional component rendered in the AppBar’s left slot (after back button).
+ *                            Receives { navigation, route } so it can call into screen logic.
+ * @property RightContent?  - Optional component rendered in the AppBar’s right slot (after LeftContent).
+ *                            Receives { navigation, route } so it can call into screen logic.
+ * @property children?      - Screen content rendered below the AppBar inside a SafeAreaView
  ******************************************************************************************************************/
 export type ScreenLayoutProps = {
   showTitle?: boolean;
   title?: string;
   showBack?: boolean;
   LeftContent?: React.FC | null;
+  RightContent?: React.FC | null;
   children?: React.ReactNode;
 };
 

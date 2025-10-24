@@ -4,7 +4,7 @@ import 'react-native-gesture-handler';
 // core
 import React, { memo, useEffect } from 'react';
 import { View, StatusBar, Platform, LogBox } from 'react-native';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 // UI
 import {
   Provider as PaperProvider,
@@ -23,11 +23,8 @@ import {
   ParamListBase
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// screen typing
-import { ScreenMap } from '../Screen/Screen.types';
 // screen layout
 import { ScreenLayoutContext } from '../Screen/ScreenLayout';
-import { ScreenLayoutProps } from '../Screen/ScreenLayout.types';
 // data
 import { useLocalData, LocalDataProvider } from '../Managers/LocalDataManager';
 // Firebase
@@ -37,6 +34,8 @@ import { AuthProvider, useAuth } from '../Managers/Firebase/FirebaseAuthManager'
 // utils
 import { doLog } from '../Utils/General';
 import { logColors } from '../Const';
+// type
+import { RootProps, RootType } from './Root.types';
 
 LogBox.ignoreAllLogs();
 
@@ -52,19 +51,6 @@ const { LightTheme: NavLight, DarkTheme: NavDark } = adaptNavigationTheme({
 const Stack = createNativeStackNavigator<ParamListBase>();
 
 /******************************************************************************************************************
- * Root component props.
- *
- * @property DEFAULT_SCREEN - Initial route name for the stack navigator
- * @property screenMap      - Mapping of route names to screen components
- * @property defaultScreenLayoutProps   - app wide screen layout (AppBar left content etc)
- ******************************************************************************************************************/
-type RootProps = {
-  DEFAULT_SCREEN: string;
-  screenMap: ScreenMap;
-  defaultScreenLayoutProps: ScreenLayoutProps;
-};
-
-/******************************************************************************************************************
  * RootApp
  *
  * Single gate that:
@@ -76,7 +62,7 @@ type RootProps = {
  *  - Hooks are always called in the same order; we avoid early returns before hooks.
  *  - We gate effect work with `if (!isLoaded) return;` and gate UI via conditional JSX.
  ******************************************************************************************************************/
-const RootApp: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap, defaultScreenLayoutProps }) => {
+const RootApp: RootType = ({ DEFAULT_SCREEN, screenMap, defaultScreenLayoutProps }) => {
   const { isLoaded, getItem } = useLocalData();
 
   // derive a safe value even when not loaded yet (avoid conditional hooks)

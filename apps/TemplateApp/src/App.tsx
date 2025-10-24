@@ -15,17 +15,14 @@ import TabsScreen from './Screens/TabsScreen';
  * AppBar: default left content
  ******************************************************************************************************************/
 const DefaultLeftContent = () => (
-  <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 12 }}>
-    <View
-      style={{
-        width: 10,
-        height: 10,
-        borderRadius: 5,
-        backgroundColor: '#007AFF', // blue dot
-        marginRight: 8,
-      }}
-    />
-    <UI.Text variant='titleMedium'>TemplateApp</UI.Text>
+  <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: 'green' }}>
+    <UI.Text variant='titleMedium'>Left</UI.Text>
+  </View>
+);
+
+const DefaultRightContent = () => (
+  <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: 'red' }}>
+    <UI.Text variant='titleMedium'>Right</UI.Text>
   </View>
 );
 
@@ -46,18 +43,17 @@ export const screenMap: Screen.ScreenMap = {
 /******************************************************************************************************************
  * App with default layout
  ******************************************************************************************************************/
-const defaultScreenLayoutProps = {
-  showTitle: false, // screens can set true to show title
-  showBack: undefined, // uses navigation.canGoBack() by default
-  LeftContent: DefaultLeftContent,
-};
-
 export default function App() {
   return (
     <Root
       DEFAULT_SCREEN='home'
       screenMap={screenMap}
-      defaultScreenLayoutProps={defaultScreenLayoutProps}
+      defaultScreenLayoutProps={{
+        showTitle: false, // screens can set true to show title
+        showBack: undefined, // uses navigation.canGoBack() by default
+        LeftContent: DefaultLeftContent,
+        RightContent: DefaultRightContent
+      }}
     />
   );
 }

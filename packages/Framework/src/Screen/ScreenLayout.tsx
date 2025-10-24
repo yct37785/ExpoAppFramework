@@ -10,9 +10,9 @@ import * as Const from '../Const';
 /******************************************************************************************************************
  * Screen layout defaults context
  *
- * @property value - Partial<ScreenLayoutProps> that acts as app-wide defaults, provided by Root
+ * @property value - ScreenLayoutProps that acts as app-wide defaults, provided by Root
  ******************************************************************************************************************/
-export const ScreenLayoutContext = createContext<Partial<ScreenLayoutProps>>({});
+export const ScreenLayoutContext = createContext<ScreenLayoutProps>({});
 
 /******************************************************************************************************************
  * Screen layout implementation.
@@ -27,6 +27,7 @@ export const ScreenLayout: ScreenLayoutType = memo((props) => {
   const showTitle = props.showTitle ?? defaults.showTitle ?? false;
   const title = props.title ?? defaults.title;
   const LeftContent = props.LeftContent ?? defaults.LeftContent;
+  const RightContent = props.RightContent ?? defaults.RightContent;
   const explicitShowBack = props.showBack ?? defaults.showBack;
 
   const computedTitle = title ?? (route?.name as string);
@@ -42,7 +43,7 @@ export const ScreenLayout: ScreenLayoutType = memo((props) => {
         title={showTitle ? computedTitle : undefined}
         onBack={showBackFinal ? () => (navigation as any).goBack() : undefined}
         left={LeftContent ? <LeftContent /> : undefined}
-        right={undefined}
+        right={RightContent ? <RightContent /> : undefined}
       />
       <SafeAreaView edges={['bottom']} style={{ flex: 1 }}>
         {props.children}

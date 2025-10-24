@@ -63,7 +63,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
 
   const SECTIONS: string[] = ['Test', 'Container', 'Layout', 'Others'];
   return (
-    <Screen.ScreenLayout LeftContent={LeftContent}>
+    <Screen.ScreenLayout>
       <UI.VerticalLayout>
         {renderAuthSection()}
 

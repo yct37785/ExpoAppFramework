@@ -13,8 +13,8 @@ import { type StyleProp, type ViewStyle } from 'react-native';
 export type AppBarProps = {
   title?: string;
   onBack?: () => void;
-  left?: React.ReactNode;
-  right?: React.ReactNode;
+  left?: React.ReactNode | null;
+  right?: React.ReactNode | null;
   style?: StyleProp<ViewStyle>;
 };
 
