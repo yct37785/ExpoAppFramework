@@ -11,6 +11,7 @@ type FlexWrap = 'wrap' | 'nowrap' | 'wrap-reverse' | 'undefined';
 const Layout: LayoutType = ({
   direction = 'column',
   justify = 'flex-start',
+  align = 'stretch',
   reverse = false,
   constraint = 'none',
   flex = 1,
@@ -34,14 +35,15 @@ const Layout: LayoutType = ({
   const scrollStyle = useMemo(() => ({ flex }), [flex]);
   const contentStyle = useMemo(
     () => ({
+      flexWrap,
       flexDirection: direction,
       justifyContent: justify,
-      flexWrap,
+      alignItems: align,
       gap,
       padding,
       backgroundColor,
     }),
-    [direction, justify, flexWrap, gap, padding, backgroundColor]
+    [flexWrap, direction, justify, align, gap, padding, backgroundColor]
   );
   const viewStyle = useMemo(
     () => ({
@@ -49,11 +51,12 @@ const Layout: LayoutType = ({
       flexWrap,
       flexDirection: direction,
       justifyContent: justify,
+      alignItems: align,
       gap,
       padding,
       backgroundColor,
     }),
-    [flex, flexWrap, direction, justify, gap, padding, backgroundColor]
+    [flex, flexWrap, direction, justify, align, gap, padding, backgroundColor]
   );
 
   // render

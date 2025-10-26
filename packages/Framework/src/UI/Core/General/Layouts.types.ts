@@ -1,10 +1,14 @@
 import React, { ReactNode } from 'react';
 
+export type FlexJustifyProperties = 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
+export type FlexAlignProperties = 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
+
 /******************************************************************************************************************
  * Layout props.
  * 
  * @property direction?       - Flex direction
- * @property justify?         - Flexbox justification along the main axis
+ * @property justify?         - Flexbox children justification along the main axis
+ * @property align?           - Flexbox children alignment along the cross axis
  * @property reverse?         - Whether to render children in reverse order
  * @property constraint?      - Layout constraint mode
  * @property flex?            - Flex grow/shrink value for container
@@ -15,7 +19,8 @@ import React, { ReactNode } from 'react';
  ******************************************************************************************************************/
 export type LayoutProps = {
   direction?: 'row' | 'column';
-  justify?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
+  justify?: FlexJustifyProperties;
+  align?: FlexAlignProperties;
   reverse?: boolean;
   constraint?: 'wrap' | 'scroll' | 'none';
   flex?: number;

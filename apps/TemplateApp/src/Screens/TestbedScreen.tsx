@@ -8,10 +8,18 @@ import { Screen, UI } from 'framework';
  ******************************************************************************************************************/
 const TestbedScreen: Screen.ScreenType = ({ navigation, route }) => {
 
+  const options: UI.MenuOption[] = [
+    { label: 'Sign in with Google', value: 'signin', leadingIcon: 'google' },
+    { label: 'Sign in with Google', value: 'signin', leadingIcon: 'google', disabled: true },
+  ];
+
+  const handleSelect = async (value: string) => {
+  };
+
   const LeftContent = () => (
-    <UI.HorizontalLayout backgroundColor='green'>
+    <UI.HorizontalLayout backgroundColor='green' justify='center' align='center'>
       <View style={{ width: 12, height: 12, borderRadius: 6, backgroundColor: 'lime' }} />
-      <UI.Text variant="labelLarge" style={{ marginLeft: 8 }}>Testbed</UI.Text>
+      <UI.Text variant='labelLarge' style={{ marginLeft: 8 }}>Testbed</UI.Text>
     </UI.HorizontalLayout>
   );
 
@@ -19,17 +27,7 @@ const TestbedScreen: Screen.ScreenType = ({ navigation, route }) => {
     <Screen.ScreenLayout LeftContent={LeftContent}>
       <UI.VerticalLayout constraint='scroll'>
 
-        <UI.Touchable>
-          <View style={{ backgroundColor: 'red', width: '100%', height: 100 }}>
-          </View>
-        </UI.Touchable>
-        <TouchableOpacity>
-          <View style={{ backgroundColor: 'red', width: '100%', height: 100 }}>
-          </View>
-        </TouchableOpacity>
-        <Button mode='contained' onPress={() => { }}>
-          asdasdsadasd
-        </Button>
+        <UI.MenuList options={options} onSelect={handleSelect} dense showDividers />
 
       </UI.VerticalLayout>
     </Screen.ScreenLayout>
