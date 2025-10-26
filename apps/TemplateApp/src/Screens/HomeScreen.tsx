@@ -46,7 +46,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
     );
   };
 
-  const SECTIONS: string[] = ['Test', 'Layouts and Containers', 'Inputs', 'Interactives', 'Menus', 'Overlays', 'Data Display', 'Others'];
+  const SECTIONS: string[] = ['Test', 'Layouts and Containers', 'Inputs', 'Interactives', 'Menus', 'Modal', 'Data Display', 'Others'];
   return (
     <Screen.ScreenLayout>
       <UI.VerticalLayout>
@@ -79,7 +79,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
           <UI.VerticalLayout>
             {renderScreenBtn('menu', 'menus')}
           </UI.VerticalLayout>
-          {/* Overlays */}
+          {/* Modal */}
           <UI.VerticalLayout>
             {renderScreenBtn('menu', 'menus')}
           </UI.VerticalLayout>

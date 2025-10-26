@@ -1,8 +1,8 @@
 import React, { memo } from 'react';
 import { Avatar } from '../../UI/Core/Others/Avatar';
-import { Popup } from '../../UI/Core/General/Popup';
+import { Popup } from '../../UI/Core/Modal/Popup';
 import { MenuList } from '../../UI/Core/Menu/Click/MenuList';
-import { VerticalLayout } from '../../UI/Core/General/Layouts';
+import { VerticalLayout } from '../../UI/Core/Layout/Layout';
 import { useAuth } from '../../Managers/Firebase/FirebaseAuthManager';
 import type { MenuOption } from '../../UI/Core/Menu/Click/MenuList.types';
 

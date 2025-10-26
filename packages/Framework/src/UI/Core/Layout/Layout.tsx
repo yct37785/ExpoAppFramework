@@ -1,7 +1,7 @@
 import React, { memo, useMemo } from 'react';
 import { View, ScrollView } from 'react-native';
 import * as Const from '../../../Const';
-import { LayoutType, VerticalLayoutType, HorizontalLayoutType } from './Layouts.types';
+import { LayoutType, VerticalLayoutType, HorizontalLayoutType } from './Layout.types';
 
 type FlexWrap = 'wrap' | 'nowrap' | 'wrap-reverse' | 'undefined';
 
