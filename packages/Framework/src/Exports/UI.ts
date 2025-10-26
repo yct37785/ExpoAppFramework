@@ -5,6 +5,8 @@ export * from '../UI/Core/Container/Tabs';
 export * from '../UI/Core/Container/Tabs.types';
 export * from '../UI/Core/Input/TextInput';
 export * from '../UI/Core/Input/TextInput.types';
+export * from '../UI/Core/Interactive/Button';
+export * from '../UI/Core/Interactive/Button.types';
 export * from '../UI/Core/Interactive/Touchable';
 export * from '../UI/Core/Interactive/Touchable.types';
 export * from '../UI/Core/Menu/Click/MenuList';

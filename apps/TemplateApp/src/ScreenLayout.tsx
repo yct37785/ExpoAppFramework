@@ -7,7 +7,7 @@ import { Managers, UI } from 'framework';
  * AppBar: default left content
  ******************************************************************************************************************/
 export const DefaultLeftContent = memo(() => {
-  return (<View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: 'green' }}>
+  return (<View style={{ flexDirection: 'row', alignItems: 'center' }}>
     <UI.Text>Left content</UI.Text>
   </View>)
 });

@@ -1,6 +1,5 @@
 import React, { memo, useEffect } from 'react';
 import { View } from 'react-native';
-import { Button } from 'react-native-paper';
 import { Screen, Managers, UI } from 'framework';
 
 /******************************************************************************************************************
@@ -21,9 +20,9 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
   // }, []);
 
   const renderScreenBtn = (screen: string, btnText: string) => (
-    <Button mode='contained' onPress={() => navigation.navigate(screen, { paramText: 'hello from home' })}>
+    <UI.Button mode='contained' onPress={() => navigation.navigate(screen, { paramText: 'hello from home' })}>
       {btnText}
-    </Button>
+    </UI.Button>
   );
 
   const renderAuthSection = () => {
@@ -47,7 +46,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
     );
   };
 
-  const SECTIONS: string[] = ['Test', 'Container', 'Layout', 'Others'];
+  const SECTIONS: string[] = ['Test', 'Layouts and Containers', 'Inputs', 'Interactives', 'Menus', 'Data Display', 'Others'];
   return (
     <Screen.ScreenLayout>
       <UI.VerticalLayout>
@@ -58,25 +57,38 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
         </UI.Text>
 
         <UI.AccordionContainer sectionTitles={SECTIONS}>
+          {/* Test */}
           <UI.VerticalLayout>
             {renderScreenBtn('testbed', 'test bed')}
           </UI.VerticalLayout>
-          <UI.VerticalLayout>
-            {renderScreenBtn('collapsible', 'collapsible')}
-            {renderScreenBtn('tabs', 'tabs')}
-          </UI.VerticalLayout>
+          {/* Layouts and Containers */}
           <UI.VerticalLayout>
             {renderScreenBtn('layout', 'layouts')}
-          </UI.VerticalLayout>
-          <UI.VerticalLayout>
-            {renderScreenBtn('typography', 'typography')}
-            {renderScreenBtn('menu', 'menus')}
-            {renderScreenBtn('list', 'list')}
             {renderScreenBtn('collapsible', 'collapsible')}
             {renderScreenBtn('tabs', 'tabs')}
           </UI.VerticalLayout>
+          {/* Inputs */}
+          <UI.VerticalLayout>
+            <View />
+          </UI.VerticalLayout>
+          {/* Interactives */}
+          <UI.VerticalLayout>
+            <View />
+          </UI.VerticalLayout>
+          {/* Menus */}
+          <UI.VerticalLayout>
+            {renderScreenBtn('menu', 'menus')}
+          </UI.VerticalLayout>
+          {/* Data Display */}
+          <UI.VerticalLayout>
+            {renderScreenBtn('list', 'list')}
+          </UI.VerticalLayout>
+          {/* Others */}
+          <UI.VerticalLayout>
+            {renderScreenBtn('typography', 'typography')}
+          </UI.VerticalLayout>
         </UI.AccordionContainer>
-        
+
       </UI.VerticalLayout>
     </Screen.ScreenLayout>
   );
