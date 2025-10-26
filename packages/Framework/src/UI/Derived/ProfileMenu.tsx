@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Avatar } from '../../UI/Core/Others/Avatar';
+import { Avatar } from '../../UI/Core/Misc/Avatar';
 import { Popup } from '../../UI/Core/Modal/Popup';
 import { MenuList } from '../../UI/Core/Menu/Click/MenuList';
 import { VerticalLayout } from '../../UI/Core/Layout/Layout';
