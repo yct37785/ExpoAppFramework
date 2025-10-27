@@ -46,11 +46,9 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
     );
   };
 
-  const SECTIONS_1 = ['Test', 'Container', 'Data'];
-  const SECTIONS_2 = ['Input', 'Interactive', 'Layout'];
-  const SECTIONS_3 = ['Menu', 'Misc', 'Modal'];
-  const SECTIONS_4 = ['Text', 'Visuals'];
-  
+  const SECTIONS = ['Test', 'Container', 'Data', 'Input', 'Interactive', 'Layout',
+    'Menu', 'Misc', 'Modal', 'Text', 'Visuals'];
+
   return (
     <Screen.ScreenLayout>
       <UI.VerticalLayout constraint='scroll'>
@@ -60,7 +58,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
           Select the screen you want to navigate to
         </UI.Text>
 
-        <UI.AccordionContainer sectionTitles={SECTIONS_1}>
+        <UI.AccordionContainer sectionTitles={SECTIONS}>
           {/* Test */}
           <UI.VerticalLayout>
             {renderScreenBtn('testbed', 'test bed')}
@@ -74,9 +72,6 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
           <UI.VerticalLayout>
             {renderScreenBtn('list', 'list')}
           </UI.VerticalLayout>
-        </UI.AccordionContainer>
-
-        <UI.AccordionContainer sectionTitles={SECTIONS_2}>
           {/* Input */}
           <UI.VerticalLayout>
             <View />
@@ -89,9 +84,6 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
           <UI.VerticalLayout>
             {renderScreenBtn('layout', 'layouts')}
           </UI.VerticalLayout>
-        </UI.AccordionContainer>
-
-        <UI.AccordionContainer sectionTitles={SECTIONS_3}>
           {/* Menu */}
           <UI.VerticalLayout>
             {renderScreenBtn('menu', 'menus')}
@@ -104,9 +96,6 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
           <UI.VerticalLayout>
             <View />
           </UI.VerticalLayout>
-        </UI.AccordionContainer>
-
-        <UI.AccordionContainer sectionTitles={SECTIONS_4}>
           {/* Text */}
           <UI.VerticalLayout>
             {renderScreenBtn('typography', 'typography')}

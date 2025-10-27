@@ -117,85 +117,87 @@ type Section = { title: string; content: React.ReactNode };
 /******************************************************************************************************************
  * AccordionContainer implementation.
  ******************************************************************************************************************/
-export const AccordionContainer: AccordionContainerType = memo(
-  ({ sectionTitles, style = {}, children }) => {
-    const theme = useTheme();
+const GRP_SIZE = 3;
 
-    const childArray = useMemo(() => React.Children.toArray(children), [children]);
-    if (sectionTitles.length !== childArray.length) {
-      throw new Error('The number of section titles must match the number of children.');
-    }
+// child: one independent accordion group, local state, memoized
+const AccordionGroup = React.memo(function AccordionGroup({
+  sections,
+}: {
+  sections: { key: string; title: string; content: React.ReactNode }[];
+}) {
+  const theme = useTheme();
+  const [activeSections, setActiveSections] = React.useState<number[]>([]);
 
-    // combine titles and children into sections (stable across renders)
-    const sections = useMemo<Section[]>(
-      () => sectionTitles.map((title, i) => ({ key: `${title} ${i}`, title, content: childArray[i] })),
-      [sectionTitles, childArray]
-    );
+  const renderHeader = React.useCallback(
+    (section: { title: string }, _i: number, isActive: boolean) => (
+      <View style={styles.headerRow}>
+        <Text variant='titleSmall' numberOfLines={1}>{section.title}</Text>
+        <View style={{ flex: 1 }} />
+        <Icon
+          source={isActive ? 'chevron-up' : 'chevron-down'}
+          size={Const.iconSizeMedium}
+          color={theme.colors.onSurface}
+        />
+      </View>
+    ),
+    []
+  );
 
-    const [activeSections, setActiveSections] = useState<number[]>([]);
+  const renderContent = React.useCallback(
+    (section: Section, _i: number, isActive: boolean) => (
+      <KeepMountedDuringClose active={isActive} durationMs={Const.animDuration}>
+        <View>{section.content}</View>
+      </KeepMountedDuringClose>
+    ),
+    []
+  );
 
-    /**
-     * Render the header row for an accordion section, including a chevron that reflects open state.
-     *
-     * @param section - Object with the section title
-     * @param i       - Index of the current section
-     * @param isActive- Whether the section is currently open
-     *
-     * @return - JSX element for the section header
-     */
-    const renderHeader = useCallback(
-      (section: Section, i: number, isActive: boolean): JSX.Element => {
-        return (
-          <View style={styles.headerRow}>
-            <Text variant='titleSmall' numberOfLines={1}>
-              {section.title}
-            </Text>
-            <View style={{ flex: 1 }} />
-            <Icon
-              source={isActive ? 'chevron-up' : 'chevron-down'}
-              size={Const.iconSizeMedium}
-              color={theme.colors.onSurface}
-            />
-          </View>
-        );
-      },
-      [theme.colors.onSurface]
-    );
+  return (
+    <Accordion
+      touchableComponent={Touchable}
+      touchableProps={{ pressOpacity: Const.pressOpacityHeavy }}
+      sections={sections}
+      activeSections={activeSections}
+      renderHeader={renderHeader}
+      renderContent={renderContent}
+      onChange={setActiveSections}
+      expandMultiple={false}
+      renderAsFlatList={false}
+      duration={Const.animDuration}
+    />
+  );
+});
 
-    /**
-     * Render the collapsible body for an accordion section.
-     *
-     * @param section - Object with a content react node
-     *
-     * @return - JSX element for the section content
-     */
-    const renderContent = useCallback(
-      (section: Section, i: number, isActive: boolean): JSX.Element => (
-        // mount only when active to avoid work for closed sections
-        <KeepMountedDuringClose active={isActive} durationMs={Const.animDuration}>
-          <View>{section.content}</View>
-        </KeepMountedDuringClose>
-      ),
-      []
-    );
+// parent: split into groups, but render each as a separate child component
+export const AccordionContainer: AccordionContainerType = React.memo(function AccordionContainer({
+  sectionTitles,
+  style = {},
+  children
+}) {
+  const childArray = React.useMemo(() => React.Children.toArray(children), [children]);
 
-    return (
-      <Accordion
-        touchableComponent={Touchable}
-        touchableProps={{ pressOpacity: Const.pressOpacityHeavy }}
-        containerStyle={style}
-        sections={sections}
-        activeSections={activeSections}
-        renderHeader={renderHeader}
-        renderContent={renderContent}
-        onChange={setActiveSections}
-        expandMultiple={false}
-        renderAsFlatList={true}
-        duration={Const.animDuration}
-      />
-    );
-  }
-);
+  const sections = React.useMemo(
+    () => sectionTitles.map((title, i) => ({ key: `${title}-${i}`, title, content: childArray[i] })),
+    [sectionTitles, childArray]
+  );
+
+  const groups = React.useMemo(() => {
+    const out: typeof sections[] = [];
+    for (let i = 0; i < sections.length; i += GRP_SIZE) out.push(sections.slice(i, i + GRP_SIZE));
+    return out;
+  }, [sections]);
+
+  return (
+    <View style={style}>
+      {groups.map((g, gi) => (
+        <AccordionGroup
+          key={`acc-${gi}`}
+          sections={g}
+        />
+      ))}
+    </View>
+  );
+});
 
 const styles = StyleSheet.create({
   headerRow: { padding: Const.padSize, alignItems: 'center', flexDirection: 'row' },
