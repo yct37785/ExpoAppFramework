@@ -1,11 +1,49 @@
-import React, { useState, JSX, memo, ReactNode, useMemo, useCallback } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import React, { useState, JSX, memo, ReactNode, useMemo, useCallback, useEffect, useRef } from 'react';
+import { View, StyleSheet } from 'react-native';
 import { Text, useTheme, Icon } from 'react-native-paper';
 import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
 import * as Const from '../../../Const';
 import { CollapsibleContainerType, AccordionContainerType } from './Collapsible.types';
 import { Touchable } from '../Interactive/Touchable';
+
+/******************************************************************************************************************
+ * Utility component that keeps its children mounted until a specified timeout elapses after becoming inactive.
+ * 
+ * @param active      - Whether the content should be considered active (visible)
+ * @param durationMs  - Duration (in milliseconds) to keep the children mounted after `active` becomes false
+ * @param children    - The React node(s) to render while mounted
+ ******************************************************************************************************************/
+const KeepMountedDuringClose: React.FC<{
+  active: boolean;
+  durationMs: number;
+  children: React.ReactNode;
+}> = ({ active, durationMs, children }) => {
+  const [render, setRender] = useState(active);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    // if becoming active: show immediately and cancel any pending unmount
+    if (active) {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+      setRender(true);
+      return;
+    }
+    // if becoming inactive: wait for the close animation to finish, then unmount
+    timerRef.current = setTimeout(() => setRender(false), durationMs);
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+    };
+  }, [active, durationMs]);
+
+  return render ? <>{children}</> : null;
+};
 
 /******************************************************************************************************************
  * ToggleHeader props.
@@ -90,7 +128,7 @@ export const AccordionContainer: AccordionContainerType = memo(
 
     // combine titles and children into sections (stable across renders)
     const sections = useMemo<Section[]>(
-      () => sectionTitles.map((title, i) => ({ title, content: childArray[i] })),
+      () => sectionTitles.map((title, i) => ({ key: `${title} ${i}`, title, content: childArray[i] })),
       [sectionTitles, childArray]
     );
 
@@ -108,7 +146,7 @@ export const AccordionContainer: AccordionContainerType = memo(
     const renderHeader = useCallback(
       (section: Section, i: number, isActive: boolean): JSX.Element => {
         return (
-          <View style={{ padding: Const.padSize, alignItems: 'center', flexDirection: 'row' }}>
+          <View style={styles.headerRow}>
             <Text variant='titleSmall' numberOfLines={1}>
               {section.title}
             </Text>
@@ -132,9 +170,12 @@ export const AccordionContainer: AccordionContainerType = memo(
      * @return - JSX element for the section content
      */
     const renderContent = useCallback(
-      (section: Section): JSX.Element => {
-        return <View>{section.content}</View>;
-      },
+      (section: Section, i: number, isActive: boolean): JSX.Element => (
+        // mount only when active to avoid work for closed sections
+        <KeepMountedDuringClose active={isActive} durationMs={Const.animDuration}>
+          <View>{section.content}</View>
+        </KeepMountedDuringClose>
+      ),
       []
     );
 
@@ -148,7 +189,14 @@ export const AccordionContainer: AccordionContainerType = memo(
         renderHeader={renderHeader}
         renderContent={renderContent}
         onChange={setActiveSections}
+        expandMultiple={false}
+        renderAsFlatList={true}
+        duration={Const.animDuration}
       />
     );
   }
 );
+
+const styles = StyleSheet.create({
+  headerRow: { padding: Const.padSize, alignItems: 'center', flexDirection: 'row' },
+});

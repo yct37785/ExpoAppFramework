@@ -46,10 +46,12 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
     );
   };
 
-  const SECTIONS: string[] = ['Test', 'Layouts and Containers', 'Inputs', 'Interactives', 'Menus', 'Modal', 'Data Display', 'Others'];
+  const SECTIONS: string[] = ['Test', 'Container', 'Data', 'Input', 'Interactive', 'Layout',
+    'Menu', 'Misc', 'Modal', 'Text', 'Visuals'
+  ];
   return (
     <Screen.ScreenLayout>
-      <UI.VerticalLayout>
+      <UI.VerticalLayout constraint='scroll'>
         {renderAuthSection()}
 
         <UI.Text variant='bodyMedium' style={{ marginTop: 16 }}>
@@ -57,40 +59,63 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
         </UI.Text>
 
         <UI.AccordionContainer sectionTitles={SECTIONS}>
+
           {/* Test */}
           <UI.VerticalLayout>
             {renderScreenBtn('testbed', 'test bed')}
           </UI.VerticalLayout>
-          {/* Layouts and Containers */}
+
+          {/* Container */}
           <UI.VerticalLayout>
-            {renderScreenBtn('layout', 'layouts')}
             {renderScreenBtn('collapsible', 'collapsible')}
             {renderScreenBtn('tabs', 'tabs')}
           </UI.VerticalLayout>
-          {/* Inputs */}
-          <UI.VerticalLayout>
-            <View />
-          </UI.VerticalLayout>
-          {/* Interactives */}
-          <UI.VerticalLayout>
-            <View />
-          </UI.VerticalLayout>
-          {/* Menus */}
-          <UI.VerticalLayout>
-            {renderScreenBtn('menu', 'menus')}
-          </UI.VerticalLayout>
-          {/* Modal */}
-          <UI.VerticalLayout>
-            {renderScreenBtn('menu', 'menus')}
-          </UI.VerticalLayout>
-          {/* Data Display */}
+
+          {/* Data */}
           <UI.VerticalLayout>
             {renderScreenBtn('list', 'list')}
           </UI.VerticalLayout>
-          {/* Others */}
+
+          {/* Input */}
+          <UI.VerticalLayout>
+            <View />
+          </UI.VerticalLayout>
+
+          {/* Interactive */}
+          <UI.VerticalLayout>
+            <View />
+          </UI.VerticalLayout>
+
+          {/* Layout */}
+          <UI.VerticalLayout>
+            {renderScreenBtn('layout', 'layouts')}
+          </UI.VerticalLayout>
+
+          {/* Menu */}
+          <UI.VerticalLayout>
+            {renderScreenBtn('menu', 'menus')}
+          </UI.VerticalLayout>
+
+          {/* Misc */}
+          <UI.VerticalLayout>
+            <View />
+          </UI.VerticalLayout>
+
+          {/* Modal */}
+          <UI.VerticalLayout>
+            <View />
+          </UI.VerticalLayout>
+
+          {/* Text */}
           <UI.VerticalLayout>
             {renderScreenBtn('typography', 'typography')}
           </UI.VerticalLayout>
+
+          {/* Visuals */}
+          <UI.VerticalLayout>
+            <View />
+          </UI.VerticalLayout>
+
         </UI.AccordionContainer>
 
       </UI.VerticalLayout>

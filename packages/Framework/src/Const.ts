@@ -41,6 +41,8 @@ export const pressOpacityHeavy = 0.2;
 export const pressInDurationMS = 110;
 export const pressOutDurationMS = 160;
 
+export const animDuration = 300;
+
 // reserved default values for storage
 export const localDataDefaults = {
   isDarkMode: false,
