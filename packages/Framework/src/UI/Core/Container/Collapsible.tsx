@@ -107,29 +107,38 @@ export const CollapsibleContainer: CollapsibleContainerType = memo(
 );
 
 /******************************************************************************************************************
- * Accordion section props.
- * 
- * @property title    - Section title
- * @property content  - Section content
+ * AccordionContainer implementation.
  ******************************************************************************************************************/
 type Section = { title: string; content: React.ReactNode };
 
-/******************************************************************************************************************
- * AccordionContainer implementation.
- ******************************************************************************************************************/
 const GRP_SIZE = 3;
 
-// child: one independent accordion group, local state, memoized
+/******************************************************************************************************************
+ * AccordionGroup:
+ * - renders one Accordion component
+ ******************************************************************************************************************/
 const AccordionGroup = React.memo(function AccordionGroup({
   sections,
+  idx,
+  closeTrigger,
+  onTrigger
 }: {
-  sections: { key: string; title: string; content: React.ReactNode }[];
+  sections: Section[];
+  idx: number;
+  closeTrigger: number;
+  onTrigger: (idx: number) => void;
 }) {
   const theme = useTheme();
   const [activeSections, setActiveSections] = React.useState<number[]>([]);
 
+  // close on receiving trigger
+  useEffect(() => {
+    // console.log(`idx ${idx} close triggered`);
+    setActiveSections([]);
+  }, [closeTrigger]);
+
   const renderHeader = React.useCallback(
-    (section: { title: string }, _i: number, isActive: boolean) => (
+    (section: Section, _i: number, isActive: boolean) => (
       <View style={styles.headerRow}>
         <Text variant='titleSmall' numberOfLines={1}>{section.title}</Text>
         <View style={{ flex: 1 }} />
@@ -152,6 +161,15 @@ const AccordionGroup = React.memo(function AccordionGroup({
     []
   );
 
+  const onChange = React.useCallback(
+    (newActiveSections: number[]) => {
+      // console.log(`idx: ${idx} open triggered`);
+      setActiveSections(newActiveSections);
+      onTrigger(idx);
+    },
+    []
+  );
+
   return (
     <Accordion
       touchableComponent={Touchable}
@@ -160,7 +178,7 @@ const AccordionGroup = React.memo(function AccordionGroup({
       activeSections={activeSections}
       renderHeader={renderHeader}
       renderContent={renderContent}
-      onChange={setActiveSections}
+      onChange={onChange}
       expandMultiple={false}
       renderAsFlatList={false}
       duration={Const.animDuration}
@@ -168,31 +186,70 @@ const AccordionGroup = React.memo(function AccordionGroup({
   );
 });
 
-// parent: split into groups, but render each as a separate child component
+/******************************************************************************************************************
+ * AccordionContainer:
+ * - renders multiple AccordionGroup components
+ ******************************************************************************************************************/
 export const AccordionContainer: AccordionContainerType = React.memo(function AccordionContainer({
   sectionTitles,
   style = {},
   children
 }) {
-  const childArray = React.useMemo(() => React.Children.toArray(children), [children]);
+  const childArray = useMemo(() => React.Children.toArray(children), [children]);
 
-  const sections = React.useMemo(
-    () => sectionTitles.map((title, i) => ({ key: `${title}-${i}`, title, content: childArray[i] })),
+  const sections: Section[] = useMemo(
+    () => sectionTitles.map((title, i) => ({ title, content: childArray[i] })),
     [sectionTitles, childArray]
   );
 
-  const groups = React.useMemo(() => {
-    const out: typeof sections[] = [];
+  const groups = useMemo(() => {
+    const out: Section[][] = [];
     for (let i = 0; i < sections.length; i += GRP_SIZE) out.push(sections.slice(i, i + GRP_SIZE));
     return out;
   }, [sections]);
+
+  // Accordion triggers
+  const [triggerCloseTrackers, setTriggerCloseTrackers] = useState<number[]>(() =>
+    groups.map(() => 0)
+  );
+  const openAccordionIdx = useRef(-1);
+  const [, setTriggerRender] = useState(0);
+
+  // when an AccordionGroup is triggered
+  const onTrigger = useCallback(
+    (idx: number) => {
+      const prev = openAccordionIdx.current;
+      // open an accordion
+      if (openAccordionIdx.current !== idx) {
+        openAccordionIdx.current = idx;
+      }
+      // close current accordion
+      else if (openAccordionIdx.current === idx) {
+        openAccordionIdx.current = -1;
+      }
+      // close prev accordion
+      if (prev !== -1) {
+        setTriggerCloseTrackers(prevTrackers => {
+          const updated = [...prevTrackers];
+          updated[prev] = updated[prev] + 1;
+          return updated;
+        });
+      }
+      // force parent re-render to update
+      setTriggerRender(prev => prev + 1);
+    },
+    []
+  );
 
   return (
     <View style={style}>
       {groups.map((g, gi) => (
         <AccordionGroup
           key={`acc-${gi}`}
+          idx={gi}
           sections={g}
+          closeTrigger={triggerCloseTrackers[gi]}
+          onTrigger={onTrigger}
         />
       ))}
     </View>
