@@ -46,9 +46,11 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
     );
   };
 
-  const SECTIONS: string[] = ['Test', 'Container', 'Data', 'Input', 'Interactive', 'Layout',
-    'Menu', 'Misc', 'Modal', 'Text', 'Visuals'
-  ];
+  const SECTIONS_1 = ['Test', 'Container', 'Data'];
+  const SECTIONS_2 = ['Input', 'Interactive', 'Layout'];
+  const SECTIONS_3 = ['Menu', 'Misc', 'Modal'];
+  const SECTIONS_4 = ['Text', 'Visuals'];
+  
   return (
     <Screen.ScreenLayout>
       <UI.VerticalLayout constraint='scroll'>
@@ -58,64 +60,61 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
           Select the screen you want to navigate to
         </UI.Text>
 
-        <UI.AccordionContainer sectionTitles={SECTIONS}>
-
+        <UI.AccordionContainer sectionTitles={SECTIONS_1}>
           {/* Test */}
           <UI.VerticalLayout>
             {renderScreenBtn('testbed', 'test bed')}
           </UI.VerticalLayout>
-
           {/* Container */}
           <UI.VerticalLayout>
             {renderScreenBtn('collapsible', 'collapsible')}
             {renderScreenBtn('tabs', 'tabs')}
           </UI.VerticalLayout>
-
           {/* Data */}
           <UI.VerticalLayout>
             {renderScreenBtn('list', 'list')}
           </UI.VerticalLayout>
+        </UI.AccordionContainer>
 
+        <UI.AccordionContainer sectionTitles={SECTIONS_2}>
           {/* Input */}
           <UI.VerticalLayout>
             <View />
           </UI.VerticalLayout>
-
           {/* Interactive */}
           <UI.VerticalLayout>
             <View />
           </UI.VerticalLayout>
-
           {/* Layout */}
           <UI.VerticalLayout>
             {renderScreenBtn('layout', 'layouts')}
           </UI.VerticalLayout>
+        </UI.AccordionContainer>
 
+        <UI.AccordionContainer sectionTitles={SECTIONS_3}>
           {/* Menu */}
           <UI.VerticalLayout>
             {renderScreenBtn('menu', 'menus')}
           </UI.VerticalLayout>
-
           {/* Misc */}
           <UI.VerticalLayout>
             <View />
           </UI.VerticalLayout>
-
           {/* Modal */}
           <UI.VerticalLayout>
             <View />
           </UI.VerticalLayout>
+        </UI.AccordionContainer>
 
+        <UI.AccordionContainer sectionTitles={SECTIONS_4}>
           {/* Text */}
           <UI.VerticalLayout>
             {renderScreenBtn('typography', 'typography')}
           </UI.VerticalLayout>
-
           {/* Visuals */}
           <UI.VerticalLayout>
             <View />
           </UI.VerticalLayout>
-
         </UI.AccordionContainer>
 
       </UI.VerticalLayout>
