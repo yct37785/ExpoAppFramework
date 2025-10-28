@@ -126,7 +126,7 @@ const AccordionGroup = React.memo(function AccordionGroup({
   sections: Section[];
   idx: number;
   closeTrigger: number;
-  onTrigger: (idx: number) => void;
+  onTrigger: (idx: number, sameSection: boolean) => void;
 }) {
   const theme = useTheme();
   const [activeSections, setActiveSections] = React.useState<number[]>([]);
@@ -165,7 +165,11 @@ const AccordionGroup = React.memo(function AccordionGroup({
     (newActiveSections: number[]) => {
       // console.log(`idx: ${idx} open triggered`);
       setActiveSections(newActiveSections);
-      onTrigger(idx);
+      let sameSection = false;
+      if (activeSections.length > 0 && newActiveSections.length > 0) {
+        sameSection = activeSections[0] === newActiveSections[0];
+      }
+      onTrigger(idx, sameSection);
     },
     []
   );
@@ -213,19 +217,21 @@ export const AccordionContainer: AccordionContainerType = React.memo(function Ac
     groups.map(() => 0)
   );
   const openAccordionIdx = useRef(-1);
-  const [, setTriggerRender] = useState(0);
 
-  // when an AccordionGroup is triggered
+  // when an AccordionGrp is triggered
   const onTrigger = useCallback(
-    (idx: number) => {
-      const prev = openAccordionIdx.current;
-      // open an accordion
-      if (openAccordionIdx.current !== idx) {
-        openAccordionIdx.current = idx;
-      }
-      // close current accordion
-      else if (openAccordionIdx.current === idx) {
+    (idx: number, sameSection: boolean) => {
+      let prev = -1;
+      // close current accordion (same AccordionGrp idx and section internally)
+      if (openAccordionIdx.current === idx && sameSection) {
+        prev = openAccordionIdx.current;
         openAccordionIdx.current = -1;
+      }
+      // same AccordionGrp idx but diff section internally, assume curr AccordionGrp stays open
+      // open a diff accordion
+      else if (openAccordionIdx.current !== idx) {
+        prev = openAccordionIdx.current;  // -1 if no prev AccordionGrp
+        openAccordionIdx.current = idx;
       }
       // close prev accordion
       if (prev !== -1) {
@@ -235,8 +241,6 @@ export const AccordionContainer: AccordionContainerType = React.memo(function Ac
           return updated;
         });
       }
-      // force parent re-render to update
-      setTriggerRender(prev => prev + 1);
     },
     []
   );
