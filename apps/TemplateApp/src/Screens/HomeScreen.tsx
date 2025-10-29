@@ -1,6 +1,7 @@
 import React, { memo, useEffect } from 'react';
 import { View } from 'react-native';
 import { Screen, Managers, UI } from 'framework';
+import { screenRoutes } from './ScreenRegistry';
 
 /******************************************************************************************************************
  * Home screen
@@ -19,9 +20,9 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
   //   })();
   // }, []);
 
-  const renderScreenBtn = (screen: string, btnText: string) => (
+  const renderScreenBtn = (screen: string) => (
     <UI.Button mode='contained' onPress={() => navigation.navigate(screen, { paramText: 'hello from home' })}>
-      {btnText}
+      {screen}
     </UI.Button>
   );
 
@@ -46,8 +47,10 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
     );
   };
 
-  const SECTIONS = ['Test', 'Container', 'Data', 'Input', 'Interactive', 'Layout',
-    'Menu', 'Misc', 'Modal', 'Text', 'Visuals'];
+  const SECTIONS = [
+    'Test', 'Container', 'Data', 'Input', 'Interactive',
+    'Layout', 'Menu', 'Misc', 'Modal', 'Text', 'Visuals'
+  ];
 
   return (
     <Screen.ScreenLayout>
@@ -61,48 +64,60 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
         <UI.AccordionContainer sectionTitles={SECTIONS}>
           {/* Test */}
           <UI.VerticalLayout>
-            {renderScreenBtn('testbed', 'test bed')}
+            {renderScreenBtn(screenRoutes.testbed)}
           </UI.VerticalLayout>
+
           {/* Container */}
           <UI.VerticalLayout>
-            {renderScreenBtn('collapsible', 'collapsible')}
-            {renderScreenBtn('tabs', 'tabs')}
+            {renderScreenBtn(screenRoutes.collapsibles)}
+            {renderScreenBtn(screenRoutes.tabs)}
           </UI.VerticalLayout>
+
           {/* Data */}
           <UI.VerticalLayout>
-            {renderScreenBtn('list', 'list')}
+            {renderScreenBtn(screenRoutes.list)}
           </UI.VerticalLayout>
+
           {/* Input */}
           <UI.VerticalLayout>
-            <View />
+            {renderScreenBtn(screenRoutes.inputs)}
           </UI.VerticalLayout>
+
           {/* Interactive */}
           <UI.VerticalLayout>
-            <View />
+            {renderScreenBtn(screenRoutes.interactives)}
           </UI.VerticalLayout>
+
           {/* Layout */}
           <UI.VerticalLayout>
-            {renderScreenBtn('layout', 'layouts')}
+            {renderScreenBtn(screenRoutes.layouts)}
           </UI.VerticalLayout>
+
           {/* Menu */}
           <UI.VerticalLayout>
-            {renderScreenBtn('menu', 'menus')}
+            {renderScreenBtn(screenRoutes.clickMenus)}
+            {renderScreenBtn(screenRoutes.optionsMenus)}
+            {renderScreenBtn(screenRoutes.selectionMenus)}
           </UI.VerticalLayout>
+
           {/* Misc */}
           <UI.VerticalLayout>
-            <View />
+            {renderScreenBtn(screenRoutes.misc)}
           </UI.VerticalLayout>
+
           {/* Modal */}
           <UI.VerticalLayout>
-            <View />
+            {renderScreenBtn(screenRoutes.modals)}
           </UI.VerticalLayout>
+
           {/* Text */}
           <UI.VerticalLayout>
-            {renderScreenBtn('typography', 'typography')}
+            {renderScreenBtn(screenRoutes.text)}
           </UI.VerticalLayout>
+
           {/* Visuals */}
           <UI.VerticalLayout>
-            <View />
+            {renderScreenBtn(screenRoutes.visuals)}
           </UI.VerticalLayout>
         </UI.AccordionContainer>
 
