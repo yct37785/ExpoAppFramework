@@ -9,43 +9,25 @@ const TypographyScreen: Screen.ScreenType = ({ navigation }) => {
   return (
     <Screen.ScreenLayout>
       <UI.VerticalLayout constraint='scroll'>
-        {/* display text */}
-        <UI.Text variant='displayLarge'>DisplayLarge</UI.Text>
-        <UI.Text variant='displayMedium'>Display Medium</UI.Text>
-        <UI.Text variant='displaySmall'>Display Small</UI.Text>
-        <UI.Divider />
-        {/* headline text */}
-        <UI.Text variant='headlineLarge'>Headline Large</UI.Text>
+        {/* text */}
         <UI.Text variant='headlineMedium'>Headline Medium</UI.Text>
-        <UI.Text variant='headlineSmall'>Headline Small</UI.Text>
-        <UI.Divider />
-        {/* title text */}
-        <UI.Text variant='titleLarge'>Title Large</UI.Text>
         <UI.Text variant='titleMedium'>Title Medium</UI.Text>
-        <UI.Text variant='titleSmall'>Title Small</UI.Text>
-        <UI.Divider />
-        {/* label text */}
-        <UI.Text variant='labelLarge'>Label Large</UI.Text>
-        <UI.Text variant='labelMedium'>Label Medium</UI.Text>
-        <UI.Text variant='labelSmall'>Label Small</UI.Text>
-        <UI.Divider />
-        {/* body text */}
-        <UI.Text variant='bodyLarge'>Body Large</UI.Text>
         <UI.Text variant='bodyMedium'>Body Medium</UI.Text>
-        <UI.Text variant='bodySmall'>Body Small</UI.Text>
+        <UI.Text variant='labelMedium'>Label Medium</UI.Text>
+        <UI.Divider />
+        {/* text color */}
+        <UI.Text color='default'>Default color text</UI.Text>
+        <UI.Text color='label'>Label color text</UI.Text>
+        <UI.Text color='error'>Error color text</UI.Text>
+        <UI.Text color='disabled'>Disabled color text</UI.Text>
+        <UI.Text color='primary'>Primary color text</UI.Text>
         <UI.Divider />
         {/* highlight text */}
         <UI.HighlightText
           variant='bodyMedium'
-          query='react'
+          query='highlight text'
         >
-          React Native makes mobile development easy with React.
-        </UI.HighlightText>
-        <UI.HighlightText
-          variant='labelMedium'
-          query='react'
-        >
-          React Native makes mobile development easy with React.
+          This is a sentence containing highlight text which should be highlighted.
         </UI.HighlightText>
       </UI.VerticalLayout>
     </Screen.ScreenLayout>

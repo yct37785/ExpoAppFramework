@@ -21,6 +21,17 @@ export type TextVariant =
   | 'labelMedium'
   | 'labelSmall';
 
+export type TextColor =
+  | 'default'
+  | 'label'
+  | 'disabled'
+  | 'primary'
+  | 'secondary'
+  | 'error'
+  | 'surface'
+  | 'background'
+  | 'outline';
+
 /******************************************************************************************************************
  * Text props.
  * 
@@ -32,7 +43,7 @@ export type TextVariant =
  ******************************************************************************************************************/
 export interface TextProps {
   variant?: TextVariant;
-  color?: string;
+  color?: TextColor;
   numberOfLines?: number;
   style?: StyleProp<TextStyle>;
   children?: string | ReactNode;
