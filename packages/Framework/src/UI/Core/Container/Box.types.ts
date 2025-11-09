@@ -1,9 +1,3 @@
-/******************************************************************************************************************
- * Box component: A drawable container, it holds content and applies styling, but does not decide spatial 
- * arrangement of siblings.
- *  - Think of it as an element in a layout.
- *  - Use to wrap singular child UI components.
- ******************************************************************************************************************/
 import React from 'react';
 import { type StyleProp, type ViewStyle, type FlexStyle } from 'react-native';
 import { PadSpacingValue } from '../../../Types';
@@ -66,6 +60,12 @@ export type BoxProps = {
 };
 
 /******************************************************************************************************************
+ * A drawable container, it holds content and applies styling, but does not decide spatial arrangement of siblings.
+ *  - Think of it as an element in a layout.
+ *  - Use to wrap singular child UI components.
+ * 
+ * @param props - Refer to BoxProps
+ * 
  * @usage
  * ```tsx
  * <Box p={2} ph={3} bgColor="#eee">

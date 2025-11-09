@@ -1,9 +1,3 @@
-/******************************************************************************************************************
- * Layout component: A flexible element grouping container that defines structure and 
- * spacing for contained elements.
- *  - Does not support custom styling as that is out of scope for layout.
- *  - Use to wrap multiple child UI components.
- ******************************************************************************************************************/
 import React, { ReactNode } from 'react';
 import { type ViewStyle } from 'react-native';
 import { PadSpacingValue } from '../../../Types';
@@ -31,6 +25,13 @@ export type LayoutProps = {
   children: ReactNode;
 };
 
+/******************************************************************************************************************
+ * A flexible element grouping container that defines structure and spacing for contained elements.
+ *  - Does not support custom styling as that is out of scope for layout.
+ *  - Use to wrap multiple child UI components.
+ * 
+ * @param props - Refer to LayoutProps
+ ******************************************************************************************************************/
 export type LayoutType = React.FC<LayoutProps>;
 
 /******************************************************************************************************************
