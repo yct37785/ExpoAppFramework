@@ -16,6 +16,7 @@ const Layout: LayoutType = ({
   constraint = 'none',
   flex = 1,
   gap = 1,
+  height,
   bgColor = 'transparent',
   children,
 }) => {
@@ -31,7 +32,7 @@ const Layout: LayoutType = ({
   const isScroll = constraint === 'scroll';
 
   // styles computed once per relevant change
-  const scrollStyle = useMemo(() => ({ flex }), [flex]);
+  const scrollStyle = useMemo(() => ({ flex, height }), [flex, height]);
   const contentStyle = useMemo(
     () => ({
       flexWrap,
@@ -47,6 +48,7 @@ const Layout: LayoutType = ({
   const viewStyle = useMemo(
     () => ({
       flex,
+      height,
       flexWrap,
       flexDirection: dir,
       justifyContent: justify,
@@ -55,7 +57,7 @@ const Layout: LayoutType = ({
       padding: gap * Const.padSize,
       backgroundColor: bgColor,
     }),
-    [flex, flexWrap, dir, justify, align, gap, bgColor]
+    [flex, height, flexWrap, dir, justify, align, gap, bgColor]
   );
 
   // render

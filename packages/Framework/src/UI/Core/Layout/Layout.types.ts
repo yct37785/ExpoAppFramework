@@ -10,6 +10,7 @@ import { PadSpacingValue } from '../../../Types';
  * @property constraint?      - Layout constraint mode
  * @property flex?            - Flex grow/shrink value for container
  * @property gap?             - Spacing between and around children
+ * @property height?          - Fixed height for the container
  * @property bgColor?         - Background color
  * @property children         - Elements rendered inside
  ******************************************************************************************************************/
@@ -21,6 +22,7 @@ export type LayoutProps = {
   constraint?: 'wrap' | 'scroll' | 'none';
   flex?: number;
   gap?: PadSpacingValue;
+  height?: number;
   bgColor?: string;
   children: ReactNode;
 };
