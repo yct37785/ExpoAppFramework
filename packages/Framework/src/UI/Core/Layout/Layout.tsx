@@ -32,7 +32,10 @@ const Layout: LayoutType = ({
   const isScroll = constraint === 'scroll';
 
   // styles computed once per relevant change
-  const scrollStyle = useMemo(() => ({ flex, height }), [flex, height]);
+  const scrollStyle = useMemo(
+    () => (height != null ? { height } : { flex }),
+    [height, flex]
+  );
   const contentStyle = useMemo(
     () => ({
       flexWrap,

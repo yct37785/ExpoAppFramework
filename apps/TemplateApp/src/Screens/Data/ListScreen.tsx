@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, memo } from 'react';
-import { ScrollView, View, Image } from 'react-native';
+import { View, Image } from 'react-native';
 import { Screen, UI, Const } from 'framework';
 import { faker } from '@faker-js/faker';
 const _ = require('lodash');
@@ -92,13 +92,14 @@ const ListScreen: Screen.ScreenType = ({ navigation, route }) => {
 
   return (
     <Screen.ScreenLayout LeftContent={LeftContent}>
-      <UI.VerticalLayout>
+      {/* if constraint != scroll, child HorizontalLayout expands to parent dims */}
+      <UI.VerticalLayout constraint='scroll'>
 
         {/* filter menu */}
-        <ScrollView horizontal={true}>
-          <UI.ChipOptions style={{ width: 700 }}
-            schema={matChipsSchema} onSelected={onChipsSelected} />
-        </ScrollView>
+        <UI.HorizontalLayout constraint='none' bgColor='yellow' height={150}>
+          {/* <UI.ChipOptions schema={matChipsSchema} onSelected={onChipsSelected} /> */}
+          <View style={{ height: 150, width: 50, backgroundColor: 'red' }}></View>
+        </UI.HorizontalLayout>
 
         {/* toggle Flashlist vs FlatList */}
         <UI.RadioGroup
@@ -106,13 +107,13 @@ const ListScreen: Screen.ScreenType = ({ navigation, route }) => {
           value={listType} onValueChange={(s: string) => setListType(s as UI.ListImplementationType)} />
 
         {/* list */}
-        <UI.List
+        {/* <UI.List
           dataArr={productList}
           query={searchQuery}
           filterMap={filterMap}
           renderItem={renderItem}
           listImplementationType={listType}
-        />
+        /> */}
       </UI.VerticalLayout>
     </Screen.ScreenLayout>
   );
