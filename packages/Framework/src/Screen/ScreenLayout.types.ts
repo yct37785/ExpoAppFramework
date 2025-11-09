@@ -1,4 +1,5 @@
 import React from 'react';
+import { PadSpacingValue } from '../Types';
 
 /******************************************************************************************************************
  * Screen layout props.
@@ -10,6 +11,7 @@ import React from 'react';
  *                            Receives { navigation, route } so it can call into screen logic.
  * @property RightContent?  - Optional component rendered in the AppBar’s right slot (after LeftContent).
  *                            Receives { navigation, route } so it can call into screen logic.
+ * @property appbarBottomMargin?  - Margin below appbar
  * @property children?      - Screen content rendered below the AppBar inside a SafeAreaView
  ******************************************************************************************************************/
 export type ScreenLayoutProps = {
@@ -18,6 +20,7 @@ export type ScreenLayoutProps = {
   showBack?: boolean;
   LeftContent?: React.FC | null;
   RightContent?: React.FC | null;
+  appbarBottomMargin?: PadSpacingValue;
   children?: React.ReactNode;
 };
 

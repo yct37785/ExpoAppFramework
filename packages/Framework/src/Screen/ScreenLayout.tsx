@@ -29,6 +29,8 @@ export const ScreenLayout: ScreenLayoutType = memo((props) => {
   const LeftContent = props.LeftContent ?? defaults.LeftContent;
   const RightContent = props.RightContent ?? defaults.RightContent;
   const explicitShowBack = props.showBack ?? defaults.showBack;
+  const appbarBottomMargin =
+    props.appbarBottomMargin ?? defaults.appbarBottomMargin ?? 2;
 
   const computedTitle = title ?? (route?.name as string);
   const canGoBack =
@@ -45,7 +47,7 @@ export const ScreenLayout: ScreenLayoutType = memo((props) => {
         left={LeftContent ? <LeftContent /> : undefined}
         right={RightContent ? <RightContent /> : undefined}
       />
-      <SafeAreaView edges={['bottom']} style={{ flex: 1 }}>
+      <SafeAreaView edges={['bottom']} style={{ flex: 1, marginTop: appbarBottomMargin * Const.padSize }}>
         {props.children}
       </SafeAreaView>
     </View>
