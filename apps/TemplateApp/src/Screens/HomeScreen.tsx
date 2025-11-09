@@ -1,5 +1,4 @@
 import React, { memo, useEffect } from 'react';
-import { View } from 'react-native';
 import { Screen, Managers, UI } from 'framework';
 import { screenRoutes } from './ScreenRegistry';
 
@@ -57,9 +56,11 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
       <UI.VerticalLayout constraint='scroll'>
         {renderAuthSection()}
 
-        <UI.Text variant='bodyMedium' style={{ marginTop: 16 }}>
-          Select the screen you want to navigate to
-        </UI.Text>
+        <UI.Box mt={2}>
+          <UI.Text variant='bodyMedium'>
+            Select the screen you want to navigate to
+          </UI.Text>
+        </UI.Box>
 
         <UI.AccordionContainer sectionTitles={SECTIONS}>
           {/* Test */}

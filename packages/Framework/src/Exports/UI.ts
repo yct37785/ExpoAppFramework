@@ -1,4 +1,6 @@
 // core
+export * from '../UI/Core/Container/Box';
+export * from '../UI/Core/Container/Box.types';
 export * from '../UI/Core/Container/Collapsible';
 export * from '../UI/Core/Container/Collapsible.types';
 export * from '../UI/Core/Container/Tabs';
