@@ -2,6 +2,7 @@ import { Screen } from 'framework';
 // test bed
 import TestbedScreen from './TestbedScreen';
 // container
+import BoxScreen from './Container/BoxScreen';
 import CollapsiblesScreen from './Container/CollapsiblesScreen';
 import TabsScreen from './Container/TabsScreen';
 // data
@@ -30,6 +31,7 @@ import VisualsScreen from './Visuals/VisualsScreen';
  ******************************************************************************************************************/
 export const screenRoutes = {
   testbed: 'testbed',
+  box: 'box',
   collapsibles: 'collapsibles',
   tabs: 'tabs',
   list: 'list',
@@ -50,6 +52,7 @@ export const screenRoutes = {
  ******************************************************************************************************************/
 export const screenRegistry: Screen.ScreenMap = {
   [screenRoutes.testbed]: TestbedScreen,
+  [screenRoutes.box]: BoxScreen,
   [screenRoutes.collapsibles]: CollapsiblesScreen,
   [screenRoutes.tabs]: TabsScreen,
   [screenRoutes.list]: ListScreen,

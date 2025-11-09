@@ -1,4 +1,3 @@
-import { View } from 'react-native';
 import { Root } from 'framework';
 import { Screen, Managers, UI } from 'framework';
 // screens

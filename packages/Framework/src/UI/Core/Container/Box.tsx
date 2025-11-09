@@ -7,8 +7,11 @@ import { BoxType } from './Box.types';
  * Box implementation.
  ******************************************************************************************************************/
 export const Box: BoxType = memo(({
-  backgroundColor = 'transparent',
+  bgColor = 'transparent',
   flex,
+  dir,
+  align,
+  justify,
   p, m,
   pv, ph, mv, mh,
   pt, pr, pb, pl,
@@ -19,8 +22,11 @@ export const Box: BoxType = memo(({
   const resolvedStyle = useMemo(() => {
     return [
       {
-        backgroundColor,
+        backgroundColor: bgColor,
         flex,
+        flexDirection: dir,
+        alignItems: align,
+        justifyContent: justify,
 
         // padding
         padding: p !== undefined ? p * Const.padSize : undefined,
@@ -46,7 +52,7 @@ export const Box: BoxType = memo(({
     p, m, pv, ph, mv, mh,
     pt, pr, pb, pl,
     mt, mr, mb, ml,
-    backgroundColor, flex, style,
+    bgColor, flex, style,
   ]);
 
   return <View style={resolvedStyle}>{children}</View>;

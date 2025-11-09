@@ -70,6 +70,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
 
           {/* Container */}
           <UI.VerticalLayout>
+            {renderScreenBtn(screenRoutes.box)}
             {renderScreenBtn(screenRoutes.collapsibles)}
             {renderScreenBtn(screenRoutes.tabs)}
           </UI.VerticalLayout>

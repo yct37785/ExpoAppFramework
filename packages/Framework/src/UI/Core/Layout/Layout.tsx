@@ -9,7 +9,7 @@ type FlexWrap = 'wrap' | 'nowrap' | 'wrap-reverse' | 'undefined';
  * Layout implementation (perf-tuned + hooks in stable order)
  ******************************************************************************************************************/
 const Layout: LayoutType = ({
-  direction = 'column',
+  dir = 'column',
   justify = 'flex-start',
   align = 'stretch',
   reverse = false,
@@ -27,7 +27,7 @@ const Layout: LayoutType = ({
   );
 
   // derived flags
-  const isRow = direction === 'row';
+  const isRow = dir === 'row';
   const flexWrap: FlexWrap = constraint === 'wrap' ? 'wrap' : 'nowrap';
   const isScroll = constraint === 'scroll';
 
@@ -36,27 +36,27 @@ const Layout: LayoutType = ({
   const contentStyle = useMemo(
     () => ({
       flexWrap,
-      flexDirection: direction,
+      flexDirection: dir,
       justifyContent: justify,
       alignItems: align,
       gap,
       padding,
       backgroundColor,
     }),
-    [flexWrap, direction, justify, align, gap, padding, backgroundColor]
+    [flexWrap, dir, justify, align, gap, padding, backgroundColor]
   );
   const viewStyle = useMemo(
     () => ({
       flex,
       flexWrap,
-      flexDirection: direction,
+      flexDirection: dir,
       justifyContent: justify,
       alignItems: align,
       gap,
       padding,
       backgroundColor,
     }),
-    [flex, flexWrap, direction, justify, align, gap, padding, backgroundColor]
+    [flex, flexWrap, dir, justify, align, gap, padding, backgroundColor]
   );
 
   // render
@@ -81,12 +81,12 @@ const Layout: LayoutType = ({
  * VerticalLayout implementation.
  ******************************************************************************************************************/
 export const VerticalLayout: VerticalLayoutType = memo((props) => (
-  <Layout {...props} direction="column" />
+  <Layout {...props} dir="column" />
 ));
 
 /******************************************************************************************************************
  * HorizontalLayout implementation.
  ******************************************************************************************************************/
 export const HorizontalLayout: HorizontalLayoutType = memo((props) => (
-  <Layout {...props} direction="row" />
+  <Layout {...props} dir="row" />
 ));
