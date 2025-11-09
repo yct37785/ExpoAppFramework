@@ -1,9 +1,12 @@
 /******************************************************************************************************************
  * Layout component: A flexible element grouping container that defines structure and 
  * spacing for contained elements.
+ *  - Does not support custom styling as that is out of scope for layout.
+ *  - Use to wrap multiple child UI components.
  ******************************************************************************************************************/
 import React, { ReactNode } from 'react';
 import { type ViewStyle } from 'react-native';
+import { PadSpacingValue } from '../../../Types';
 
 /******************************************************************************************************************
  * @property dir?             - Flex direction
@@ -12,9 +15,8 @@ import { type ViewStyle } from 'react-native';
  * @property reverse?         - Whether to render children in reverse order
  * @property constraint?      - Layout constraint mode
  * @property flex?            - Flex grow/shrink value for container
- * @property gap?             - Spacing between children
- * @property padding?         - Padding inside container
- * @property backgroundColor? - Background color
+ * @property gap?             - Spacing between and around children
+ * @property bgColor?         - Background color
  * @property children         - Elements rendered inside
  ******************************************************************************************************************/
 export type LayoutProps = {
@@ -24,9 +26,8 @@ export type LayoutProps = {
   reverse?: boolean;
   constraint?: 'wrap' | 'scroll' | 'none';
   flex?: number;
-  gap?: number;
-  padding?: number;
-  backgroundColor?: string;
+  gap?: PadSpacingValue;
+  bgColor?: string;
   children: ReactNode;
 };
 

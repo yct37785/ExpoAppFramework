@@ -1,18 +1,12 @@
 /******************************************************************************************************************
  * Box component: A drawable container, it holds content and applies styling, but does not decide spatial 
- * arrangement of siblings. Think of it as an element in a layout.
+ * arrangement of siblings.
+ *  - Think of it as an element in a layout.
+ *  - Use to wrap singular child UI components.
  ******************************************************************************************************************/
 import React from 'react';
 import { type StyleProp, type ViewStyle, type FlexStyle } from 'react-native';
-
-/**
- * A numeric scale where:
- *   1 = base padding/margin
- *   2 = 2x base
- *   3 = 3x base
- *   ...
- */
-export type BoxSpacingValue = 1 | 2 | 3 | 4;
+import { PadSpacingValue } from '../../../Types';
 
 /******************************************************************************************************************
  * @property bgColor?  - Background color of the container
@@ -49,23 +43,23 @@ export type BoxProps = {
   align?: ViewStyle['alignItems'];
   justify?: ViewStyle['justifyContent'];
 
-  p?: BoxSpacingValue;
-  m?: BoxSpacingValue;
+  p?: PadSpacingValue;
+  m?: PadSpacingValue;
 
-  ph?: BoxSpacingValue;
-  pv?: BoxSpacingValue;
-  mh?: BoxSpacingValue;
-  mv?: BoxSpacingValue;
+  ph?: PadSpacingValue;
+  pv?: PadSpacingValue;
+  mh?: PadSpacingValue;
+  mv?: PadSpacingValue;
 
-  pt?: BoxSpacingValue;
-  pr?: BoxSpacingValue;
-  pb?: BoxSpacingValue;
-  pl?: BoxSpacingValue;
+  pt?: PadSpacingValue;
+  pr?: PadSpacingValue;
+  pb?: PadSpacingValue;
+  pl?: PadSpacingValue;
 
-  mt?: BoxSpacingValue;
-  mr?: BoxSpacingValue;
-  mb?: BoxSpacingValue;
-  ml?: BoxSpacingValue;
+  mt?: PadSpacingValue;
+  mr?: PadSpacingValue;
+  mb?: PadSpacingValue;
+  ml?: PadSpacingValue;
   
   style?: StyleProp<ViewStyle>;
   children?: React.ReactNode;

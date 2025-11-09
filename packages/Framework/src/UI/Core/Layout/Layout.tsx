@@ -15,9 +15,8 @@ const Layout: LayoutType = ({
   reverse = false,
   constraint = 'none',
   flex = 1,
-  gap = Const.padSize,
-  padding = Const.padSize,
-  backgroundColor = 'transparent',
+  gap = 1,
+  bgColor = 'transparent',
   children,
 }) => {
   // reverse only when requested, and memoize so we don't rebuild arrays unnecessarily
@@ -39,11 +38,11 @@ const Layout: LayoutType = ({
       flexDirection: dir,
       justifyContent: justify,
       alignItems: align,
-      gap,
-      padding,
-      backgroundColor,
+      gap: gap * Const.padSize,
+      padding: gap * Const.padSize,
+      backgroundColor: bgColor,
     }),
-    [flexWrap, dir, justify, align, gap, padding, backgroundColor]
+    [flexWrap, dir, justify, align, gap, bgColor]
   );
   const viewStyle = useMemo(
     () => ({
@@ -52,11 +51,11 @@ const Layout: LayoutType = ({
       flexDirection: dir,
       justifyContent: justify,
       alignItems: align,
-      gap,
-      padding,
-      backgroundColor,
+      gap: gap * Const.padSize,
+      padding: gap * Const.padSize,
+      backgroundColor: bgColor,
     }),
-    [flex, flexWrap, dir, justify, align, gap, padding, backgroundColor]
+    [flex, flexWrap, dir, justify, align, gap, bgColor]
   );
 
   // render
