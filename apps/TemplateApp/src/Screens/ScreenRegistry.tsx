@@ -14,7 +14,7 @@ import InteractivesScreen from './Interactive/InteractivesScreen';
 // layout
 import LayoutsScreen from './Layout/LayoutsScreen';
 // menu
-import ClickMenusScreen from './Menu/ClickMenusScreen';
+import ListMenusScreen from './Menu/ListMenusScreen';
 import OptionsMenusScreen from './Menu/OptionsMenusScreen';
 import SelectionMenusScreen from './Menu/SelectionMenusScreen';
 // misc
@@ -38,7 +38,7 @@ export const screenRoutes = {
   inputs: 'inputs',
   interactives: 'interactives',
   layouts: 'layouts',
-  clickMenus: 'clickMenus',
+  listMenus: 'listMenus',
   optionsMenus: 'optionsMenus',
   selectionMenus: 'selectionMenus',
   misc: 'misc',
@@ -59,7 +59,7 @@ export const screenRegistry: Screen.ScreenMap = {
   [screenRoutes.inputs]: InputsScreen,
   [screenRoutes.interactives]: InteractivesScreen,
   [screenRoutes.layouts]: LayoutsScreen,
-  [screenRoutes.clickMenus]: ClickMenusScreen,
+  [screenRoutes.listMenus]: ListMenusScreen,
   [screenRoutes.optionsMenus]: OptionsMenusScreen,
   [screenRoutes.selectionMenus]: SelectionMenusScreen,
   [screenRoutes.misc]: MiscScreen,

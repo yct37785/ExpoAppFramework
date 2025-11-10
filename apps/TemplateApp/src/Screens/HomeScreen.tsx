@@ -97,7 +97,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
 
           {/* Menu */}
           <UI.VerticalLayout>
-            {renderScreenBtn(screenRoutes.clickMenus)}
+            {renderScreenBtn(screenRoutes.listMenus)}
             {renderScreenBtn(screenRoutes.optionsMenus)}
             {renderScreenBtn(screenRoutes.selectionMenus)}
           </UI.VerticalLayout>

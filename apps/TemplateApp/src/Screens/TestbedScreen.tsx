@@ -17,7 +17,7 @@ const TestbedScreen: Screen.ScreenType = ({ navigation, route }) => {
   };
 
   const LeftContent = () => (
-    <UI.HorizontalLayout backgroundColor='green' justify='center' align='center'>
+    <UI.HorizontalLayout bgColor='green'>
       <View style={{ width: 12, height: 12, borderRadius: 6, backgroundColor: 'lime' }} />
       <UI.Text variant='labelLarge' style={{ marginLeft: 8 }}>Testbed</UI.Text>
     </UI.HorizontalLayout>
