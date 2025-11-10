@@ -23,7 +23,7 @@ const Layout: LayoutType = ({
   reverse = false,
   constraint = 'none',
   // important: default to undefined so a fixed height isn't overridden by an implicit flex:1
-  flex,
+  flex = 1,
   gap = 1,
   height,
   bgColor = 'transparent',
