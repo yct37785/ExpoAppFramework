@@ -1,11 +1,8 @@
 import React, { ReactNode } from 'react';
-import { type ViewStyle } from 'react-native';
 import { PadSpacingValue } from '../../../Types';
 
 /******************************************************************************************************************
  * @property dir?             - Flex direction
- * @property justify?         - Flexbox children justification along the main axis
- * @property align?           - Flexbox children alignment along the cross axis
  * @property reverse?         - Whether to render children in reverse order
  * @property constraint?      - Layout constraint mode
  * @property flex?            - Flex grow/shrink value for container
@@ -16,8 +13,6 @@ import { PadSpacingValue } from '../../../Types';
  ******************************************************************************************************************/
 export type LayoutProps = {
   dir?: 'row' | 'column';
-  justify?: ViewStyle['justifyContent'];
-  align?: ViewStyle['alignItems'];
   reverse?: boolean;
   constraint?: 'wrap' | 'scroll' | 'none';
   flex?: number;

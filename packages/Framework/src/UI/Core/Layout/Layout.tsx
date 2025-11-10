@@ -5,6 +5,10 @@ import { LayoutType, VerticalLayoutType, HorizontalLayoutType } from './Layout.t
 
 type FlexWrap = 'wrap' | 'nowrap' | 'wrap-reverse' | 'undefined';
 
+// locks flexgrow/shrink when height is set
+const lockWhenFixedHeight = (height?: number) =>
+  height != null ? { flexGrow: 0, flexShrink: 0 } : {};
+
 /******************************************************************************************************************
  * Layout implementation:
  *  - If neither height nor flex is provided, the layout defaults to flex: 1 and fills available space.
@@ -12,8 +16,6 @@ type FlexWrap = 'wrap' | 'nowrap' | 'wrap-reverse' | 'undefined';
  ******************************************************************************************************************/
 const Layout: LayoutType = ({
   dir = 'column',
-  justify = 'flex-start',
-  align = 'stretch',
   reverse = false,
   constraint = 'none',
   // important: default to undefined so a fixed height isn't overridden by an implicit flex:1
@@ -34,9 +36,8 @@ const Layout: LayoutType = ({
   const isScroll = constraint === 'scroll';
   const flexWrap: FlexWrap = isWrap ? 'wrap' : 'nowrap';
 
-  // default cross-axis behavior for wrap containers
-  const effectiveAlignItems: FlexAlignType =
-    align ?? (isWrap ? 'flex-start' : 'stretch');
+  // do not stretch if isWrap
+  const effectiveAlignItems: FlexAlignType = isWrap ? 'flex-start' : 'stretch';
 
   // honor explicit flex, otherwise only default to flex:1 when not height-bound AND not explicitly wrap
   const appliedFlex = useMemo(() => {
@@ -45,11 +46,7 @@ const Layout: LayoutType = ({
     return isWrap ? undefined : 1;
   }, [flex, height, isWrap]);
 
-  // locks flexgrow/shrink when height is set
-  const lockWhenFixedHeight = (height?: number) =>
-    height != null ? { flexGrow: 0, flexShrink: 0 } : {};
-
-  // outer wrapper dimensions
+  // outer wrapper (flex/height)
   const containerDims: ViewStyle = useMemo(
     () => ({
       ...(height != null ? { height } : {}),
@@ -65,14 +62,14 @@ const Layout: LayoutType = ({
     () => ({
       flexWrap,
       flexDirection: dir,
-      justifyContent: justify,
+      justifyContent: 'flex-start',
       alignItems: effectiveAlignItems,  // controls items within a row
       alignContent: alignContentValue,  // controls how the rows themselves stack and distribute
       gap: gap * Const.padSize,
       padding: gap * Const.padSize,
       backgroundColor: bgColor,
     }),
-    [flexWrap, dir, justify, effectiveAlignItems, alignContentValue, gap, bgColor]
+    [flexWrap, dir, effectiveAlignItems, alignContentValue, gap, bgColor]
   );
 
   if (isScroll) {
