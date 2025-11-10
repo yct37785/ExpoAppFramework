@@ -1,5 +1,4 @@
 import React, { memo, useEffect } from 'react';
-import { View } from 'react-native';
 import { Switch, useTheme } from 'react-native-paper';
 import { Managers, UI } from 'framework';
 
@@ -7,9 +6,9 @@ import { Managers, UI } from 'framework';
  * AppBar: default left content
  ******************************************************************************************************************/
 export const DefaultLeftContent = memo(() => {
-  return (<View style={{ flexDirection: 'row', alignItems: 'center' }}>
-    <UI.Text>Left content</UI.Text>
-  </View>)
+  return (<UI.Box flex={1}>
+    {/* <UI.Text>Left content</UI.Text> */}
+  </UI.Box>)
 });
 
 /******************************************************************************************************************

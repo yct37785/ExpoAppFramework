@@ -32,7 +32,7 @@ export const ScreenLayout: ScreenLayoutType = memo((props) => {
   const appbarBottomMargin =
     props.appbarBottomMargin ?? defaults.appbarBottomMargin ?? 2;
 
-  const computedTitle = title ?? (route?.name as string);
+  const computedTitle = title ?? route?.name?.replace(/^./, c => c.toUpperCase());
   const canGoBack =
     typeof (navigation as any).canGoBack === 'function'
       ? (navigation as any).canGoBack()

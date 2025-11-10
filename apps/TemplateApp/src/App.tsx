@@ -23,8 +23,7 @@ export default function App() {
       DEFAULT_SCREEN='home'
       screenMap={screenMap}
       defaultScreenLayoutProps={{
-        showTitle: false, // screens can set true to show title
-        showBack: undefined, // uses navigation.canGoBack() by default
+        showTitle: true, // screens can set true to show title
         LeftContent: DefaultLeftContent,
         RightContent: DefaultRightContent
       }}
