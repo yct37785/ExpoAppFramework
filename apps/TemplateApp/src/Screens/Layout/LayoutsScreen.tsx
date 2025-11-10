@@ -68,11 +68,13 @@ const LayoutScreen: Screen.ScreenType = ({ navigation, route }) => {
         <UI.Text variant='labelLarge'>Layouts nested</UI.Text>
         <UI.HorizontalLayout constraint='none' bgColor={tier1}>
 
-          <UI.VerticalLayout constraint='wrap' justify='center' flex={1} bgColor={tier2}>
+          <UI.VerticalLayout constraint='wrap' flex={1} bgColor={tier2}>
             <BasicContainer i={1} width={small} height={small} bgColor={tier3} />
+            <BasicContainer i={2} width={small} height={small} bgColor={tier3} />
           </UI.VerticalLayout>
-          <UI.HorizontalLayout constraint='wrap' justify='center' flex={1} bgColor={tier2}>
+          <UI.HorizontalLayout constraint='wrap' flex={1} bgColor={tier2}>
             <BasicContainer i={1} width={small} height={small} bgColor={tier3} />
+            <BasicContainer i={2} width={small} height={small} bgColor={tier3} />
           </UI.HorizontalLayout>
 
         </UI.HorizontalLayout>

@@ -5,9 +5,13 @@ import { LayoutType, VerticalLayoutType, HorizontalLayoutType } from './Layout.t
 
 type FlexWrap = 'wrap' | 'nowrap' | 'wrap-reverse' | 'undefined';
 
+// lock flexgrow/shrink when flex = 0
+const lockWhenZeroFlex = (flex?: number) =>
+  flex === 0 ? { flexGrow: 0, flexShrink: 0 } : {};
+
 // locks flexgrow/shrink when height is set
 const lockWhenFixedHeight = (height?: number) =>
-  height != null ? { flexGrow: 0, flexShrink: 0 } : {};
+  height != null ? { height, flexGrow: 0, flexShrink: 0 } : {};
 
 /******************************************************************************************************************
  * Layout implementation:
@@ -36,24 +40,14 @@ const Layout: LayoutType = ({
   const isScroll = constraint === 'scroll';
   const flexWrap: FlexWrap = isWrap ? 'wrap' : 'nowrap';
 
-  // do not stretch if isWrap
-  const effectiveAlignItems: FlexAlignType = isWrap ? 'flex-start' : 'stretch';
-
-  // honor explicit flex, otherwise only default to flex:1 when not height-bound AND not explicitly wrap
-  const appliedFlex = useMemo(() => {
-    if (typeof flex === 'number') return flex;
-    if (height != null) return undefined;
-    return isWrap ? undefined : 1;
-  }, [flex, height, isWrap]);
-
   // outer wrapper (flex/height)
   const containerDims: ViewStyle = useMemo(
     () => ({
-      ...(height != null ? { height } : {}),
-      ...(appliedFlex != null ? { flex: appliedFlex } : {}),
-      ...lockWhenFixedHeight(height),
+      ...(typeof flex === 'number' ? { flex } : {}),
+      ...lockWhenZeroFlex(flex),       // stop filling when flex=0
+      ...lockWhenFixedHeight(height),  // stop filling when height is set
     }),
-    [height, appliedFlex]
+    [height, flex]
   );
 
   // content style
@@ -63,13 +57,13 @@ const Layout: LayoutType = ({
       flexWrap,
       flexDirection: dir,
       justifyContent: 'flex-start',
-      alignItems: effectiveAlignItems,  // controls items within a row
+      alignItems: isWrap ? 'flex-start' : 'stretch',  // controls items within a row, do not stretch if wrap
       alignContent: alignContentValue,  // controls how the rows themselves stack and distribute
       gap: gap * Const.padSize,
       padding: gap * Const.padSize,
       backgroundColor: bgColor,
     }),
-    [flexWrap, dir, effectiveAlignItems, alignContentValue, gap, bgColor]
+    [flexWrap, dir, isWrap, alignContentValue, gap, bgColor]
   );
 
   if (isScroll) {

@@ -92,13 +92,11 @@ const ListScreen: Screen.ScreenType = ({ navigation, route }) => {
 
   return (
     <Screen.ScreenLayout LeftContent={LeftContent}>
-      {/* if constraint != scroll, child HorizontalLayout expands to parent dims */}
       <UI.VerticalLayout>
 
         {/* filter menu */}
-        <UI.HorizontalLayout constraint='none' bgColor='yellow' height={150}>
-          {/* <UI.ChipOptions schema={matChipsSchema} onSelected={onChipsSelected} /> */}
-          <View style={{ height: 150, width: 50, backgroundColor: 'red' }}></View>
+        <UI.HorizontalLayout constraint='scroll' flex={0}>
+          <UI.ChipOptions schema={matChipsSchema} onSelected={onChipsSelected} style={{ width: 1000 }} />
         </UI.HorizontalLayout>
 
         {/* toggle Flashlist vs FlatList */}
