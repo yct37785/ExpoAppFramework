@@ -45,11 +45,16 @@ const Layout: LayoutType = ({
     return isWrap ? undefined : 1;
   }, [flex, height, isWrap]);
 
+  // locks flexgrow/shrink when height is set
+  const lockWhenFixedHeight = (height?: number) =>
+    height != null ? { flexGrow: 0, flexShrink: 0 } : {};
+
   // outer wrapper dimensions
   const containerDims: ViewStyle = useMemo(
     () => ({
       ...(height != null ? { height } : {}),
       ...(appliedFlex != null ? { flex: appliedFlex } : {}),
+      ...lockWhenFixedHeight(height),
     }),
     [height, appliedFlex]
   );
