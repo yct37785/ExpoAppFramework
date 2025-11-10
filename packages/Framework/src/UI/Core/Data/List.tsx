@@ -62,5 +62,5 @@ export const List: ListType = memo(({
     );
   };
 
-  return <View style={[{ width: '100%', height: '100%' }, style]}>{renderList()}</View>;
+  return <View style={[{ flex: 1 }, style]}>{renderList()}</View>;
 });

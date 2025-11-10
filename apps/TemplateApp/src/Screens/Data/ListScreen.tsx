@@ -96,7 +96,7 @@ const ListScreen: Screen.ScreenType = ({ navigation, route }) => {
 
         {/* filter menu */}
         <UI.HorizontalLayout constraint='scroll' flex={0}>
-          <UI.ChipOptions schema={matChipsSchema} onSelected={onChipsSelected} style={{ width: 1000 }} />
+          <UI.ChipOptions schema={matChipsSchema} onSelected={onChipsSelected} style={{ width: 700 }} />
         </UI.HorizontalLayout>
 
         {/* toggle Flashlist vs FlatList */}
@@ -105,13 +105,13 @@ const ListScreen: Screen.ScreenType = ({ navigation, route }) => {
           value={listType} onValueChange={(s: string) => setListType(s as UI.ListImplementationType)} />
 
         {/* list */}
-        {/* <UI.List
+        <UI.List
           dataArr={productList}
           query={searchQuery}
           filterMap={filterMap}
           renderItem={renderItem}
           listImplementationType={listType}
-        /> */}
+        />
       </UI.VerticalLayout>
     </Screen.ScreenLayout>
   );
