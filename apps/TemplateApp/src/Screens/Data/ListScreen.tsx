@@ -93,7 +93,7 @@ const ListScreen: Screen.ScreenType = ({ navigation, route }) => {
   return (
     <Screen.ScreenLayout LeftContent={LeftContent}>
       {/* if constraint != scroll, child HorizontalLayout expands to parent dims */}
-      <UI.VerticalLayout constraint='scroll'>
+      <UI.VerticalLayout>
 
         {/* filter menu */}
         <UI.HorizontalLayout constraint='none' bgColor='yellow' height={150}>
