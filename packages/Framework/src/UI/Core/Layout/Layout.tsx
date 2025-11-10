@@ -1,9 +1,9 @@
 import React, { memo, useMemo } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, ViewStyle, FlexStyle, FlexAlignType } from 'react-native';
 import * as Const from '../../../Const';
 import { LayoutType, VerticalLayoutType, HorizontalLayoutType } from './Layout.types';
 
-type FlexWrap = 'wrap' | 'nowrap' | 'wrap-reverse' | undefined;
+type FlexWrap = 'wrap' | 'nowrap' | 'wrap-reverse' | 'undefined';
 
 /******************************************************************************************************************
  * Layout implementation:
@@ -28,24 +28,25 @@ const Layout: LayoutType = ({
     [children, reverse]
   );
 
+  // derived flags
   const isRow = dir === 'row';
-  const flexWrap: FlexWrap = constraint === 'wrap' ? 'wrap' : 'nowrap';
+  const isWrap = constraint === 'wrap';
   const isScroll = constraint === 'scroll';
+  const flexWrap: FlexWrap = isWrap ? 'wrap' : 'nowrap';
 
-  // apply flex only if explicitly provided, otherwise if no fixed height, expand with flex:1
+  // default cross-axis behavior for wrap containers
+  const effectiveAlignItems: FlexAlignType =
+    align ?? (isWrap ? 'flex-start' : 'stretch');
+
+  // honor explicit flex, otherwise only default to flex:1 when not height-bound AND not explicitly wrap
   const appliedFlex = useMemo(() => {
     if (typeof flex === 'number') return flex;
-    return height == null ? 1 : undefined;
-  }, [flex, height]);
+    if (height != null) return undefined;
+    return isWrap ? undefined : 1;
+  }, [flex, height, isWrap]);
 
-  // ScrollView's outer wrapper
-  const scrollStyle = useMemo(
-    () => (height != null ? { height } : appliedFlex != null ? { flex: appliedFlex } : undefined),
-    [height, appliedFlex]
-  );
-
-  // shared size constraints for the non-scroll container
-  const baseContainerDims = useMemo(
+  // outer wrapper dimensions
+  const containerDims: ViewStyle = useMemo(
     () => ({
       ...(height != null ? { height } : {}),
       ...(appliedFlex != null ? { flex: appliedFlex } : {}),
@@ -53,27 +54,20 @@ const Layout: LayoutType = ({
     [height, appliedFlex]
   );
 
-  // ScrollView content styles
-  const contentStyle = useMemo(
+  // content style
+  const alignContentValue: FlexStyle['alignContent'] = isWrap ? 'flex-start' : undefined;
+  const contentStyle: ViewStyle = useMemo(
     () => ({
       flexWrap,
       flexDirection: dir,
       justifyContent: justify,
-      alignItems: align,
+      alignItems: effectiveAlignItems,  // controls items within a row
+      alignContent: alignContentValue,  // controls how the rows themselves stack and distribute
       gap: gap * Const.padSize,
       padding: gap * Const.padSize,
       backgroundColor: bgColor,
     }),
-    [flexWrap, dir, justify, align, gap, bgColor]
-  );
-
-  // view styles for the non-scroll path
-  const viewStyle = useMemo(
-    () => ({
-      ...baseContainerDims,
-      ...contentStyle,
-    }),
-    [baseContainerDims, contentStyle]
+    [flexWrap, dir, justify, effectiveAlignItems, alignContentValue, gap, bgColor]
   );
 
   if (isScroll) {
@@ -82,15 +76,15 @@ const Layout: LayoutType = ({
         horizontal={isRow}
         showsVerticalScrollIndicator={!isRow}
         showsHorizontalScrollIndicator={isRow}
-        style={scrollStyle}
-        contentContainerStyle={contentStyle}
+        style={containerDims}                 // dimensions on ScrollView
+        contentContainerStyle={contentStyle}  // layout rules on inner content
       >
         {content}
       </ScrollView>
     );
   }
 
-  return <View style={viewStyle}>{content}</View>;
+  return <View style={[containerDims, contentStyle]}>{content}</View>;
 };
 
 /******************************************************************************************************************
