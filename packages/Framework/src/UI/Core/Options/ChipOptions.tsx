@@ -1,7 +1,7 @@
 import React, { memo, useState } from 'react';
 import { View } from 'react-native';
 import { useTheme, Chip } from 'react-native-paper';
-import * as Const from '../../../../Const';
+import * as Const from '../../../Const';
 import { ChipOptionsType } from './ChipOptions.types';
 
 /******************************************************************************************************************

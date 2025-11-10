@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { View } from 'react-native';
 import { useTheme, Divider, List } from 'react-native-paper';
-import * as Const from '../../../../Const';
+import * as Const from '../../../Const';
 import { MenuListType } from './MenuList.types';
 
 /******************************************************************************************************************

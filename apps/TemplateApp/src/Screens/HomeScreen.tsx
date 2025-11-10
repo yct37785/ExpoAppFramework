@@ -48,7 +48,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
 
   const SECTIONS = [
     'Test', 'Container', 'Data', 'Input', 'Interactive',
-    'Layout', 'Menu', 'Misc', 'Modal', 'Text', 'Visuals'
+    'Layout', 'Menu', 'Misc', 'Modal', 'Options', 'Selections', 'Text', 'Visuals'
   ];
 
   return (
@@ -97,9 +97,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
 
           {/* Menu */}
           <UI.VerticalLayout>
-            {renderScreenBtn(screenRoutes.listMenus)}
-            {renderScreenBtn(screenRoutes.optionsMenus)}
-            {renderScreenBtn(screenRoutes.selectionMenus)}
+            {renderScreenBtn(screenRoutes.menu)}
           </UI.VerticalLayout>
 
           {/* Misc */}
@@ -110,6 +108,16 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
           {/* Modal */}
           <UI.VerticalLayout>
             {renderScreenBtn(screenRoutes.modals)}
+          </UI.VerticalLayout>
+
+          {/* Options */}
+          <UI.VerticalLayout>
+            {renderScreenBtn(screenRoutes.options)}
+          </UI.VerticalLayout>
+
+          {/* Options */}
+          <UI.VerticalLayout>
+            {renderScreenBtn(screenRoutes.selections)}
           </UI.VerticalLayout>
 
           {/* Text */}

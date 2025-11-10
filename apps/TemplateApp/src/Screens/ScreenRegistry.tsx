@@ -14,13 +14,15 @@ import InteractivesScreen from './Interactive/InteractivesScreen';
 // layout
 import LayoutsScreen from './Layout/LayoutsScreen';
 // menu
-import ListMenusScreen from './Menu/ListMenusScreen';
-import OptionsMenusScreen from './Menu/OptionsMenusScreen';
-import SelectionMenusScreen from './Menu/SelectionMenusScreen';
+import MenuScreen from './Menu/MenuScreen';
 // misc
 import MiscScreen from './Misc/MiscScreen';
 // modal
 import ModalsScreen from './Modal/ModalsScreen';
+// options
+import OptionsScreen from './Options/OptionsScreen';
+// selections
+import SelectionsScreen from './Selections/SelectionsScreen';
 // text
 import TextScreen from './Text/TextScreen';
 // visuals
@@ -38,11 +40,11 @@ export const screenRoutes = {
   inputs: 'inputs',
   interactives: 'interactives',
   layouts: 'layouts',
-  listMenus: 'listMenus',
-  optionsMenus: 'optionsMenus',
-  selectionMenus: 'selectionMenus',
+  menu: 'menu',
   misc: 'misc',
   modals: 'modals',
+  options: 'options',
+  selections: 'selections',
   text: 'text',
   visuals: 'visuals',
 } as const;
@@ -59,11 +61,11 @@ export const screenRegistry: Screen.ScreenMap = {
   [screenRoutes.inputs]: InputsScreen,
   [screenRoutes.interactives]: InteractivesScreen,
   [screenRoutes.layouts]: LayoutsScreen,
-  [screenRoutes.listMenus]: ListMenusScreen,
-  [screenRoutes.optionsMenus]: OptionsMenusScreen,
-  [screenRoutes.selectionMenus]: SelectionMenusScreen,
+  [screenRoutes.menu]: MenuScreen,
   [screenRoutes.misc]: MiscScreen,
   [screenRoutes.modals]: ModalsScreen,
+  [screenRoutes.options]: OptionsScreen,
+  [screenRoutes.selections]: SelectionsScreen,
   [screenRoutes.text]: TextScreen,
   [screenRoutes.visuals]: VisualsScreen,
 };
