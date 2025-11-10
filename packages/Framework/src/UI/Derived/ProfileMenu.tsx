@@ -4,7 +4,7 @@ import { Popup } from '../../UI/Core/Modal/Popup';
 import { MenuList } from '../../UI/Core/Menu/MenuList';
 import { VerticalLayout } from '../../UI/Core/Layout/Layout';
 import { useAuth } from '../../Managers/Firebase/FirebaseAuthManager';
-import type { MenuOption } from '../../UI/Core/Menu/MenuList.types';
+import type { MenuOption } from '../../UI/Core/Menu/MenuListItem.types';
 
 /******************************************************************************************************************
  * ProfileMenu — Renders the authenticated user's avatar and dropdown menu of account actions.
