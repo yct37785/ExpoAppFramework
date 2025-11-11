@@ -14,15 +14,15 @@ export type IconVariant = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
  *
  * @property source          - Icon source (dependent on icon source under the hood)
  * @property variant?        - Prefixed size variant ('xs'|'sm'|'md'|'lg'|'xl'), defaults to 'md'
+ * @property color?          - Font color
  * @property size?           - Optional explicit pixel size (overrides variant mapping)
- * @property color?          - Token color aligned with FontColor (mapped to theme colors)
  * @property style?          - Container style for outer wrapper
  ******************************************************************************************************************/
 export type IconProps = {
   source: string;
   variant?: IconVariant;
-  size?: number;
   color?: FontColor;
+  size?: number;
   style?: StyleProp<ViewStyle>;
 };
 

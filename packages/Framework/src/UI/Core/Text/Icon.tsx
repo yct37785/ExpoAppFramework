@@ -2,7 +2,7 @@ import React, { memo, useMemo } from 'react';
 import { View, StyleSheet, type StyleProp, type ViewStyle } from 'react-native';
 import { Icon as PaperIcon, useTheme } from 'react-native-paper';
 import { IconType, IconVariant } from './Icon.types';
-import { tokenToRNPaperThemeKey } from '../../../Types';
+import { resolveFontColor } from './Utils';
 
 /******************************************************************************************************************
  * Variant → pixel size mapping
@@ -18,16 +18,12 @@ const sizeMap: Record<IconVariant, number> = {
 /******************************************************************************************************************
  * Icon implementation.
  ******************************************************************************************************************/
-export const Icon: IconType = memo(({ source, variant = 'md', size, color = 'default', style }) => {
+export const Icon: IconType = memo(({ source, variant = 'md', color = 'default', size, style }) => {
   const theme = useTheme();
+  const resolvedColor = resolveFontColor(color, theme);
 
   // resolve numeric size (explicit size overrides variant)
   const pixel = size ?? sizeMap[variant];
-
-  // resolve theme color
-  const themeKey = tokenToRNPaperThemeKey[color];
-  const resolvedColor =
-    (theme.colors as any)[themeKey] ?? theme.colors.onSurface;
 
   const base: ViewStyle = { justifyContent: 'center', alignItems: 'center' };
   const wrapperStyle = useMemo<StyleProp<ViewStyle>>(

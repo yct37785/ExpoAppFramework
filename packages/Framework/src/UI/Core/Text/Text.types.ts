@@ -25,11 +25,11 @@ export type TextVariant =
 /******************************************************************************************************************
  * Text props.
  * 
- * @property variant          - MD3 text role; defaults to 'bodyMedium'.
- * @property color?           - Optional color override.
- * @property numberOfLines?   - Fixed num of lines if provided.
- * @property style?           - Optional extra styles.
- * @property children?        - Text content.
+ * @property variant          - MD3 text role; defaults to 'bodyMedium'
+ * @property color?           - Font color
+ * @property numberOfLines?   - Fixed num of lines if provided
+ * @property style?           - Optional extra styles
+ * @property children?        - Text content
  ******************************************************************************************************************/
 export interface TextProps {
   variant?: TextVariant;
