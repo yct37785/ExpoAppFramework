@@ -21,7 +21,6 @@ export const Touchable: TouchableType = memo(
   ({
     feedback = 'opacity',
     pressOpacity = Const.pressOpacityLight,
-    style,
     disabled,
     onPress,
     onPressIn,
@@ -31,6 +30,7 @@ export const Touchable: TouchableType = memo(
     android_disableSound,
     hitSlop,
     pressRetentionOffset,
+    style,
     children
   }) => {
     /**

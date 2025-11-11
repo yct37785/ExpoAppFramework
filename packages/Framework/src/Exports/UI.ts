@@ -17,6 +17,8 @@ export * from '../UI/Core/Layout/Layout';
 export * from '../UI/Core/Layout/Layout.types';
 export * from '../UI/Core/Menu/MenuList';
 export * from '../UI/Core/Menu/MenuList.types';
+export * from '../UI/Core/Menu/MenuListItem';
+export * from '../UI/Core/Menu/MenuListItem.types';
 export * from '../UI/Core/Misc/Avatar';
 export * from '../UI/Core/Misc/Avatar.types';
 export * from '../UI/Core/Modal/Dialog';

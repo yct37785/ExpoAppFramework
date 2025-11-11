@@ -1,7 +1,8 @@
 import React, { memo, useMemo } from 'react';
-import { View } from 'react-native';
-import { Text, useTheme, Icon, Divider } from 'react-native-paper';
+import { View, StyleSheet, type StyleProp, type ViewStyle } from 'react-native';
 import * as Const from '../../../Const';
+import { Text } from '../Text/Text';
+import { Icon } from '../Text/Icon';
 import { Touchable } from '../Interactive/Touchable';
 import { MenuListItemType } from './MenuListItem.types';
 
@@ -9,40 +10,40 @@ import { MenuListItemType } from './MenuListItem.types';
  * MenuListItem implementation.
  ******************************************************************************************************************/
 export const MenuListItem: MenuListItemType = memo(({ option, onPress, dense = false, style = {} }) => {
-  const theme = useTheme();
-
-  const { paddingY, fontSize, color, iconColor, disabled } = useMemo(() => {
-    const disabled = !!option.disabled;
-    const color = disabled ? theme.colors.onSurfaceDisabled : theme.colors.onSurface;
-    const iconColor = color;
-    const fontSize = (dense ? theme.fonts.bodySmall.fontSize : theme.fonts.bodyLarge.fontSize) as number;
-    const paddingY = dense ? 0 : Const.padSize;
-    return { paddingY, fontSize, color, iconColor, disabled };
-  }, [option.disabled, dense, theme]);
+  const padding = dense ? Const.padSize025 : Const.padSize;
+  const disabled = !!option.disabled;
 
   const handlePress = () => {
     if (!disabled) onPress(option.value);
   };
+
+  const base: ViewStyle = { flexDirection: 'row', alignItems: 'center', padding };
+  const wrapperStyle = useMemo<StyleProp<ViewStyle>>(
+    () => StyleSheet.compose(base, style),
+    [style]
+  );
 
   return (
     <Touchable
       pressOpacity={Const.pressOpacityHeavy}
       onPress={handlePress}
       disabled={disabled}
+      style={wrapperStyle}
     >
-      <View style={[{ flexDirection: 'row', alignItems: 'center', paddingVertical: paddingY }, style]}>
-        {/* Leading icon (optional) */}
+      <>
+        {/* leading icon */}
         {option.leadingIcon ? (
           <Icon
             source={option.leadingIcon}
-            size={Const.iconSizeMedium}
-            color={iconColor}
+            variant={dense ? 'sm' : 'md'}
+            color={disabled ? 'disabled' : 'default'}
+            style={{ marginRight: dense ? Const.padSize : Const.padSize2 }}
           />
         ) : null}
 
-        {/* Label */}
-        <Text style={{ color, fontSize }}>{option.label}</Text>
-      </View>
+        {/* label */}
+        <Text color={disabled ? 'disabled' : 'default'} variant={dense ? 'labelSmall' : 'labelMedium'}>{option.label}</Text>
+      </>
     </Touchable>
   );
 });

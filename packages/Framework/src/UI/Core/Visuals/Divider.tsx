@@ -10,7 +10,7 @@ import { DividerType } from './Divider.types';
 export const Divider: DividerType = memo(
   ({
     orientation = 'horizontal',
-    spacing = Const.padSize,
+    spacing = 1,
     style,
   }) => {
 
@@ -18,7 +18,7 @@ export const Divider: DividerType = memo(
       const vStyle: ViewStyle = {
         width: RNStyleSheet.hairlineWidth,
         height: '100%',
-        marginHorizontal: spacing,
+        marginHorizontal: spacing * Const.padSize,
         alignSelf: 'stretch',
       };
       return <View style={[styles.base, vStyle, style]} />;
@@ -26,7 +26,7 @@ export const Divider: DividerType = memo(
 
     const hStyle: ViewStyle = {
       height: RNStyleSheet.hairlineWidth,
-      marginVertical: spacing,
+      marginVertical: spacing * Const.padSize,
     };
 
     return <PaperDivider style={[styles.base, hStyle, style]} />;

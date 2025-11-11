@@ -16,7 +16,7 @@ const EmptyScreen: Screen.ScreenType = ({ navigation, route }) => {
   return (
     <Screen.ScreenLayout>
       <UI.VerticalLayout constraint='scroll'>
-        <UI.Text variant='labelLarge'>Empty screen</UI.Text>
+        <UI.Text variant='labelLarge'>MenuList</UI.Text>
         <UI.MenuList options={options} onSelect={handleSelect} dense showDividers />
       </UI.VerticalLayout>
     </Screen.ScreenLayout>

@@ -1,8 +1,8 @@
 import React, { memo } from 'react';
 import { View } from 'react-native';
-import { Divider } from 'react-native-paper';
 import { MenuListType } from './MenuList.types';
 import { MenuListItem } from './MenuListItem';
+import { Divider } from '../Visuals/Divider';
 import * as Const from '../../../Const';
 
 /******************************************************************************************************************
@@ -21,7 +21,7 @@ export const MenuList: MenuListType = memo(({
         <React.Fragment key={`${option.value}-${idx}`}>
           <MenuListItem option={option} onPress={onSelect} dense={dense} />
           {showDividers && idx < options.length - 1 ? (
-            <Divider style={{ marginLeft: option.leadingIcon ? Const.padSize * 3 : 0 }} />
+            <Divider />
           ) : null}
         </React.Fragment>
       ))}

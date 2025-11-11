@@ -1,17 +1,18 @@
 import React from 'react';
 import { type ViewStyle, type StyleProp } from 'react-native';
+import { PadSpacingValue } from '../../../Types';
 
 /******************************************************************************************************************
  * Divider props.
  *
  * @property orientation  - Line orientation ('horizontal' | 'vertical'), default: 'horizontal'
  * @property spacing?     - Margin applied before/after the line (dp). Vertical margin for horizontal dividers,
- *                          horizontal margin for vertical dividers. Default: Const.padSize
+ *                          horizontal margin for vertical dividers.
  * @property style?       - Additional style for the divider
  ******************************************************************************************************************/
 export type DividerProps = {
   orientation?: 'horizontal' | 'vertical';
-  spacing?: number;
+  spacing?: PadSpacingValue;
   style?: StyleProp<ViewStyle>;
 };
 
@@ -20,7 +21,7 @@ export type DividerProps = {
  * 
  * @usage
  * ```tsx
- * <Divider spacing={8} />
+ * <Divider spacing={1} />
  * <Divider orientation="vertical" thickness={2} style={{ height: 24 }} />
  * ```
  ******************************************************************************************************************/
