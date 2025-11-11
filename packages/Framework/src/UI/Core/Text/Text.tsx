@@ -6,9 +6,10 @@ import { resolveFontColor } from './Utils';
 /******************************************************************************************************************
  * Text implementation.
  ******************************************************************************************************************/
-export const Text: TextType = memo(({ variant = 'bodyMedium', color = 'default', style, numberOfLines, children }) => {
+export const Text: TextType = memo(({ variant = 'bodyMedium', color = 'default',
+  customColor, numberOfLines, style, children }) => {
   const theme = useTheme();
-  const resolvedColor = resolveFontColor(color, theme);
+  const resolvedColor = resolveFontColor(color, customColor, theme);
 
   return (
     <PaperText

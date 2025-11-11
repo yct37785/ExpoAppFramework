@@ -14,7 +14,15 @@ export const tokenToRNPaperThemeKey: Record<FontColor, string> = {
   outline: 'outline',
 } as const;
 
-export function resolveFontColor(color: FontColor | undefined, theme: MD3Theme): string {
+export function resolveFontColor(
+  color: FontColor | undefined,
+  customColor: string | undefined,
+  theme: MD3Theme
+): string {
+  // highest priority: custom literal color override
+  if (customColor) return customColor;
+  // normal token: theme lookup
   const themeKey = color ? tokenToRNPaperThemeKey[color] : undefined;
+  // fallback: to theme default
   return (theme.colors as any)[themeKey ?? 'onSurface'] ?? theme.colors.onSurface;
 }

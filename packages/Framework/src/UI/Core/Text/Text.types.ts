@@ -27,6 +27,7 @@ export type TextVariant =
  * 
  * @property variant          - MD3 text role; defaults to 'bodyMedium'
  * @property color?           - Font color
+ * @property customColor?     - Raw color string (overrides color prop)
  * @property numberOfLines?   - Fixed num of lines if provided
  * @property style?           - Optional extra styles
  * @property children?        - Text content
@@ -34,6 +35,7 @@ export type TextVariant =
 export interface TextProps {
   variant?: TextVariant;
   color?: FontColor;
+  customColor?: string;
   numberOfLines?: number;
   style?: StyleProp<TextStyle>;
   children?: string | ReactNode;
