@@ -1,21 +1,12 @@
 import React, { memo, useMemo } from 'react';
 import { Text as PaperText, useTheme } from 'react-native-paper';
-import { TextType, TextColor } from './Text.types';
+import { TextType } from './Text.types';
+import { tokenToRNPaperThemeKey } from '../../../Types';
 
 /******************************************************************************************************************
  * TextColor to theme.colors key mapping
  ******************************************************************************************************************/
-const tokenToThemeKey: Record<TextColor, string> = {
-  default: 'onSurface',
-  label: 'onSurfaceVariant',
-  disabled: 'onSurfaceDisabled',
-  primary: 'primary',
-  secondary: 'secondary',
-  error: 'error',
-  surface: 'surface',
-  background: 'background',
-  outline: 'outline',
-} as const;
+
 
 /******************************************************************************************************************
  * Text implementation.
@@ -23,7 +14,7 @@ const tokenToThemeKey: Record<TextColor, string> = {
 export const Text: TextType = memo(({ variant = 'bodyMedium', color = 'default', style, numberOfLines, children }) => {
   const theme = useTheme();
 
-  const key = tokenToThemeKey[color];
+  const key = tokenToRNPaperThemeKey[color];
 
   const resolvedColor =
     (theme.colors as any)[key] ??

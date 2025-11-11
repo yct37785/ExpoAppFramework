@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import { StyleProp, TextStyle } from 'react-native';
+import { FontColor } from 'Types';
 
 /******************************************************************************************************************
  * MD3 typography variants.
@@ -21,17 +22,6 @@ export type TextVariant =
   | 'labelMedium'
   | 'labelSmall';
 
-export type TextColor =
-  | 'default'
-  | 'label'
-  | 'disabled'
-  | 'primary'
-  | 'secondary'
-  | 'error'
-  | 'surface'
-  | 'background'
-  | 'outline';
-
 /******************************************************************************************************************
  * Text props.
  * 
@@ -43,7 +33,7 @@ export type TextColor =
  ******************************************************************************************************************/
 export interface TextProps {
   variant?: TextVariant;
-  color?: TextColor;
+  color?: FontColor;
   numberOfLines?: number;
   style?: StyleProp<TextStyle>;
   children?: string | ReactNode;
