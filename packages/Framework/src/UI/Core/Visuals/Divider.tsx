@@ -11,6 +11,7 @@ export const Divider: DividerType = memo(
   ({
     orientation = 'horizontal',
     spacing = 1,
+    margin = 0,
     style,
   }) => {
 
@@ -19,6 +20,7 @@ export const Divider: DividerType = memo(
         width: RNStyleSheet.hairlineWidth,
         height: '100%',
         marginHorizontal: spacing * Const.padSize,
+        marginVertical: margin * Const.padSize,
         alignSelf: 'stretch',
       };
       return <View style={[styles.base, vStyle, style]} />;
@@ -27,6 +29,7 @@ export const Divider: DividerType = memo(
     const hStyle: ViewStyle = {
       height: RNStyleSheet.hairlineWidth,
       marginVertical: spacing * Const.padSize,
+      marginHorizontal: margin * Const.padSize,
     };
 
     return <PaperDivider style={[styles.base, hStyle, style]} />;

@@ -8,11 +8,13 @@ import { PadSpacingValue } from '../../../Types';
  * @property orientation  - Line orientation ('horizontal' | 'vertical'), default: 'horizontal'
  * @property spacing?     - Margin applied before/after the line (dp). Vertical margin for horizontal dividers,
  *                          horizontal margin for vertical dividers.
+ * @property margin?      - Margin applied along the axis (defaults 0)
  * @property style?       - Additional style for the divider
  ******************************************************************************************************************/
 export type DividerProps = {
   orientation?: 'horizontal' | 'vertical';
   spacing?: PadSpacingValue;
+  margin?: PadSpacingValue;
   style?: StyleProp<ViewStyle>;
 };
 

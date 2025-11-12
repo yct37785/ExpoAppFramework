@@ -21,7 +21,7 @@ export const MenuList: MenuListType = memo(({
         <React.Fragment key={`${option.value}-${idx}`}>
           <MenuListItem option={option} onPress={onSelect} dense={dense} />
           {showDividers && idx < options.length - 1 ? (
-            <Divider />
+            <Divider spacing={0} />
           ) : null}
         </React.Fragment>
       ))}

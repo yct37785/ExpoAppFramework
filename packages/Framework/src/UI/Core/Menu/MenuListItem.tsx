@@ -10,14 +10,18 @@ import { MenuListItemType } from './MenuListItem.types';
  * MenuListItem implementation.
  ******************************************************************************************************************/
 export const MenuListItem: MenuListItemType = memo(({ option, onPress, dense = false, style = {} }) => {
-  const padding = dense ? Const.padSize025 : Const.padSize;
+  const paddingX = dense ? Const.padSize025 : Const.padSize;
+  const paddingY = dense ? Const.padSize : Const.padSize2;
   const disabled = !!option.disabled;
 
   const handlePress = () => {
     if (!disabled) onPress(option.value);
   };
 
-  const base: ViewStyle = { flexDirection: 'row', alignItems: 'center', padding };
+  const base: ViewStyle = {
+    flexDirection: 'row', alignItems: 'center', paddingHorizontal: paddingX,
+    paddingVertical: paddingY, backgroundColor: 'red'
+  };
   const wrapperStyle = useMemo<StyleProp<ViewStyle>>(
     () => StyleSheet.compose(base, style),
     [style]
