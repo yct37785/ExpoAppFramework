@@ -1,15 +1,12 @@
 import React, { memo, useEffect } from 'react';
-import { View } from 'react-native';
-import { Text, Button, Switch } from 'react-native-paper';
-import { Core, Managers, UI } from 'framework';
+import { Screen, Managers, UI } from 'framework';
+import { screenRoutes } from './ScreenRegistry';
 
 /******************************************************************************************************************
  * Home screen
  ******************************************************************************************************************/
-const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
+const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
   const { user } = Managers.useAuth();
-  const { getItem, setItem } = Managers.useLocalData();
-  const isDarkMode = getItem('isDarkMode');
 
   // useEffect(() => {
   //   (async () => {
@@ -22,16 +19,10 @@ const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
   //   })();
   // }, []);
 
-  const LeftContent = () => (
-    <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-      <Switch value={!!isDarkMode} onValueChange={(val) => setItem('isDarkMode', val)} />
-    </View>
-  );
-
-  const renderScreenBtn = (screen: string, btnText: string) => (
-    <Button mode='contained' onPress={() => navigation.navigate(screen, { paramText: 'hello from home' })}>
-      {btnText}
-    </Button>
+  const renderScreenBtn = (screen: string) => (
+    <UI.Button mode='contained' onPress={() => navigation.navigate(screen, { paramText: 'hello from home' })}>
+      {screen}
+    </UI.Button>
   );
 
   const renderAuthSection = () => {
@@ -48,30 +39,100 @@ const HomeScreen: React.FC<Core.ScreenProps> = ({ navigation }) => {
 
     return (
       <>
-        <Text variant='bodyMedium' style={{ marginBottom: 12 }}>
+        <UI.Text variant='bodyMedium'>
           {statusText}
-        </Text>
+        </UI.Text>
       </>
     );
   };
 
+  const SECTIONS = [
+    'Test', 'Container', 'Data', 'Input', 'Interactive',
+    'Layout', 'Menu', 'Misc', 'Modal', 'Options', 'Selections', 'Text', 'Visuals'
+  ];
+
   return (
-    <Core.Activity navigation={navigation} LeftContent={LeftContent} title='Home Sample'>
-      <UI.VerticalLayout>
+    <Screen.ScreenLayout>
+      <UI.VerticalLayout constraint='scroll'>
         {renderAuthSection()}
 
-        <Text variant='bodyMedium' style={{ marginTop: 16 }}>
-          Select the screen you want to navigate to
-        </Text>
-        
-        {renderScreenBtn('testbed', 'test bed example')}
-        {renderScreenBtn('typography', 'typography example')}
-        {/* {renderScreenBtn('layout', 'layouts example')}
-        {renderScreenBtn('menu', 'menus example')}
-        {renderScreenBtn('list', 'list example')}
-        {renderScreenBtn('container', 'containers example')} */}
+        <UI.Box mt={2}>
+          <UI.Text variant='bodyMedium'>
+            Select the screen you want to navigate to
+          </UI.Text>
+        </UI.Box>
+
+        <UI.AccordionContainer sectionTitles={SECTIONS}>
+          {/* Test */}
+          <UI.VerticalLayout>
+            {renderScreenBtn(screenRoutes.testbed)}
+          </UI.VerticalLayout>
+
+          {/* Container */}
+          <UI.VerticalLayout>
+            {renderScreenBtn(screenRoutes.box)}
+            {renderScreenBtn(screenRoutes.collapsibles)}
+            {renderScreenBtn(screenRoutes.tabs)}
+          </UI.VerticalLayout>
+
+          {/* Data */}
+          <UI.VerticalLayout>
+            {renderScreenBtn(screenRoutes.list)}
+          </UI.VerticalLayout>
+
+          {/* Input */}
+          <UI.VerticalLayout>
+            {renderScreenBtn(screenRoutes.inputs)}
+          </UI.VerticalLayout>
+
+          {/* Interactive */}
+          <UI.VerticalLayout>
+            {renderScreenBtn(screenRoutes.interactives)}
+          </UI.VerticalLayout>
+
+          {/* Layout */}
+          <UI.VerticalLayout>
+            {renderScreenBtn(screenRoutes.layouts)}
+          </UI.VerticalLayout>
+
+          {/* Menu */}
+          <UI.VerticalLayout>
+            {renderScreenBtn(screenRoutes.menu)}
+          </UI.VerticalLayout>
+
+          {/* Misc */}
+          <UI.VerticalLayout>
+            {renderScreenBtn(screenRoutes.misc)}
+          </UI.VerticalLayout>
+
+          {/* Modal */}
+          <UI.VerticalLayout>
+            {renderScreenBtn(screenRoutes.modals)}
+          </UI.VerticalLayout>
+
+          {/* Options */}
+          <UI.VerticalLayout>
+            {renderScreenBtn(screenRoutes.options)}
+          </UI.VerticalLayout>
+
+          {/* Options */}
+          <UI.VerticalLayout>
+            {renderScreenBtn(screenRoutes.selections)}
+          </UI.VerticalLayout>
+
+          {/* Text */}
+          <UI.VerticalLayout>
+            {renderScreenBtn(screenRoutes.text)}
+          </UI.VerticalLayout>
+
+          {/* Visuals */}
+          <UI.VerticalLayout>
+            {renderScreenBtn(screenRoutes.visuals)}
+          </UI.VerticalLayout>
+        </UI.AccordionContainer>
+
       </UI.VerticalLayout>
-    </Core.Activity>
+    </Screen.ScreenLayout>
   );
 };
 

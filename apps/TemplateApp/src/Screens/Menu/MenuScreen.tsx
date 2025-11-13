@@ -1,13 +1,10 @@
 import React, { memo } from 'react';
-import { View, TouchableOpacity } from 'react-native';
-import { Button } from 'react-native-paper';
 import { Screen, UI } from 'framework';
 
 /******************************************************************************************************************
- * Testbed screen: used for development and testing of new UI elements
+ * 
  ******************************************************************************************************************/
-const TestbedScreen: Screen.ScreenType = ({ navigation, route }) => {
-
+const EmptyScreen: Screen.ScreenType = ({ navigation, route }) => {
   const options: UI.MenuOption[] = [
     { label: 'Sign in with Google', value: 'signin', leadingIcon: 'google' },
     { label: 'Sign in with Google', value: 'signin', leadingIcon: 'google', disabled: true },
@@ -16,22 +13,14 @@ const TestbedScreen: Screen.ScreenType = ({ navigation, route }) => {
   const handleSelect = async (value: string) => {
   };
 
-  const LeftContent = () => (
-    <UI.HorizontalLayout bgColor='green'>
-      <View style={{ width: 12, height: 12, borderRadius: 6, backgroundColor: 'lime' }} />
-      <UI.Text variant='labelLarge' style={{ marginLeft: 8 }}>Testbed</UI.Text>
-    </UI.HorizontalLayout>
-  );
-
   return (
-    <Screen.ScreenLayout LeftContent={LeftContent}>
+    <Screen.ScreenLayout>
       <UI.VerticalLayout constraint='scroll'>
-
+        <UI.Text variant='labelLarge'>MenuList</UI.Text>
         <UI.MenuList options={options} onSelect={handleSelect} dense showDividers />
-
       </UI.VerticalLayout>
     </Screen.ScreenLayout>
   );
 };
 
-export default memo(TestbedScreen);
+export default memo(EmptyScreen);
