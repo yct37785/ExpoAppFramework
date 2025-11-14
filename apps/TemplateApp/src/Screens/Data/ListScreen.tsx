@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback, memo } from 'react';
-import { View, Image } from 'react-native';
+import React, { useState, useEffect, memo } from 'react';
+import { View, Image, StyleSheet } from 'react-native';
 import { Screen, UI, Const } from 'framework';
 import { faker } from '@faker-js/faker';
 const _ = require('lodash');
@@ -63,21 +63,31 @@ const ListScreen: Screen.ScreenType = ({ navigation, route }) => {
   /**
    * renders each item in the list
    */
-  const renderItem: UI.renderListItemFunc = useCallback((item: UI.ListItem, index: number): React.ReactNode => {
+  const renderItem: UI.renderListItemFunc = (item, index) => {
     return (
-      <View style={{ flex: 1, paddingVertical: Const.padSize }}>
-        <UI.HighlightText query={searchQuery} variant={'titleSmall'}>{item.searchable.name}</UI.HighlightText>
+      <View style={styles.row}>
+        <UI.HighlightText query={searchQuery} variant='titleSmall'>
+          {item.searchable.name}
+        </UI.HighlightText>
+
         <Image
-          style={{ width: 100, height: 100 }}
+          style={styles.img}
           source={{ uri: item.none.img }}
-          resizeMode={'contain'}
+          resizeMode='contain'
         />
-        <UI.Text variant='labelMedium'>{`material: ${item.filterable.material}`}</UI.Text>
-        <UI.HighlightText query={searchQuery} variant={'bodyMedium'}>{item.searchable.desc}</UI.HighlightText>
-        <UI.Divider style={{ marginTop: Const.padSize }} />
+
+        <UI.Text variant='labelMedium'>
+          {`material: ${item.filterable.material}`}
+        </UI.Text>
+
+        <UI.HighlightText query={searchQuery} variant='bodyMedium'>
+          {item.searchable.desc}
+        </UI.HighlightText>
+
+        <UI.Divider style={styles.divider} />
       </View>
     );
-  }, [searchQuery]);
+  };
 
   function LeftContent() {
     return <View>
@@ -116,5 +126,19 @@ const ListScreen: Screen.ScreenType = ({ navigation, route }) => {
     </Screen.ScreenLayout>
   );
 };
+
+const styles = StyleSheet.create({
+  row: {
+    flex: 1,
+    paddingVertical: Const.padSize,
+  },
+  img: {
+    width: 100,
+    height: 100,
+  },
+  divider: {
+    marginTop: Const.padSize,
+  },
+});
 
 export default memo(ListScreen);
