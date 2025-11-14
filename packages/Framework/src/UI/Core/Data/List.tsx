@@ -1,5 +1,5 @@
 import React, { useMemo, memo } from 'react';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, StyleSheet } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import { ListImplementationType, ListItem, ListType } from './List.types';
 
@@ -24,10 +24,16 @@ export const List: ListType = memo(({
       const matchesSearch = Object.values(item.searchable || {}).some((value) =>
         value.toLowerCase().includes(normalizedQuery)
       );
-      const matchesFilter = Object.entries(filterMap).every(([category, categoryValues]) => {
-        const hasFilters = categoryValues.size > 0;
-        return !hasFilters || categoryValues.has(item.filterable?.[category] || '');
-      });
+
+      const matchesFilter = Object.entries(filterMap).every(
+        ([category, categoryValues]) => {
+          const hasFilters = categoryValues.size > 0;
+          return (
+            !hasFilters ||
+            categoryValues.has(item.filterable?.[category] || '')
+          );
+        }
+      );
 
       return matchesSearch && matchesFilter;
     });
@@ -36,31 +42,52 @@ export const List: ListType = memo(({
   /**
    * adapter to wrap renderItem into FlatList/FlashList signature
    */
-  const renderListItem = ({ item, index }: { item: ListItem; index: number }) => (
-    <View style={{ flex: 1 }}>{renderItem(item, index)}</View>
+  const renderListItem = ({
+    item,
+    index,
+  }: {
+    item: ListItem;
+    index: number;
+  }) => (
+    <View style={styles.itemWrapper}>{renderItem(item, index)}</View>
   );
 
   /**
-   * selects the underlying list implementation
+   * shared props across both list implementations
    */
-  const renderList = () => {
-    if (listImplementationType === ListImplementationType.flashlist) {
-      return (
-        <FlashList
-          data={filteredData}
-          renderItem={renderListItem}
-        />
-      );
-    }
-    return (
-      <FlatList
-        data={filteredData}
-        renderItem={renderListItem}
-        keyExtractor={(_, index) => index.toString()}
-        windowSize={5}
-      />
-    );
+  const sharedListProps = {
+    data: filteredData,
+    renderItem: renderListItem,
+    keyExtractor: (_: ListItem, index: number) => index.toString(),
   };
 
-  return <View style={[{ flex: 1 }, style]}>{renderList()}</View>;
+  /**
+   * render
+   */
+  return (
+    <View style={[styles.container, style]}>
+      {listImplementationType === ListImplementationType.flashlist ? (
+        <FlashList
+          {...sharedListProps}
+        />
+      ) : (
+        <FlatList
+          {...sharedListProps}
+          windowSize={5}
+        />
+      )}
+    </View>
+  );
+});
+
+/******************************************************************************************************************
+ * styles
+ ******************************************************************************************************************/
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  itemWrapper: {
+    flex: 1,
+  },
 });
