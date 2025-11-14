@@ -89,19 +89,19 @@ const ListScreen: Screen.ScreenType = ({ navigation, route }) => {
     );
   };
 
-  function LeftContent() {
-    return <View>
+  const leftContent = (
+    <View>
       <UI.TextInput
-        type='search'
+        type="search"
         value={searchQuery}
         onChange={setSearchQuery}
-        placeholder='search'
+        placeholder="search"
       />
     </View>
-  }
+  );
 
   return (
-    <Screen.ScreenLayout LeftContent={LeftContent}>
+    <Screen.ScreenLayout LeftContent={leftContent} showTitle={false}>
       <UI.VerticalLayout>
 
         {/* filter menu */}

@@ -54,7 +54,7 @@ export const BaseOptions: BaseOptionsType = memo(
     };
 
     /**
-     * recursively renders options and their children
+     * Recursively renders options and their children.
      */
     const renderChildrenOptions = (
       options: OptionSchema,

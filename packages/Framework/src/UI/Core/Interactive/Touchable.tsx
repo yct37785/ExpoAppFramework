@@ -91,8 +91,8 @@ export const Touchable: TouchableType = memo(
     }, [isOpacity, disabled, opacity]);
 
     /**
-     * Android native ripple
-     * - Used only when feedback = 'opacity' to match Material touch feedback
+     * Android native ripple:
+     * - Used only when feedback = 'opacity' to match Material touch feedback.
      */
     const ripple = useMemo(
       () =>
