@@ -66,34 +66,36 @@ export type ToggleHeaderProps = {
  * <ToggleHeader toggleHeaderText='advanced' isCollapsed />
  * ```
  ******************************************************************************************************************/
-export const ToggleHeader: React.FC<ToggleHeaderProps> = memo(({ toggleHeaderText, isCollapsed }) => {
-  const theme = useTheme();
-  return (
-    <View style={{ padding: Const.padSize, flexDirection: 'row', alignItems: 'center' }}>
-      <Text variant='titleSmall'>{toggleHeaderText}</Text>
-      <View style={{ flex: 1 }} />
-      <Icon
-        source={isCollapsed ? 'chevron-down' : 'chevron-up'}
-        size={Const.iconSizeMedium}
-        color={theme.colors.onSurface}
-      />
-    </View>
-  );
-});
+export const ToggleHeader: React.FC<ToggleHeaderProps> = memo(
+  ({ toggleHeaderText, isCollapsed }) => {
+    const theme = useTheme();
+    return (
+      <View style={styles.toggleHeaderRow}>
+        <Text variant="titleSmall">{toggleHeaderText}</Text>
+        <View style={styles.flexSpacer} />
+        <Icon
+          source={isCollapsed ? 'chevron-down' : 'chevron-up'}
+          size={Const.iconSizeMedium}
+          color={theme.colors.onSurface}
+        />
+      </View>
+    );
+  }
+);
 
 /******************************************************************************************************************
  * CollapsibleContainer implementation.
  ******************************************************************************************************************/
 export const CollapsibleContainer: CollapsibleContainerType = memo(
-  ({ toggleHeaderText, style = {}, children }) => {
+  ({ toggleHeaderText, style, children }) => {
     const [isCollapsed, setIsCollapsed] = useState(true);
 
     /**
      * Toggles the collapsed state when the header is pressed.
      */
-    const toggleCollapse = useCallback(() => {
+    const toggleCollapse = () => {
       setIsCollapsed(prev => !prev);
-    }, []);
+    };
 
     return (
       <View style={style}>
@@ -121,7 +123,7 @@ const AccordionGroup = React.memo(function AccordionGroup({
   sections,
   idx,
   closeTrigger,
-  onTrigger
+  onTrigger,
 }: {
   sections: Section[];
   idx: number;
@@ -133,46 +135,39 @@ const AccordionGroup = React.memo(function AccordionGroup({
 
   // close on receiving trigger
   useEffect(() => {
-    // console.log(`idx ${idx} close triggered`);
     setActiveSections([]);
   }, [closeTrigger]);
 
-  const renderHeader = React.useCallback(
-    (section: Section, _i: number, isActive: boolean) => (
-      <View style={styles.headerRow}>
-        <Text variant='titleSmall' numberOfLines={1}>{section.title}</Text>
-        <View style={{ flex: 1 }} />
-        <Icon
-          source={isActive ? 'chevron-up' : 'chevron-down'}
-          size={Const.iconSizeMedium}
-          color={theme.colors.onSurface}
-        />
-      </View>
-    ),
-    []
+  const renderHeader = (section: Section, _i: number, isActive: boolean) => (
+    <View style={styles.headerRow}>
+      <Text variant="titleSmall" numberOfLines={1}>
+        {section.title}
+      </Text>
+      <View style={styles.flexSpacer} />
+      <Icon
+        source={isActive ? 'chevron-up' : 'chevron-down'}
+        size={Const.iconSizeMedium}
+        color={theme.colors.onSurface}
+      />
+    </View>
   );
 
-  const renderContent = React.useCallback(
-    (section: Section, _i: number, isActive: boolean) => (
-      <KeepMountedDuringClose active={isActive} durationMs={Const.animDuration}>
-        <View>{section.content}</View>
-      </KeepMountedDuringClose>
-    ),
-    []
+  const renderContent = (section: Section, _i: number, isActive: boolean) => (
+    <KeepMountedDuringClose active={isActive} durationMs={Const.animDuration}>
+      <View>{section.content}</View>
+    </KeepMountedDuringClose>
   );
 
-  const onChange = React.useCallback(
-    (newActiveSections: number[]) => {
-      // console.log(`idx: ${idx} open triggered`);
-      setActiveSections(newActiveSections);
+  const onChange = (newActiveSections: number[]) => {
+    setActiveSections(prevActive => {
       let sameSection = false;
-      if (activeSections.length > 0 && newActiveSections.length > 0) {
-        sameSection = activeSections[0] === newActiveSections[0];
+      if (prevActive.length > 0 && newActiveSections.length > 0) {
+        sameSection = prevActive[0] === newActiveSections[0];
       }
       onTrigger(idx, sameSection);
-    },
-    []
-  );
+      return newActiveSections;
+    });
+  };
 
   return (
     <Accordion
@@ -196,44 +191,43 @@ const AccordionGroup = React.memo(function AccordionGroup({
  ******************************************************************************************************************/
 export const AccordionContainer: AccordionContainerType = React.memo(function AccordionContainer({
   sectionTitles,
-  style = {},
-  children
+  style,
+  children,
 }) {
-  const childArray = useMemo(() => React.Children.toArray(children), [children]);
+  const childArray = React.Children.toArray(children);
 
-  const sections: Section[] = useMemo(
-    () => sectionTitles.map((title, i) => ({ title, content: childArray[i] })),
-    [sectionTitles, childArray]
-  );
+  const sections: Section[] = sectionTitles.map((title, i) => ({
+    title,
+    content: childArray[i],
+  }));
 
-  const groups = useMemo(() => {
-    const out: Section[][] = [];
-    for (let i = 0; i < sections.length; i += GRP_SIZE) out.push(sections.slice(i, i + GRP_SIZE));
-    return out;
-  }, [sections]);
+  const groups: Section[][] = [];
+  for (let i = 0; i < sections.length; i += GRP_SIZE) {
+    groups.push(sections.slice(i, i + GRP_SIZE));
+  }
 
   // Accordion triggers
-  const [triggerCloseTrackers, setTriggerCloseTrackers] = useState<number[]>(() =>
-    groups.map(() => 0)
+  const [triggerCloseTrackers, setTriggerCloseTrackers] = useState<number[]>(
+    () => groups.map(() => 0)
   );
   const openAccordionIdx = useRef(-1);
 
-  // when an AccordionGrp is triggered
   const onTrigger = useCallback(
     (idx: number, sameSection: boolean) => {
       let prev = -1;
-      // close current accordion (same AccordionGrp idx and section internally)
+
+      // close current accordion (same group + same section)
       if (openAccordionIdx.current === idx && sameSection) {
         prev = openAccordionIdx.current;
         openAccordionIdx.current = -1;
       }
-      // same AccordionGrp idx but diff section internally, assume curr AccordionGrp stays open
-      // open a diff accordion
+      // open a different accordion group
       else if (openAccordionIdx.current !== idx) {
-        prev = openAccordionIdx.current;  // -1 if no prev AccordionGrp
+        prev = openAccordionIdx.current; // -1 if no previous group
         openAccordionIdx.current = idx;
       }
-      // close prev accordion
+
+      // close previously open accordion group
       if (prev !== -1) {
         setTriggerCloseTrackers(prevTrackers => {
           const updated = [...prevTrackers];
@@ -260,6 +254,21 @@ export const AccordionContainer: AccordionContainerType = React.memo(function Ac
   );
 });
 
+/******************************************************************************************************************
+ * styles
+ ******************************************************************************************************************/
 const styles = StyleSheet.create({
-  headerRow: { padding: Const.padSize, alignItems: 'center', flexDirection: 'row' },
+  toggleHeaderRow: {
+    padding: Const.padSize,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  flexSpacer: {
+    flex: 1,
+  },
+  headerRow: {
+    padding: Const.padSize,
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
 });

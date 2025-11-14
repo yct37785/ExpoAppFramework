@@ -9,84 +9,66 @@ import { TabRouteProps, TabsContainerType } from './Tabs.types';
  * TabsContainer implementation (perf-tuned, MD3-aligned)
  ******************************************************************************************************************/
 export const TabsContainer: TabsContainerType = memo(
-  ({ routes, sceneMap, tabIndex, onTabIdxChange, position, style = {} }) => {
+  ({ routes, sceneMap, tabIndex, onTabIdxChange, position, style }) => {
     const theme = useTheme();
 
     // memoized scene map
     const renderScene = useMemo(() => SceneMap(sceneMap as any), [sceneMap]);
 
-    // Fallbacks so we don't rely on magic numbers if your Const isn't present
     const ripple = theme.dark ? Const.rippleColorForDark : Const.rippleColorForLight;
+    const onSurface = theme.colors.onSurface;
 
     /****************************************************************************************************************
      * lazy placeholder
      ****************************************************************************************************************/
-    const loadingScreen = useCallback((): JSX.Element => <View style={{ flex: 1 }} />, []);
+    const renderLazyPlaceholder = () => <View style={{ flex: 1 }} />;
 
     /****************************************************************************************************************
      * tab icon renderer
      ****************************************************************************************************************/
-    const renderIcon = useCallback(
-      ({ route, color }: { route: TabRouteProps; color: string }): JSX.Element | null =>
-        route.icon ? <Icon source={route.icon} size={Const?.iconSizeSmall} color={color} /> : null,
-      []
-    );
-
-    /****************************************************************************************************************
-     * styles
-     ****************************************************************************************************************/
-    const indicatorStyle = useMemo<StyleProp<ViewStyle>>(
-      () => [{ backgroundColor: theme.colors.primary }],
-      [theme.colors.primary]
-    );
-    const tabBarStyle = useMemo(
-      () => [
-        {
-          backgroundColor: theme.colors.surface,
-          // have divider instead of elevation when in dark mode
-          elevation: theme.dark ? 0 : 2,
-          borderBottomWidth: theme.dark ? 0.5 : 0,
-          borderBottomColor: theme.dark
-            ? theme.colors.outlineVariant
-            : 'transparent',
-        },
-      ],
-      [theme.dark, theme.colors],
-    );
-    const labelStyle = useMemo<StyleProp<TextStyle>>(
-      () => [theme.fonts?.labelMedium ?? null],
-      [theme.fonts]
-    );
-    const onSurface = theme.colors.onSurface;
+    const renderIcon = ({
+      route,
+      color,
+    }: {
+      route: TabRouteProps;
+      focused: boolean;
+      color: string;
+    }) =>
+      route.icon ? (
+        <Icon source={route.icon} size={Const.iconSizeSmall} color={color} />
+      ) : null;
 
     /****************************************************************************************************************
      * TabBar renderer (stable)
      ****************************************************************************************************************/
-    const renderTabBar = useCallback(
-      (props: any): JSX.Element => (
-        <TabBar
-          {...props}
-          pressColor={ripple}
-          indicatorStyle={indicatorStyle}
-          style={tabBarStyle}
-          activeColor={onSurface}
-          inactiveColor={onSurface}
-          labelStyle={labelStyle}
-        />
-      ),
-      [indicatorStyle, labelStyle, tabBarStyle, renderIcon, ripple]
+    const renderTabBar = (props: any) => (
+      <TabBar
+        {...props}
+        pressColor={ripple}
+        indicatorStyle={{ backgroundColor: theme.colors.primary }}
+        style={{
+          backgroundColor: theme.colors.surface,
+          elevation: theme.dark ? 0 : 2,
+          borderBottomWidth: theme.dark ? 0.5 : 0,
+          borderBottomColor: theme.dark ? theme.colors.outlineVariant : 'transparent',
+        }}
+        activeColor={onSurface}
+        inactiveColor={onSurface}
+        labelStyle={theme.fonts?.labelMedium ?? undefined}
+      />
     );
 
     return (
       <TabView
         lazy
         commonOptions={{
-          icon: ({ route, focused, color }) => renderIcon({ route: route as TabRouteProps, color }),
+          icon: ({ route, focused, color }) =>
+            renderIcon({ route: route as TabRouteProps, focused, color }),
         }}
         navigationState={{ index: tabIndex, routes }}
         renderTabBar={renderTabBar}
         renderScene={renderScene}
-        renderLazyPlaceholder={loadingScreen}
+        renderLazyPlaceholder={renderLazyPlaceholder}
         onIndexChange={onTabIdxChange}
         tabBarPosition={position}
         style={style}
