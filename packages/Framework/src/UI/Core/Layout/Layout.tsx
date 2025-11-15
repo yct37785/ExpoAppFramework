@@ -1,9 +1,9 @@
-import React, { memo, useMemo } from 'react';
-import { View, ScrollView, ViewStyle, FlexStyle, FlexAlignType } from 'react-native';
+import React, { memo } from 'react';
+import { View, ScrollView, ViewStyle, FlexStyle } from 'react-native';
 import * as Const from '../../../Const';
 import { LayoutType, VerticalLayoutType, HorizontalLayoutType } from './Layout.types';
 
-type FlexWrap = 'wrap' | 'nowrap' | 'wrap-reverse' | 'undefined';
+type FlexWrap = 'wrap' | 'nowrap' | 'wrap-reverse';
 
 // lock flexgrow/shrink when flex = 0
 const lockWhenZeroFlex = (flex?: number) =>
@@ -22,17 +22,16 @@ const Layout: LayoutType = ({
   dir = 'column',
   reverse = false,
   constraint = 'none',
-  // important: default to undefined so a fixed height isn't overridden by an implicit flex:1
   flex = 1,
   gap = 1,
   height,
   bgColor = 'transparent',
   children,
 }) => {
-  const content = useMemo(
-    () => (reverse ? React.Children.toArray(children).reverse() : children),
-    [children, reverse]
-  );
+  // reverse children if requested
+  const content = reverse
+    ? React.Children.toArray(children).reverse()
+    : children;
 
   // derived flags
   const isRow = dir === 'row';
@@ -41,30 +40,27 @@ const Layout: LayoutType = ({
   const flexWrap: FlexWrap = isWrap ? 'wrap' : 'nowrap';
 
   // outer wrapper (flex/height)
-  const containerDims: ViewStyle = useMemo(
-    () => ({
-      ...(typeof flex === 'number' ? { flex } : {}),
-      ...lockWhenZeroFlex(flex),       // stop filling when flex=0
-      ...lockWhenFixedHeight(height),  // stop filling when height is set
-    }),
-    [height, flex]
-  );
+  const containerDims: ViewStyle = {
+    ...(typeof flex === 'number' ? { flex } : {}),
+    ...lockWhenZeroFlex(flex),       // stop filling when flex=0
+    ...lockWhenFixedHeight(height),  // stop filling when height is set
+  };
 
   // content style
-  const alignContentValue: FlexStyle['alignContent'] = isWrap ? 'flex-start' : undefined;
-  const contentStyle: ViewStyle = useMemo(
-    () => ({
-      flexWrap,
-      flexDirection: dir,
-      justifyContent: 'flex-start',
-      alignItems: isWrap ? 'flex-start' : 'stretch',  // controls items within a row, do not stretch if wrap
-      alignContent: alignContentValue,  // controls how the rows themselves stack and distribute
-      gap: gap * Const.padSize,
-      padding: gap * Const.padSize,
-      backgroundColor: bgColor,
-    }),
-    [flexWrap, dir, isWrap, alignContentValue, gap, bgColor]
-  );
+  const alignContentValue: FlexStyle['alignContent'] = isWrap
+    ? 'flex-start'
+    : undefined;
+
+  const contentStyle: ViewStyle = {
+    flexWrap,
+    flexDirection: dir,
+    justifyContent: 'flex-start',
+    alignItems: isWrap ? 'flex-start' : 'stretch', // items within a row
+    alignContent: alignContentValue,               // how rows stack
+    gap: gap * Const.padSize,
+    padding: gap * Const.padSize,
+    backgroundColor: bgColor,
+  };
 
   if (isScroll) {
     return (

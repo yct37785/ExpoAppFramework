@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+import { StyleSheet } from 'react-native';
 import { Avatar } from '../../UI/Core/Misc/Avatar';
 import { Popup } from '../../UI/Core/Modal/Popup';
 import { MenuList } from '../../UI/Core/Menu/MenuList';
@@ -7,9 +8,9 @@ import { useAuth } from '../../Managers/Firebase/FirebaseAuthManager';
 import type { MenuOption } from '../../UI/Core/Menu/MenuListItem.types';
 
 /******************************************************************************************************************
- * ProfileMenu — Renders the authenticated user's avatar and dropdown menu of account actions.
+ * ProfileMenu: renders the authenticated user's avatar and dropdown menu of account actions.
  ******************************************************************************************************************/
-export const ProfileMenu = memo(({}) => {
+export const ProfileMenu = memo(() => {
   // auth props
   const { user, signIn, signOut } = useAuth();
   const isAnon = !!user?.isAnonymous || !user;
@@ -37,12 +38,22 @@ export const ProfileMenu = memo(({}) => {
 
   return (
     <Popup
-      triggerComp={<Avatar uri={photoURL} label='A' size='md' />}
-      triggerContainerStyle={{ borderRadius: 9999, overflow: 'hidden' }} // ensures circular ripple
+      triggerComp={<Avatar uri={photoURL} label="A" size="md" />}
+      triggerContainerStyle={styles.triggerContainer}
     >
       <VerticalLayout>
         <MenuList options={options} onSelect={handleSelect} dense showDividers />
       </VerticalLayout>
     </Popup>
   );
+});
+
+/******************************************************************************************************************
+ * Styles.
+ ******************************************************************************************************************/
+const styles = StyleSheet.create({
+  triggerContainer: {
+    borderRadius: 9999,
+    overflow: 'hidden', // ensures circular ripple
+  },
 });

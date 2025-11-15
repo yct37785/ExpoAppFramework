@@ -24,8 +24,8 @@ export default function App() {
       screenMap={screenMap}
       defaultScreenLayoutProps={{
         showTitle: true, // screens can set true to show title
-        LeftContent: DefaultLeftContent,
-        RightContent: DefaultRightContent
+        LeftContent: <DefaultLeftContent />,
+        RightContent: <DefaultRightContent />
       }}
     />
   );

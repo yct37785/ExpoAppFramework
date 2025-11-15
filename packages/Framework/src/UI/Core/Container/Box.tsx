@@ -3,24 +3,27 @@ import { View } from 'react-native';
 import * as Const from '../../../Const';
 import { BoxType } from './Box.types';
 
+const spacing = (units?: number) =>
+  units === undefined ? undefined : units * Const.padSize;
+
 /******************************************************************************************************************
  * Box implementation.
  ******************************************************************************************************************/
-export const Box: BoxType = memo(({
-  bgColor = 'transparent',
-  flex,
-  dir,
-  align,
-  justify,
-  p, m,
-  pv, ph, mv, mh,
-  pt, pr, pb, pl,
-  mt, mr, mb, ml,
-  style = {},
-  children,
-}) => {
-  const resolvedStyle = useMemo(() => {
-    return [
+export const Box: BoxType = memo(
+  ({
+    bgColor = 'transparent',
+    flex,
+    dir,
+    align,
+    justify,
+    p, m,
+    pv, ph, mv, mh,
+    pt, pr, pb, pl,
+    mt, mr, mb, ml,
+    style,
+    children,
+  }) => {
+    const resolvedStyle = [
       {
         backgroundColor: bgColor,
         flex,
@@ -29,31 +32,28 @@ export const Box: BoxType = memo(({
         justifyContent: justify,
 
         // padding
-        padding: p !== undefined ? p * Const.padSize : undefined,
-        paddingVertical: pv !== undefined ? pv * Const.padSize : undefined,
-        paddingHorizontal: ph !== undefined ? ph * Const.padSize : undefined,
-        paddingTop: pt !== undefined ? pt * Const.padSize : undefined,
-        paddingRight: pr !== undefined ? pr * Const.padSize : undefined,
-        paddingBottom: pb !== undefined ? pb * Const.padSize : undefined,
-        paddingLeft: pl !== undefined ? pl * Const.padSize : undefined,
+        padding: spacing(p),
+        paddingVertical: spacing(pv),
+        paddingHorizontal: spacing(ph),
+        paddingTop: spacing(pt),
+        paddingRight: spacing(pr),
+        paddingBottom: spacing(pb),
+        paddingLeft: spacing(pl),
 
         // margin
-        margin: m !== undefined ? m * Const.padSize : undefined,
-        marginVertical: mv !== undefined ? mv * Const.padSize : undefined,
-        marginHorizontal: mh !== undefined ? mh * Const.padSize : undefined,
-        marginTop: mt !== undefined ? mt * Const.padSize : undefined,
-        marginRight: mr !== undefined ? mr * Const.padSize : undefined,
-        marginBottom: mb !== undefined ? mb * Const.padSize : undefined,
-        marginLeft: ml !== undefined ? ml * Const.padSize : undefined,
+        margin: spacing(m),
+        marginVertical: spacing(mv),
+        marginHorizontal: spacing(mh),
+        marginTop: spacing(mt),
+        marginRight: spacing(mr),
+        marginBottom: spacing(mb),
+        marginLeft: spacing(ml),
       },
       style,
     ];
-  }, [
-    p, m, pv, ph, mv, mh,
-    pt, pr, pb, pl,
-    mt, mr, mb, ml,
-    bgColor, flex, style,
-  ]);
 
-  return <View style={resolvedStyle}>{children}</View>;
-});
+    return <View style={resolvedStyle}>{children}</View>;
+  }
+);
+
+Box.displayName = 'Box';

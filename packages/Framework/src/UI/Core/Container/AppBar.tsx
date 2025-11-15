@@ -9,19 +9,18 @@ import * as Const from '../../../Const';
  * AppBar implementation.
  ******************************************************************************************************************/
 export const AppBar: AppBarType = memo(({ title, onBack, left, right }) => {
-  const theme = useTheme();
 
   return (
     <Appbar.Header elevated>
       {/* back btn */}
       {onBack ? (
-        <Appbar.BackAction onPress={onBack} color={theme.colors.onSurface} />
+        <Appbar.BackAction onPress={onBack} />
       ) : null}
 
       {/* title */}
       {title ? (
-        <View style={{ paddingLeft: onBack ? 0 : Const.padSize2 }}>
-          <Text variant="titleLarge">{title}</Text>
+        <View style={onBack ? styles.titleWithBack : styles.titleNoBack}>
+          <Text variant='titleLarge'>{title}</Text>
         </View>
       ) : null}
 
@@ -41,6 +40,12 @@ export const AppBar: AppBarType = memo(({ title, onBack, left, right }) => {
 AppBar.displayName = 'AppBar';
 
 const styles = StyleSheet.create({
+  titleWithBack: {
+    paddingLeft: 0,
+  },
+  titleNoBack: {
+    paddingLeft: Const.padSize2,
+  },
   leftSlot: {
     flex: 1,
     minWidth: 0, // allow inner text to ellipsize

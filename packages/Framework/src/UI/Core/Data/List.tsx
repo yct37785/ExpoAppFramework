@@ -1,66 +1,126 @@
 import React, { useMemo, memo } from 'react';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, StyleSheet } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import { ListImplementationType, ListItem, ListType } from './List.types';
 
 /******************************************************************************************************************
  * List implementation.
  ******************************************************************************************************************/
-export const List: ListType = memo(({
-  dataArr = [],
-  query = '',
-  filterMap = {},
-  renderItem,
-  listImplementationType = ListImplementationType.flashlist,
-  style = {},
-}) => {
-  /**
-   * filters the dataset using both search and filter criteria
-   */
-  const filteredData = useMemo(() => {
-    const normalizedQuery = query.toLowerCase();
-
-    return dataArr.filter((item) => {
-      const matchesSearch = Object.values(item.searchable || {}).some((value) =>
-        value.toLowerCase().includes(normalizedQuery)
+export const List: ListType = memo(
+  ({
+    dataArr = [],
+    query = '',
+    filterMap = {},
+    renderItem,
+    listImplementationType = ListImplementationType.flashlist,
+    style,
+  }) => {
+    /**
+     * Filters the dataset using both search and filter criteria.
+     */
+    const filteredData = useMemo(() => {
+      // fast path: if no search AND all filter sets are empty, return original data
+      const hasQuery = query.trim().length > 0;
+      const hasAnyFilters = Object.values(filterMap).some(
+        (set: Set<string>) => set && set.size > 0
       );
-      const matchesFilter = Object.entries(filterMap).every(([category, categoryValues]) => {
-        const hasFilters = categoryValues.size > 0;
-        return !hasFilters || categoryValues.has(item.filterable?.[category] || '');
+      if (!hasQuery && !hasAnyFilters) {
+        return dataArr;
+      }
+
+      const normalizedQuery = query.toLowerCase();
+
+      return dataArr.filter((item) => {
+        // --- search ---
+        let matchesSearch = true;
+        if (hasQuery) {
+          const searchable = item.searchable || {};
+          matchesSearch = Object.values(searchable).some((value) =>
+            String(value).toLowerCase().includes(normalizedQuery)
+          );
+        }
+
+        // --- filters ---
+        let matchesFilter = true;
+        if (hasAnyFilters) {
+          matchesFilter = Object.entries(filterMap).every(
+            ([category, categoryValues]) => {
+              const set = categoryValues as Set<string>;
+              const hasFilters = set && set.size > 0;
+              if (!hasFilters) return true;
+
+              const itemValue = item.filterable?.[category] || '';
+              return set.has(itemValue);
+            }
+          );
+        }
+
+        return matchesSearch && matchesFilter;
       });
+    }, [dataArr, query, filterMap]);
 
-      return matchesSearch && matchesFilter;
-    });
-  }, [dataArr, query, filterMap]);
+    /**
+     * Adapter to wrap renderItem into FlatList/FlashList signature.
+     * Uses static style from StyleSheet to avoid per-render allocations.
+     */
+    const renderListItem = ({
+      item,
+      index,
+    }: {
+      item: ListItem;
+      index: number;
+    }) => (
+      <View style={styles.itemWrapper}>{renderItem(item, index)}</View>
+    );
 
-  /**
-   * adapter to wrap renderItem into FlatList/FlashList signature
-   */
-  const renderListItem = ({ item, index }: { item: ListItem; index: number }) => (
-    <View style={{ flex: 1 }}>{renderItem(item, index)}</View>
-  );
+    /**
+     * Prefer a stable key if the item has an "id" in searchable.
+     * Falls back to index as a last resort.
+     * This makes the list safer and faster by default for end users.
+     */
+    const keyExtractor = (item: ListItem, index: number) => {
+      const maybeId = (item.searchable as any)?.id;
+      return typeof maybeId === 'string' && maybeId.length > 0
+        ? maybeId
+        : index.toString();
+    };
 
-  /**
-   * selects the underlying list implementation
-   */
-  const renderList = () => {
-    if (listImplementationType === ListImplementationType.flashlist) {
+    const sharedListProps = {
+      data: filteredData,
+      renderItem: renderListItem,
+      keyExtractor,
+    };
+
+    const renderList = () => {
+      if (listImplementationType === ListImplementationType.flashlist) {
+        return (
+          <FlashList
+            {...sharedListProps}
+          />
+        );
+      }
+
       return (
-        <FlashList
-          data={filteredData}
-          renderItem={renderListItem}
+        <FlatList
+          {...sharedListProps}
+          // conservative default, keeps memory reasonable with large lists
+          windowSize={5}
         />
       );
-    }
-    return (
-      <FlatList
-        data={filteredData}
-        renderItem={renderListItem}
-        keyExtractor={(_, index) => index.toString()}
-        windowSize={5}
-      />
-    );
-  };
+    };
 
-  return <View style={[{ flex: 1 }, style]}>{renderList()}</View>;
+    return <View style={[styles.container, style]}>{renderList()}</View>;
+  }
+);
+
+/******************************************************************************************************************
+ * styles
+ ******************************************************************************************************************/
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  itemWrapper: {
+    flex: 1,
+  },
 });

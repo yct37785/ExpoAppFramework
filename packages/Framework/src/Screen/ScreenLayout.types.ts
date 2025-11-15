@@ -18,8 +18,8 @@ export type ScreenLayoutProps = {
   showTitle?: boolean;
   title?: string;
   showBack?: boolean;
-  LeftContent?: React.FC | null;
-  RightContent?: React.FC | null;
+  LeftContent?: React.ReactNode;
+  RightContent?: React.ReactNode;
   appbarBottomMargin?: PadSpacingValue;
   children?: React.ReactNode;
 };
