@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { Text, Modal, Button, Card, useTheme } from 'react-native-paper';
 import * as Const from '../../../Const';
 import { DialogType } from './Dialog.types';
@@ -7,55 +7,95 @@ import { DialogType } from './Dialog.types';
 /******************************************************************************************************************
  * Dialog implementation.
  ******************************************************************************************************************/
-export const Dialog: DialogType = memo(({
-  title,
-  subtitle,
-  children,
-  isVisible,
-  onSubmit,
-  onClose,
-  dismissable = false,
-  submitText = 'Confirm',
-  closeText = 'Close',
-  style = {},
-}) => {
-  const theme = useTheme();
+export const Dialog: DialogType = memo(
+  ({
+    title,
+    subtitle,
+    children,
+    isVisible,
+    onSubmit,
+    onClose,
+    dismissable = false,
+    submitText = 'Confirm',
+    closeText = 'Close',
+    style,
+  }) => {
+    const theme = useTheme();
 
-  return (
-    <Modal dismissable={dismissable} visible={isVisible} style={[{ marginHorizontal: Const.padSize4 }, style]}>
-      <View
-        style={{
-          backgroundColor: theme.colors.surfaceVariant,
-          borderRadius: theme.roundness,
-          minHeight: 160,
-        }}
+    const containerDynamic: StyleProp<ViewStyle> = {
+      backgroundColor: theme.colors.surfaceVariant,
+      borderRadius: theme.roundness,
+    };
+
+    return (
+      <Modal
+        dismissable={dismissable}
+        visible={isVisible}
+        style={[styles.modal, style]}
       >
-        {title && (
-          <Text style={{ padding: Const.padSize2 }} variant='titleLarge'>
-            {title}
-          </Text>
-        )}
-        {subtitle && <Text style={{ marginHorizontal: Const.padSize2 }}>{subtitle}</Text>}
-        {children ? children : <View style={{ flex: 1 }} />}
-        <View style={{ width: '100%', padding: Const.padSize }}>
-          {onClose && onSubmit && (
-            <Card.Actions style={{ justifyContent: 'flex-end' }}>
-              <Button onPress={onClose}>{closeText}</Button>
-              <Button onPress={onSubmit}>{submitText}</Button>
-            </Card.Actions>
-          )}
-          {onSubmit && !onClose && (
-            <Card.Actions style={{ justifyContent: 'flex-end' }}>
-              <Button onPress={onSubmit}>{submitText}</Button>
-            </Card.Actions>
-          )}
-          {onClose && !onSubmit && (
-            <Card.Actions style={{ justifyContent: 'flex-end' }}>
-              <Button onPress={onClose}>{closeText}</Button>
-            </Card.Actions>
-          )}
+        <View style={[styles.container, containerDynamic]}>
+          {title ? (
+            <Text style={styles.title} variant="titleLarge">
+              {title}
+            </Text>
+          ) : null}
+
+          {subtitle ? (
+            <Text style={styles.subtitle}>{subtitle}</Text>
+          ) : null}
+
+          {children ?? <View style={styles.childrenFallback} />}
+
+          <View style={styles.actionsWrapper}>
+            {onClose && onSubmit && (
+              <Card.Actions style={styles.actionsRow}>
+                <Button onPress={onClose}>{closeText}</Button>
+                <Button onPress={onSubmit}>{submitText}</Button>
+              </Card.Actions>
+            )}
+
+            {onSubmit && !onClose && (
+              <Card.Actions style={styles.actionsRow}>
+                <Button onPress={onSubmit}>{submitText}</Button>
+              </Card.Actions>
+            )}
+
+            {onClose && !onSubmit && (
+              <Card.Actions style={styles.actionsRow}>
+                <Button onPress={onClose}>{closeText}</Button>
+              </Card.Actions>
+            )}
+          </View>
         </View>
-      </View>
-    </Modal>
-  );
+      </Modal>
+    );
+  }
+);
+
+/******************************************************************************************************************
+ * Styles.
+ ******************************************************************************************************************/
+const styles = StyleSheet.create({
+  modal: {
+    marginHorizontal: Const.padSize4,
+  },
+  container: {
+    minHeight: 160,
+  },
+  title: {
+    padding: Const.padSize2,
+  },
+  subtitle: {
+    marginHorizontal: Const.padSize2,
+  },
+  childrenFallback: {
+    flex: 1,
+  },
+  actionsWrapper: {
+    width: '100%',
+    padding: Const.padSize,
+  },
+  actionsRow: {
+    justifyContent: 'flex-end',
+  },
 });
