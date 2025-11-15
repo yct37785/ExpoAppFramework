@@ -7,6 +7,8 @@ import { AppBar } from '../UI/Core/Container/AppBar';
 import { ScreenLayoutProps, ScreenLayoutType } from './ScreenLayout.types';
 import * as Const from '../Const';
 
+const SAFE_AREA_EDGES = ['bottom'] as const;
+
 /******************************************************************************************************************
  * Screen layout defaults context
  *
@@ -56,7 +58,7 @@ export const ScreenLayout: ScreenLayoutType = memo((props) => {
       />
 
       <SafeAreaView
-        edges={['bottom']}
+        edges={SAFE_AREA_EDGES}
         style={[
           styles.content,
           { marginTop: appbarBottomMargin * Const.padSize },
