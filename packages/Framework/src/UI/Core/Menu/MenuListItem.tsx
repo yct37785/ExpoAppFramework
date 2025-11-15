@@ -1,5 +1,5 @@
-import React, { memo, useMemo } from 'react';
-import { View, StyleSheet, type StyleProp, type ViewStyle } from 'react-native';
+import React, { memo } from 'react';
+import { StyleSheet, type StyleProp, type ViewStyle } from 'react-native';
 import * as Const from '../../../Const';
 import { Text } from '../Text/Text';
 import { Icon } from '../Text/Icon';
@@ -9,45 +9,74 @@ import { MenuListItemType } from './MenuListItem.types';
 /******************************************************************************************************************
  * MenuListItem implementation.
  ******************************************************************************************************************/
-export const MenuListItem: MenuListItemType = memo(({ option, onPress, dense = false, style = {} }) => {
-  const paddingX = dense ? Const.padSize025 : Const.padSize;
-  const paddingY = dense ? Const.padSize : Const.padSize2;
-  const disabled = !!option.disabled;
+export const MenuListItem: MenuListItemType = memo(
+  ({ option, onPress, dense = false, style }) => {
+    const paddingX = dense ? Const.padSize025 : Const.padSize;
+    const paddingY = dense ? Const.padSize : Const.padSize2;
+    const disabled = !!option.disabled;
 
-  const handlePress = () => {
-    if (!disabled) onPress(option.value);
-  };
+    const handlePress = () => {
+      if (!disabled) {
+        onPress(option.value);
+      }
+    };
 
-  const base: ViewStyle = {
-    flexDirection: 'row', alignItems: 'center', paddingHorizontal: paddingX,
-    paddingVertical: paddingY, backgroundColor: 'red'
-  };
-  const wrapperStyle = useMemo<StyleProp<ViewStyle>>(
-    () => StyleSheet.compose(base, style),
-    [style]
-  );
+    const dynamicPadding: ViewStyle = {
+      paddingHorizontal: paddingX,
+      paddingVertical: paddingY,
+    };
 
-  return (
-    <Touchable
-      pressOpacity={Const.pressOpacityHeavy}
-      onPress={handlePress}
-      disabled={disabled}
-      style={wrapperStyle}
-    >
-      <>
-        {/* leading icon */}
-        {option.leadingIcon ? (
-          <Icon
-            source={option.leadingIcon}
-            variant={dense ? 'sm' : 'md'}
+    const wrapperStyle: StyleProp<ViewStyle> = [
+      styles.baseRow,
+      dynamicPadding,
+      style,
+    ];
+
+    const iconMarginStyle = dense
+      ? styles.iconMarginDense
+      : styles.iconMarginRegular;
+
+    return (
+      <Touchable
+        pressOpacity={Const.pressOpacityHeavy}
+        onPress={handlePress}
+        disabled={disabled}
+        style={wrapperStyle}
+      >
+        <>
+          {/* leading icon */}
+          {option.leadingIcon ? (
+            <Icon
+              source={option.leadingIcon}
+              variant={dense ? 'sm' : 'md'}
+              color={disabled ? 'disabled' : 'default'}
+              style={iconMarginStyle}
+            />
+          ) : null}
+
+          {/* label */}
+          <Text
             color={disabled ? 'disabled' : 'default'}
-            style={{ marginRight: dense ? Const.padSize : Const.padSize2 }}
-          />
-        ) : null}
+            variant={dense ? 'labelSmall' : 'labelMedium'}
+          >
+            {option.label}
+          </Text>
+        </>
+      </Touchable>
+    );
+  }
+);
 
-        {/* label */}
-        <Text color={disabled ? 'disabled' : 'default'} variant={dense ? 'labelSmall' : 'labelMedium'}>{option.label}</Text>
-      </>
-    </Touchable>
-  );
+const styles = StyleSheet.create({
+  baseRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'red', // debug
+  },
+  iconMarginDense: {
+    marginRight: Const.padSize,
+  },
+  iconMarginRegular: {
+    marginRight: Const.padSize2,
+  },
 });
