@@ -1,21 +1,29 @@
-import React, { useRef, useEffect, useCallback, useMemo, memo } from 'react';
+import React, { useRef, useEffect, memo } from 'react';
 import {
   Pressable,
   type ViewStyle,
   Platform,
   Animated,
-  Easing
+  Easing,
 } from 'react-native';
 import * as Const from '../../../Const';
 import { TouchableType } from './Touchable.types';
 
 /******************************************************************************************************************
+ * Predefined Android ripple configuration (shared instance).
+ ******************************************************************************************************************/
+const ANDROID_RIPPLE = {
+  borderless: false,
+  foreground: true,
+} as const;
+
+/******************************************************************************************************************
  * Touchable implementation.
  * 
- * Performance notes:
- *  - Handlers are memoized (useCallback) to avoid new identities per render.
- *  - Animations are stopped before re-running to prevent race conditions on fast taps.
- *  - Platform ripple color is left to the system for zero-cost theming + parity.
+ * Notes:
+ * - Uses Animated.Value for opacity feedback (native driver).
+ * - Avoids heavy hooks (no useMemo/useCallback) since work is cheap.
+ * - Uses a shared ripple config instead of recreating it per render.
  ******************************************************************************************************************/
 export const Touchable: TouchableType = memo(
   ({
@@ -31,54 +39,34 @@ export const Touchable: TouchableType = memo(
     hitSlop,
     pressRetentionOffset,
     style,
-    children
+    children,
   }) => {
-    /**
-     * State: Animated driver for opacity.
-     * Using a single Animated.Value avoids re-renders,
-     * the value updates on the native thread (useNativeDriver: true).
-     */
     const opacity = useRef(new Animated.Value(1)).current;
     const isOpacity = feedback === 'opacity';
 
+    const run = (to: number, dur: number) => {
+      opacity.stopAnimation();
+      Animated.timing(opacity, {
+        toValue: to,
+        duration: dur,
+        easing: Easing.out(Easing.quad),
+        useNativeDriver: true,
+      }).start();
+    };
 
-    /**
-     * Stops any in-flight animation before starting the next one.
-     * Using timing with native driver keeps it smooth & low-overhead.
-     */
-    const run = useCallback(
-      (to: number, dur: number) => {
-        opacity.stopAnimation(); // stop ongoing animation
-        Animated.timing(opacity, {
-          toValue: to,
-          duration: dur,
-          easing: Easing.out(Easing.quad),
-          useNativeDriver: true,
-        }).start();
-      },
-      [opacity]
-    );
+    const handleIn = (e: any) => {
+      if (!disabled && isOpacity) {
+        run(pressOpacity, Const.pressInDurationMS);
+      }
+      onPressIn?.(e);
+    };
 
-
-    /**
-     * Handlers: memoized to avoid re-creation.
-     * We only animate when feedback mode is 'opacity' and not disabled.
-     */
-    const handleIn = useCallback(
-      (e: any) => {
-        if (!disabled && isOpacity) run(pressOpacity, Const.pressInDurationMS);
-        onPressIn?.(e);
-      },
-      [disabled, isOpacity, onPressIn, run]
-    );
-
-    const handleOut = useCallback(
-      (e: any) => {
-        if (isOpacity) run(1, Const.pressOutDurationMS);
-        onPressOut?.(e);
-      },
-      [isOpacity, onPressOut, run]
-    );
+    const handleOut = (e: any) => {
+      if (isOpacity) {
+        run(1, Const.pressOutDurationMS);
+      }
+      onPressOut?.(e);
+    };
 
     /**
      * Reset opacity immediately when disabled or feedback mode changes.
@@ -90,17 +78,8 @@ export const Touchable: TouchableType = memo(
       }
     }, [isOpacity, disabled, opacity]);
 
-    /**
-     * Android native ripple:
-     * - Used only when feedback = 'opacity' to match Material touch feedback.
-     */
-    const ripple = useMemo(
-      () =>
-        Platform.OS === 'android' && isOpacity
-          ? ({ borderless: false, foreground: true } as const) // draw ripple ABOVE content
-          : undefined,
-      [isOpacity]
-    );
+    const ripple =
+      Platform.OS === 'android' && isOpacity ? ANDROID_RIPPLE : undefined;
 
     return (
       <Pressable
@@ -115,7 +94,9 @@ export const Touchable: TouchableType = memo(
         hitSlop={hitSlop}
         pressRetentionOffset={pressRetentionOffset}
       >
-        <Animated.View style={[style as ViewStyle, { opacity }]}>{children}</Animated.View>
+        <Animated.View style={[style as ViewStyle, { opacity }]}>
+          {children}
+        </Animated.View>
       </Pressable>
     );
   }
