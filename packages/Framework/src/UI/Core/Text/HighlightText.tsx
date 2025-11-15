@@ -8,6 +8,10 @@ function escapeRegExp(s: string) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+const defaultHighlightStyle: TextStyle = {
+  backgroundColor: Const.highlightColor,
+};
+
 /******************************************************************************************************************
  * HighlightText implementation.
  ******************************************************************************************************************/
@@ -22,7 +26,6 @@ export const HighlightText: HighlightTextType = memo(
     children,
     ...rest
   }) => {
-
     // only operate on plain strings, otherwise fall back to a single node
     if (typeof children !== 'string' || !query) {
       return (
@@ -38,13 +41,16 @@ export const HighlightText: HighlightTextType = memo(
     const parts = children.split(re);
 
     const resolvedHighlightStyle: StyleProp<TextStyle> =
-      highlightStyle ?? { backgroundColor: Const.highlightColor };
+      highlightStyle ?? defaultHighlightStyle;
+
+    const normalizedQuery = caseSensitive ? query : query.toLowerCase();
 
     return (
       <Text variant={variant} color={color} style={style} {...rest}>
         {parts.map((part, i) => {
-          const match =
-            caseSensitive ? part === query : part.toLowerCase() === query.toLowerCase();
+          const match = caseSensitive
+            ? part === normalizedQuery
+            : part.toLowerCase() === normalizedQuery;
 
           return match ? (
             <Text key={`h-${i}`} variant={variant} style={resolvedHighlightStyle}>
@@ -58,5 +64,3 @@ export const HighlightText: HighlightTextType = memo(
     );
   }
 );
-
-HighlightText.displayName = 'HighlightText';
