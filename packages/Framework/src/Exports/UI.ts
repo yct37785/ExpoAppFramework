@@ -37,6 +37,8 @@ export * from '../UI/Core/Selection/RadioGroup';
 export * from '../UI/Core/Selection/RadioGroup.types';
 export * from '../UI/Core/Text/HighlightText';
 export * from '../UI/Core/Text/HighlightText.types';
+export * from '../UI/Core/Text/Icon';
+export * from '../UI/Core/Text/Icon.types';
 export * from '../UI/Core/Text/Text';
 export * from '../UI/Core/Text/Text.types';
 export * from '../UI/Core/Visuals/Divider';
