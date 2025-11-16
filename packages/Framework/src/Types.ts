@@ -7,17 +7,3 @@
  *   ...
  */
 export type PadSpacingValue = 0 | 1 | 2 | 3 | 4;
-
-/**
- * General font colors (Text, Icon etc.)
- */
-export type FontColor =
-  | 'default'
-  | 'label'
-  | 'disabled'
-  | 'primary'
-  | 'secondary'
-  | 'error'
-  | 'surface'
-  | 'background'
-  | 'outline';

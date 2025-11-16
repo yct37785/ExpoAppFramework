@@ -1,7 +1,9 @@
 import React from 'react';
 import { type StyleProp, type ViewStyle } from 'react-native';
 
-// declared locally for VSC intelliSense
+/******************************************************************************************************************
+ * declared locally for VSC intelliSense
+ ******************************************************************************************************************/
 type FontColor =
   | 'default'
   | 'label'
