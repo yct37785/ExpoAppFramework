@@ -24,12 +24,8 @@ const BoxScreen: Screen.ScreenType = () => {
     <Screen.ScreenLayout showTitle>
       <UI.VerticalLayout constraint='scroll'>
         {/* Header */}
-        <UI.Text variant='titleLarge'>UI.Box</UI.Text>
-        <UI.Text variant='bodySmall'>
-          <UI.Text variant='bodySmall' color='label'>
-            Box
-          </UI.Text>{' '}
-          is a drawable container that wraps content and applies flex layout, alignment, and spacing. It
+        <UI.Text variant='titleLarge'>Box</UI.Text>
+        <UI.Text variant='bodySmall'>Box is a drawable container that wraps content and applies flex layout, alignment, and spacing. It
           doesn&apos;t decide how siblings are arranged; instead, it acts as a flexible building block.
         </UI.Text>
 

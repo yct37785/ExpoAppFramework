@@ -21,24 +21,17 @@ export type CollapsibleHeaderIconOptions = Omit<IconProps, 'source'>;
  * @property children          - Content rendered inside the collapsible body
  ******************************************************************************************************************/
 export type CollapsibleContainerProps = {
-  /** Preferred header label */
+  /** preferred header label */
   text?: string;
 
-  /** Optional text props (variant, color, numberOfLines, style, …) */
+  /** optional text props (variant, color, numberOfLines, style, …) */
   textOpts?: CollapsibleHeaderTextOptions;
 
-  /** Optional leading icon name (passed to UI.Icon) */
+  /** optional leading icon name (passed to UI.Icon) */
   icon?: IconProps['source'];
 
-  /** Optional leading icon props (variant, color, size, style, …) */
+  /** optional leading icon props (variant, color, size, style, …) */
   iconOpts?: CollapsibleHeaderIconOptions;
-
-  /**
-   * @deprecated Use `text` instead.
-   * Left here for backwards compatibility – if `text` is undefined,
-   * `toggleHeaderText` will be used as the header label.
-   */
-  toggleHeaderText?: string;
 
   style?: StyleProp<ViewStyle>;
   children: ReactNode;

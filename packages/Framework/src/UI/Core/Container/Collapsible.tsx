@@ -113,15 +113,8 @@ export const ToggleHeader: React.FC<ToggleHeaderProps> = memo(
  * CollapsibleContainer implementation.
  ******************************************************************************************************************/
 export const CollapsibleContainer: CollapsibleContainerType = memo(
-  ({ text, textOpts, icon, iconOpts, toggleHeaderText, style, children }) => {
+  ({ text, textOpts, icon, iconOpts, style, children }) => {
     const [isCollapsed, setIsCollapsed] = useState(true);
-
-    /**
-     * Header label precedence:
-     *   1. `text` (new API)
-     *   2. `toggleHeaderText` (legacy API)
-     */
-    const headerText = text ?? toggleHeaderText ?? '';
 
     const toggleCollapse = () => {
       setIsCollapsed(prev => !prev);
@@ -131,7 +124,7 @@ export const CollapsibleContainer: CollapsibleContainerType = memo(
       <View style={style}>
         <Touchable pressOpacity={Const.pressOpacityHeavy} onPress={toggleCollapse}>
           <ToggleHeader
-            text={headerText}
+            text={text}
             textOpts={textOpts}
             icon={icon}
             iconOpts={iconOpts}

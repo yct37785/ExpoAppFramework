@@ -35,31 +35,7 @@ const CollapsiblesScreen: Screen.ScreenType = () => {
         {/* Header */}
         <UI.Text variant='titleLarge'>Collapsibles</UI.Text>
         <UI.Text variant='bodySmall'>
-          This page demonstrates{' '}
-          <UI.Text variant='bodySmall' color='label'>
-            CollapsibleContainer
-          </UI.Text>{' '}
-          and{' '}
-          <UI.Text variant='bodySmall' color='label'>
-            AccordionContainer
-          </UI.Text>
-          , including the new{' '}
-          <UI.Text variant='bodySmall' color='label'>
-            text
-          </UI.Text>
-          ,{' '}
-          <UI.Text variant='bodySmall' color='label'>
-            textOpts
-          </UI.Text>
-          ,{' '}
-          <UI.Text variant='bodySmall' color='label'>
-            icon
-          </UI.Text>{' '}
-          and{' '}
-          <UI.Text variant='bodySmall' color='label'>
-            iconOpts
-          </UI.Text>{' '}
-          props for customizing headers.
+          This page demonstrates the CollapsibleContainer and AccordionContainer, including props for customizing headers.
         </UI.Text>
 
         <UI.Divider spacing={1} />
@@ -168,28 +144,27 @@ const CollapsiblesScreen: Screen.ScreenType = () => {
         </UI.AccordionContainer>
 
         {/* Usage notes */}
-        <UI.Divider spacing={2} />
+        <UI.Divider spacing={0} />
 
         <UI.Text variant='titleMedium'>Usage notes</UI.Text>
+
         <UI.Text variant='bodySmall' color='label'>
-          • For <UI.Text variant='bodySmall' color='label'>CollapsibleContainer</UI.Text>, prefer{' '}
-          <UI.Text variant='bodySmall' color='label'>text</UI.Text> over the legacy{' '}
-          <UI.Text variant='bodySmall' color='label'>toggleHeaderText</UI.Text>.
-        </UI.Text>
-        <UI.Text variant='bodySmall' color='label'>
-          • Use <UI.Text variant='bodySmall' color='label'>textOpts</UI.Text> to adjust typography
+          • Use <UI.Text variant='bodySmall' color='label' bold>textOpts</UI.Text> to adjust typography
           (variant, color, etc.).
         </UI.Text>
+
         <UI.Text variant='bodySmall' color='label'>
-          • Use <UI.Text variant='bodySmall' color='label'>icon</UI.Text> and{' '}
-          <UI.Text variant='bodySmall' color='label'>iconOpts</UI.Text> to add and style a leading
+          • Use <UI.Text variant='bodySmall' color='label' bold>icon</UI.Text> and{' '}
+          <UI.Text variant='bodySmall' color='label' bold>iconOpts</UI.Text> to add and style a leading
           icon, including custom colors.
         </UI.Text>
+
         <UI.Text variant='bodySmall' color='label'>
-          • For <UI.Text variant='bodySmall' color='label'>AccordionContainer</UI.Text>, the{' '}
+          • For <UI.Text variant='bodySmall' color='label' bold>AccordionContainer</UI.Text>, the{' '}
           <UI.Text variant='bodySmall' color='label'>sections</UI.Text> array must have the same
           length as the children.
         </UI.Text>
+
       </UI.VerticalLayout>
     </Screen.ScreenLayout>
   );
