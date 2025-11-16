@@ -15,11 +15,10 @@ import type { IconProps } from '../Text/Icon.types';
  ******************************************************************************************************************/
 export type MenuOption = {
   value: string;
-  /** Preferred text label */
   text?: string;
-  textOpts?: Omit<TextProps, 'children'>;
-  icon?: IconProps['source'];
-  iconOpts?: Omit<IconProps, 'source'>;
+  textOpts?: TextProps;
+  icon?: string;
+  iconOpts?: IconProps;
   disabled?: boolean;
 };
 

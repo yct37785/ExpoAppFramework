@@ -30,14 +30,18 @@ export type IconVariant = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
  * @property size?           - Optional explicit pixel size (overrides variant mapping)
  * @property style?          - Container style for outer wrapper
  ******************************************************************************************************************/
+// opts
 export type IconProps = {
-  source: string;
   variant?: IconVariant;
   color?: FontColor;
   customColor?: string;
   size?: number;
   style?: StyleProp<ViewStyle>;
 };
+// comp
+interface IconCompProps extends IconProps {
+  source: string;
+}
 
 /******************************************************************************************************************
  * A theme-aware icon that uses TextColor tokens for color and supports prefixed size variants.
@@ -51,4 +55,4 @@ export type IconProps = {
  * <Icon source="bell" size={28} color="label" />
  * ```
  ******************************************************************************************************************/
-export type IconType = React.FC<IconProps>;
+export type IconType = React.FC<IconCompProps>;

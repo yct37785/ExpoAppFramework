@@ -44,6 +44,7 @@ export type TextVariant =
  * @property style?           - Optional extra styles
  * @property children?        - Text content
  ******************************************************************************************************************/
+// opts
 export interface TextProps {
   variant?: TextVariant;
   color?: FontColor;
@@ -51,6 +52,9 @@ export interface TextProps {
   bold?: boolean;
   numberOfLines?: number;
   style?: StyleProp<TextStyle>;
+}
+// comp
+interface TextCompProps extends TextProps {
   children?: string | ReactNode;
 }
 
@@ -65,4 +69,4 @@ export interface TextProps {
  * <Text variant='label2' color={t.colors.muted}>Secondary label</Text>
  * ```
  ******************************************************************************************************************/
-export type TextType = React.FC<TextProps>;
+export type TextType = React.FC<TextCompProps>;

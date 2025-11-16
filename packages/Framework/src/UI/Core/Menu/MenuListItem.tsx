@@ -41,6 +41,9 @@ export const MenuListItem: MenuListItemType = memo(
     const iconStyleOverride = option.iconOpts?.style;
     const { style: _ignoredIconStyle, ...restIconOpts } = option.iconOpts ?? {};
 
+    const iconSource = option.icon;
+    const text = option.text ?? '';
+
     return (
       <Touchable
         pressOpacity={Const.pressOpacityHeavy}
@@ -50,9 +53,9 @@ export const MenuListItem: MenuListItemType = memo(
       >
         <>
           {/* leading icon */}
-          {option.icon ? (
+          {iconSource ? (
             <Icon
-              source={option.icon}
+              source={iconSource}
               variant={dense ? 'sm' : 'md'}
               color={disabled ? 'disabled' : 'default'}
               style={[iconMarginStyle, iconStyleOverride]}
@@ -61,13 +64,15 @@ export const MenuListItem: MenuListItemType = memo(
           ) : null}
 
           {/* label / text */}
-          <Text
-            variant={dense ? 'labelSmall' : 'labelMedium'}
-            color={disabled ? 'disabled' : 'default'}
-            {...option.textOpts}
-          >
-            {option.text}
-          </Text>
+          {text ? (
+            <Text
+              variant={dense ? 'labelSmall' : 'labelMedium'}
+              color={disabled ? 'disabled' : 'default'}
+              {...option.textOpts}
+            >
+              {text}
+            </Text>
+          ) : null}
         </>
       </Touchable>
     );

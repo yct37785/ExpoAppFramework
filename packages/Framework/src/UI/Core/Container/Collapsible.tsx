@@ -66,9 +66,9 @@ const KeepMountedDuringClose: React.FC<{
  ******************************************************************************************************************/
 export type ToggleHeaderProps = {
   text?: string;
-  textOpts?: Omit<TextProps, 'children'>;
-  icon?: IconProps['source'];
-  iconOpts?: Omit<IconProps, 'source'>;
+  textOpts?: TextProps;
+  icon?: string;
+  iconOpts?: IconProps;
   isCollapsed: boolean;
 };
 

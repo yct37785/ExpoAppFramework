@@ -4,12 +4,6 @@ import type { TextProps } from '../Text/Text.types';
 import type { IconProps } from '../Text/Icon.types';
 
 /******************************************************************************************************************
- * Shared header option types.
- ******************************************************************************************************************/
-export type CollapsibleHeaderTextOptions = Omit<TextProps, 'children'>;
-export type CollapsibleHeaderIconOptions = Omit<IconProps, 'source'>;
-
-/******************************************************************************************************************
  * CollapsibleContainer props.
  * 
  * @property text?             - Main header label (preferred)
@@ -21,18 +15,10 @@ export type CollapsibleHeaderIconOptions = Omit<IconProps, 'source'>;
  * @property children          - Content rendered inside the collapsible body
  ******************************************************************************************************************/
 export type CollapsibleContainerProps = {
-  /** preferred header label */
   text?: string;
-
-  /** optional text props (variant, color, numberOfLines, style, …) */
-  textOpts?: CollapsibleHeaderTextOptions;
-
-  /** optional leading icon name (passed to UI.Icon) */
-  icon?: IconProps['source'];
-
-  /** optional leading icon props (variant, color, size, style, …) */
-  iconOpts?: CollapsibleHeaderIconOptions;
-
+  textOpts?: TextProps;
+  icon?: string;
+  iconOpts?: IconProps;
   style?: StyleProp<ViewStyle>;
   children: ReactNode;
 };
@@ -59,9 +45,9 @@ export type CollapsibleContainerType = React.FC<CollapsibleContainerProps>;
  ******************************************************************************************************************/
 export type AccordionSectionHeader = {
   text?: string;
-  textOpts?: CollapsibleHeaderTextOptions;
-  icon?: IconProps['source'];
-  iconOpts?: CollapsibleHeaderIconOptions;
+  textOpts?: TextProps;
+  icon?: string;
+  iconOpts?: IconProps;
 };
 
 /******************************************************************************************************************
