@@ -1,6 +1,17 @@
 import React, { ReactNode } from 'react';
 import { StyleProp, TextStyle } from 'react-native';
-import { FontColor } from 'Types';
+
+// declared locally for VSC intelliSense
+type FontColor =
+  | 'default'
+  | 'label'
+  | 'disabled'
+  | 'primary'
+  | 'secondary'
+  | 'error'
+  | 'surface'
+  | 'background'
+  | 'outline';
 
 /******************************************************************************************************************
  * MD3 typography variants.

@@ -12,7 +12,7 @@ const CUSTOM_SECTIONS: UI.AccordionSectionHeader[] = [
     text: 'Overview',
     icon: 'information-outline',
     textOpts: { variant: 'labelMedium', color: 'primary' },
-    iconOpts: { customColor: '#1976d2' }, // blue
+    iconOpts: { color: 'primary' }, // blue
   },
   {
     text: 'Details',
@@ -92,7 +92,7 @@ const CollapsiblesScreen: Screen.ScreenType = () => {
         {/* 1.2 Collapsible with custom text + icon + custom colors */}
         <UI.Box mt={2} mb={1}>
           <UI.Text variant='labelSmall' color='label'>
-            Collapsible with textOpts, icon &amp; custom colors
+            Collapsible with custom header (color &amp; icon)
           </UI.Text>
         </UI.Box>
 

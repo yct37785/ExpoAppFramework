@@ -1,6 +1,17 @@
 import React from 'react';
 import { type StyleProp, type ViewStyle } from 'react-native';
-import { FontColor } from 'Types';
+
+// declared locally for VSC intelliSense
+type FontColor =
+  | 'default'
+  | 'label'
+  | 'disabled'
+  | 'primary'
+  | 'secondary'
+  | 'error'
+  | 'surface'
+  | 'background'
+  | 'outline';
 
 /******************************************************************************************************************
  * IconVariant
