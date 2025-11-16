@@ -1,16 +1,31 @@
 import React, { memo } from 'react';
-import { Screen, UI, Const } from 'framework';
+import { Screen, UI } from 'framework';
 
-const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+const BASIC_SECTIONS = [
+  { text: 'First section' },
+  { text: 'Second section' },
+  { text: 'Third section' },
+];
 
-const BASIC_ACCORDION_TITLES = ['First', 'Second', 'Third'];
-const ADVANCED_ACCORDION_TITLES = [
-  'Overview',
-  'Details',
-  'Comments',
-  'History',
-  'Attachments',
-  'More',
+const CUSTOM_SECTIONS: UI.AccordionSectionHeader[] = [
+  {
+    text: 'Overview',
+    icon: 'information-outline',
+    textOpts: { variant: 'labelMedium', color: 'primary' },
+    iconOpts: { customColor: '#1976d2' }, // blue
+  },
+  {
+    text: 'Details',
+    icon: 'file-document-outline',
+    textOpts: { variant: 'labelMedium', color: 'secondary' },
+    iconOpts: { customColor: '#388e3c' }, // green
+  },
+  {
+    text: 'Activity',
+    icon: 'history',
+    textOpts: { variant: 'labelMedium', color: 'error' },
+    iconOpts: { customColor: '#d32f2f' }, // red
+  },
 ];
 
 const CollapsiblesScreen: Screen.ScreenType = () => {
@@ -20,11 +35,31 @@ const CollapsiblesScreen: Screen.ScreenType = () => {
         {/* Header */}
         <UI.Text variant='titleLarge'>Collapsibles</UI.Text>
         <UI.Text variant='bodySmall'>
-          Collapsible components provide expandable sections of content:
-          {' '}
-          <UI.Text variant='bodySmall' color='label'>CollapsibleContainer</UI.Text>
-          {' '}and{' '}
-          <UI.Text variant='bodySmall' color='label'>AccordionContainer</UI.Text>.
+          This page demonstrates{' '}
+          <UI.Text variant='bodySmall' color='label'>
+            CollapsibleContainer
+          </UI.Text>{' '}
+          and{' '}
+          <UI.Text variant='bodySmall' color='label'>
+            AccordionContainer
+          </UI.Text>
+          , including the new{' '}
+          <UI.Text variant='bodySmall' color='label'>
+            text
+          </UI.Text>
+          ,{' '}
+          <UI.Text variant='bodySmall' color='label'>
+            textOpts
+          </UI.Text>
+          ,{' '}
+          <UI.Text variant='bodySmall' color='label'>
+            icon
+          </UI.Text>{' '}
+          and{' '}
+          <UI.Text variant='bodySmall' color='label'>
+            iconOpts
+          </UI.Text>{' '}
+          props for customizing headers.
         </UI.Text>
 
         <UI.Divider spacing={1} />
@@ -32,72 +67,57 @@ const CollapsiblesScreen: Screen.ScreenType = () => {
         {/* 1. CollapsibleContainer */}
         <UI.Text variant='titleMedium'>1. CollapsibleContainer</UI.Text>
         <UI.Text variant='bodySmall' color='label'>
-          A single header that toggles a collapsible area.
+          A single header that toggles visibility of its content.
         </UI.Text>
 
-        {/* Basic Example */}
+        {/* 1.1 Basic collapsible (text only) */}
         <UI.Box mv={1}>
-          <UI.Text variant='labelSmall' color='label'>Basic collapsible</UI.Text>
+          <UI.Text variant='labelSmall' color='label'>
+            Basic collapsible
+          </UI.Text>
         </UI.Box>
 
-        <UI.CollapsibleContainer toggleHeaderText='Tap to toggle'>
+        <UI.CollapsibleContainer text='Tap to toggle'>
           <UI.Box p={1}>
             <UI.Text variant='bodySmall'>
-              This content is inside a{' '}
-              <UI.Text variant='bodySmall' color='label'>CollapsibleContainer</UI.Text>.
+              Simple collapsible using{' '}
+              <UI.Text variant='bodySmall' color='label'>
+                text
+              </UI.Text>
+              .
             </UI.Text>
           </UI.Box>
         </UI.CollapsibleContainer>
 
-        {/* Long content */}
+        {/* 1.2 Collapsible with custom text + icon + custom colors */}
         <UI.Box mt={2} mb={1}>
-          <UI.Text variant='labelSmall' color='label'>Collapsible with long content</UI.Text>
+          <UI.Text variant='labelSmall' color='label'>
+            Collapsible with textOpts, icon &amp; custom colors
+          </UI.Text>
         </UI.Box>
 
-        <UI.CollapsibleContainer toggleHeaderText='Show more details'>
+        <UI.CollapsibleContainer
+          text='Advanced settings'
+          textOpts={{ variant: 'labelMedium', color: 'primary' }}
+          icon='tune'
+          iconOpts={{ variant: 'md', customColor: '#ff9800' }} // orange icon
+        >
           <UI.Box p={1}>
-            <UI.Text variant='bodySmall'>{lorem}</UI.Text>
-          </UI.Box>
-        </UI.CollapsibleContainer>
-
-        {/* Nested content */}
-        <UI.Box mt={2} mb={1}>
-          <UI.Text variant='labelSmall' color='label'>Collapsible with nested UI</UI.Text>
-        </UI.Box>
-
-        <UI.CollapsibleContainer toggleHeaderText='Advanced settings'>
-          <UI.Box p={1} bgColor='#f5f5f5'>
-
-            <UI.Box dir='row' align='center' mb={1}>
-              <UI.Icon source='tune' variant='sm' />
-              <UI.Box ml={1}>
-                <UI.Text variant='labelMedium'>Filters</UI.Text>
-                <UI.Text variant='bodySmall' color='secondary'>
-                  Configure advanced filter options
-                </UI.Text>
-              </UI.Box>
-            </UI.Box>
-
-            <UI.Box dir='row' align='center' mb={1}>
-              <UI.Icon source='brightness-6' variant='sm' />
-              <UI.Box ml={1}>
-                <UI.Text variant='labelSmall'>Theme</UI.Text>
-                <UI.Text variant='bodySmall'>
-                  Switch between light and dark appearance.
-                </UI.Text>
-              </UI.Box>
-            </UI.Box>
-
-            <UI.Box dir='row' align='center'>
-              <UI.Icon source='bell-outline' variant='sm' />
-              <UI.Box ml={1}>
-                <UI.Text variant='labelSmall'>Notifications</UI.Text>
-                <UI.Text variant='bodySmall'>
-                  Control alerts and reminder behavior.
-                </UI.Text>
-              </UI.Box>
-            </UI.Box>
-
+            <UI.Text variant='bodySmall'>
+              This header uses{' '}
+              <UI.Text variant='bodySmall' color='label'>
+                textOpts
+              </UI.Text>{' '}
+              to set the font variant and color, and an{' '}
+              <UI.Text variant='bodySmall' color='label'>
+                icon
+              </UI.Text>{' '}
+              with a custom color via{' '}
+              <UI.Text variant='bodySmall' color='label'>
+                iconOpts
+              </UI.Text>
+              .
+            </UI.Text>
           </UI.Box>
         </UI.CollapsibleContainer>
 
@@ -106,38 +126,45 @@ const CollapsiblesScreen: Screen.ScreenType = () => {
         {/* 2. AccordionContainer */}
         <UI.Text variant='titleMedium'>2. AccordionContainer</UI.Text>
         <UI.Text variant='bodySmall' color='label'>
-          Multiple collapsible sections with only one open at a time.
+          Multiple collapsible sections where only one is open at a time.
         </UI.Text>
 
-        {/* Basic Accordion */}
+        {/* 2.1 Basic accordion (text only) */}
         <UI.Box mt={1} mb={1}>
-          <UI.Text variant='labelSmall' color='label'>Basic accordion</UI.Text>
+          <UI.Text variant='labelSmall' color='label'>
+            Basic accordion
+          </UI.Text>
         </UI.Box>
 
-        <UI.AccordionContainer sectionTitles={BASIC_ACCORDION_TITLES}>
+        <UI.AccordionContainer sections={BASIC_SECTIONS}>
           <UI.Box p={1}>
-            <UI.Text variant='bodySmall'>Content for the First section.</UI.Text>
+            <UI.Text variant='bodySmall'>Content for the first section.</UI.Text>
           </UI.Box>
           <UI.Box p={1}>
-            <UI.Text variant='bodySmall'>Content for the Second section.</UI.Text>
+            <UI.Text variant='bodySmall'>Content for the second section.</UI.Text>
           </UI.Box>
           <UI.Box p={1}>
-            <UI.Text variant='bodySmall'>Content for the Third section.</UI.Text>
+            <UI.Text variant='bodySmall'>Content for the third section.</UI.Text>
           </UI.Box>
         </UI.AccordionContainer>
 
-        {/* Larger Accordion */}
+        {/* 2.2 Accordion with custom textOpts & icon/iconOpts per section */}
         <UI.Box mt={2} mb={1}>
-          <UI.Text variant='labelSmall' color='label'>Large accordion</UI.Text>
+          <UI.Text variant='labelSmall' color='label'>
+            Accordion with custom headers (colors &amp; icons)
+          </UI.Text>
         </UI.Box>
 
-        <UI.AccordionContainer sectionTitles={ADVANCED_ACCORDION_TITLES}>
-          <UI.Box p={1}><UI.Text variant='bodySmall'>Overview content.</UI.Text></UI.Box>
-          <UI.Box p={1}><UI.Text variant='bodySmall'>Details content.</UI.Text></UI.Box>
-          <UI.Box p={1}><UI.Text variant='bodySmall'>Comments content.</UI.Text></UI.Box>
-          <UI.Box p={1}><UI.Text variant='bodySmall'>History content.</UI.Text></UI.Box>
-          <UI.Box p={1}><UI.Text variant='bodySmall'>Attachments content.</UI.Text></UI.Box>
-          <UI.Box p={1}><UI.Text variant='bodySmall'>More content.</UI.Text></UI.Box>
+        <UI.AccordionContainer sections={CUSTOM_SECTIONS}>
+          <UI.Box p={1}>
+            <UI.Text variant='bodySmall'>Overview content.</UI.Text>
+          </UI.Box>
+          <UI.Box p={1}>
+            <UI.Text variant='bodySmall'>Details content.</UI.Text>
+          </UI.Box>
+          <UI.Box p={1}>
+            <UI.Text variant='bodySmall'>Activity content.</UI.Text>
+          </UI.Box>
         </UI.AccordionContainer>
 
         {/* Usage notes */}
@@ -145,15 +172,24 @@ const CollapsiblesScreen: Screen.ScreenType = () => {
 
         <UI.Text variant='titleMedium'>Usage notes</UI.Text>
         <UI.Text variant='bodySmall' color='label'>
-          • Use <UI.Text variant='bodySmall' color='label'>CollapsibleContainer</UI.Text> for a single toggle section.
+          • For <UI.Text variant='bodySmall' color='label'>CollapsibleContainer</UI.Text>, prefer{' '}
+          <UI.Text variant='bodySmall' color='label'>text</UI.Text> over the legacy{' '}
+          <UI.Text variant='bodySmall' color='label'>toggleHeaderText</UI.Text>.
         </UI.Text>
         <UI.Text variant='bodySmall' color='label'>
-          • Use <UI.Text variant='bodySmall' color='label'>AccordionContainer</UI.Text> for multi-section layouts.
+          • Use <UI.Text variant='bodySmall' color='label'>textOpts</UI.Text> to adjust typography
+          (variant, color, etc.).
         </UI.Text>
         <UI.Text variant='bodySmall' color='label'>
-          • The number of children must match the length of <UI.Text variant='bodySmall' color='label'>sectionTitles</UI.Text>.
+          • Use <UI.Text variant='bodySmall' color='label'>icon</UI.Text> and{' '}
+          <UI.Text variant='bodySmall' color='label'>iconOpts</UI.Text> to add and style a leading
+          icon, including custom colors.
         </UI.Text>
-
+        <UI.Text variant='bodySmall' color='label'>
+          • For <UI.Text variant='bodySmall' color='label'>AccordionContainer</UI.Text>, the{' '}
+          <UI.Text variant='bodySmall' color='label'>sections</UI.Text> array must have the same
+          length as the children.
+        </UI.Text>
       </UI.VerticalLayout>
     </Screen.ScreenLayout>
   );
