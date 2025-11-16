@@ -47,8 +47,19 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
   };
 
   const SECTIONS = [
-    'Test', 'Container', 'Data', 'Input', 'Interactive',
-    'Layout', 'Menu', 'Misc', 'Modal', 'Options', 'Selections', 'Text', 'Visuals'
+    { text: 'Test' },
+    { text: 'Container' },
+    { text: 'Data' },
+    { text: 'Input' },
+    { text: 'Interactive' },
+    { text: 'Layout' },
+    { text: 'Menu' },
+    { text: 'Misc' },
+    { text: 'Modal' },
+    { text: 'Options' },
+    { text: 'Selections' },
+    { text: 'Text' },
+    { text: 'Visuals' },
   ];
 
   return (
@@ -62,7 +73,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
           </UI.Text>
         </UI.Box>
 
-        <UI.AccordionContainer sectionTitles={SECTIONS}>
+        <UI.AccordionContainer sections={SECTIONS}>
           {/* Test */}
           <UI.VerticalLayout>
             {renderScreenBtn(screenRoutes.testbed)}

@@ -1,18 +1,28 @@
-import React, { useState, JSX, memo, ReactNode, useMemo, useCallback, useEffect, useRef } from 'react';
+import React, {
+  useState,
+  memo,
+  useEffect,
+  useRef,
+  useCallback,
+} from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Text, useTheme, Icon } from 'react-native-paper';
+import { useTheme } from 'react-native-paper';
 import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
 import * as Const from '../../../Const';
-import { CollapsibleContainerType, AccordionContainerType } from './Collapsible.types';
+import {
+  CollapsibleContainerType,
+  AccordionContainerType,
+  AccordionSectionHeader,
+} from './Collapsible.types';
 import { Touchable } from '../Interactive/Touchable';
+import { Text } from '../Text/Text';
+import { Icon } from '../Text/Icon';
+import type { TextProps } from '../Text/Text.types';
+import type { IconProps } from '../Text/Icon.types';
 
 /******************************************************************************************************************
  * Utility component that keeps its children mounted until a specified timeout elapses after becoming inactive.
- * 
- * @param active      - Whether the content should be considered active (visible)
- * @param durationMs  - Duration (in milliseconds) to keep the children mounted after `active` becomes false
- * @param children    - The React node(s) to render while mounted
  ******************************************************************************************************************/
 const KeepMountedDuringClose: React.FC<{
   active: boolean;
@@ -47,36 +57,52 @@ const KeepMountedDuringClose: React.FC<{
 
 /******************************************************************************************************************
  * ToggleHeader props.
- * 
- * @property toggleHeaderText - Text label displayed in the header
- * @property isCollapsed      - Whether the section is currently collapsed
+ *
+ * @property text        - Text label displayed in the header
+ * @property textOpts    - Text styling options
+ * @property icon        - Optional leading icon
+ * @property iconOpts    - Leading icon styling options
+ * @property isCollapsed - Whether the section is currently collapsed
  ******************************************************************************************************************/
 export type ToggleHeaderProps = {
-  toggleHeaderText: string;
+  text?: string;
+  textOpts?: Omit<TextProps, 'children'>;
+  icon?: IconProps['source'];
+  iconOpts?: Omit<IconProps, 'source'>;
   isCollapsed: boolean;
 };
 
 /******************************************************************************************************************
- * Render a compact header with a title and a chevron that reflects collapse state.
- *
- * @param props - Refer to ToggleHeaderProps
- *
- * @usage
- * ```tsx
- * <ToggleHeader toggleHeaderText='advanced' isCollapsed />
- * ```
+ * Render a compact header with optional icon + title and a chevron that reflects collapse state.
  ******************************************************************************************************************/
 export const ToggleHeader: React.FC<ToggleHeaderProps> = memo(
-  ({ toggleHeaderText, isCollapsed }) => {
+  ({ text, textOpts, icon, iconOpts, isCollapsed }) => {
     const theme = useTheme();
+
     return (
       <View style={styles.toggleHeaderRow}>
-        <Text variant="titleSmall">{toggleHeaderText}</Text>
+        {icon ? (
+          <Icon
+            source={icon}
+            size={Const.iconSizeMedium}
+            customColor={theme.colors.onSurface}
+            style={{ marginRight: Const.padSize2 }}
+            {...iconOpts}
+          />
+        ) : null}
+
+        {text ? (
+          <Text variant="titleSmall" {...textOpts}>
+            {text}
+          </Text>
+        ) : null}
+
         <View style={styles.flexSpacer} />
+
         <Icon
           source={isCollapsed ? 'chevron-down' : 'chevron-up'}
           size={Const.iconSizeMedium}
-          color={theme.colors.onSurface}
+          customColor={theme.colors.onSurface}
         />
       </View>
     );
@@ -87,12 +113,16 @@ export const ToggleHeader: React.FC<ToggleHeaderProps> = memo(
  * CollapsibleContainer implementation.
  ******************************************************************************************************************/
 export const CollapsibleContainer: CollapsibleContainerType = memo(
-  ({ toggleHeaderText, style, children }) => {
+  ({ text, textOpts, icon, iconOpts, toggleHeaderText, style, children }) => {
     const [isCollapsed, setIsCollapsed] = useState(true);
 
     /**
-     * Toggles the collapsed state when the header is pressed.
+     * Header label precedence:
+     *   1. `text` (new API)
+     *   2. `toggleHeaderText` (legacy API)
      */
+    const headerText = text ?? toggleHeaderText ?? '';
+
     const toggleCollapse = () => {
       setIsCollapsed(prev => !prev);
     };
@@ -100,7 +130,13 @@ export const CollapsibleContainer: CollapsibleContainerType = memo(
     return (
       <View style={style}>
         <Touchable pressOpacity={Const.pressOpacityHeavy} onPress={toggleCollapse}>
-          <ToggleHeader toggleHeaderText={toggleHeaderText} isCollapsed={isCollapsed} />
+          <ToggleHeader
+            text={headerText}
+            textOpts={textOpts}
+            icon={icon}
+            iconOpts={iconOpts}
+            isCollapsed={isCollapsed}
+          />
         </Touchable>
         <Collapsible collapsed={isCollapsed}>{children}</Collapsible>
       </View>
@@ -109,9 +145,12 @@ export const CollapsibleContainer: CollapsibleContainerType = memo(
 );
 
 /******************************************************************************************************************
- * AccordionContainer implementation.
+ * Accordion implementation.
  ******************************************************************************************************************/
-type Section = { title: string; content: React.ReactNode };
+type Section = {
+  header: AccordionSectionHeader;
+  content: React.ReactNode;
+};
 
 const GRP_SIZE = 3;
 
@@ -130,8 +169,8 @@ const AccordionGroup = React.memo(function AccordionGroup({
   closeTrigger: number;
   onTrigger: (idx: number, sameSection: boolean) => void;
 }) {
+  const [activeSections, setActiveSections] = useState<number[]>([]);
   const theme = useTheme();
-  const [activeSections, setActiveSections] = React.useState<number[]>([]);
 
   // close on receiving trigger
   useEffect(() => {
@@ -139,17 +178,13 @@ const AccordionGroup = React.memo(function AccordionGroup({
   }, [closeTrigger]);
 
   const renderHeader = (section: Section, _i: number, isActive: boolean) => (
-    <View style={styles.headerRow}>
-      <Text variant="titleSmall" numberOfLines={1}>
-        {section.title}
-      </Text>
-      <View style={styles.flexSpacer} />
-      <Icon
-        source={isActive ? 'chevron-up' : 'chevron-down'}
-        size={Const.iconSizeMedium}
-        color={theme.colors.onSurface}
-      />
-    </View>
+    <ToggleHeader
+      text={section.header.text}
+      textOpts={section.header.textOpts}
+      icon={section.header.icon}
+      iconOpts={section.header.iconOpts}
+      isCollapsed={!isActive}
+    />
   );
 
   const renderContent = (section: Section, _i: number, isActive: boolean) => (
@@ -189,73 +224,77 @@ const AccordionGroup = React.memo(function AccordionGroup({
  * AccordionContainer:
  * - renders multiple AccordionGroup components
  ******************************************************************************************************************/
-export const AccordionContainer: AccordionContainerType = React.memo(function AccordionContainer({
-  sectionTitles,
-  style,
-  children,
-}) {
-  const childArray = React.Children.toArray(children);
+export const AccordionContainer: AccordionContainerType = memo(
+  ({ sections, style, children }) => {
+    const childArray = React.Children.toArray(children);
 
-  const sections: Section[] = sectionTitles.map((title, i) => ({
-    title,
-    content: childArray[i],
-  }));
+    if (childArray.length !== sections.length) {
+      throw new Error(
+        `AccordionContainer: sections.length (${sections.length}) must match children.length (${childArray.length})`
+      );
+    }
 
-  const groups: Section[][] = [];
-  for (let i = 0; i < sections.length; i += GRP_SIZE) {
-    groups.push(sections.slice(i, i + GRP_SIZE));
+    const mergedSections: Section[] = sections.map((header, i) => ({
+      header,
+      content: childArray[i],
+    }));
+
+    const groups: Section[][] = [];
+    for (let i = 0; i < mergedSections.length; i += GRP_SIZE) {
+      groups.push(mergedSections.slice(i, i + GRP_SIZE));
+    }
+
+    // Accordion triggers
+    const [triggerCloseTrackers, setTriggerCloseTrackers] = useState<number[]>(
+      () => groups.map(() => 0)
+    );
+    const openAccordionIdx = useRef(-1);
+
+    const onTrigger = useCallback(
+      (idx: number, sameSection: boolean) => {
+        let prev = -1;
+
+        // close current accordion (same group + same section)
+        if (openAccordionIdx.current === idx && sameSection) {
+          prev = openAccordionIdx.current;
+          openAccordionIdx.current = -1;
+        }
+        // open a different accordion group
+        else if (openAccordionIdx.current !== idx) {
+          prev = openAccordionIdx.current; // -1 if no previous group
+          openAccordionIdx.current = idx;
+        }
+
+        // close previously open accordion group
+        if (prev !== -1) {
+          setTriggerCloseTrackers(prevTrackers => {
+            const updated = [...prevTrackers];
+            updated[prev] = updated[prev] + 1;
+            return updated;
+          });
+        }
+      },
+      []
+    );
+
+    return (
+      <View style={style}>
+        {groups.map((g, gi) => (
+          <AccordionGroup
+            key={`acc-${gi}`}
+            idx={gi}
+            sections={g}
+            closeTrigger={triggerCloseTrackers[gi]}
+            onTrigger={onTrigger}
+          />
+        ))}
+      </View>
+    );
   }
-
-  // Accordion triggers
-  const [triggerCloseTrackers, setTriggerCloseTrackers] = useState<number[]>(
-    () => groups.map(() => 0)
-  );
-  const openAccordionIdx = useRef(-1);
-
-  const onTrigger = useCallback(
-    (idx: number, sameSection: boolean) => {
-      let prev = -1;
-
-      // close current accordion (same group + same section)
-      if (openAccordionIdx.current === idx && sameSection) {
-        prev = openAccordionIdx.current;
-        openAccordionIdx.current = -1;
-      }
-      // open a different accordion group
-      else if (openAccordionIdx.current !== idx) {
-        prev = openAccordionIdx.current; // -1 if no previous group
-        openAccordionIdx.current = idx;
-      }
-
-      // close previously open accordion group
-      if (prev !== -1) {
-        setTriggerCloseTrackers(prevTrackers => {
-          const updated = [...prevTrackers];
-          updated[prev] = updated[prev] + 1;
-          return updated;
-        });
-      }
-    },
-    []
-  );
-
-  return (
-    <View style={style}>
-      {groups.map((g, gi) => (
-        <AccordionGroup
-          key={`acc-${gi}`}
-          idx={gi}
-          sections={g}
-          closeTrigger={triggerCloseTrackers[gi]}
-          onTrigger={onTrigger}
-        />
-      ))}
-    </View>
-  );
-});
+);
 
 /******************************************************************************************************************
- * styles
+ * Styles.
  ******************************************************************************************************************/
 const styles = StyleSheet.create({
   toggleHeaderRow: {
@@ -265,10 +304,5 @@ const styles = StyleSheet.create({
   },
   flexSpacer: {
     flex: 1,
-  },
-  headerRow: {
-    padding: Const.padSize,
-    alignItems: 'center',
-    flexDirection: 'row',
   },
 });
