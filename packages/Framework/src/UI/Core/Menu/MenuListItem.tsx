@@ -21,6 +21,7 @@ export const MenuListItem: MenuListItemType = memo(
       }
     };
 
+    // padding
     const dynamicPadding: ViewStyle = {
       paddingHorizontal: paddingX,
       paddingVertical: paddingY,
@@ -36,6 +37,10 @@ export const MenuListItem: MenuListItemType = memo(
       ? styles.iconMarginDense
       : styles.iconMarginRegular;
 
+    // extract icon style override, if any, so we can merge margins + custom styles
+    const iconStyleOverride = option.iconOpts?.style;
+    const { style: _ignoredIconStyle, ...restIconOpts } = option.iconOpts ?? {};
+
     return (
       <Touchable
         pressOpacity={Const.pressOpacityHeavy}
@@ -45,21 +50,23 @@ export const MenuListItem: MenuListItemType = memo(
       >
         <>
           {/* leading icon */}
-          {option.leadingIcon ? (
+          {option.icon ? (
             <Icon
-              source={option.leadingIcon}
+              source={option.icon}
               variant={dense ? 'sm' : 'md'}
               color={disabled ? 'disabled' : 'default'}
-              style={iconMarginStyle}
+              style={[iconMarginStyle, iconStyleOverride]}
+              {...restIconOpts}
             />
           ) : null}
 
-          {/* label */}
+          {/* label / text */}
           <Text
-            color={disabled ? 'disabled' : 'default'}
             variant={dense ? 'labelSmall' : 'labelMedium'}
+            color={disabled ? 'disabled' : 'default'}
+            {...option.textOpts}
           >
-            {option.label}
+            {option.text}
           </Text>
         </>
       </Touchable>
@@ -67,11 +74,14 @@ export const MenuListItem: MenuListItemType = memo(
   }
 );
 
+/******************************************************************************************************************
+ * Styles.
+ ******************************************************************************************************************/
 const styles = StyleSheet.create({
   baseRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'red', // debug
+    // backgroundColor: 'red', // debug
   },
   iconMarginDense: {
     marginRight: Const.padSize,

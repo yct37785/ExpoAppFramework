@@ -19,16 +19,16 @@ export const ProfileMenu = memo(() => {
 
   // menu options dependent on auth state
   const options: MenuOption[] = isAnon
-    ? [{ label: 'Sign in with Google', value: 'signin', leadingIcon: 'google' }]
+    ? [{ text: 'Sign in with Google', value: 'signin', icon: 'google' }]
     : [
-        {
-          label: email ? `Signed in as ${email}` : 'Signed in',
-          value: 'noop',
-          leadingIcon: 'account',
-          disabled: true,
-        },
-        { label: 'Sign out', value: 'signout', leadingIcon: 'logout' },
-      ];
+      {
+        text: email ? `Signed in as ${email}` : 'Signed in',
+        value: 'noop',
+        icon: 'account',
+        disabled: true,
+      },
+      { text: 'Sign out', value: 'signout', icon: 'logout' },
+    ];
 
   // trigger sign-in/sign-out
   const handleSelect = async (value: string) => {

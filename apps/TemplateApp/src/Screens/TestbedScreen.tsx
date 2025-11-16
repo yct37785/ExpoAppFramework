@@ -9,8 +9,8 @@ import { Screen, UI } from 'framework';
 const TestbedScreen: Screen.ScreenType = ({ navigation, route }) => {
 
   const options: UI.MenuOption[] = [
-    { label: 'Sign in with Google', value: 'signin', leadingIcon: 'google' },
-    { label: 'Sign in with Google', value: 'signin', leadingIcon: 'google', disabled: true },
+    { text: 'Sign in with Google', value: 'signin', icon: 'google' },
+    { text: 'Sign in with Google', value: 'signin', icon: 'google', disabled: true },
   ];
 
   const handleSelect = async (value: string) => {
@@ -24,7 +24,7 @@ const TestbedScreen: Screen.ScreenType = ({ navigation, route }) => {
   );
 
   return (
-    <Screen.ScreenLayout LeftContent={LeftContent}>
+    <Screen.ScreenLayout LeftContent={<LeftContent />}>
       <UI.VerticalLayout constraint='scroll'>
 
         <UI.MenuList options={options} onSelect={handleSelect} dense showDividers />
