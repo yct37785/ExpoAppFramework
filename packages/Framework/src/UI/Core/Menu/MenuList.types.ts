@@ -1,22 +1,22 @@
 import React from 'react';
-import { StyleProp, ViewStyle } from 'react-native';
+import { FlexStyle } from 'react-native';
 import { MenuOption } from './MenuListItem.types';
 
 /******************************************************************************************************************
  * MenuList props.
  * 
- * @property options        - Array of MenuOption rows to display (order preserved)
- * @property onSelect       - Callback invoked with the clicked option's `value`
- * @property showDividers?  - When true, draws a Divider between items
- * @property dense?         - When true, renders compact rows
- * @property style?         - Wrapper style for the outer container
+ * @property options          - Array of MenuOption rows to display (order preserved)
+ * @property onSelect         - Callback invoked with the clicked option's `value`
+ * @property showDividers?    - When true, draws a Divider between items
+ * @property dense?           - When true, renders compact rows
+ * @property align?           - Alignment of menu list item content
  ******************************************************************************************************************/
 export type MenuListProps = {
   options: MenuOption[];
   onSelect: (value: string) => void;
   showDividers?: boolean;
   dense?: boolean;
-  style?: StyleProp<ViewStyle>;
+  align?: 'start' | 'center';
 };
 
 /******************************************************************************************************************

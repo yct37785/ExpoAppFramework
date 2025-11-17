@@ -136,6 +136,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
               options={testOptions}
               onSelect={handleSelect}
               showDividers
+              align='center'
             />
           </UI.VerticalLayout>
 
@@ -145,6 +146,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
               options={containerOptions}
               onSelect={handleSelect}
               showDividers
+              align='center'
             />
           </UI.VerticalLayout>
 
@@ -154,6 +156,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
               options={dataOptions}
               onSelect={handleSelect}
               showDividers
+              align='center'
             />
           </UI.VerticalLayout>
 
@@ -163,6 +166,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
               options={inputOptions}
               onSelect={handleSelect}
               showDividers
+              align='center'
             />
           </UI.VerticalLayout>
 
@@ -172,6 +176,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
               options={interactiveOptions}
               onSelect={handleSelect}
               showDividers
+              align='center'
             />
           </UI.VerticalLayout>
 
@@ -181,6 +186,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
               options={layoutOptions}
               onSelect={handleSelect}
               showDividers
+              align='center'
             />
           </UI.VerticalLayout>
 
@@ -190,6 +196,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
               options={menuOptions}
               onSelect={handleSelect}
               showDividers
+              align='center'
             />
           </UI.VerticalLayout>
 
@@ -199,6 +206,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
               options={miscOptions}
               onSelect={handleSelect}
               showDividers
+              align='center'
             />
           </UI.VerticalLayout>
 
@@ -208,6 +216,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
               options={modalOptions}
               onSelect={handleSelect}
               showDividers
+              align='center'
             />
           </UI.VerticalLayout>
 
@@ -217,6 +226,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
               options={optionsOptions}
               onSelect={handleSelect}
               showDividers
+              align='center'
             />
           </UI.VerticalLayout>
 
@@ -226,6 +236,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
               options={selectionsOptions}
               onSelect={handleSelect}
               showDividers
+              align='center'
             />
           </UI.VerticalLayout>
 
@@ -235,6 +246,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
               options={textOptions}
               onSelect={handleSelect}
               showDividers
+              align='center'
             />
           </UI.VerticalLayout>
 
@@ -244,6 +256,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
               options={visualsOptions}
               onSelect={handleSelect}
               showDividers
+              align='center'
             />
           </UI.VerticalLayout>
         </UI.AccordionContainer>

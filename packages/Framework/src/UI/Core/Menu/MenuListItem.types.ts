@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleProp, ViewStyle } from 'react-native';
+import { FlexStyle } from 'react-native';
 import type { TextProps } from '../Text/Text.types';
 import type { IconProps } from '../Text/Icon.types';
 
@@ -25,16 +25,16 @@ export type MenuOption = {
 /******************************************************************************************************************
  * MenuListItem props.
  *
- * @property option       - The option to render
- * @property onPress      - Invoked with the option's value when pressed (no-op if disabled)
- * @property dense?       - Compact row density
- * @property style?       - Optional container style
+ * @property option      - The option to render
+ * @property onPress     - Invoked with the option's value when pressed (no-op if disabled)
+ * @property dense?      - Compact row density
+ * @property align?      - Alignment of content
  ******************************************************************************************************************/
 export type MenuListItemProps = {
   option: MenuOption;
   onPress: (value: string) => void;
   dense?: boolean;
-  style?: StyleProp<ViewStyle>;
+  align?: 'start' | 'center';
 };
 
 /******************************************************************************************************************
