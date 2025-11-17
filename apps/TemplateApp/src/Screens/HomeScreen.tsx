@@ -26,8 +26,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
   const testOptions = [
     {
       value: screenRoutes.testbed,
-      text: 'Testbed playground',
-      icon: 'flask',
+      text: 'Testbed playground'
     },
   ];
 
@@ -136,7 +135,6 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
             <UI.MenuList
               options={testOptions}
               onSelect={handleSelect}
-              dense
               showDividers
             />
           </UI.VerticalLayout>
@@ -146,7 +144,6 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
             <UI.MenuList
               options={containerOptions}
               onSelect={handleSelect}
-              dense
               showDividers
             />
           </UI.VerticalLayout>
@@ -156,7 +153,6 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
             <UI.MenuList
               options={dataOptions}
               onSelect={handleSelect}
-              dense
               showDividers
             />
           </UI.VerticalLayout>
@@ -166,7 +162,6 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
             <UI.MenuList
               options={inputOptions}
               onSelect={handleSelect}
-              dense
               showDividers
             />
           </UI.VerticalLayout>
@@ -176,7 +171,6 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
             <UI.MenuList
               options={interactiveOptions}
               onSelect={handleSelect}
-              dense
               showDividers
             />
           </UI.VerticalLayout>
@@ -186,7 +180,6 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
             <UI.MenuList
               options={layoutOptions}
               onSelect={handleSelect}
-              dense
               showDividers
             />
           </UI.VerticalLayout>
@@ -196,7 +189,6 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
             <UI.MenuList
               options={menuOptions}
               onSelect={handleSelect}
-              dense
               showDividers
             />
           </UI.VerticalLayout>
@@ -206,7 +198,6 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
             <UI.MenuList
               options={miscOptions}
               onSelect={handleSelect}
-              dense
               showDividers
             />
           </UI.VerticalLayout>
@@ -216,7 +207,6 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
             <UI.MenuList
               options={modalOptions}
               onSelect={handleSelect}
-              dense
               showDividers
             />
           </UI.VerticalLayout>
@@ -226,7 +216,6 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
             <UI.MenuList
               options={optionsOptions}
               onSelect={handleSelect}
-              dense
               showDividers
             />
           </UI.VerticalLayout>
@@ -236,7 +225,6 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
             <UI.MenuList
               options={selectionsOptions}
               onSelect={handleSelect}
-              dense
               showDividers
             />
           </UI.VerticalLayout>
@@ -246,7 +234,6 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
             <UI.MenuList
               options={textOptions}
               onSelect={handleSelect}
-              dense
               showDividers
             />
           </UI.VerticalLayout>
@@ -256,7 +243,6 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
             <UI.MenuList
               options={visualsOptions}
               onSelect={handleSelect}
-              dense
               showDividers
             />
           </UI.VerticalLayout>
