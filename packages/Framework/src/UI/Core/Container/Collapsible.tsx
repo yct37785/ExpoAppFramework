@@ -84,7 +84,7 @@ export const ToggleHeader: React.FC<ToggleHeaderProps> = memo(
         {icon ? (
           <Icon
             source={icon}
-            size={Const.iconSizeMedium}
+            variant='md'
             customColor={theme.colors.onSurface}
             style={{ marginRight: Const.padSize2 }}
             {...iconOpts}
@@ -92,7 +92,7 @@ export const ToggleHeader: React.FC<ToggleHeaderProps> = memo(
         ) : null}
 
         {text ? (
-          <Text variant="titleSmall" {...textOpts}>
+          <Text variant='titleSmall' {...textOpts}>
             {text}
           </Text>
         ) : null}
@@ -101,7 +101,7 @@ export const ToggleHeader: React.FC<ToggleHeaderProps> = memo(
 
         <Icon
           source={isCollapsed ? 'chevron-down' : 'chevron-up'}
-          size={Const.iconSizeMedium}
+          variant='md'
           customColor={theme.colors.onSurface}
         />
       </View>

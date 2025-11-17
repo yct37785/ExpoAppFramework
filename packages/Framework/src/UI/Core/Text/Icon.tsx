@@ -19,12 +19,12 @@ const sizeMap: Record<IconVariant, number> = {
  * Icon implementation.
  ******************************************************************************************************************/
 export const Icon: IconType = memo(
-  ({ source, variant = 'md', color = 'default', customColor, size, style }) => {
+  ({ source, variant = 'md', color = 'default', customColor, style }) => {
     const theme = useTheme();
     const resolvedColor = resolveFontColor(color, customColor, theme);
 
-    // resolve numeric size (explicit size overrides variant)
-    const pixel = size ?? sizeMap[variant];
+    // resolve numeric size
+    const pixel = sizeMap[variant];
 
     const wrapperStyle: StyleProp<ViewStyle> = [styles.wrapper, style];
 
