@@ -1,147 +1,266 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo } from 'react';
 import { Screen, Managers, UI } from 'framework';
 import { screenRoutes } from './ScreenRegistry';
 
 /******************************************************************************************************************
- * Home screen
+ * Home screen – UI demo hub
  ******************************************************************************************************************/
-const HomeScreen: Screen.ScreenType = ({ navigation, route }) => {
+const HomeScreen: Screen.ScreenType = ({ navigation }) => {
   const { user } = Managers.useAuth();
+  const isAnon = !!user?.isAnonymous || !user;
+  const uid = user?.uid;
+  const email = user?.email ?? '';
 
-  // useEffect(() => {
-  //   (async () => {
-  //     console.log('list all docs...');
-  //     const listOfDocs = await Managers.listAllFirestoreDocs('allergies', 'solids');
-  //     console.log(listOfDocs);
-  //     console.log('read data...');
-  //     const docData = await Managers.readFirestoreDoc('allergies', 'solids/peanut');
-  //     console.log(docData);
-  //   })();
-  // }, []);
+  /******************************************************************************************************************
+   * Auth status text
+   ******************************************************************************************************************/
+  const statusText = !user
+    ? 'Setting up session…'
+    : isAnon
+    ? `Anonymous session\nuid: ${uid?.slice(0, 10)}…`
+    : `Signed in with Google\nuid: ${uid?.slice(0, 10)}…\nEmail: ${email}`;
 
-  const renderScreenBtn = (screen: string) => (
-    <UI.Button mode='contained' onPress={() => navigation.navigate(screen, { paramText: 'hello from home' })}>
-      {screen}
-    </UI.Button>
-  );
+  /******************************************************************************************************************
+   * Menu options per section (values are route names)
+   ******************************************************************************************************************/
+  const testOptions = [
+    {
+      value: screenRoutes.testbed,
+      text: 'Testbed playground',
+      icon: 'flask',
+    },
+  ];
 
-  const renderAuthSection = () => {
-    // debug purposes only, show the current uid and linked acc if available
-    const isAnon = !!user?.isAnonymous;
-    const uid = user?.uid;
+  const containerOptions = [
+    { value: screenRoutes.box, text: 'Box' },
+    { value: screenRoutes.collapsibles, text: 'Collapsibles' },
+    { value: screenRoutes.tabs, text: 'Tabs' },
+  ];
 
-    let statusText = 'Setting up session...';
-    if (user) {
-      statusText = isAnon
-        ? `anonymous account mode\nuid: ${uid?.slice(0, 10)}..`
-        : `Signed in with Google\nuid: ${uid?.slice(0, 10)}..\nGmail: ${user.email}`;
-    }
+  const dataOptions = [
+    { value: screenRoutes.list, text: 'List' },
+  ];
 
-    return (
-      <>
-        <UI.Text variant='bodyMedium'>
-          {statusText}
-        </UI.Text>
-      </>
-    );
+  const inputOptions = [
+    { value: screenRoutes.inputs, text: 'Inputs' },
+  ];
+
+  const interactiveOptions = [
+    { value: screenRoutes.interactives, text: 'Interactive controls' },
+  ];
+
+  const layoutOptions = [
+    { value: screenRoutes.layouts, text: 'Layouts' },
+  ];
+
+  const menuOptions = [
+    { value: screenRoutes.menu, text: 'Menus & popups' },
+  ];
+
+  const miscOptions = [
+    { value: screenRoutes.misc, text: 'Misc components' },
+  ];
+
+  const modalOptions = [
+    { value: screenRoutes.modals, text: 'Dialogs & popups' },
+  ];
+
+  const optionsOptions = [
+    { value: screenRoutes.options, text: 'Base/Check/Chip options' },
+  ];
+
+  const selectionsOptions = [
+    { value: screenRoutes.selections, text: 'Pickers & selections' },
+  ];
+
+  const textOptions = [
+    { value: screenRoutes.text, text: 'Text, HighlightText, Icon' },
+  ];
+
+  const visualsOptions = [
+    { value: screenRoutes.visuals, text: 'Avatar, Divider, etc.' },
+  ];
+
+  /******************************************************************************************************************
+   * Unified navigation handler
+   ******************************************************************************************************************/
+  const handleSelect = (routeName: string) => {
+    navigation.navigate(routeName, { paramText: 'hello from home' });
   };
 
+  /******************************************************************************************************************
+   * Accordion headers
+   ******************************************************************************************************************/
   const SECTIONS = [
-    { text: 'Test' },
-    { text: 'Container' },
-    { text: 'Data' },
-    { text: 'Input' },
-    { text: 'Interactive' },
-    { text: 'Layout' },
-    { text: 'Menu' },
-    { text: 'Misc' },
-    { text: 'Modal' },
-    { text: 'Options' },
-    { text: 'Selections' },
-    { text: 'Text' },
-    { text: 'Visuals' },
+    { text: 'Test', icon: 'flask' },
+    { text: 'Container', icon: 'crop-square' },
+    { text: 'Data', icon: 'view-list' },
+    { text: 'Input', icon: 'form-textbox' },
+    { text: 'Interactive', icon: 'gesture-tap' },
+    { text: 'Layout', icon: 'view-grid-plus' },
+    { text: 'Menu / Navigation', icon: 'dots-vertical' },
+    { text: 'Misc', icon: 'dots-horizontal-circle' },
+    { text: 'Modal', icon: 'message-draw' },
+    { text: 'Options', icon: 'tune' },
+    { text: 'Selections', icon: 'checkbox-multiple-marked' },
+    { text: 'Text / Icon', icon: 'format-text' },
+    { text: 'Visuals', icon: 'palette' },
   ];
 
   return (
     <Screen.ScreenLayout>
-      <UI.VerticalLayout constraint='scroll'>
-        {renderAuthSection()}
-
-        <UI.Box mt={2}>
-          <UI.Text variant='bodyMedium'>
-            Select the screen you want to navigate to
+      <UI.VerticalLayout constraint='scroll' gap={2}>
+        {/* Hero / intro */}
+        <UI.Box mb={1}>
+          <UI.Text variant='titleLarge'>UI Component Gallery</UI.Text>
+          <UI.Text variant='bodySmall' color='label'>
+            Browse all UI demo screens grouped by category. Tap any row to jump
+            straight into a live example.
           </UI.Text>
         </UI.Box>
 
+        {/* Auth status card */}
+        <UI.Box mv={1}>
+          <UI.VerticalLayout bgColor='#F5F5F5' gap={1}>
+            <UI.Text variant='labelSmall' color='label' bold>
+              Session
+            </UI.Text>
+            <UI.Text variant='bodySmall'>{statusText}</UI.Text>
+          </UI.VerticalLayout>
+        </UI.Box>
+
+        {/* Sectioned navigation using Accordion + MenuList */}
         <UI.AccordionContainer sections={SECTIONS}>
           {/* Test */}
           <UI.VerticalLayout>
-            {renderScreenBtn(screenRoutes.testbed)}
+            <UI.MenuList
+              options={testOptions}
+              onSelect={handleSelect}
+              dense
+              showDividers
+            />
           </UI.VerticalLayout>
 
           {/* Container */}
           <UI.VerticalLayout>
-            {renderScreenBtn(screenRoutes.box)}
-            {renderScreenBtn(screenRoutes.collapsibles)}
-            {renderScreenBtn(screenRoutes.tabs)}
+            <UI.MenuList
+              options={containerOptions}
+              onSelect={handleSelect}
+              dense
+              showDividers
+            />
           </UI.VerticalLayout>
 
           {/* Data */}
           <UI.VerticalLayout>
-            {renderScreenBtn(screenRoutes.list)}
+            <UI.MenuList
+              options={dataOptions}
+              onSelect={handleSelect}
+              dense
+              showDividers
+            />
           </UI.VerticalLayout>
 
           {/* Input */}
           <UI.VerticalLayout>
-            {renderScreenBtn(screenRoutes.inputs)}
+            <UI.MenuList
+              options={inputOptions}
+              onSelect={handleSelect}
+              dense
+              showDividers
+            />
           </UI.VerticalLayout>
 
           {/* Interactive */}
           <UI.VerticalLayout>
-            {renderScreenBtn(screenRoutes.interactives)}
+            <UI.MenuList
+              options={interactiveOptions}
+              onSelect={handleSelect}
+              dense
+              showDividers
+            />
           </UI.VerticalLayout>
 
           {/* Layout */}
           <UI.VerticalLayout>
-            {renderScreenBtn(screenRoutes.layouts)}
+            <UI.MenuList
+              options={layoutOptions}
+              onSelect={handleSelect}
+              dense
+              showDividers
+            />
           </UI.VerticalLayout>
 
-          {/* Menu */}
+          {/* Menu / Navigation */}
           <UI.VerticalLayout>
-            {renderScreenBtn(screenRoutes.menu)}
+            <UI.MenuList
+              options={menuOptions}
+              onSelect={handleSelect}
+              dense
+              showDividers
+            />
           </UI.VerticalLayout>
 
           {/* Misc */}
           <UI.VerticalLayout>
-            {renderScreenBtn(screenRoutes.misc)}
+            <UI.MenuList
+              options={miscOptions}
+              onSelect={handleSelect}
+              dense
+              showDividers
+            />
           </UI.VerticalLayout>
 
           {/* Modal */}
           <UI.VerticalLayout>
-            {renderScreenBtn(screenRoutes.modals)}
+            <UI.MenuList
+              options={modalOptions}
+              onSelect={handleSelect}
+              dense
+              showDividers
+            />
           </UI.VerticalLayout>
 
           {/* Options */}
           <UI.VerticalLayout>
-            {renderScreenBtn(screenRoutes.options)}
+            <UI.MenuList
+              options={optionsOptions}
+              onSelect={handleSelect}
+              dense
+              showDividers
+            />
           </UI.VerticalLayout>
 
-          {/* Options */}
+          {/* Selections */}
           <UI.VerticalLayout>
-            {renderScreenBtn(screenRoutes.selections)}
+            <UI.MenuList
+              options={selectionsOptions}
+              onSelect={handleSelect}
+              dense
+              showDividers
+            />
           </UI.VerticalLayout>
 
           {/* Text */}
           <UI.VerticalLayout>
-            {renderScreenBtn(screenRoutes.text)}
+            <UI.MenuList
+              options={textOptions}
+              onSelect={handleSelect}
+              dense
+              showDividers
+            />
           </UI.VerticalLayout>
 
           {/* Visuals */}
           <UI.VerticalLayout>
-            {renderScreenBtn(screenRoutes.visuals)}
+            <UI.MenuList
+              options={visualsOptions}
+              onSelect={handleSelect}
+              dense
+              showDividers
+            />
           </UI.VerticalLayout>
         </UI.AccordionContainer>
-
       </UI.VerticalLayout>
     </Screen.ScreenLayout>
   );
