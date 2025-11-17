@@ -1,10 +1,16 @@
 import React, { useMemo, memo } from 'react';
-import { View, FlatList, StyleSheet } from 'react-native';
+import { View, FlatList, StyleSheet, type StyleProp, type ViewStyle } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import { ListImplementationType, ListItem, ListType } from './List.types';
 
 /******************************************************************************************************************
  * List implementation.
+ *
+ * Features:
+ * - Text search across `item.searchable`
+ * - Filtering via `filterMap` (Set-based per category)
+ * - Pluggable list engine (FlashList / FlatList)
+ * - Optional empty state component
  ******************************************************************************************************************/
 export const List: ListType = memo(
   ({
@@ -13,17 +19,19 @@ export const List: ListType = memo(
     filterMap = {},
     renderItem,
     listImplementationType = ListImplementationType.flashlist,
+    emptyComponent,
     style,
   }) => {
     /**
      * Filters the dataset using both search and filter criteria.
      */
     const filteredData = useMemo(() => {
-      // fast path: if no search AND all filter sets are empty, return original data
       const hasQuery = query.trim().length > 0;
       const hasAnyFilters = Object.values(filterMap).some(
         (set: Set<string>) => set && set.size > 0
       );
+
+      // Fast path: no search and no active filters → return original data
       if (!hasQuery && !hasAnyFilters) {
         return dataArr;
       }
@@ -61,7 +69,6 @@ export const List: ListType = memo(
 
     /**
      * Adapter to wrap renderItem into FlatList/FlashList signature.
-     * Uses static style from StyleSheet to avoid per-render allocations.
      */
     const renderListItem = ({
       item,
@@ -76,7 +83,6 @@ export const List: ListType = memo(
     /**
      * Prefer a stable key if the item has an "id" in searchable.
      * Falls back to index as a last resort.
-     * This makes the list safer and faster by default for end users.
      */
     const keyExtractor = (item: ListItem, index: number) => {
       const maybeId = (item.searchable as any)?.id;
@@ -85,10 +91,18 @@ export const List: ListType = memo(
         : index.toString();
     };
 
+    /**
+     * Optional empty state component.
+     */
+    const ListEmptyComponent = emptyComponent
+      ? () => <>{emptyComponent}</>
+      : undefined;
+
     const sharedListProps = {
       data: filteredData,
       renderItem: renderListItem,
       keyExtractor,
+      ListEmptyComponent,
     };
 
     const renderList = () => {
@@ -103,13 +117,13 @@ export const List: ListType = memo(
       return (
         <FlatList
           {...sharedListProps}
-          // conservative default, keeps memory reasonable with large lists
+          // conservative default, keeps memory reasonable for large lists
           windowSize={5}
         />
       );
     };
 
-    return <View style={[styles.container, style]}>{renderList()}</View>;
+    return <View style={[styles.container, style as StyleProp<ViewStyle>]}>{renderList()}</View>;
   }
 );
 

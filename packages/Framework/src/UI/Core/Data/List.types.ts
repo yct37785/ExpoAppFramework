@@ -64,12 +64,13 @@ export type renderListItemFunc = (item: ListItem, index: number) => React.ReactN
 /******************************************************************************************************************
  * List props.
  * 
- * @property dataArr      - Input dataset to render
- * @property query        - Case-insensitive search query applied to searchable values
- * @property filterMap    - Active filters applied to filterable keys
- * @property renderItem   - Function that renders a row for a given item
- * @property listType?    - Underlying list implementation (default flashlist)
- * @property style?       - Optional wrapper style
+ * @property dataArr        - Input dataset to render
+ * @property query          - Case-insensitive search query applied to searchable values
+ * @property filterMap      - Active filters applied to filterable keys
+ * @property renderItem     - Function that renders a row for a given item
+ * @property listType?      - Underlying list implementation (default flashlist)
+ * @property emptyComponent - Custom view when no results
+ * @property style?         - Optional wrapper style
  ******************************************************************************************************************/
 export type ListProps = {
   dataArr: ListItem[];
@@ -77,6 +78,7 @@ export type ListProps = {
   filterMap: ListFilterMap;
   renderItem: renderListItemFunc;
   listImplementationType?: ListImplementationType;
+  emptyComponent?: React.ReactNode;
   style?: StyleProp<ViewStyle>;
 };
 

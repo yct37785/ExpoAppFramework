@@ -11,11 +11,10 @@ const ListTypes = {
 /******************************************************************************************************************
  * List demo
  *
- * Demonstrates:
- *  - Search bar wired to List `query`
- *  - Filtering via ChipOptions + ListFilterMap
- *  - Switching between FlashList / FlatList
- *  - Simple, production-like list row styling with dividers
+ * - Search bar in the app bar
+ * - Filter section using ChipOptions + ListFilterMap
+ * - Switch between FlashList / FlatList
+ * - Material-style, non-elevated rows separated by dividers
  ******************************************************************************************************************/
 const ListScreen: Screen.ScreenType = () => {
   const [listType, setListType] = useState<UI.ListImplementationType>(
@@ -29,7 +28,7 @@ const ListScreen: Screen.ScreenType = () => {
   });
 
   useEffect(() => {
-    const fakeData = faker.helpers.multiple(createRandomProduct, { count: 1000 });
+    const fakeData = faker.helpers.multiple(createRandomProduct, { count: 200 });
 
     const matNext: Set<string> = new Set();
     fakeData.forEach((item) => {
@@ -41,7 +40,8 @@ const ListScreen: Screen.ScreenType = () => {
   }, []);
 
   /**
-   * creates a random product object generated with FakerJS
+   * Create a random product item.
+   * Keep the data aligned with ListItem types: strings only in searchable/filterable/none.
    */
   const createRandomProduct = (): UI.ListItem => {
     return {
@@ -49,6 +49,7 @@ const ListScreen: Screen.ScreenType = () => {
         id: faker.string.uuid(),
         name: faker.commerce.productName(),
         desc: faker.commerce.productDescription(),
+        category: faker.commerce.department(),
       },
       filterable: {
         material: faker.commerce.productMaterial().toLowerCase(),
@@ -60,7 +61,7 @@ const ListScreen: Screen.ScreenType = () => {
   };
 
   /**
-   * handles selection of material chips
+   * Handle selection of material chips
    */
   function onChipsSelected(selectedValues: Set<string>) {
     filterMap.material = selectedValues;
@@ -68,33 +69,82 @@ const ListScreen: Screen.ScreenType = () => {
   }
 
   /**
-   * render each item as a simple list row with a divider
+   * Card-style (but non-elevated) list item renderer.
+   * We derive price/rating/inStock from the index so we don't modify the ListItem type.
    */
   const renderItem: UI.renderListItemFunc = (item, index) => {
+    const { name, desc, category } = item.searchable as any;
+    const { material } = item.filterable as any;
+    const { img } = item.none as any;
+
+    // Derived fields for visual richness (not stored in ListItem)
+    const price = 19 + (index % 80); // 19–98
+    const rating = 3 + ((index * 7) % 20) / 10; // 3.0–4.9
+    const inStock = index % 4 !== 0;
+
     return (
       <View>
-        <UI.Box style={styles.row}>
+        <UI.Box style={styles.rowContainer} bgColor='#FFFFFF'>
           <UI.HorizontalLayout gap={1}>
             {/* Image */}
             <View style={styles.imageContainer}>
               <Image
                 style={styles.img}
-                source={{ uri: item.none.img }}
+                source={{ uri: img }}
                 resizeMode='cover'
               />
             </View>
 
             {/* Text content */}
-            <UI.VerticalLayout flex={1} gap={0}>
-              {/* Name */}
-              <UI.HighlightText query={searchQuery} variant='titleSmall'>
-                {item.searchable.name}
-              </UI.HighlightText>
+            <UI.VerticalLayout flex={1} gap={1}>
+              {/* Title + category/material */}
+              <UI.VerticalLayout gap={0}>
+                <UI.HighlightText query={searchQuery} variant='titleSmall'>
+                  {name}
+                </UI.HighlightText>
+                <UI.Text variant='labelSmall' color='label'>
+                  {category} • {material}
+                </UI.Text>
+              </UI.VerticalLayout>
 
-              {/* Material line */}
-              <UI.Text variant='labelSmall' color='label'>
-                {`material: ${item.filterable.material}`}
-              </UI.Text>
+              {/* Price + rating + stock as 'pills' */}
+              <UI.HorizontalLayout gap={1}>
+                <UI.Box
+                  bgColor='#E3F2FD'
+                  align='center'
+                  justify='center'
+                  style={styles.pill}
+                >
+                  <UI.Text variant='labelSmall' color='primary' bold>
+                    ${price}
+                  </UI.Text>
+                </UI.Box>
+
+                <UI.Box
+                  bgColor='#FFF3E0'
+                  align='center'
+                  justify='center'
+                  style={styles.pill}
+                >
+                  <UI.Text variant='labelSmall' color='label'>
+                    ⭐ {rating.toFixed(1)}
+                  </UI.Text>
+                </UI.Box>
+
+                <UI.Box
+                  bgColor={inStock ? '#E8F5E9' : '#FFEBEE'}
+                  align='center'
+                  justify='center'
+                  style={styles.pill}
+                >
+                  <UI.Text
+                    variant='labelSmall'
+                    color={inStock ? 'primary' : 'error'}
+                  >
+                    {inStock ? 'In stock' : 'Out of stock'}
+                  </UI.Text>
+                </UI.Box>
+              </UI.HorizontalLayout>
 
               {/* Description */}
               <UI.HighlightText
@@ -103,11 +153,13 @@ const ListScreen: Screen.ScreenType = () => {
                 numberOfLines={2}
                 style={styles.description}
               >
-                {item.searchable.desc}
+                {desc}
               </UI.HighlightText>
             </UI.VerticalLayout>
           </UI.HorizontalLayout>
         </UI.Box>
+
+        {/* Divider between items */}
         <UI.Divider spacing={0} />
       </View>
     );
@@ -127,6 +179,18 @@ const ListScreen: Screen.ScreenType = () => {
     </View>
   );
 
+  /**
+   * Empty state for List when no items match query + filters.
+   */
+  const emptyComponent = (
+    <UI.Box align='center' justify='center' style={styles.emptyContainer}>
+      <UI.Text variant='titleSmall'>No results</UI.Text>
+      <UI.Text variant='bodySmall' color='label'>
+        Try changing your search or clearing filters.
+      </UI.Text>
+    </UI.Box>
+  );
+
   return (
     <Screen.ScreenLayout LeftContent={leftContent} showTitle={false}>
       {/* Main content area – List is primary, no outer scroll to avoid nested scrolling */}
@@ -135,13 +199,9 @@ const ListScreen: Screen.ScreenType = () => {
         <UI.Box>
           <UI.Text variant='titleLarge'>List</UI.Text>
           <UI.Text variant='bodySmall' color='label'>
-            The <UI.Text variant='bodySmall' color='label'>List</UI.Text> component
-            renders large data sets with search and filters. You provide a{' '}
-            <UI.Text variant='bodySmall' color='label'>
-              renderItem
-            </UI.Text>{' '}
-            function, and List handles query matching, filtering and efficient
-            rendering underneath (FlashList / FlatList).
+            List renders large data sets with built-in search and filters. You
+            define the row layout, and List handles matching and efficient rendering
+            with FlashList or FlatList.
           </UI.Text>
         </UI.Box>
 
@@ -153,7 +213,7 @@ const ListScreen: Screen.ScreenType = () => {
               <UI.Text variant='bodySmall' color='label'>
                 material
               </UI.Text>
-              . The selected chip values are stored in{' '}
+              . Selected chip values are stored in{' '}
               <UI.Text variant='bodySmall' color='label'>
                 ListFilterMap
               </UI.Text>{' '}
@@ -177,14 +237,14 @@ const ListScreen: Screen.ScreenType = () => {
         >
           <UI.Box mt={1}>
             <UI.Text variant='bodySmall' color='label'>
-              Choose which list engine to use under the hood:
+              Choose which list engine to use:
             </UI.Text>
             <UI.Text variant='bodySmall' color='label'>
               •{' '}
               <UI.Text variant='bodySmall' color='label'>
                 FlashList
               </UI.Text>{' '}
-              – optimized for large, high-performance lists.
+              – optimized for large, high-performance lists (default).
             </UI.Text>
             <UI.Text variant='bodySmall' color='label'>
               •{' '}
@@ -212,6 +272,7 @@ const ListScreen: Screen.ScreenType = () => {
             filterMap={filterMap}
             renderItem={renderItem}
             listImplementationType={listType}
+            emptyComponent={emptyComponent}
           />
         </UI.Box>
       </UI.VerticalLayout>
@@ -220,14 +281,14 @@ const ListScreen: Screen.ScreenType = () => {
 };
 
 const styles = StyleSheet.create({
-  row: {
+  rowContainer: {
     flex: 1,
     paddingHorizontal: Const.padSize,
     paddingVertical: Const.padSize,
   },
   imageContainer: {
-    width: 80,
-    height: 80,
+    width: 90,
+    height: 90,
     borderRadius: Const.padSize,
     overflow: 'hidden',
     marginRight: Const.padSize,
@@ -236,8 +297,16 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  pill: {
+    borderRadius: Const.padSize,
+    paddingHorizontal: Const.padSize,
+    paddingVertical: Const.padSize / 3,
+  },
   description: {
     marginTop: Const.padSize / 2,
+  },
+  emptyContainer: {
+    paddingVertical: Const.padSize2,
   },
 });
 
