@@ -112,7 +112,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
         {/* Hero / intro */}
         <UI.Box mb={1}>
           <UI.Text variant='titleLarge'>UI Component Gallery</UI.Text>
-          <UI.Text variant='bodySmall' color='label'>
+          <UI.Text variant='bodySmall'>
             Browse all UI demo screens grouped by category. Tap any row to jump
             straight into a live example.
           </UI.Text>
