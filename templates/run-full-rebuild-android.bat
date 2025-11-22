@@ -12,7 +12,8 @@ if errorlevel 1 (
 
 echo [2/2] Build ^& install (Metro will start automatically)...
 REM IMPORTANT: do NOT set CI here, so Metro starts in watch mode
-call npx expo run:android
+call npx expo run:android --variant debugOptimized
+REM npx expo run:android --variant debugOptimized
 if errorlevel 1 (
   echo [x] Build/install failed
   exit /b 1
