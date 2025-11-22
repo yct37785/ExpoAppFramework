@@ -1,13 +1,26 @@
-import React, { useEffect, useRef, memo } from 'react';
-import { Keyboard, TextStyle, StyleProp } from 'react-native';
-import { Searchbar, TextInput as RNPTextInput } from 'react-native-paper';
+import React, { useEffect, useRef, useState, memo } from 'react';
+import {
+  View,
+  Text,
+  TextInput as RNTextInput,
+  Keyboard,
+  TouchableOpacity,
+  StyleSheet,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
 import { TextInputType, InputKind } from './Input.types';
+import { Icon } from '../Text/Icon';
 
-// maps input type to a suitable keyboardType
-const getKeyboardTypeForType = (type: InputKind): React.ComponentProps<typeof RNPTextInput>['keyboardType'] => {
+/******************************************************************************************************************
+ * Keyboard + secure entry mapping
+ ******************************************************************************************************************/
+const getKeyboardTypeForType = (
+  type: InputKind
+): React.ComponentProps<typeof RNTextInput>['keyboardType'] => {
   switch (type) {
     case 'numeric':
-    case 'passcode':
+    case 'password':
       return 'number-pad';
     case 'email':
       return 'email-address';
@@ -18,17 +31,14 @@ const getKeyboardTypeForType = (type: InputKind): React.ComponentProps<typeof RN
   }
 };
 
-// determines if the input should hide characters (e.g. passcode)
-const isSecureForType = (type: InputKind): boolean => {
-  return type === 'passcode';
-};
-
 /******************************************************************************************************************
- * TextInput implementation.
+ * TextInput implementation (pure React Native)
  ******************************************************************************************************************/
 export const TextInput: TextInputType = memo(
   ({
     type = 'text',
+    label,
+    variant = 'flat',
     value = '',
     placeholder = '',
     onChange = () => {},
@@ -40,67 +50,143 @@ export const TextInput: TextInputType = memo(
     multiline,
     numberOfLines,
     editable = true,
+    leadingIcon,
+    trailingIcon,
+    onPressTrailingIcon,
   }) => {
-    const inputRef = useRef<any>(null);
+    const inputRef = useRef<RNTextInput | null>(null);
+    const [passwordVisible, setPasswordVisible] = useState(false);
 
+    /******************************************************************************************************************
+     * Auto-blur when keyboard hides (preserves your older behaviour)
+     ******************************************************************************************************************/
     useEffect(() => {
-      // only blur when keyboard fully hides AND the input is still focused
-      const keyboardListener = Keyboard.addListener('keyboardDidHide', () => {
+      const listener = Keyboard.addListener('keyboardDidHide', () => {
         const ref = inputRef.current;
-        if (ref && typeof ref.blur === 'function') {
-          if (typeof ref.isFocused === 'function') {
-            if (ref.isFocused()) {
-              ref.blur();
-            }
-          } else {
-            // fallback: blur without focus check if isFocused is not available
-            ref.blur();
-          }
+        if (ref && ref.blur && ref.isFocused && ref.isFocused()) {
+          ref.blur();
         }
       });
-
-      return () => {
-        keyboardListener.remove();
-      };
+      return () => listener.remove();
     }, []);
 
-    // search input uses the dedicated Searchbar component
-    if (type === 'search') {
-      return (
-        <Searchbar
-          ref={inputRef}
-          placeholder={placeholder}
-          onChangeText={onChange}
-          onFocus={onFocus}
-          onBlur={onBlur}
-          value={value}
-          autoFocus={autoFocus}
-          style={style as StyleProp<TextStyle>}
-        />
-      );
+    /******************************************************************************************************************
+     * Icon behaviours
+     ******************************************************************************************************************/
+    const handleTrailingPress = () => {
+      if (!editable) return;
+
+      if (onPressTrailingIcon) {
+        onPressTrailingIcon();
+        return;
+      }
+
+      if (type === 'password') {
+        setPasswordVisible(v => !v);
+      } else if (value.length > 0) {
+        onChange('');
+      }
+    };
+
+    // Default icons
+    let resolvedLeading = leadingIcon;
+    if (!resolvedLeading && type === 'search') {
+      resolvedLeading = 'magnify';
     }
 
-    // all other types use the standard TextInput with type-aware config
-    const keyboardType = getKeyboardTypeForType(type);
-    const secureTextEntry = isSecureForType(type);
+    let resolvedTrailing = trailingIcon;
+    if (!resolvedTrailing) {
+      if (type === 'password') resolvedTrailing = passwordVisible ? 'eye-off' : 'eye';
+      else if (value.length > 0) resolvedTrailing = 'close';
+    }
 
+    const secureTextEntry = type === 'password' && !passwordVisible;
+    const keyboardType = getKeyboardTypeForType(type);
+
+    /******************************************************************************************************************
+     * Variant (flat | outline)
+     ******************************************************************************************************************/
+    const containerStyle: StyleProp<ViewStyle> = [
+      styles.containerBase,
+      variant === 'outline' ? styles.outline : styles.flat,
+      style as ViewStyle,
+    ];
+
+    /******************************************************************************************************************
+     * Render
+     ******************************************************************************************************************/
     return (
-      <RNPTextInput
-        ref={inputRef}
-        placeholder={placeholder}
-        onChangeText={onChange}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        value={value}
-        keyboardType={keyboardType}
-        secureTextEntry={secureTextEntry}
-        autoFocus={autoFocus}
-        maxLength={maxLength}
-        multiline={multiline}
-        numberOfLines={numberOfLines}
-        editable={editable}
-        style={style}
-      />
+      <View>
+        {label ? <Text style={styles.label}>{label}</Text> : null}
+
+        <View style={containerStyle}>
+          {/* Leading icon */}
+          {resolvedLeading ? (
+            <View style={styles.icon}>
+              <Icon source={resolvedLeading} variant='sm' />
+            </View>
+          ) : null}
+
+          {/* Main input */}
+          <RNTextInput
+            ref={inputRef}
+            style={styles.input}
+            value={value}
+            placeholder={placeholder}
+            onChangeText={onChange}
+            onFocus={onFocus}
+            onBlur={onBlur}
+            editable={editable}
+            autoFocus={autoFocus}
+            maxLength={maxLength}
+            multiline={multiline}
+            numberOfLines={numberOfLines}
+            keyboardType={keyboardType}
+            secureTextEntry={secureTextEntry}
+          />
+
+          {/* Trailing icon */}
+          {resolvedTrailing ? (
+            <TouchableOpacity style={styles.icon} onPress={handleTrailingPress}>
+              <Icon source={resolvedTrailing} variant='sm' />
+            </TouchableOpacity>
+          ) : null}
+        </View>
+      </View>
     );
   }
 );
+
+/******************************************************************************************************************
+ * Styles
+ ******************************************************************************************************************/
+const styles = StyleSheet.create({
+  label: {
+    marginBottom: 4,
+    color: '#555',
+    fontSize: 12,
+  },
+  containerBase: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    borderRadius: 8,
+    minHeight: 44,
+  },
+  flat: {
+    backgroundColor: '#F4F4F4',
+  },
+  outline: {
+    borderWidth: 1,
+    borderColor: '#CCC',
+    backgroundColor: '#FFF',
+  },
+  icon: {
+    marginHorizontal: 6,
+  },
+  input: {
+    flex: 1,
+    paddingVertical: 6,
+    fontSize: 16,
+  },
+});
