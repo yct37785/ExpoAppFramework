@@ -35,9 +35,9 @@ if exist ".expo" (
     echo      .expo folder not found, skipping.
 )
 
-echo    - Running expo prebuild ^(clean, non-interactive^)...
+echo    - Running expo prebuild...
 set "CI=1"
-call npx expo prebuild -p android --clean --non-interactive
+call npx expo prebuild -p android --clean
 set "CI="
 if errorlevel 1 (
     echo [x] Prebuild failed
