@@ -41,7 +41,7 @@ const HomeScreen: Screen.ScreenType = ({ navigation }) => {
   ];
 
   const inputOptions = [
-    { value: screenRoutes.inputs, text: 'Inputs' },
+    { value: screenRoutes.input, text: 'Input' },
   ];
 
   const interactiveOptions = [
