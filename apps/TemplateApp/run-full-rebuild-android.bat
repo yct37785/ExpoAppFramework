@@ -1,5 +1,6 @@
 @echo off
 setlocal
 pushd "%~dp0"
-call ..\..\templates\run-full-rebuild-android.bat
+set CLEAN_INSTALL=true
+call ..\..\templates\run-android.bat
 endlocal
