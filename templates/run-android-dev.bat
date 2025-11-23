@@ -67,3 +67,4 @@ echo [DONE] Build complete.
 echo.
 
 endlocal
+pause
