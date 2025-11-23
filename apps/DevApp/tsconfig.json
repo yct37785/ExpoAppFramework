@@ -1,6 +1,10 @@
 {
-  "extends": "expo/tsconfig.base",
+  "extends": "../../templates/tsconfig.base.json",
   "compilerOptions": {
-    "strict": true
-  }
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "isolatedModules": true,
+    "noEmit": true
+  },
+  "include": ["src"]
 }
