@@ -2,6 +2,6 @@
 setlocal
 
 pushd "%~dp0"
-call npm i
+call npm run setup
 
-endlocal
+pause
