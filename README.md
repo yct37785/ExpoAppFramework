@@ -1,4 +1,4 @@
-# Expo App Framework
+# One For All
 This project is a monorepo for building Expo apps with a shared framework.
 
 Core functionality such as UI elements, hooks, constants, and utilities (collectively referred to as **components**) is centralized and reused across all Expo app projects.
