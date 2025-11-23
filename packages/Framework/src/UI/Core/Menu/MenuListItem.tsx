@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { StyleSheet, type StyleProp, type ViewStyle } from 'react-native';
+import { StyleSheet, ViewStyle } from 'react-native';
 import * as Const from '../../../Const';
 import { Text } from '../Text/Text';
 import { Icon } from '../Text/Icon';
@@ -10,73 +10,76 @@ import { MenuListItemType } from './MenuListItem.types';
  * MenuListItem implementation.
  ******************************************************************************************************************/
 export const MenuListItem: MenuListItemType = memo(
-  ({ option, onPress, dense = false, style }) => {
+  ({ option, onPress, dense = false, align = 'start' }) => {
     const paddingX = dense ? Const.padSize025 : Const.padSize;
     const paddingY = dense ? Const.padSize : Const.padSize2;
     const disabled = !!option.disabled;
 
-    const handlePress = () => {
-      if (!disabled) {
-        onPress(option.value);
-      }
-    };
-
-    const dynamicPadding: ViewStyle = {
+    const wrapperStyle: ViewStyle = {
       paddingHorizontal: paddingX,
       paddingVertical: paddingY,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: align === 'center' ? 'center' : 'flex-start',
     };
 
-    const wrapperStyle: StyleProp<ViewStyle> = [
-      styles.baseRow,
-      dynamicPadding,
-      style,
-    ];
-
-    const iconMarginStyle = dense
+    const iconMargin = dense
       ? styles.iconMarginDense
       : styles.iconMarginRegular;
+
+    const iconOverride = option.iconOpts?.style;
+    const { style: _remove, ...restIconOpts } = option.iconOpts ?? {};
+
+    const text = option.text ?? '';
 
     return (
       <Touchable
         pressOpacity={Const.pressOpacityHeavy}
-        onPress={handlePress}
+        onPress={() => !disabled && onPress(option.value)}
         disabled={disabled}
         style={wrapperStyle}
       >
         <>
-          {/* leading icon */}
-          {option.leadingIcon ? (
+          {option.icon ? (
             <Icon
-              source={option.leadingIcon}
+              source={option.icon}
               variant={dense ? 'sm' : 'md'}
               color={disabled ? 'disabled' : 'default'}
-              style={iconMarginStyle}
+              style={[
+                align === 'center' ? styles.iconCenteredMargin : iconMargin,
+                iconOverride,
+              ]}
+              {...restIconOpts}
             />
           ) : null}
 
-          {/* label */}
-          <Text
-            color={disabled ? 'disabled' : 'default'}
-            variant={dense ? 'labelSmall' : 'labelMedium'}
-          >
-            {option.label}
-          </Text>
+          {text ? (
+            <Text
+              variant={dense ? 'labelSmall' : 'labelMedium'}
+              color={disabled ? 'disabled' : 'default'}
+              {...option.textOpts}
+            >
+              {text}
+            </Text>
+          ) : null}
         </>
       </Touchable>
     );
   }
 );
 
+/******************************************************************************************************************
+ * Styles.
+ ******************************************************************************************************************/
 const styles = StyleSheet.create({
-  baseRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'red', // debug
-  },
   iconMarginDense: {
     marginRight: Const.padSize,
   },
   iconMarginRegular: {
     marginRight: Const.padSize2,
+  },
+  // smaller, balanced spacing for centered layout
+  iconCenteredMargin: {
+    marginRight: Const.padSize,
   },
 });

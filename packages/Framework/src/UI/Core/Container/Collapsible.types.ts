@@ -1,15 +1,24 @@
 import React, { ReactNode } from 'react';
 import { type StyleProp, type ViewStyle } from 'react-native';
+import type { TextProps } from '../Text/Text.types';
+import type { IconProps } from '../Text/Icon.types';
 
 /******************************************************************************************************************
  * CollapsibleContainer props.
  * 
- * @property toggleHeaderText - Text for the header button
- * @property style?           - Optional container style
- * @property children         - Content rendered inside the collapsible body
+ * @property text?             - Main header label (preferred)
+ * @property textOpts?         - Text styling options for the header label
+ * @property icon?             - Optional leading icon in the header
+ * @property iconOpts?         - Styling options for the leading icon
+ * @property toggleHeaderText? - Deprecated: legacy header label (used if `text` is not provided)
+ * @property style?            - Optional container style
+ * @property children          - Content rendered inside the collapsible body
  ******************************************************************************************************************/
 export type CollapsibleContainerProps = {
-  toggleHeaderText: string;
+  text?: string;
+  textOpts?: TextProps;
+  icon?: string;
+  iconOpts?: IconProps;
   style?: StyleProp<ViewStyle>;
   children: ReactNode;
 };
@@ -19,7 +28,7 @@ export type CollapsibleContainerProps = {
  *
  * @usage
  * ```tsx
- * <CollapsibleContainer toggleHeaderText='details'>
+ * <CollapsibleContainer text='details'>
  *   <Text>hidden content</Text>
  * </CollapsibleContainer>
  * ```
@@ -27,14 +36,29 @@ export type CollapsibleContainerProps = {
 export type CollapsibleContainerType = React.FC<CollapsibleContainerProps>;
 
 /******************************************************************************************************************
+ * Accordion section header config.
+ *
+ * @property text?     - Header label
+ * @property textOpts? - Text styling options
+ * @property icon?     - Optional leading icon
+ * @property iconOpts? - Leading icon styling options
+ ******************************************************************************************************************/
+export type AccordionSectionHeader = {
+  text?: string;
+  textOpts?: TextProps;
+  icon?: string;
+  iconOpts?: IconProps;
+};
+
+/******************************************************************************************************************
  * AccordionContainer props.
  * 
- * @property sectionTitles  - Titles for each section in order
- * @property style?         - Optional container style
- * @property children       - Content nodes matched 1:1 with sectionTitles
+ * @property sections  - Header config for each section in order
+ * @property style?    - Optional container style
+ * @property children  - Content nodes matched 1:1 with sections
  ******************************************************************************************************************/
 export type AccordionContainerProps = {
-  sectionTitles: string[];
+  sections: AccordionSectionHeader[];
   style?: StyleProp<ViewStyle>;
   children: ReactNode[];
 };
@@ -44,11 +68,16 @@ export type AccordionContainerProps = {
  *
  * @param props - Refer to AccordionContainerProps
  *
- * @throws {Error} when the number of section titles does not match the number of children
+ * @throws {Error} when the number of sections does not match the number of children
  *
  * @usage
  * ```tsx
- * <AccordionContainer sectionTitles={['a', 'b']}>
+ * <AccordionContainer
+ *   sections={[
+ *     { text: 'First' },
+ *     { text: 'Second', icon: 'star' },
+ *   ]}
+ * >
  *   <View><Text>a content</Text></View>
  *   <View><Text>b content</Text></View>
  * </AccordionContainer>

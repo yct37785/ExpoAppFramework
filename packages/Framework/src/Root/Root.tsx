@@ -39,6 +39,9 @@ import { RootProps, RootType } from './Root.types';
 
 LogBox.ignoreAllLogs();
 
+// mode
+console.log('DEV MODE:', __DEV__);
+
 /******************************************************************************************************************
  * Navigation theme adaptation (Paper ↔ React Navigation).
  * Keep these at module scope so they’re stable across renders.

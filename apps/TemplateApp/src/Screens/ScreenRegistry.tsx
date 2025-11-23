@@ -8,7 +8,7 @@ import TabsScreen from './Container/TabsScreen';
 // data
 import ListScreen from './Data/ListScreen';
 // input
-import InputsScreen from './Input/InputsScreen';
+import InputScreen from './Input/InputScreen';
 // interactive
 import InteractivesScreen from './Interactive/InteractivesScreen';
 // layout
@@ -37,7 +37,7 @@ export const screenRoutes = {
   collapsibles: 'collapsibles',
   tabs: 'tabs',
   list: 'list',
-  inputs: 'inputs',
+  input: 'input',
   interactives: 'interactives',
   layouts: 'layouts',
   menu: 'menu',
@@ -58,7 +58,7 @@ export const screenRegistry: Screen.ScreenMap = {
   [screenRoutes.collapsibles]: CollapsiblesScreen,
   [screenRoutes.tabs]: TabsScreen,
   [screenRoutes.list]: ListScreen,
-  [screenRoutes.inputs]: InputsScreen,
+  [screenRoutes.input]: InputScreen,
   [screenRoutes.interactives]: InteractivesScreen,
   [screenRoutes.layouts]: LayoutsScreen,
   [screenRoutes.menu]: MenuScreen,

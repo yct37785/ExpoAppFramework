@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import type { TextStyle, StyleProp } from 'react-native';
 import type { TextProps } from './Text.types';
 
@@ -13,6 +13,7 @@ export type HighlightTextProps = TextProps & {
   query: string;
   caseSensitive?: boolean;
   highlightStyle?: StyleProp<TextStyle>;
+  children?: string | ReactNode;
 };
 
 /******************************************************************************************************************

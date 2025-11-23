@@ -1,6 +1,19 @@
 import React, { ReactNode } from 'react';
 import { StyleProp, TextStyle } from 'react-native';
-import { FontColor } from 'Types';
+
+/******************************************************************************************************************
+ * declared locally for VSC intelliSense
+ ******************************************************************************************************************/
+type FontColor =
+  | 'default'
+  | 'label'
+  | 'disabled'
+  | 'primary'
+  | 'secondary'
+  | 'error'
+  | 'surface'
+  | 'background'
+  | 'outline';
 
 /******************************************************************************************************************
  * MD3 typography variants.
@@ -28,16 +41,22 @@ export type TextVariant =
  * @property variant          - MD3 text role; defaults to 'bodyMedium'
  * @property color?           - Font color
  * @property customColor?     - Raw color string (overrides color prop)
+ * @property bold?            - Bolded text
  * @property numberOfLines?   - Fixed num of lines if provided
  * @property style?           - Optional extra styles
  * @property children?        - Text content
  ******************************************************************************************************************/
+// opts
 export interface TextProps {
   variant?: TextVariant;
   color?: FontColor;
   customColor?: string;
+  bold?: boolean;
   numberOfLines?: number;
   style?: StyleProp<TextStyle>;
+}
+// comp
+interface TextCompProps extends TextProps {
   children?: string | ReactNode;
 }
 
@@ -52,4 +71,4 @@ export interface TextProps {
  * <Text variant='label2' color={t.colors.muted}>Secondary label</Text>
  * ```
  ******************************************************************************************************************/
-export type TextType = React.FC<TextProps>;
+export type TextType = React.FC<TextCompProps>;

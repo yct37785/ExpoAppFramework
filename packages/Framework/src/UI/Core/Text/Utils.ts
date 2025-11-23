@@ -1,8 +1,7 @@
-import { FontColor } from 'Types';
 import { MD3Theme } from 'react-native-paper';
 
 // mapping of general font colors to RN Paper theme keys
-export const tokenToRNPaperThemeKey: Record<FontColor, string> = {
+export const tokenToRNPaperThemeKey: Record<string, string> = {
   default: 'onSurface',
   label: 'onSurfaceVariant',
   disabled: 'onSurfaceDisabled',
@@ -15,7 +14,7 @@ export const tokenToRNPaperThemeKey: Record<FontColor, string> = {
 } as const;
 
 export function resolveFontColor(
-  color: FontColor | undefined,
+  color: string | undefined,
   customColor: string | undefined,
   theme: MD3Theme
 ): string {
