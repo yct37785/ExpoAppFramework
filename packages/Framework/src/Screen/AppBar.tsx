@@ -5,24 +5,29 @@ import { Text } from 'react-native-paper';
 import * as Const from '../Const';
 
 /******************************************************************************************************************
- * A theme-aware top navigation bar that displays titles, navigation actions, and contextual controls.
+ * AppBar props.
  * 
  * @property title?           - String title or a custom node via `TitleComponent`
  * @property onBack?          - If provided, renders a back button and calls this on press
  * @property left?            - Optional left-side content (renders after back button, flex 1)
  * @property right?           - Optional right-side content (e.g., actions, profile, flex 0)
+ ******************************************************************************************************************/
+export type AppBarProps = {
+  title?: string;
+  onBack?: () => void;
+  left?: React.ReactNode;
+  right?: React.ReactNode;
+};
+
+/******************************************************************************************************************
+ * A theme-aware top navigation bar that displays titles, navigation actions, and contextual controls.
  * 
  * @usage
  * ```tsx
  * <AppBar title='Settings' onBack={() => navigation.goBack()} right={<Avatar label='A' />} />
  * ```
  ******************************************************************************************************************/
-export const AppBar: React.FC<{
-  title?: string;
-  onBack?: () => void;
-  left?: React.ReactNode;
-  right?: React.ReactNode;
-}> = memo(({ title, onBack, left, right }) => {
+export const AppBar: React.FC<AppBarProps> = memo(({ title, onBack, left, right }) => {
 
   return (
     <Appbar.Header elevated>
@@ -51,6 +56,9 @@ export const AppBar: React.FC<{
   );
 });
 
+/******************************************************************************************************************
+ * Styles
+ ******************************************************************************************************************/
 const styles = StyleSheet.create({
   titleWithBack: {
     paddingLeft: 0,

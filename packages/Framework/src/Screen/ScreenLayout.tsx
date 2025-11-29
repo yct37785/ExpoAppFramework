@@ -1,8 +1,9 @@
 import React, { memo, useContext, createContext } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useTheme } from 'react-native-paper';
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import { AppBar } from './AppBar';
 import { PadSpacingValue } from '../Types';
 import * as Const from '../Const';
@@ -10,7 +11,7 @@ import * as Const from '../Const';
 const SAFE_AREA_EDGES = ['bottom'] as const;
 
 /******************************************************************************************************************
- * Screen layout defaults context
+ * Screen layout defaults context.
  *
  * @property value - ScreenLayoutProps that acts as app-wide defaults, provided by Root
  ******************************************************************************************************************/
@@ -41,7 +42,8 @@ export type ScreenLayoutProps = {
 
 /******************************************************************************************************************
  * Screen layout — Base view for screens.
- * Use this in each screen to render consistent base screen layout (AppBar, SafeAreaView etc).
+ * - Use this in each screen to render consistent base screen layout (AppBar, SafeAreaView etc).
+ * - Put all wrapper views here.
  *
  * @usage
  * ```tsx
@@ -77,11 +79,13 @@ export const ScreenLayout: React.FC<ScreenLayoutProps> = memo((props) => {
   const showBackFinal = explicitShowBack ?? canGoBack;
 
   return (
-    <View
+    <KeyboardAvoidingView
       style={[
         styles.root,
         { backgroundColor: theme.colors.background },
       ]}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      keyboardVerticalOffset={0}
     >
       <AppBar
         title={showTitle ? computedTitle : undefined}
@@ -99,7 +103,7 @@ export const ScreenLayout: React.FC<ScreenLayoutProps> = memo((props) => {
       >
         {props.children}
       </SafeAreaView>
-    </View>
+    </KeyboardAvoidingView>
   );
 });
 

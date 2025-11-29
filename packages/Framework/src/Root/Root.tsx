@@ -3,7 +3,7 @@ import 'react-native-get-random-values';
 import 'react-native-gesture-handler';
 // screen typing and layout
 import { ScreenMap } from '../Screen/Screen';
-import { ScreenLayoutProps } from '../Screen/ScreenLayout';
+import { ScreenLayoutProps, ScreenLayoutContext } from '../Screen/ScreenLayout';
 // core
 import React, { memo, useEffect } from 'react';
 import { View, StatusBar, Platform, LogBox } from 'react-native';
@@ -18,6 +18,7 @@ import {
 import { MenuProvider } from 'react-native-popup-menu';
 import * as NavigationBar from 'expo-navigation-bar';
 import * as SystemUI from 'expo-system-ui';
+import { KeyboardProvider } from 'react-native-keyboard-controller';
 // nav
 import {
   NavigationContainer,
@@ -26,8 +27,6 @@ import {
   ParamListBase
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// screen layout
-import { ScreenLayoutContext } from '../Screen/ScreenLayout';
 // Firebase
 import { getApp } from '@react-native-firebase/app';
 // utils
@@ -74,6 +73,7 @@ export type RootProps = {
  * NOTE:
  *  - Hooks are always called in the same order; we avoid early returns before hooks.
  *  - We gate effect work with `if (!isLoaded) return;` and gate UI via conditional JSX.
+ *  - Put all providers here.
  ******************************************************************************************************************/
 const RootApp: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap, defaultScreenLayoutProps }) => {
 
@@ -83,19 +83,21 @@ const RootApp: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap, defaultScreen
 
   return (
     <SafeAreaProvider>
-      <PaperProvider theme={paperTheme}>
-        <MenuProvider>
-          <ScreenLayoutContext.Provider value={defaultScreenLayoutProps}>
-            <NavigationContainer theme={navTheme}>
-              <Stack.Navigator initialRouteName={DEFAULT_SCREEN} screenOptions={{ headerShown: false }}>
-                {Object.entries(screenMap).map(([name, Component]) => (
-                  <Stack.Screen name={name} key={name} component={Component as any} />
-                ))}
-              </Stack.Navigator>
-            </NavigationContainer>
-          </ScreenLayoutContext.Provider>
-        </MenuProvider>
-      </PaperProvider>
+      <KeyboardProvider>
+        <PaperProvider theme={paperTheme}>
+          <MenuProvider>
+            <ScreenLayoutContext.Provider value={defaultScreenLayoutProps}>
+              <NavigationContainer theme={navTheme}>
+                <Stack.Navigator initialRouteName={DEFAULT_SCREEN} screenOptions={{ headerShown: false }}>
+                  {Object.entries(screenMap).map(([name, Component]) => (
+                    <Stack.Screen name={name} key={name} component={Component as any} />
+                  ))}
+                </Stack.Navigator>
+              </NavigationContainer>
+            </ScreenLayoutContext.Provider>
+          </MenuProvider>
+        </PaperProvider>
+      </KeyboardProvider>
     </SafeAreaProvider>
   );
 };
