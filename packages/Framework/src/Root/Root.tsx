@@ -5,9 +5,8 @@ import 'react-native-gesture-handler';
 import { ScreenMap } from '../Screen/Screen';
 import { ScreenLayoutProps, ScreenLayoutContext } from '../Screen/ScreenLayout';
 // core
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { View, StatusBar, Platform, LogBox } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 // UI
 import {
   Provider as PaperProvider,
@@ -17,7 +16,7 @@ import {
 } from 'react-native-paper';
 import { MenuProvider } from 'react-native-popup-menu';
 import * as NavigationBar from 'expo-navigation-bar';
-import * as SystemUI from 'expo-system-ui';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 // nav
 import {
@@ -27,10 +26,12 @@ import {
   ParamListBase
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+// data storage
+import { useLocalData, LocalDataProvider } from '../Manager/LocalDataManager';
 // Firebase
 import { getApp } from '@react-native-firebase/app';
 // utils
-import { doLog } from '../Utils/General';
+import { doLog } from '../Util/General';
 import { logColors } from '../Const';
 
 LogBox.ignoreAllLogs();
@@ -76,10 +77,48 @@ export type RootProps = {
  *  - Put all providers here.
  ******************************************************************************************************************/
 const RootApp: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap, defaultScreenLayoutProps }) => {
+  const { getItem } = useLocalData();
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  /**
+   * Load isDarkMode from storage on mount.
+   */
+  useEffect(() => {
+    (async () => {
+      const stored = await getItem<boolean>('isDarkMode');
+      setIsDarkMode(!!stored);
+    })();
+  }, [getItem]);
+
+  /**
+   * Nav and status bar config.
+   */
+  useEffect(() => {
+    StatusBar.setBarStyle(isDarkMode ? 'light-content' : 'dark-content', true);
+    if (Platform.OS === 'android') {
+      NavigationBar.setButtonStyleAsync(isDarkMode ? 'light' : 'dark');
+      // optional:
+      // NavigationBar.setVisibilityAsync('visible');
+      // StatusBar.setBackgroundColor(navTheme.colors.background);
+    }
+  }, [isDarkMode]);
+
+  /**
+   * Firebase pulse check.
+   */
+  useEffect(() => {
+    try {
+      const firebaseApp = getApp();
+      const { projectId } = firebaseApp.options;
+      doLog('root', 'Firebase pulse check', `Loaded with projectId: ${logColors.green}${projectId}`);
+    } catch (err) {
+      doLog('root', 'Firebase pulse check', `NOT ready (native config missing?): ${String(err)}`);
+    }
+  }, []);
 
   // pick theme
-  const paperTheme = MD3LightTheme;
-  const navTheme = NavLight;
+  const paperTheme = isDarkMode ? MD3DarkTheme : MD3LightTheme;
+  const navTheme = isDarkMode ? NavDark : NavLight;
 
   return (
     <SafeAreaProvider>
@@ -107,7 +146,9 @@ const RootApp: React.FC<RootProps> = ({ DEFAULT_SCREEN, screenMap, defaultScreen
  ******************************************************************************************************************/
 const AppEntry: React.FC<RootProps> = (props) => {
   return (
-    <RootApp {...props} />
+    <LocalDataProvider>
+      <RootApp {...props} />
+    </LocalDataProvider>
   );
 };
 

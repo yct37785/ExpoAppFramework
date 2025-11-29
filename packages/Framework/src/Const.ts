@@ -1,6 +1,12 @@
 // style
 export const padSize = 8;
 
+// reserved default values for storage
+export const localDataDefaults = {
+  isDarkMode: false,
+  language: 'en',
+};
+
 // logging
 export const logColors = {
   reset: '\x1b[0m',
