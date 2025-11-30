@@ -1,6 +1,9 @@
 // style
 export const padSize = 8;
 
+export const rippleColorForLight = 'rgba(0,0,0,0.26)';
+export const rippleColorForDark = 'rgba(255,255,255,0.26)';
+
 export const snackbarDuration = 2000;
 
 export const textOpacityHEmphasis = 0.87;

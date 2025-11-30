@@ -5,8 +5,8 @@ import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
 import * as Const from '../../../Const';
 import { Touchable } from '../../Interactive/Touchable';
-import type { TextProps } from '../../Text/Text.types';
-import type { IconProps } from '../../Text/Icon.types';
+import type { TextProps } from '../../Text/Text';
+import type { IconProps } from '../../Text/Icon';
 import { KeepMountedDuringClose, ToggleHeader } from './CollapsibleUtils';
 
 /******************************************************************************************************************

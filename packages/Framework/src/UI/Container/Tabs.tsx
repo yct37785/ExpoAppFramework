@@ -1,14 +1,64 @@
-import React, { memo, JSX, useCallback, useMemo } from 'react';
-import { View, StyleProp, ViewStyle, TextStyle } from 'react-native';
-import { useTheme, Icon } from 'react-native-paper';
-import * as Const from '../../../Const';
-import { TabView, TabBar, TabBarProps, SceneMap } from 'react-native-tab-view';
-import { TabRouteProps, TabsContainerType } from './Tabs.types';
+import React, { memo, useMemo } from 'react';
+import { View, StyleProp, ViewStyle } from 'react-native';
+import { useTheme } from 'react-native-paper';
+import { Icon } from '../Text/Icon';
+import * as Const from '../../Const';
+import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
 
 /******************************************************************************************************************
- * TabsContainer implementation (perf-tuned, MD3-aligned)
+ * Describe the route object for each tab in the tabs container.
+ *
+ * @property key    - Unique identifier for the tab
+ * @property title  - Display title for the tab
+ * @property icon   - Optional material community icon name
+ *
+ * @usage
+ * ```ts
+ * const routes: TabRouteProps[] = [{ key: 'home', title: 'home', icon: 'home' }]
+ * ```
  ******************************************************************************************************************/
-export const TabsContainer: TabsContainerType = memo(
+export type TabRouteProps = {
+  key: string;
+  title?: string;
+  icon?: string;
+};
+
+/******************************************************************************************************************
+ * Tabs scene map (headless)
+ *
+ * A mapping of route keys → scene components, compatible with react-native-tab-view's SceneMap().
+ *
+ * @example
+ * const scenes: TabsSceneMap = {
+ *   music: MusicRoute,
+ *   albums: AlbumsRoute,
+ * };
+ ******************************************************************************************************************/
+export type TabsSceneMap<T extends string = string> = Record<T, React.ComponentType<unknown>>;
+
+/******************************************************************************************************************
+ * TabsContainer props.
+ * 
+ * @property routes         - Array of tab definitions (see TabRouteProps)
+ * @property sceneMap       - Function that renders a scene for a given route (see TabsSceneMap)
+ * @property tabIndex       - Index of the active tab
+ * @property onTabIdxChange - Callback when the active tab changes
+ * @property position       - Tab bar position
+ * @property style?         - Optional wrapper style for the tab view
+ ******************************************************************************************************************/
+export type TabsContainerProps = {
+  routes: TabRouteProps[];
+  sceneMap: TabsSceneMap;
+  tabIndex: number;
+  onTabIdxChange: (index: number) => void;
+  position: 'top' | 'bottom';
+  style?: StyleProp<ViewStyle>;
+};
+
+/******************************************************************************************************************
+ * A container for managing tabbed navigation where content changes based on the selected tab.
+ ******************************************************************************************************************/
+export const TabsContainer: React.FC<TabsContainerProps> = memo(
   ({ routes, sceneMap, tabIndex, onTabIdxChange, position, style }) => {
     const theme = useTheme();
 
@@ -35,7 +85,7 @@ export const TabsContainer: TabsContainerType = memo(
       color: string;
     }) =>
       route.icon ? (
-        <Icon source={route.icon} size={Const.iconSizeSmall} color={color} />
+        <Icon source={route.icon} variant='xs' customColor={color} />
       ) : null;
 
     /**************************************************************************************************************

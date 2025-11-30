@@ -1,20 +1,21 @@
 import React, { useEffect, useRef, useState, memo } from 'react';
-import {
-  View,
-  Text,
-  TextInput as RNTextInput,
-  Keyboard,
-  TouchableOpacity,
-  StyleSheet,
-  StyleProp,
-  ViewStyle,
-} from 'react-native';
-import { TextInputType, InputKind } from './Input.types';
+import { View, Text, TextInput as RNTextInput, Keyboard, TouchableOpacity, StyleSheet, StyleProp, ViewStyle, TextStyle } from 'react-native';
 import { Icon } from '../Text/Icon';
 
 /******************************************************************************************************************
- * Keyboard + secure entry mapping
+ * Types.
  ******************************************************************************************************************/
+export type InputKind =
+  | 'text'
+  | 'numeric'
+  | 'password'
+  | 'search'
+  | 'email'
+  | 'phone';
+
+export type InputVariant = 'flat' | 'outline';
+
+// keyboard + secure entry mapping
 const getKeyboardTypeForType = (
   type: InputKind
 ): React.ComponentProps<typeof RNTextInput>['keyboardType'] => {
@@ -32,9 +33,63 @@ const getKeyboardTypeForType = (
 };
 
 /******************************************************************************************************************
- * TextInput implementation (pure React Native)
+ * TextInput props.
+ *
+ * @property type?                 - Input mode ('text', 'numeric', 'password', 'search', 'email', 'phone')
+ * @property label?                - Optional text label displayed above the input
+ * @property variant?              - Visual style ('flat' | 'outline')
+ * @property value?                - Current input value
+ * @property placeholder?          - Placeholder text
+ * @property onChange?             - Called when value changes
+ * @property onFocus?              - Called when input gains focus
+ * @property onBlur?               - Called when input loses focus
+ * @property style?                - Optional custom styling (ViewStyle or TextStyle)
+ * @property autoFocus?            - Auto focus on mount
+ * @property maxLength?            - Character limit
+ * @property multiline?            - Whether the field allows multiple lines
+ * @property numberOfLines?        - Number of lines when multiline is enabled
+ * @property editable?             - Whether user can modify input
+ * @property leadingIcon?          - Optional left icon (e.g. 'magnify' for search)
+ * @property trailingIcon?         - Optional right icon (overrides default clear/password toggle)
+ * @property onPressTrailingIcon?  - Custom handler when trailing icon is pressed
  ******************************************************************************************************************/
-export const TextInput: TextInputType = memo(
+export type TextInputProps = {
+  type?: InputKind;
+  label?: string;
+  variant?: InputVariant;
+  value?: string;
+  placeholder?: string;
+  onChange?: (text: string) => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
+  style?: StyleProp<ViewStyle | TextStyle>;
+  autoFocus?: boolean;
+  maxLength?: number;
+  multiline?: boolean;
+  numberOfLines?: number;
+  editable?: boolean;
+  leadingIcon?: string;
+  trailingIcon?: string;
+  onPressTrailingIcon?: () => void;
+};
+
+/******************************************************************************************************************
+ * A controlled text field for user input.
+ *
+ * @usage
+ * ```tsx
+ * <TextInput
+ *   type='search'
+ *   label='Search'
+ *   variant='outline'
+ *   leadingIcon='magnify'
+ *   value={query}
+ *   placeholder='Search items'
+ *   onChange={setQuery}
+ * />
+ * ```
+ ******************************************************************************************************************/
+export const TextInput: React.FC<TextInputProps> = memo(
   ({
     type = 'text',
     label,
@@ -88,7 +143,7 @@ export const TextInput: TextInputType = memo(
       }
     };
 
-    // Default icons
+    // default icon = magnifying
     let resolvedLeading = leadingIcon;
     if (!resolvedLeading && type === 'search') {
       resolvedLeading = 'magnify';
