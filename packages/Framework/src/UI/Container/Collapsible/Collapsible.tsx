@@ -1,118 +1,45 @@
-import React, {
-  useState,
-  memo,
-  useEffect,
-  useRef,
-  useCallback,
-} from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useState, memo, useEffect, useRef, useCallback, ReactNode } from 'react';
+import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
 import * as Const from '../../../Const';
-import {
-  CollapsibleContainerType,
-  AccordionContainerType,
-  AccordionSectionHeader,
-} from './Collapsible.types';
-import { Touchable } from '../Interactive/Touchable';
-import { Text } from '../Text/Text';
-import { Icon } from '../Text/Icon';
-import type { TextProps } from '../Text/Text.types';
-import type { IconProps } from '../Text/Icon.types';
+import { Touchable } from '../../Interactive/Touchable';
+import type { TextProps } from '../../Text/Text.types';
+import type { IconProps } from '../../Text/Icon.types';
+import { KeepMountedDuringClose, ToggleHeader } from './CollapsibleUtils';
 
 /******************************************************************************************************************
- * Utility component that keeps its children mounted until a specified timeout elapses after becoming inactive.
+ * CollapsibleContainer props.
+ * 
+ * @property text?             - Main header label (preferred)
+ * @property textOpts?         - Text styling options for the header label
+ * @property icon?             - Optional leading icon in the header
+ * @property iconOpts?         - Styling options for the leading icon
+ * @property toggleHeaderText? - Deprecated: legacy header label (used if `text` is not provided)
+ * @property style?            - Optional container style
+ * @property children          - Content rendered inside the collapsible body
  ******************************************************************************************************************/
-const KeepMountedDuringClose: React.FC<{
-  active: boolean;
-  durationMs: number;
-  children: React.ReactNode;
-}> = ({ active, durationMs, children }) => {
-  const [render, setRender] = useState(active);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => {
-    // if becoming active: show immediately and cancel any pending unmount
-    if (active) {
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
-        timerRef.current = null;
-      }
-      setRender(true);
-      return;
-    }
-    // if becoming inactive: wait for the close animation to finish, then unmount
-    timerRef.current = setTimeout(() => setRender(false), durationMs);
-    return () => {
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
-        timerRef.current = null;
-      }
-    };
-  }, [active, durationMs]);
-
-  return render ? <>{children}</> : null;
-};
-
-/******************************************************************************************************************
- * ToggleHeader props.
- *
- * @property text        - Text label displayed in the header
- * @property textOpts    - Text styling options
- * @property icon        - Optional leading icon
- * @property iconOpts    - Leading icon styling options
- * @property isCollapsed - Whether the section is currently collapsed
- ******************************************************************************************************************/
-export type ToggleHeaderProps = {
+export type CollapsibleContainerProps = {
   text?: string;
   textOpts?: TextProps;
   icon?: string;
   iconOpts?: IconProps;
-  isCollapsed: boolean;
+  style?: StyleProp<ViewStyle>;
+  children: ReactNode;
 };
 
 /******************************************************************************************************************
- * Render a compact header with optional icon + title and a chevron that reflects collapse state.
+ * A container that can expand or collapse its content vertically, typically used for toggling visibility of sections.
+ *
+ * @usage
+ * ```tsx
+ * <CollapsibleContainer text='details'>
+ *   <Text>hidden content</Text>
+ * </CollapsibleContainer>
+ * ```
  ******************************************************************************************************************/
-export const ToggleHeader: React.FC<ToggleHeaderProps> = memo(
-  ({ text, textOpts, icon, iconOpts, isCollapsed }) => {
-    const theme = useTheme();
-
-    return (
-      <View style={styles.toggleHeaderRow}>
-        {icon ? (
-          <Icon
-            source={icon}
-            variant='md'
-            customColor={theme.colors.onSurface}
-            style={{ marginRight: Const.padSize2 }}
-            {...iconOpts}
-          />
-        ) : null}
-
-        {text ? (
-          <Text variant='titleSmall' {...textOpts}>
-            {text}
-          </Text>
-        ) : null}
-
-        <View style={styles.flexSpacer} />
-
-        <Icon
-          source={isCollapsed ? 'chevron-down' : 'chevron-up'}
-          variant='md'
-          customColor={theme.colors.onSurface}
-        />
-      </View>
-    );
-  }
-);
-
-/******************************************************************************************************************
- * CollapsibleContainer implementation.
- ******************************************************************************************************************/
-export const CollapsibleContainer: CollapsibleContainerType = memo(
+export const CollapsibleContainer: React.FC<CollapsibleContainerProps> = memo(
   ({ text, textOpts, icon, iconOpts, style, children }) => {
     const [isCollapsed, setIsCollapsed] = useState(true);
 
@@ -138,8 +65,20 @@ export const CollapsibleContainer: CollapsibleContainerType = memo(
 );
 
 /******************************************************************************************************************
- * Accordion implementation.
+ * Accordion section header config.
+ *
+ * @property text?     - Header label
+ * @property textOpts? - Text styling options
+ * @property icon?     - Optional leading icon
+ * @property iconOpts? - Leading icon styling options
  ******************************************************************************************************************/
+export type AccordionSectionHeader = {
+  text?: string;
+  textOpts?: TextProps;
+  icon?: string;
+  iconOpts?: IconProps;
+};
+
 type Section = {
   header: AccordionSectionHeader;
   content: React.ReactNode;
@@ -148,10 +87,10 @@ type Section = {
 const GRP_SIZE = 3;
 
 /******************************************************************************************************************
- * AccordionGroup:
+ * AccordionOption:
  * - renders one Accordion component
  ******************************************************************************************************************/
-const AccordionGroup = React.memo(function AccordionGroup({
+const AccordionOption = React.memo(function AccordionOption({
   sections,
   idx,
   closeTrigger,
@@ -214,10 +153,39 @@ const AccordionGroup = React.memo(function AccordionGroup({
 });
 
 /******************************************************************************************************************
- * AccordionContainer:
- * - renders multiple AccordionGroup components
+ * AccordionContainer props.
+ * 
+ * @property sections  - Header config for each section in order
+ * @property style?    - Optional container style
+ * @property children  - Content nodes matched 1:1 with sections
  ******************************************************************************************************************/
-export const AccordionContainer: AccordionContainerType = memo(
+export type AccordionContainerProps = {
+  sections: AccordionSectionHeader[];
+  style?: StyleProp<ViewStyle>;
+  children: ReactNode[];
+};
+
+/******************************************************************************************************************
+ * A vertically stacked set of collapsible panels where only one section can be expanded at a time.
+ *
+ * @param props - Refer to AccordionContainerProps
+ *
+ * @throws {Error} when the number of sections does not match the number of children
+ *
+ * @usage
+ * ```tsx
+ * <AccordionContainer
+ *   sections={[
+ *     { text: 'First' },
+ *     { text: 'Second', icon: 'star' },
+ *   ]}
+ * >
+ *   <View><Text>a content</Text></View>
+ *   <View><Text>b content</Text></View>
+ * </AccordionContainer>
+ * ```
+ ******************************************************************************************************************/
+export const AccordionContainer: React.FC<AccordionContainerProps> = memo(
   ({ sections, style, children }) => {
     const childArray = React.Children.toArray(children);
 
@@ -273,7 +241,7 @@ export const AccordionContainer: AccordionContainerType = memo(
     return (
       <View style={style}>
         {groups.map((g, gi) => (
-          <AccordionGroup
+          <AccordionOption
             key={`acc-${gi}`}
             idx={gi}
             sections={g}
@@ -285,17 +253,3 @@ export const AccordionContainer: AccordionContainerType = memo(
     );
   }
 );
-
-/******************************************************************************************************************
- * Styles.
- ******************************************************************************************************************/
-const styles = StyleSheet.create({
-  toggleHeaderRow: {
-    padding: Const.padSize,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  flexSpacer: {
-    flex: 1,
-  },
-});
